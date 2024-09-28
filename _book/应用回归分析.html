@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 应用回归分析 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 应用回归分析 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 应用回归分析 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="part2_5.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="内容组成.html"><a href="内容组成.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="个人简介.html"><a href="个人简介.html"><i class="fa fa-check"></i>个人简介</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path=""><a href="#part-专项"><i class="fa fa-check"></i>(PART) 专项</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="part1_1.html"><a href="part1_1.html"><i class="fa fa-check"></i><b>0.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="0.2" data-path="part1_2.html"><a href="part1_2.html"><i class="fa fa-check"></i><b>0.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="0.3" data-path="part1_3.html"><a href="part1_3.html"><i class="fa fa-check"></i><b>0.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="0.3.1" data-path="part1_3.html"><a href="part1_3.html#part1_3_1"><i class="fa fa-check"></i><b>0.3.1</b> 标题</a></li>
+<li class="chapter" data-level="0.3.2" data-path="part1_3.html"><a href="part1_3.html#part1_3_2"><i class="fa fa-check"></i><b>0.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="0.3.3" data-path="part1_3.html"><a href="part1_3.html#part1_3_3"><i class="fa fa-check"></i><b>0.3.3</b> 换行</a></li>
+<li class="chapter" data-level="0.3.4" data-path="part1_3.html"><a href="part1_3.html#part1_3_4"><i class="fa fa-check"></i><b>0.3.4</b> 链接</a></li>
+<li class="chapter" data-level="0.3.5" data-path="part1_3.html"><a href="part1_3.html#part1_3_5"><i class="fa fa-check"></i><b>0.3.5</b> 引用</a></li>
+<li class="chapter" data-level="0.3.6" data-path="part1_3.html"><a href="part1_3.html#part1_3_6"><i class="fa fa-check"></i><b>0.3.6</b> 列表</a></li>
+<li class="chapter" data-level="0.3.7" data-path="part1_3.html"><a href="part1_3.html#part1_3_7"><i class="fa fa-check"></i><b>0.3.7</b> 代码</a></li>
+<li class="chapter" data-level="0.3.8" data-path="part1_3.html"><a href="part1_3.html#part1_3_8"><i class="fa fa-check"></i><b>0.3.8</b> 表格</a></li>
+<li class="chapter" data-level="0.3.9" data-path="part1_3.html"><a href="part1_3.html#part1_3_9"><i class="fa fa-check"></i><b>0.3.9</b> 图片</a></li>
+<li class="chapter" data-level="0.3.10" data-path="part1_3.html"><a href="part1_3.html#part1_3_10"><i class="fa fa-check"></i><b>0.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="0.4" data-path="part1_4.html"><a href="part1_4.html"><i class="fa fa-check"></i><b>0.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="0.4.1" data-path="part1_4.html"><a href="part1_4.html#part1_4_1"><i class="fa fa-check"></i><b>0.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="0.4.2" data-path="part1_4.html"><a href="part1_4.html#part1_4_2"><i class="fa fa-check"></i><b>0.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="0.4.3" data-path="part1_4.html"><a href="part1_4.html#part1_4_3"><i class="fa fa-check"></i><b>0.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="0.4.4" data-path="part1_4.html"><a href="part1_4.html#part1_4_4"><i class="fa fa-check"></i><b>0.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="0.4.5" data-path="part1_4.html"><a href="part1_4.html#part1_4_5"><i class="fa fa-check"></i><b>0.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="0.4.6" data-path="part1_4.html"><a href="part1_4.html#part1_4_6"><i class="fa fa-check"></i><b>0.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="0.4.7" data-path="part1_4.html"><a href="part1_4.html#part1_4_7"><i class="fa fa-check"></i><b>0.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="0.4.8" data-path="part1_4.html"><a href="part1_4.html#part1_4_8"><i class="fa fa-check"></i><b>0.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="0.4.9" data-path="part1_4.html"><a href="part1_4.html#part1_4_9"><i class="fa fa-check"></i><b>0.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="0.4.10" data-path="part1_4.html"><a href="part1_4.html#part1_4_10"><i class="fa fa-check"></i><b>0.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="0.4.11" data-path="part1_4.html"><a href="part1_4.html#part1_4_11"><i class="fa fa-check"></i><b>0.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="0.4.12" data-path="part1_4.html"><a href="part1_4.html#part1_4_12"><i class="fa fa-check"></i><b>0.4.12</b> 注释</a></li>
+<li class="chapter" data-level="0.4.13" data-path="part1_4.html"><a href="part1_4.html#part1_4_13"><i class="fa fa-check"></i><b>0.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="0.4.14" data-path="part1_4.html"><a href="part1_4.html#part1_4_14"><i class="fa fa-check"></i><b>0.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="0.5" data-path="part1_5.html"><a href="part1_5.html"><i class="fa fa-check"></i><b>0.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="0.5.1" data-path="part1_5.html"><a href="part1_5.html#part1_5_1"><i class="fa fa-check"></i><b>0.5.1</b> 标签</a></li>
+<li class="chapter" data-level="0.5.2" data-path="part1_5.html"><a href="part1_5.html#part1_5_2"><i class="fa fa-check"></i><b>0.5.2</b> 目录</a></li>
+<li class="chapter" data-level="0.5.3" data-path="part1_5.html"><a href="part1_5.html#part1_5_3"><i class="fa fa-check"></i><b>0.5.3</b> 外观</a></li>
+<li class="chapter" data-level="0.5.4" data-path="part1_5.html"><a href="part1_5.html#part1_5_4"><i class="fa fa-check"></i><b>0.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="0.5.5" data-path="part1_5.html"><a href="part1_5.html#part1_5_5"><i class="fa fa-check"></i><b>0.5.5</b> 表格</a></li>
+<li class="chapter" data-level="0.5.6" data-path="part1_5.html"><a href="part1_5.html#part1_5_6"><i class="fa fa-check"></i><b>0.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="0.5.7" data-path="part1_5.html"><a href="part1_5.html#part1_5_7"><i class="fa fa-check"></i><b>0.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="0.5.8" data-path="part1_5.html"><a href="part1_5.html#part1_5_8"><i class="fa fa-check"></i><b>0.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="0.5.9" data-path="part1_5.html"><a href="part1_5.html#part1_5_9"><i class="fa fa-check"></i><b>0.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="0.5.10" data-path="part1_5.html"><a href="part1_5.html#part1_5_10"><i class="fa fa-check"></i><b>0.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="0.6" data-path="part1_6.html"><a href="part1_6.html"><i class="fa fa-check"></i><b>0.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="0.6.1" data-path="part1_6.html"><a href="part1_6.html#part1_6_1"><i class="fa fa-check"></i><b>0.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="0.6.2" data-path="part1_6.html"><a href="part1_6.html#part1_6_2"><i class="fa fa-check"></i><b>0.6.2</b> 目录</a></li>
+<li class="chapter" data-level="0.6.3" data-path="part1_6.html"><a href="part1_6.html#part1_6_3"><i class="fa fa-check"></i><b>0.6.3</b> 图与表</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="part2.html"><a href="part2.html"><i class="fa fa-check"></i><b>1</b> Manim</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="part2_1.html"><a href="part2_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="part2_2.html"><a href="part2_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="1.3" data-path="part2_3.html"><a href="part2_3.html"><i class="fa fa-check"></i><b>1.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="part2_3.html"><a href="part2_3.html#part2_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="1.3.2" data-path="part2_3.html"><a href="part2_3.html#part2_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 片段</a></li>
+<li class="chapter" data-level="1.3.3" data-path="part2_3.html"><a href="part2_3.html#part2_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="part2_4.html"><a href="part2_4.html"><i class="fa fa-check"></i><b>1.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="part2_4.html"><a href="part2_4.html#part2_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="1.4.2" data-path="part2_4.html"><a href="part2_4.html#part2_4_2"><i class="fa fa-check"></i><b>1.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="1.4.3" data-path="part2_4.html"><a href="part2_4.html#part2_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="part2_5.html"><a href="part2_5.html"><i class="fa fa-check"></i><b>1.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="part2_5.html"><a href="part2_5.html#part2_5_1"><i class="fa fa-check"></i><b>1.5.1</b> Text</a></li>
+<li class="chapter" data-level="1.5.2" data-path="part2_5.html"><a href="part2_5.html#part2_5_2"><i class="fa fa-check"></i><b>1.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="1.5.3" data-path="part2_5.html"><a href="part2_5.html#part2_5_3"><i class="fa fa-check"></i><b>1.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="1.5.4" data-path="part2_5.html"><a href="part2_5.html#part2_5_4"><i class="fa fa-check"></i><b>1.5.4</b> Tex</a></li>
+<li class="chapter" data-level="1.5.5" data-path="part2_5.html"><a href="part2_5.html#part2_5_5"><i class="fa fa-check"></i><b>1.5.5</b> MathTex</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="应用回归分析.html"><a href="应用回归分析.html"><i class="fa fa-check"></i><b>2</b> 应用回归分析</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="应用回归分析" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> 应用回归分析<a href="应用回归分析.html#应用回归分析" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h1>
+<p>回归模型的分类如下所示：</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-de2f1c139fd51c6f8ad9" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-de2f1c139fd51c6f8ad9">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>回归模型的建模步骤如下所示：</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-883bd58f99e5a0df6879" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-883bd58f99e5a0df6879">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="part2_5.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

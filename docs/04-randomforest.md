@@ -3,25 +3,6 @@
 随机森林(random forest)是一种集成学习方法，主要用于分类和回归任务。“森林”意味着该模型是以决策树为基学习器，通过综合多个基学习器的结果来改善模型性能；“随机”意味着该模型不仅采用bootstrap法获得随机训练集，还在所有属性的一个随机子集中选择最优属性进行划分。
 
 
-```
-## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.2     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-## 
-## 载入程序包：'kableExtra'
-## 
-## 
-## The following object is masked from 'package:dplyr':
-## 
-##     group_rows
-```
 
 ## R实现 {#rf_1}
 

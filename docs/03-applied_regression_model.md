@@ -1,26 +1,26 @@
 # (PART) 模型与方法 {.unnumbered}
 
-# 应用回归分析 {#part3}
+# 应用回归分析 {#reg}
 
 回归模型的分类如下所示：
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-b6718c4b47e19e309a85" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-b6718c4b47e19e309a85">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-08ca8e103fe25ced5281" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-08ca8e103fe25ced5281">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 回归模型的建模步骤如下所示：
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-60e9f2c58d5c903c86da" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-60e9f2c58d5c903c86da">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-2016419bfa8420ada020" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-2016419bfa8420ada020">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
-## 引言 {#part3_1}
+## 引言 {#reg_1}
 
-### 变量间的相关关系 {#part3_1_1}
+### 变量间的相关关系 {#reg_1_1}
 
 - 函数关系：变量间存在的确定性数量对应关系
 
@@ -52,7 +52,7 @@
 >
 > X与Y的地位是否平等；有无因果关系；相关分析揭示线性相关程度，回归分析给出具体的回归方程。
 
-### 回归模型的一般形式 {#part3_1_2}
+### 回归模型的一般形式 {#reg_1_2}
 
 $$
 y=f(x_1, ..., x_p, \epsilon)
@@ -67,7 +67,7 @@ $\epsilon$包含的内容：
 - 模型设定误差
 - 其他随机因素的影响
 
-## 假定 {#part3_2}
+## 假定 {#reg_2}
 
 1. 零均值：$E(\epsilon)=0$
 2. 同方差：$Var(\epsilon)=\sigma^2$
@@ -85,9 +85,9 @@ $\epsilon$包含的内容：
 
 第7条，如果真实模型不具有线性关系，那么我们的模型设定就是有偏误的（做此假定只是为了让自己用得放心，谁又能知道真实模型是什么样子的呢）。
 
-## 线性回归模型 {#part3_3}
+## 线性回归模型 {#reg_3}
 
-### 一元线性回归模型 {#part3_3_1}
+### 一元线性回归模型 {#reg_3_1}
 
 $$
 \left\{
@@ -151,7 +151,7 @@ $$
 
 **挖坑，一元线性回归示意图或动画**
 
-### 多元线性回归模型 {#part3_3_2}
+### 多元线性回归模型 {#reg_3_2}
 
 $$
 \left\{
@@ -225,9 +225,9 @@ $$
 
 此时$Y \sim N(X\beta,\sigma^2I_n)$
 
-## 参数估计 {#part3_4}
+## 参数估计 {#reg_4}
 
-### 一元 {#part3_4_1}
+### 一元 {#reg_4_1}
 
 1. 最小二乘估计
 
@@ -341,7 +341,7 @@ $$
 
    与式\@ref(eq:model8)一致，则估计结果与最小二乘估计相同。
 
-### 多元 {#part3_4_2}
+### 多元 {#reg_4_2}
 
 1. 最小二乘估计
 
@@ -439,17 +439,17 @@ $$
 >
 > 注意X'的第一行都是1，用来满足$E(\epsilon)=0$的条件。其余行为不同自变量的观测值，用来满足$Cov(X_i,\epsilon)=E(X_i\epsilon)=0$的条件。
 
-### 几何视角 {#part3_4_3}
+### 几何视角 {#reg_4_3}
 
 <video src='./video/Projection.mp4' controls width="800px" height="600px"></video>
 
 [B站：最小二乘与投影矩阵](https://www.bilibili.com/video/BV1eFxMeKEpM/)
 
-## 最小二乘估计的性质 {#part3_5}
+## 最小二乘估计的性质 {#reg_5}
 
 根据高斯-马尔科夫定理，在满足假定的前提下，最小二乘估计为最优线性无偏估计(best linear unbiased estimator，BLUE)。再探讨性质之前，请先回忆一元及多元场合的最小二乘估计值，式\@ref(eq:model15)和式\@ref(eq:model20)。
 
-### 线性 {#part3_5_1}
+### 线性 {#reg_5_1}
 
 - 一元场合
 
@@ -462,7 +462,7 @@ $$
    &= {\sum\limits_{i=1}^n (x_i-\bar x)y_i \over L_{xx}} \\
    &= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} y_i \\
    &= \sum_{i=1}^n k_i y_i
-   \end{aligned}
+   \end{aligned} (\#eq:model26)
    $$
 
    > $L_{xx}$相当于一个常数，可以放进去或提出来。
@@ -472,7 +472,7 @@ $$
    \hat \beta_0 &= \bar y - \hat \beta_1 \bar x \\
    &= \sum\limits_{i=1}^n {1 \over n}y_i - \sum\limits_{i=1}^n {(x_i-\bar x)\bar x \over L_{xx}} y_i \\
    &= \sum\limits_{i=1}^n [{1 \over n} - {(x_i-\bar x)\bar x \over L_{xx}}]y_i
-   \end{aligned}
+   \end{aligned} (\#eq:model27)
    $$
 
 - 多元场合
@@ -482,14 +482,14 @@ $$
    \hat \beta &= (X'X)^{-1}X'Y \\
    &= (X'X)^{-1}X'(X\beta+\epsilon) \\
    &= \beta+(X'X)^{-1}X'\epsilon
-   \end{aligned}
+   \end{aligned} (\#eq:model28)
    $$
 
    注意到$\hat \beta$不仅是$y$的线性组合，还是$\epsilon$的线性组合。
 
 > 除了最小二乘估计是线性的，由最小二乘估计推得的拟合值、预测值与残差也都是线性的。
 
-### 无偏性 {#part3_5_2}
+### 无偏性 {#reg_5_2}
 
 - 一元场合
 
@@ -500,7 +500,7 @@ $$
    &= \sum_{i=1}^n {(x_i-\bar x)x_i \over L_{xx}}\beta_1 \\
    &= {L_{xx} \over L_{xx}}\beta_1 \\
    &= \beta_1
-   \end{aligned}
+   \end{aligned} (\#eq:model29)
    $$
 
    $$
@@ -510,7 +510,7 @@ $$
    &= {\sum\limits_{i=1}^n (\beta_0 + \beta_1 x) \over n}-\beta_1 \bar x \\
    &= \beta_0 + \beta_1 \bar x -\beta_1 \bar x \\
    &= \beta_0
-   \end{aligned}
+   \end{aligned} (\#eq:model30)
    $$
 
 - 多元场合
@@ -521,10 +521,10 @@ $$
    &= (X'X)^{-1}X'E(Y) \\
    &= (X'X)^{-1}X'X\beta \\
    &= \beta
-   \end{aligned}
+   \end{aligned} (\#eq:model31)
    $$
 
-### 有效性 {#part3_5_3}
+### 有效性 {#reg_5_3}
 
 - 一元场合
 
@@ -537,7 +537,7 @@ $$
    &= \sum\limits_{i=1}^n c_i(\beta_0+\beta_1x_i) \\
    &= \beta_0 \sum\limits_{i=1}^n c_i + \beta_1 \sum\limits_{i=1}^n c_ix_i \\
    &= \beta_1
-   \end{aligned}
+   \end{aligned} (\#eq:model32)
    $$
 
    根据无偏性，可知$\tilde \beta_1$满足$\sum\limits_{i=1}^n c_i=0$和$\sum\limits_{i=1}^n c_ix_i=1$。
@@ -550,7 +550,7 @@ $$
    &= \sigma^2[\sum\limits_{i=1}^n(c_i-k_i)^2+\sum\limits_{i=1}^nk_i^2+\sum\limits_{i=1}^n2(c_i-k_i)k_i] \\
    &= \sum\limits_{i=1}^n(c_i-k_i)^2 \sigma^2 + Var(\hat \beta_1) \\
    Var(\tilde \beta_1) &\geq Var(\hat \beta_1)
-   \end{aligned}
+   \end{aligned} (\#eq:model33)
    $$
 
    注意到$\sum\limits_{i=1}^n c_i=0$和$\sum\limits_{i=1}^n c_ix_i=1$，其中
@@ -561,7 +561,7 @@ $$
    &=2\sum\limits_{i=1}^n c_i{(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2\sum\limits_{i=1}^n ({(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2})^2 \\
    &= 2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2} \\
    &= 0
-   \end{aligned}
+   \end{aligned} (\#eq:model34)
    $$
 
    关于$\hat \beta_0$的证明也是类似的，略。
@@ -576,7 +576,7 @@ $$
    &= [(X'X)^{-1}X'+A]X\beta \\
    &= \beta +AX\beta \\
    &= \beta
-   \end{aligned}
+   \end{aligned} (\#eq:model35)
    $$
 
    根据无偏性，可知$AX=0$。
@@ -589,25 +589,29 @@ $$
    Cov(\tilde \beta)&=[(X'X)^{-1}X'+A]Cov(Y)[(X'X)^{-1}X'+A]' \\
    &= [(X'X)^{-1}X'+A]\sigma^2I_n[(X'X)^{-1}X'+A]' \\
    &= \sigma^2 [(X'X)^{-1}+AA'] 
-   \end{aligned}
+   \end{aligned} (\#eq:model36)
    $$
 
    > 注意到$AX=0$
 
    由于$AA'$是半正定矩阵（非负定），则$Cov(\tilde \beta) \geq Cov(\hat \beta)$。
 
-### 方差 {#part3_5_4}
+### 方差 {#reg_5_4}
 
 - 一元场合
 
+   - $Var(\hat{\beta_1})$
+   
    $$
    \begin{aligned}
    Var(\hat \beta_1)&=Var(\sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} y_i) \\
    &= \sum_{i=1}^n {(x_i-\bar x)^2 \over L_{xx}^2}\sigma^2 \\
    &= {L_{xx} \over L_{xx}^2}\sigma^2 \\
    &= {\sigma^2 \over L_{xx}}
-   \end{aligned}
+   \end{aligned} (\#eq:model37)
    $$
+   
+   - $Var(\hat{\beta_0})$
    
    $$
    \begin{aligned}
@@ -615,7 +619,7 @@ $$
    &= Var(\bar y)+\bar x^2Var(\hat \beta)-2Cov(\bar y,\hat \beta_1 \bar x) \\
    &= {\sigma^2 \over n}+\bar x^2{\sigma^2 \over L_{xx}} \\
    &= [{1 \over n}+{\bar x^2 \over L_{xx}}]\sigma^2
-   \end{aligned}
+   \end{aligned} (\#eq:model38)
    $$
 
    其中
@@ -627,10 +631,12 @@ $$
    &= {\bar x^2 \sigma^2 \over n} \sum_{i=1}^n k_i \\
    &= {\bar x^2 \sigma^2 \over n} \sum_{i=1}^n {x_i-\bar x \over L_{xx}} \\
    &= 0
-   \end{aligned}
+   \end{aligned} (\#eq:model39)
    $$
 
    > 注意有$Cov(\epsilon_i,\epsilon_j)=0$，则$Cov(y_i,y_j)=0$
+   
+   - $Cov(\hat \beta_0,\hat \beta_1)$
    
    $$
    \begin{aligned}
@@ -638,7 +644,65 @@ $$
    &= Cov(\bar y,\hat \beta_1)-\bar xCov(\hat \beta_1,\hat \beta_1) \\
    &= 0-\bar x {\sigma^2 \over L_{xx}} \\
    &= -{\bar x \over L_{xx}}\sigma^2
-   \end{aligned}
+   \end{aligned} (\#eq:model40)
+   $$
+
+   - $Cov(e_i,e_j)$
+
+   令$e_i=y_i-\hat{y_i}=y_i-\sum\limits_{j=1}^nh_{ij}y_j$，其中$h_{ij}={1 \over n}+{(x_i-\bar{x})(x_j-\bar{x}) \over L_{xx}}$，显然有$h_{ij}=h_{ji}$。
+
+   当$i \neq j$时：
+
+   $$
+   \begin{aligned}
+   Cov(e_i,e_j)&=Cov(y_i-\sum\limits_{k=1}^nh_{ik}y_k \, , \, y_j-\sum\limits_{l=1}^nh_{jl}y_l) \\
+   &= -Cov(y_i \, , \, h_{ji}y_i)-Cov(y_j \, , \, h_{ij}y_j)+\sum\limits_{k=1}^n h_{ik}h_{jk}Cov(y_i \, , \, y_j) \\
+   &= -h_{ji}\sigma^2-h_{ij}\sigma^2+h_{ij}\sigma^2 \\
+   &= -h_{ij}\sigma^2
+   \end{aligned} (\#eq:model41)
+   $$
+
+   其中
+
+   $$
+   \begin{aligned}
+   \sum\limits_{k=1}^n h_{ik}h_{jk}&=\sum\limits_{k=1}^n [{1 \over n^2} + {(x_k-\bar{x})(x_j-\bar{x}+x_i-\bar{x}) \over nL_{xx}}+{(x_i-\bar{x})(x_j-\bar{x})(x_k-\bar{x})^2 \over L_{xx}^2}] \\
+   &= {1 \over n} + {(x_i-\bar{x})(x_j-\bar{x}) \over L_{xx}} \\
+   &= h_{ij}
+   \end{aligned} (\#eq:model42)
+   $$
+
+   当$i = j$时：
+
+   $$
+   \begin{aligned}
+   Cov(e_i \, , \, e_i)&=Var(e_i) \\
+   &= Var(y_i-\sum\limits_{j=1}^nh_{ij}y_j) \\
+   &= Var(y_i)+Var(\sum\limits_{j=1}^nh_{ij}y_j)-2Cov(y_i\, , \, \sum\limits_{j=1}^nh_{ij}y_j) \\
+   &= \sigma^2 + \sigma^2 \sum\limits_{j=1}^n h_{ij}^2-2h_{ii}\sigma^2 \\
+   &= \sigma^2+h_{ii}\sigma^2-2h_{ii}\sigma^2 \\
+   &= (1-h_{ii})\sigma^2
+   \end{aligned} (\#eq:model43)
+   $$
+
+   其中
+
+   $$
+   \begin{aligned}
+   \sum\limits_{j=1}^n h_{ij}^2 &= \sum\limits_{j=1}^n [{1 \over n^2}+{(x_i-\bar{x})^2(x_j-\bar{x})^2 \over L_{xx}^2}+{2(x_i-\bar{x})(x_j-\bar{x}) \over nL_{xx}}] \\
+   &= {1 \over n}+{(x_i-\bar{x})^2 \over L_{xx}} \\
+&= h_{ii}
+   \end{aligned} (\#eq:model44)
+   $$
+
+   故
+
+   $$
+   Cov(e_i\, , \, e_j)=
+   \begin{cases}
+   (1-h_{ii})\sigma^2, &i=j \\
+   -h_{ij}\sigma^2, &i \neq j
+   \end{cases} (\#eq:model45)
    $$
 
 - 多元场合
@@ -651,10 +715,20 @@ $$
    &= (X'X)^{-1}X'E(\epsilon \epsilon ') X(X'X)^{-1} \\
    &= (X'X)^{-1}X'\sigma^2I_n X(X'X)^{-1} \\
    &= \sigma^2(X'X)^{-1}
-   \end{aligned}
+   \end{aligned} (\#eq:model46)
    $$
 
-### 正态分布 {#part3_5_5}
+
+   $$
+   \begin{aligned}
+   Cov(e) &= Cov((I-H)Y) \\
+   &= Cov((I-H)\epsilon) \\
+   &= (I-H)E(\epsilon\epsilon')(I-H)' \\
+   &= \sigma^2 (I-H)
+   \end{aligned} (\#eq:model47)
+   $$
+   
+### 正态分布 {#reg_5_5}
 
 - 一元场合 
 

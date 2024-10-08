@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.2 数据模拟 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.2 数据模拟 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.2 数据模拟 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="rf_1.html"/>
+<link rel="next" href="ms.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="内容组成.html"><a href="内容组成.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="个人简介.html"><a href="个人简介.html"><i class="fa fa-check"></i>个人简介</a></li>
+</ul></li>
+<li class="part"><span><b>I 专项</b></span></li>
+<li class="chapter" data-level="1" data-path="rmd.html"><a href="rmd.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rmd_1.html"><a href="rmd_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="rmd_2.html"><a href="rmd_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="1.3" data-path="rmd_3.html"><a href="rmd_3.html"><i class="fa fa-check"></i><b>1.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 标题</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 换行</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_4"><i class="fa fa-check"></i><b>1.3.4</b> 链接</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_5"><i class="fa fa-check"></i><b>1.3.5</b> 引用</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_6"><i class="fa fa-check"></i><b>1.3.6</b> 列表</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_7"><i class="fa fa-check"></i><b>1.3.7</b> 代码</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_8"><i class="fa fa-check"></i><b>1.3.8</b> 表格</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_9"><i class="fa fa-check"></i><b>1.3.9</b> 图片</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_10"><i class="fa fa-check"></i><b>1.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rmd_4.html"><a href="rmd_4.html"><i class="fa fa-check"></i><b>1.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_2"><i class="fa fa-check"></i><b>1.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_4"><i class="fa fa-check"></i><b>1.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_5"><i class="fa fa-check"></i><b>1.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="1.4.6" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_6"><i class="fa fa-check"></i><b>1.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="1.4.7" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_7"><i class="fa fa-check"></i><b>1.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="1.4.8" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_8"><i class="fa fa-check"></i><b>1.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="1.4.9" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_9"><i class="fa fa-check"></i><b>1.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="1.4.10" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_10"><i class="fa fa-check"></i><b>1.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="1.4.11" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_11"><i class="fa fa-check"></i><b>1.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="1.4.12" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_12"><i class="fa fa-check"></i><b>1.4.12</b> 注释</a></li>
+<li class="chapter" data-level="1.4.13" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_13"><i class="fa fa-check"></i><b>1.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="1.4.14" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_14"><i class="fa fa-check"></i><b>1.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rmd_5.html"><a href="rmd_5.html"><i class="fa fa-check"></i><b>1.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_1"><i class="fa fa-check"></i><b>1.5.1</b> 标签</a></li>
+<li class="chapter" data-level="1.5.2" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_2"><i class="fa fa-check"></i><b>1.5.2</b> 目录</a></li>
+<li class="chapter" data-level="1.5.3" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_3"><i class="fa fa-check"></i><b>1.5.3</b> 外观</a></li>
+<li class="chapter" data-level="1.5.4" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_4"><i class="fa fa-check"></i><b>1.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="1.5.5" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_5"><i class="fa fa-check"></i><b>1.5.5</b> 表格</a></li>
+<li class="chapter" data-level="1.5.6" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_6"><i class="fa fa-check"></i><b>1.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="1.5.7" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_7"><i class="fa fa-check"></i><b>1.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="1.5.8" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_8"><i class="fa fa-check"></i><b>1.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="1.5.9" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_9"><i class="fa fa-check"></i><b>1.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="1.5.10" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_10"><i class="fa fa-check"></i><b>1.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rmd_6.html"><a href="rmd_6.html"><i class="fa fa-check"></i><b>1.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_1"><i class="fa fa-check"></i><b>1.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="1.6.2" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_2"><i class="fa fa-check"></i><b>1.6.2</b> 目录</a></li>
+<li class="chapter" data-level="1.6.3" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_3"><i class="fa fa-check"></i><b>1.6.3</b> 图与表</a></li>
+<li class="chapter" data-level="1.6.4" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_4"><i class="fa fa-check"></i><b>1.6.4</b> 语法高亮</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manim.html"><a href="manim.html"><i class="fa fa-check"></i><b>2</b> Manim</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manim_1.html"><a href="manim_1.html"><i class="fa fa-check"></i><b>2.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="2.2" data-path="manim_2.html"><a href="manim_2.html"><i class="fa fa-check"></i><b>2.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="2.3" data-path="manim_3.html"><a href="manim_3.html"><i class="fa fa-check"></i><b>2.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="manim_3.html"><a href="manim_3.html#manim_3_1"><i class="fa fa-check"></i><b>2.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="2.3.2" data-path="manim_3.html"><a href="manim_3.html#manim_3_2"><i class="fa fa-check"></i><b>2.3.2</b> 片段</a></li>
+<li class="chapter" data-level="2.3.3" data-path="manim_3.html"><a href="manim_3.html#manim_3_3"><i class="fa fa-check"></i><b>2.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="manim_4.html"><a href="manim_4.html"><i class="fa fa-check"></i><b>2.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="manim_4.html"><a href="manim_4.html#manim_4_1"><i class="fa fa-check"></i><b>2.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="manim_4.html"><a href="manim_4.html#manim_4_2"><i class="fa fa-check"></i><b>2.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="2.4.3" data-path="manim_4.html"><a href="manim_4.html#manim_4_3"><i class="fa fa-check"></i><b>2.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="manim_5.html"><a href="manim_5.html"><i class="fa fa-check"></i><b>2.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manim_5.html"><a href="manim_5.html#manim_5_1"><i class="fa fa-check"></i><b>2.5.1</b> Text</a></li>
+<li class="chapter" data-level="2.5.2" data-path="manim_5.html"><a href="manim_5.html#manim_5_2"><i class="fa fa-check"></i><b>2.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="2.5.3" data-path="manim_5.html"><a href="manim_5.html#manim_5_3"><i class="fa fa-check"></i><b>2.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="2.5.4" data-path="manim_5.html"><a href="manim_5.html#manim_5_4"><i class="fa fa-check"></i><b>2.5.4</b> Tex</a></li>
+<li class="chapter" data-level="2.5.5" data-path="manim_5.html"><a href="manim_5.html#manim_5_5"><i class="fa fa-check"></i><b>2.5.5</b> MathTex</a></li>
+<li class="chapter" data-level="2.5.6" data-path="manim_5.html"><a href="manim_5.html#manim_5_6"><i class="fa fa-check"></i><b>2.5.6</b> Title</a></li>
+<li class="chapter" data-level="2.5.7" data-path="manim_5.html"><a href="manim_5.html#manim_5_7"><i class="fa fa-check"></i><b>2.5.7</b> BulletedList</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manim_6.html"><a href="manim_6.html"><i class="fa fa-check"></i><b>2.6</b> 内置颜色</a></li>
+<li class="chapter" data-level="2.7" data-path="manim_7.html"><a href="manim_7.html"><i class="fa fa-check"></i><b>2.7</b> 物体的位置与移动</a></li>
+<li class="chapter" data-level="2.8" data-path="manim_8.html"><a href="manim_8.html"><i class="fa fa-check"></i><b>2.8</b> 动画</a></li>
+<li class="chapter" data-level="2.9" data-path="manim_9.html"><a href="manim_9.html"><i class="fa fa-check"></i><b>2.9</b> 镜头视角</a></li>
+<li class="chapter" data-level="2.10" data-path="manim_10.html"><a href="manim_10.html"><i class="fa fa-check"></i><b>2.10</b> 存储对象</a></li>
+<li class="chapter" data-level="2.11" data-path="manim_11.html"><a href="manim_11.html"><i class="fa fa-check"></i><b>2.11</b> 成品</a></li>
+</ul></li>
+<li class="part"><span><b>II 模型与方法</b></span></li>
+<li class="chapter" data-level="3" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>3</b> 应用回归分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="reg_1.html"><a href="reg_1.html"><i class="fa fa-check"></i><b>3.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="reg_1.html"><a href="reg_1.html#reg_1_1"><i class="fa fa-check"></i><b>3.1.1</b> 变量间的相关关系</a></li>
+<li class="chapter" data-level="3.1.2" data-path="reg_1.html"><a href="reg_1.html#reg_1_2"><i class="fa fa-check"></i><b>3.1.2</b> 回归模型的一般形式</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="reg_2.html"><a href="reg_2.html"><i class="fa fa-check"></i><b>3.2</b> 假定</a></li>
+<li class="chapter" data-level="3.3" data-path="reg_3.html"><a href="reg_3.html"><i class="fa fa-check"></i><b>3.3</b> 线性回归模型</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="reg_3.html"><a href="reg_3.html#reg_3_1"><i class="fa fa-check"></i><b>3.3.1</b> 一元线性回归模型</a></li>
+<li class="chapter" data-level="3.3.2" data-path="reg_3.html"><a href="reg_3.html#reg_3_2"><i class="fa fa-check"></i><b>3.3.2</b> 多元线性回归模型</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="reg_4.html"><a href="reg_4.html"><i class="fa fa-check"></i><b>3.4</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>3.4.1</b> 一元</a></li>
+<li class="chapter" data-level="3.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>3.4.2</b> 多元</a></li>
+<li class="chapter" data-level="3.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>3.4.3</b> 几何视角</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="reg_5.html"><a href="reg_5.html"><i class="fa fa-check"></i><b>3.5</b> 最小二乘估计的性质</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="reg_5.html"><a href="reg_5.html#reg_5_1"><i class="fa fa-check"></i><b>3.5.1</b> 线性</a></li>
+<li class="chapter" data-level="3.5.2" data-path="reg_5.html"><a href="reg_5.html#reg_5_2"><i class="fa fa-check"></i><b>3.5.2</b> 无偏性</a></li>
+<li class="chapter" data-level="3.5.3" data-path="reg_5.html"><a href="reg_5.html#reg_5_3"><i class="fa fa-check"></i><b>3.5.3</b> 有效性</a></li>
+<li class="chapter" data-level="3.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>3.5.4</b> 方差</a></li>
+<li class="chapter" data-level="3.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态分布</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>4.1</b> R实现</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>4.1.1</b> randomForest</a></li>
+<li class="chapter" data-level="4.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>4.1.2</b> 其余函数</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>4.2</b> 数据模拟</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>4.2.1</b> 分类任务</a></li>
+<li class="chapter" data-level="4.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>4.2.2</b> 回归任务</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>5</b> 应用多元统计</a></li>
+<li class="part"><span><b>III 多源数据分析</b></span></li>
+<li class="chapter" data-level="6" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>6</b> 网络型数据</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>6.1</b> 构造联系</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="6.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 社会网络量表</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>6.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="6.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>6.3</b> 拓展分析</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="6.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="6.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="6.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>6.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="6.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>6.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="6.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>6.3.6</b> 综合评价</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>6.4</b> 其他启示</a></li>
+<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="part"><span><b>IV 可视化</b></span></li>
+<li class="chapter" data-level="7" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>7</b> Manim动画</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>7.1</b> 最小二乘与投影矩阵</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="rf_2" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 数据模拟<a href="rf_2.html#rf_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="rf_2.html#cb128-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb128-2"><a href="rf_2.html#cb128-2" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb128-3"><a href="rf_2.html#cb128-3" tabindex="-1"></a><span class="fu">library</span>(MASS)  <span class="co"># 用到多元正态随机数</span></span></code></pre></div>
+<p>首先自定义函数，用于生成模拟数据。</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="rf_2.html#cb129-1" tabindex="-1"></a><span class="co"># 自定义函数——生成多元正态数据</span></span>
+<span id="cb129-2"><a href="rf_2.html#cb129-2" tabindex="-1"></a>gen_data <span class="ot">&lt;-</span> <span class="cf">function</span>(level, size, mu, sigma) {</span>
+<span id="cb129-3"><a href="rf_2.html#cb129-3" tabindex="-1"></a>    <span class="co"># 初始化数据框</span></span>
+<span id="cb129-4"><a href="rf_2.html#cb129-4" tabindex="-1"></a>    df <span class="ot">=</span> <span class="fu">data.frame</span>()</span>
+<span id="cb129-5"><a href="rf_2.html#cb129-5" tabindex="-1"></a></span>
+<span id="cb129-6"><a href="rf_2.html#cb129-6" tabindex="-1"></a>    <span class="co"># 生成每个类别的数据</span></span>
+<span id="cb129-7"><a href="rf_2.html#cb129-7" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>level) {</span>
+<span id="cb129-8"><a href="rf_2.html#cb129-8" tabindex="-1"></a>        <span class="co"># 生成类别标签</span></span>
+<span id="cb129-9"><a href="rf_2.html#cb129-9" tabindex="-1"></a>        category_label <span class="ot">=</span> <span class="fu">rep</span>(LETTERS[i], size[i])</span>
+<span id="cb129-10"><a href="rf_2.html#cb129-10" tabindex="-1"></a></span>
+<span id="cb129-11"><a href="rf_2.html#cb129-11" tabindex="-1"></a>        <span class="co"># 生成数据</span></span>
+<span id="cb129-12"><a href="rf_2.html#cb129-12" tabindex="-1"></a>        category_data <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">mvrnorm</span>(<span class="at">n =</span> size[i], <span class="at">mu =</span> mu[[i]], <span class="at">Sigma =</span> sigma[[i]]))</span>
+<span id="cb129-13"><a href="rf_2.html#cb129-13" tabindex="-1"></a></span>
+<span id="cb129-14"><a href="rf_2.html#cb129-14" tabindex="-1"></a>        <span class="co"># 添加类别标签</span></span>
+<span id="cb129-15"><a href="rf_2.html#cb129-15" tabindex="-1"></a>        category_data<span class="sc">$</span>category <span class="ot">=</span> <span class="fu">factor</span>(category_label)</span>
+<span id="cb129-16"><a href="rf_2.html#cb129-16" tabindex="-1"></a></span>
+<span id="cb129-17"><a href="rf_2.html#cb129-17" tabindex="-1"></a>        <span class="co"># 将数据添加到数据框</span></span>
+<span id="cb129-18"><a href="rf_2.html#cb129-18" tabindex="-1"></a>        df <span class="ot">=</span> <span class="fu">rbind</span>(df, category_data)</span>
+<span id="cb129-19"><a href="rf_2.html#cb129-19" tabindex="-1"></a>    }</span>
+<span id="cb129-20"><a href="rf_2.html#cb129-20" tabindex="-1"></a></span>
+<span id="cb129-21"><a href="rf_2.html#cb129-21" tabindex="-1"></a>    <span class="co"># 返回数据框</span></span>
+<span id="cb129-22"><a href="rf_2.html#cb129-22" tabindex="-1"></a>    <span class="fu">return</span>(df)</span>
+<span id="cb129-23"><a href="rf_2.html#cb129-23" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="rf_2.html#cb130-1" tabindex="-1"></a><span class="co"># 自定义函数——生成协方差矩阵</span></span>
+<span id="cb130-2"><a href="rf_2.html#cb130-2" tabindex="-1"></a>gen_sigma <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb130-3"><a href="rf_2.html#cb130-3" tabindex="-1"></a>    <span class="co"># 生成一个n x n的随机矩阵</span></span>
+<span id="cb130-4"><a href="rf_2.html#cb130-4" tabindex="-1"></a>    L <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> n, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">2</span>), <span class="at">ncol =</span> n)</span>
+<span id="cb130-5"><a href="rf_2.html#cb130-5" tabindex="-1"></a>    <span class="fu">diag</span>(L) <span class="ot">=</span> <span class="fu">abs</span>(<span class="fu">diag</span>(L))  <span class="co"># 确保对角线上的元素为正</span></span>
+<span id="cb130-6"><a href="rf_2.html#cb130-6" tabindex="-1"></a></span>
+<span id="cb130-7"><a href="rf_2.html#cb130-7" tabindex="-1"></a>    <span class="co"># 填充上三角部分为0</span></span>
+<span id="cb130-8"><a href="rf_2.html#cb130-8" tabindex="-1"></a>    L[<span class="fu">upper.tri</span>(L)] <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb130-9"><a href="rf_2.html#cb130-9" tabindex="-1"></a></span>
+<span id="cb130-10"><a href="rf_2.html#cb130-10" tabindex="-1"></a>    <span class="co"># 计算Cholesky分解</span></span>
+<span id="cb130-11"><a href="rf_2.html#cb130-11" tabindex="-1"></a>    A <span class="ot">=</span> L <span class="sc">%*%</span> <span class="fu">t</span>(L)</span>
+<span id="cb130-12"><a href="rf_2.html#cb130-12" tabindex="-1"></a></span>
+<span id="cb130-13"><a href="rf_2.html#cb130-13" tabindex="-1"></a>    <span class="fu">return</span>(A)</span>
+<span id="cb130-14"><a href="rf_2.html#cb130-14" tabindex="-1"></a>}</span></code></pre></div>
+<div id="rf_2_1" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 分类任务<a href="rf_2.html#rf_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>这里生成具有3个水平的响应变量和9个预测变量。注意到不同类别之间的样本量存在一定的差异。</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="rf_2.html#cb131-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb131-2"><a href="rf_2.html#cb131-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>), <span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>), <span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>,</span>
+<span id="cb131-3"><a href="rf_2.html#cb131-3" tabindex="-1"></a>    <span class="at">max =</span> <span class="dv">4</span>))</span>
+<span id="cb131-4"><a href="rf_2.html#cb131-4" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">gen_sigma</span>(<span class="dv">9</span>), <span class="fu">gen_sigma</span>(<span class="dv">9</span>), <span class="fu">gen_sigma</span>(<span class="dv">9</span>))</span>
+<span id="cb131-5"><a href="rf_2.html#cb131-5" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">300</span>, <span class="dv">600</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb131-6"><a href="rf_2.html#cb131-6" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">180</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span></code></pre></div>
+<p>接着运行模型。</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="rf_2.html#cb132-1" tabindex="-1"></a>rf_class <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">importance =</span> T)</span>
+<span id="cb132-2"><a href="rf_2.html#cb132-2" tabindex="-1"></a><span class="fu">print</span>(rf_class)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##  randomForest(x = df_train[, -10], y = df_train$category, importance = T) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 3
+## 
+##         OOB estimate of  error rate: 16.2%
+## Confusion matrix:
+##    A   B   C class.error
+## A 34  35  31  0.66000000
+## B  3 221  76  0.26333333
+## C  0  17 583  0.02833333</code></pre>
+<p>可以看到，袋外数据的分类错误率为16.2%。其中A类的分类错误率高达66%，这可能和训练集中的类别比例有关。</p>
+<p>进一步地，绘制出分类错误率随决策树增加的变化趋势，可以更清晰地看到分类错误率的收敛情况。</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="rf_2.html#cb134-1" tabindex="-1"></a><span class="fu">plot</span>(rf_class, <span class="at">col=</span><span class="fu">c</span>(<span class="st">&#39;black&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;brown&#39;</span>), </span>
+<span id="cb134-2"><a href="rf_2.html#cb134-2" tabindex="-1"></a>     <span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">&#39;OOB err.rate&#39;</span>)</span>
+<span id="cb134-3"><a href="rf_2.html#cb134-3" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="at">legend=</span><span class="fu">colnames</span>(rf_class<span class="sc">$</span>err.rate), </span>
+<span id="cb134-4"><a href="rf_2.html#cb134-4" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&#39;black&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;brown&#39;</span>),</span>
+<span id="cb134-5"><a href="rf_2.html#cb134-5" tabindex="-1"></a>       <span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p1"></span>
+<img src="04-randomforest_files/figure-html/p1-1.png" alt="袋外数据的分类错误率" width="672" />
+<p class="caption">
+图 1.1: 袋外数据的分类错误率
+</p>
+</div>
+<p>再来看看不同特征的重要程度。对于一棵树，在随机打乱某个特征的值的顺序之后，可以作差得到前后预测精度的下降情况，对于所有树取平均即可得到平均下降精度(MDA)。显然，如果MDA越大，说明该特征就越重要。同理，平均下降基尼系数(MDI)通过计算每个特征在所有树上节点分裂时导致的基尼系数平均下降量来评估特征的重要性。基尼系数反映了不纯度，下降得越多说明结点越容易从“不纯”走向了“纯”，意味着该特征在区分不同类别时能够较为显著地发挥作用。由图可知，两种评价准则得到的结果较为一致。</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="rf_2.html#cb135-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_class)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p2"></span>
+<img src="04-randomforest_files/figure-html/p2-1.png" alt="分类_重要性度量" width="672" />
+<p class="caption">
+图 1.2: 分类_重要性度量
+</p>
+</div>
+<p>下面关注如何缓解类不平衡问题及如何选取最优参数<code>mtry</code>。</p>
+<p>注意到训练集中类别的比例为1:3:6，存在一定程度的类不平衡问题。对此，在运行随机森林模型时可以设置<code>classwt</code>参数来设定各个类别的先验概率。</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="rf_2.html#cb136-1" tabindex="-1"></a>rf_class_prior <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">importance =</span> T,</span>
+<span id="cb136-2"><a href="rf_2.html#cb136-2" tabindex="-1"></a>    <span class="at">proximity =</span> T, <span class="at">classwt =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span>))</span>
+<span id="cb136-3"><a href="rf_2.html#cb136-3" tabindex="-1"></a><span class="fu">print</span>(rf_class_prior)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##  randomForest(x = df_train[, -10], y = df_train$category, classwt = c(1,      3, 6), importance = T, proximity = T) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 3
+## 
+##         OOB estimate of  error rate: 15.8%
+## Confusion matrix:
+##    A   B   C class.error
+## A 32  37  31        0.68
+## B  5 228  67        0.24
+## C  0  18 582        0.03</code></pre>
+<p>而对于参数<code>mtry</code>的选取，除了可以使用<code>randomForest</code>包自带的<code>tuneRF()</code>函数进行调参，还可以自己写个循环，直接根据测试集来选取最优参数。</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="rf_2.html#cb138-1" tabindex="-1"></a>err.rate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb138-2"><a href="rf_2.html#cb138-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb138-3"><a href="rf_2.html#cb138-3" tabindex="-1"></a>    rf <span class="ot">=</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">mtry =</span> i)</span>
+<span id="cb138-4"><a href="rf_2.html#cb138-4" tabindex="-1"></a>    fit_test <span class="ot">=</span> <span class="fu">predict</span>(rf, df_test[, <span class="sc">-</span><span class="dv">10</span>])</span>
+<span id="cb138-5"><a href="rf_2.html#cb138-5" tabindex="-1"></a>    err.rate[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(fit_test <span class="sc">!=</span> df_test<span class="sc">$</span>category)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
+<span id="cb138-6"><a href="rf_2.html#cb138-6" tabindex="-1"></a>}</span>
+<span id="cb138-7"><a href="rf_2.html#cb138-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, err.rate, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test err.rate&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p3"></span>
+<img src="04-randomforest_files/figure-html/p3-1.png" alt="分类_mtry调优" width="672" />
+<p class="caption">
+图 1.3: 分类_mtry调优
+</p>
+</div>
+<p>由图可知，当mtry=3时，在测试集上的袋外数据分类错误率达到最小，为14.2%。</p>
+</div>
+<div id="rf_2_2" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> 回归任务<a href="rf_2.html#rf_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>这里首先生成自变量数据，然后在自变量的线性组合的基础上添加噪声，得到因变量数据。</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="rf_2.html#cb139-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb139-2"><a href="rf_2.html#cb139-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>))</span>
+<span id="cb139-3"><a href="rf_2.html#cb139-3" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">gen_sigma</span>(<span class="dv">9</span>))</span>
+<span id="cb139-4"><a href="rf_2.html#cb139-4" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">1000</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb139-5"><a href="rf_2.html#cb139-5" tabindex="-1"></a>df_train<span class="sc">$</span>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb139-6"><a href="rf_2.html#cb139-6" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> df_train <span class="sc">%&gt;%</span></span>
+<span id="cb139-7"><a href="rf_2.html#cb139-7" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> V1 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> V4 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V5 <span class="sc">+</span> V6 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> V7 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V8 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span></span>
+<span id="cb139-8"><a href="rf_2.html#cb139-8" tabindex="-1"></a>        V9 <span class="sc">+</span> epsilon)</span>
+<span id="cb139-9"><a href="rf_2.html#cb139-9" tabindex="-1"></a></span>
+<span id="cb139-10"><a href="rf_2.html#cb139-10" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">100</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb139-11"><a href="rf_2.html#cb139-11" tabindex="-1"></a>df_test<span class="sc">$</span>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb139-12"><a href="rf_2.html#cb139-12" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> df_test <span class="sc">%&gt;%</span></span>
+<span id="cb139-13"><a href="rf_2.html#cb139-13" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> V1 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> V4 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V5 <span class="sc">+</span> V6 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> V7 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V8 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span></span>
+<span id="cb139-14"><a href="rf_2.html#cb139-14" tabindex="-1"></a>        V9 <span class="sc">+</span> epsilon)</span></code></pre></div>
+<p>接着直接运行模型。</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="rf_2.html#cb140-1" tabindex="-1"></a>rf_reg <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">y =</span> df_train<span class="sc">$</span>y, <span class="at">importance =</span> T)</span>
+<span id="cb140-2"><a href="rf_2.html#cb140-2" tabindex="-1"></a><span class="fu">print</span>(rf_reg)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##  randomForest(x = df_train[, 1:9], y = df_train$y, importance = T) 
+##                Type of random forest: regression
+##                      Number of trees: 500
+## No. of variables tried at each split: 3
+## 
+##           Mean of squared residuals: 46.75519
+##                     % Var explained: 98.91</code></pre>
+<p>从结果中可以看到，均方误差为46.7551872，自变量能解释的变异程度为98.91%。</p>
+<p>进一步地，下面给出了模型的袋外数据MSE。</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="rf_2.html#cb142-1" tabindex="-1"></a><span class="fu">plot</span>(rf_reg, <span class="at">main=</span><span class="st">&#39;OOB mse&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p4"></span>
+<img src="04-randomforest_files/figure-html/p4-1.png" alt="袋外数据MSE" width="672" />
+<p class="caption">
+图 1.4: 袋外数据MSE
+</p>
+</div>
+<p>再来看看特征的重要性度量。其中<code>%IncMSE</code>表示重排某个特征前后袋外数据MSE的上升百分比，上升的幅度越大，说明该特征对模型更加重要。<code>IncNodePurity</code>则表示结点分列时残差平方和的下降情况。</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="rf_2.html#cb143-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_reg)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5"></span>
+<img src="04-randomforest_files/figure-html/p5-1.png" alt="回归_重要性度量" width="672" />
+<p class="caption">
+图 1.5: 回归_重要性度量
+</p>
+</div>
+<p>最后，给模型参数<code>mtry</code>调调优。</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="rf_2.html#cb144-1" tabindex="-1"></a>mse <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb144-2"><a href="rf_2.html#cb144-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb144-3"><a href="rf_2.html#cb144-3" tabindex="-1"></a>    rf <span class="ot">=</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">y =</span> df_train<span class="sc">$</span>y, <span class="at">mtry =</span> i)</span>
+<span id="cb144-4"><a href="rf_2.html#cb144-4" tabindex="-1"></a>    fit_test <span class="ot">=</span> <span class="fu">predict</span>(rf, df_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>])</span>
+<span id="cb144-5"><a href="rf_2.html#cb144-5" tabindex="-1"></a>    mse[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>((fit_test <span class="sc">-</span> df_test<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
+<span id="cb144-6"><a href="rf_2.html#cb144-6" tabindex="-1"></a>}</span>
+<span id="cb144-7"><a href="rf_2.html#cb144-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test MSE&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6"></span>
+<img src="04-randomforest_files/figure-html/p6-1.png" alt="回归_mtry调优" width="672" />
+<p class="caption">
+图 1.6: 回归_mtry调优
+</p>
+</div>
+<p>由图可知，当mtry=2时，在测试集上的袋外数据MSE达到最小，为31.9。</p>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="rf_1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

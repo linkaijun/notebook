@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 应用多元统计 | kj的学习笔记</title>
+  <title>4 随机森林 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 应用多元统计 | kj的学习笔记" />
+  <meta property="og:title" content="4 随机森林 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 应用多元统计 | kj的学习笔记" />
+  <meta name="twitter:title" content="4 随机森林 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="part3_5.html"/>
-<link rel="next" href="part5.html"/>
+<link rel="next" href="part4_1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -297,32 +297,45 @@ div.csl-indent {
 <li class="chapter" data-level="3.5.5" data-path="part3_5.html"><a href="part3_5.html#part3_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态分布</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="part4.html"><a href="part4.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
+<li class="chapter" data-level="4" data-path="part4.html"><a href="part4.html"><i class="fa fa-check"></i><b>4</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="part4_1.html"><a href="part4_1.html"><i class="fa fa-check"></i><b>4.1</b> R实现</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="part4_1.html"><a href="part4_1.html#part4_1_1"><i class="fa fa-check"></i><b>4.1.1</b> randomForest</a></li>
+<li class="chapter" data-level="4.1.2" data-path="part4_1.html"><a href="part4_1.html#part4_1_2"><i class="fa fa-check"></i><b>4.1.2</b> 其余函数</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="part4_2.html"><a href="part4_2.html"><i class="fa fa-check"></i><b>4.2</b> 数据模拟</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="part4_2.html"><a href="part4_2.html#part4_2_1"><i class="fa fa-check"></i><b>4.2.1</b> 分类任务</a></li>
+<li class="chapter" data-level="4.2.2" data-path="part4_2.html"><a href="part4_2.html#part4_2_2"><i class="fa fa-check"></i><b>4.2.2</b> 回归任务</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="part5.html"><a href="part5.html"><i class="fa fa-check"></i><b>5</b> 应用多元统计</a></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
-<li class="chapter" data-level="5" data-path="part5.html"><a href="part5.html"><i class="fa fa-check"></i><b>5</b> 网络型数据</a>
+<li class="chapter" data-level="6" data-path="part6.html"><a href="part6.html"><i class="fa fa-check"></i><b>6</b> 网络型数据</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="part5_1.html"><a href="part5_1.html"><i class="fa fa-check"></i><b>5.1</b> 构造联系</a>
+<li class="chapter" data-level="6.1" data-path="part6_1.html"><a href="part6_1.html"><i class="fa fa-check"></i><b>6.1</b> 构造联系</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="part5_1.html"><a href="part5_1.html#part5_1_1"><i class="fa fa-check"></i><b>5.1.1</b> 引力模型</a></li>
-<li class="chapter" data-level="5.1.2" data-path="part5_1.html"><a href="part5_1.html#part5_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 社会网络量表</a></li>
+<li class="chapter" data-level="6.1.1" data-path="part6_1.html"><a href="part6_1.html#part6_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="6.1.2" data-path="part6_1.html"><a href="part6_1.html#part6_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 社会网络量表</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="part5_2.html"><a href="part5_2.html"><i class="fa fa-check"></i><b>5.2</b> 网络结构特征</a></li>
-<li class="chapter" data-level="5.3" data-path="part5_3.html"><a href="part5_3.html"><i class="fa fa-check"></i><b>5.3</b> 拓展分析</a>
+<li class="chapter" data-level="6.2" data-path="part6_2.html"><a href="part6_2.html"><i class="fa fa-check"></i><b>6.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="6.3" data-path="part6_3.html"><a href="part6_3.html"><i class="fa fa-check"></i><b>6.3</b> 拓展分析</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="part5_3.html"><a href="part5_3.html#part5_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 凝聚子群</a></li>
-<li class="chapter" data-level="5.3.2" data-path="part5_3.html"><a href="part5_3.html#part5_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 社区发现</a></li>
-<li class="chapter" data-level="5.3.3" data-path="part5_3.html"><a href="part5_3.html#part5_3_3"><i class="fa fa-check"></i><b>5.3.3</b> 核心-边缘分析</a></li>
-<li class="chapter" data-level="5.3.4" data-path="part5_3.html"><a href="part5_3.html#part5_3_4"><i class="fa fa-check"></i><b>5.3.4</b> QAP分析</a></li>
-<li class="chapter" data-level="5.3.5" data-path="part5_3.html"><a href="part5_3.html#part5_3_5"><i class="fa fa-check"></i><b>5.3.5</b> 计量模型</a></li>
-<li class="chapter" data-level="5.3.6" data-path="part5_3.html"><a href="part5_3.html#part5_3_6"><i class="fa fa-check"></i><b>5.3.6</b> 综合评价</a></li>
+<li class="chapter" data-level="6.3.1" data-path="part6_3.html"><a href="part6_3.html#part6_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="6.3.2" data-path="part6_3.html"><a href="part6_3.html#part6_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="6.3.3" data-path="part6_3.html"><a href="part6_3.html#part6_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="6.3.4" data-path="part6_3.html"><a href="part6_3.html#part6_3_4"><i class="fa fa-check"></i><b>6.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="6.3.5" data-path="part6_3.html"><a href="part6_3.html#part6_3_5"><i class="fa fa-check"></i><b>6.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="6.3.6" data-path="part6_3.html"><a href="part6_3.html#part6_3_6"><i class="fa fa-check"></i><b>6.3.6</b> 综合评价</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="part5_4.html"><a href="part5_4.html"><i class="fa fa-check"></i><b>5.4</b> 其他启示</a></li>
+<li class="chapter" data-level="6.4" data-path="part6_4.html"><a href="part6_4.html"><i class="fa fa-check"></i><b>6.4</b> 其他启示</a></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul></li>
 <li class="part"><span><b>IV 可视化</b></span></li>
-<li class="chapter" data-level="6" data-path="part6.html"><a href="part6.html"><i class="fa fa-check"></i><b>6</b> Manim动画</a>
+<li class="chapter" data-level="7" data-path="part7.html"><a href="part7.html"><i class="fa fa-check"></i><b>7</b> Manim动画</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="part6_1.html"><a href="part6_1.html"><i class="fa fa-check"></i><b>6.1</b> 最小二乘与投影矩阵</a></li>
+<li class="chapter" data-level="7.1" data-path="part7_1.html"><a href="part7_1.html"><i class="fa fa-check"></i><b>7.1</b> 最小二乘与投影矩阵</a></li>
 </ul></li>
 </ul>
 
@@ -342,13 +355,9 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="part4" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> 应用多元统计<a href="part4.html#part4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h1>
-<p>挖坑</p>
-
-</div>
-
-
-
+<h1><span class="header-section-number">4</span> 随机森林<a href="part4.html#part4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h1>
+<p>随机森林(random forest)是一种集成学习方法，主要用于分类和回归任务。“森林”意味着该模型是以决策树为基学习器，通过综合多个基学习器的结果来改善模型性能；“随机”意味着该模型不仅采用bootstrap法获得随机训练集，还在所有属性的一个随机子集中选择最优属性进行划分。</p>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
@@ -372,7 +381,7 @@ div.csl-indent {
         </div>
       </div>
 <a href="part3_5.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="part5.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="part4_1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

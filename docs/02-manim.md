@@ -1,4 +1,4 @@
-# Manim {#part2}
+# Manim {#manim}
 
 `Manim`是Python的一个数学动画库，作者为“3Blue1Brown”。3Blue1Brown的[视频](https://space.bilibili.com/88461692?spm_id_from=333.337.0.0)非常精良，这种将知识与可视化结合的方式令人着迷。了解到他的动画均是由`Manim`制作，故开始上手学习。
 
@@ -16,7 +16,7 @@
 > 
 > 终于将第一个Manim视频做完了。在掌握一定基础之后，发挥想象力，先将视频脚本构想出来，然后再去问AI或者翻找官方文档中的参考手册去看看有没有相应的办法，自己再捣鼓捣鼓就出来了。所以在“文本”这一节之后的所有内容就是提及自己用到的方法（例如物体移动、视角移动等），不做详尽的描述（做不完的）。
 > 
-> 在“[Manim动画](#part6)”这章我会提供我的Manim动画源码。
+> 在“[Manim动画](#animation)”这章我会提供我的Manim动画源码。
 
 
 ```
@@ -32,7 +32,7 @@
 ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-## 安装与创建 {#part2_1}
+## 安装与创建 {#manim_1}
 
 安装教程较多，大家可以自行搜索。这里就说说安装过程中遇到的问题，笔者用的是pycharm。
 
@@ -70,7 +70,7 @@ class Example(Scene):
 <p class="caption">(\#fig:p1)示例视频</p>
 </div>
 
-## 初识Manim {#part2_2}
+## 初识Manim {#manim_2}
 
 Manim最核心的三个部分为**Mobjects**、**Animations**、**Scenes**，即数学对象、动画、场景。
 
@@ -117,13 +117,13 @@ class Example(Scene):
 
 再来说说输出命令`manim -pql example.py Example`。`manim`是必带的，`-pql`表示以低画质`-ql`制作视频，并在代码运行后预览`-p`动画，也就是会直接跳出视频来，不用去生成的文件夹里面找。之后再跟上python文件名`example.py`和你创建的类名`Example`即可。
 
-## 输出设置 {#part2_3}
+## 输出设置 {#manim_3}
 
-### 输出文件夹 {#part2_3_1}
+### 输出文件夹 {#manim_3_1}
 
 在2.2节中，当你运行`manim -pql example.py Example`之后，就会在同目录中生成media文件夹，里面根据不同的数据类型设置了不同文件夹，如文本、视频、图片等等。你可以在videos文件夹下找到对应的文件名，从中可以找到最终的成片。而在partial_movie_files文件夹中则存放着一小段一小段的视频，可以发现最终的视频就是由这些不同的小视频组合在一起的。
 
-### 片段 {#part2_3_2}
+### 片段 {#manim_3_2}
 
 借助`self.next_section()`，你可以手动设置切片位置，使得除了生成完整视频外，还能生成不同视频片段，这些视频片段存储在与成片同目录的sections文件夹中。需要注意的是，每个视频片段不能仅有一帧内容，也就是说需要包含动画变换或者`self.wait()`。一旦引入了`self.next_section()`，事实上，你可以不用在`def construct(self):`的下一行紧跟`self.next_section()`，因为他会自动生成。这就好比剪一张纸条，`self.next_section()`的位置就是要剪开的位置，你是不需要在最开始那剪一刀的。
 
@@ -169,19 +169,19 @@ class Example(Scene):
         self.wait(1)
 ```
 
-### 命令行标志 {#part2_3_3}
+### 命令行标志 {#manim_3_3}
 
 对于`manim -pql example.py Example`，其结构为`manim [OPTIONS] FILE [SCENES]`。
 
-`OPTIONS`就是一些参数标志，例如`-p`表示在渲染后预览视频，`-ql`代表分辨率854x480及15 FPS。更多的参数设置请参见[第2.4.1节](#part2_4_1)
+`OPTIONS`就是一些参数标志，例如`-p`表示在渲染后预览视频，`-ql`代表分辨率854x480及15 FPS。更多的参数设置请参见[第2.4.1节](#manim_4_1)
 
 `SCENES`为你创建的类名。如果一个文件中仅有一个类，则可以省略该类名。如果有多个类，则指定输出特定类，类与类之间用空格隔开，如`manim -pql example.py ExampleOne ExampleTwo`。如果要输出所有的类，可以不用一一指名，直接在`OPTIONS`中使用`-a`标志即可。注意，一个类就相当于一个成片，一次性输出多个类意味着输出多个独立的成片。
    
-## 配置 {#part2_4}
+## 配置 {#manim_4}
 
 Manim有着非常广泛的配置系统，可以根据调整命令行参数(command-line interface, CLI)、更改ManimConfig类属性、创建配置文件。其中最为常用的就是调整命令行参数。
 
-### 命令行参数 {#part2_4_1}
+### 命令行参数 {#manim_4_1}
 
 Manim中最为常用的命令就是`render`，也就是渲染命令。其一般的格式为`manim render [OPTIONS] FILE [SCENES]`。如果没有详细指名命令的话，则Manim默认使用`render`命令，也就是我们常见的`manim [OPTIONS] FILE [SCENES]`。
 
@@ -295,7 +295,7 @@ Made with <3 by Manim Community developers.
 > 
 > manim -pql -r 1920,1080 --fps 54 demo.py Example    设置分辨率为1920x1080，帧率为54FPS
 
-### ManimConfig类 {#part2_4_2}
+### ManimConfig类 {#manim_4_2}
 
 通过更改`config`对象的属性是确定Manim全局配置最直接的方式。`config`对象在`ManimConfig`类中，主要有两种方式（官方文档中建议第一种方式）来设置属性，如下所示。
 
@@ -331,7 +331,7 @@ config["background_color"] = WHITE
 'enable_wireframe', 'force_window']
 ```
 
-### 配置文件 {#part2_4_3}
+### 配置文件 {#manim_4_3}
 
 配置文件中你可以先创建一个`.txt`文件，在其中进行设置之后，再修改后缀名为`.cfg`即可创建配置文件，而且这个配置文件必须命名为`manim.cfg`。在配置文件中，必须把`[CLI]`放在第一行，之后再根据前一节的`config`对象的属性进行设置，设置方法如下所示。注意这里的属性必须为全称，部分属性不能向命令行参数那样简写！
 
@@ -378,11 +378,11 @@ Linux: UserDirectory/.config/manim/manim.cfg
 
    ManimConfig类
 
-## 文本 {#part2_5}
+## 文本 {#manim_5}
 
 Manim中的文本主要可以分为两类，分别是非LaTeX文本和LaTeX文本。前者使用Pango，归为`text_mobject`类；后者用LaTeX，归为`Tex_mobject`类。非LaTeX文本有三种：`Text`、`MarkupText`、`Paragraph`。LaTeX有五种：`Tex`、`MathTex`、`Title`、`BulletedList`、`SingleStringMathTex`（不谈）。除此之外，还有`code_mobject`类的代码文本及`numbers`类的数字型文本。
 
-### Text {#part2_5_1}
+### Text {#manim_5_1}
 
 ```
 class Text(text, fill_opacity=1.0, stroke_width=0, *, color=ManimColor('#FFFFFF'), font_size=48, line_spacing=-1, font='', slant='NORMAL', weight='NORMAL', t2c=None, t2f=None, t2g=None, t2s=None, t2w=None, gradient=None, tab_width=4, warn_missing_font=True, height=None, width=None, should_center=True, disable_ligatures=False, use_svg_cache=False, **kwargs)
@@ -615,7 +615,7 @@ class Example(Scene):
 <p class="caption">(\#fig:p6)行间距与换行</p>
 </div>
 
-### MarkupText {#part2_5_2}
+### MarkupText {#manim_5_2}
 
 ```
 class MarkupText(text, fill_opacity=1, stroke_width=0, color=None, font_size=48, line_spacing=-1, font='', slant='NORMAL', weight='NORMAL', justify=False, gradient=None, tab_width=4, height=None, width=None, should_center=True, disable_ligatures=False, warn_missing_font=True, **kwargs)
@@ -810,7 +810,7 @@ class Example(Scene):
 
 > python会自动将圆括号中的几个连续无间隔字符串拼接在一起。
 
-### Paragraph {#part2_5_3}
+### Paragraph {#manim_5_3}
 
 ```
 class Paragraph(*text, line_spacing=-1, alignment=None, **kwargs)
@@ -902,7 +902,7 @@ class Example(Scene):
 <p class="caption">(\#fig:p9)Paragraph示例</p>
 </div>
 
-### Tex {#part2_5_4}
+### Tex {#manim_5_4}
 
 ```
 class Tex(*tex_strings, arg_separator='', tex_environment='center', **kwargs)
@@ -990,7 +990,7 @@ class Example(Scene):
 <p class="caption">(\#fig:p10)Tex示例</p>
 </div>
 
-### MathTex {#part2_5_5}
+### MathTex {#manim_5_5}
 
 ```
 class MathTex(*tex_strings, arg_separator=' ', substrings_to_isolate=None, tex_to_color_map=None, tex_environment='align*', **kwargs)
@@ -1171,7 +1171,7 @@ class Example(Scene):
 
 `MathTex()`可通过`tex_template`参数来修改字体。在`TexFontTemplates`类中有诸多字体可供选择，通过提取其属性值来进行赋值，例如`tex_template = TexFontTemplates.french_cursive`。可选字体如[官网所示](https://docs.manim.community/en/stable/reference/manim.utils.tex_templates.TexFontTemplates.html#manim.utils.tex_templates.TexFontTemplates)。
 
-### Title {#part2_5_6}
+### Title {#manim_5_6}
 
 ```
 class Title(*text_parts, include_underline=True, match_underline_width_to_text=False, underline_buff=0.25, **kwargs)
@@ -1259,7 +1259,7 @@ class Example(Scene):
 <p class="caption">(\#fig:p15)Title示例</p>
 </div>
 
-### BulletedList {#part2_5_7}
+### BulletedList {#manim_5_7}
 
 ```
 class BulletedList(*items, buff=0.5, dot_scale_factor=2, tex_environment=None, **kwargs)
@@ -1347,11 +1347,11 @@ class Example(Scene):
 <p class="caption">(\#fig:p16)BulletedList示例</p>
 </div>
 
-## 内置颜色 {#part2_6}
+## 内置颜色 {#manim_6}
 
 参考知乎的这篇[文章](https://zhuanlan.zhihu.com/p/640277422)。
 
-## 物体的位置与移动 {#part2_7}
+## 物体的位置与移动 {#manim_7}
 
 1. .next_to()
 
@@ -1361,19 +1361,19 @@ class Example(Scene):
 
 4. MoveToTarget()
 
-## 动画 {#part2_8}
+## 动画 {#manim_8}
 
 1. Succession()
 
    动画有先后顺序，前一个完成再接下一个
 
-## 镜头视角 {#part2_9}
+## 镜头视角 {#manim_9}
 
 1. self.camera.frame.animate.shift()
 
    仅能在`MovingCameraScene`类下使用，而不是Scene类。
 
-## 存储对象 {#part2_10}
+## 存储对象 {#manim_10}
 
 1. Group()
 
@@ -1381,7 +1381,7 @@ class Example(Scene):
 
 3. self.mobjects
 
-## 成品 {#part2_11}
+## 成品 {#manim_11}
 
-1. [最小二乘与投影矩阵](#part6_1)
+1. [最小二乘与投影矩阵](#animation_1)
 

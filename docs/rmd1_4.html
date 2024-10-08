@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.4 文档元素 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.4 文档元素 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.4 文档元素 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="rmd1_3.html"/>
+<link rel="next" href="rmd_5.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="内容组成.html"><a href="内容组成.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="个人简介.html"><a href="个人简介.html"><i class="fa fa-check"></i>个人简介</a></li>
+</ul></li>
+<li class="part"><span><b>I 专项</b></span></li>
+<li class="chapter" data-level="1" data-path="rmd1.html"><a href="rmd1.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rmd1_1.html"><a href="rmd1_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="rmd1_2.html"><a href="rmd1_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="1.3" data-path="rmd1_3.html"><a href="rmd1_3.html"><i class="fa fa-check"></i><b>1.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 标题</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 换行</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_4"><i class="fa fa-check"></i><b>1.3.4</b> 链接</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_5"><i class="fa fa-check"></i><b>1.3.5</b> 引用</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_6"><i class="fa fa-check"></i><b>1.3.6</b> 列表</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_7"><i class="fa fa-check"></i><b>1.3.7</b> 代码</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_8"><i class="fa fa-check"></i><b>1.3.8</b> 表格</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_9"><i class="fa fa-check"></i><b>1.3.9</b> 图片</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rmd1_3.html"><a href="rmd1_3.html#rmd1_3_10"><i class="fa fa-check"></i><b>1.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rmd1_4.html"><a href="rmd1_4.html"><i class="fa fa-check"></i><b>1.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd1_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_2"><i class="fa fa-check"></i><b>1.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_4"><i class="fa fa-check"></i><b>1.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_5"><i class="fa fa-check"></i><b>1.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="1.4.6" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_6"><i class="fa fa-check"></i><b>1.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="1.4.7" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_7"><i class="fa fa-check"></i><b>1.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="1.4.8" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_8"><i class="fa fa-check"></i><b>1.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="1.4.9" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_9"><i class="fa fa-check"></i><b>1.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="1.4.10" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_10"><i class="fa fa-check"></i><b>1.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="1.4.11" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_11"><i class="fa fa-check"></i><b>1.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="1.4.12" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_12"><i class="fa fa-check"></i><b>1.4.12</b> 注释</a></li>
+<li class="chapter" data-level="1.4.13" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_13"><i class="fa fa-check"></i><b>1.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="1.4.14" data-path="rmd1_4.html"><a href="rmd1_4.html#rmd_4_14"><i class="fa fa-check"></i><b>1.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rmd_5.html"><a href="rmd_5.html"><i class="fa fa-check"></i><b>1.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_1"><i class="fa fa-check"></i><b>1.5.1</b> 标签</a></li>
+<li class="chapter" data-level="1.5.2" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_2"><i class="fa fa-check"></i><b>1.5.2</b> 目录</a></li>
+<li class="chapter" data-level="1.5.3" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_3"><i class="fa fa-check"></i><b>1.5.3</b> 外观</a></li>
+<li class="chapter" data-level="1.5.4" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_4"><i class="fa fa-check"></i><b>1.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="1.5.5" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_5"><i class="fa fa-check"></i><b>1.5.5</b> 表格</a></li>
+<li class="chapter" data-level="1.5.6" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_6"><i class="fa fa-check"></i><b>1.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="1.5.7" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_7"><i class="fa fa-check"></i><b>1.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="1.5.8" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_8"><i class="fa fa-check"></i><b>1.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="1.5.9" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_9"><i class="fa fa-check"></i><b>1.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="1.5.10" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_10"><i class="fa fa-check"></i><b>1.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rmd_6.html"><a href="rmd_6.html"><i class="fa fa-check"></i><b>1.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_1"><i class="fa fa-check"></i><b>1.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="1.6.2" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_2"><i class="fa fa-check"></i><b>1.6.2</b> 目录</a></li>
+<li class="chapter" data-level="1.6.3" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_3"><i class="fa fa-check"></i><b>1.6.3</b> 图与表</a></li>
+<li class="chapter" data-level="1.6.4" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_4"><i class="fa fa-check"></i><b>1.6.4</b> 语法高亮</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="part2.html"><a href="part2.html"><i class="fa fa-check"></i><b>2</b> Manim</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="part2_1.html"><a href="part2_1.html"><i class="fa fa-check"></i><b>2.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="2.2" data-path="part2_2.html"><a href="part2_2.html"><i class="fa fa-check"></i><b>2.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="2.3" data-path="part2_3.html"><a href="part2_3.html"><i class="fa fa-check"></i><b>2.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="part2_3.html"><a href="part2_3.html#part2_3_1"><i class="fa fa-check"></i><b>2.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="2.3.2" data-path="part2_3.html"><a href="part2_3.html#part2_3_2"><i class="fa fa-check"></i><b>2.3.2</b> 片段</a></li>
+<li class="chapter" data-level="2.3.3" data-path="part2_3.html"><a href="part2_3.html#part2_3_3"><i class="fa fa-check"></i><b>2.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="part2_4.html"><a href="part2_4.html"><i class="fa fa-check"></i><b>2.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="part2_4.html"><a href="part2_4.html#part2_4_1"><i class="fa fa-check"></i><b>2.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="part2_4.html"><a href="part2_4.html#part2_4_2"><i class="fa fa-check"></i><b>2.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="2.4.3" data-path="part2_4.html"><a href="part2_4.html#part2_4_3"><i class="fa fa-check"></i><b>2.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="part2_5.html"><a href="part2_5.html"><i class="fa fa-check"></i><b>2.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="part2_5.html"><a href="part2_5.html#part2_5_1"><i class="fa fa-check"></i><b>2.5.1</b> Text</a></li>
+<li class="chapter" data-level="2.5.2" data-path="part2_5.html"><a href="part2_5.html#part2_5_2"><i class="fa fa-check"></i><b>2.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="2.5.3" data-path="part2_5.html"><a href="part2_5.html#part2_5_3"><i class="fa fa-check"></i><b>2.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="2.5.4" data-path="part2_5.html"><a href="part2_5.html#part2_5_4"><i class="fa fa-check"></i><b>2.5.4</b> Tex</a></li>
+<li class="chapter" data-level="2.5.5" data-path="part2_5.html"><a href="part2_5.html#part2_5_5"><i class="fa fa-check"></i><b>2.5.5</b> MathTex</a></li>
+<li class="chapter" data-level="2.5.6" data-path="part2_5.html"><a href="part2_5.html#part2_5_6"><i class="fa fa-check"></i><b>2.5.6</b> Title</a></li>
+<li class="chapter" data-level="2.5.7" data-path="part2_5.html"><a href="part2_5.html#part2_5_7"><i class="fa fa-check"></i><b>2.5.7</b> BulletedList</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="part2_6.html"><a href="part2_6.html"><i class="fa fa-check"></i><b>2.6</b> 内置颜色</a></li>
+<li class="chapter" data-level="2.7" data-path="part2_7.html"><a href="part2_7.html"><i class="fa fa-check"></i><b>2.7</b> 物体的位置与移动</a></li>
+<li class="chapter" data-level="2.8" data-path="part2_8.html"><a href="part2_8.html"><i class="fa fa-check"></i><b>2.8</b> 动画</a></li>
+<li class="chapter" data-level="2.9" data-path="part2_9.html"><a href="part2_9.html"><i class="fa fa-check"></i><b>2.9</b> 镜头视角</a></li>
+<li class="chapter" data-level="2.10" data-path="part2_10.html"><a href="part2_10.html"><i class="fa fa-check"></i><b>2.10</b> 存储对象</a></li>
+<li class="chapter" data-level="2.11" data-path="part2_11.html"><a href="part2_11.html"><i class="fa fa-check"></i><b>2.11</b> 成品</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path=""><a href="#part-模型与方法"><i class="fa fa-check"></i>(PART) 模型与方法</a>
+<ul>
+<li class="chapter" data-level="2.12" data-path="part3_1.html"><a href="part3_1.html"><i class="fa fa-check"></i><b>2.12</b> 引言</a>
+<ul>
+<li class="chapter" data-level="2.12.1" data-path="part3_1.html"><a href="part3_1.html#part3_1_1"><i class="fa fa-check"></i><b>2.12.1</b> 变量间的相关关系</a></li>
+<li class="chapter" data-level="2.12.2" data-path="part3_1.html"><a href="part3_1.html#part3_1_2"><i class="fa fa-check"></i><b>2.12.2</b> 回归模型的一般形式</a></li>
+</ul></li>
+<li class="chapter" data-level="2.13" data-path="part3_2.html"><a href="part3_2.html"><i class="fa fa-check"></i><b>2.13</b> 假定</a></li>
+<li class="chapter" data-level="2.14" data-path="part3_3.html"><a href="part3_3.html"><i class="fa fa-check"></i><b>2.14</b> 线性回归模型</a>
+<ul>
+<li class="chapter" data-level="2.14.1" data-path="part3_3.html"><a href="part3_3.html#part3_3_1"><i class="fa fa-check"></i><b>2.14.1</b> 一元线性回归模型</a></li>
+<li class="chapter" data-level="2.14.2" data-path="part3_3.html"><a href="part3_3.html#part3_3_2"><i class="fa fa-check"></i><b>2.14.2</b> 多元线性回归模型</a></li>
+</ul></li>
+<li class="chapter" data-level="2.15" data-path="part3_4.html"><a href="part3_4.html"><i class="fa fa-check"></i><b>2.15</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="2.15.1" data-path="part3_4.html"><a href="part3_4.html#part3_4_1"><i class="fa fa-check"></i><b>2.15.1</b> 一元</a></li>
+<li class="chapter" data-level="2.15.2" data-path="part3_4.html"><a href="part3_4.html#part3_4_2"><i class="fa fa-check"></i><b>2.15.2</b> 多元</a></li>
+<li class="chapter" data-level="2.15.3" data-path="part3_4.html"><a href="part3_4.html#part3_4_3"><i class="fa fa-check"></i><b>2.15.3</b> 几何视角</a></li>
+</ul></li>
+<li class="chapter" data-level="2.16" data-path="part3_5.html"><a href="part3_5.html"><i class="fa fa-check"></i><b>2.16</b> 最小二乘估计的性质</a>
+<ul>
+<li class="chapter" data-level="2.16.1" data-path="part3_5.html"><a href="part3_5.html#part3_5_1"><i class="fa fa-check"></i><b>2.16.1</b> 线性</a></li>
+<li class="chapter" data-level="2.16.2" data-path="part3_5.html"><a href="part3_5.html#part3_5_2"><i class="fa fa-check"></i><b>2.16.2</b> 无偏性</a></li>
+<li class="chapter" data-level="2.16.3" data-path="part3_5.html"><a href="part3_5.html#part3_5_3"><i class="fa fa-check"></i><b>2.16.3</b> 有效性</a></li>
+<li class="chapter" data-level="2.16.4" data-path="part3_5.html"><a href="part3_5.html#part3_5_4"><i class="fa fa-check"></i><b>2.16.4</b> 方差</a></li>
+<li class="chapter" data-level="2.16.5" data-path="part3_5.html"><a href="part3_5.html#part3_5_5"><i class="fa fa-check"></i><b>2.16.5</b> 正态分布</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="part4.html"><a href="part4.html"><i class="fa fa-check"></i><b>3</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="part4_1.html"><a href="part4_1.html"><i class="fa fa-check"></i><b>3.1</b> R实现</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="part4_1.html"><a href="part4_1.html#part4_1_1"><i class="fa fa-check"></i><b>3.1.1</b> randomForest</a></li>
+<li class="chapter" data-level="3.1.2" data-path="part4_1.html"><a href="part4_1.html#part4_1_2"><i class="fa fa-check"></i><b>3.1.2</b> 其余函数</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="part4_2.html"><a href="part4_2.html"><i class="fa fa-check"></i><b>3.2</b> 数据模拟</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="part4_2.html"><a href="part4_2.html#part4_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 分类任务</a></li>
+<li class="chapter" data-level="3.2.2" data-path="part4_2.html"><a href="part4_2.html#part4_2_2"><i class="fa fa-check"></i><b>3.2.2</b> 回归任务</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="part5.html"><a href="part5.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#part-多源数据分析"><i class="fa fa-check"></i>(PART) 多源数据分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="part6_1.html"><a href="part6_1.html"><i class="fa fa-check"></i><b>4.1</b> 构造联系</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="part6_1.html"><a href="part6_1.html#part6_1_1"><i class="fa fa-check"></i><b>4.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="4.1.2" data-path="part6_1.html"><a href="part6_1.html#part6_1_2"><i class="fa fa-check"></i><b>4.1.2</b> 社会网络量表</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="part6_2.html"><a href="part6_2.html"><i class="fa fa-check"></i><b>4.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="4.3" data-path="part6_3.html"><a href="part6_3.html"><i class="fa fa-check"></i><b>4.3</b> 拓展分析</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="part6_3.html"><a href="part6_3.html#part6_3_1"><i class="fa fa-check"></i><b>4.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="4.3.2" data-path="part6_3.html"><a href="part6_3.html#part6_3_2"><i class="fa fa-check"></i><b>4.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="4.3.3" data-path="part6_3.html"><a href="part6_3.html#part6_3_3"><i class="fa fa-check"></i><b>4.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="4.3.4" data-path="part6_3.html"><a href="part6_3.html#part6_3_4"><i class="fa fa-check"></i><b>4.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="4.3.5" data-path="part6_3.html"><a href="part6_3.html#part6_3_5"><i class="fa fa-check"></i><b>4.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="4.3.6" data-path="part6_3.html"><a href="part6_3.html#part6_3_6"><i class="fa fa-check"></i><b>4.3.6</b> 综合评价</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="part6_4.html"><a href="part6_4.html"><i class="fa fa-check"></i><b>4.4</b> 其他启示</a></li>
+<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul></li>
+<li class="part"><span><b>II 可视化</b></span></li>
+<li class="chapter" data-level="5" data-path="part7.html"><a href="part7.html"><i class="fa fa-check"></i><b>5</b> Manim动画</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="part7_1.html"><a href="part7_1.html"><i class="fa fa-check"></i><b>5.1</b> 最小二乘与投影矩阵</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="rmd1_4" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> 文档元素<a href="rmd1_4.html#rmd1_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div id="rmd1_4_1" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> 分割线<a href="rmd1_4.html#rmd1_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>三个及以上的<code>*</code>或<code>-</code>或<code>_</code>，注意需用空格与周边内容隔开。</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="rmd1_4.html#cb57-1" tabindex="-1"></a>text</span>
+<span id="cb57-2"><a href="rmd1_4.html#cb57-2" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="rmd1_4.html#cb57-3" tabindex="-1"></a><span class="sc">-----</span></span>
+<span id="cb57-4"><a href="rmd1_4.html#cb57-4" tabindex="-1"></a>   </span>
+<span id="cb57-5"><a href="rmd1_4.html#cb57-5" tabindex="-1"></a>text</span>
+<span id="cb57-6"><a href="rmd1_4.html#cb57-6" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="rmd1_4.html#cb57-7" tabindex="-1"></a><span class="sc">-----</span></span>
+<span id="cb57-8"><a href="rmd1_4.html#cb57-8" tabindex="-1"></a>   </span>
+<span id="cb57-9"><a href="rmd1_4.html#cb57-9" tabindex="-1"></a>text</span></code></pre></div>
+</div>
+<div id="rmd_4_2" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> 转义符<a href="rmd1_4.html#rmd_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>对于特殊字符，可以在其前面添加<code>\</code>进行转义。例如<code>\_text\_</code>将会输出为’_text_’而非斜体。又如markdown中多个空格将会被视为一个空格，你也可以在每个空格前添加反斜杠使其保留下来。</p>
+</div>
+<div id="rmd_4_3" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> 分页符<a href="rmd1_4.html#rmd_4_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>添加<code>\newpage</code>即可，注意上下要空行。</p>
+<p>（<a href="https://bookdown.org/yihui/rmarkdown-cookbook/pagebreaks.html" target="_blank">Cookbook</a>中说是HTML输出也能起作用，但貌似不太行😭）</p>
+<blockquote>
+<p>It is a LaTeX command, but the rmarkdown package is able to recognize it for both LaTeX output formats and a few non-LaTeX output formats including HTML, Word, and ODT.</p>
+</blockquote>
+</div>
+<div id="rmd_4_4" class="section level3 hasAnchor" number="1.4.4">
+<h3><span class="header-section-number">1.4.4</span> 设置动态标题<a href="rmd1_4.html#rmd_4_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在元数据的<code>title</code>中，你可以添加内联代码来实现动态输入信息的效果。</p>
+<pre><code>--- 
+title: &quot;基于`r nrow(iris)`条鸢尾花数据的分析&quot; 
+---</code></pre>
+<p>当标题所需的动态元素在正文中产生时，你可以不用一开始就在元数据处设置<code>title</code>，直到你所需的元素出现即可。</p>
+<pre><code>--- 
+author: lkj 
+date: 2024/7/17 
+output: bookdown::html_document2 
+--- 
+ 
+这里是正文 
+ 
+```{r} 
+x &lt;- runif(1, min=1, max=100) 
+``` 
+ 
+--- 
+title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot; 
+--- 
+ 
+这里是正文</code></pre>
+</div>
+<div id="rmd_4_5" class="section level3 hasAnchor" number="1.4.5">
+<h3><span class="header-section-number">1.4.5</span> 自动更新时间<a href="rmd1_4.html#rmd_4_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>和上一节的设置一样，只需在元数据的<code>date</code>处设置相应的内联代码即可。</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="rmd1_4.html#cb60-1" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb60-2"><a href="rmd1_4.html#cb60-2" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;`r format(Sys.time(),&#39;%Y-%m-%d&#39;)`&quot;</span>,</span>
+<span id="cb60-3"><a href="rmd1_4.html#cb60-3" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
+</div>
+<div id="rmd_4_6" class="section level3 hasAnchor" number="1.4.6">
+<h3><span class="header-section-number">1.4.6</span> 获取元数据信息<a href="rmd1_4.html#rmd_4_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>当rmarkdown文件完成编译时，所有的元数据信息将会被存储在<code>rmarkdown::metadata</code>这一列表对象当中。你可以在r代码块中提取该列表包含的元数据信息，例如<code>rmarkdown::metadata$title</code>表示获取元数据中的标题信息。</p>
+</div>
+<div id="rmd_4_7" class="section level3 hasAnchor" number="1.4.7">
+<h3><span class="header-section-number">1.4.7</span> 参考文献<a href="rmd1_4.html#rmd_4_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>要想在文末添加参考文献，可以在元数据处写入<code>bibliography</code>，并在后面添加你的<code>.bib</code>文件。<code>.bib</code>文件是用于管理参考文献的文件，不同类型的参考文献有不同的格式要求，可参考<a href="https://zhuanlan.zhihu.com/p/609189102" target="_blank">知乎的这篇文章</a>。</p>
+<p>有些时候，你可能需要不同格式的参考文献，这就得依靠<code>.csl</code>文件来设置参考文献的格式。你需要在元数据处的<code>csl</code>声明你用的<code>.csl</code>文件。你可以在<a href="https://www.zotero.org/styles" target="_blank">zotero</a>查询你想要的格式并下载对应的<code>.csl</code>文件，或者在<a href="https://editor.citationstyles.org" target="_blank">这里</a>自定义格式（我还没试过）。</p>
+<p>下面介绍具体使用方法：</p>
+<ol style="list-style-type: decimal">
+<li>打开<a href="https://www.zotero.org/styles" target="_blank">zotero</a>，以’china’（或者’chinese’）为关键词进行搜索，点击相应的链接即可下载对应的<code>.csl</code>文件。这里下载’china’关键词下的<code>China National Standard GB/T 7714-2015 (numeric, 中文)</code>文件。</li>
+<li>将<code>.csl</code>文件放在与<code>.Rmd</code>文件相同的目录中。（例如<code>.css</code>文件也是得和<code>.Rmd</code>文件同目录）</li>
+<li>在文献资源平台上找到需要的参考文献，并导出<code>Bibtex</code>引用格式。这里以“万方”为例。</li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p11"></span>
+<img src="pic/rmarkdown/p11.jpg" alt="点击引用"  />
+<p class="caption">
+图 1.11: 点击引用
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p12"></span>
+<img src="pic/rmarkdown/p12.jpg" alt="点击Bibtex"  />
+<p class="caption">
+图 1.12: 点击Bibtex
+</p>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li><p>将下载来的文件放到<code>.Rmd</code>文件所在的目录中。我下载过来的文件是<code>.txt</code>格式，如果有其他文献，那么可以下载过来后粘贴到同一个<code>.txt</code>文件中，并将其重命名为<code>reference.bib</code>，之后便可在元数据处写入<code>bibliography: reference.bib</code>及<code>csl: china-national-standard-gb-t-7714-2015-numeric.csl</code>。</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="rmd1_4.html#cb61-1" tabindex="-1"></a><span class="sc">@</span>article{姜玲,</span>
+<span id="cb61-2"><a href="rmd1_4.html#cb61-2" tabindex="-1"></a>author<span class="ot">=</span>{姜玲 and 张爱宁},</span>
+<span id="cb61-3"><a href="rmd1_4.html#cb61-3" tabindex="-1"></a>title<span class="ot">=</span>{ 中国省际循环经济发展差异的空间计量分析 },</span>
+<span id="cb61-4"><a href="rmd1_4.html#cb61-4" tabindex="-1"></a>organization<span class="ot">=</span>{甘肃省科学技术情报研究所 and 甘肃省科学技术情报研究所},</span>
+<span id="cb61-5"><a href="rmd1_4.html#cb61-5" tabindex="-1"></a>journal<span class="ot">=</span>{资源开发与市场},</span>
+<span id="cb61-6"><a href="rmd1_4.html#cb61-6" tabindex="-1"></a>year<span class="ot">=</span>{<span class="dv">2014</span>},</span>
+<span id="cb61-7"><a href="rmd1_4.html#cb61-7" tabindex="-1"></a>volume<span class="ot">=</span>{<span class="dv">30</span>},</span>
+<span id="cb61-8"><a href="rmd1_4.html#cb61-8" tabindex="-1"></a>number<span class="ot">=</span>{<span class="dv">1</span>},</span>
+<span id="cb61-9"><a href="rmd1_4.html#cb61-9" tabindex="-1"></a>pages<span class="ot">=</span>{<span class="dv">32-34</span>,<span class="dv">44</span>},</span>
+<span id="cb61-10"><a href="rmd1_4.html#cb61-10" tabindex="-1"></a>month<span class="ot">=</span>{<span class="dv">1</span>},</span>
+<span id="cb61-11"><a href="rmd1_4.html#cb61-11" tabindex="-1"></a>}</span>
+<span id="cb61-12"><a href="rmd1_4.html#cb61-12" tabindex="-1"></a></span>
+<span id="cb61-13"><a href="rmd1_4.html#cb61-13" tabindex="-1"></a><span class="sc">@</span>article{张红梅,</span>
+<span id="cb61-14"><a href="rmd1_4.html#cb61-14" tabindex="-1"></a>author<span class="ot">=</span>{张红梅 and 李黎力},</span>
+<span id="cb61-15"><a href="rmd1_4.html#cb61-15" tabindex="-1"></a>title<span class="ot">=</span>{ 国内大循环的供给网络 ——基于省际流出增加值数据的考察 },</span>
+<span id="cb61-16"><a href="rmd1_4.html#cb61-16" tabindex="-1"></a>organization<span class="ot">=</span>{北京语言大学 and 中国人民大学},</span>
+<span id="cb61-17"><a href="rmd1_4.html#cb61-17" tabindex="-1"></a>journal<span class="ot">=</span>{学习与探索},</span>
+<span id="cb61-18"><a href="rmd1_4.html#cb61-18" tabindex="-1"></a>year<span class="ot">=</span>{<span class="dv">2021</span>},</span>
+<span id="cb61-19"><a href="rmd1_4.html#cb61-19" tabindex="-1"></a>volume<span class="ot">=</span>{},</span>
+<span id="cb61-20"><a href="rmd1_4.html#cb61-20" tabindex="-1"></a>number<span class="ot">=</span>{<span class="dv">4</span>},</span>
+<span id="cb61-21"><a href="rmd1_4.html#cb61-21" tabindex="-1"></a>pages<span class="ot">=</span>{<span class="dv">111-119</span>},</span>
+<span id="cb61-22"><a href="rmd1_4.html#cb61-22" tabindex="-1"></a>month<span class="ot">=</span>{<span class="dv">4</span>},</span>
+<span id="cb61-23"><a href="rmd1_4.html#cb61-23" tabindex="-1"></a>}</span></code></pre></div></li>
+<li><p>在正文处使用<code>[@key]</code>即可引用对应的文献，其中<code>key</code>就是第一个逗号前的内容（如果太长则可以任意修改，只要是唯一的就行）。</p></li>
+<li><p>如果有些文献在文中没有直接引用，则默认不显示这些参考文献。除非你在元数据的<code>notice</code>处声明了<code>'@key'</code>，不同文献之间用逗号隔开。或者直接<code>notice: '@*'</code>表示显示所有的参考文献。</p></li>
+</ol>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="rmd1_4.html#cb62-1" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb62-2"><a href="rmd1_4.html#cb62-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;示例&quot;</span></span>
+<span id="cb62-3"><a href="rmd1_4.html#cb62-3" tabindex="-1"></a>output<span class="sc">:</span> html_document</span>
+<span id="cb62-4"><a href="rmd1_4.html#cb62-4" tabindex="-1"></a>bibliography<span class="sc">:</span> reference.bib</span>
+<span id="cb62-5"><a href="rmd1_4.html#cb62-5" tabindex="-1"></a>csl<span class="sc">:</span> china<span class="sc">-</span>national<span class="sc">-</span>standard<span class="sc">-</span>gb<span class="sc">-</span>t<span class="dv">-7714-2015</span><span class="sc">-</span>numeric.csl</span>
+<span id="cb62-6"><a href="rmd1_4.html#cb62-6" tabindex="-1"></a>notice<span class="sc">:</span> <span class="st">&#39;@张红梅&#39;</span></span>
+<span id="cb62-7"><a href="rmd1_4.html#cb62-7" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb62-8"><a href="rmd1_4.html#cb62-8" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="rmd1_4.html#cb62-9" tabindex="-1"></a>姜玲等学者[<span class="sc">@</span>姜玲]在其文章中指出，balabala...</span>
+<span id="cb62-10"><a href="rmd1_4.html#cb62-10" tabindex="-1"></a></span>
+<span id="cb62-11"><a href="rmd1_4.html#cb62-11" tabindex="-1"></a><span class="co"># 参考文献</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p13"></span>
+<img src="pic/rmarkdown/p13.jpg" alt="参考文献示例"  />
+<p class="caption">
+图 1.13: 参考文献示例
+</p>
+</div>
+<blockquote>
+<p>事实上，如果你经常阅读文献，那么下载专门的文献管理工具将会是更好的选择，例如<code>Zotero</code>。</p>
+</blockquote>
+<p>当生成完参考文献后，其默认会被放在文档的末端。如果要改变其位置，例如你还需在参考文献后添加附录，你可以使用<code>&lt;div id="refs"&gt;&lt;/div&gt;</code>来控制参考文献的位置，该html语句在哪参考文献就在哪。这条语句在其他文档输出中也有效，例如PDF。</p>
+</div>
+<div id="rmd_4_8" class="section level3 hasAnchor" number="1.4.8">
+<h3><span class="header-section-number">1.4.8</span> 交叉引用<a href="rmd1_4.html#rmd_4_8" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>交叉引用允许你在文档中能够跳转到目标章节、图、表、公式等等。</p>
+<p>首先实现章节的跳转，有如下三种方法：</p>
+<ul>
+<li><code>[目标标题]</code></li>
+<li><code>[文本][目标标题]</code></li>
+<li><code>[文本](#目标标题的标识符)</code></li>
+</ul>
+<p>而其余元素的交叉引用需要满足相应的条件才能实现：</p>
+<ul>
+<li>使用<code>bookdown</code>的文件输出格式<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>，例如从一般的<code>output: html_document</code>变为<code>output: bookdown::html_document2</code>，同理，还有<code>pdf_document2</code>、<code>word_document2</code></li>
+<li>图表需要有标题。在<code>bookdown</code>下的输出文档，有标题的图表才能被编号。没有编号是不能交叉引用的。</li>
+<li>相应的代码块或公式也需要有标签。代码块的标签详见<a href="#rmd_3_7" target="_blank">第1.3.7节</a>，公式的标签只要在输入的公式后面跟上<code>(\#eq:label)</code>即可。</li>
+</ul>
+<p>满足条件之后，就可以按<code>\@ref(type:label)</code>的形式进行交叉引用，其中<code>type</code>可替换为<code>fig</code>、<code>tab</code>、<code>eq</code>等，分别代表图、表、公式，<code>label</code>就是代码块或者公式的标签。例如我这里输入<code>\@ref(fig:p13)</code>就会出现<a href="rmd1_4.html#fig:p13">1.13</a>。这个只是图片的编号，所以我真实的输入会是<code>图\@ref(fig:p13)</code>，即图<a href="rmd1_4.html#fig:p13">1.13</a>。</p>
+<blockquote>
+<p>既然提到了<code>bookdown</code>有关的输出文档，还是说一下，关于<code>bookdown</code>的配置文件有不少，例如<code>_output.yml</code>、<code>_bookdown.yml</code>，我没精力去详细介绍，因为这又是一个填不完的坑，建议你查询<a href="https://bookdown.org/yihui/bookdown/usage.html" target="_blank">官方文档</a>。你可以在<code>.Rmd</code>文件（例如<code>html_document2</code>类型的输出格式）的同目录中添加<code>_bookdown.yml</code>文件，在该文件中输入下述内容（注意缩进），就能够使图表标题的前缀从字母<code>fig</code>或<code>tab</code>变成你自定义的文本。</p>
+<div class="line-block">language:<br />
+  label:<br />
+    fig: “图”<br />
+    tab: “表”</div>
+</blockquote>
+</div>
+<div id="rmd_4_9" class="section level3 hasAnchor" number="1.4.9">
+<h3><span class="header-section-number">1.4.9</span> 多位作者<a href="rmd1_4.html#rmd_4_9" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>如果一篇文档有多位作者的话，那么可以直接以字符串的形式输入，例如<code>author: '小明，小红，小刚'</code>（有无引号均可）。或许你想为每位作者附加一些基本信息，那么你可以尝试无序列表及脚注，如下所示：</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="rmd1_4.html#cb63-1" tabindex="-1"></a><span class="co"># 无序列表，每位作者单独一行</span></span>
+<span id="cb63-2"><a href="rmd1_4.html#cb63-2" tabindex="-1"></a>author<span class="sc">:</span> </span>
+<span id="cb63-3"><a href="rmd1_4.html#cb63-3" tabindex="-1"></a>  <span class="sc">-</span> 小明，基本信息</span>
+<span id="cb63-4"><a href="rmd1_4.html#cb63-4" tabindex="-1"></a>  <span class="sc">-</span> 小红，基本信息</span>
+<span id="cb63-5"><a href="rmd1_4.html#cb63-5" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="rmd1_4.html#cb63-6" tabindex="-1"></a><span class="co"># 脚注，在脚注处标明额外信息</span></span>
+<span id="cb63-7"><a href="rmd1_4.html#cb63-7" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&#39;小明^[基本信息]， 小红^[基本信息]&#39;</span></span>
+<span id="cb63-8"><a href="rmd1_4.html#cb63-8" tabindex="-1"></a><span class="co"># 使用脚注时注意和上标作区分，逗号后面空格隔开即可</span></span></code></pre></div>
+</div>
+<div id="rmd_4_10" class="section level3 hasAnchor" number="1.4.10">
+<h3><span class="header-section-number">1.4.10</span> 将模型输出为公式<a href="rmd1_4.html#rmd_4_10" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><code>equatiomatic</code>包的<code>extract_eq</code>能够将拟合的模型输出为公式，如下所示:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="rmd1_4.html#cb64-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris)</span>
+<span id="cb64-2"><a href="rmd1_4.html#cb64-2" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(model)                  <span class="co"># 提取公式</span></span></code></pre></div>
+<p><span class="math display">\[
+\operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \epsilon
+\]</span></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="rmd1_4.html#cb65-1" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(model, <span class="at">use_coefs=</span><span class="cn">TRUE</span>)  <span class="co"># 提取具体数值的公式</span></span></code></pre></div>
+<p><span class="math display">\[
+\operatorname{\widehat{Sepal.Length}} = 6.53 - 0.22(\operatorname{Sepal.Width})
+\]</span></p>
+<blockquote>
+<p>如何为提取出来的公式编号尚不清楚，如果不能的话还是手动输入吧😂</p>
+</blockquote>
+</div>
+<div id="rmd_4_11" class="section level3 hasAnchor" number="1.4.11">
+<h3><span class="header-section-number">1.4.11</span> 流程图<a href="rmd1_4.html#rmd_4_11" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><code>DiagrammeR</code>包利用<code>graphviz</code>或<code>mermaid</code>来绘制流程图，对应的函数分别为<code>grViz</code>和<code>mermaid</code>。两个函数都得以字符串的形式来接收对应风格的绘图语言。关于选择何种函数就见仁见智了，二者示例如下：</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rmd1_4.html#cb66-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">grViz</span>(<span class="st">&quot;digraph {</span></span>
+<span id="cb66-2"><a href="rmd1_4.html#cb66-2" tabindex="-1"></a><span class="st">  graph [layout = dot, rankdir = LR]</span></span>
+<span id="cb66-3"><a href="rmd1_4.html#cb66-3" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb66-4"><a href="rmd1_4.html#cb66-4" tabindex="-1"></a><span class="st">  node [shape = box]        </span></span>
+<span id="cb66-5"><a href="rmd1_4.html#cb66-5" tabindex="-1"></a><span class="st">  rec1 [label = &#39;Step 1 打开冰箱&#39;]</span></span>
+<span id="cb66-6"><a href="rmd1_4.html#cb66-6" tabindex="-1"></a><span class="st">  rec2 [label = &#39;Step 2 塞入大象&#39;]</span></span>
+<span id="cb66-7"><a href="rmd1_4.html#cb66-7" tabindex="-1"></a><span class="st">  rec3 [label = &#39;Step 3 关上冰箱&#39;]</span></span>
+<span id="cb66-8"><a href="rmd1_4.html#cb66-8" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb66-9"><a href="rmd1_4.html#cb66-9" tabindex="-1"></a><span class="st">  rec1 -&gt; rec2 -&gt; rec3</span></span>
+<span id="cb66-10"><a href="rmd1_4.html#cb66-10" tabindex="-1"></a><span class="st">  }&quot;</span>,</span>
+<span id="cb66-11"><a href="rmd1_4.html#cb66-11" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
+<div id="htmlwidget-518a5c619b1081aabc59" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-518a5c619b1081aabc59">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="rmd1_4.html#cb67-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">mermaid</span>(<span class="st">&#39;</span></span>
+<span id="cb67-2"><a href="rmd1_4.html#cb67-2" tabindex="-1"></a><span class="st">  graph LR</span></span>
+<span id="cb67-3"><a href="rmd1_4.html#cb67-3" tabindex="-1"></a><span class="st">  node_1[Step 1 打开冰箱] --&gt; node_2[Step 2 塞入大象]</span></span>
+<span id="cb67-4"><a href="rmd1_4.html#cb67-4" tabindex="-1"></a><span class="st">  node_2[Step 2 塞入大象] --&gt; node_3[Step 3 关上冰箱]</span></span>
+<span id="cb67-5"><a href="rmd1_4.html#cb67-5" tabindex="-1"></a><span class="st">  &#39;</span>,</span>
+<span id="cb67-6"><a href="rmd1_4.html#cb67-6" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
+<div id="htmlwidget-cfb747320b74db3df4a1" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cfb747320b74db3df4a1">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<p>相关语法介绍可详见<code>graphviz</code><a href="https://www.graphviz.org/doc/info/lang.html" target="_blank">官网</a>和<code>mermaid</code><a href="https://mermaid.nodejs.cn/syntax/flowchart.html" target="_blank">官网</a>（有中英文官网，这个是中文的）。</p>
+<blockquote>
+<p><code>mermaid</code>官网还介绍了其他类型的图形，例如甘特图、桑基图。</p>
+</blockquote>
+</div>
+<div id="rmd_4_12" class="section level3 hasAnchor" number="1.4.12">
+<h3><span class="header-section-number">1.4.12</span> 注释<a href="rmd1_4.html#rmd_4_12" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在编辑<code>.Rmd</code>文件时，如果需要注释，可以使用HTML的注释语法<code>&lt;!--注释--&gt;</code>（注释内容可跨行）。也可以选中要注释的内容，使用快捷键<code>Ctrl + Shift + C</code>进行注释。</p>
+</div>
+<div id="rmd_4_13" class="section level3 hasAnchor" number="1.4.13">
+<h3><span class="header-section-number">1.4.13</span> 缩进<a href="rmd1_4.html#rmd_4_13" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在markdown中，如果你想用空格来表示缩进，这将会是徒劳的。在开头使用’| ‘后即可正常保留空格（四个空格对应一个汉字符）及之后的换行符。注意’| ’后面跟了个空格。</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="rmd1_4.html#cb68-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span>     昨天是你</span>
+<span id="cb68-2"><a href="rmd1_4.html#cb68-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span> 今天是我</span>
+<span id="cb68-3"><a href="rmd1_4.html#cb68-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span>     明天又是谁</span></code></pre></div>
+<blockquote>
+<div class="line-block">    昨天是你<br />
+今天是我<br />
+    明天又是谁</div>
+</blockquote>
+</div>
+<div id="rmd_4_14" class="section level3 hasAnchor" number="1.4.14">
+<h3><span class="header-section-number">1.4.14</span> 字体颜色<a href="rmd1_4.html#rmd_4_14" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>对于HTML输出，可以用形如<code>&lt;span style='color: red'&gt;text&lt;/span&gt;</code>的方式来对<code>text</code>设置字体颜色。</p>
+<p>对于PDF输出，可以用形如<code>\textcolor{red}{text}</code>的方式来对<code>text</code>设置字体颜色。</p>
+<p>甚至可以使用自定义函数来格式化输出文本。你只需用内联代码的形式输入该自定义函数及目标参数即可。</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="rmd1_4.html#cb69-1" tabindex="-1"></a>colorize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, color) {</span>
+<span id="cb69-2"><a href="rmd1_4.html#cb69-2" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">&quot;&lt;span style=&#39;color: %s;&#39;&gt;%s&lt;/span&gt;&quot;</span>, color, x)</span>
+<span id="cb69-3"><a href="rmd1_4.html#cb69-3" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>所以我是打算就直接用<code>bookdown</code>下面的文件输出格式了，功能会比一般的文件输出格式要多<a href="rmd1_4.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="rmd1_3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rmd_5.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

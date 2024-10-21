@@ -64,6 +64,12 @@
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -297,46 +303,85 @@ div.csl-indent {
 <li class="chapter" data-level="3.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态分布</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4</b> 随机森林</a>
+<li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
+<li class="chapter" data-level="5" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>5</b> 随机森林</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>4.1</b> R实现</a>
+<li class="chapter" data-level="5.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>5.1</b> R实现</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>4.1.1</b> randomForest</a></li>
-<li class="chapter" data-level="4.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>4.1.2</b> 其余函数</a></li>
+<li class="chapter" data-level="5.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>5.1.1</b> randomForest</a></li>
+<li class="chapter" data-level="5.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 其余函数</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>4.2</b> 数据模拟</a>
+<li class="chapter" data-level="5.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>5.2</b> 数据模拟</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>4.2.1</b> 分类任务</a></li>
-<li class="chapter" data-level="4.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>4.2.2</b> 回归任务</a></li>
+<li class="chapter" data-level="5.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 分类任务</a></li>
+<li class="chapter" data-level="5.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 回归任务</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>5</b> 应用多元统计</a></li>
+<li class="chapter" data-level="6" data-path="penalty.html"><a href="penalty.html"><i class="fa fa-check"></i><b>6</b> 变量选择与惩罚函数</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="penalty_1.html"><a href="penalty_1.html"><i class="fa fa-check"></i><b>6.1</b> 准备</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 范数</a></li>
+<li class="chapter" data-level="6.1.2" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 目标函数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>6.2</b> 单变量选择</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>6.2.1</b> Lasso</a></li>
+<li class="chapter" data-level="6.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>6.2.2</b> Hard Thresholding</a></li>
+<li class="chapter" data-level="6.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>6.2.3</b> SCAD</a></li>
+<li class="chapter" data-level="6.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>6.2.4</b> Adaptive Lasso</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="penalty_3.html"><a href="penalty_3.html"><i class="fa fa-check"></i><b>6.3</b> 群组变量选择</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 思维导图</a></li>
+<li class="chapter" data-level="6.3.2" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 处理高度相关数据的组变量选择方法</a></li>
+<li class="chapter" data-level="6.3.3" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 仅能选择组变量的方法</a></li>
+<li class="chapter" data-level="6.3.4" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_4"><i class="fa fa-check"></i><b>6.3.4</b> 双层变量选择方法</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="penalty_4.html"><a href="penalty_4.html"><i class="fa fa-check"></i><b>6.4</b> 算法</a></li>
+<li class="chapter" data-level="6.5" data-path="penalty_5.html"><a href="penalty_5.html"><i class="fa fa-check"></i><b>6.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="integrative.html"><a href="integrative.html"><i class="fa fa-check"></i><b>7</b> 整合分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
+<li class="chapter" data-level="7.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>7.2</b> 模型基本形式</a></li>
+</ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
-<li class="chapter" data-level="6" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>6</b> 网络型数据</a>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> 网络型数据</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>6.1</b> 构造联系</a>
+<li class="chapter" data-level="8.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>8.1</b> 构造联系</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 引力模型</a></li>
-<li class="chapter" data-level="6.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 社会网络量表</a></li>
+<li class="chapter" data-level="8.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>8.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="8.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 社会网络量表</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>6.2</b> 网络结构特征</a></li>
-<li class="chapter" data-level="6.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>6.3</b> 拓展分析</a>
+<li class="chapter" data-level="8.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>8.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="8.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>8.3</b> 拓展分析</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 凝聚子群</a></li>
-<li class="chapter" data-level="6.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 社区发现</a></li>
-<li class="chapter" data-level="6.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 核心-边缘分析</a></li>
-<li class="chapter" data-level="6.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>6.3.4</b> QAP分析</a></li>
-<li class="chapter" data-level="6.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>6.3.5</b> 计量模型</a></li>
-<li class="chapter" data-level="6.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>6.3.6</b> 综合评价</a></li>
+<li class="chapter" data-level="8.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>8.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="8.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>8.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="8.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>8.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="8.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>8.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="8.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>8.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="8.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>8.3.6</b> 综合评价</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>6.4</b> 其他启示</a></li>
-<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="chapter" data-level="8.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>8.4</b> 其他启示</a></li>
 </ul></li>
 <li class="part"><span><b>IV 可视化</b></span></li>
-<li class="chapter" data-level="7" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>7</b> Manim动画</a>
+<li class="chapter" data-level="9" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>9</b> Manim动画</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>7.1</b> 最小二乘与投影矩阵</a></li>
+<li class="chapter" data-level="9.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>9.1</b> 最小二乘与投影矩阵</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="people.html"><a href="people.html"><i class="fa fa-check"></i><b>10</b> 七普数据可视化</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="people_1.html"><a href="people_1.html"><i class="fa fa-check"></i><b>10.1</b> 数据来源及说明</a></li>
+<li class="chapter" data-level="10.2" data-path="people_2.html"><a href="people_2.html"><i class="fa fa-check"></i><b>10.2</b> 全国人口状况</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="people_2.html"><a href="people_2.html#people_2_1"><i class="fa fa-check"></i><b>10.2.1</b> 人口自然增长率</a></li>
+<li class="chapter" data-level="10.2.2" data-path="people_2.html"><a href="people_2.html#people_2_2"><i class="fa fa-check"></i><b>10.2.2</b> 年龄结构</a></li>
+<li class="chapter" data-level="10.2.3" data-path="people_2.html"><a href="people_2.html#people_2_3"><i class="fa fa-check"></i><b>10.2.3</b> 人口流动</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
       </nav>
@@ -464,46 +509,46 @@ Made with &lt;3 by Manim Community developers.</code></pre>
 <div id="manim_4_2" class="section level3 hasAnchor" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> ManimConfig类<a href="manim_4.html#manim_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>通过更改<code>config</code>对象的属性是确定Manim全局配置最直接的方式。<code>config</code>对象在<code>ManimConfig</code>类中，主要有两种方式（官方文档中建议第一种方式）来设置属性，如下所示。</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="manim_4.html#cb98-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb98-2"><a href="manim_4.html#cb98-2" tabindex="-1"></a>  </span>
-<span id="cb98-3"><a href="manim_4.html#cb98-3" tabindex="-1"></a>config.background_color <span class="ot">=</span> WHITE</span>
-<span id="cb98-4"><a href="manim_4.html#cb98-4" tabindex="-1"></a>config[<span class="st">&quot;background_color&quot;</span>] <span class="ot">=</span> WHITE</span>
-<span id="cb98-5"><a href="manim_4.html#cb98-5" tabindex="-1"></a></span>
-<span id="cb98-6"><a href="manim_4.html#cb98-6" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="manim_4.html#cb97-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb97-2"><a href="manim_4.html#cb97-2" tabindex="-1"></a>  </span>
+<span id="cb97-3"><a href="manim_4.html#cb97-3" tabindex="-1"></a>config.background_color <span class="ot">=</span> WHITE</span>
+<span id="cb97-4"><a href="manim_4.html#cb97-4" tabindex="-1"></a>config[<span class="st">&quot;background_color&quot;</span>] <span class="ot">=</span> WHITE</span>
+<span id="cb97-5"><a href="manim_4.html#cb97-5" tabindex="-1"></a></span>
+<span id="cb97-6"><a href="manim_4.html#cb97-6" tabindex="-1"></a>...</span></code></pre></div>
 <p><code>config</code>对象的所有属性如下所示。需要注意的是，<code>ManimConfig</code>具有内部一致性，更改了某项属性就会影响与其相关联的属性，例如更改y轴的半径<code>frame_y_radius</code>就会影响到画面的高度<code>frame_height</code>。</p>
 <blockquote>
 <p>平面直角坐标系的原点处于画面中心，向上是y轴正半轴，向右是x轴正半轴</p>
 </blockquote>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="manim_4.html#cb99-1" tabindex="-1"></a>[<span class="st">&#39;aspect_ratio&#39;</span>, <span class="st">&#39;assets_dir&#39;</span>, <span class="st">&#39;background_color&#39;</span>, <span class="st">&#39;background_opacity&#39;</span>,</span>
-<span id="cb99-2"><a href="manim_4.html#cb99-2" tabindex="-1"></a><span class="st">&#39;bottom&#39;</span>, <span class="st">&#39;custom_folders&#39;</span>, <span class="st">&#39;disable_caching&#39;</span>, <span class="st">&#39;dry_run&#39;</span>,</span>
-<span id="cb99-3"><a href="manim_4.html#cb99-3" tabindex="-1"></a><span class="st">&#39;ffmpeg_loglevel&#39;</span>, <span class="st">&#39;flush_cache&#39;</span>, <span class="st">&#39;frame_height&#39;</span>, <span class="st">&#39;frame_rate&#39;</span>,</span>
-<span id="cb99-4"><a href="manim_4.html#cb99-4" tabindex="-1"></a><span class="st">&#39;frame_size&#39;</span>, <span class="st">&#39;frame_width&#39;</span>, <span class="st">&#39;frame_x_radius&#39;</span>, <span class="st">&#39;frame_y_radius&#39;</span>,</span>
-<span id="cb99-5"><a href="manim_4.html#cb99-5" tabindex="-1"></a><span class="st">&#39;from_animation_number&#39;</span>, <span class="st">&#39;fullscreen&#39;</span>, <span class="st">&#39;images_dir&#39;</span>, <span class="st">&#39;input_file&#39;</span>, <span class="st">&#39;left_side&#39;</span>,</span>
-<span id="cb99-6"><a href="manim_4.html#cb99-6" tabindex="-1"></a><span class="st">&#39;log_dir&#39;</span>, <span class="st">&#39;log_to_file&#39;</span>, <span class="st">&#39;max_files_cached&#39;</span>, <span class="st">&#39;media_dir&#39;</span>, <span class="st">&#39;media_width&#39;</span>,</span>
-<span id="cb99-7"><a href="manim_4.html#cb99-7" tabindex="-1"></a><span class="st">&#39;movie_file_extension&#39;</span>, <span class="st">&#39;notify_outdated_version&#39;</span>, <span class="st">&#39;output_file&#39;</span>, <span class="st">&#39;partial_movie_dir&#39;</span>,</span>
-<span id="cb99-8"><a href="manim_4.html#cb99-8" tabindex="-1"></a><span class="st">&#39;pixel_height&#39;</span>, <span class="st">&#39;pixel_width&#39;</span>, <span class="st">&#39;plugins&#39;</span>, <span class="st">&#39;preview&#39;</span>,</span>
-<span id="cb99-9"><a href="manim_4.html#cb99-9" tabindex="-1"></a><span class="st">&#39;progress_bar&#39;</span>, <span class="st">&#39;quality&#39;</span>, <span class="st">&#39;right_side&#39;</span>, <span class="st">&#39;save_as_gif&#39;</span>, <span class="st">&#39;save_last_frame&#39;</span>,</span>
-<span id="cb99-10"><a href="manim_4.html#cb99-10" tabindex="-1"></a><span class="st">&#39;save_pngs&#39;</span>, <span class="st">&#39;scene_names&#39;</span>, <span class="st">&#39;show_in_file_browser&#39;</span>, <span class="st">&#39;sound&#39;</span>, <span class="st">&#39;tex_dir&#39;</span>,</span>
-<span id="cb99-11"><a href="manim_4.html#cb99-11" tabindex="-1"></a><span class="st">&#39;tex_template&#39;</span>, <span class="st">&#39;tex_template_file&#39;</span>, <span class="st">&#39;text_dir&#39;</span>, <span class="st">&#39;top&#39;</span>, <span class="st">&#39;transparent&#39;</span>,</span>
-<span id="cb99-12"><a href="manim_4.html#cb99-12" tabindex="-1"></a><span class="st">&#39;upto_animation_number&#39;</span>, <span class="st">&#39;use_opengl_renderer&#39;</span>, <span class="st">&#39;verbosity&#39;</span>, <span class="st">&#39;video_dir&#39;</span>,</span>
-<span id="cb99-13"><a href="manim_4.html#cb99-13" tabindex="-1"></a><span class="st">&#39;window_position&#39;</span>, <span class="st">&#39;window_monitor&#39;</span>, <span class="st">&#39;window_size&#39;</span>, <span class="st">&#39;write_all&#39;</span>, <span class="st">&#39;write_to_movie&#39;</span>,</span>
-<span id="cb99-14"><a href="manim_4.html#cb99-14" tabindex="-1"></a><span class="st">&#39;enable_wireframe&#39;</span>, <span class="st">&#39;force_window&#39;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="manim_4.html#cb98-1" tabindex="-1"></a>[<span class="st">&#39;aspect_ratio&#39;</span>, <span class="st">&#39;assets_dir&#39;</span>, <span class="st">&#39;background_color&#39;</span>, <span class="st">&#39;background_opacity&#39;</span>,</span>
+<span id="cb98-2"><a href="manim_4.html#cb98-2" tabindex="-1"></a><span class="st">&#39;bottom&#39;</span>, <span class="st">&#39;custom_folders&#39;</span>, <span class="st">&#39;disable_caching&#39;</span>, <span class="st">&#39;dry_run&#39;</span>,</span>
+<span id="cb98-3"><a href="manim_4.html#cb98-3" tabindex="-1"></a><span class="st">&#39;ffmpeg_loglevel&#39;</span>, <span class="st">&#39;flush_cache&#39;</span>, <span class="st">&#39;frame_height&#39;</span>, <span class="st">&#39;frame_rate&#39;</span>,</span>
+<span id="cb98-4"><a href="manim_4.html#cb98-4" tabindex="-1"></a><span class="st">&#39;frame_size&#39;</span>, <span class="st">&#39;frame_width&#39;</span>, <span class="st">&#39;frame_x_radius&#39;</span>, <span class="st">&#39;frame_y_radius&#39;</span>,</span>
+<span id="cb98-5"><a href="manim_4.html#cb98-5" tabindex="-1"></a><span class="st">&#39;from_animation_number&#39;</span>, <span class="st">&#39;fullscreen&#39;</span>, <span class="st">&#39;images_dir&#39;</span>, <span class="st">&#39;input_file&#39;</span>, <span class="st">&#39;left_side&#39;</span>,</span>
+<span id="cb98-6"><a href="manim_4.html#cb98-6" tabindex="-1"></a><span class="st">&#39;log_dir&#39;</span>, <span class="st">&#39;log_to_file&#39;</span>, <span class="st">&#39;max_files_cached&#39;</span>, <span class="st">&#39;media_dir&#39;</span>, <span class="st">&#39;media_width&#39;</span>,</span>
+<span id="cb98-7"><a href="manim_4.html#cb98-7" tabindex="-1"></a><span class="st">&#39;movie_file_extension&#39;</span>, <span class="st">&#39;notify_outdated_version&#39;</span>, <span class="st">&#39;output_file&#39;</span>, <span class="st">&#39;partial_movie_dir&#39;</span>,</span>
+<span id="cb98-8"><a href="manim_4.html#cb98-8" tabindex="-1"></a><span class="st">&#39;pixel_height&#39;</span>, <span class="st">&#39;pixel_width&#39;</span>, <span class="st">&#39;plugins&#39;</span>, <span class="st">&#39;preview&#39;</span>,</span>
+<span id="cb98-9"><a href="manim_4.html#cb98-9" tabindex="-1"></a><span class="st">&#39;progress_bar&#39;</span>, <span class="st">&#39;quality&#39;</span>, <span class="st">&#39;right_side&#39;</span>, <span class="st">&#39;save_as_gif&#39;</span>, <span class="st">&#39;save_last_frame&#39;</span>,</span>
+<span id="cb98-10"><a href="manim_4.html#cb98-10" tabindex="-1"></a><span class="st">&#39;save_pngs&#39;</span>, <span class="st">&#39;scene_names&#39;</span>, <span class="st">&#39;show_in_file_browser&#39;</span>, <span class="st">&#39;sound&#39;</span>, <span class="st">&#39;tex_dir&#39;</span>,</span>
+<span id="cb98-11"><a href="manim_4.html#cb98-11" tabindex="-1"></a><span class="st">&#39;tex_template&#39;</span>, <span class="st">&#39;tex_template_file&#39;</span>, <span class="st">&#39;text_dir&#39;</span>, <span class="st">&#39;top&#39;</span>, <span class="st">&#39;transparent&#39;</span>,</span>
+<span id="cb98-12"><a href="manim_4.html#cb98-12" tabindex="-1"></a><span class="st">&#39;upto_animation_number&#39;</span>, <span class="st">&#39;use_opengl_renderer&#39;</span>, <span class="st">&#39;verbosity&#39;</span>, <span class="st">&#39;video_dir&#39;</span>,</span>
+<span id="cb98-13"><a href="manim_4.html#cb98-13" tabindex="-1"></a><span class="st">&#39;window_position&#39;</span>, <span class="st">&#39;window_monitor&#39;</span>, <span class="st">&#39;window_size&#39;</span>, <span class="st">&#39;write_all&#39;</span>, <span class="st">&#39;write_to_movie&#39;</span>,</span>
+<span id="cb98-14"><a href="manim_4.html#cb98-14" tabindex="-1"></a><span class="st">&#39;enable_wireframe&#39;</span>, <span class="st">&#39;force_window&#39;</span>]</span></code></pre></div>
 </div>
 <div id="manim_4_3" class="section level3 hasAnchor" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> 配置文件<a href="manim_4.html#manim_4_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>配置文件中你可以先创建一个<code>.txt</code>文件，在其中进行设置之后，再修改后缀名为<code>.cfg</code>即可创建配置文件，而且这个配置文件必须命名为<code>manim.cfg</code>。在配置文件中，必须把<code>[CLI]</code>放在第一行，之后再根据前一节的<code>config</code>对象的属性进行设置，设置方法如下所示。注意这里的属性必须为全称，部分属性不能向命令行参数那样简写！</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="manim_4.html#cb100-1" tabindex="-1"></a>[CLI]</span>
-<span id="cb100-2"><a href="manim_4.html#cb100-2" tabindex="-1"></a>background_color <span class="ot">=</span> WHITE</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="manim_4.html#cb99-1" tabindex="-1"></a>[CLI]</span>
+<span id="cb99-2"><a href="manim_4.html#cb99-2" tabindex="-1"></a>background_color <span class="ot">=</span> WHITE</span></code></pre></div>
 <p>在这个例子中，我们将背景色改成了白色。之后需将该文件放置在<strong>与脚本文件的相同目录中</strong>。当你按常规方法（如<code>manim -pql demo.py Example</code>）输出视频时，Manim会自动找到<code>.cfg</code>文件进行配置并反映在视频当中。</p>
 <p>上述这种放在与脚本文件相同目录中的配置文件叫做“folder-wide config file”，其作用范围就是在一个文件夹内。如果你有多个视频需要产出，而且他们恰好需要有共同的配置，此时你可以选择将该配置文件放置在特定的文件夹中，从而作用在多个视频中，此种配置文件即“user-wide config file”，也就是针对用户而言的。配置文件在不同系统中要放置在不同地方，具体如下所示。其中<code>UserDirectory</code>就是你的主文件夹。</p>
 <blockquote>
 <p>我的<code>UserDirectory</code>就是在C盘里，需要在“查看”里勾选“隐藏的项目”才能找到下面的文件夹。</p>
 </blockquote>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="manim_4.html#cb101-1" tabindex="-1"></a>Windows<span class="sc">:</span> UserDirectory<span class="sc">/</span>AppData<span class="sc">/</span>Roaming<span class="sc">/</span>Manim<span class="sc">/</span>manim.cfg</span>
-<span id="cb101-2"><a href="manim_4.html#cb101-2" tabindex="-1"></a></span>
-<span id="cb101-3"><a href="manim_4.html#cb101-3" tabindex="-1"></a>MacOS<span class="sc">:</span> UserDirectory<span class="sc">/</span>.config<span class="sc">/</span>manim<span class="sc">/</span>manim.cfg</span>
-<span id="cb101-4"><a href="manim_4.html#cb101-4" tabindex="-1"></a></span>
-<span id="cb101-5"><a href="manim_4.html#cb101-5" tabindex="-1"></a>Linux<span class="sc">:</span> UserDirectory<span class="sc">/</span>.config<span class="sc">/</span>manim<span class="sc">/</span>manim.cfg</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="manim_4.html#cb100-1" tabindex="-1"></a>Windows<span class="sc">:</span> UserDirectory<span class="sc">/</span>AppData<span class="sc">/</span>Roaming<span class="sc">/</span>Manim<span class="sc">/</span>manim.cfg</span>
+<span id="cb100-2"><a href="manim_4.html#cb100-2" tabindex="-1"></a></span>
+<span id="cb100-3"><a href="manim_4.html#cb100-3" tabindex="-1"></a>MacOS<span class="sc">:</span> UserDirectory<span class="sc">/</span>.config<span class="sc">/</span>manim<span class="sc">/</span>manim.cfg</span>
+<span id="cb100-4"><a href="manim_4.html#cb100-4" tabindex="-1"></a></span>
+<span id="cb100-5"><a href="manim_4.html#cb100-5" tabindex="-1"></a>Linux<span class="sc">:</span> UserDirectory<span class="sc">/</span>.config<span class="sc">/</span>manim<span class="sc">/</span>manim.cfg</span></code></pre></div>
 <p>总体而言，调整命令行参数最为便捷，而后两种方法则有更多的选项可供选择。而且各个配置方式的优先级从低到高如下所示。所谓“优先级”就是如果各个配置方式中存在冲突的部分，则以优先级较高的方式为准。</p>
 <ol style="list-style-type: decimal">
 <li><p>Library-wide config file</p>
@@ -574,7 +619,7 @@ gitbook.start({
 },
 "toc": {
 "collapse": "section",
-"toc_depth": 3
+"toc_depth": 4
 }
 });
 });

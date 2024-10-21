@@ -19,18 +19,6 @@
 > 在“[Manim动画](#animation)”这章我会提供我的Manim动画源码。
 
 
-```
-## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.2     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-```
 
 ## 安装与创建 {#manim_1}
 
@@ -66,8 +54,8 @@ class Example(Scene):
 ```
 
 <div class="figure" style="text-align: center">
-<img src="./pic/manim/p1.gif" alt="示例视频"  />
-<p class="caption">(\#fig:p1)示例视频</p>
+<img src="./pic/manim/p1.gif" alt="示例"  />
+<p class="caption">(\#fig:p1)示例</p>
 </div>
 
 ## 初识Manim {#manim_2}

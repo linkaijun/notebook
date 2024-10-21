@@ -64,6 +64,12 @@
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -297,46 +303,85 @@ div.csl-indent {
 <li class="chapter" data-level="3.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态分布</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>4</b> 随机森林</a>
+<li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
+<li class="chapter" data-level="5" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>5</b> 随机森林</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>4.1</b> R实现</a>
+<li class="chapter" data-level="5.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>5.1</b> R实现</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>4.1.1</b> randomForest</a></li>
-<li class="chapter" data-level="4.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>4.1.2</b> 其余函数</a></li>
+<li class="chapter" data-level="5.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>5.1.1</b> randomForest</a></li>
+<li class="chapter" data-level="5.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 其余函数</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>4.2</b> 数据模拟</a>
+<li class="chapter" data-level="5.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>5.2</b> 数据模拟</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>4.2.1</b> 分类任务</a></li>
-<li class="chapter" data-level="4.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>4.2.2</b> 回归任务</a></li>
+<li class="chapter" data-level="5.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 分类任务</a></li>
+<li class="chapter" data-level="5.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 回归任务</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>5</b> 应用多元统计</a></li>
+<li class="chapter" data-level="6" data-path="penalty.html"><a href="penalty.html"><i class="fa fa-check"></i><b>6</b> 变量选择与惩罚函数</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="penalty_1.html"><a href="penalty_1.html"><i class="fa fa-check"></i><b>6.1</b> 准备</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 范数</a></li>
+<li class="chapter" data-level="6.1.2" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 目标函数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>6.2</b> 单变量选择</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>6.2.1</b> Lasso</a></li>
+<li class="chapter" data-level="6.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>6.2.2</b> Hard Thresholding</a></li>
+<li class="chapter" data-level="6.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>6.2.3</b> SCAD</a></li>
+<li class="chapter" data-level="6.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>6.2.4</b> Adaptive Lasso</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="penalty_3.html"><a href="penalty_3.html"><i class="fa fa-check"></i><b>6.3</b> 群组变量选择</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 思维导图</a></li>
+<li class="chapter" data-level="6.3.2" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 处理高度相关数据的组变量选择方法</a></li>
+<li class="chapter" data-level="6.3.3" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 仅能选择组变量的方法</a></li>
+<li class="chapter" data-level="6.3.4" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_4"><i class="fa fa-check"></i><b>6.3.4</b> 双层变量选择方法</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="penalty_4.html"><a href="penalty_4.html"><i class="fa fa-check"></i><b>6.4</b> 算法</a></li>
+<li class="chapter" data-level="6.5" data-path="penalty_5.html"><a href="penalty_5.html"><i class="fa fa-check"></i><b>6.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="integrative.html"><a href="integrative.html"><i class="fa fa-check"></i><b>7</b> 整合分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
+<li class="chapter" data-level="7.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>7.2</b> 模型基本形式</a></li>
+</ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
-<li class="chapter" data-level="6" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>6</b> 网络型数据</a>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> 网络型数据</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>6.1</b> 构造联系</a>
+<li class="chapter" data-level="8.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>8.1</b> 构造联系</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 引力模型</a></li>
-<li class="chapter" data-level="6.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 社会网络量表</a></li>
+<li class="chapter" data-level="8.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>8.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="8.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 社会网络量表</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>6.2</b> 网络结构特征</a></li>
-<li class="chapter" data-level="6.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>6.3</b> 拓展分析</a>
+<li class="chapter" data-level="8.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>8.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="8.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>8.3</b> 拓展分析</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 凝聚子群</a></li>
-<li class="chapter" data-level="6.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 社区发现</a></li>
-<li class="chapter" data-level="6.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 核心-边缘分析</a></li>
-<li class="chapter" data-level="6.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>6.3.4</b> QAP分析</a></li>
-<li class="chapter" data-level="6.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>6.3.5</b> 计量模型</a></li>
-<li class="chapter" data-level="6.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>6.3.6</b> 综合评价</a></li>
+<li class="chapter" data-level="8.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>8.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="8.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>8.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="8.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>8.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="8.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>8.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="8.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>8.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="8.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>8.3.6</b> 综合评价</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>6.4</b> 其他启示</a></li>
-<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="chapter" data-level="8.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>8.4</b> 其他启示</a></li>
 </ul></li>
 <li class="part"><span><b>IV 可视化</b></span></li>
-<li class="chapter" data-level="7" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>7</b> Manim动画</a>
+<li class="chapter" data-level="9" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>9</b> Manim动画</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>7.1</b> 最小二乘与投影矩阵</a></li>
+<li class="chapter" data-level="9.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>9.1</b> 最小二乘与投影矩阵</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="people.html"><a href="people.html"><i class="fa fa-check"></i><b>10</b> 七普数据可视化</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="people_1.html"><a href="people_1.html"><i class="fa fa-check"></i><b>10.1</b> 数据来源及说明</a></li>
+<li class="chapter" data-level="10.2" data-path="people_2.html"><a href="people_2.html"><i class="fa fa-check"></i><b>10.2</b> 全国人口状况</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="people_2.html"><a href="people_2.html#people_2_1"><i class="fa fa-check"></i><b>10.2.1</b> 人口自然增长率</a></li>
+<li class="chapter" data-level="10.2.2" data-path="people_2.html"><a href="people_2.html#people_2_2"><i class="fa fa-check"></i><b>10.2.2</b> 年龄结构</a></li>
+<li class="chapter" data-level="10.2.3" data-path="people_2.html"><a href="people_2.html#people_2_3"><i class="fa fa-check"></i><b>10.2.3</b> 人口流动</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
       </nav>
@@ -415,7 +460,7 @@ gitbook.start({
 },
 "toc": {
 "collapse": "section",
-"toc_depth": 3
+"toc_depth": 4
 }
 });
 });

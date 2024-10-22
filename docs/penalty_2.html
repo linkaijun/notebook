@@ -327,7 +327,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>6.2</b> 单变量选择</a>
 <ul>
 <li class="chapter" data-level="6.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>6.2.1</b> Lasso</a></li>
-<li class="chapter" data-level="6.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>6.2.2</b> Hard Thresholding</a></li>
+<li class="chapter" data-level="6.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>6.2.2</b> Hard &amp; Soft Threshold</a></li>
 <li class="chapter" data-level="6.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>6.2.3</b> SCAD</a></li>
 <li class="chapter" data-level="6.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>6.2.4</b> Adaptive Lasso</a></li>
 </ul></li>
@@ -401,17 +401,105 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="penalty_2" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> 单变量选择<a href="penalty_2.html#penalty_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>在Fan &amp; Li<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>的论文中提到一个好的惩罚函数产生的估计应该满足如下三条性质：</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>无偏性</strong></p>
+<p>当真实系数足够大时，对它的估计应当是无偏的。</p></li>
+<li><p><strong>稀疏性</strong></p>
+<p>估计结果应当是分段的，当系数估计值较小时应当被设置为0。</p></li>
+<li><p><strong>连续性</strong></p>
+<p>估计结果应当是连续的。</p></li>
+</ol>
+<p>文章<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>中提到在原点奇异即可满足稀疏性和连续性。</p>
 <div id="penalty_2_1" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Lasso<a href="penalty_2.html#penalty_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>Tibshirani提出的<span class="math inline">\(Lasso\)</span><span class="citation"><sup>[<a href="#ref-penalty_14">3</a>]</sup></span>是用于变量选择的经典方法之一。其惩罚函数如下所示</p>
+<p><span class="math display" id="eq:eq25">\[
+P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag{6.6}
+\]</span></p>
+<p>式<a href="penalty_2.html#eq:eq25">(6.6)</a>表明<span class="math inline">\(Lasso\)</span>就是在目标函数中添加了<span class="math inline">\(L_1\)</span>正则项。<span class="math inline">\(L_1\)</span>正则项的<span class="math inline">\(contour\)</span>图如图<a href="rmd_1.html#fig:p1">1.1</a>所示，函数图如图<a href="rmd_4.html#fig:p13">1.13</a>所示，3D图如图<a href="rmd_2.html#fig:p3">1.3</a>所示。</p>
+<p><span class="math inline">\(Lasso\)</span>的解为</p>
+<p><span class="math display" id="eq:eq26">\[
+\hat{\beta_j}=sgn(z)(|z|-\lambda)_{+} \tag{6.7}
+\]</span>
+其中<span class="math inline">\(z\)</span>表示最小二乘估计的解，下同。解的图像如图<a href="rmd_5.html#fig:p14">1.14</a>所示。由图可知，<strong>该解满足连续性和稀疏性，但不满足无偏性</strong>。</p>
 </div>
 <div id="penalty_2_2" class="section level3 hasAnchor" number="6.2.2">
-<h3><span class="header-section-number">6.2.2</span> Hard Thresholding<a href="penalty_2.html#penalty_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<h3><span class="header-section-number">6.2.2</span> Hard &amp; Soft Threshold<a href="penalty_2.html#penalty_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><span class="math inline">\(Hard \; Threshold\)</span>（硬阈值）与<span class="math inline">\(Soft \; Threshold\)</span>（软阈值）初见于文献<span class="citation"><sup>[<a href="#ref-penalty_17">4</a>]</sup></span>。解的形式为</p>
+<p><span class="math display" id="eq:eq27">\[
+\begin{aligned}
+\hat\beta_{H}&amp;=zI(|z|&gt;\lambda) \\
+\hat\beta_{S}&amp;=sgn(z)(|z|-\lambda)_{+}
+\end{aligned} \tag{6.8}
+\]</span></p>
+<p>可以发现，软阈值的解与<span class="math inline">\(Lasso\)</span>的解一模一样。Tibshirani在其文章<span class="citation"><sup>[<a href="#ref-penalty_14">3</a>]</sup></span>中也指出了这种联系。</p>
+<p>在Fan &amp; Li<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>的文章中给出了当惩罚函数为<span class="math inline">\(P_\lambda(|\theta|)=\lambda^2-(|\theta|-\lambda)^2I(|\theta|-\lambda)\)</span>时硬阈值的惩罚函数及解的图像，分别如图<a href="rmd_4.html#fig:p13">1.13</a>、图<a href="rmd_5.html#fig:p14">1.14</a>所示。</p>
+<p>由图可知，硬阈值的解<strong>满足无偏性、稀疏性，不满足连续性</strong>。</p>
 </div>
 <div id="penalty_2_3" class="section level3 hasAnchor" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> SCAD<a href="penalty_2.html#penalty_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>Fan &amp; Li<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>提出的<span class="math inline">\(SCAD\)</span>惩罚函数很好地弥补了硬阈值和软阈值的不足，<strong>同时满足无偏性、稀疏性和连续性</strong>。更进一步地，文中证明了<span class="math inline">\(SCAD\)</span>法具有<span class="math inline">\(Oracle\)</span>性质。</p>
+<blockquote>
+<p><span class="math inline">\(Oracle\)</span>性质指基于惩罚函数的目标函数的解以概率1收敛到真值，并且能够识别出零解和非零解，就好像事先知道了答案一样。</p>
+</blockquote>
+<p>原文从导数的角度给出了<span class="math inline">\(SCAD\)</span>函数的定义</p>
+<p><span class="math display" id="eq:eq28">\[
+P&#39;_\lambda(\theta)=\lambda\{I(\theta\leq\lambda)+\frac{(a\lambda-\theta)_+}{(a-1)\lambda}I(\theta \gt \lambda)\}, \; a\gt2 \, \&amp; \, \theta \gt 0 \tag{6.9}
+\]</span></p>
+<p>并且也给出了解的表达式</p>
+<p><span class="math display" id="eq:eq29">\[
+\hat{\theta}=
+\begin{cases}
+sgn(z)(|z|-\lambda)_+, &amp; |z| \leq 2\lambda \\
+\{(a-1)z-sgn(z)a\lambda\}/(a-2), &amp; 2\lambda \lt |z| \leq a\lambda \\
+z, &amp; |z| \gt a\lambda
+\end{cases} \tag{6.10}
+\]</span></p>
+<p>惩罚函数图像及解分别如图<a href="rmd_4.html#fig:p13">1.13</a>、图<a href="rmd_5.html#fig:p14">1.14</a>所示。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p13"></span>
+<img src="pic/penalty/p13.png" alt="硬阈值、软阈值和SCAD的惩罚函数" width="90%" />
+<p class="caption">
+图 1.13: 硬阈值、软阈值和SCAD的惩罚函数
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p14"></span>
+<img src="pic/penalty/p14.png" alt="硬阈值、软阈值和SCAD的解" width="90%" />
+<p class="caption">
+图 1.14: 硬阈值、软阈值和SCAD的解
+</p>
+</div>
 </div>
 <div id="penalty_2_4" class="section level3 hasAnchor" number="6.2.4">
 <h3><span class="header-section-number">6.2.4</span> Adaptive Lasso<a href="penalty_2.html#penalty_2_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>Hui Zou改进了<span class="math inline">\(Lasso\)</span>回归，在其文章<span class="citation"><sup>[<a href="#ref-penalty_18">5</a>]</sup></span>中提出了<span class="math inline">\(Adaptive \; Lasso\)</span>，能够根据不同系数分配不同的权重，解决了<span class="math inline">\(Lasso\)</span>变量选择不一致的问题，具有<span class="math inline">\(Oracle\)</span>性质。</p>
+<p><span class="math inline">\(Adaptive \; Lasso\)</span>的惩罚函数为</p>
+<p><span class="math display" id="eq:eq30">\[
+P_{\lambda, w}(\beta)=\lambda\sum_{i=1}^p w_i|\beta_i| \tag{6.11}
+\]</span></p>
+<p>其中<span class="math inline">\(w_i\)</span>为权重，可通过数据驱动得到。</p>
+<p><span class="math inline">\(Adaptive \; Lasso\)</span>的解如图<a href="rmd_5.html#fig:p15">1.15</a>所示，显然满足<strong>无偏性、稀疏性和连续性</strong></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p15"></span>
+<img src="pic/penalty/p15.png" alt="Adaptive Lasso的解" width="90%" />
+<p class="caption">
+图 1.15: Adaptive Lasso的解
+</p>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-penalty_16" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">FAN J. LI R. Variable selection via nonconcave penalized likelihood and its oracle properties[J]. Journal of the American Statistical Association, 2001, 96(456): 1348-1360.</div>
+</div>
+<div id="ref-penalty_14" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">TIBSHIRANI R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 1996, 58(1): 267-288.</div>
+</div>
+<div id="ref-penalty_17" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">DONOHO D L. JOHNSTONE I M. Ideal spatial adaptation by wavelet shrinkage[J/OL]. Biometrika, 1994, 81: 425-455. <a href="https://api.semanticscholar.org/CorpusID:239520">https://api.semanticscholar.org/CorpusID:239520</a>.</div>
+</div>
+<div id="ref-penalty_18" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">ZOU. HUI. The Adaptive Lasso and Its Oracle Properties[J]. Publications of the American Statistical Association, 2006, 101(476): 1418-1429.</div>
 </div>
 </div>
             </section>

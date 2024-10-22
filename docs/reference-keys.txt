@@ -75,6 +75,12 @@ eq:eq2
 eq:eq3
 eq:eq4
 eq:eq5
+eq:eq25
+eq:eq26
+eq:eq27
+eq:eq28
+eq:eq29
+eq:eq30
 eq:eq6
 eq:eq7
 eq:eq8

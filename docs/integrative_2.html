@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="integrative_1.html"/>
-<link rel="next" href="network.html"/>
+<link rel="next" href="integrative_3.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -345,6 +345,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
 <li class="chapter" data-level="7.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>7.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="7.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>7.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="7.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>7.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="7.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>7.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
 <li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> 网络型数据</a>
@@ -401,20 +404,59 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="integrative_2" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> 模型基本形式<a href="integrative_2.html#integrative_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<p>假设有<span class="math inline">\(M\)</span>个数据集，<span class="math inline">\(p\)</span>个解释变量。第<span class="math inline">\(m\)</span>个数据集的样本量为<span class="math inline">\(n^{(m)}\)</span>，因变量为</p>
-
+<p>假设有<span class="math inline">\(M\)</span>个数据集，<span class="math inline">\(p\)</span>个解释变量。第<span class="math inline">\(m\)</span>个数据集的样本量为<span class="math inline">\(n^{(m)}\)</span>，因变量<span class="math inline">\(y^{(m)}\)</span>为<span class="math inline">\(n^{(m)} \times 1\)</span>向量，解释变量<span class="math inline">\(X^{(m)}\)</span>为<span class="math inline">\(n^{m} \times p\)</span>矩阵，假设数据已经被标准化。</p>
+<p>对第<span class="math inline">\(m\)</span>个数据集建立如下模型：</p>
+<p><span class="math display" id="eq:eq1">\[
+y^{(m)}=X^{(m)}\beta^{(m)}+\epsilon^{(m)} \tag{6.1}
+\]</span></p>
+<p>其中，<span class="math inline">\(\beta^{(m)}=(\beta_1^{(m)}, \cdots,\beta_p^{(m)})&#39;\)</span>为回归系数，<span class="math inline">\(\epsilon^{(m)}\)</span>满足<span class="math inline">\(E(\epsilon^{(m)})=0\)</span>、<span class="math inline">\(Var(\epsilon^{(m)})=\sigma^2_{(m)}\)</span>。</p>
+<p>由此拓展到所有数据集中，则</p>
+<p><span class="math display" id="eq:eq2">\[
+\beta=\textrm{argmin}\{L(X,y;\beta)+P(\beta;\lambda)\} \tag{6.2}
+\]</span></p>
+<p>其中<span class="math inline">\(y=(y^{(1)&#39;},\cdots,y^{(M)&#39;})&#39;\)</span>为<span class="math inline">\(\sum\limits_{m=1}^M n^{(m)} \times 1\)</span>的因变量，<span class="math inline">\(X=diag(X^{(1)},\cdots,X^{(m)})\)</span>为<span class="math inline">\(\sum\limits_{m=1}^M n^{(m)} \times Mp\)</span>的设计矩阵，<span class="math inline">\(\beta=(\beta^{(1)&#39;},\cdots,\beta^{(M)&#39;})&#39;\)</span>为<span class="math inline">\(Mp \times 1\)</span>的未知参数向量。<span class="math inline">\(L(X,y;\beta)=\sum\limits_{i=1}^M L(X^{(m)},y^{(m)};\beta^{(m)})\)</span>是所有数据集上的损失之和，<span class="math inline">\(L(\cdot)\)</span>可取平方损失或负向对数似然损失。<span class="math inline">\(P(\lambda;\beta)\)</span>是惩罚函数，<span class="math inline">\(\lambda\)</span>用于调控惩罚力度，<span class="math inline">\(\lambda\)</span>越大，惩罚力度越大，<span class="math inline">\(\beta\)</span>被压缩得越严重，估计为零的回归系数也就越多。</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+y^{(1)}\\
+\vdots \\
+y^{(m)}
+\end{pmatrix}=
+\begin{pmatrix}
+X^{(1)}\beta^{(1)}+\epsilon^{(1)}\\
+\vdots \\
+X^{(m)}\beta^{(m)}+\epsilon^{(m)}
+\end{pmatrix}=
+\begin{pmatrix}
+X^{(1)} &amp; &amp; \\
+&amp; \ddots &amp; \\
+&amp; &amp; X^{(m)}
+\end{pmatrix}
+\begin{pmatrix}
+\beta^{(1)} \\
+\vdots \\
+\beta^{(m)}
+\end{pmatrix}+
+\begin{pmatrix}
+\epsilon^{(1)} \\
+\vdots \\
+\epsilon^{(m)}
+\end{pmatrix}
+\]</span></p>
+<p>记<span class="math inline">\(X_j\)</span>在所有数据集中的回归系数为<span class="math inline">\(\beta_j=(\beta_j^{(1)},\cdots,\beta_j^{(m)})&#39;\)</span>。在整合分析中，由于<span class="math inline">\(\beta_j\)</span>归属于同一个自变量<span class="math inline">\(X_j\)</span>，故<span class="math inline">\(\beta_j\)</span>内部之间具有一定程度的关联性或相似性，即可将其视为<strong>群组</strong>。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p7-1"></span>
+<img src="pic/penalty/p1_integrative.png" alt="数据结构" width="90%" />
+<p class="caption">
+图 7.1: 数据结构
+</p>
 </div>
-<!-- </div> -->
-
-
-
+</div>
             </section>
 
           </div>
         </div>
       </div>
 <a href="integrative_1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="network.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="integrative_3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -463,7 +505,7 @@ gitbook.start({
 },
 "toc": {
 "collapse": "section",
-"toc_depth": 4
+"toc_depth": 3
 }
 });
 });

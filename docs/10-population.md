@@ -79,8 +79,8 @@ ggplot(growth_df)+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-population_files/figure-html/p1-1.png" alt="全国及各省市的自然增长率轮廓图" width="672" />
-<p class="caption">(\#fig:p1)全国及各省市的自然增长率轮廓图</p>
+<img src="10-population_files/figure-html/p10-1-1.png" alt="全国及各省市的自然增长率轮廓图" width="672" />
+<p class="caption">(\#fig:p10-1)全国及各省市的自然增长率轮廓图</p>
 </div>
 
 ### 年龄结构 {#people_2_2}
@@ -119,8 +119,8 @@ age_demo %>% ggplot(aes(x=fct_rev(province),y=value,fill=age))+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-population_files/figure-html/p2-1.png" alt="全国及各省市年龄结构" width="672" />
-<p class="caption">(\#fig:p2)全国及各省市年龄结构</p>
+<img src="10-population_files/figure-html/p10-2-1.png" alt="全国及各省市年龄结构" width="672" />
+<p class="caption">(\#fig:p10-2)全国及各省市年龄结构</p>
 </div>
 
 
@@ -154,8 +154,8 @@ age_series %>% ggplot()+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-population_files/figure-html/p3-1.png" alt="一般年龄结构" width="672" />
-<p class="caption">(\#fig:p3)一般年龄结构</p>
+<img src="10-population_files/figure-html/p10-3-1.png" alt="一般年龄结构" width="672" />
+<p class="caption">(\#fig:p10-3)一般年龄结构</p>
 </div>
 
 ### 人口流动 {#people_2_3}
@@ -223,8 +223,8 @@ pheatmap(flow_mat,cluster_rows = F,cluster_cols = F,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-population_files/figure-html/p4-1.png" alt="全国人口流动" width="672" />
-<p class="caption">(\#fig:p4)全国人口流动</p>
+<img src="10-population_files/figure-html/p10-4-1.png" alt="全国人口流动" width="672" />
+<p class="caption">(\#fig:p10-4)全国人口流动</p>
 </div>
 
 

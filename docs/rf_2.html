@@ -345,6 +345,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
 <li class="chapter" data-level="7.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>7.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="7.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>7.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="7.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>7.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="7.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>7.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
 <li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> 网络型数据</a>
@@ -474,18 +477,18 @@ div.csl-indent {
 <span id="cb132-3"><a href="rf_2.html#cb132-3" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="at">legend=</span><span class="fu">colnames</span>(rf_class<span class="sc">$</span>err.rate), </span>
 <span id="cb132-4"><a href="rf_2.html#cb132-4" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&#39;black&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;brown&#39;</span>),</span>
 <span id="cb132-5"><a href="rf_2.html#cb132-5" tabindex="-1"></a>       <span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p1"></span>
-<img src="05-randomforest_files/figure-html/p1-1.png" alt="袋外数据的分类错误率" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5-1"></span>
+<img src="05-randomforest_files/figure-html/p5-1-1.png" alt="袋外数据的分类错误率" width="672" />
 <p class="caption">
-图 1.1: 袋外数据的分类错误率
+图 5.1: 袋外数据的分类错误率
 </p>
 </div>
 <p>再来看看不同特征的重要程度。对于一棵树，在随机打乱某个特征的值的顺序之后，可以作差得到前后预测精度的下降情况，对于所有树取平均即可得到平均下降精度(MDA)。显然，如果MDA越大，说明该特征就越重要。同理，平均下降基尼系数(MDI)通过计算每个特征在所有树上节点分裂时导致的基尼系数平均下降量来评估特征的重要性。基尼系数反映了不纯度，下降得越多说明结点越容易从“不纯”走向了“纯”，意味着该特征在区分不同类别时能够较为显著地发挥作用。由图可知，两种评价准则得到的结果较为一致。</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="rf_2.html#cb133-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_class)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p2"></span>
-<img src="05-randomforest_files/figure-html/p2-1.png" alt="分类_重要性度量" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5-2"></span>
+<img src="05-randomforest_files/figure-html/p5-2-1.png" alt="分类_重要性度量" width="672" />
 <p class="caption">
-图 1.2: 分类_重要性度量
+图 5.2: 分类_重要性度量
 </p>
 </div>
 <p>下面关注如何缓解类不平衡问题及如何选取最优参数<code>mtry</code>。</p>
@@ -514,10 +517,10 @@ div.csl-indent {
 <span id="cb136-5"><a href="rf_2.html#cb136-5" tabindex="-1"></a>    err.rate[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(fit_test <span class="sc">!=</span> df_test<span class="sc">$</span>category)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
 <span id="cb136-6"><a href="rf_2.html#cb136-6" tabindex="-1"></a>}</span>
 <span id="cb136-7"><a href="rf_2.html#cb136-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, err.rate, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test err.rate&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p3"></span>
-<img src="05-randomforest_files/figure-html/p3-1.png" alt="分类_mtry调优" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5-3"></span>
+<img src="05-randomforest_files/figure-html/p5-3-1.png" alt="分类_mtry调优" width="672" />
 <p class="caption">
-图 1.3: 分类_mtry调优
+图 5.3: 分类_mtry调优
 </p>
 </div>
 <p>由图可知，当mtry=3时，在测试集上的袋外数据分类错误率达到最小，为14.2%。</p>
@@ -554,18 +557,18 @@ div.csl-indent {
 <p>从结果中可以看到，均方误差为46.7551872，自变量能解释的变异程度为98.91%。</p>
 <p>进一步地，下面给出了模型的袋外数据MSE。</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="rf_2.html#cb140-1" tabindex="-1"></a><span class="fu">plot</span>(rf_reg, <span class="at">main=</span><span class="st">&#39;OOB mse&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p4"></span>
-<img src="05-randomforest_files/figure-html/p4-1.png" alt="袋外数据MSE" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5-4"></span>
+<img src="05-randomforest_files/figure-html/p5-4-1.png" alt="袋外数据MSE" width="672" />
 <p class="caption">
-图 1.4: 袋外数据MSE
+图 5.4: 袋外数据MSE
 </p>
 </div>
 <p>再来看看特征的重要性度量。其中<code>%IncMSE</code>表示重排某个特征前后袋外数据MSE的上升百分比，上升的幅度越大，说明该特征对模型更加重要。<code>IncNodePurity</code>则表示结点分列时残差平方和的下降情况。</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="rf_2.html#cb141-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf_reg)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5"></span>
-<img src="05-randomforest_files/figure-html/p5-1.png" alt="回归_重要性度量" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5-5"></span>
+<img src="05-randomforest_files/figure-html/p5-5-1.png" alt="回归_重要性度量" width="672" />
 <p class="caption">
-图 1.5: 回归_重要性度量
+图 5.5: 回归_重要性度量
 </p>
 </div>
 <p>最后，给模型参数<code>mtry</code>调调优。</p>
@@ -576,10 +579,10 @@ div.csl-indent {
 <span id="cb142-5"><a href="rf_2.html#cb142-5" tabindex="-1"></a>    mse[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>((fit_test <span class="sc">-</span> df_test<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
 <span id="cb142-6"><a href="rf_2.html#cb142-6" tabindex="-1"></a>}</span>
 <span id="cb142-7"><a href="rf_2.html#cb142-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test MSE&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6"></span>
-<img src="05-randomforest_files/figure-html/p6-1.png" alt="回归_mtry调优" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p5-6"></span>
+<img src="05-randomforest_files/figure-html/p5-6-1.png" alt="回归_mtry调优" width="672" />
 <p class="caption">
-图 1.6: 回归_mtry调优
+图 5.6: 回归_mtry调优
 </p>
 </div>
 <p>由图可知，当mtry=2时，在测试集上的袋外数据MSE达到最小，为31.9。</p>
@@ -642,7 +645,7 @@ gitbook.start({
 },
 "toc": {
 "collapse": "section",
-"toc_depth": 4
+"toc_depth": 3
 }
 });
 });

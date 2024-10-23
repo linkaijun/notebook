@@ -345,6 +345,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
 <li class="chapter" data-level="7.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>7.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="7.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>7.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="7.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>7.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="7.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>7.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
 <li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> 网络型数据</a>
@@ -429,10 +432,10 @@ div.csl-indent {
 <span id="cb151-12"><a href="people_2.html#cb151-12" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
 <span id="cb151-13"><a href="people_2.html#cb151-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&#39;人口自然增长率‰&#39;</span>,<span class="at">x=</span><span class="st">&#39;年份&#39;</span>)<span class="sc">+</span></span>
 <span id="cb151-14"><a href="people_2.html#cb151-14" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;2015&#39;</span>,<span class="st">&#39;2016&#39;</span>,<span class="st">&#39;2017&#39;</span>,<span class="st">&#39;2018&#39;</span>,<span class="st">&#39;2019&#39;</span>,<span class="st">&#39;2020&#39;</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p1"></span>
-<img src="10-population_files/figure-html/p1-1.png" alt="全国及各省市的自然增长率轮廓图" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p10-1"></span>
+<img src="10-population_files/figure-html/p10-1-1.png" alt="全国及各省市的自然增长率轮廓图" width="672" />
 <p class="caption">
-图 1.1: 全国及各省市的自然增长率轮廓图
+图 10.1: 全国及各省市的自然增长率轮廓图
 </p>
 </div>
 </div>
@@ -461,10 +464,10 @@ div.csl-indent {
 <span id="cb154-12"><a href="people_2.html#cb154-12" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>,<span class="dv">80</span>,<span class="dv">90</span>,<span class="dv">93</span>,<span class="dv">100</span>))<span class="sc">+</span></span>
 <span id="cb154-13"><a href="people_2.html#cb154-13" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">labels=</span><span class="fu">c</span>(<span class="st">&#39;65岁及以上&#39;</span>,<span class="st">&#39;15-64岁&#39;</span>,<span class="st">&#39;0-14岁&#39;</span>))<span class="sc">+</span></span>
 <span id="cb154-14"><a href="people_2.html#cb154-14" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p2"></span>
-<img src="10-population_files/figure-html/p2-1.png" alt="全国及各省市年龄结构" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p10-2"></span>
+<img src="10-population_files/figure-html/p10-2-1.png" alt="全国及各省市年龄结构" width="672" />
 <p class="caption">
-图 1.2: 全国及各省市年龄结构
+图 10.2: 全国及各省市年龄结构
 </p>
 </div>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="people_2.html#cb155-1" tabindex="-1"></a>age_series <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;一般年龄结构&#39;</span>)</span>
@@ -487,10 +490,10 @@ div.csl-indent {
 <span id="cb157-9"><a href="people_2.html#cb157-9" tabindex="-1"></a>                     <span class="at">limits=</span><span class="fu">c</span>(<span class="st">&#39;young&#39;</span>,<span class="st">&#39;old&#39;</span>),</span>
 <span id="cb157-10"><a href="people_2.html#cb157-10" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&#39;0-14岁&#39;</span>,<span class="st">&#39;65岁及以上&#39;</span>))<span class="sc">+</span></span>
 <span id="cb157-11"><a href="people_2.html#cb157-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;年份&#39;</span>,<span class="at">y=</span><span class="st">&#39;比重%&#39;</span>,<span class="at">color=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p3"></span>
-<img src="10-population_files/figure-html/p3-1.png" alt="一般年龄结构" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p10-3"></span>
+<img src="10-population_files/figure-html/p10-3-1.png" alt="一般年龄结构" width="672" />
 <p class="caption">
-图 1.3: 一般年龄结构
+图 10.3: 一般年龄结构
 </p>
 </div>
 </div>
@@ -542,10 +545,10 @@ div.csl-indent {
 <span id="cb161-19"><a href="people_2.html#cb161-19" tabindex="-1"></a><span class="fu">pheatmap</span>(flow_mat,<span class="at">cluster_rows =</span> F,<span class="at">cluster_cols =</span> F,</span>
 <span id="cb161-20"><a href="people_2.html#cb161-20" tabindex="-1"></a>         <span class="at">angle_col =</span> <span class="dv">0</span>,<span class="at">legend =</span> F,<span class="at">fontsize_row =</span> <span class="dv">8</span> ,<span class="at">fontsize_col =</span> <span class="dv">8</span>,</span>
 <span id="cb161-21"><a href="people_2.html#cb161-21" tabindex="-1"></a>         <span class="at">gaps_row =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">19</span>),<span class="at">gaps_col =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">19</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p4"></span>
-<img src="10-population_files/figure-html/p4-1.png" alt="全国人口流动" width="672" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p10-4"></span>
+<img src="10-population_files/figure-html/p10-4-1.png" alt="全国人口流动" width="672" />
 <p class="caption">
-图 1.4: 全国人口流动
+图 10.4: 全国人口流动
 </p>
 </div>
 
@@ -607,7 +610,7 @@ gitbook.start({
 },
 "toc": {
 "collapse": "section",
-"toc_depth": 4
+"toc_depth": 3
 }
 });
 });

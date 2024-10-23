@@ -345,6 +345,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="7.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
 <li class="chapter" data-level="7.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>7.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="7.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>7.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="7.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>7.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="7.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>7.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
 <li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> 网络型数据</a>
@@ -413,16 +416,16 @@ div.csl-indent {
 <p>文章<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>中提到在原点奇异即可满足稀疏性和连续性。</p>
 <div id="penalty_2_1" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Lasso<a href="penalty_2.html#penalty_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>Tibshirani提出的<span class="math inline">\(Lasso\)</span><span class="citation"><sup>[<a href="#ref-penalty_14">3</a>]</sup></span>是用于变量选择的经典方法之一。其惩罚函数如下所示</p>
+<p>Tibshirani<span class="citation"><sup>[<a href="#ref-penalty_14">3</a>]</sup></span>提出的<span class="math inline">\(Lasso\)</span>是用于变量选择的经典方法之一。其惩罚函数如下所示</p>
 <p><span class="math display" id="eq:eq25">\[
 P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag{6.6}
 \]</span></p>
-<p>式<a href="penalty_2.html#eq:eq25">(6.6)</a>表明<span class="math inline">\(Lasso\)</span>就是在目标函数中添加了<span class="math inline">\(L_1\)</span>正则项。<span class="math inline">\(L_1\)</span>正则项的<span class="math inline">\(contour\)</span>图如图<a href="rmd_1.html#fig:p1">1.1</a>所示，函数图如图<a href="rmd_4.html#fig:p13">1.13</a>所示，3D图如图<a href="rmd_2.html#fig:p3">1.3</a>所示。</p>
+<p>式<a href="penalty_2.html#eq:eq25">(6.6)</a>表明<span class="math inline">\(Lasso\)</span>就是在目标函数中添加了<span class="math inline">\(L_1\)</span>正则项。<span class="math inline">\(L_1\)</span>正则项的<span class="math inline">\(contour\)</span>图如图<a href="penalty_1.html#fig:p6-1">6.1</a>所示，函数图如图<a href="penalty_2.html#fig:p6-13">6.7</a>所示，3D图如图<a href="penalty_1.html#fig:p6-3">6.3</a>所示。</p>
 <p><span class="math inline">\(Lasso\)</span>的解为</p>
 <p><span class="math display" id="eq:eq26">\[
 \hat{\beta_j}=sgn(z)(|z|-\lambda)_{+} \tag{6.7}
 \]</span>
-其中<span class="math inline">\(z\)</span>表示最小二乘估计的解，下同。解的图像如图<a href="rmd_5.html#fig:p14">1.14</a>所示。由图可知，<strong>该解满足连续性和稀疏性，但不满足无偏性</strong>。</p>
+其中<span class="math inline">\(z\)</span>表示最小二乘估计的解，下同。解的图像如图<a href="penalty_2.html#fig:p6-14">6.8</a>所示。由图可知，<strong>该解满足连续性和稀疏性，但不满足无偏性</strong>。</p>
 </div>
 <div id="penalty_2_2" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Hard &amp; Soft Threshold<a href="penalty_2.html#penalty_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -434,7 +437,7 @@ P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag
 \end{aligned} \tag{6.8}
 \]</span></p>
 <p>可以发现，软阈值的解与<span class="math inline">\(Lasso\)</span>的解一模一样。Tibshirani在其文章<span class="citation"><sup>[<a href="#ref-penalty_14">3</a>]</sup></span>中也指出了这种联系。</p>
-<p>在Fan &amp; Li<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>的文章中给出了当惩罚函数为<span class="math inline">\(P_\lambda(|\theta|)=\lambda^2-(|\theta|-\lambda)^2I(|\theta|-\lambda)\)</span>时硬阈值的惩罚函数及解的图像，分别如图<a href="rmd_4.html#fig:p13">1.13</a>、图<a href="rmd_5.html#fig:p14">1.14</a>所示。</p>
+<p>在Fan &amp; Li<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>的文章中给出了当惩罚函数为<span class="math inline">\(P_\lambda(|\theta|)=\lambda^2-(|\theta|-\lambda)^2I(|\theta|-\lambda)\)</span>时硬阈值的惩罚函数及解的图像，分别如图<a href="penalty_2.html#fig:p6-13">6.7</a>、图<a href="penalty_2.html#fig:p6-14">6.8</a>所示。</p>
 <p>由图可知，硬阈值的解<strong>满足无偏性、稀疏性，不满足连续性</strong>。</p>
 </div>
 <div id="penalty_2_3" class="section level3 hasAnchor" number="6.2.3">
@@ -445,7 +448,7 @@ P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag
 </blockquote>
 <p>原文从导数的角度给出了<span class="math inline">\(SCAD\)</span>函数的定义</p>
 <p><span class="math display" id="eq:eq28">\[
-P&#39;_\lambda(\theta)=\lambda\{I(\theta\leq\lambda)+\frac{(a\lambda-\theta)_+}{(a-1)\lambda}I(\theta \gt \lambda)\}, \; a\gt2 \, \&amp; \, \theta \gt 0 \tag{6.9}
+P&#39;_\lambda(\theta)=\lambda\{I(\theta\leq\lambda)+\frac{(a\lambda-\theta)_+}{(a-1)\lambda}I(\theta \gt \lambda)\}, \; a\gt2 \; \&amp; \; \theta \gt 0 \tag{6.9}
 \]</span></p>
 <p>并且也给出了解的表达式</p>
 <p><span class="math display" id="eq:eq29">\[
@@ -456,33 +459,33 @@ sgn(z)(|z|-\lambda)_+, &amp; |z| \leq 2\lambda \\
 z, &amp; |z| \gt a\lambda
 \end{cases} \tag{6.10}
 \]</span></p>
-<p>惩罚函数图像及解分别如图<a href="rmd_4.html#fig:p13">1.13</a>、图<a href="rmd_5.html#fig:p14">1.14</a>所示。</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p13"></span>
+<p>惩罚函数图像及解分别如图<a href="penalty_2.html#fig:p6-13">6.7</a>、图<a href="penalty_2.html#fig:p6-14">6.8</a>所示。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6-13"></span>
 <img src="pic/penalty/p13.png" alt="硬阈值、软阈值和SCAD的惩罚函数" width="90%" />
 <p class="caption">
-图 1.13: 硬阈值、软阈值和SCAD的惩罚函数
+图 6.7: 硬阈值、软阈值和SCAD的惩罚函数
 </p>
 </div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p14"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6-14"></span>
 <img src="pic/penalty/p14.png" alt="硬阈值、软阈值和SCAD的解" width="90%" />
 <p class="caption">
-图 1.14: 硬阈值、软阈值和SCAD的解
+图 6.8: 硬阈值、软阈值和SCAD的解
 </p>
 </div>
 </div>
 <div id="penalty_2_4" class="section level3 hasAnchor" number="6.2.4">
 <h3><span class="header-section-number">6.2.4</span> Adaptive Lasso<a href="penalty_2.html#penalty_2_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>Hui Zou改进了<span class="math inline">\(Lasso\)</span>回归，在其文章<span class="citation"><sup>[<a href="#ref-penalty_18">5</a>]</sup></span>中提出了<span class="math inline">\(Adaptive \; Lasso\)</span>，能够根据不同系数分配不同的权重，解决了<span class="math inline">\(Lasso\)</span>变量选择不一致的问题，具有<span class="math inline">\(Oracle\)</span>性质。</p>
+<p>Hui Zou<span class="citation"><sup>[<a href="#ref-penalty_18">5</a>]</sup></span>改进了<span class="math inline">\(Lasso\)</span>回归，在其文章中提出了<span class="math inline">\(Adaptive \; Lasso\)</span>，能够根据不同系数分配不同的权重，解决了<span class="math inline">\(Lasso\)</span>变量选择不一致的问题，具有<span class="math inline">\(Oracle\)</span>性质。</p>
 <p><span class="math inline">\(Adaptive \; Lasso\)</span>的惩罚函数为</p>
 <p><span class="math display" id="eq:eq30">\[
 P_{\lambda, w}(\beta)=\lambda\sum_{i=1}^p w_i|\beta_i| \tag{6.11}
 \]</span></p>
 <p>其中<span class="math inline">\(w_i\)</span>为权重，可通过数据驱动得到。</p>
-<p><span class="math inline">\(Adaptive \; Lasso\)</span>的解如图<a href="rmd_5.html#fig:p15">1.15</a>所示，显然满足<strong>无偏性、稀疏性和连续性</strong></p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p15"></span>
+<p><span class="math inline">\(Adaptive \; Lasso\)</span>的解如图<a href="penalty_2.html#fig:p6-15">6.9</a>所示，显然满足<strong>无偏性、稀疏性和连续性</strong></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6-15"></span>
 <img src="pic/penalty/p15.png" alt="Adaptive Lasso的解" width="90%" />
 <p class="caption">
-图 1.15: Adaptive Lasso的解
+图 6.9: Adaptive Lasso的解
 </p>
 </div>
 </div>
@@ -557,7 +560,7 @@ gitbook.start({
 },
 "toc": {
 "collapse": "section",
-"toc_depth": 4
+"toc_depth": 3
 }
 });
 });

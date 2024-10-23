@@ -321,8 +321,8 @@ legend('topright', legend=colnames(rf_class$err.rate),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-randomforest_files/figure-html/p1-1.png" alt="袋外数据的分类错误率" width="672" />
-<p class="caption">(\#fig:p1)袋外数据的分类错误率</p>
+<img src="05-randomforest_files/figure-html/p5-1-1.png" alt="袋外数据的分类错误率" width="672" />
+<p class="caption">(\#fig:p5-1)袋外数据的分类错误率</p>
 </div>
 
 再来看看不同特征的重要程度。对于一棵树，在随机打乱某个特征的值的顺序之后，可以作差得到前后预测精度的下降情况，对于所有树取平均即可得到平均下降精度(MDA)。显然，如果MDA越大，说明该特征就越重要。同理，平均下降基尼系数(MDI)通过计算每个特征在所有树上节点分裂时导致的基尼系数平均下降量来评估特征的重要性。基尼系数反映了不纯度，下降得越多说明结点越容易从“不纯”走向了“纯”，意味着该特征在区分不同类别时能够较为显著地发挥作用。由图可知，两种评价准则得到的结果较为一致。
@@ -333,8 +333,8 @@ varImpPlot(rf_class)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-randomforest_files/figure-html/p2-1.png" alt="分类_重要性度量" width="672" />
-<p class="caption">(\#fig:p2)分类_重要性度量</p>
+<img src="05-randomforest_files/figure-html/p5-2-1.png" alt="分类_重要性度量" width="672" />
+<p class="caption">(\#fig:p5-2)分类_重要性度量</p>
 </div>
 
 下面关注如何缓解类不平衡问题及如何选取最优参数`mtry`。
@@ -378,8 +378,8 @@ plot(1:9, err.rate, type = "b", lwd = 2, xlab = "mtry", ylab = "test err.rate")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-randomforest_files/figure-html/p3-1.png" alt="分类_mtry调优" width="672" />
-<p class="caption">(\#fig:p3)分类_mtry调优</p>
+<img src="05-randomforest_files/figure-html/p5-3-1.png" alt="分类_mtry调优" width="672" />
+<p class="caption">(\#fig:p5-3)分类_mtry调优</p>
 </div>
 
 由图可知，当mtry=3时，在测试集上的袋外数据分类错误率达到最小，为14.2%。
@@ -436,8 +436,8 @@ plot(rf_reg, main='OOB mse', lwd=2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-randomforest_files/figure-html/p4-1.png" alt="袋外数据MSE" width="672" />
-<p class="caption">(\#fig:p4)袋外数据MSE</p>
+<img src="05-randomforest_files/figure-html/p5-4-1.png" alt="袋外数据MSE" width="672" />
+<p class="caption">(\#fig:p5-4)袋外数据MSE</p>
 </div>
 
 再来看看特征的重要性度量。其中`%IncMSE`表示重排某个特征前后袋外数据MSE的上升百分比，上升的幅度越大，说明该特征对模型更加重要。`IncNodePurity`则表示结点分列时残差平方和的下降情况。
@@ -448,8 +448,8 @@ varImpPlot(rf_reg)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-randomforest_files/figure-html/p5-1.png" alt="回归_重要性度量" width="672" />
-<p class="caption">(\#fig:p5)回归_重要性度量</p>
+<img src="05-randomforest_files/figure-html/p5-5-1.png" alt="回归_重要性度量" width="672" />
+<p class="caption">(\#fig:p5-5)回归_重要性度量</p>
 </div>
 
 最后，给模型参数`mtry`调调优。
@@ -466,8 +466,8 @@ plot(1:9, mse, type = "b", lwd = 2, xlab = "mtry", ylab = "test MSE")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-randomforest_files/figure-html/p6-1.png" alt="回归_mtry调优" width="672" />
-<p class="caption">(\#fig:p6)回归_mtry调优</p>
+<img src="05-randomforest_files/figure-html/p5-6-1.png" alt="回归_mtry调优" width="672" />
+<p class="caption">(\#fig:p5-6)回归_mtry调优</p>
 </div>
 
 由图可知，当mtry=2时，在测试集上的袋外数据MSE达到最小，为31.9。

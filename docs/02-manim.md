@@ -55,7 +55,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p1.gif" alt="示例"  />
-<p class="caption">(\#fig:p2-1)示例</p>
+<p class="caption">(\#fig:manim-p1)示例</p>
 </div>
 
 ## 初识Manim {#manim_2}
@@ -461,7 +461,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p2.png" alt="各语言文本示例" width="427" />
-<p class="caption">(\#fig:p2-2)各语言文本示例</p>
+<p class="caption">(\#fig:manim-p2)各语言文本示例</p>
 </div>
 
 - 字体
@@ -501,7 +501,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p3.png" alt="斜体与粗细示例" width="427" />
-<p class="caption">(\#fig:p2-3)斜体与粗细示例</p>
+<p class="caption">(\#fig:manim-p3)斜体与粗细示例</p>
 </div>
    
 - 颜色
@@ -547,7 +547,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p4.png" alt="文本颜色" width="427" />
-<p class="caption">(\#fig:p2-4)文本颜色</p>
+<p class="caption">(\#fig:manim-p4)文本颜色</p>
 </div>
 
 - 大小
@@ -575,7 +575,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p5.png" alt="文本颜色" width="427" />
-<p class="caption">(\#fig:p2-5)文本颜色</p>
+<p class="caption">(\#fig:manim-p5)文本颜色</p>
 </div>
 
 > 貌似这里也有bug，t_2被设置了渐变色。
@@ -600,7 +600,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p6.png" alt="行间距与换行" width="427" />
-<p class="caption">(\#fig:p2-6)行间距与换行</p>
+<p class="caption">(\#fig:manim-p6)行间距与换行</p>
 </div>
 
 ### MarkupText {#manim_5_2}
@@ -610,7 +610,7 @@ class MarkupText(text, fill_opacity=1, stroke_width=0, color=None, font_size=48,
 ```
 
 <table>
-<caption>(\#tab:t2-2)MarkupText类的方法与属性</caption>
+<caption>(\#tab:manim_t2)MarkupText类的方法与属性</caption>
  <thead>
   <tr>
    <th style="text-align:center;"> 方法 </th>
@@ -733,7 +733,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p7.png" alt="span示例" width="427" />
-<p class="caption">(\#fig:p2-7)span示例</p>
+<p class="caption">(\#fig:manim-p7)span示例</p>
 </div>
 
 `<gradient>`支持十六进制颜色或者Manim自带的颜色常量。但`<gradient>`在实际应用中稍显复杂。对于带连字`ligatures`（姑且翻译为“连字”吧，有些语言会把两个或者多个字符视为一个字符，也就是连字）的语言，`<gradient>`有时并不能正确识别渐变色的起始字符与终止字符，起始字符和终止字符可能会提前或推迟。对此，你可以使用`<gradient>`的`offset`属性来调整起始字符和结束字符的位置。例如`offset='1'`表示起始字符提前一个位置；`offset='1,2'`表示起始字符提前一个位置，终止字符提前两个位置；又如`offset=',-1'`表示终止字符推迟一个位置。对于不依赖连字`ligatures`的语言，你可以直接在`MarkupText()`中设置`disable_ligatures=True`。
@@ -761,7 +761,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p8.png" alt="gradient示例" width="427" />
-<p class="caption">(\#fig:p2-8)gradient示例</p>
+<p class="caption">(\#fig:manim-p8)gradient示例</p>
 </div>
 
 如果你需要在文本中使用`<`、`>`和`&`，得进行转义，用`&lt;`、`&gt`、`&amp;`依次替代。
@@ -805,7 +805,7 @@ class Paragraph(*text, line_spacing=-1, alignment=None, **kwargs)
 ```
 
 <table>
-<caption>(\#tab:t2-3)Paragraph类的方法与属性</caption>
+<caption>(\#tab:manim_t3)Paragraph类的方法与属性</caption>
  <thead>
   <tr>
    <th style="text-align:center;"> 方法 </th>
@@ -887,7 +887,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p9.png" alt="Paragraph示例" width="427" />
-<p class="caption">(\#fig:p2-9)Paragraph示例</p>
+<p class="caption">(\#fig:manim-p9)Paragraph示例</p>
 </div>
 
 ### Tex {#manim_5_4}
@@ -897,7 +897,7 @@ class Tex(*tex_strings, arg_separator='', tex_environment='center', **kwargs)
 ```
 
 <table>
-<caption>(\#tab:t2-4)Tex类的方法与属性</caption>
+<caption>(\#tab:manim_t4)Tex类的方法与属性</caption>
  <thead>
   <tr>
    <th style="text-align:center;"> 方法 </th>
@@ -975,7 +975,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p10.png" alt="Tex示例" width="427" />
-<p class="caption">(\#fig:p2-10)Tex示例</p>
+<p class="caption">(\#fig:manim-p10)Tex示例</p>
 </div>
 
 ### MathTex {#manim_5_5}
@@ -985,7 +985,7 @@ class MathTex(*tex_strings, arg_separator=' ', substrings_to_isolate=None, tex_t
 ```
 
 <table>
-<caption>(\#tab:t2-5)MathTex类的方法与属性</caption>
+<caption>(\#tab:manim_t5)MathTex类的方法与属性</caption>
  <thead>
   <tr>
    <th style="text-align:center;"> 方法 </th>
@@ -1065,7 +1065,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p11.png" alt="MathTex示例" width="427" />
-<p class="caption">(\#fig:p2-11)MathTex示例</p>
+<p class="caption">(\#fig:manim-p11)MathTex示例</p>
 </div>
 
 - 字符串上色
@@ -1092,7 +1092,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p12.png" alt="子字符串上色示例" width="427" />
-<p class="caption">(\#fig:p2-12)子字符串上色示例</p>
+<p class="caption">(\#fig:manim-p12)子字符串上色示例</p>
 </div>
 
 - 目标字符上色
@@ -1128,7 +1128,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p13.png" alt="目标字符上色示例" width="427" />
-<p class="caption">(\#fig:p2-13)目标字符上色示例</p>
+<p class="caption">(\#fig:manim-p13)目标字符上色示例</p>
 </div>
 
 除了多个字符串的索引，还可以对一个字符串（即Mobject对象）中的不同组成部分进行索引。`index_labels()`能够显示Mobject对象的组成部分的索引，如下所示：
@@ -1152,7 +1152,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p14.png" alt="目标字符上色示例" width="427" />
-<p class="caption">(\#fig:p2-14)目标字符上色示例</p>
+<p class="caption">(\#fig:manim-p14)目标字符上色示例</p>
 </div>
 
 - 字体
@@ -1166,7 +1166,7 @@ class Title(*text_parts, include_underline=True, match_underline_width_to_text=F
 ```
 
 <table>
-<caption>(\#tab:t2-6)Title类的方法与属性</caption>
+<caption>(\#tab:manim_t6)Title类的方法与属性</caption>
  <thead>
   <tr>
    <th style="text-align:center;"> 方法 </th>
@@ -1244,7 +1244,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p15.png" alt="Title示例" width="427" />
-<p class="caption">(\#fig:p2-15)Title示例</p>
+<p class="caption">(\#fig:manim-p15)Title示例</p>
 </div>
 
 ### BulletedList {#manim_5_7}
@@ -1254,7 +1254,7 @@ class BulletedList(*items, buff=0.5, dot_scale_factor=2, tex_environment=None, *
 ```
 
 <table>
-<caption>(\#tab:t2-7)Title类的方法与属性</caption>
+<caption>(\#tab:manim_t7)Title类的方法与属性</caption>
  <thead>
   <tr>
    <th style="text-align:center;"> 方法 </th>
@@ -1332,7 +1332,7 @@ class Example(Scene):
 
 <div class="figure" style="text-align: center">
 <img src="./pic/manim/p16.png" alt="BulletedList示例" width="427" />
-<p class="caption">(\#fig:p2-16)BulletedList示例</p>
+<p class="caption">(\#fig:manim-p16)BulletedList示例</p>
 </div>
 
 ## 内置颜色 {#manim_6}

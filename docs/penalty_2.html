@@ -418,14 +418,30 @@ div.csl-indent {
 <h3><span class="header-section-number">6.2.1</span> Lasso<a href="penalty_2.html#penalty_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>Tibshirani<span class="citation"><sup>[<a href="#ref-penalty_14">3</a>]</sup></span>提出的<span class="math inline">\(Lasso\)</span>是用于变量选择的经典方法之一。其惩罚函数如下所示</p>
 <p><span class="math display" id="eq:eq25">\[
-P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag{6.6}
+P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag{6.8}
 \]</span></p>
-<p>式<a href="penalty_2.html#eq:eq25">(6.6)</a>表明<span class="math inline">\(Lasso\)</span>就是在目标函数中添加了<span class="math inline">\(L_1\)</span>正则项。<span class="math inline">\(L_1\)</span>正则项的<span class="math inline">\(contour\)</span>图如图<a href="penalty_1.html#fig:p6-1">6.1</a>所示，函数图如图<a href="penalty_2.html#fig:p6-13">6.7</a>所示，3D图如图<a href="penalty_1.html#fig:p6-3">6.3</a>所示。</p>
+<p>式<a href="penalty_2.html#eq:eq25">(6.8)</a>表明<span class="math inline">\(Lasso\)</span>就是在目标函数中添加了<span class="math inline">\(L_1\)</span>正则项。<span class="math inline">\(L_1\)</span>正则项的<span class="math inline">\(contour\)</span>图如图<a href="penalty_1.html#fig:p6-1">6.1</a>所示，函数图如图<a href="penalty_2.html#fig:p6-13">6.7</a>所示，3D图如图<a href="penalty_1.html#fig:p6-3">6.3</a>所示。</p>
 <p><span class="math inline">\(Lasso\)</span>的解为</p>
 <p><span class="math display" id="eq:eq26">\[
-\hat{\beta_j}=sgn(z)(|z|-\lambda)_{+} \tag{6.7}
+\hat{\beta_j}=sgn(z)(|z|-\lambda)_{+} \tag{6.9}
 \]</span>
 其中<span class="math inline">\(z\)</span>表示最小二乘估计的解，下同。解的图像如图<a href="penalty_2.html#fig:p6-14">6.8</a>所示。由图可知，<strong>该解满足连续性和稀疏性，但不满足无偏性</strong>。</p>
+<blockquote>
+<p>下面的优缺点来自各个方法的原文献及相关文献，下同。</p>
+</blockquote>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>通过<span class="math inline">\(L_1\)</span>正则化项，可以将一些系数压缩到零，从而实现变量选择</li>
+<li>在高维数据中表现良好，尤其在信噪比大的情况下。</li>
+</ol></li>
+<li><p>缺点</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(Lasso\)</span>可能会引入较大的偏差，特别是在样本量不充足时。</li>
+<li><span class="math inline">\(Lasso\)</span>不满足<span class="math inline">\(Oracle\)</span>性质，即它不能在变量选择上与已知真实模型的情况进行比较。</li>
+<li>需要选择合适的正则化参数</li>
+</ol></li>
+</ul>
 </div>
 <div id="penalty_2_2" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Hard &amp; Soft Threshold<a href="penalty_2.html#penalty_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -434,11 +450,11 @@ P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag
 \begin{aligned}
 \hat\beta_{H}&amp;=zI(|z|&gt;\lambda) \\
 \hat\beta_{S}&amp;=sgn(z)(|z|-\lambda)_{+}
-\end{aligned} \tag{6.8}
+\end{aligned} \tag{6.10}
 \]</span></p>
 <p>可以发现，软阈值的解与<span class="math inline">\(Lasso\)</span>的解一模一样。Tibshirani在其文章<span class="citation"><sup>[<a href="#ref-penalty_14">3</a>]</sup></span>中也指出了这种联系。</p>
 <p>在Fan &amp; Li<span class="citation"><sup>[<a href="#ref-penalty_16">2</a>]</sup></span>的文章中给出了当惩罚函数为<span class="math inline">\(P_\lambda(|\theta|)=\lambda^2-(|\theta|-\lambda)^2I(|\theta|-\lambda)\)</span>时硬阈值的惩罚函数及解的图像，分别如图<a href="penalty_2.html#fig:p6-13">6.7</a>、图<a href="penalty_2.html#fig:p6-14">6.8</a>所示。</p>
-<p>由图可知，硬阈值的解<strong>满足无偏性、稀疏性，不满足连续性</strong>。</p>
+<p>由图可知，硬阈值的解<strong>满足无偏性、稀疏性，不满足连续性</strong>。软阈值的解<strong>满足连续性、稀疏性，不满足无偏性</strong>。</p>
 </div>
 <div id="penalty_2_3" class="section level3 hasAnchor" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> SCAD<a href="penalty_2.html#penalty_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -448,7 +464,7 @@ P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag
 </blockquote>
 <p>原文从导数的角度给出了<span class="math inline">\(SCAD\)</span>函数的定义</p>
 <p><span class="math display" id="eq:eq28">\[
-P&#39;_\lambda(\theta)=\lambda\{I(\theta\leq\lambda)+\frac{(a\lambda-\theta)_+}{(a-1)\lambda}I(\theta \gt \lambda)\}, \; a\gt2 \; \&amp; \; \theta \gt 0 \tag{6.9}
+P&#39;_\lambda(\theta)=\lambda\{I(\theta\leq\lambda)+\frac{(a\lambda-\theta)_+}{(a-1)\lambda}I(\theta \gt \lambda)\}, \; a\gt2 \; \&amp; \; \theta \gt 0 \tag{6.11}
 \]</span></p>
 <p>并且也给出了解的表达式</p>
 <p><span class="math display" id="eq:eq29">\[
@@ -457,7 +473,7 @@ P&#39;_\lambda(\theta)=\lambda\{I(\theta\leq\lambda)+\frac{(a\lambda-\theta)_+}{
 sgn(z)(|z|-\lambda)_+, &amp; |z| \leq 2\lambda \\
 \{(a-1)z-sgn(z)a\lambda\}/(a-2), &amp; 2\lambda \lt |z| \leq a\lambda \\
 z, &amp; |z| \gt a\lambda
-\end{cases} \tag{6.10}
+\end{cases} \tag{6.12}
 \]</span></p>
 <p>惩罚函数图像及解分别如图<a href="penalty_2.html#fig:p6-13">6.7</a>、图<a href="penalty_2.html#fig:p6-14">6.8</a>所示。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6-13"></span>
@@ -472,22 +488,56 @@ z, &amp; |z| \gt a\lambda
 图 6.8: 硬阈值、软阈值和SCAD的解
 </p>
 </div>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>结合了硬阈值和<span class="math inline">\(L_1\)</span>惩罚的优点，提供了连续且具有阈值特性的解。</li>
+<li>通过局部二次近似，<span class="math inline">\(SCAD\)</span>惩罚能够减少大系数的惩罚，同时保持变量选择的特性。</li>
+<li><span class="math inline">\(SCAD\)</span>在高信噪比情况下表现良好，能够准确地识别出重要的变量。</li>
+</ol></li>
+<li><p>缺点</p>
+<ol style="list-style-type: decimal">
+<li>需要估计额外的参数，这可能增加计算复杂度。</li>
+<li><span class="math inline">\(SCAD\)</span>的计算可能比<span class="math inline">\(Lasso\)</span>和<span class="math inline">\(Adaptive \; Lasso\)</span>更复杂，尤其是在处理大量变量时。</li>
+</ol></li>
+</ul>
 </div>
 <div id="penalty_2_4" class="section level3 hasAnchor" number="6.2.4">
 <h3><span class="header-section-number">6.2.4</span> Adaptive Lasso<a href="penalty_2.html#penalty_2_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>Hui Zou<span class="citation"><sup>[<a href="#ref-penalty_18">5</a>]</sup></span>改进了<span class="math inline">\(Lasso\)</span>回归，在其文章中提出了<span class="math inline">\(Adaptive \; Lasso\)</span>，能够根据不同系数分配不同的权重，解决了<span class="math inline">\(Lasso\)</span>变量选择不一致的问题，具有<span class="math inline">\(Oracle\)</span>性质。</p>
 <p><span class="math inline">\(Adaptive \; Lasso\)</span>的惩罚函数为</p>
 <p><span class="math display" id="eq:eq30">\[
-P_{\lambda, w}(\beta)=\lambda\sum_{i=1}^p w_i|\beta_i| \tag{6.11}
+P_{\lambda, w}(\beta)=\lambda\sum_{i=1}^p w_i|\beta_i| \tag{6.13}
 \]</span></p>
-<p>其中<span class="math inline">\(w_i\)</span>为权重，可通过数据驱动得到。</p>
-<p><span class="math inline">\(Adaptive \; Lasso\)</span>的解如图<a href="penalty_2.html#fig:p6-15">6.9</a>所示，显然满足<strong>无偏性、稀疏性和连续性</strong></p>
+<p>其中<span class="math inline">\(w_i\)</span>为权重，可通过数据驱动得到。以<span class="math inline">\(3|\beta_1|+|\beta_2|\)</span>为例绘制惩罚函数图。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6-19"></span>
+<img src="06-penalty_files/figure-html/p6-19-1.png" alt="Adaptive Lasso的惩罚函数" width="90%" />
+<p class="caption">
+图 6.9: Adaptive Lasso的惩罚函数
+</p>
+</div>
+<p><span class="math inline">\(Adaptive \; Lasso\)</span>的解如图<a href="penalty_2.html#fig:p6-15">6.10</a>所示，显然满足<strong>无偏性、稀疏性和连续性</strong></p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:p6-15"></span>
 <img src="pic/penalty/p15.png" alt="Adaptive Lasso的解" width="90%" />
 <p class="caption">
-图 6.9: Adaptive Lasso的解
+图 6.10: Adaptive Lasso的解
 </p>
 </div>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>通过使用数据依赖的权重对不同的系数进行惩罚，改进了<span class="math inline">\(Lasso\)</span>方法。</li>
+<li>具有<span class="math inline">\(Oracle\)</span>性质。</li>
+<li>在预测准确性和变量选择上，<span class="math inline">\(Adaptive \; Lasso\)</span>能够平衡<span class="math inline">\(Lasso\)</span>和<span class="math inline">\(SCAD\)</span>的优点。</li>
+</ol></li>
+<li><p>缺点</p>
+<ol style="list-style-type: decimal">
+<li>需要选择合适的正则化参数，这可能需要依赖于数据驱动的方法。</li>
+</ol></li>
+</ul>
+<blockquote>
+<p>T老师建议，当<span class="math inline">\(p\)</span>很大时，<span class="math inline">\(SCAD\)</span>优于<span class="math inline">\(Adaptive \; Lasso\)</span>。当<span class="math inline">\(p&gt;&gt;n\)</span>时，选用<span class="math inline">\(Sure \; Independence \; Screening\)</span>法。</p>
+</blockquote>
 </div>
 </div>
 <h3>References</h3>

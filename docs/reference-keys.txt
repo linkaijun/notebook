@@ -103,6 +103,8 @@ fig:p6-3
 fig:p6-16
 fig:p6-4
 fig:p6-17
+eq:eq32
+eq:eq33
 eq:eq25
 eq:eq26
 eq:eq27
@@ -111,6 +113,7 @@ eq:eq29
 fig:p6-13
 fig:p6-14
 eq:eq30
+fig:p6-19
 fig:p6-15
 eq:eq6
 eq:eq31
@@ -134,6 +137,8 @@ eq:eq18
 eq:eq19
 fig:p6-11
 eq:eq20
+eq:eq34
+fig:p6-18
 eq:eq21
 eq:eq22
 eq:eq23

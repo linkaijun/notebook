@@ -131,8 +131,6 @@ $$
 P(\beta;\lambda)=\lambda\sum_{j=1}^p p_j||\beta_j||_i^\gamma (\#eq:eq8)
 $$
 
-<span style='color:red'>为什么有p，椭圆范数？</span>
-
 4. Sparse Group Lasso & Adaptive Sparse Group Lasso
 
 $Sparse \; Group \; Lasso$与$Adaptive \; Sparse \; Group \; Lasso$都是基于$Lasso$的惩罚方法，两者的惩罚函数分别为
@@ -152,11 +150,7 @@ $$
 P(\beta;\lambda)=\lambda\sum_{1 \leq j,k \leq p}a_{jk}(\frac{||\beta_j||_2}{\sqrt{M_j}}-\frac{||\beta_k||_2}{\sqrt{M_k}})^2 (\#eq:eq10)
 $$
 
-<span style='color:red'>Mj和Mk是什么含义，不应该一样嘛</span>
-
 其中$a_{jk}$由网络图得到，描述了两个节点之间是否相连以及链接的强度。若$X_j$和$X_k$越相似，则其惩罚越重($a_{jk}$越大)，从而拉近$\beta_j$和$\beta_k$之间的距离，它们的估计值越相近。
-
-<span style='color:red'>这个相近应该是L2范数下的大小相近，而不是各个分量之间的相近吧</span>
 
 同一解释变量在不同数据集中的系数存在某种相似性，称之为“跨数据集结构”。对此有$Contrast$惩罚，惩罚函数如下所示
 

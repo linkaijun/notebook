@@ -405,14 +405,13 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="penalty_5" class="section level2 hasAnchor" number="9.5">
 <h2><span class="header-section-number">9.5</span> 总结<a href="penalty_5.html#penalty_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<p>回顾第<a href="penalty_1.html#penalty_1_2" target="_blank">6.1.2</a>节，惩罚函数的加入使得目标函数的最小值解有所变动，因此要重新找到这个最小值解。故系数向量<span class="math inline">\(\beta\)</span>不得不进行一定程度的收缩，从而在损失函数和惩罚函数的动态平衡中找到最小值解。</p>
+<p>回顾<a href="penalty_1.html#penalty_1_2" target="_blank">目标函数</a>这一节，惩罚函数的加入使得目标函数的最小值解有所变动，因此要重新找到这个最小值解。故系数向量<span class="math inline">\(\beta\)</span>不得不进行一定程度的收缩，从而在损失函数和惩罚函数的动态平衡中找到最小值解。</p>
 <p>那么我们为什么要进行惩罚？</p>
 <p>对于<span class="math inline">\(L_2\)</span>正则项而言，惩罚是为了牺牲无偏性而换取更小的方差，使得模型更加稳定。对于<span class="math inline">\(L_1\)</span>正则项而言，惩罚在一定程度上压缩了各个估计值，但更重要的是为了得到稀疏解。稀疏性是我们在高维场合中优先追求的目标，而惩罚函数是我们获取稀疏解的不二之选。</p>
 <p>对于一系列变量，稀疏解的意义就在于帮助我们识别出那些非零系数的变量，也就是重要变量。如果一个自变量对因变量具有不可忽视的作用，那么即便在受到惩罚后也会保持相对较大的数值。相反，如果一个自变量对因变量的影响是微不足道的，那么在惩罚函数的作用下他就应该为零。可以说，惩罚函数的值反映了自变量在模型中的话语权。</p>
 <p>从几何视角来看，惩罚函数在某种标准下度量了系数向量离原点的距离，若某一分量在这个寻求动态平衡的过程中变为了零，那么就说明该分量对应的自变量就是不重要的。</p>
 <p>不同的惩罚函数则是决定了我们是以何种路径、方式去找到稀疏解。</p>
 <p><strong>惩罚函数的存在使得系数向原点方向收缩，并改变了目标函数的形态，形态决定功能，由此产生目标解。</strong></p>
-<p>不同惩罚函数的组合使得最终的惩罚函数同时拥有子惩罚函数的优点或缺点。例如<span class="math inline">\(L_1 \; Group \; MCP\)</span>和<span class="math inline">\(Group \; MCP\)</span>相比，前者的组内惩罚函数为<span class="math inline">\(L_1\)</span>，组间惩罚函数为<span class="math inline">\(MCP\)</span>，而后者的组内、组间惩罚函数都是<span class="math inline">\(MCP\)</span>，故<span class="math inline">\(Group \; MCP\)</span>具有组内、组间选择一致性，而<span class="math inline">\(L_1 \;Group \; MCP\)</span>仅具有组间选择一致性。</p>
 
 </div>
 <!-- </div> -->

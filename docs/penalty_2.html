@@ -435,7 +435,10 @@ P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag
 <ol style="list-style-type: decimal">
 <li>通过<span class="math inline">\(L_1\)</span>正则化项，可以将一些系数压缩到零，从而实现变量选择</li>
 <li>在高维数据中表现良好，尤其在信噪比大的情况下。</li>
-</ol></li>
+</ol>
+<blockquote>
+<p>信噪比：系数非零自变量与系数为零自变量的个数之比。</p>
+</blockquote></li>
 <li><p>缺点</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(Lasso\)</span>可能会引入较大的偏差，特别是在样本量不充足时。</li>
@@ -461,7 +464,7 @@ P_\lambda(\beta)=\lambda|| \beta ||_1=\lambda\sum\limits_{i=1}^p |\beta_i|  \tag
 <h3><span class="header-section-number">9.2.3</span> SCAD<a href="penalty_2.html#penalty_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>Fan &amp; Li<span class="citation"><sup>[<a href="#ref-penalty_16">13</a>]</sup></span>提出的<span class="math inline">\(SCAD\)</span>惩罚函数很好地弥补了硬阈值和软阈值的不足，<strong>同时满足无偏性、稀疏性和连续性</strong>。更进一步地，文中证明了<span class="math inline">\(SCAD\)</span>法具有<span class="math inline">\(Oracle\)</span>性质。</p>
 <blockquote>
-<p><span class="math inline">\(Oracle\)</span>性质指基于惩罚函数的目标函数的解以概率1收敛到真值，并且能够识别出零解和非零解，就好像事先知道了答案一样。</p>
+<p><span class="math inline">\(Oracle\)</span>性质：(1)能正确选择模型，即对真实为零的系数，方法能将其估计值压缩到零，对真实非零的系数，方法能正确识别对应的变量；(2)真实非零系数的估计值是无偏或近似无偏的，且具有渐进正态性。</p>
 </blockquote>
 <p>原文从导数的角度给出了<span class="math inline">\(SCAD\)</span>函数的定义</p>
 <p><span class="math display" id="eq:eq28">\[

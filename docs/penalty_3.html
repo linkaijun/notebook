@@ -413,8 +413,8 @@ div.csl-indent {
 <p>在群组变量情形下，将自变量分为<span class="math inline">\(J\)</span>个组别，即<span class="math inline">\(X=(X_1,\cdots,X_J)\)</span>依旧是<span class="math inline">\(n \times p\)</span>维设计矩阵，对应的系数向量为<span class="math inline">\(\beta=(\beta^{(1)&#39;},\dots,\beta^{(J)&#39;})&#39;\)</span>，其中<span class="math inline">\(X_j=(x_{j1},\cdots,x_{jp_j})\)</span>，<span class="math inline">\(\beta^{(j)}=(\beta_1^{(j)},\cdots,\beta_{p_j}^{(j)})\)</span>。目标函数形式同式<a href="penalty_1.html#eq:eq4">(9.4)</a>。</p>
 <div id="penalty_3_1" class="section level3 hasAnchor" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> 思维导图<a href="penalty_3.html#penalty_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-19f5e7f7d4c63291ad7d" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-19f5e7f7d4c63291ad7d">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec_root [label = \"群组变量\"]\n  rec1_1 [label = \"分组\"]\n  rec1_2 [label = \"群组变量选择方法\"]\n  \n  rec1_1_1 [label = \"自然分组\"]\n  rec1_1_2 [label = \"人为分组\"]\n  rec1_1_1_sub [label = \"先验信息\"]\n  rec1_1_2_sub [label = \"高度相关（相关系数）\"]\n  \n  rec1_2_1 [label = \"高度相关\"]\n  rec1_2_1_1 [label = \"弹性网\"]\n  rec1_2_1_1_sub [label = \"L1+L2\", color=\"red\"]\n  rec1_2_1_2 [label = \"Mnet\"]\n  rec1_2_1_2_sub [label = \"MCP+L2\", color=\"red\"]\n  rec1_2_1_3 [label = \"SCAD_L2\"]\n  rec1_2_1_3_sub [label = \"SCAD+L2\", color=\"red\"]\n  \n  rec1_2_2 [label = \"仅能选择组\"]\n  rec1_2_2_1 [label = \"Group Lasso\"]\n  rec1_2_2_1_sub [label = \"椭圆范数+L1\", color=\"red\"]\n  rec1_2_2_2 [label = \"CAP\"]\n  rec1_2_2_2_sub [label = \"范数嵌套\", color=\"red\"]\n  \n  rec1_2_3 [label = \"双层变量选择\"]\n  rec1_2_3_1 [label = \"复合函数惩罚法\"]\n  rec1_2_3_1_1 [label = \"Group Bridge\"]\n  rec1_2_3_1_1_sub [label = \"组内Lasso，组间Bridge\", color=\"red\"]\n  rec1_2_3_1_2 [label = \"Group MCP\"]\n  rec1_2_3_1_2_sub [label = \"组内MCP，组间MCP\", color=\"red\"]\n  rec1_2_3_2 [label = \"稀疏组惩罚法\"]\n  rec1_2_3_2_1 [label = \"Sparse Group Lasso\"]\n  rec1_2_3_2_1_sub [label = \"Lasso + Group Lasso\", color=\"red\"]\n  \n  rec_root -> {rec1_1 rec1_2}\n  rec1_1 -> {rec1_1_1 rec1_1_2}\n  rec1_1_1 -> rec1_1_1_sub\n  rec1_1_2 -> rec1_1_2_sub\n  \n  rec1_2 -> {rec1_2_1 rec1_2_2 rec1_2_3}\n  rec1_2_1 -> {rec1_2_1_1 rec1_2_1_2 rec1_2_1_3}\n  rec1_2_1_1 -> rec1_2_1_1_sub\n  rec1_2_1_2 -> rec1_2_1_2_sub\n  rec1_2_1_3 -> rec1_2_1_3_sub\n  rec1_2_2 -> {rec1_2_2_1 rec1_2_2_2}\n  rec1_2_2_1 -> rec1_2_2_1_sub\n  rec1_2_2_2 -> rec1_2_2_2_sub\n  rec1_2_3 -> {rec1_2_3_1 rec1_2_3_2}\n  rec1_2_3_1 -> {rec1_2_3_1_1 rec1_2_3_1_2}\n  rec1_2_3_1_1 -> rec1_2_3_1_1_sub\n  rec1_2_3_1_2 -> rec1_2_3_1_2_sub\n  rec1_2_3_2 -> rec1_2_3_2_1\n  rec1_2_3_2_1 -> rec1_2_3_2_1_sub\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-22b957d653c71160d22a" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-22b957d653c71160d22a">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec_root [label = \"群组变量\"]\n  rec1_1 [label = \"分组\"]\n  rec1_2 [label = \"群组变量选择方法\"]\n  \n  rec1_1_1 [label = \"自然分组\"]\n  rec1_1_2 [label = \"人为分组\"]\n  rec1_1_1_sub [label = \"先验信息\"]\n  rec1_1_2_sub [label = \"高度相关（相关系数）\"]\n  \n  rec1_2_1 [label = \"高度相关\"]\n  rec1_2_1_1 [label = \"弹性网\"]\n  rec1_2_1_1_sub [label = \"L1+L2\", color=\"red\"]\n  rec1_2_1_2 [label = \"Mnet\"]\n  rec1_2_1_2_sub [label = \"MCP+L2\", color=\"red\"]\n  rec1_2_1_3 [label = \"SCAD_L2\"]\n  rec1_2_1_3_sub [label = \"SCAD+L2\", color=\"red\"]\n  \n  rec1_2_2 [label = \"仅能选择组\"]\n  rec1_2_2_1 [label = \"Group Lasso\"]\n  rec1_2_2_1_sub [label = \"椭圆范数+L1\", color=\"red\"]\n  rec1_2_2_2 [label = \"CAP\"]\n  rec1_2_2_2_sub [label = \"范数嵌套\", color=\"red\"]\n  \n  rec1_2_3 [label = \"双层变量选择\"]\n  rec1_2_3_1 [label = \"复合函数惩罚法\"]\n  rec1_2_3_1_1 [label = \"Group Bridge\"]\n  rec1_2_3_1_1_sub [label = \"组内Lasso，组间Bridge\", color=\"red\"]\n  rec1_2_3_1_2 [label = \"Group MCP\"]\n  rec1_2_3_1_2_sub [label = \"组内MCP，组间MCP\", color=\"red\"]\n  rec1_2_3_2 [label = \"稀疏组惩罚法\"]\n  rec1_2_3_2_1 [label = \"Sparse Group Lasso\"]\n  rec1_2_3_2_1_sub [label = \"Lasso + Group Lasso\", color=\"red\"]\n  \n  rec_root -> {rec1_1 rec1_2}\n  rec1_1 -> {rec1_1_1 rec1_1_2}\n  rec1_1_1 -> rec1_1_1_sub\n  rec1_1_2 -> rec1_1_2_sub\n  \n  rec1_2 -> {rec1_2_1 rec1_2_2 rec1_2_3}\n  rec1_2_1 -> {rec1_2_1_1 rec1_2_1_2 rec1_2_1_3}\n  rec1_2_1_1 -> rec1_2_1_1_sub\n  rec1_2_1_2 -> rec1_2_1_2_sub\n  rec1_2_1_3 -> rec1_2_1_3_sub\n  rec1_2_2 -> {rec1_2_2_1 rec1_2_2_2}\n  rec1_2_2_1 -> rec1_2_2_1_sub\n  rec1_2_2_2 -> rec1_2_2_2_sub\n  rec1_2_3 -> {rec1_2_3_1 rec1_2_3_2}\n  rec1_2_3_1 -> {rec1_2_3_1_1 rec1_2_3_1_2}\n  rec1_2_3_1_1 -> rec1_2_3_1_1_sub\n  rec1_2_3_1_2 -> rec1_2_3_1_2_sub\n  rec1_2_3_2 -> rec1_2_3_2_1\n  rec1_2_3_2_1 -> rec1_2_3_2_1_sub\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="penalty_3_2" class="section level3 hasAnchor" number="9.3.2">
 <h3><span class="header-section-number">9.3.2</span> 处理高度相关数据的组变量选择方法<a href="penalty_3.html#penalty_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -449,6 +449,9 @@ P_{\lambda_1,\lambda_2}(| \beta |)=\sum_{j=1}^pf_{\lambda_1}(| \beta_j |)+\lambd
 </ul>
 <div id="penalty_3_2_1" class="section level4 hasAnchor" number="9.3.2.1">
 <h4><span class="header-section-number">9.3.2.1</span> Enet<a href="penalty_3.html#penalty_3_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>glmnet</code>包的<code>glmnet()</code>函数</p>
+</blockquote>
 <p><span class="math inline">\(Enet\)</span>首先见刊于<em>Hui Zou &amp; Trevor Hastie</em><span class="citation"><sup>[<a href="#ref-penalty_4">19</a>]</sup></span>的文章。</p>
 <blockquote>
 <p>Hui Zou也是<span class="math inline">\(Adaptive \; Lasso\)</span>的创造者。</p>
@@ -512,6 +515,9 @@ P_{\lambda}(| \beta |)=\lambda_1\sum_{j=1}^p| \beta_j |+\lambda_2\sum_{j=1}^p \b
 </div>
 <div id="penalty_3_2_2" class="section level4 hasAnchor" number="9.3.2.2">
 <h4><span class="header-section-number">9.3.2.2</span> Mnet<a href="penalty_3.html#penalty_3_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>ncvreg</code>包的<code>ncvreg()</code>函数</p>
+</blockquote>
 <p>Jian Huang等人<span class="citation"><sup>[<a href="#ref-penalty_5">22</a>]</sup></span>提出的<span class="math inline">\(Mnet\)</span>法结合了<span class="math inline">\(MCP\)</span>函数<span class="citation"><sup>[<a href="#ref-penalty_6">20</a>]</sup></span>和<span class="math inline">\(L_2\)</span>正则项。</p>
 <p><span class="math inline">\(Mnet\)</span>的惩罚函数为</p>
 <p><span class="math display" id="eq:eq9">\[
@@ -570,6 +576,9 @@ z, &amp; | z | \gt a \lambda_1(1+\lambda_2)
 </div>
 <div id="penalty_3_2_3" class="section level4 hasAnchor" number="9.3.2.3">
 <h4><span class="header-section-number">9.3.2.3</span> SCAD_l<sub>2</sub><a href="penalty_3.html#penalty_3_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>ncvreg</code>包的<code>ncvreg()</code>函数</p>
+</blockquote>
 <p>Zeng和Xie<span class="citation"><sup>[<a href="#ref-penalty_7">23</a>]</sup></span>提出的<span class="math inline">\(SCAD\_l_2\)</span>法综合了<span class="math inline">\(SCAD\)</span>函数和<span class="math inline">\(L_2\)</span>正则项。</p>
 <blockquote>
 <p><strong>《高维数据下群组变量选择的惩罚方法综述》</strong>引用的<em>Group variable selection for data with dependent structures</em><span class="citation"><sup>[<a href="#ref-penalty_8">24</a>]</sup></span>并没有<span class="math inline">\(SCAD\_L_2\)</span>，而是介绍<span class="math inline">\(gLars\)</span>和<span class="math inline">\(gRidge\)</span>算法。</p>
@@ -638,6 +647,9 @@ P_{\lambda}(| \beta |)=\lambda\sum_{j=1}^JP_{outer}(\sum_{k=1}^{p_j}P_{inner}(| 
 <p>这类方法的组间惩罚函数具有单个变量选择功能，通过将组内对系数的惩罚和视作一个整体从而实现对组别的选择。而组内惩罚函数不具有单个变量选择功能，故该类方法只能选择重要组而不能选择组内的重要变量。</p>
 <div id="penalty_3_3_1" class="section level4 hasAnchor" number="9.3.3.1">
 <h4><span class="header-section-number">9.3.3.1</span> Group Lasso<a href="penalty_3.html#penalty_3_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>gglasso</code>包的<code>gglasso()</code>函数 or <code>grpreg</code>包的<code>grpreg</code>函数</p>
+</blockquote>
 <p>Yuan和Lin<span class="citation"><sup>[<a href="#ref-penalty_9">25</a>]</sup></span>在其文章中除了给出了<span class="math inline">\(Group \; Lasso\)</span>，还讨论了<span class="math inline">\(Group \; Lar\)</span>、<span class="math inline">\(Group \; non-negative \; garrotte\)</span>，这里仅讨论<span class="math inline">\(Group \; Lasso\)</span>。</p>
 <p><span class="math inline">\(Group \; Lasso\)</span>的惩罚函数为</p>
 <p><span class="math display" id="eq:eq17">\[
@@ -721,6 +733,9 @@ P_{\lambda_1,\lambda_2}(|\beta|)=\lambda_1P_{indiv}(|\beta|)+\lambda_2P_{grp}(|\
 \]</span></p>
 <div id="penalty_3_4_1" class="section level4 hasAnchor" number="9.3.4.1">
 <h4><span class="header-section-number">9.3.4.1</span> Group Bridge<a href="penalty_3.html#penalty_3_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>grpreg</code>包的<code>grpreg</code>函数</p>
+</blockquote>
 <p>Huang等人<span class="citation"><sup>[<a href="#ref-penalty_11">27</a>]</sup></span>提出的<span class="math inline">\(Group \; Bridge\)</span>属于“复合函数惩罚法”，其惩罚函数形式为</p>
 <p><span class="math display" id="eq:eq22">\[
 P_\lambda(|\beta|)=\sum\limits_{j=1}^J\lambda c_j||\beta^{(j)}||_1^\gamma \tag{9.32}
@@ -741,6 +756,9 @@ P_\lambda(|\beta|)=\sum\limits_{j=1}^J\lambda c_j||\beta^{(j)}||_1^\gamma \tag{9
 </div>
 <div id="penalty_3_4_2" class="section level4 hasAnchor" number="9.3.4.2">
 <h4><span class="header-section-number">9.3.4.2</span> Group MCP<a href="penalty_3.html#penalty_3_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>grpreg</code>包的<code>grpreg</code>函数</p>
+</blockquote>
 <p><span class="math inline">\(Group \; Bridge\)</span>的惩罚函数结合了<span class="math inline">\(L_1\)</span>正则项与<span class="math inline">\(L_\gamma\)</span>正则项(<span class="math inline">\(0&lt;\gamma&lt;1\)</span>)，因此在某些点是奇异的，即不可微。故Breheny和Huang<span class="citation"><sup>[<a href="#ref-penalty_12">28</a>]</sup></span>提出的<span class="math inline">\(Group \; MCP\)</span>采用<span class="math inline">\(MCP\)</span>函数来作为组间及组内惩罚函数。在<span class="math inline">\(MCP\)</span>的原始文献<span class="citation"><sup>[<a href="#ref-penalty_6">20</a>]</sup></span>中已经证明了该惩罚函数具有无偏性、连续性和稀疏性。</p>
 <p><span class="math inline">\(Group \; MCP\)</span>的惩罚函数为</p>
 <p><span class="math display" id="eq:eq23">\[
@@ -778,6 +796,9 @@ covariate and group levels, while the group lasso and group bridge penalties are
 </div>
 <div id="penalty_3_4_3" class="section level4 hasAnchor" number="9.3.4.3">
 <h4><span class="header-section-number">9.3.4.3</span> Sparse Group Lasso<a href="penalty_3.html#penalty_3_4_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>sparsegl</code>包的<code>sparsegl()</code>函数</p>
+</blockquote>
 <p>Simon等人<span class="citation"><sup>[<a href="#ref-penalty_13">29</a>]</sup></span>提出的<span class="math inline">\(Sparse Group Lasso\)</span>的惩罚函数如下所示</p>
 <p><span class="math display" id="eq:eq24">\[
 P_\lambda(|\beta|)=\lambda_1||\beta||_1+\lambda_2\sum\limits_{j=1}^J ||\beta^{(j)}||_2 \tag{9.34}

@@ -722,7 +722,7 @@ for (i in 1:2) {
 }
 ```
 
-虽然`kable()`相较Markdown语法创建表格更为方便，但仍有不足之处。为避免正文过长，将在[附录A](#appendix_A)处介绍**kableExtra**包。
+虽然`kable()`相较Markdown语法创建表格更为方便，但仍有不足之处。**kableExtra**包则进一步拓展了`kable()`，大家可翻阅[相关资料](https://cran.r-project.org/web/packages/kableExtra/index.html)增进了解。
 
 ### 图片 {#rmd_3_9}
 
@@ -1262,8 +1262,8 @@ DiagrammeR::grViz("digraph {
 ```
 
 ```{=html}
-<div id="htmlwidget-96b1de24f38c6751b7a4" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-96b1de24f38c6751b7a4">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5ef604b8f84a727b920e" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5ef604b8f84a727b920e">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ``` r
@@ -1276,8 +1276,8 @@ DiagrammeR::mermaid('
 ```
 
 ```{=html}
-<div id="htmlwidget-0b008e813df9544e1dd5" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0b008e813df9544e1dd5">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ed1dd3dceecba97c80c4" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed1dd3dceecba97c80c4">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 ```
 
 相关语法介绍可详见`graphviz`[官网](https://www.graphviz.org/doc/info/lang.html)和`mermaid`[官网](https://mermaid.nodejs.cn/syntax/flowchart.html)（有中英文官网，这个是中文的）。

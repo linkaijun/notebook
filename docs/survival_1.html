@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.1 基本概念 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.1 基本概念 | kj的学习笔记" />
   <meta property="og:type" content="book" />
@@ -422,7 +422,7 @@ div.csl-indent {
 <h3><span class="header-section-number">6.1.1</span> 生存数据<a href="survival_1.html#survival_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>在随访期（观察期）内，我们关心研究对象生存了多长时间，感兴趣的事件是否有发生。因此，每一个研究对象都可以由<strong>生存时间、生存结局</strong>这两个指标去描述。</p>
 <p>在实践中，我们不可能有无限的时间去持续观察样本，因此会设置一段观察期。<strong>生存时间</strong>指的是样本自被观察起直到目标事件发生或者观察期止、中途丢失的持续时间，无论该样本是一开始就在还是中途加入。</p>
-<p>若样本在观察期内确实发生了我们感兴趣的事件，那么我们可以记录该样本的<strong>生存时间</strong>及<strong>生存结局</strong>，不妨将其<strong>生存结局</strong>记为<strong>1</strong>。而对于那些在观察期内目标事件尚未发生或中途丢失的样本，我们同样可以记录其<strong>生存时间</strong>，并将其<strong>生存结局</strong>记为<strong>0</strong>。对于标记为<strong>0</strong>的样本数据，我们称之为<strong>删失</strong>。</p>
+<p>若样本在观察期内确实发生了我们感兴趣的事件，那么我们可以记录该样本的<strong>生存时间</strong>及<strong>生存结局</strong>，不妨将其<strong>生存结局</strong>记为<strong>1</strong>(failure)。而对于那些在观察期内目标事件尚未发生或中途丢失的样本，我们同样可以记录其<strong>生存时间</strong>，并将其<strong>生存结局</strong>记为<strong>0</strong>(censoring)，称之为<strong>删失</strong>。</p>
 <p>下面给出示例。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p1"></span>
 <img src="06-survival_analysis_files/figure-html/survival-p1-1.png" alt="生存数据示例" width="80%" />

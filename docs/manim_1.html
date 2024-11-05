@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.1 安装与创建 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.1 安装与创建 | kj的学习笔记" />
   <meta property="og:type" content="book" />
@@ -424,25 +424,25 @@ div.csl-indent {
 <li><p><u>运行示例代码后没有报错，但也没有视频。</u>打开终端，看路径是否与动画文件所在的路径一致，如果不一致，可以右键动画文件，在“打开于”中找到“终端”，此时终端的路径也会变为动画文件所在的文件夹中。之后在终端处输入命令<code>manim -pql example.py Example</code>即可。</p></li>
 </ol>
 <p>附上使用的示例：</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="manim_1.html#cb93-1" tabindex="-1"></a><span class="co"># example.py</span></span>
-<span id="cb93-2"><a href="manim_1.html#cb93-2" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb93-3"><a href="manim_1.html#cb93-3" tabindex="-1"></a></span>
-<span id="cb93-4"><a href="manim_1.html#cb93-4" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb93-5"><a href="manim_1.html#cb93-5" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb93-6"><a href="manim_1.html#cb93-6" tabindex="-1"></a>        t1<span class="ot">=</span><span class="fu">Text</span>(<span class="st">&#39;你好！Manim&#39;</span>)</span>
-<span id="cb93-7"><a href="manim_1.html#cb93-7" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span>
-<span id="cb93-8"><a href="manim_1.html#cb93-8" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
-<span id="cb93-9"><a href="manim_1.html#cb93-9" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">t1.animate.shift</span>(UP<span class="sc">*</span><span class="dv">3</span>))</span>
-<span id="cb93-10"><a href="manim_1.html#cb93-10" tabindex="-1"></a></span>
-<span id="cb93-11"><a href="manim_1.html#cb93-11" tabindex="-1"></a>        circle<span class="ot">=</span><span class="fu">Circle</span>()<span class="fu">.set_color</span>(BLUE)</span>
-<span id="cb93-12"><a href="manim_1.html#cb93-12" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">FadeIn</span>(circle))</span>
-<span id="cb93-13"><a href="manim_1.html#cb93-13" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">circle.animate.set_fill</span>(BLUE, <span class="at">opacity=</span><span class="fl">0.5</span>), <span class="at">run_time=</span><span class="dv">1</span>)</span>
-<span id="cb93-14"><a href="manim_1.html#cb93-14" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
-<span id="cb93-15"><a href="manim_1.html#cb93-15" tabindex="-1"></a></span>
-<span id="cb93-16"><a href="manim_1.html#cb93-16" tabindex="-1"></a>        square<span class="ot">=</span><span class="fu">Square</span>()<span class="fu">.set_color</span>(RED)<span class="fu">.set_fill</span>(RED, <span class="at">opacity=</span><span class="fl">0.5</span>)</span>
-<span id="cb93-17"><a href="manim_1.html#cb93-17" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">ReplacementTransform</span>(circle, square, <span class="at">run_time=</span><span class="dv">1</span>))</span>
-<span id="cb93-18"><a href="manim_1.html#cb93-18" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">square.animate.set_fill</span>(RED, <span class="at">opacity=</span><span class="dv">0</span>))</span>
-<span id="cb93-19"><a href="manim_1.html#cb93-19" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="manim_1.html#cb92-1" tabindex="-1"></a><span class="co"># example.py</span></span>
+<span id="cb92-2"><a href="manim_1.html#cb92-2" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb92-3"><a href="manim_1.html#cb92-3" tabindex="-1"></a></span>
+<span id="cb92-4"><a href="manim_1.html#cb92-4" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb92-5"><a href="manim_1.html#cb92-5" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb92-6"><a href="manim_1.html#cb92-6" tabindex="-1"></a>        t1<span class="ot">=</span><span class="fu">Text</span>(<span class="st">&#39;你好！Manim&#39;</span>)</span>
+<span id="cb92-7"><a href="manim_1.html#cb92-7" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span>
+<span id="cb92-8"><a href="manim_1.html#cb92-8" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
+<span id="cb92-9"><a href="manim_1.html#cb92-9" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">t1.animate.shift</span>(UP<span class="sc">*</span><span class="dv">3</span>))</span>
+<span id="cb92-10"><a href="manim_1.html#cb92-10" tabindex="-1"></a></span>
+<span id="cb92-11"><a href="manim_1.html#cb92-11" tabindex="-1"></a>        circle<span class="ot">=</span><span class="fu">Circle</span>()<span class="fu">.set_color</span>(BLUE)</span>
+<span id="cb92-12"><a href="manim_1.html#cb92-12" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">FadeIn</span>(circle))</span>
+<span id="cb92-13"><a href="manim_1.html#cb92-13" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">circle.animate.set_fill</span>(BLUE, <span class="at">opacity=</span><span class="fl">0.5</span>), <span class="at">run_time=</span><span class="dv">1</span>)</span>
+<span id="cb92-14"><a href="manim_1.html#cb92-14" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
+<span id="cb92-15"><a href="manim_1.html#cb92-15" tabindex="-1"></a></span>
+<span id="cb92-16"><a href="manim_1.html#cb92-16" tabindex="-1"></a>        square<span class="ot">=</span><span class="fu">Square</span>()<span class="fu">.set_color</span>(RED)<span class="fu">.set_fill</span>(RED, <span class="at">opacity=</span><span class="fl">0.5</span>)</span>
+<span id="cb92-17"><a href="manim_1.html#cb92-17" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">ReplacementTransform</span>(circle, square, <span class="at">run_time=</span><span class="dv">1</span>))</span>
+<span id="cb92-18"><a href="manim_1.html#cb92-18" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">square.animate.set_fill</span>(RED, <span class="at">opacity=</span><span class="dv">0</span>))</span>
+<span id="cb92-19"><a href="manim_1.html#cb92-19" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p1"></span>
 <img src="pic/manim/p1.gif" alt="示例"  />
 <p class="caption">

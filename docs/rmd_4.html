@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.4 文档元素 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.4 文档元素 | kj的学习笔记" />
   <meta property="og:type" content="book" />
@@ -421,15 +421,15 @@ div.csl-indent {
 <div id="rmd_4_1" class="section level3 hasAnchor" number="1.4.1">
 <h3><span class="header-section-number">1.4.1</span> 分割线<a href="rmd_4.html#rmd_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>三个及以上的<code>*</code>或<code>-</code>或<code>_</code>，注意需用空格与周边内容隔开。</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="rmd_4.html#cb57-1" tabindex="-1"></a>text</span>
-<span id="cb57-2"><a href="rmd_4.html#cb57-2" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="rmd_4.html#cb57-3" tabindex="-1"></a><span class="sc">-----</span></span>
-<span id="cb57-4"><a href="rmd_4.html#cb57-4" tabindex="-1"></a>   </span>
-<span id="cb57-5"><a href="rmd_4.html#cb57-5" tabindex="-1"></a>text</span>
-<span id="cb57-6"><a href="rmd_4.html#cb57-6" tabindex="-1"></a></span>
-<span id="cb57-7"><a href="rmd_4.html#cb57-7" tabindex="-1"></a><span class="sc">-----</span></span>
-<span id="cb57-8"><a href="rmd_4.html#cb57-8" tabindex="-1"></a>   </span>
-<span id="cb57-9"><a href="rmd_4.html#cb57-9" tabindex="-1"></a>text</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="rmd_4.html#cb56-1" tabindex="-1"></a>text</span>
+<span id="cb56-2"><a href="rmd_4.html#cb56-2" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="rmd_4.html#cb56-3" tabindex="-1"></a><span class="sc">-----</span></span>
+<span id="cb56-4"><a href="rmd_4.html#cb56-4" tabindex="-1"></a>   </span>
+<span id="cb56-5"><a href="rmd_4.html#cb56-5" tabindex="-1"></a>text</span>
+<span id="cb56-6"><a href="rmd_4.html#cb56-6" tabindex="-1"></a></span>
+<span id="cb56-7"><a href="rmd_4.html#cb56-7" tabindex="-1"></a><span class="sc">-----</span></span>
+<span id="cb56-8"><a href="rmd_4.html#cb56-8" tabindex="-1"></a>   </span>
+<span id="cb56-9"><a href="rmd_4.html#cb56-9" tabindex="-1"></a>text</span></code></pre></div>
 </div>
 <div id="rmd_4_2" class="section level3 hasAnchor" number="1.4.2">
 <h3><span class="header-section-number">1.4.2</span> 转义符<a href="rmd_4.html#rmd_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -471,9 +471,9 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <div id="rmd_4_5" class="section level3 hasAnchor" number="1.4.5">
 <h3><span class="header-section-number">1.4.5</span> 自动更新时间<a href="rmd_4.html#rmd_4_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>和上一节的设置一样，只需在元数据的<code>date</code>处设置相应的内联代码即可。</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="rmd_4.html#cb60-1" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb60-2"><a href="rmd_4.html#cb60-2" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;`r format(Sys.time(),&#39;%Y-%m-%d&#39;)`&quot;</span>,</span>
-<span id="cb60-3"><a href="rmd_4.html#cb60-3" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="rmd_4.html#cb59-1" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb59-2"><a href="rmd_4.html#cb59-2" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;`r format(Sys.time(),&#39;%Y-%m-%d&#39;)`&quot;</span>,</span>
+<span id="cb59-3"><a href="rmd_4.html#cb59-3" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 </div>
 <div id="rmd_4_6" class="section level3 hasAnchor" number="1.4.6">
 <h3><span class="header-section-number">1.4.6</span> 获取元数据信息<a href="rmd_4.html#rmd_4_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -503,43 +503,43 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 </div>
 <ol start="4" style="list-style-type: decimal">
 <li><p>将下载来的文件放到<code>.Rmd</code>文件所在的目录中。我下载过来的文件是<code>.txt</code>格式，如果有其他文献，那么可以下载过来后粘贴到同一个<code>.txt</code>文件中，并将其重命名为<code>reference.bib</code>，之后便可在元数据处写入<code>bibliography: reference.bib</code>及<code>csl: china-national-standard-gb-t-7714-2015-numeric.csl</code>。</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="rmd_4.html#cb61-1" tabindex="-1"></a><span class="sc">@</span>article{姜玲,</span>
-<span id="cb61-2"><a href="rmd_4.html#cb61-2" tabindex="-1"></a>author<span class="ot">=</span>{姜玲 and 张爱宁},</span>
-<span id="cb61-3"><a href="rmd_4.html#cb61-3" tabindex="-1"></a>title<span class="ot">=</span>{ 中国省际循环经济发展差异的空间计量分析 },</span>
-<span id="cb61-4"><a href="rmd_4.html#cb61-4" tabindex="-1"></a>organization<span class="ot">=</span>{甘肃省科学技术情报研究所 and 甘肃省科学技术情报研究所},</span>
-<span id="cb61-5"><a href="rmd_4.html#cb61-5" tabindex="-1"></a>journal<span class="ot">=</span>{资源开发与市场},</span>
-<span id="cb61-6"><a href="rmd_4.html#cb61-6" tabindex="-1"></a>year<span class="ot">=</span>{<span class="dv">2014</span>},</span>
-<span id="cb61-7"><a href="rmd_4.html#cb61-7" tabindex="-1"></a>volume<span class="ot">=</span>{<span class="dv">30</span>},</span>
-<span id="cb61-8"><a href="rmd_4.html#cb61-8" tabindex="-1"></a>number<span class="ot">=</span>{<span class="dv">1</span>},</span>
-<span id="cb61-9"><a href="rmd_4.html#cb61-9" tabindex="-1"></a>pages<span class="ot">=</span>{<span class="dv">32-34</span>,<span class="dv">44</span>},</span>
-<span id="cb61-10"><a href="rmd_4.html#cb61-10" tabindex="-1"></a>month<span class="ot">=</span>{<span class="dv">1</span>},</span>
-<span id="cb61-11"><a href="rmd_4.html#cb61-11" tabindex="-1"></a>}</span>
-<span id="cb61-12"><a href="rmd_4.html#cb61-12" tabindex="-1"></a></span>
-<span id="cb61-13"><a href="rmd_4.html#cb61-13" tabindex="-1"></a><span class="sc">@</span>article{张红梅,</span>
-<span id="cb61-14"><a href="rmd_4.html#cb61-14" tabindex="-1"></a>author<span class="ot">=</span>{张红梅 and 李黎力},</span>
-<span id="cb61-15"><a href="rmd_4.html#cb61-15" tabindex="-1"></a>title<span class="ot">=</span>{ 国内大循环的供给网络 ——基于省际流出增加值数据的考察 },</span>
-<span id="cb61-16"><a href="rmd_4.html#cb61-16" tabindex="-1"></a>organization<span class="ot">=</span>{北京语言大学 and 中国人民大学},</span>
-<span id="cb61-17"><a href="rmd_4.html#cb61-17" tabindex="-1"></a>journal<span class="ot">=</span>{学习与探索},</span>
-<span id="cb61-18"><a href="rmd_4.html#cb61-18" tabindex="-1"></a>year<span class="ot">=</span>{<span class="dv">2021</span>},</span>
-<span id="cb61-19"><a href="rmd_4.html#cb61-19" tabindex="-1"></a>volume<span class="ot">=</span>{},</span>
-<span id="cb61-20"><a href="rmd_4.html#cb61-20" tabindex="-1"></a>number<span class="ot">=</span>{<span class="dv">4</span>},</span>
-<span id="cb61-21"><a href="rmd_4.html#cb61-21" tabindex="-1"></a>pages<span class="ot">=</span>{<span class="dv">111-119</span>},</span>
-<span id="cb61-22"><a href="rmd_4.html#cb61-22" tabindex="-1"></a>month<span class="ot">=</span>{<span class="dv">4</span>},</span>
-<span id="cb61-23"><a href="rmd_4.html#cb61-23" tabindex="-1"></a>}</span></code></pre></div></li>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="rmd_4.html#cb60-1" tabindex="-1"></a><span class="sc">@</span>article{姜玲,</span>
+<span id="cb60-2"><a href="rmd_4.html#cb60-2" tabindex="-1"></a>author<span class="ot">=</span>{姜玲 and 张爱宁},</span>
+<span id="cb60-3"><a href="rmd_4.html#cb60-3" tabindex="-1"></a>title<span class="ot">=</span>{ 中国省际循环经济发展差异的空间计量分析 },</span>
+<span id="cb60-4"><a href="rmd_4.html#cb60-4" tabindex="-1"></a>organization<span class="ot">=</span>{甘肃省科学技术情报研究所 and 甘肃省科学技术情报研究所},</span>
+<span id="cb60-5"><a href="rmd_4.html#cb60-5" tabindex="-1"></a>journal<span class="ot">=</span>{资源开发与市场},</span>
+<span id="cb60-6"><a href="rmd_4.html#cb60-6" tabindex="-1"></a>year<span class="ot">=</span>{<span class="dv">2014</span>},</span>
+<span id="cb60-7"><a href="rmd_4.html#cb60-7" tabindex="-1"></a>volume<span class="ot">=</span>{<span class="dv">30</span>},</span>
+<span id="cb60-8"><a href="rmd_4.html#cb60-8" tabindex="-1"></a>number<span class="ot">=</span>{<span class="dv">1</span>},</span>
+<span id="cb60-9"><a href="rmd_4.html#cb60-9" tabindex="-1"></a>pages<span class="ot">=</span>{<span class="dv">32-34</span>,<span class="dv">44</span>},</span>
+<span id="cb60-10"><a href="rmd_4.html#cb60-10" tabindex="-1"></a>month<span class="ot">=</span>{<span class="dv">1</span>},</span>
+<span id="cb60-11"><a href="rmd_4.html#cb60-11" tabindex="-1"></a>}</span>
+<span id="cb60-12"><a href="rmd_4.html#cb60-12" tabindex="-1"></a></span>
+<span id="cb60-13"><a href="rmd_4.html#cb60-13" tabindex="-1"></a><span class="sc">@</span>article{张红梅,</span>
+<span id="cb60-14"><a href="rmd_4.html#cb60-14" tabindex="-1"></a>author<span class="ot">=</span>{张红梅 and 李黎力},</span>
+<span id="cb60-15"><a href="rmd_4.html#cb60-15" tabindex="-1"></a>title<span class="ot">=</span>{ 国内大循环的供给网络 ——基于省际流出增加值数据的考察 },</span>
+<span id="cb60-16"><a href="rmd_4.html#cb60-16" tabindex="-1"></a>organization<span class="ot">=</span>{北京语言大学 and 中国人民大学},</span>
+<span id="cb60-17"><a href="rmd_4.html#cb60-17" tabindex="-1"></a>journal<span class="ot">=</span>{学习与探索},</span>
+<span id="cb60-18"><a href="rmd_4.html#cb60-18" tabindex="-1"></a>year<span class="ot">=</span>{<span class="dv">2021</span>},</span>
+<span id="cb60-19"><a href="rmd_4.html#cb60-19" tabindex="-1"></a>volume<span class="ot">=</span>{},</span>
+<span id="cb60-20"><a href="rmd_4.html#cb60-20" tabindex="-1"></a>number<span class="ot">=</span>{<span class="dv">4</span>},</span>
+<span id="cb60-21"><a href="rmd_4.html#cb60-21" tabindex="-1"></a>pages<span class="ot">=</span>{<span class="dv">111-119</span>},</span>
+<span id="cb60-22"><a href="rmd_4.html#cb60-22" tabindex="-1"></a>month<span class="ot">=</span>{<span class="dv">4</span>},</span>
+<span id="cb60-23"><a href="rmd_4.html#cb60-23" tabindex="-1"></a>}</span></code></pre></div></li>
 <li><p>在正文处使用<code>[@key]</code>即可引用对应的文献，其中<code>key</code>就是第一个逗号前的内容（如果太长则可以任意修改，只要是唯一的就行）。</p></li>
 <li><p>如果有些文献在文中没有直接引用，则默认不显示这些参考文献。除非你在元数据的<code>notice</code>处声明了<code>'@key'</code>，不同文献之间用逗号隔开。或者直接<code>notice: '@*'</code>表示显示所有的参考文献。</p></li>
 </ol>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="rmd_4.html#cb62-1" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb62-2"><a href="rmd_4.html#cb62-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;示例&quot;</span></span>
-<span id="cb62-3"><a href="rmd_4.html#cb62-3" tabindex="-1"></a>output<span class="sc">:</span> html_document</span>
-<span id="cb62-4"><a href="rmd_4.html#cb62-4" tabindex="-1"></a>bibliography<span class="sc">:</span> reference.bib</span>
-<span id="cb62-5"><a href="rmd_4.html#cb62-5" tabindex="-1"></a>csl<span class="sc">:</span> china<span class="sc">-</span>national<span class="sc">-</span>standard<span class="sc">-</span>gb<span class="sc">-</span>t<span class="dv">-7714-2015</span><span class="sc">-</span>numeric.csl</span>
-<span id="cb62-6"><a href="rmd_4.html#cb62-6" tabindex="-1"></a>notice<span class="sc">:</span> <span class="st">&#39;@张红梅&#39;</span></span>
-<span id="cb62-7"><a href="rmd_4.html#cb62-7" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb62-8"><a href="rmd_4.html#cb62-8" tabindex="-1"></a></span>
-<span id="cb62-9"><a href="rmd_4.html#cb62-9" tabindex="-1"></a>姜玲等学者[<span class="sc">@</span>姜玲]在其文章中指出，balabala...</span>
-<span id="cb62-10"><a href="rmd_4.html#cb62-10" tabindex="-1"></a></span>
-<span id="cb62-11"><a href="rmd_4.html#cb62-11" tabindex="-1"></a><span class="co"># 参考文献</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="rmd_4.html#cb61-1" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb61-2"><a href="rmd_4.html#cb61-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;示例&quot;</span></span>
+<span id="cb61-3"><a href="rmd_4.html#cb61-3" tabindex="-1"></a>output<span class="sc">:</span> html_document</span>
+<span id="cb61-4"><a href="rmd_4.html#cb61-4" tabindex="-1"></a>bibliography<span class="sc">:</span> reference.bib</span>
+<span id="cb61-5"><a href="rmd_4.html#cb61-5" tabindex="-1"></a>csl<span class="sc">:</span> china<span class="sc">-</span>national<span class="sc">-</span>standard<span class="sc">-</span>gb<span class="sc">-</span>t<span class="dv">-7714-2015</span><span class="sc">-</span>numeric.csl</span>
+<span id="cb61-6"><a href="rmd_4.html#cb61-6" tabindex="-1"></a>notice<span class="sc">:</span> <span class="st">&#39;@张红梅&#39;</span></span>
+<span id="cb61-7"><a href="rmd_4.html#cb61-7" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb61-8"><a href="rmd_4.html#cb61-8" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="rmd_4.html#cb61-9" tabindex="-1"></a>姜玲等学者[<span class="sc">@</span>姜玲]在其文章中指出，balabala...</span>
+<span id="cb61-10"><a href="rmd_4.html#cb61-10" tabindex="-1"></a></span>
+<span id="cb61-11"><a href="rmd_4.html#cb61-11" tabindex="-1"></a><span class="co"># 参考文献</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p13"></span>
 <img src="pic/rmarkdown/p13.jpg" alt="参考文献示例"  />
 <p class="caption">
@@ -578,24 +578,24 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <div id="rmd_4_9" class="section level3 hasAnchor" number="1.4.9">
 <h3><span class="header-section-number">1.4.9</span> 多位作者<a href="rmd_4.html#rmd_4_9" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>如果一篇文档有多位作者的话，那么可以直接以字符串的形式输入，例如<code>author: '小明，小红，小刚'</code>（有无引号均可）。或许你想为每位作者附加一些基本信息，那么你可以尝试无序列表及脚注，如下所示：</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="rmd_4.html#cb63-1" tabindex="-1"></a><span class="co"># 无序列表，每位作者单独一行</span></span>
-<span id="cb63-2"><a href="rmd_4.html#cb63-2" tabindex="-1"></a>author<span class="sc">:</span> </span>
-<span id="cb63-3"><a href="rmd_4.html#cb63-3" tabindex="-1"></a>  <span class="sc">-</span> 小明，基本信息</span>
-<span id="cb63-4"><a href="rmd_4.html#cb63-4" tabindex="-1"></a>  <span class="sc">-</span> 小红，基本信息</span>
-<span id="cb63-5"><a href="rmd_4.html#cb63-5" tabindex="-1"></a></span>
-<span id="cb63-6"><a href="rmd_4.html#cb63-6" tabindex="-1"></a><span class="co"># 脚注，在脚注处标明额外信息</span></span>
-<span id="cb63-7"><a href="rmd_4.html#cb63-7" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&#39;小明^[基本信息]， 小红^[基本信息]&#39;</span></span>
-<span id="cb63-8"><a href="rmd_4.html#cb63-8" tabindex="-1"></a><span class="co"># 使用脚注时注意和上标作区分，逗号后面空格隔开即可</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="rmd_4.html#cb62-1" tabindex="-1"></a><span class="co"># 无序列表，每位作者单独一行</span></span>
+<span id="cb62-2"><a href="rmd_4.html#cb62-2" tabindex="-1"></a>author<span class="sc">:</span> </span>
+<span id="cb62-3"><a href="rmd_4.html#cb62-3" tabindex="-1"></a>  <span class="sc">-</span> 小明，基本信息</span>
+<span id="cb62-4"><a href="rmd_4.html#cb62-4" tabindex="-1"></a>  <span class="sc">-</span> 小红，基本信息</span>
+<span id="cb62-5"><a href="rmd_4.html#cb62-5" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="rmd_4.html#cb62-6" tabindex="-1"></a><span class="co"># 脚注，在脚注处标明额外信息</span></span>
+<span id="cb62-7"><a href="rmd_4.html#cb62-7" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&#39;小明^[基本信息]， 小红^[基本信息]&#39;</span></span>
+<span id="cb62-8"><a href="rmd_4.html#cb62-8" tabindex="-1"></a><span class="co"># 使用脚注时注意和上标作区分，逗号后面空格隔开即可</span></span></code></pre></div>
 </div>
 <div id="rmd_4_10" class="section level3 hasAnchor" number="1.4.10">
 <h3><span class="header-section-number">1.4.10</span> 将模型输出为公式<a href="rmd_4.html#rmd_4_10" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p><code>equatiomatic</code>包的<code>extract_eq</code>能够将拟合的模型输出为公式，如下所示:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="rmd_4.html#cb64-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris)</span>
-<span id="cb64-2"><a href="rmd_4.html#cb64-2" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(model)                  <span class="co"># 提取公式</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="rmd_4.html#cb63-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length<span class="sc">~</span>Sepal.Width, <span class="at">data=</span>iris)</span>
+<span id="cb63-2"><a href="rmd_4.html#cb63-2" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(model)                  <span class="co"># 提取公式</span></span></code></pre></div>
 <p><span class="math display">\[
 \operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \epsilon
 \]</span></p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="rmd_4.html#cb65-1" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(model, <span class="at">use_coefs=</span><span class="cn">TRUE</span>)  <span class="co"># 提取具体数值的公式</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="rmd_4.html#cb64-1" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(model, <span class="at">use_coefs=</span><span class="cn">TRUE</span>)  <span class="co"># 提取具体数值的公式</span></span></code></pre></div>
 <p><span class="math display">\[
 \operatorname{\widehat{Sepal.Length}} = 6.53 - 0.22(\operatorname{Sepal.Width})
 \]</span></p>
@@ -606,27 +606,27 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <div id="rmd_4_11" class="section level3 hasAnchor" number="1.4.11">
 <h3><span class="header-section-number">1.4.11</span> 流程图<a href="rmd_4.html#rmd_4_11" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p><code>DiagrammeR</code>包利用<code>graphviz</code>或<code>mermaid</code>来绘制流程图，对应的函数分别为<code>grViz</code>和<code>mermaid</code>。两个函数都得以字符串的形式来接收对应风格的绘图语言。关于选择何种函数就见仁见智了，二者示例如下：</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rmd_4.html#cb66-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">grViz</span>(<span class="st">&quot;digraph {</span></span>
-<span id="cb66-2"><a href="rmd_4.html#cb66-2" tabindex="-1"></a><span class="st">  graph [layout = dot, rankdir = LR]</span></span>
-<span id="cb66-3"><a href="rmd_4.html#cb66-3" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb66-4"><a href="rmd_4.html#cb66-4" tabindex="-1"></a><span class="st">  node [shape = box]        </span></span>
-<span id="cb66-5"><a href="rmd_4.html#cb66-5" tabindex="-1"></a><span class="st">  rec1 [label = &#39;Step 1 打开冰箱&#39;]</span></span>
-<span id="cb66-6"><a href="rmd_4.html#cb66-6" tabindex="-1"></a><span class="st">  rec2 [label = &#39;Step 2 塞入大象&#39;]</span></span>
-<span id="cb66-7"><a href="rmd_4.html#cb66-7" tabindex="-1"></a><span class="st">  rec3 [label = &#39;Step 3 关上冰箱&#39;]</span></span>
-<span id="cb66-8"><a href="rmd_4.html#cb66-8" tabindex="-1"></a><span class="st">  </span></span>
-<span id="cb66-9"><a href="rmd_4.html#cb66-9" tabindex="-1"></a><span class="st">  rec1 -&gt; rec2 -&gt; rec3</span></span>
-<span id="cb66-10"><a href="rmd_4.html#cb66-10" tabindex="-1"></a><span class="st">  }&quot;</span>,</span>
-<span id="cb66-11"><a href="rmd_4.html#cb66-11" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-5ef604b8f84a727b920e" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5ef604b8f84a727b920e">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="rmd_4.html#cb67-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">mermaid</span>(<span class="st">&#39;</span></span>
-<span id="cb67-2"><a href="rmd_4.html#cb67-2" tabindex="-1"></a><span class="st">  graph LR</span></span>
-<span id="cb67-3"><a href="rmd_4.html#cb67-3" tabindex="-1"></a><span class="st">  node_1[Step 1 打开冰箱] --&gt; node_2[Step 2 塞入大象]</span></span>
-<span id="cb67-4"><a href="rmd_4.html#cb67-4" tabindex="-1"></a><span class="st">  node_2[Step 2 塞入大象] --&gt; node_3[Step 3 关上冰箱]</span></span>
-<span id="cb67-5"><a href="rmd_4.html#cb67-5" tabindex="-1"></a><span class="st">  &#39;</span>,</span>
-<span id="cb67-6"><a href="rmd_4.html#cb67-6" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-ed1dd3dceecba97c80c4" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ed1dd3dceecba97c80c4">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="rmd_4.html#cb65-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">grViz</span>(<span class="st">&quot;digraph {</span></span>
+<span id="cb65-2"><a href="rmd_4.html#cb65-2" tabindex="-1"></a><span class="st">  graph [layout = dot, rankdir = LR]</span></span>
+<span id="cb65-3"><a href="rmd_4.html#cb65-3" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb65-4"><a href="rmd_4.html#cb65-4" tabindex="-1"></a><span class="st">  node [shape = box]        </span></span>
+<span id="cb65-5"><a href="rmd_4.html#cb65-5" tabindex="-1"></a><span class="st">  rec1 [label = &#39;Step 1 打开冰箱&#39;]</span></span>
+<span id="cb65-6"><a href="rmd_4.html#cb65-6" tabindex="-1"></a><span class="st">  rec2 [label = &#39;Step 2 塞入大象&#39;]</span></span>
+<span id="cb65-7"><a href="rmd_4.html#cb65-7" tabindex="-1"></a><span class="st">  rec3 [label = &#39;Step 3 关上冰箱&#39;]</span></span>
+<span id="cb65-8"><a href="rmd_4.html#cb65-8" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb65-9"><a href="rmd_4.html#cb65-9" tabindex="-1"></a><span class="st">  rec1 -&gt; rec2 -&gt; rec3</span></span>
+<span id="cb65-10"><a href="rmd_4.html#cb65-10" tabindex="-1"></a><span class="st">  }&quot;</span>,</span>
+<span id="cb65-11"><a href="rmd_4.html#cb65-11" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
+<div id="htmlwidget-ba2f0df8cf2dfd2a344a" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ba2f0df8cf2dfd2a344a">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rmd_4.html#cb66-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">mermaid</span>(<span class="st">&#39;</span></span>
+<span id="cb66-2"><a href="rmd_4.html#cb66-2" tabindex="-1"></a><span class="st">  graph LR</span></span>
+<span id="cb66-3"><a href="rmd_4.html#cb66-3" tabindex="-1"></a><span class="st">  node_1[Step 1 打开冰箱] --&gt; node_2[Step 2 塞入大象]</span></span>
+<span id="cb66-4"><a href="rmd_4.html#cb66-4" tabindex="-1"></a><span class="st">  node_2[Step 2 塞入大象] --&gt; node_3[Step 3 关上冰箱]</span></span>
+<span id="cb66-5"><a href="rmd_4.html#cb66-5" tabindex="-1"></a><span class="st">  &#39;</span>,</span>
+<span id="cb66-6"><a href="rmd_4.html#cb66-6" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
+<div id="htmlwidget-1f4bfa723602338da8d1" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1f4bfa723602338da8d1">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 <p>相关语法介绍可详见<code>graphviz</code><a href="https://www.graphviz.org/doc/info/lang.html" target="_blank">官网</a>和<code>mermaid</code><a href="https://mermaid.nodejs.cn/syntax/flowchart.html" target="_blank">官网</a>（有中英文官网，这个是中文的）。</p>
 <blockquote>
 <p><code>mermaid</code>官网还介绍了其他类型的图形，例如甘特图、桑基图。</p>
@@ -639,9 +639,9 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <div id="rmd_4_13" class="section level3 hasAnchor" number="1.4.13">
 <h3><span class="header-section-number">1.4.13</span> 缩进<a href="rmd_4.html#rmd_4_13" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>在markdown中，如果你想用空格来表示缩进，这将会是徒劳的。在开头使用’| ‘后即可正常保留空格（四个空格对应一个汉字符）及之后的换行符。注意’| ’后面跟了个空格。</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="rmd_4.html#cb68-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span>     昨天是你</span>
-<span id="cb68-2"><a href="rmd_4.html#cb68-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span> 今天是我</span>
-<span id="cb68-3"><a href="rmd_4.html#cb68-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span>     明天又是谁</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="rmd_4.html#cb67-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span>     昨天是你</span>
+<span id="cb67-2"><a href="rmd_4.html#cb67-2" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span> 今天是我</span>
+<span id="cb67-3"><a href="rmd_4.html#cb67-3" tabindex="-1"></a><span class="sc">&gt;</span> <span class="er">|</span>     明天又是谁</span></code></pre></div>
 <blockquote>
 <div class="line-block">    昨天是你<br />
 今天是我<br />
@@ -653,9 +653,9 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <p>对于HTML输出，可以用形如<code>&lt;span style='color: red'&gt;text&lt;/span&gt;</code>的方式来对<code>text</code>设置字体颜色。</p>
 <p>对于PDF输出，可以用形如<code>\textcolor{red}{text}</code>的方式来对<code>text</code>设置字体颜色。</p>
 <p>甚至可以使用自定义函数来格式化输出文本。你只需用内联代码的形式输入该自定义函数及目标参数即可。</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="rmd_4.html#cb69-1" tabindex="-1"></a>colorize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, color) {</span>
-<span id="cb69-2"><a href="rmd_4.html#cb69-2" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">&quot;&lt;span style=&#39;color: %s;&#39;&gt;%s&lt;/span&gt;&quot;</span>, color, x)</span>
-<span id="cb69-3"><a href="rmd_4.html#cb69-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="rmd_4.html#cb68-1" tabindex="-1"></a>colorize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, color) {</span>
+<span id="cb68-2"><a href="rmd_4.html#cb68-2" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">&quot;&lt;span style=&#39;color: %s;&#39;&gt;%s&lt;/span&gt;&quot;</span>, color, x)</span>
+<span id="cb68-3"><a href="rmd_4.html#cb68-3" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 <div class="footnotes">

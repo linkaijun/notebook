@@ -418,9 +418,6 @@ code
     # collapse=TRUE
     cat('在同一个块中\n')
     ## 在同一个块中
-    ```
-    
-    ``` r
     print('在同一个块中\n')
     ## [1] "在同一个块中\n"
     ```
@@ -1262,8 +1259,8 @@ DiagrammeR::grViz("digraph {
 ```
 
 ```{=html}
-<div id="htmlwidget-5ef604b8f84a727b920e" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5ef604b8f84a727b920e">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ba2f0df8cf2dfd2a344a" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ba2f0df8cf2dfd2a344a">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ``` r
@@ -1276,8 +1273,8 @@ DiagrammeR::mermaid('
 ```
 
 ```{=html}
-<div id="htmlwidget-ed1dd3dceecba97c80c4" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ed1dd3dceecba97c80c4">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1f4bfa723602338da8d1" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1f4bfa723602338da8d1">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 ```
 
 相关语法介绍可详见`graphviz`[官网](https://www.graphviz.org/doc/info/lang.html)和`mermaid`[官网](https://mermaid.nodejs.cn/syntax/flowchart.html)（有中英文官网，这个是中文的）。

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.3 语法介绍 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.3 语法介绍 | kj的学习笔记" />
   <meta property="og:type" content="book" />
@@ -637,9 +637,9 @@ code
 <p><em>一般的输出结果就和<code>results='markup'</code>的示例一样</em></p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="rmd_3.html#cb21-1" tabindex="-1"></a><span class="co"># collapse=TRUE</span></span>
 <span id="cb21-2"><a href="rmd_3.html#cb21-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&#39;在同一个块中</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
-<span id="cb21-3"><a href="rmd_3.html#cb21-3" tabindex="-1"></a><span class="do">## 在同一个块中</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="rmd_3.html#cb22-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&#39;在同一个块中</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
-<span id="cb22-2"><a href="rmd_3.html#cb22-2" tabindex="-1"></a><span class="do">## [1] &quot;在同一个块中\n&quot;</span></span></code></pre></div></li>
+<span id="cb21-3"><a href="rmd_3.html#cb21-3" tabindex="-1"></a><span class="do">## 在同一个块中</span></span>
+<span id="cb21-4"><a href="rmd_3.html#cb21-4" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&#39;在同一个块中</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb21-5"><a href="rmd_3.html#cb21-5" tabindex="-1"></a><span class="do">## [1] &quot;在同一个块中\n&quot;</span></span></code></pre></div></li>
 <li><p>include</p>
 <p>是否将源代码和结果显示出来，默认为<code>TRUE</code>。</p></li>
 <li><p>warning</p>
@@ -650,31 +650,31 @@ code
 <p>是否在遇到错误时继续运行后面的代码，默认为<code>FALSE</code>。若为<code>FALSE</code>，则遇到错误就停止，并且错误也会显示在控制台里。若为<code>TRUE</code>，则即使遇到错误也会继续运行后面的代码。除了<code>TRUE</code>和<code>FALSE</code>选项，还可以输入数字<code>0</code>、<code>1</code>、<code>2</code>。<code>0</code>如同<code>TRUE</code>，<code>2</code>如同<code>FALSE</code>，而<code>1</code>则表示在遇到错误时停止，但不会再控制台里报错。</p></li>
 <li><p>tidy</p>
 <p>是否格式化输出R代码，默认为<code>FALSE</code>。若为<code>TRUE</code>，则使用<strong>formatR</strong>包（得提前下载）的<code>tidy_source()</code>函数来对R代码进行格式化处理，也就是用<strong>formatR</strong>包的风格来呈现源代码。</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="rmd_3.html#cb23-1" tabindex="-1"></a><span class="co"># tidy=FALSE</span></span>
-<span id="cb23-2"><a href="rmd_3.html#cb23-2" tabindex="-1"></a><span class="cf">if</span>(<span class="cn">TRUE</span>){<span class="dv">1</span>} <span class="cf">else</span> {<span class="dv">2</span>}</span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="rmd_3.html#cb24-1" tabindex="-1"></a><span class="co"># tidy=TRUE</span></span>
-<span id="cb24-2"><a href="rmd_3.html#cb24-2" tabindex="-1"></a><span class="cf">if</span> (<span class="cn">TRUE</span>) {</span>
-<span id="cb24-3"><a href="rmd_3.html#cb24-3" tabindex="-1"></a>    <span class="dv">1</span></span>
-<span id="cb24-4"><a href="rmd_3.html#cb24-4" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb24-5"><a href="rmd_3.html#cb24-5" tabindex="-1"></a>    <span class="dv">2</span></span>
-<span id="cb24-6"><a href="rmd_3.html#cb24-6" tabindex="-1"></a>}</span></code></pre></div></li>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="rmd_3.html#cb22-1" tabindex="-1"></a><span class="co"># tidy=FALSE</span></span>
+<span id="cb22-2"><a href="rmd_3.html#cb22-2" tabindex="-1"></a><span class="cf">if</span>(<span class="cn">TRUE</span>){<span class="dv">1</span>} <span class="cf">else</span> {<span class="dv">2</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="rmd_3.html#cb23-1" tabindex="-1"></a><span class="co"># tidy=TRUE</span></span>
+<span id="cb23-2"><a href="rmd_3.html#cb23-2" tabindex="-1"></a><span class="cf">if</span> (<span class="cn">TRUE</span>) {</span>
+<span id="cb23-3"><a href="rmd_3.html#cb23-3" tabindex="-1"></a>    <span class="dv">1</span></span>
+<span id="cb23-4"><a href="rmd_3.html#cb23-4" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb23-5"><a href="rmd_3.html#cb23-5" tabindex="-1"></a>    <span class="dv">2</span></span>
+<span id="cb23-6"><a href="rmd_3.html#cb23-6" tabindex="-1"></a>}</span></code></pre></div></li>
 <li><p>tidy.opts</p>
 <p>为<code>tidy</code>传递参数，列表。</p></li>
 <li><p>prompt</p>
 <p>是否为R代码添加提示符，默认为<code>FALSE</code>。若为<code>TRUE</code>，则会在行首添加’&gt;‘和’+’符号。</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="rmd_3.html#cb25-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># prompt=TRUE</span></span>
-<span id="cb25-2"><a href="rmd_3.html#cb25-2" tabindex="-1"></a><span class="er">&gt;</span> <span class="cf">if</span> (<span class="cn">TRUE</span>) {</span>
-<span id="cb25-3"><a href="rmd_3.html#cb25-3" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1</span></span>
-<span id="cb25-4"><a href="rmd_3.html#cb25-4" tabindex="-1"></a><span class="sc">+</span> } <span class="cf">else</span> {</span>
-<span id="cb25-5"><a href="rmd_3.html#cb25-5" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">2</span></span>
-<span id="cb25-6"><a href="rmd_3.html#cb25-6" tabindex="-1"></a><span class="sc">+</span> }</span></code></pre></div></li>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="rmd_3.html#cb24-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># prompt=TRUE</span></span>
+<span id="cb24-2"><a href="rmd_3.html#cb24-2" tabindex="-1"></a><span class="er">&gt;</span> <span class="cf">if</span> (<span class="cn">TRUE</span>) {</span>
+<span id="cb24-3"><a href="rmd_3.html#cb24-3" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">1</span></span>
+<span id="cb24-4"><a href="rmd_3.html#cb24-4" tabindex="-1"></a><span class="sc">+</span> } <span class="cf">else</span> {</span>
+<span id="cb24-5"><a href="rmd_3.html#cb24-5" tabindex="-1"></a><span class="sc">+</span>     <span class="dv">2</span></span>
+<span id="cb24-6"><a href="rmd_3.html#cb24-6" tabindex="-1"></a><span class="sc">+</span> }</span></code></pre></div></li>
 <li><p>comment</p>
 <p>用以控制输出结果的前缀，默认为’##‘。你可以用<code>comment=''</code>来将’##’去掉。</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="rmd_3.html#cb26-1" tabindex="-1"></a><span class="co"># comment=&#39;##&#39;</span></span>
-<span id="cb26-2"><a href="rmd_3.html#cb26-2" tabindex="-1"></a><span class="cf">if</span>(<span class="cn">TRUE</span>){<span class="dv">1</span>} <span class="cf">else</span> {<span class="dv">2</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="rmd_3.html#cb25-1" tabindex="-1"></a><span class="co"># comment=&#39;##&#39;</span></span>
+<span id="cb25-2"><a href="rmd_3.html#cb25-2" tabindex="-1"></a><span class="cf">if</span>(<span class="cn">TRUE</span>){<span class="dv">1</span>} <span class="cf">else</span> {<span class="dv">2</span>}</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="rmd_3.html#cb28-1" tabindex="-1"></a><span class="co"># comment=&#39;&#39;</span></span>
-<span id="cb28-2"><a href="rmd_3.html#cb28-2" tabindex="-1"></a><span class="cf">if</span>(<span class="cn">TRUE</span>){<span class="dv">1</span>} <span class="cf">else</span> {<span class="dv">2</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="rmd_3.html#cb27-1" tabindex="-1"></a><span class="co"># comment=&#39;&#39;</span></span>
+<span id="cb27-2"><a href="rmd_3.html#cb27-2" tabindex="-1"></a><span class="cf">if</span>(<span class="cn">TRUE</span>){<span class="dv">1</span>} <span class="cf">else</span> {<span class="dv">2</span>}</span></code></pre></div>
 <pre><code>[1] 1</code></pre></li>
 <li><p>highlight</p>
 <p>是否高亮语法，默认为<code>TRUE</code>。</p></li>
@@ -687,20 +687,20 @@ code
 <h3><span class="header-section-number">1.3.8</span> 表格<a href="rmd_3.html#rmd_3_8" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>你可以在<strong>Visual</strong>模式中，找到工具栏里的’Insert’选项来插入表格。</p>
 <p>你也可以使用Markdown语法来创建表格。用三个及以上的’-‘来创建标题，并用’|‘隔开每列，向左右两侧添加’:’来实现对齐（示例中依次是左对齐、居中、右对齐）。</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="rmd_3.html#cb30-1" tabindex="-1"></a><span class="sc">|</span>col1<span class="sc">|</span>col2<span class="sc">|</span>col3<span class="sc">|</span></span>
-<span id="cb30-2"><a href="rmd_3.html#cb30-2" tabindex="-1"></a><span class="er">|:</span><span class="sc">---</span><span class="er">|:</span><span class="sc">---</span><span class="er">:|</span><span class="sc">---</span><span class="er">:|</span></span>
-<span id="cb30-3"><a href="rmd_3.html#cb30-3" tabindex="-1"></a><span class="er">|</span>text<span class="sc">|</span>text<span class="sc">|</span>text<span class="sc">|</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="rmd_3.html#cb29-1" tabindex="-1"></a><span class="sc">|</span>col1<span class="sc">|</span>col2<span class="sc">|</span>col3<span class="sc">|</span></span>
+<span id="cb29-2"><a href="rmd_3.html#cb29-2" tabindex="-1"></a><span class="er">|:</span><span class="sc">---</span><span class="er">|:</span><span class="sc">---</span><span class="er">:|</span><span class="sc">---</span><span class="er">:|</span></span>
+<span id="cb29-3"><a href="rmd_3.html#cb29-3" tabindex="-1"></a><span class="er">|</span>text<span class="sc">|</span>text<span class="sc">|</span>text<span class="sc">|</span></span></code></pre></div>
 <p>而<strong>knitr</strong>包提供了<code>kable()</code>函数来较为方便地控制表格。<code>kable()</code>能够将矩阵或数据框转化为表格，但仅能在HTML、PDF、Word中使用。注意<code>kable()</code>无法精细地设置单元格样式或合并单元格。</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="rmd_3.html#cb31-1" tabindex="-1"></a><span class="fu">kable</span>(x, format, <span class="at">digits =</span> <span class="fu">getOption</span>(<span class="st">&quot;digits&quot;</span>), <span class="at">row.names =</span> <span class="cn">NA</span>,</span>
-<span id="cb31-2"><a href="rmd_3.html#cb31-2" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="cn">NA</span>, align, <span class="at">caption =</span> <span class="cn">NULL</span>, <span class="at">label =</span> <span class="cn">NULL</span>,</span>
-<span id="cb31-3"><a href="rmd_3.html#cb31-3" tabindex="-1"></a>  <span class="at">format.args =</span> <span class="fu">list</span>(), <span class="at">escape =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="rmd_3.html#cb30-1" tabindex="-1"></a><span class="fu">kable</span>(x, format, <span class="at">digits =</span> <span class="fu">getOption</span>(<span class="st">&quot;digits&quot;</span>), <span class="at">row.names =</span> <span class="cn">NA</span>,</span>
+<span id="cb30-2"><a href="rmd_3.html#cb30-2" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="cn">NA</span>, align, <span class="at">caption =</span> <span class="cn">NULL</span>, <span class="at">label =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-3"><a href="rmd_3.html#cb30-3" tabindex="-1"></a>  <span class="at">format.args =</span> <span class="fu">list</span>(), <span class="at">escape =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
 <hr />
 <ul>
 <li><p>x</p>
 <p>矩阵或数据框。</p></li>
 <li><p>format</p>
 <p>设置表格样式，字符串。可选值有<code>'pipe'</code>、<code>'simple'</code>、<code>'latex'</code>、<code>'html'</code>、<code>'rst'</code>、<code>'jira'</code>、<code>'org'</code>。注意可选值应当与文档的输出格式相匹配，<code>'pipe'</code>和<code>'simple'</code>适用于所有输出格式，RMD文件默认使用<code>'pipe'</code>。如果你只需要一种非默认的表格样式，你可以在全局设置中设置表格样式，如<code>options(knitr.table.format = 'html')</code>。</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="rmd_3.html#cb32-1" tabindex="-1"></a><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">format=</span><span class="st">&#39;pipe&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="rmd_3.html#cb31-1" tabindex="-1"></a><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">format=</span><span class="st">&#39;pipe&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -728,7 +728,7 @@ code
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="rmd_3.html#cb33-1" tabindex="-1"></a><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">format=</span><span class="st">&#39;simple&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="rmd_3.html#cb32-1" tabindex="-1"></a><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">format=</span><span class="st">&#39;simple&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -760,8 +760,8 @@ code
 <p>保留小数点位数，数值或数值向量。若为数值向量，则根据数值向量长度从第一列开始对应过去，例如表格有5列，数字向量长度为3，则仅对前三列生效。若遇到字符串型的列，可以在数值向量中设置0或<code>NA</code>。</p></li>
 <li><p>format.args</p>
 <p>为<code>format()</code>传递参数来格式化数值，列表。例如可以对数值采用科学计数法，或者每隔三位用’,’隔开。</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="rmd_3.html#cb34-1" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">12345</span>,<span class="dv">12138</span>),<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">13548987</span>,<span class="dv">13548581</span>))</span>
-<span id="cb34-2"><a href="rmd_3.html#cb34-2" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">format.args=</span><span class="fu">list</span>(<span class="at">scientific=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="rmd_3.html#cb33-1" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">12345</span>,<span class="dv">12138</span>),<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">13548987</span>,<span class="dv">13548581</span>))</span>
+<span id="cb33-2"><a href="rmd_3.html#cb33-2" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">format.args=</span><span class="fu">list</span>(<span class="at">scientific=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -780,8 +780,8 @@ code
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="rmd_3.html#cb35-1" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">12345</span>, <span class="dv">12138</span>),<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">13548987</span>, <span class="dv">13548581</span>))</span>
-<span id="cb35-2"><a href="rmd_3.html#cb35-2" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="rmd_3.html#cb34-1" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">12345</span>, <span class="dv">12138</span>),<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">13548987</span>, <span class="dv">13548581</span>))</span>
+<span id="cb34-2"><a href="rmd_3.html#cb34-2" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -815,9 +815,9 @@ code
 </ul>
 <hr />
 <p>有时表格中会出现缺失值，默认用<code>NA</code>展示。你可以在全局设置中设置缺失值的替换值，如<code>options(knitr.kable.NA = '-')</code></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="rmd_3.html#cb36-1" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">123</span>, <span class="cn">NA</span>),<span class="at">y =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">15</span>))</span>
-<span id="cb36-2"><a href="rmd_3.html#cb36-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">&#39;—&#39;</span>)</span>
-<span id="cb36-3"><a href="rmd_3.html#cb36-3" tabindex="-1"></a><span class="fu">kable</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="rmd_3.html#cb35-1" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">123</span>, <span class="cn">NA</span>),<span class="at">y =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">15</span>))</span>
+<span id="cb35-2"><a href="rmd_3.html#cb35-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">&#39;—&#39;</span>)</span>
+<span id="cb35-3"><a href="rmd_3.html#cb35-3" tabindex="-1"></a><span class="fu">kable</span>(df)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -837,13 +837,13 @@ code
 </tbody>
 </table>
 <p>如果你想并排放置两个表格，那么你可以使用<code>kables()</code>（仅适用于HTML及PDF），该函数的<code>x</code>参数接收列表，列表中的每个元素均为<code>kable()</code>对象，其余参数同<code>kable()</code>。</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="rmd_3.html#cb37-1" tabindex="-1"></a><span class="fu">kables</span>(</span>
-<span id="cb37-2"><a href="rmd_3.html#cb37-2" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb37-3"><a href="rmd_3.html#cb37-3" tabindex="-1"></a>    <span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">caption =</span> <span class="st">&#39;鸢尾花&#39;</span>),</span>
-<span id="cb37-4"><a href="rmd_3.html#cb37-4" tabindex="-1"></a>    <span class="fu">kable</span>(mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">caption =</span> <span class="st">&#39;车车&#39;</span>)</span>
-<span id="cb37-5"><a href="rmd_3.html#cb37-5" tabindex="-1"></a>    ),</span>
-<span id="cb37-6"><a href="rmd_3.html#cb37-6" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;两个表格并排&#39;</span></span>
-<span id="cb37-7"><a href="rmd_3.html#cb37-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="rmd_3.html#cb36-1" tabindex="-1"></a><span class="fu">kables</span>(</span>
+<span id="cb36-2"><a href="rmd_3.html#cb36-2" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb36-3"><a href="rmd_3.html#cb36-3" tabindex="-1"></a>    <span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">caption =</span> <span class="st">&#39;鸢尾花&#39;</span>),</span>
+<span id="cb36-4"><a href="rmd_3.html#cb36-4" tabindex="-1"></a>    <span class="fu">kable</span>(mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">caption =</span> <span class="st">&#39;车车&#39;</span>)</span>
+<span id="cb36-5"><a href="rmd_3.html#cb36-5" tabindex="-1"></a>    ),</span>
+<span id="cb36-6"><a href="rmd_3.html#cb36-6" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&#39;两个表格并排&#39;</span></span>
+<span id="cb36-7"><a href="rmd_3.html#cb36-7" tabindex="-1"></a>  )</span></code></pre></div>
 <table class="kable_wrapper">
 <caption>
 <span id="tab:unnamed-chunk-22">表 1.1: </span>两个表格并排
@@ -908,10 +908,10 @@ code
 </tbody>
 </table>
 <p>如果你想在<code>for</code>循环中生成表格，那么你可以采取如下的办法。<strong>注意<code>results='asis'</code>、<code>print()</code>是必需的</strong>。末尾的<code>cat('\n')</code>是为了更好地区分打印出来的表格，否则有些时候就会弄混。</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="rmd_3.html#cb38-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
-<span id="cb38-2"><a href="rmd_3.html#cb38-2" tabindex="-1"></a>  <span class="fu">print</span>(knitr<span class="sc">::</span><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,]))</span>
-<span id="cb38-3"><a href="rmd_3.html#cb38-3" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
-<span id="cb38-4"><a href="rmd_3.html#cb38-4" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="rmd_3.html#cb37-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb37-2"><a href="rmd_3.html#cb37-2" tabindex="-1"></a>  <span class="fu">print</span>(knitr<span class="sc">::</span><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,]))</span>
+<span id="cb37-3"><a href="rmd_3.html#cb37-3" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb37-4"><a href="rmd_3.html#cb37-4" tabindex="-1"></a>}</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -966,12 +966,12 @@ code
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="rmd_3.html#cb39-1" tabindex="-1"></a><span class="co"># 如果没有results=&#39;asis&#39;、print()</span></span>
-<span id="cb39-2"><a href="rmd_3.html#cb39-2" tabindex="-1"></a><span class="co"># 直接就打印不出来了</span></span>
-<span id="cb39-3"><a href="rmd_3.html#cb39-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
-<span id="cb39-4"><a href="rmd_3.html#cb39-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,])</span>
-<span id="cb39-5"><a href="rmd_3.html#cb39-5" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
-<span id="cb39-6"><a href="rmd_3.html#cb39-6" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="rmd_3.html#cb38-1" tabindex="-1"></a><span class="co"># 如果没有results=&#39;asis&#39;、print()</span></span>
+<span id="cb38-2"><a href="rmd_3.html#cb38-2" tabindex="-1"></a><span class="co"># 直接就打印不出来了</span></span>
+<span id="cb38-3"><a href="rmd_3.html#cb38-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb38-4"><a href="rmd_3.html#cb38-4" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,])</span>
+<span id="cb38-5"><a href="rmd_3.html#cb38-5" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb38-6"><a href="rmd_3.html#cb38-6" tabindex="-1"></a>}</span></code></pre></div>
 <p>虽然<code>kable()</code>相较Markdown语法创建表格更为方便，但仍有不足之处。<strong>kableExtra</strong>包则进一步拓展了<code>kable()</code>，大家可翻阅<a href="https://cran.r-project.org/web/packages/kableExtra/index.html" target="_blank">相关资料</a>增进了解。</p>
 </div>
 <div id="rmd_3_9" class="section level3 hasAnchor" number="1.3.9">
@@ -1018,96 +1018,96 @@ code
 <ul>
 <li><p>high</p>
 <p>仅展示高级绘图命令（例如产生新图的命令）的结果，低级绘图命令（例如增添细节的命令）会被作用到已有的图片之中。</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="rmd_3.html#cb40-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;high&#39;</span></span>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="rmd_3.html#cb39-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;high&#39;</span></span>
+<span id="cb39-2"><a href="rmd_3.html#cb39-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
+<span id="cb39-3"><a href="rmd_3.html#cb39-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb39-4"><a href="rmd_3.html#cb39-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
+<span id="cb39-5"><a href="rmd_3.html#cb39-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb39-6"><a href="rmd_3.html#cb39-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p></li>
+<li><p>none</p>
+<p>不展示任何图片。</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="rmd_3.html#cb40-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;none&#39;</span></span>
 <span id="cb40-2"><a href="rmd_3.html#cb40-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
 <span id="cb40-3"><a href="rmd_3.html#cb40-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
 <span id="cb40-4"><a href="rmd_3.html#cb40-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
 <span id="cb40-5"><a href="rmd_3.html#cb40-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb40-6"><a href="rmd_3.html#cb40-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p></li>
-<li><p>none</p>
-<p>不展示任何图片。</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="rmd_3.html#cb41-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;none&#39;</span></span>
-<span id="cb41-2"><a href="rmd_3.html#cb41-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
-<span id="cb41-3"><a href="rmd_3.html#cb41-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb41-4"><a href="rmd_3.html#cb41-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
-<span id="cb41-5"><a href="rmd_3.html#cb41-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb41-6"><a href="rmd_3.html#cb41-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
+<span id="cb40-6"><a href="rmd_3.html#cb40-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
 <li><p>all</p>
 <p>展示所有图片，低级绘图命令会另外产生新的图片。</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="rmd_3.html#cb42-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;all&#39;</span></span>
-<span id="cb42-2"><a href="rmd_3.html#cb42-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
-<span id="cb42-3"><a href="rmd_3.html#cb42-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="rmd_3.html#cb41-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;all&#39;</span></span>
+<span id="cb41-2"><a href="rmd_3.html#cb41-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
+<span id="cb41-3"><a href="rmd_3.html#cb41-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="rmd_3.html#cb43-1" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
-<span id="cb43-2"><a href="rmd_3.html#cb43-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="rmd_3.html#cb42-1" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
+<span id="cb42-2"><a href="rmd_3.html#cb42-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="rmd_3.html#cb44-1" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="rmd_3.html#cb43-1" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p></li>
 <li><p>first</p>
 <p>只展示第一幅图。</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="rmd_3.html#cb45-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;first&#39;</span></span>
-<span id="cb45-2"><a href="rmd_3.html#cb45-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
-<span id="cb45-3"><a href="rmd_3.html#cb45-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="rmd_3.html#cb44-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;first&#39;</span></span>
+<span id="cb44-2"><a href="rmd_3.html#cb44-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
+<span id="cb44-3"><a href="rmd_3.html#cb44-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="rmd_3.html#cb46-1" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
-<span id="cb46-2"><a href="rmd_3.html#cb46-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb46-3"><a href="rmd_3.html#cb46-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="rmd_3.html#cb45-1" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
+<span id="cb45-2"><a href="rmd_3.html#cb45-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb45-3"><a href="rmd_3.html#cb45-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
 <li><p>last</p>
 <p>只展示最后一幅图。</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="rmd_3.html#cb47-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;last&#39;</span></span>
-<span id="cb47-2"><a href="rmd_3.html#cb47-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
-<span id="cb47-3"><a href="rmd_3.html#cb47-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb47-4"><a href="rmd_3.html#cb47-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
-<span id="cb47-5"><a href="rmd_3.html#cb47-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb47-6"><a href="rmd_3.html#cb47-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="rmd_3.html#cb46-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;last&#39;</span></span>
+<span id="cb46-2"><a href="rmd_3.html#cb46-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
+<span id="cb46-3"><a href="rmd_3.html#cb46-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb46-4"><a href="rmd_3.html#cb46-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
+<span id="cb46-5"><a href="rmd_3.html#cb46-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb46-6"><a href="rmd_3.html#cb46-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p></li>
 <li><p>数值向量</p>
 <p>以数值向量为索引展示对应的图片。</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="rmd_3.html#cb48-1" tabindex="-1"></a><span class="co"># fig.keep = c(2)</span></span>
-<span id="cb48-2"><a href="rmd_3.html#cb48-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
-<span id="cb48-3"><a href="rmd_3.html#cb48-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb48-4"><a href="rmd_3.html#cb48-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
-<span id="cb48-5"><a href="rmd_3.html#cb48-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="rmd_3.html#cb47-1" tabindex="-1"></a><span class="co"># fig.keep = c(2)</span></span>
+<span id="cb47-2"><a href="rmd_3.html#cb47-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
+<span id="cb47-3"><a href="rmd_3.html#cb47-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb47-4"><a href="rmd_3.html#cb47-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
+<span id="cb47-5"><a href="rmd_3.html#cb47-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="rmd_3.html#cb49-1" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="rmd_3.html#cb48-1" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
 </ul></li>
 <li><p>fig.show</p>
 <p>如何呈现图片，可选值为<code>'asis'</code>、<code>'hold'</code>、<code>'animate'</code>、<code>'hide'</code>，默认为<code>'asis'</code>。</p>
 <ul>
 <li><p>asis</p>
 <p>图片跟在对应的代码后面。</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="rmd_3.html#cb50-1" tabindex="-1"></a><span class="co"># fig.show = &#39;asis&#39;</span></span>
-<span id="cb50-2"><a href="rmd_3.html#cb50-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb50-3"><a href="rmd_3.html#cb50-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="rmd_3.html#cb49-1" tabindex="-1"></a><span class="co"># fig.show = &#39;asis&#39;</span></span>
+<span id="cb49-2"><a href="rmd_3.html#cb49-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb49-3"><a href="rmd_3.html#cb49-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="rmd_3.html#cb51-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb51-2"><a href="rmd_3.html#cb51-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="rmd_3.html#cb50-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb50-2"><a href="rmd_3.html#cb50-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p></li>
 <li><p>hold</p>
 <p>所有图片等代码块运行完后再出现。</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="rmd_3.html#cb52-1" tabindex="-1"></a><span class="co"># fig.show = &#39;hold&#39;</span></span>
-<span id="cb52-2"><a href="rmd_3.html#cb52-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb52-3"><a href="rmd_3.html#cb52-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb52-4"><a href="rmd_3.html#cb52-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb52-5"><a href="rmd_3.html#cb52-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="rmd_3.html#cb51-1" tabindex="-1"></a><span class="co"># fig.show = &#39;hold&#39;</span></span>
+<span id="cb51-2"><a href="rmd_3.html#cb51-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb51-3"><a href="rmd_3.html#cb51-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb51-4"><a href="rmd_3.html#cb51-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb51-5"><a href="rmd_3.html#cb51-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-1.png" width="672" /><img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p></li>
 <li><p>animate</p>
 <p>以动画的形式展示图片，详见<code>animation.hook</code>。</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="rmd_3.html#cb53-1" tabindex="-1"></a><span class="co"># fig.show = &#39;animate&#39;</span></span>
-<span id="cb53-2"><a href="rmd_3.html#cb53-2" tabindex="-1"></a><span class="co"># animation.hook = &#39;gifski&#39;</span></span>
-<span id="cb53-3"><a href="rmd_3.html#cb53-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb53-4"><a href="rmd_3.html#cb53-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="rmd_3.html#cb54-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb54-2"><a href="rmd_3.html#cb54-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="rmd_3.html#cb52-1" tabindex="-1"></a><span class="co"># fig.show = &#39;animate&#39;</span></span>
+<span id="cb52-2"><a href="rmd_3.html#cb52-2" tabindex="-1"></a><span class="co"># animation.hook = &#39;gifski&#39;</span></span>
+<span id="cb52-3"><a href="rmd_3.html#cb52-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb52-4"><a href="rmd_3.html#cb52-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="rmd_3.html#cb53-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb53-2"><a href="rmd_3.html#cb53-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-33-.gif" width="672" /></p></li>
 <li><p>hide</p>
 <p>并不展示图片。</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="rmd_3.html#cb55-1" tabindex="-1"></a><span class="co"># fig.show = &#39;hide&#39;</span></span>
-<span id="cb55-2"><a href="rmd_3.html#cb55-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb55-3"><a href="rmd_3.html#cb55-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="rmd_3.html#cb56-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
-<span id="cb56-2"><a href="rmd_3.html#cb56-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="rmd_3.html#cb54-1" tabindex="-1"></a><span class="co"># fig.show = &#39;hide&#39;</span></span>
+<span id="cb54-2"><a href="rmd_3.html#cb54-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb54-3"><a href="rmd_3.html#cb54-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="rmd_3.html#cb55-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
+<span id="cb55-2"><a href="rmd_3.html#cb55-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
 </ul></li>
 <li><p>animation.hook</p>
 <p>在HTML中用何种方式生成动画，可选值为<code>'ffmpeg'</code>、<code>'gifski'</code>，默认为`‘ffmpeg’。前者生成WebM视频，后者生成gif动图。</p>

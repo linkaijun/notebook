@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.5 文本 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.5 文本 | kj的学习笔记" />
   <meta property="og:type" content="book" />
@@ -532,19 +532,19 @@ width
 <blockquote>
 <p>官方文档中介绍的就是中、日、韩语言都能显示，但我实操的时候发现韩语显示不出。这也无伤大雅，我估计我只用得到到英语和中文。</p>
 </blockquote>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="manim_5.html#cb102-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb102-2"><a href="manim_5.html#cb102-2" tabindex="-1"></a></span>
-<span id="cb102-3"><a href="manim_5.html#cb102-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb102-4"><a href="manim_5.html#cb102-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb102-5"><a href="manim_5.html#cb102-5" tabindex="-1"></a>        text_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
-<span id="cb102-6"><a href="manim_5.html#cb102-6" tabindex="-1"></a>        text_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;你好，世界&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
-<span id="cb102-7"><a href="manim_5.html#cb102-7" tabindex="-1"></a>        text_3 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;こんにちは，せかい&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
-<span id="cb102-8"><a href="manim_5.html#cb102-8" tabindex="-1"></a>        text_4 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;안녕, 세계&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
-<span id="cb102-9"><a href="manim_5.html#cb102-9" tabindex="-1"></a></span>
-<span id="cb102-10"><a href="manim_5.html#cb102-10" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_1.shift</span>(UP<span class="sc">*</span><span class="dv">2</span>))</span>
-<span id="cb102-11"><a href="manim_5.html#cb102-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_2.next_to</span>(text_1, DOWN))</span>
-<span id="cb102-12"><a href="manim_5.html#cb102-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_3.next_to</span>(text_2, DOWN))</span>
-<span id="cb102-13"><a href="manim_5.html#cb102-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_4.next_to</span>(text_3, DOWN))</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="manim_5.html#cb101-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb101-2"><a href="manim_5.html#cb101-2" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="manim_5.html#cb101-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb101-4"><a href="manim_5.html#cb101-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb101-5"><a href="manim_5.html#cb101-5" tabindex="-1"></a>        text_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb101-6"><a href="manim_5.html#cb101-6" tabindex="-1"></a>        text_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;你好，世界&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb101-7"><a href="manim_5.html#cb101-7" tabindex="-1"></a>        text_3 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;こんにちは，せかい&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb101-8"><a href="manim_5.html#cb101-8" tabindex="-1"></a>        text_4 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;안녕, 세계&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb101-9"><a href="manim_5.html#cb101-9" tabindex="-1"></a></span>
+<span id="cb101-10"><a href="manim_5.html#cb101-10" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_1.shift</span>(UP<span class="sc">*</span><span class="dv">2</span>))</span>
+<span id="cb101-11"><a href="manim_5.html#cb101-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_2.next_to</span>(text_1, DOWN))</span>
+<span id="cb101-12"><a href="manim_5.html#cb101-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_3.next_to</span>(text_2, DOWN))</span>
+<span id="cb101-13"><a href="manim_5.html#cb101-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_4.next_to</span>(text_3, DOWN))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p2"></span>
 <img src="pic/manim/p2.png" alt="各语言文本示例" width="427" />
 <p class="caption">
@@ -554,8 +554,8 @@ width
 <ul>
 <li><p>字体</p>
 <p>首先你得知道你能使用哪些字体，使用下面的代码查看你能使用的字体。</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="manim_5.html#cb103-1" tabindex="-1"></a>import manimpango</span>
-<span id="cb103-2"><a href="manim_5.html#cb103-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">manimpango.list_fonts</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="manim_5.html#cb102-1" tabindex="-1"></a>import manimpango</span>
+<span id="cb102-2"><a href="manim_5.html#cb102-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">manimpango.list_fonts</span>())</span></code></pre></div>
 <p>然后，为<code>font</code>参数赋值即可选择对应字体，如<code>Text('Hello', font='Times New Roman')</code></p></li>
 <li><p>斜体和粗细</p>
 <ul>
@@ -564,15 +564,15 @@ width
 <li><p>weight</p>
 <p>参数<code>weight</code>控制字体粗细，粗细程度从小到大为<code>THIN</code>、<code>ULTRALIGHT</code>、<code>LIGHT</code>、<code>BOOK</code>、<code>NORMAL</code>、<code>MEDIUM</code>、<code>SEMIBOLD</code>、<code>BOLD</code>、<code>ULTRABOLD</code>、<code>HEAVY</code>、<code>ULTRAHEAVY</code>。如<code>Text("Hello world", weight=BOLD)</code>。</p></li>
 </ul>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="manim_5.html#cb104-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb104-2"><a href="manim_5.html#cb104-2" tabindex="-1"></a></span>
-<span id="cb104-3"><a href="manim_5.html#cb104-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb104-4"><a href="manim_5.html#cb104-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb104-5"><a href="manim_5.html#cb104-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">slant=</span>ITALIC)</span>
-<span id="cb104-6"><a href="manim_5.html#cb104-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">weight=</span>BOLD)</span>
-<span id="cb104-7"><a href="manim_5.html#cb104-7" tabindex="-1"></a></span>
-<span id="cb104-8"><a href="manim_5.html#cb104-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(UP))</span>
-<span id="cb104-9"><a href="manim_5.html#cb104-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span></code></pre></div></li>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="manim_5.html#cb103-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb103-2"><a href="manim_5.html#cb103-2" tabindex="-1"></a></span>
+<span id="cb103-3"><a href="manim_5.html#cb103-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb103-4"><a href="manim_5.html#cb103-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb103-5"><a href="manim_5.html#cb103-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">slant=</span>ITALIC)</span>
+<span id="cb103-6"><a href="manim_5.html#cb103-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">weight=</span>BOLD)</span>
+<span id="cb103-7"><a href="manim_5.html#cb103-7" tabindex="-1"></a></span>
+<span id="cb103-8"><a href="manim_5.html#cb103-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(UP))</span>
+<span id="cb103-9"><a href="manim_5.html#cb103-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span></code></pre></div></li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p3"></span>
 <img src="pic/manim/p3.png" alt="斜体与粗细示例" width="427" />
@@ -598,21 +598,21 @@ width
 <p>能被切片的方式选择字符说明<code>Text()</code>字符串对象是可迭代的、可被索引的。</p>
 </blockquote></li>
 </ul>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="manim_5.html#cb105-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb105-2"><a href="manim_5.html#cb105-2" tabindex="-1"></a></span>
-<span id="cb105-3"><a href="manim_5.html#cb105-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb105-4"><a href="manim_5.html#cb105-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb105-5"><a href="manim_5.html#cb105-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">color=</span>BLUE)</span>
-<span id="cb105-6"><a href="manim_5.html#cb105-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">gradient=</span>(BLUE, YELLOW, RED))</span>
-<span id="cb105-7"><a href="manim_5.html#cb105-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">t2c=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span>BLUE, <span class="st">&#39;rld&#39;</span><span class="sc">:</span>RED})</span>
-<span id="cb105-8"><a href="manim_5.html#cb105-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">t2g=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span>(BLUE, YELLOW), <span class="st">&#39;rld&#39;</span><span class="sc">:</span>(YELLOW ,RED)})</span>
-<span id="cb105-9"><a href="manim_5.html#cb105-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;明天你还在这里吗&#39;</span>, <span class="at">t2g=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span> (BLUE, YELLOW), <span class="st">&#39;这里&#39;</span><span class="sc">:</span> (YELLOW, RED)})</span>
-<span id="cb105-10"><a href="manim_5.html#cb105-10" tabindex="-1"></a></span>
-<span id="cb105-11"><a href="manim_5.html#cb105-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(<span class="dv">2</span><span class="sc">*</span>UP))</span>
-<span id="cb105-12"><a href="manim_5.html#cb105-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span>
-<span id="cb105-13"><a href="manim_5.html#cb105-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_3.next_to</span>(t_2, DOWN))</span>
-<span id="cb105-14"><a href="manim_5.html#cb105-14" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_4.next_to</span>(t_3, DOWN))</span>
-<span id="cb105-15"><a href="manim_5.html#cb105-15" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_5.next_to</span>(t_4, DOWN))</span></code></pre></div></li>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="manim_5.html#cb104-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb104-2"><a href="manim_5.html#cb104-2" tabindex="-1"></a></span>
+<span id="cb104-3"><a href="manim_5.html#cb104-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb104-4"><a href="manim_5.html#cb104-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb104-5"><a href="manim_5.html#cb104-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">color=</span>BLUE)</span>
+<span id="cb104-6"><a href="manim_5.html#cb104-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">gradient=</span>(BLUE, YELLOW, RED))</span>
+<span id="cb104-7"><a href="manim_5.html#cb104-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">t2c=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span>BLUE, <span class="st">&#39;rld&#39;</span><span class="sc">:</span>RED})</span>
+<span id="cb104-8"><a href="manim_5.html#cb104-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">t2g=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span>(BLUE, YELLOW), <span class="st">&#39;rld&#39;</span><span class="sc">:</span>(YELLOW ,RED)})</span>
+<span id="cb104-9"><a href="manim_5.html#cb104-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;明天你还在这里吗&#39;</span>, <span class="at">t2g=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span> (BLUE, YELLOW), <span class="st">&#39;这里&#39;</span><span class="sc">:</span> (YELLOW, RED)})</span>
+<span id="cb104-10"><a href="manim_5.html#cb104-10" tabindex="-1"></a></span>
+<span id="cb104-11"><a href="manim_5.html#cb104-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(<span class="dv">2</span><span class="sc">*</span>UP))</span>
+<span id="cb104-12"><a href="manim_5.html#cb104-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span>
+<span id="cb104-13"><a href="manim_5.html#cb104-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_3.next_to</span>(t_2, DOWN))</span>
+<span id="cb104-14"><a href="manim_5.html#cb104-14" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_4.next_to</span>(t_3, DOWN))</span>
+<span id="cb104-15"><a href="manim_5.html#cb104-15" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_5.next_to</span>(t_4, DOWN))</span></code></pre></div></li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p4"></span>
 <img src="pic/manim/p4.png" alt="文本颜色" width="427" />
@@ -628,15 +628,15 @@ width
 <li><p>scale</p>
 <p><code>scale</code>是<code>Text()</code>的属性，用于调整字体大小的倍数，如<code>Text('Hello World').scale(0.5)</code>表示默认大小的0.5倍。</p></li>
 </ul>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="manim_5.html#cb106-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb106-2"><a href="manim_5.html#cb106-2" tabindex="-1"></a></span>
-<span id="cb106-3"><a href="manim_5.html#cb106-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb106-4"><a href="manim_5.html#cb106-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb106-5"><a href="manim_5.html#cb106-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">font_size=</span><span class="dv">50</span>)</span>
-<span id="cb106-6"><a href="manim_5.html#cb106-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>)<span class="fu">.scale</span>(<span class="fl">0.5</span>)</span>
-<span id="cb106-7"><a href="manim_5.html#cb106-7" tabindex="-1"></a></span>
-<span id="cb106-8"><a href="manim_5.html#cb106-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(UP))</span>
-<span id="cb106-9"><a href="manim_5.html#cb106-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span></code></pre></div></li>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="manim_5.html#cb105-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb105-2"><a href="manim_5.html#cb105-2" tabindex="-1"></a></span>
+<span id="cb105-3"><a href="manim_5.html#cb105-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb105-4"><a href="manim_5.html#cb105-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb105-5"><a href="manim_5.html#cb105-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">font_size=</span><span class="dv">50</span>)</span>
+<span id="cb105-6"><a href="manim_5.html#cb105-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>)<span class="fu">.scale</span>(<span class="fl">0.5</span>)</span>
+<span id="cb105-7"><a href="manim_5.html#cb105-7" tabindex="-1"></a></span>
+<span id="cb105-8"><a href="manim_5.html#cb105-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(UP))</span>
+<span id="cb105-9"><a href="manim_5.html#cb105-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span></code></pre></div></li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p5"></span>
 <img src="pic/manim/p5.png" alt="文本颜色" width="427" />
@@ -650,16 +650,16 @@ width
 <ul>
 <li><p>行间距与换行</p>
 <p>在字符串中可以添加<code>\n</code>实现换行效果，并通过<code>Text()</code>中的<code>line_spacing</code>来调整行间距，如下所示。</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="manim_5.html#cb107-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb107-2"><a href="manim_5.html#cb107-2" tabindex="-1"></a></span>
-<span id="cb107-3"><a href="manim_5.html#cb107-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb107-4"><a href="manim_5.html#cb107-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb107-5"><a href="manim_5.html#cb107-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello</span><span class="sc">\n</span><span class="st">World&#39;</span>, <span class="at">line_spacing=</span><span class="dv">3</span>)</span>
-<span id="cb107-6"><a href="manim_5.html#cb107-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello</span><span class="sc">\n</span><span class="st">World&#39;</span>)</span>
-<span id="cb107-7"><a href="manim_5.html#cb107-7" tabindex="-1"></a></span>
-<span id="cb107-8"><a href="manim_5.html#cb107-8" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2)</span>
-<span id="cb107-9"><a href="manim_5.html#cb107-9" tabindex="-1"></a></span>
-<span id="cb107-10"><a href="manim_5.html#cb107-10" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(LEFT))</span></code></pre></div></li>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="manim_5.html#cb106-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb106-2"><a href="manim_5.html#cb106-2" tabindex="-1"></a></span>
+<span id="cb106-3"><a href="manim_5.html#cb106-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb106-4"><a href="manim_5.html#cb106-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb106-5"><a href="manim_5.html#cb106-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello</span><span class="sc">\n</span><span class="st">World&#39;</span>, <span class="at">line_spacing=</span><span class="dv">3</span>)</span>
+<span id="cb106-6"><a href="manim_5.html#cb106-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello</span><span class="sc">\n</span><span class="st">World&#39;</span>)</span>
+<span id="cb106-7"><a href="manim_5.html#cb106-7" tabindex="-1"></a></span>
+<span id="cb106-8"><a href="manim_5.html#cb106-8" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2)</span>
+<span id="cb106-9"><a href="manim_5.html#cb106-9" tabindex="-1"></a></span>
+<span id="cb106-10"><a href="manim_5.html#cb106-10" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(LEFT))</span></code></pre></div></li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p6"></span>
 <img src="pic/manim/p6.png" alt="行间距与换行" width="427" />
@@ -812,20 +812,20 @@ width
 <p>foreground和fgcolor都是作用于文本颜色（貌似效果一样？）</p>
 </blockquote>
 <p>在<code>&lt;span&gt;</code>标签里可以使用十六进制颜色(如<code>#ff0000</code>)或者CSS命名颜色(如<code>Coral</code>)。如果你想在其中继续使用Manim的颜色常量，那么你就得在字符串前添加<code>f</code>，以格式化的形式嵌入颜色常量(如<code>MarkupText(f'&lt;span fgcolor="{RED}"&gt;Hello&lt;/span&gt;')</code>)。</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="manim_5.html#cb110-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb110-2"><a href="manim_5.html#cb110-2" tabindex="-1"></a></span>
-<span id="cb110-3"><a href="manim_5.html#cb110-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb110-4"><a href="manim_5.html#cb110-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb110-5"><a href="manim_5.html#cb110-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;Do you need &lt;tt&gt;help&lt;/tt&gt;?&#39;</span>)</span>
-<span id="cb110-6"><a href="manim_5.html#cb110-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;H&lt;sub&gt;2&lt;/sub&gt;O and OH&lt;sup&gt;+&lt;/sup&gt;&#39;</span>)</span>
-<span id="cb110-7"><a href="manim_5.html#cb110-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span foreground=&quot;red&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
-<span id="cb110-8"><a href="manim_5.html#cb110-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;red&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
-<span id="cb110-9"><a href="manim_5.html#cb110-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;#ff0000&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
-<span id="cb110-10"><a href="manim_5.html#cb110-10" tabindex="-1"></a>        t_6 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;Coral&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
-<span id="cb110-11"><a href="manim_5.html#cb110-11" tabindex="-1"></a>        t_7 <span class="ot">=</span> <span class="fu">MarkupText</span>(f<span class="st">&#39;&lt;span fgcolor=&quot;{RED}&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
-<span id="cb110-12"><a href="manim_5.html#cb110-12" tabindex="-1"></a></span>
-<span id="cb110-13"><a href="manim_5.html#cb110-13" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2, t_3, t_4, t_5, t_6, t_7)</span>
-<span id="cb110-14"><a href="manim_5.html#cb110-14" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="manim_5.html#cb109-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb109-2"><a href="manim_5.html#cb109-2" tabindex="-1"></a></span>
+<span id="cb109-3"><a href="manim_5.html#cb109-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb109-4"><a href="manim_5.html#cb109-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb109-5"><a href="manim_5.html#cb109-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;Do you need &lt;tt&gt;help&lt;/tt&gt;?&#39;</span>)</span>
+<span id="cb109-6"><a href="manim_5.html#cb109-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;H&lt;sub&gt;2&lt;/sub&gt;O and OH&lt;sup&gt;+&lt;/sup&gt;&#39;</span>)</span>
+<span id="cb109-7"><a href="manim_5.html#cb109-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span foreground=&quot;red&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb109-8"><a href="manim_5.html#cb109-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;red&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb109-9"><a href="manim_5.html#cb109-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;#ff0000&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb109-10"><a href="manim_5.html#cb109-10" tabindex="-1"></a>        t_6 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;Coral&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb109-11"><a href="manim_5.html#cb109-11" tabindex="-1"></a>        t_7 <span class="ot">=</span> <span class="fu">MarkupText</span>(f<span class="st">&#39;&lt;span fgcolor=&quot;{RED}&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb109-12"><a href="manim_5.html#cb109-12" tabindex="-1"></a></span>
+<span id="cb109-13"><a href="manim_5.html#cb109-13" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2, t_3, t_4, t_5, t_6, t_7)</span>
+<span id="cb109-14"><a href="manim_5.html#cb109-14" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p7"></span>
 <img src="pic/manim/p7.png" alt="span示例" width="427" />
 <p class="caption">
@@ -837,19 +837,19 @@ width
 <p>貌似中文可以不用考虑“连字”问题，英语的话可能会遇到</p>
 <p>当你在一个字符串中使用了<code>&lt;gradient&gt;</code>，并同时使用了<code>overline</code>或<code>underline</code>或<code>strikethrough</code>，你可能需要使用<code>offset</code>进行适当调整。</p>
 </blockquote>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="manim_5.html#cb111-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb111-2"><a href="manim_5.html#cb111-2" tabindex="-1"></a></span>
-<span id="cb111-3"><a href="manim_5.html#cb111-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb111-4"><a href="manim_5.html#cb111-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb111-5"><a href="manim_5.html#cb111-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;我想打&lt;gradient from=&quot;BLUE&quot; to=&quot;GREEN&quot;&gt;羽毛球&lt;/gradient&gt;&#39;</span>)</span>
-<span id="cb111-6"><a href="manim_5.html#cb111-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;hello &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot;&gt;world&lt;/gradient&gt; bye&#39;</span>)</span>
-<span id="cb111-7"><a href="manim_5.html#cb111-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;hello &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;1,2&quot;&gt;world&lt;/gradient&gt; bye&#39;</span>)</span>
-<span id="cb111-8"><a href="manim_5.html#cb111-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;double&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
-<span id="cb111-9"><a href="manim_5.html#cb111-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;double&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;-2&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
-<span id="cb111-10"><a href="manim_5.html#cb111-10" tabindex="-1"></a>        t_6 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;single&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;-1&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
-<span id="cb111-11"><a href="manim_5.html#cb111-11" tabindex="-1"></a></span>
-<span id="cb111-12"><a href="manim_5.html#cb111-12" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2, t_3, t_4, t_5, t_6)</span>
-<span id="cb111-13"><a href="manim_5.html#cb111-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="manim_5.html#cb110-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb110-2"><a href="manim_5.html#cb110-2" tabindex="-1"></a></span>
+<span id="cb110-3"><a href="manim_5.html#cb110-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb110-4"><a href="manim_5.html#cb110-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb110-5"><a href="manim_5.html#cb110-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;我想打&lt;gradient from=&quot;BLUE&quot; to=&quot;GREEN&quot;&gt;羽毛球&lt;/gradient&gt;&#39;</span>)</span>
+<span id="cb110-6"><a href="manim_5.html#cb110-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;hello &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot;&gt;world&lt;/gradient&gt; bye&#39;</span>)</span>
+<span id="cb110-7"><a href="manim_5.html#cb110-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;hello &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;1,2&quot;&gt;world&lt;/gradient&gt; bye&#39;</span>)</span>
+<span id="cb110-8"><a href="manim_5.html#cb110-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;double&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
+<span id="cb110-9"><a href="manim_5.html#cb110-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;double&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;-2&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
+<span id="cb110-10"><a href="manim_5.html#cb110-10" tabindex="-1"></a>        t_6 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;single&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;-1&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
+<span id="cb110-11"><a href="manim_5.html#cb110-11" tabindex="-1"></a></span>
+<span id="cb110-12"><a href="manim_5.html#cb110-12" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2, t_3, t_4, t_5, t_6)</span>
+<span id="cb110-13"><a href="manim_5.html#cb110-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p8"></span>
 <img src="pic/manim/p8.png" alt="gradient示例" width="427" />
 <p class="caption">
@@ -858,30 +858,30 @@ width
 </div>
 <p>如果你需要在文本中使用<code>&lt;</code>、<code>&gt;</code>和<code>&amp;</code>，得进行转义，用<code>&amp;lt;</code>、<code>&amp;gt</code>、<code>&amp;amp;</code>依次替代。</p>
 <p><code>MarkupText()</code>中的参数<code>justify=True</code>能够实现文本左右对齐，如下面所示。</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="manim_5.html#cb112-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb112-2"><a href="manim_5.html#cb112-2" tabindex="-1"></a></span>
-<span id="cb112-3"><a href="manim_5.html#cb112-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb112-4"><a href="manim_5.html#cb112-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb112-5"><a href="manim_5.html#cb112-5" tabindex="-1"></a>        ipsum_text <span class="ot">=</span> (</span>
-<span id="cb112-6"><a href="manim_5.html#cb112-6" tabindex="-1"></a>            <span class="st">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&quot;</span></span>
-<span id="cb112-7"><a href="manim_5.html#cb112-7" tabindex="-1"></a>            <span class="st">&quot;Praesent feugiat metus sit amet iaculis pulvinar. Nulla posuere &quot;</span></span>
-<span id="cb112-8"><a href="manim_5.html#cb112-8" tabindex="-1"></a>            <span class="st">&quot;quam a ex aliquam, eleifend consectetur tellus viverra. Aliquam &quot;</span></span>
-<span id="cb112-9"><a href="manim_5.html#cb112-9" tabindex="-1"></a>            <span class="st">&quot;fermentum interdum justo, nec rutrum elit pretium ac. Nam quis &quot;</span></span>
-<span id="cb112-10"><a href="manim_5.html#cb112-10" tabindex="-1"></a>            <span class="st">&quot;leo pulvinar, dignissim est at, venenatis nisi.&quot;</span></span>
-<span id="cb112-11"><a href="manim_5.html#cb112-11" tabindex="-1"></a>        )</span>
-<span id="cb112-12"><a href="manim_5.html#cb112-12" tabindex="-1"></a>        justified_text <span class="ot">=</span> <span class="fu">MarkupText</span>(ipsum_text, <span class="at">justify=</span>True)<span class="fu">.scale</span>(<span class="fl">0.4</span>)</span>
-<span id="cb112-13"><a href="manim_5.html#cb112-13" tabindex="-1"></a>        not_justified_text <span class="ot">=</span> <span class="fu">MarkupText</span>(ipsum_text, <span class="at">justify=</span>False)<span class="fu">.scale</span>(<span class="fl">0.4</span>)</span>
-<span id="cb112-14"><a href="manim_5.html#cb112-14" tabindex="-1"></a>        just_title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&quot;Justified&quot;</span>)</span>
-<span id="cb112-15"><a href="manim_5.html#cb112-15" tabindex="-1"></a>        njust_title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&quot;Not Justified&quot;</span>)</span>
-<span id="cb112-16"><a href="manim_5.html#cb112-16" tabindex="-1"></a>        <span class="fu">self.add</span>(njust_title, not_justified_text)</span>
-<span id="cb112-17"><a href="manim_5.html#cb112-17" tabindex="-1"></a>        <span class="fu">self.play</span>(</span>
-<span id="cb112-18"><a href="manim_5.html#cb112-18" tabindex="-1"></a>            <span class="fu">FadeOut</span>(not_justified_text),</span>
-<span id="cb112-19"><a href="manim_5.html#cb112-19" tabindex="-1"></a>            <span class="fu">FadeIn</span>(justified_text),</span>
-<span id="cb112-20"><a href="manim_5.html#cb112-20" tabindex="-1"></a>            <span class="fu">FadeOut</span>(njust_title),</span>
-<span id="cb112-21"><a href="manim_5.html#cb112-21" tabindex="-1"></a>            <span class="fu">FadeIn</span>(just_title),</span>
-<span id="cb112-22"><a href="manim_5.html#cb112-22" tabindex="-1"></a>            <span class="at">run_time=</span><span class="dv">5</span></span>
-<span id="cb112-23"><a href="manim_5.html#cb112-23" tabindex="-1"></a>        )</span>
-<span id="cb112-24"><a href="manim_5.html#cb112-24" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="manim_5.html#cb111-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb111-2"><a href="manim_5.html#cb111-2" tabindex="-1"></a></span>
+<span id="cb111-3"><a href="manim_5.html#cb111-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb111-4"><a href="manim_5.html#cb111-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb111-5"><a href="manim_5.html#cb111-5" tabindex="-1"></a>        ipsum_text <span class="ot">=</span> (</span>
+<span id="cb111-6"><a href="manim_5.html#cb111-6" tabindex="-1"></a>            <span class="st">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&quot;</span></span>
+<span id="cb111-7"><a href="manim_5.html#cb111-7" tabindex="-1"></a>            <span class="st">&quot;Praesent feugiat metus sit amet iaculis pulvinar. Nulla posuere &quot;</span></span>
+<span id="cb111-8"><a href="manim_5.html#cb111-8" tabindex="-1"></a>            <span class="st">&quot;quam a ex aliquam, eleifend consectetur tellus viverra. Aliquam &quot;</span></span>
+<span id="cb111-9"><a href="manim_5.html#cb111-9" tabindex="-1"></a>            <span class="st">&quot;fermentum interdum justo, nec rutrum elit pretium ac. Nam quis &quot;</span></span>
+<span id="cb111-10"><a href="manim_5.html#cb111-10" tabindex="-1"></a>            <span class="st">&quot;leo pulvinar, dignissim est at, venenatis nisi.&quot;</span></span>
+<span id="cb111-11"><a href="manim_5.html#cb111-11" tabindex="-1"></a>        )</span>
+<span id="cb111-12"><a href="manim_5.html#cb111-12" tabindex="-1"></a>        justified_text <span class="ot">=</span> <span class="fu">MarkupText</span>(ipsum_text, <span class="at">justify=</span>True)<span class="fu">.scale</span>(<span class="fl">0.4</span>)</span>
+<span id="cb111-13"><a href="manim_5.html#cb111-13" tabindex="-1"></a>        not_justified_text <span class="ot">=</span> <span class="fu">MarkupText</span>(ipsum_text, <span class="at">justify=</span>False)<span class="fu">.scale</span>(<span class="fl">0.4</span>)</span>
+<span id="cb111-14"><a href="manim_5.html#cb111-14" tabindex="-1"></a>        just_title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&quot;Justified&quot;</span>)</span>
+<span id="cb111-15"><a href="manim_5.html#cb111-15" tabindex="-1"></a>        njust_title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&quot;Not Justified&quot;</span>)</span>
+<span id="cb111-16"><a href="manim_5.html#cb111-16" tabindex="-1"></a>        <span class="fu">self.add</span>(njust_title, not_justified_text)</span>
+<span id="cb111-17"><a href="manim_5.html#cb111-17" tabindex="-1"></a>        <span class="fu">self.play</span>(</span>
+<span id="cb111-18"><a href="manim_5.html#cb111-18" tabindex="-1"></a>            <span class="fu">FadeOut</span>(not_justified_text),</span>
+<span id="cb111-19"><a href="manim_5.html#cb111-19" tabindex="-1"></a>            <span class="fu">FadeIn</span>(justified_text),</span>
+<span id="cb111-20"><a href="manim_5.html#cb111-20" tabindex="-1"></a>            <span class="fu">FadeOut</span>(njust_title),</span>
+<span id="cb111-21"><a href="manim_5.html#cb111-21" tabindex="-1"></a>            <span class="fu">FadeIn</span>(just_title),</span>
+<span id="cb111-22"><a href="manim_5.html#cb111-22" tabindex="-1"></a>            <span class="at">run_time=</span><span class="dv">5</span></span>
+<span id="cb111-23"><a href="manim_5.html#cb111-23" tabindex="-1"></a>        )</span>
+<span id="cb111-24"><a href="manim_5.html#cb111-24" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
 <blockquote>
 <p>python会自动将圆括号中的几个连续无间隔字符串拼接在一起。</p>
 </blockquote>
@@ -988,15 +988,15 @@ width
 <li><p>alignment</p>
 <p>对齐方式，默认为<code>None</code>，可选值为<code>'center'</code>、<code>'left'</code>、<code>'right'</code>。</p></li>
 </ul>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="manim_5.html#cb114-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb114-2"><a href="manim_5.html#cb114-2" tabindex="-1"></a></span>
-<span id="cb114-3"><a href="manim_5.html#cb114-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb114-4"><a href="manim_5.html#cb114-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb114-5"><a href="manim_5.html#cb114-5" tabindex="-1"></a>        paragraph <span class="ot">=</span> <span class="fu">Paragraph</span>(<span class="st">&#39;再见了妈妈&#39;</span>, <span class="st">&#39;我今晚就要远航&#39;</span>, <span class="st">&#39;别为我担心&#39;</span>,</span>
-<span id="cb114-6"><a href="manim_5.html#cb114-6" tabindex="-1"></a>                              <span class="at">alignment =</span> <span class="st">&#39;center&#39;</span>, <span class="at">line_spacing =</span> <span class="dv">2</span>)</span>
-<span id="cb114-7"><a href="manim_5.html#cb114-7" tabindex="-1"></a>        paragraph.color <span class="ot">=</span> <span class="st">&#39;#FFB6C1&#39;</span></span>
-<span id="cb114-8"><a href="manim_5.html#cb114-8" tabindex="-1"></a></span>
-<span id="cb114-9"><a href="manim_5.html#cb114-9" tabindex="-1"></a>        <span class="fu">self.add</span>(paragraph)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="manim_5.html#cb113-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb113-2"><a href="manim_5.html#cb113-2" tabindex="-1"></a></span>
+<span id="cb113-3"><a href="manim_5.html#cb113-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb113-4"><a href="manim_5.html#cb113-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb113-5"><a href="manim_5.html#cb113-5" tabindex="-1"></a>        paragraph <span class="ot">=</span> <span class="fu">Paragraph</span>(<span class="st">&#39;再见了妈妈&#39;</span>, <span class="st">&#39;我今晚就要远航&#39;</span>, <span class="st">&#39;别为我担心&#39;</span>,</span>
+<span id="cb113-6"><a href="manim_5.html#cb113-6" tabindex="-1"></a>                              <span class="at">alignment =</span> <span class="st">&#39;center&#39;</span>, <span class="at">line_spacing =</span> <span class="dv">2</span>)</span>
+<span id="cb113-7"><a href="manim_5.html#cb113-7" tabindex="-1"></a>        paragraph.color <span class="ot">=</span> <span class="st">&#39;#FFB6C1&#39;</span></span>
+<span id="cb113-8"><a href="manim_5.html#cb113-8" tabindex="-1"></a></span>
+<span id="cb113-9"><a href="manim_5.html#cb113-9" tabindex="-1"></a>        <span class="fu">self.add</span>(paragraph)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p9"></span>
 <img src="pic/manim/p9.png" alt="Paragraph示例" width="427" />
 <p class="caption">
@@ -1113,13 +1113,13 @@ width
 <p>在<code>Tex()</code>中也可像<code>Text()</code>一样直接设置<code>color</code>、<code>font_size</code>等参数。因为往上有相同的父类</p>
 </blockquote>
 <p>使用<code>Tex()</code>即可插入LaTeX。由于LaTeX经常使用特殊字符（例如’\’），这在python中也具有特殊意义，所以推荐使用<code>Tex(r'字符串')</code>来输入字符串。</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="manim_5.html#cb116-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb116-2"><a href="manim_5.html#cb116-2" tabindex="-1"></a></span>
-<span id="cb116-3"><a href="manim_5.html#cb116-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb116-4"><a href="manim_5.html#cb116-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb116-5"><a href="manim_5.html#cb116-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">Tex</span>(<span class="st">&#39;Hello&#39;</span>, <span class="st">&#39;World&#39;</span>, <span class="st">&#39;Bye&#39;</span>, <span class="at">arg_separator=</span><span class="st">&#39;-&#39;</span>)</span>
-<span id="cb116-6"><a href="manim_5.html#cb116-6" tabindex="-1"></a></span>
-<span id="cb116-7"><a href="manim_5.html#cb116-7" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="manim_5.html#cb115-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb115-2"><a href="manim_5.html#cb115-2" tabindex="-1"></a></span>
+<span id="cb115-3"><a href="manim_5.html#cb115-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb115-4"><a href="manim_5.html#cb115-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb115-5"><a href="manim_5.html#cb115-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">Tex</span>(<span class="st">&#39;Hello&#39;</span>, <span class="st">&#39;World&#39;</span>, <span class="st">&#39;Bye&#39;</span>, <span class="at">arg_separator=</span><span class="st">&#39;-&#39;</span>)</span>
+<span id="cb115-6"><a href="manim_5.html#cb115-6" tabindex="-1"></a></span>
+<span id="cb115-7"><a href="manim_5.html#cb115-7" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p10"></span>
 <img src="pic/manim/p10.png" alt="Tex示例" width="427" />
 <p class="caption">
@@ -1244,15 +1244,15 @@ width
 <p>关于如何编辑数学公式大家可以参考这篇<a href="https://www.cnblogs.com/syqwq/p/15190115.html" target="_blank">博客</a>。</p>
 </blockquote>
 <p><code>MathTex()</code>中的字符串默认处在数学环境中，对应有<code>Tex(r'$字符串$')</code>，相当于是数学公式的<code>Tex()</code>简写。</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="manim_5.html#cb118-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb118-2"><a href="manim_5.html#cb118-2" tabindex="-1"></a></span>
-<span id="cb118-3"><a href="manim_5.html#cb118-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb118-4"><a href="manim_5.html#cb118-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb118-5"><a href="manim_5.html#cb118-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&#39;f(k)={n \choose k}p^{k}(1-p)^{n-k}&#39;</span>)</span>
-<span id="cb118-6"><a href="manim_5.html#cb118-6" tabindex="-1"></a>        t2 <span class="ot">=</span> <span class="fu">Tex</span>(r<span class="st">&#39;$f(k)={n \choose k}p^{k}(1-p)^{n-k}$&#39;</span>)</span>
-<span id="cb118-7"><a href="manim_5.html#cb118-7" tabindex="-1"></a></span>
-<span id="cb118-8"><a href="manim_5.html#cb118-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t1.shift</span>(UP))</span>
-<span id="cb118-9"><a href="manim_5.html#cb118-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t2.shift</span>(DOWN))</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="manim_5.html#cb117-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb117-2"><a href="manim_5.html#cb117-2" tabindex="-1"></a></span>
+<span id="cb117-3"><a href="manim_5.html#cb117-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb117-4"><a href="manim_5.html#cb117-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb117-5"><a href="manim_5.html#cb117-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&#39;f(k)={n \choose k}p^{k}(1-p)^{n-k}&#39;</span>)</span>
+<span id="cb117-6"><a href="manim_5.html#cb117-6" tabindex="-1"></a>        t2 <span class="ot">=</span> <span class="fu">Tex</span>(r<span class="st">&#39;$f(k)={n \choose k}p^{k}(1-p)^{n-k}$&#39;</span>)</span>
+<span id="cb117-7"><a href="manim_5.html#cb117-7" tabindex="-1"></a></span>
+<span id="cb117-8"><a href="manim_5.html#cb117-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t1.shift</span>(UP))</span>
+<span id="cb117-9"><a href="manim_5.html#cb117-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t2.shift</span>(DOWN))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p11"></span>
 <img src="pic/manim/p11.png" alt="MathTex示例" width="427" />
 <p class="caption">
@@ -1265,18 +1265,18 @@ width
 <blockquote>
 <p><code>Tex()</code>也同样适用，毕竟其父类就是<code>MathTex()</code>。</p>
 </blockquote>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="manim_5.html#cb119-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb119-2"><a href="manim_5.html#cb119-2" tabindex="-1"></a></span>
-<span id="cb119-3"><a href="manim_5.html#cb119-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb119-4"><a href="manim_5.html#cb119-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb119-5"><a href="manim_5.html#cb119-5" tabindex="-1"></a>        tex_1 <span class="ot">=</span> <span class="fu">Tex</span>(<span class="st">&#39;Hello&#39;</span>, r<span class="st">&#39;$</span><span class="sc">\b</span><span class="st">igstar$&#39;</span>, r<span class="st">&#39;\LaTeX&#39;</span>, <span class="at">font_size=</span><span class="dv">58</span>)</span>
-<span id="cb119-6"><a href="manim_5.html#cb119-6" tabindex="-1"></a>        tex_1[<span class="dv">1</span>]<span class="fu">.set_color</span>(RED)</span>
-<span id="cb119-7"><a href="manim_5.html#cb119-7" tabindex="-1"></a></span>
-<span id="cb119-8"><a href="manim_5.html#cb119-8" tabindex="-1"></a>        tex_2 <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&#39;\sum_{i=0}^n i^2&#39;</span>, <span class="st">&#39;=&#39;</span>, r<span class="st">&#39;</span><span class="sc">\f</span><span class="st">rac{(n^2+n)(2n+1)}{6}&#39;</span>, <span class="at">font_size=</span><span class="dv">58</span>)</span>
-<span id="cb119-9"><a href="manim_5.html#cb119-9" tabindex="-1"></a>        <span class="fu">tex_2.set_color_by_tex</span>(<span class="st">&#39;i=&#39;</span>, RED)</span>
-<span id="cb119-10"><a href="manim_5.html#cb119-10" tabindex="-1"></a></span>
-<span id="cb119-11"><a href="manim_5.html#cb119-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">tex_1.shift</span>(UP))</span>
-<span id="cb119-12"><a href="manim_5.html#cb119-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">tex_2.shift</span>(DOWN))</span></code></pre></div></li>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="manim_5.html#cb118-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb118-2"><a href="manim_5.html#cb118-2" tabindex="-1"></a></span>
+<span id="cb118-3"><a href="manim_5.html#cb118-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb118-4"><a href="manim_5.html#cb118-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb118-5"><a href="manim_5.html#cb118-5" tabindex="-1"></a>        tex_1 <span class="ot">=</span> <span class="fu">Tex</span>(<span class="st">&#39;Hello&#39;</span>, r<span class="st">&#39;$</span><span class="sc">\b</span><span class="st">igstar$&#39;</span>, r<span class="st">&#39;\LaTeX&#39;</span>, <span class="at">font_size=</span><span class="dv">58</span>)</span>
+<span id="cb118-6"><a href="manim_5.html#cb118-6" tabindex="-1"></a>        tex_1[<span class="dv">1</span>]<span class="fu">.set_color</span>(RED)</span>
+<span id="cb118-7"><a href="manim_5.html#cb118-7" tabindex="-1"></a></span>
+<span id="cb118-8"><a href="manim_5.html#cb118-8" tabindex="-1"></a>        tex_2 <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&#39;\sum_{i=0}^n i^2&#39;</span>, <span class="st">&#39;=&#39;</span>, r<span class="st">&#39;</span><span class="sc">\f</span><span class="st">rac{(n^2+n)(2n+1)}{6}&#39;</span>, <span class="at">font_size=</span><span class="dv">58</span>)</span>
+<span id="cb118-9"><a href="manim_5.html#cb118-9" tabindex="-1"></a>        <span class="fu">tex_2.set_color_by_tex</span>(<span class="st">&#39;i=&#39;</span>, RED)</span>
+<span id="cb118-10"><a href="manim_5.html#cb118-10" tabindex="-1"></a></span>
+<span id="cb118-11"><a href="manim_5.html#cb118-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">tex_1.shift</span>(UP))</span>
+<span id="cb118-12"><a href="manim_5.html#cb118-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">tex_2.shift</span>(DOWN))</span></code></pre></div></li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p12"></span>
 <img src="pic/manim/p12.png" alt="子字符串上色示例" width="427" />
@@ -1287,29 +1287,29 @@ width
 <ul>
 <li><p>目标字符上色</p>
 <p>如果想要匹配某个字符而不是字符所在的整个字符串，则可以用到<code>substrings_to_isolate</code>参数，它能够在<code>set_color_by_tex</code>时将目标字符串单独分离出来。或者用两对花括号<code>{{.}}</code>将目标字符框起来也能起到同样作用。二者如下所示：</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="manim_5.html#cb120-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb120-2"><a href="manim_5.html#cb120-2" tabindex="-1"></a></span>
-<span id="cb120-3"><a href="manim_5.html#cb120-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb120-4"><a href="manim_5.html#cb120-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb120-5"><a href="manim_5.html#cb120-5" tabindex="-1"></a>        e_1 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
-<span id="cb120-6"><a href="manim_5.html#cb120-6" tabindex="-1"></a>            r<span class="st">&#39;e^x = x^0 + x^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} x^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} x^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} x^n + \cdots&#39;</span></span>
-<span id="cb120-7"><a href="manim_5.html#cb120-7" tabindex="-1"></a>     )</span>
-<span id="cb120-8"><a href="manim_5.html#cb120-8" tabindex="-1"></a>        <span class="fu">e_1.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
-<span id="cb120-9"><a href="manim_5.html#cb120-9" tabindex="-1"></a></span>
-<span id="cb120-10"><a href="manim_5.html#cb120-10" tabindex="-1"></a>        e_2 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
-<span id="cb120-11"><a href="manim_5.html#cb120-11" tabindex="-1"></a>            r<span class="st">&#39;e^x = x^0 + x^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} x^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} x^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} x^n + \cdots&#39;</span>,</span>
-<span id="cb120-12"><a href="manim_5.html#cb120-12" tabindex="-1"></a>            <span class="at">substrings_to_isolate=</span><span class="st">&#39;x&#39;</span></span>
-<span id="cb120-13"><a href="manim_5.html#cb120-13" tabindex="-1"></a>        )</span>
-<span id="cb120-14"><a href="manim_5.html#cb120-14" tabindex="-1"></a>        <span class="fu">e_2.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
-<span id="cb120-15"><a href="manim_5.html#cb120-15" tabindex="-1"></a></span>
-<span id="cb120-16"><a href="manim_5.html#cb120-16" tabindex="-1"></a>        e_3 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
-<span id="cb120-17"><a href="manim_5.html#cb120-17" tabindex="-1"></a>            r<span class="st">&#39;e^{{x}} = {{x}}^0 + {{x}}^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} {{x}}^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} {{x}}^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} {{x}}^n + \cdots&#39;</span></span>
-<span id="cb120-18"><a href="manim_5.html#cb120-18" tabindex="-1"></a>        )</span>
-<span id="cb120-19"><a href="manim_5.html#cb120-19" tabindex="-1"></a>        <span class="fu">e_3.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
-<span id="cb120-20"><a href="manim_5.html#cb120-20" tabindex="-1"></a></span>
-<span id="cb120-21"><a href="manim_5.html#cb120-21" tabindex="-1"></a>        group<span class="ot">=</span><span class="fu">VGroup</span>(e_1, e_2, e_3)</span>
-<span id="cb120-22"><a href="manim_5.html#cb120-22" tabindex="-1"></a></span>
-<span id="cb120-23"><a href="manim_5.html#cb120-23" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div></li>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="manim_5.html#cb119-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb119-2"><a href="manim_5.html#cb119-2" tabindex="-1"></a></span>
+<span id="cb119-3"><a href="manim_5.html#cb119-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb119-4"><a href="manim_5.html#cb119-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb119-5"><a href="manim_5.html#cb119-5" tabindex="-1"></a>        e_1 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
+<span id="cb119-6"><a href="manim_5.html#cb119-6" tabindex="-1"></a>            r<span class="st">&#39;e^x = x^0 + x^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} x^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} x^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} x^n + \cdots&#39;</span></span>
+<span id="cb119-7"><a href="manim_5.html#cb119-7" tabindex="-1"></a>     )</span>
+<span id="cb119-8"><a href="manim_5.html#cb119-8" tabindex="-1"></a>        <span class="fu">e_1.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
+<span id="cb119-9"><a href="manim_5.html#cb119-9" tabindex="-1"></a></span>
+<span id="cb119-10"><a href="manim_5.html#cb119-10" tabindex="-1"></a>        e_2 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
+<span id="cb119-11"><a href="manim_5.html#cb119-11" tabindex="-1"></a>            r<span class="st">&#39;e^x = x^0 + x^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} x^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} x^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} x^n + \cdots&#39;</span>,</span>
+<span id="cb119-12"><a href="manim_5.html#cb119-12" tabindex="-1"></a>            <span class="at">substrings_to_isolate=</span><span class="st">&#39;x&#39;</span></span>
+<span id="cb119-13"><a href="manim_5.html#cb119-13" tabindex="-1"></a>        )</span>
+<span id="cb119-14"><a href="manim_5.html#cb119-14" tabindex="-1"></a>        <span class="fu">e_2.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
+<span id="cb119-15"><a href="manim_5.html#cb119-15" tabindex="-1"></a></span>
+<span id="cb119-16"><a href="manim_5.html#cb119-16" tabindex="-1"></a>        e_3 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
+<span id="cb119-17"><a href="manim_5.html#cb119-17" tabindex="-1"></a>            r<span class="st">&#39;e^{{x}} = {{x}}^0 + {{x}}^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} {{x}}^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} {{x}}^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} {{x}}^n + \cdots&#39;</span></span>
+<span id="cb119-18"><a href="manim_5.html#cb119-18" tabindex="-1"></a>        )</span>
+<span id="cb119-19"><a href="manim_5.html#cb119-19" tabindex="-1"></a>        <span class="fu">e_3.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
+<span id="cb119-20"><a href="manim_5.html#cb119-20" tabindex="-1"></a></span>
+<span id="cb119-21"><a href="manim_5.html#cb119-21" tabindex="-1"></a>        group<span class="ot">=</span><span class="fu">VGroup</span>(e_1, e_2, e_3)</span>
+<span id="cb119-22"><a href="manim_5.html#cb119-22" tabindex="-1"></a></span>
+<span id="cb119-23"><a href="manim_5.html#cb119-23" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div></li>
 </ul>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p13"></span>
 <img src="pic/manim/p13.png" alt="目标字符上色示例" width="427" />
@@ -1318,19 +1318,19 @@ width
 </p>
 </div>
 <p>除了多个字符串的索引，还可以对一个字符串（即Mobject对象）中的不同组成部分进行索引。<code>index_labels()</code>能够显示Mobject对象的组成部分的索引，如下所示：</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="manim_5.html#cb121-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb121-2"><a href="manim_5.html#cb121-2" tabindex="-1"></a></span>
-<span id="cb121-3"><a href="manim_5.html#cb121-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb121-4"><a href="manim_5.html#cb121-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb121-5"><a href="manim_5.html#cb121-5" tabindex="-1"></a>        text <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&quot;</span><span class="sc">\b</span><span class="st">inom{2n}{n+2}&quot;</span>, <span class="at">font_size=</span><span class="dv">96</span>)</span>
-<span id="cb121-6"><a href="manim_5.html#cb121-6" tabindex="-1"></a></span>
-<span id="cb121-7"><a href="manim_5.html#cb121-7" tabindex="-1"></a>        <span class="co"># MathTex中仅有一个字符串，所以只索引了第一项</span></span>
-<span id="cb121-8"><a href="manim_5.html#cb121-8" tabindex="-1"></a>        <span class="co"># 若有多个字符串则可以通过对应的索引选中目标字符串</span></span>
-<span id="cb121-9"><a href="manim_5.html#cb121-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">index_labels</span>(text[<span class="dv">0</span>]))</span>
-<span id="cb121-10"><a href="manim_5.html#cb121-10" tabindex="-1"></a></span>
-<span id="cb121-11"><a href="manim_5.html#cb121-11" tabindex="-1"></a>        text[<span class="dv">0</span>][<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]<span class="fu">.set_color</span>(YELLOW)</span>
-<span id="cb121-12"><a href="manim_5.html#cb121-12" tabindex="-1"></a>        text[<span class="dv">0</span>][<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>]<span class="fu">.set_color</span>(RED)</span>
-<span id="cb121-13"><a href="manim_5.html#cb121-13" tabindex="-1"></a>        <span class="fu">self.add</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="manim_5.html#cb120-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb120-2"><a href="manim_5.html#cb120-2" tabindex="-1"></a></span>
+<span id="cb120-3"><a href="manim_5.html#cb120-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb120-4"><a href="manim_5.html#cb120-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb120-5"><a href="manim_5.html#cb120-5" tabindex="-1"></a>        text <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&quot;</span><span class="sc">\b</span><span class="st">inom{2n}{n+2}&quot;</span>, <span class="at">font_size=</span><span class="dv">96</span>)</span>
+<span id="cb120-6"><a href="manim_5.html#cb120-6" tabindex="-1"></a></span>
+<span id="cb120-7"><a href="manim_5.html#cb120-7" tabindex="-1"></a>        <span class="co"># MathTex中仅有一个字符串，所以只索引了第一项</span></span>
+<span id="cb120-8"><a href="manim_5.html#cb120-8" tabindex="-1"></a>        <span class="co"># 若有多个字符串则可以通过对应的索引选中目标字符串</span></span>
+<span id="cb120-9"><a href="manim_5.html#cb120-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">index_labels</span>(text[<span class="dv">0</span>]))</span>
+<span id="cb120-10"><a href="manim_5.html#cb120-10" tabindex="-1"></a></span>
+<span id="cb120-11"><a href="manim_5.html#cb120-11" tabindex="-1"></a>        text[<span class="dv">0</span>][<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]<span class="fu">.set_color</span>(YELLOW)</span>
+<span id="cb120-12"><a href="manim_5.html#cb120-12" tabindex="-1"></a>        text[<span class="dv">0</span>][<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>]<span class="fu">.set_color</span>(RED)</span>
+<span id="cb120-13"><a href="manim_5.html#cb120-13" tabindex="-1"></a>        <span class="fu">self.add</span>(text)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p14"></span>
 <img src="pic/manim/p14.png" alt="目标字符上色示例" width="427" />
 <p class="caption">
@@ -1453,13 +1453,13 @@ width
 <blockquote>
 <p><code>Tex</code>若想显示中文也得这样设置，但一般用<code>Text</code>来显示中文会更多。</p>
 </blockquote>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="manim_5.html#cb123-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb123-2"><a href="manim_5.html#cb123-2" tabindex="-1"></a></span>
-<span id="cb123-3"><a href="manim_5.html#cb123-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb123-4"><a href="manim_5.html#cb123-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb123-5"><a href="manim_5.html#cb123-5" tabindex="-1"></a>        banner <span class="ot">=</span> <span class="fu">ManimBanner</span>()</span>
-<span id="cb123-6"><a href="manim_5.html#cb123-6" tabindex="-1"></a>        title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&#39;Hello你好&#39;</span>, <span class="at">tex_template=</span>TexTemplateLibrary.ctex, <span class="at">match_underline_width_to_text=</span>True)</span>
-<span id="cb123-7"><a href="manim_5.html#cb123-7" tabindex="-1"></a>        <span class="fu">self.add</span>(banner, title)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="manim_5.html#cb122-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb122-2"><a href="manim_5.html#cb122-2" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="manim_5.html#cb122-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb122-4"><a href="manim_5.html#cb122-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb122-5"><a href="manim_5.html#cb122-5" tabindex="-1"></a>        banner <span class="ot">=</span> <span class="fu">ManimBanner</span>()</span>
+<span id="cb122-6"><a href="manim_5.html#cb122-6" tabindex="-1"></a>        title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&#39;Hello你好&#39;</span>, <span class="at">tex_template=</span>TexTemplateLibrary.ctex, <span class="at">match_underline_width_to_text=</span>True)</span>
+<span id="cb122-7"><a href="manim_5.html#cb122-7" tabindex="-1"></a>        <span class="fu">self.add</span>(banner, title)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p15"></span>
 <img src="pic/manim/p15.png" alt="Title示例" width="427" />
 <p class="caption">
@@ -1576,15 +1576,15 @@ width
 <p>继承自<code>Tex</code></p>
 </blockquote>
 <p><code>BulletedList</code>实际上就是markdown中的无序列表。</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="manim_5.html#cb125-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb125-2"><a href="manim_5.html#cb125-2" tabindex="-1"></a></span>
-<span id="cb125-3"><a href="manim_5.html#cb125-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb125-4"><a href="manim_5.html#cb125-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb125-5"><a href="manim_5.html#cb125-5" tabindex="-1"></a>        blist <span class="ot">=</span> <span class="fu">BulletedList</span>(<span class="st">&#39;项目 1&#39;</span>, <span class="st">&#39;项目 2&#39;</span>, <span class="st">&#39;项目 3&#39;</span>, <span class="at">height=</span><span class="dv">2</span>, <span class="at">width=</span><span class="dv">2</span>, <span class="at">tex_template=</span>TexTemplateLibrary.ctex)</span>
-<span id="cb125-6"><a href="manim_5.html#cb125-6" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;1&#39;</span>, RED)</span>
-<span id="cb125-7"><a href="manim_5.html#cb125-7" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;2&#39;</span>, GREEN)</span>
-<span id="cb125-8"><a href="manim_5.html#cb125-8" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;3&#39;</span>, BLUE)</span>
-<span id="cb125-9"><a href="manim_5.html#cb125-9" tabindex="-1"></a>        <span class="fu">self.add</span>(blist)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="manim_5.html#cb124-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb124-2"><a href="manim_5.html#cb124-2" tabindex="-1"></a></span>
+<span id="cb124-3"><a href="manim_5.html#cb124-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb124-4"><a href="manim_5.html#cb124-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb124-5"><a href="manim_5.html#cb124-5" tabindex="-1"></a>        blist <span class="ot">=</span> <span class="fu">BulletedList</span>(<span class="st">&#39;项目 1&#39;</span>, <span class="st">&#39;项目 2&#39;</span>, <span class="st">&#39;项目 3&#39;</span>, <span class="at">height=</span><span class="dv">2</span>, <span class="at">width=</span><span class="dv">2</span>, <span class="at">tex_template=</span>TexTemplateLibrary.ctex)</span>
+<span id="cb124-6"><a href="manim_5.html#cb124-6" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;1&#39;</span>, RED)</span>
+<span id="cb124-7"><a href="manim_5.html#cb124-7" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;2&#39;</span>, GREEN)</span>
+<span id="cb124-8"><a href="manim_5.html#cb124-8" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;3&#39;</span>, BLUE)</span>
+<span id="cb124-9"><a href="manim_5.html#cb124-9" tabindex="-1"></a>        <span class="fu">self.add</span>(blist)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p16"></span>
 <img src="pic/manim/p16.png" alt="BulletedList示例" width="427" />
 <p class="caption">

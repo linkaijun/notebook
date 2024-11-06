@@ -174,6 +174,235 @@
    failure time为$t_i$的观测对象的权重和
    
 
+``` r
+cox_cd <- function(y, X, lambda, alpha, beta_0=NULL, max.iter=100){
+  n = dim(X)[1]
+  status = y[,'status']
+  y = y[,'time']
+  
+  failure_t = y[status==1] %>% sort()
+  R = map(failure_t, ~which(y>=.)) #R中每个元素对应原文的R_i
+  C = map(y, ~which(failure_t<.))
+  
+  # 根据是否有ties运行不同代码
+  if(length(y)==length(unique(y))){
+    # 无ties
+    weight = 1/n #原文无ties情况的1/n就是有ties情况下权重为1/n的情形
+    j_i = as.numeric(y %in% failure_t)   #即原文的j(i)
+    # log_likelihood_beta用于精度判断
+    log_likelihood_beta <- function(beta){
+      term_1 = as.numeric(j_i %*% X %*% beta)
+      # 2.4节有一个递推式，待议
+      term_2 = map_vec(R, function(R_i){
+        map_vec(R_i, ~exp(X[.,] %*% beta)) %>% sum() %>% log()
+      }) %>% sum()
+      result = term_1 - term_2
+      result
+    }
+    
+    # 初始化beta
+    if(is.null(beta_0)){
+      beta = rep(0,dim(X)[2])
+    }else{
+      beta = beta_0
+    }
+    
+    for (i in 1:max.iter) {
+      print(paste0("第", i, "次迭代"))
+      
+      eta = X %*% beta
+      w = map2_vec(C, c(1:length(C)), function(.x, .y){
+        # 计算w_k
+        C_k = .x
+        k = .y   # .y提供位置索引
+        eta_k = as.numeric(eta[k,])
+        exp_eta_k = exp(eta_k)
+        exp_eta_k_2 = exp_eta_k^2
+        w_k = map_vec(C_k, function(i){
+          sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
+          sum_exp_eta_Ri_2 = sum_exp_eta_Ri^2
+          value = (exp_eta_k * sum_exp_eta_Ri - exp_eta_k_2) / sum_exp_eta_Ri_2
+          value
+        }) %>% sum()
+        w_k = -weight * w_k   #该代码的w始终和coxgrad的grad差负号，数值上略微差异
+        w_k
+      })
+      w_sub = map2_vec(C, c(1:length(C)), function(.x, .y){
+        # 计算w_k
+        C_k = .x
+        k = .y   # .y提供位置索引
+        eta_k = as.numeric(eta[k,])
+        exp_eta_k = exp(eta_k)
+        w_sub_k = map_vec(C_k, function(i){
+          sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
+          value = exp_eta_k / sum_exp_eta_Ri
+          value
+        }) %>% sum()
+        w_sub_k = weight * w_sub_k
+        w_sub_k
+      })
+      if(any(w==0)) stop('w中有零')
+      z = eta + (status - w_sub) / w
+      
+      for (k in 1:length(beta)) {
+        denominator = as.numeric(w %*% X[,k]^2 + lambda * (1-alpha))
+        numerator = as.numeric(diag(w) %*% X[,k] %*% (z - X[,-k] %*% beta[-k]))
+        numerator = sign(numerator) * max(abs(numerator), lambda * alpha)
+        beta[k] = numerator/denominator
+      }
+      # 精度判断
+      # 无ties情况下，l_saturated = 0
+      D_null = -2 * log_likelihood_beta(rep(0,length(beta)))
+      D_current = -2 * log_likelihood_beta(beta)
+      if(D_current - D_null >= 0.99 * D_null){
+        print('满足精度要求')
+        paste0('D_current:', D_current)
+        break
+      }
+    }
+    return(beta)
+  }else{
+    # 有ties
+    message('有ties')
+  }
+}
+```
+
+
+``` r
+library(glmnet)
+```
+
+```
+## 载入需要的程序包：Matrix
+```
+
+```
+## 
+## 载入程序包：'Matrix'
+```
+
+```
+## The following objects are masked from 'package:tidyr':
+## 
+##     expand, pack, unpack
+```
+
+```
+## Loaded glmnet 4.1-8
+```
+
+``` r
+data(CoxExample)
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+
+n = dim(X)[1]
+status = y[,'status']
+y = y[,'time']
+  
+failure_t = y[status==1] %>% sort()
+R = map(failure_t, ~which(y>=.)) #R中每个元素对应原文的R_i
+C = map(y, ~which(failure_t<.))
+
+weight = 1/n #原文无ties情况的1/n就是有ties情况下权重为1/n的情形
+
+# 初始化beta
+beta = rep(0,dim(X)[2])
+
+# 第一次迭代
+eta = X %*% beta
+w = map2_vec(C, c(1:length(C)), function(.x, .y){
+# 计算w_k
+C_k = .x
+k = .y   # .y提供位置索引
+eta_k = as.numeric(eta[k,])
+exp_eta_k = exp(eta_k)
+exp_eta_k_2 = exp_eta_k^2
+w_k = map_vec(C_k, function(i){
+  sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
+  sum_exp_eta_Ri_2 = sum_exp_eta_Ri^2
+  value = (exp_eta_k * sum_exp_eta_Ri - exp_eta_k_2) / sum_exp_eta_Ri_2
+      value
+  }) %>% sum()
+w_k = -weight * w_k   #该代码的w始终和coxgrad的grad差负号，数值上略微差异
+w_k
+})
+w
+```
+
+```
+##  [1] -0.0183293825 -0.0035368399 -0.0008510459 -0.0090531224 -0.0049389213
+##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0064465663 -0.0201293825
+## [11] -0.0124020632 -0.0028709660 -0.0018033986 -0.0008510459 -0.0201293825
+## [16] -0.0111576188 -0.0064465663 -0.0151487122 -0.0056785663 -0.0028709660
+## [21]  0.0000000000 -0.0100503523 -0.0008510459 -0.0028709660 -0.0042256154
+## [26] -0.0018033986 -0.0201293825  0.0000000000 -0.0201293825 -0.0072783243
+## [31] -0.0013158986 -0.0023158639 -0.0081460929  0.0000000000 -0.0111576188
+## [36] -0.0004164780 -0.0201293825 -0.0028709660 -0.0004164780 -0.0270793825
+## [41] -0.0023158639 -0.0137285938 -0.0233293825 -0.0166764899 -0.0270793825
+## [46] -0.0090531224 -0.0023158639 -0.0013158986 -0.0100503523 -0.0028709660
+```
+
+
+``` r
+fid <- function(x,index) {
+    idup=duplicated(x)
+    if(!any(idup)) list(index_first=index,index_ties=NULL)
+    else {
+        ndup=!idup
+        xu=x[ndup]# first death times
+        index_first=index[ndup]
+        ities=match(x,xu)
+        index_ties=split(index,ities)
+        nties=sapply(index_ties,length)
+        list(index_first=index_first,index_ties=index_ties[nties>1])
+    }
+}
+
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+
+w=rep(1,length(eta))
+w=w/sum(w)
+nobs <- nrow(y)
+time <- y[, "time"]
+d    <- y[, "status"]
+eta <- scale(eta, TRUE, FALSE)
+o <- order(time, d, decreasing = c(FALSE, TRUE))
+exp_eta <- exp(eta)[o]
+time <- time[o]
+d <- d[o]
+w <- w[o]
+rskden <- rev(cumsum(rev(exp_eta*w)))
+dups <- fid(time[d == 1],seq(length(d))[d == 1])
+dd <- d
+ww <- w
+rskcount=cumsum(dd)
+rskdeninv=cumsum((ww/rskden)[dd==1])
+rskdeninv=c(0,rskdeninv)
+grad <- w * (d - exp_eta * rskdeninv[rskcount+1])
+grad[o] <- grad
+rskdeninv2 <- cumsum((ww/(rskden^2))[dd==1])
+rskdeninv2 <- c(0, rskdeninv2)
+w_exp_eta <- w * exp_eta
+diag_hessian <- w_exp_eta^2 * rskdeninv2[rskcount+1] - w_exp_eta * rskdeninv[rskcount+1]
+diag_hessian[o] <- diag_hessian
+diag_hessian
+```
+
+```
+##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
+##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
+## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
+## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
+## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
+## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
+## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
+## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
+## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
+## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660
+```
 
    
 

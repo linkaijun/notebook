@@ -544,50 +544,86 @@ div.csl-indent {
 <span id="cb142-89"><a href="survival_2.html#cb142-89" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&#39;有ties&#39;</span>)</span>
 <span id="cb142-90"><a href="survival_2.html#cb142-90" tabindex="-1"></a>  }</span>
 <span id="cb142-91"><a href="survival_2.html#cb142-91" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="survival_2.html#cb143-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code></pre></div>
-<pre><code>## 载入需要的程序包：Matrix</code></pre>
-<pre><code>## 
-## 载入程序包：&#39;Matrix&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
-## 
-##     expand, pack, unpack</code></pre>
-<pre><code>## Loaded glmnet 4.1-8</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="survival_2.html#cb148-1" tabindex="-1"></a><span class="fu">data</span>(CoxExample)</span>
-<span id="cb148-2"><a href="survival_2.html#cb148-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb148-3"><a href="survival_2.html#cb148-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>
-<span id="cb148-4"><a href="survival_2.html#cb148-4" tabindex="-1"></a></span>
-<span id="cb148-5"><a href="survival_2.html#cb148-5" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">1</span>]</span>
-<span id="cb148-6"><a href="survival_2.html#cb148-6" tabindex="-1"></a>status <span class="ot">=</span> y[,<span class="st">&#39;status&#39;</span>]</span>
-<span id="cb148-7"><a href="survival_2.html#cb148-7" tabindex="-1"></a>y <span class="ot">=</span> y[,<span class="st">&#39;time&#39;</span>]</span>
-<span id="cb148-8"><a href="survival_2.html#cb148-8" tabindex="-1"></a>  </span>
-<span id="cb148-9"><a href="survival_2.html#cb148-9" tabindex="-1"></a>failure_t <span class="ot">=</span> y[status<span class="sc">==</span><span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="fu">sort</span>()</span>
-<span id="cb148-10"><a href="survival_2.html#cb148-10" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">map</span>(failure_t, <span class="sc">~</span><span class="fu">which</span>(y<span class="sc">&gt;=</span>.)) <span class="co">#R中每个元素对应原文的R_i</span></span>
-<span id="cb148-11"><a href="survival_2.html#cb148-11" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">map</span>(y, <span class="sc">~</span><span class="fu">which</span>(failure_t<span class="sc">&lt;</span>.))</span>
-<span id="cb148-12"><a href="survival_2.html#cb148-12" tabindex="-1"></a></span>
-<span id="cb148-13"><a href="survival_2.html#cb148-13" tabindex="-1"></a>weight <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span>n <span class="co">#原文无ties情况的1/n就是有ties情况下权重为1/n的情形</span></span>
-<span id="cb148-14"><a href="survival_2.html#cb148-14" tabindex="-1"></a></span>
-<span id="cb148-15"><a href="survival_2.html#cb148-15" tabindex="-1"></a><span class="co"># 初始化beta</span></span>
-<span id="cb148-16"><a href="survival_2.html#cb148-16" tabindex="-1"></a>beta <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="fu">dim</span>(X)[<span class="dv">2</span>])</span>
-<span id="cb148-17"><a href="survival_2.html#cb148-17" tabindex="-1"></a></span>
-<span id="cb148-18"><a href="survival_2.html#cb148-18" tabindex="-1"></a><span class="co"># 第一次迭代</span></span>
-<span id="cb148-19"><a href="survival_2.html#cb148-19" tabindex="-1"></a>eta <span class="ot">=</span> X <span class="sc">%*%</span> beta</span>
-<span id="cb148-20"><a href="survival_2.html#cb148-20" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">map2_vec</span>(C, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)), <span class="cf">function</span>(.x, .y){</span>
-<span id="cb148-21"><a href="survival_2.html#cb148-21" tabindex="-1"></a><span class="co"># 计算w_k</span></span>
-<span id="cb148-22"><a href="survival_2.html#cb148-22" tabindex="-1"></a>C_k <span class="ot">=</span> .x</span>
-<span id="cb148-23"><a href="survival_2.html#cb148-23" tabindex="-1"></a>k <span class="ot">=</span> .y   <span class="co"># .y提供位置索引</span></span>
-<span id="cb148-24"><a href="survival_2.html#cb148-24" tabindex="-1"></a>eta_k <span class="ot">=</span> <span class="fu">as.numeric</span>(eta[k,])</span>
-<span id="cb148-25"><a href="survival_2.html#cb148-25" tabindex="-1"></a>exp_eta_k <span class="ot">=</span> <span class="fu">exp</span>(eta_k)</span>
-<span id="cb148-26"><a href="survival_2.html#cb148-26" tabindex="-1"></a>exp_eta_k_2 <span class="ot">=</span> exp_eta_k<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb148-27"><a href="survival_2.html#cb148-27" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="fu">map_vec</span>(C_k, <span class="cf">function</span>(i){</span>
-<span id="cb148-28"><a href="survival_2.html#cb148-28" tabindex="-1"></a>  sum_exp_eta_Ri <span class="ot">=</span> <span class="fu">map_vec</span>(R[[i]], <span class="sc">~</span><span class="fu">exp</span>(eta[.,])) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb148-29"><a href="survival_2.html#cb148-29" tabindex="-1"></a>  sum_exp_eta_Ri_2 <span class="ot">=</span> sum_exp_eta_Ri<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb148-30"><a href="survival_2.html#cb148-30" tabindex="-1"></a>  value <span class="ot">=</span> (exp_eta_k <span class="sc">*</span> sum_exp_eta_Ri <span class="sc">-</span> exp_eta_k_2) <span class="sc">/</span> sum_exp_eta_Ri_2</span>
-<span id="cb148-31"><a href="survival_2.html#cb148-31" tabindex="-1"></a>      value</span>
-<span id="cb148-32"><a href="survival_2.html#cb148-32" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb148-33"><a href="survival_2.html#cb148-33" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="sc">-</span>weight <span class="sc">*</span> w_k   <span class="co">#该代码的w始终和coxgrad的grad差负号，数值上略微差异</span></span>
-<span id="cb148-34"><a href="survival_2.html#cb148-34" tabindex="-1"></a>w_k</span>
-<span id="cb148-35"><a href="survival_2.html#cb148-35" tabindex="-1"></a>})</span>
-<span id="cb148-36"><a href="survival_2.html#cb148-36" tabindex="-1"></a>w</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="survival_2.html#cb143-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb143-2"><a href="survival_2.html#cb143-2" tabindex="-1"></a></span>
+<span id="cb143-3"><a href="survival_2.html#cb143-3" tabindex="-1"></a><span class="fu">data</span>(CoxExample)</span>
+<span id="cb143-4"><a href="survival_2.html#cb143-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb143-5"><a href="survival_2.html#cb143-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>
+<span id="cb143-6"><a href="survival_2.html#cb143-6" tabindex="-1"></a></span>
+<span id="cb143-7"><a href="survival_2.html#cb143-7" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">1</span>]</span>
+<span id="cb143-8"><a href="survival_2.html#cb143-8" tabindex="-1"></a>status <span class="ot">=</span> y[,<span class="st">&#39;status&#39;</span>]</span>
+<span id="cb143-9"><a href="survival_2.html#cb143-9" tabindex="-1"></a>y <span class="ot">=</span> y[,<span class="st">&#39;time&#39;</span>]</span>
+<span id="cb143-10"><a href="survival_2.html#cb143-10" tabindex="-1"></a>  </span>
+<span id="cb143-11"><a href="survival_2.html#cb143-11" tabindex="-1"></a>failure_t <span class="ot">=</span> y[status<span class="sc">==</span><span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="fu">sort</span>()</span>
+<span id="cb143-12"><a href="survival_2.html#cb143-12" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">map</span>(failure_t, <span class="sc">~</span><span class="fu">which</span>(y<span class="sc">&gt;=</span>.)) <span class="co">#R中每个元素对应原文的R_i</span></span>
+<span id="cb143-13"><a href="survival_2.html#cb143-13" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">map</span>(y, <span class="sc">~</span><span class="fu">which</span>(failure_t<span class="sc">&lt;</span>.))</span>
+<span id="cb143-14"><a href="survival_2.html#cb143-14" tabindex="-1"></a></span>
+<span id="cb143-15"><a href="survival_2.html#cb143-15" tabindex="-1"></a>weight <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span>n <span class="co">#原文无ties情况的1/n就是有ties情况下权重为1/n的情形</span></span>
+<span id="cb143-16"><a href="survival_2.html#cb143-16" tabindex="-1"></a></span>
+<span id="cb143-17"><a href="survival_2.html#cb143-17" tabindex="-1"></a><span class="co"># 初始化beta</span></span>
+<span id="cb143-18"><a href="survival_2.html#cb143-18" tabindex="-1"></a>beta <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="fu">dim</span>(X)[<span class="dv">2</span>])</span>
+<span id="cb143-19"><a href="survival_2.html#cb143-19" tabindex="-1"></a></span>
+<span id="cb143-20"><a href="survival_2.html#cb143-20" tabindex="-1"></a><span class="co"># 第一次迭代</span></span>
+<span id="cb143-21"><a href="survival_2.html#cb143-21" tabindex="-1"></a>eta <span class="ot">=</span> X <span class="sc">%*%</span> beta</span>
+<span id="cb143-22"><a href="survival_2.html#cb143-22" tabindex="-1"></a>w_hessian <span class="ot">=</span> <span class="fu">map2_vec</span>(C, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)), <span class="cf">function</span>(.x, .y){</span>
+<span id="cb143-23"><a href="survival_2.html#cb143-23" tabindex="-1"></a><span class="co"># 计算w_k</span></span>
+<span id="cb143-24"><a href="survival_2.html#cb143-24" tabindex="-1"></a>C_k <span class="ot">=</span> .x</span>
+<span id="cb143-25"><a href="survival_2.html#cb143-25" tabindex="-1"></a>k <span class="ot">=</span> .y   <span class="co"># .y提供位置索引</span></span>
+<span id="cb143-26"><a href="survival_2.html#cb143-26" tabindex="-1"></a>eta_k <span class="ot">=</span> <span class="fu">as.numeric</span>(eta[k,])</span>
+<span id="cb143-27"><a href="survival_2.html#cb143-27" tabindex="-1"></a>exp_eta_k <span class="ot">=</span> <span class="fu">exp</span>(eta_k)</span>
+<span id="cb143-28"><a href="survival_2.html#cb143-28" tabindex="-1"></a>exp_eta_k_2 <span class="ot">=</span> exp_eta_k<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb143-29"><a href="survival_2.html#cb143-29" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="fu">map_vec</span>(C_k, <span class="cf">function</span>(i){</span>
+<span id="cb143-30"><a href="survival_2.html#cb143-30" tabindex="-1"></a>  sum_exp_eta_Ri <span class="ot">=</span> <span class="fu">map_vec</span>(R[[i]], <span class="sc">~</span><span class="fu">exp</span>(eta[.,])) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
+<span id="cb143-31"><a href="survival_2.html#cb143-31" tabindex="-1"></a>  sum_exp_eta_Ri_2 <span class="ot">=</span> sum_exp_eta_Ri<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb143-32"><a href="survival_2.html#cb143-32" tabindex="-1"></a>  value <span class="ot">=</span> (exp_eta_k <span class="sc">*</span> sum_exp_eta_Ri <span class="sc">-</span> exp_eta_k_2) <span class="sc">/</span> sum_exp_eta_Ri_2</span>
+<span id="cb143-33"><a href="survival_2.html#cb143-33" tabindex="-1"></a>      value</span>
+<span id="cb143-34"><a href="survival_2.html#cb143-34" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
+<span id="cb143-35"><a href="survival_2.html#cb143-35" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="sc">-</span>weight <span class="sc">*</span> w_k   <span class="co">#该代码的w始终和coxgrad的grad差负号，数值上略微差异</span></span>
+<span id="cb143-36"><a href="survival_2.html#cb143-36" tabindex="-1"></a>w_k</span>
+<span id="cb143-37"><a href="survival_2.html#cb143-37" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="survival_2.html#cb144-1" tabindex="-1"></a>fid <span class="ot">&lt;-</span> <span class="cf">function</span>(x,index) {</span>
+<span id="cb144-2"><a href="survival_2.html#cb144-2" tabindex="-1"></a>    idup<span class="ot">=</span><span class="fu">duplicated</span>(x)</span>
+<span id="cb144-3"><a href="survival_2.html#cb144-3" tabindex="-1"></a>    <span class="cf">if</span>(<span class="sc">!</span><span class="fu">any</span>(idup)) <span class="fu">list</span>(<span class="at">index_first=</span>index,<span class="at">index_ties=</span><span class="cn">NULL</span>)</span>
+<span id="cb144-4"><a href="survival_2.html#cb144-4" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb144-5"><a href="survival_2.html#cb144-5" tabindex="-1"></a>        ndup<span class="ot">=</span><span class="sc">!</span>idup</span>
+<span id="cb144-6"><a href="survival_2.html#cb144-6" tabindex="-1"></a>        xu<span class="ot">=</span>x[ndup]<span class="co"># first death times</span></span>
+<span id="cb144-7"><a href="survival_2.html#cb144-7" tabindex="-1"></a>        index_first<span class="ot">=</span>index[ndup]</span>
+<span id="cb144-8"><a href="survival_2.html#cb144-8" tabindex="-1"></a>        ities<span class="ot">=</span><span class="fu">match</span>(x,xu)</span>
+<span id="cb144-9"><a href="survival_2.html#cb144-9" tabindex="-1"></a>        index_ties<span class="ot">=</span><span class="fu">split</span>(index,ities)</span>
+<span id="cb144-10"><a href="survival_2.html#cb144-10" tabindex="-1"></a>        nties<span class="ot">=</span><span class="fu">sapply</span>(index_ties,length)</span>
+<span id="cb144-11"><a href="survival_2.html#cb144-11" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">index_first=</span>index_first,<span class="at">index_ties=</span>index_ties[nties<span class="sc">&gt;</span><span class="dv">1</span>])</span>
+<span id="cb144-12"><a href="survival_2.html#cb144-12" tabindex="-1"></a>    }</span>
+<span id="cb144-13"><a href="survival_2.html#cb144-13" tabindex="-1"></a>}</span>
+<span id="cb144-14"><a href="survival_2.html#cb144-14" tabindex="-1"></a></span>
+<span id="cb144-15"><a href="survival_2.html#cb144-15" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb144-16"><a href="survival_2.html#cb144-16" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>
+<span id="cb144-17"><a href="survival_2.html#cb144-17" tabindex="-1"></a></span>
+<span id="cb144-18"><a href="survival_2.html#cb144-18" tabindex="-1"></a>w<span class="ot">=</span><span class="fu">rep</span>(<span class="dv">1</span>,<span class="fu">length</span>(eta))</span>
+<span id="cb144-19"><a href="survival_2.html#cb144-19" tabindex="-1"></a>w<span class="ot">=</span>w<span class="sc">/</span><span class="fu">sum</span>(w)</span>
+<span id="cb144-20"><a href="survival_2.html#cb144-20" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(y)</span>
+<span id="cb144-21"><a href="survival_2.html#cb144-21" tabindex="-1"></a>time <span class="ot">&lt;-</span> y[, <span class="st">&quot;time&quot;</span>]</span>
+<span id="cb144-22"><a href="survival_2.html#cb144-22" tabindex="-1"></a>d    <span class="ot">&lt;-</span> y[, <span class="st">&quot;status&quot;</span>]</span>
+<span id="cb144-23"><a href="survival_2.html#cb144-23" tabindex="-1"></a>eta <span class="ot">&lt;-</span> <span class="fu">scale</span>(eta, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb144-24"><a href="survival_2.html#cb144-24" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">order</span>(time, d, <span class="at">decreasing =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>))</span>
+<span id="cb144-25"><a href="survival_2.html#cb144-25" tabindex="-1"></a>exp_eta <span class="ot">&lt;-</span> <span class="fu">exp</span>(eta)[o]</span>
+<span id="cb144-26"><a href="survival_2.html#cb144-26" tabindex="-1"></a>time <span class="ot">&lt;-</span> time[o]</span>
+<span id="cb144-27"><a href="survival_2.html#cb144-27" tabindex="-1"></a>d <span class="ot">&lt;-</span> d[o]</span>
+<span id="cb144-28"><a href="survival_2.html#cb144-28" tabindex="-1"></a>w <span class="ot">&lt;-</span> w[o]</span>
+<span id="cb144-29"><a href="survival_2.html#cb144-29" tabindex="-1"></a>rskden <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">cumsum</span>(<span class="fu">rev</span>(exp_eta<span class="sc">*</span>w)))</span>
+<span id="cb144-30"><a href="survival_2.html#cb144-30" tabindex="-1"></a>dups <span class="ot">&lt;-</span> <span class="fu">fid</span>(time[d <span class="sc">==</span> <span class="dv">1</span>],<span class="fu">seq</span>(<span class="fu">length</span>(d))[d <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb144-31"><a href="survival_2.html#cb144-31" tabindex="-1"></a>dd <span class="ot">&lt;-</span> d</span>
+<span id="cb144-32"><a href="survival_2.html#cb144-32" tabindex="-1"></a>ww <span class="ot">&lt;-</span> w</span>
+<span id="cb144-33"><a href="survival_2.html#cb144-33" tabindex="-1"></a>rskcount<span class="ot">=</span><span class="fu">cumsum</span>(dd)</span>
+<span id="cb144-34"><a href="survival_2.html#cb144-34" tabindex="-1"></a>rskdeninv<span class="ot">=</span><span class="fu">cumsum</span>((ww<span class="sc">/</span>rskden)[dd<span class="sc">==</span><span class="dv">1</span>])</span>
+<span id="cb144-35"><a href="survival_2.html#cb144-35" tabindex="-1"></a>rskdeninv<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,rskdeninv)</span>
+<span id="cb144-36"><a href="survival_2.html#cb144-36" tabindex="-1"></a>grad <span class="ot">&lt;-</span> w <span class="sc">*</span> (d <span class="sc">-</span> exp_eta <span class="sc">*</span> rskdeninv[rskcount<span class="sc">+</span><span class="dv">1</span>])</span>
+<span id="cb144-37"><a href="survival_2.html#cb144-37" tabindex="-1"></a>grad[o] <span class="ot">&lt;-</span> grad</span>
+<span id="cb144-38"><a href="survival_2.html#cb144-38" tabindex="-1"></a>rskdeninv2 <span class="ot">&lt;-</span> <span class="fu">cumsum</span>((ww<span class="sc">/</span>(rskden<span class="sc">^</span><span class="dv">2</span>))[dd<span class="sc">==</span><span class="dv">1</span>])</span>
+<span id="cb144-39"><a href="survival_2.html#cb144-39" tabindex="-1"></a>rskdeninv2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, rskdeninv2)</span>
+<span id="cb144-40"><a href="survival_2.html#cb144-40" tabindex="-1"></a>w_exp_eta <span class="ot">&lt;-</span> w <span class="sc">*</span> exp_eta</span>
+<span id="cb144-41"><a href="survival_2.html#cb144-41" tabindex="-1"></a>diag_hessian <span class="ot">&lt;-</span> w_exp_eta<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> rskdeninv2[rskcount<span class="sc">+</span><span class="dv">1</span>] <span class="sc">-</span> w_exp_eta <span class="sc">*</span> rskdeninv[rskcount<span class="sc">+</span><span class="dv">1</span>]</span>
+<span id="cb144-42"><a href="survival_2.html#cb144-42" tabindex="-1"></a>diag_hessian[o] <span class="ot">&lt;-</span> diag_hessian</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="survival_2.html#cb145-1" tabindex="-1"></a>w_hessian</span></code></pre></div>
 <pre><code>##  [1] -0.0183293825 -0.0035368399 -0.0008510459 -0.0090531224 -0.0049389213
 ##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0064465663 -0.0201293825
 ## [11] -0.0124020632 -0.0028709660 -0.0018033986 -0.0008510459 -0.0201293825
@@ -598,49 +634,7 @@ div.csl-indent {
 ## [36] -0.0004164780 -0.0201293825 -0.0028709660 -0.0004164780 -0.0270793825
 ## [41] -0.0023158639 -0.0137285938 -0.0233293825 -0.0166764899 -0.0270793825
 ## [46] -0.0090531224 -0.0023158639 -0.0013158986 -0.0100503523 -0.0028709660</code></pre>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="survival_2.html#cb150-1" tabindex="-1"></a>fid <span class="ot">&lt;-</span> <span class="cf">function</span>(x,index) {</span>
-<span id="cb150-2"><a href="survival_2.html#cb150-2" tabindex="-1"></a>    idup<span class="ot">=</span><span class="fu">duplicated</span>(x)</span>
-<span id="cb150-3"><a href="survival_2.html#cb150-3" tabindex="-1"></a>    <span class="cf">if</span>(<span class="sc">!</span><span class="fu">any</span>(idup)) <span class="fu">list</span>(<span class="at">index_first=</span>index,<span class="at">index_ties=</span><span class="cn">NULL</span>)</span>
-<span id="cb150-4"><a href="survival_2.html#cb150-4" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb150-5"><a href="survival_2.html#cb150-5" tabindex="-1"></a>        ndup<span class="ot">=</span><span class="sc">!</span>idup</span>
-<span id="cb150-6"><a href="survival_2.html#cb150-6" tabindex="-1"></a>        xu<span class="ot">=</span>x[ndup]<span class="co"># first death times</span></span>
-<span id="cb150-7"><a href="survival_2.html#cb150-7" tabindex="-1"></a>        index_first<span class="ot">=</span>index[ndup]</span>
-<span id="cb150-8"><a href="survival_2.html#cb150-8" tabindex="-1"></a>        ities<span class="ot">=</span><span class="fu">match</span>(x,xu)</span>
-<span id="cb150-9"><a href="survival_2.html#cb150-9" tabindex="-1"></a>        index_ties<span class="ot">=</span><span class="fu">split</span>(index,ities)</span>
-<span id="cb150-10"><a href="survival_2.html#cb150-10" tabindex="-1"></a>        nties<span class="ot">=</span><span class="fu">sapply</span>(index_ties,length)</span>
-<span id="cb150-11"><a href="survival_2.html#cb150-11" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">index_first=</span>index_first,<span class="at">index_ties=</span>index_ties[nties<span class="sc">&gt;</span><span class="dv">1</span>])</span>
-<span id="cb150-12"><a href="survival_2.html#cb150-12" tabindex="-1"></a>    }</span>
-<span id="cb150-13"><a href="survival_2.html#cb150-13" tabindex="-1"></a>}</span>
-<span id="cb150-14"><a href="survival_2.html#cb150-14" tabindex="-1"></a></span>
-<span id="cb150-15"><a href="survival_2.html#cb150-15" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb150-16"><a href="survival_2.html#cb150-16" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>
-<span id="cb150-17"><a href="survival_2.html#cb150-17" tabindex="-1"></a></span>
-<span id="cb150-18"><a href="survival_2.html#cb150-18" tabindex="-1"></a>w<span class="ot">=</span><span class="fu">rep</span>(<span class="dv">1</span>,<span class="fu">length</span>(eta))</span>
-<span id="cb150-19"><a href="survival_2.html#cb150-19" tabindex="-1"></a>w<span class="ot">=</span>w<span class="sc">/</span><span class="fu">sum</span>(w)</span>
-<span id="cb150-20"><a href="survival_2.html#cb150-20" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(y)</span>
-<span id="cb150-21"><a href="survival_2.html#cb150-21" tabindex="-1"></a>time <span class="ot">&lt;-</span> y[, <span class="st">&quot;time&quot;</span>]</span>
-<span id="cb150-22"><a href="survival_2.html#cb150-22" tabindex="-1"></a>d    <span class="ot">&lt;-</span> y[, <span class="st">&quot;status&quot;</span>]</span>
-<span id="cb150-23"><a href="survival_2.html#cb150-23" tabindex="-1"></a>eta <span class="ot">&lt;-</span> <span class="fu">scale</span>(eta, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb150-24"><a href="survival_2.html#cb150-24" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">order</span>(time, d, <span class="at">decreasing =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>))</span>
-<span id="cb150-25"><a href="survival_2.html#cb150-25" tabindex="-1"></a>exp_eta <span class="ot">&lt;-</span> <span class="fu">exp</span>(eta)[o]</span>
-<span id="cb150-26"><a href="survival_2.html#cb150-26" tabindex="-1"></a>time <span class="ot">&lt;-</span> time[o]</span>
-<span id="cb150-27"><a href="survival_2.html#cb150-27" tabindex="-1"></a>d <span class="ot">&lt;-</span> d[o]</span>
-<span id="cb150-28"><a href="survival_2.html#cb150-28" tabindex="-1"></a>w <span class="ot">&lt;-</span> w[o]</span>
-<span id="cb150-29"><a href="survival_2.html#cb150-29" tabindex="-1"></a>rskden <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">cumsum</span>(<span class="fu">rev</span>(exp_eta<span class="sc">*</span>w)))</span>
-<span id="cb150-30"><a href="survival_2.html#cb150-30" tabindex="-1"></a>dups <span class="ot">&lt;-</span> <span class="fu">fid</span>(time[d <span class="sc">==</span> <span class="dv">1</span>],<span class="fu">seq</span>(<span class="fu">length</span>(d))[d <span class="sc">==</span> <span class="dv">1</span>])</span>
-<span id="cb150-31"><a href="survival_2.html#cb150-31" tabindex="-1"></a>dd <span class="ot">&lt;-</span> d</span>
-<span id="cb150-32"><a href="survival_2.html#cb150-32" tabindex="-1"></a>ww <span class="ot">&lt;-</span> w</span>
-<span id="cb150-33"><a href="survival_2.html#cb150-33" tabindex="-1"></a>rskcount<span class="ot">=</span><span class="fu">cumsum</span>(dd)</span>
-<span id="cb150-34"><a href="survival_2.html#cb150-34" tabindex="-1"></a>rskdeninv<span class="ot">=</span><span class="fu">cumsum</span>((ww<span class="sc">/</span>rskden)[dd<span class="sc">==</span><span class="dv">1</span>])</span>
-<span id="cb150-35"><a href="survival_2.html#cb150-35" tabindex="-1"></a>rskdeninv<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,rskdeninv)</span>
-<span id="cb150-36"><a href="survival_2.html#cb150-36" tabindex="-1"></a>grad <span class="ot">&lt;-</span> w <span class="sc">*</span> (d <span class="sc">-</span> exp_eta <span class="sc">*</span> rskdeninv[rskcount<span class="sc">+</span><span class="dv">1</span>])</span>
-<span id="cb150-37"><a href="survival_2.html#cb150-37" tabindex="-1"></a>grad[o] <span class="ot">&lt;-</span> grad</span>
-<span id="cb150-38"><a href="survival_2.html#cb150-38" tabindex="-1"></a>rskdeninv2 <span class="ot">&lt;-</span> <span class="fu">cumsum</span>((ww<span class="sc">/</span>(rskden<span class="sc">^</span><span class="dv">2</span>))[dd<span class="sc">==</span><span class="dv">1</span>])</span>
-<span id="cb150-39"><a href="survival_2.html#cb150-39" tabindex="-1"></a>rskdeninv2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, rskdeninv2)</span>
-<span id="cb150-40"><a href="survival_2.html#cb150-40" tabindex="-1"></a>w_exp_eta <span class="ot">&lt;-</span> w <span class="sc">*</span> exp_eta</span>
-<span id="cb150-41"><a href="survival_2.html#cb150-41" tabindex="-1"></a>diag_hessian <span class="ot">&lt;-</span> w_exp_eta<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> rskdeninv2[rskcount<span class="sc">+</span><span class="dv">1</span>] <span class="sc">-</span> w_exp_eta <span class="sc">*</span> rskdeninv[rskcount<span class="sc">+</span><span class="dv">1</span>]</span>
-<span id="cb150-42"><a href="survival_2.html#cb150-42" tabindex="-1"></a>diag_hessian[o] <span class="ot">&lt;-</span> diag_hessian</span>
-<span id="cb150-43"><a href="survival_2.html#cb150-43" tabindex="-1"></a>diag_hessian</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="survival_2.html#cb147-1" tabindex="-1"></a>diag_hessian</span></code></pre></div>
 <pre><code>##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
 ##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
 ## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825

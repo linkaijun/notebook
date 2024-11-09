@@ -173,6 +173,56 @@
 
 ### 算法 {#survival_2_2}
 
+考虑Cox比例风险模型在有结点情况下的似然函数
+
+$$
+L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_jx_j'\beta})}{(\sum_{j \in R_i}\omega_je^{x_j'\beta})^{d_i}} (\#eq:eq6)
+$$
+
+对数似然函数为
+
+$$
+l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_j'\beta)-d_i\log(\sum_{j \in R_i}\omega_je^{x_j'\beta})] (\#eq:eq7)
+$$
+
+分别对$\beta_k$求一阶导及二阶导
+
+$$
+\dot l(\beta)_k=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_{jk})-d_i\frac{\sum_{j \in R_i}\omega_jx_{jk}e^{x_j'\beta}}{\sum_{j \in R_i}\omega_je^{x_j'\beta}}] (\#eq:eq8)
+$$
+
+$$
+\ddot l(\beta)_k=-\sum_i^m d_i\frac{(\sum_{j \in R_i}\omega_jx_{jk}^2e^{x_j'\beta})(\sum_{j \in R_i}\omega_je^{x_j'\beta})-(\sum_{j \in R_i}\omega_jx_{jk}e^{x_j'\beta})^2}{(\sum_{j \in R_i}\omega_je^{x_j'\beta})^2} (\#eq:eq9)
+$$
+
+对对数似然函数进行二阶泰勒展开
+
+$$
+l(\beta)\approx l(\tilde \beta)+(\beta-\tilde \beta)'\dot l(\tilde \beta)+(\beta - \tilde \beta)'\ddot l(\tilde \beta)(\beta - \tilde \beta)/2 (\#eq:eq10)
+$$
+
+为方便计算，令$\ddot l(\beta)=diag\{\ddot l(\beta)_k\}$，即只取黑塞矩阵主对角线元素。得到如下目标函数
+
+$$
+M(\beta)= -\sum_{k=1}^p(\beta_k-\tilde \beta_k)\dot l(\tilde \beta)_k-\frac{1}{2}\sum_{k=1}^p \ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2) (\#eq:eq11)
+$$
+
+对$\beta_k$求偏导，得
+
+$$
+\frac{\partial M}{\partial \beta_k}=-\dot l(\tilde \beta)_k-\ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)+\lambda \alpha \cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k (\#eq:eq12)
+$$
+
+可得
+
+$$
+\hat{\beta_k}=\frac{\textrm{sgn}(-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k)\cdot\max(|-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k|-\lambda\alpha, \, 0)}{-\ddot l(\tilde \beta)_k+\lambda(1-\alpha)} (\#eq:eq13)
+$$
+
+-------------------
+
+<span style='color:red'>下面的内容是初次尝试，结果并不理想，恼人，故痛定思痛，自己推导，重新来过，也就有了上面的内容，下面的内容就留作纪念吧。</span>
+
 下面是自定义算法。
 
 

@@ -455,6 +455,39 @@ div.csl-indent {
 </div>
 <div id="survival_2_2" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> 算法<a href="survival_2.html#survival_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>考虑Cox比例风险模型在有结点情况下的似然函数</p>
+<p><span class="math display" id="eq:eq6">\[
+L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_jx_j&#39;\beta})}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^{d_i}} \tag{6.6}
+\]</span></p>
+<p>对数似然函数为</p>
+<p><span class="math display" id="eq:eq7">\[
+l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_j&#39;\beta)-d_i\log(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})] \tag{6.7}
+\]</span></p>
+<p>分别对<span class="math inline">\(\beta_k\)</span>求一阶导及二阶导</p>
+<p><span class="math display" id="eq:eq8">\[
+\dot l(\beta)_k=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_{jk})-d_i\frac{\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta}}{\sum_{j \in R_i}\omega_je^{x_j&#39;\beta}}] \tag{6.8}
+\]</span></p>
+<p><span class="math display" id="eq:eq9">\[
+\ddot l(\beta)_k=-\sum_i^m d_i\frac{(\sum_{j \in R_i}\omega_jx_{jk}^2e^{x_j&#39;\beta})(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})-(\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta})^2}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^2} \tag{6.9}
+\]</span></p>
+<p>对对数似然函数进行二阶泰勒展开</p>
+<p><span class="math display" id="eq:eq10">\[
+l(\beta)\approx l(\tilde \beta)+(\beta-\tilde \beta)&#39;\dot l(\tilde \beta)+(\beta - \tilde \beta)&#39;\ddot l(\tilde \beta)(\beta - \tilde \beta)/2 \tag{6.10}
+\]</span></p>
+<p>为方便计算，令<span class="math inline">\(\ddot l(\beta)=diag\{\ddot l(\beta)_k\}\)</span>，即只取黑塞矩阵主对角线元素。得到如下目标函数</p>
+<p><span class="math display" id="eq:eq11">\[
+M(\beta)= -\sum_{k=1}^p(\beta_k-\tilde \beta_k)\dot l(\tilde \beta)_k-\frac{1}{2}\sum_{k=1}^p \ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2) \tag{6.11}
+\]</span></p>
+<p>对<span class="math inline">\(\beta_k\)</span>求偏导，得</p>
+<p><span class="math display" id="eq:eq12">\[
+\frac{\partial M}{\partial \beta_k}=-\dot l(\tilde \beta)_k-\ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)+\lambda \alpha \cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k \tag{6.12}
+\]</span></p>
+<p>可得</p>
+<p><span class="math display" id="eq:eq13">\[
+\hat{\beta_k}=\frac{\textrm{sgn}(-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k)\cdot\max(|-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k|-\lambda\alpha, \, 0)}{-\ddot l(\tilde \beta)_k+\lambda(1-\alpha)} \tag{6.13}
+\]</span></p>
+<hr />
+<p><span style="color:red">下面的内容是初次尝试，结果并不理想，恼人，故痛定思痛，自己推导，重新来过，也就有了上面的内容，下面的内容就留作纪念吧。</span></p>
 <p>下面是自定义算法。</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="survival_2.html#cb142-1" tabindex="-1"></a>cox_cd <span class="ot">&lt;-</span> <span class="cf">function</span>(y, X, lambda, alpha, <span class="at">beta_0=</span><span class="cn">NULL</span>, <span class="at">max.iter=</span><span class="dv">100</span>){</span>
 <span id="cb142-2"><a href="survival_2.html#cb142-2" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">1</span>]</span>

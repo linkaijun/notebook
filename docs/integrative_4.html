@@ -425,7 +425,7 @@ div.csl-indent {
 </ol>
 <p><span class="math inline">\(L_1 \; Group \; MCP\)</span>组内<span class="math inline">\(L_1\)</span>惩罚，组间为<span class="math inline">\(MCP\)</span>惩罚，其惩罚函数为</p>
 <p><span class="math display" id="eq:eq6">\[
-P(\beta;\lambda,a)=\sum_{j=1}^p P_{MCP}(||\beta_j||_1;\lambda,a) \tag{10.9}
+P(\beta;\lambda,a)=\sum_{j=1}^p P_{MCP}(||\beta_j||_1;\lambda,a) \tag{6.6}
 \]</span></p>
 <p>经证明，<span class="math inline">\(L_1 \; Group \; MCP\)</span>仅满足组间选择一致性。</p>
 <ol start="2" style="list-style-type: decimal">
@@ -433,7 +433,7 @@ P(\beta;\lambda,a)=\sum_{j=1}^p P_{MCP}(||\beta_j||_1;\lambda,a) \tag{10.9}
 </ol>
 <p><span class="math inline">\(Group \; MCP\)</span>又称<span class="math inline">\(Composite \; MCP\)</span>，组内、组间都是<span class="math inline">\(MCP\)</span>惩罚，其惩罚函数为</p>
 <p><span class="math display" id="eq:eq7">\[
-P(\beta;\lambda,a,b)=\sum_{j=1}^p P_{MCP}(\sum_{m=1}^M P_{MCP}(|\beta_j^{(m)}|;\lambda,a);\lambda,b) \tag{10.11}
+P(\beta;\lambda,a,b)=\sum_{j=1}^p P_{MCP}(\sum_{m=1}^M P_{MCP}(|\beta_j^{(m)}|;\lambda,a);\lambda,b) \tag{6.7}
 \]</span></p>
 <p>经证明，<span class="math inline">\(Group \; MCP\)</span>在组内和组间均满足选择一致性。</p>
 <ol start="3" style="list-style-type: decimal">
@@ -441,7 +441,7 @@ P(\beta;\lambda,a,b)=\sum_{j=1}^p P_{MCP}(\sum_{m=1}^M P_{MCP}(|\beta_j^{(m)}|;\
 </ol>
 <p><span class="math inline">\(L_1 \; Group \; Bridge\)</span>组内为<span class="math inline">\(L_1\)</span>惩罚，组间为<span class="math inline">\(Bridge\)</span>惩罚，其惩罚函数为</p>
 <p><span class="math display" id="eq:eq8">\[
-P(\beta;\lambda)=\lambda\sum_{j=1}^p p_j||\beta_j||_i^\gamma \tag{10.12}
+P(\beta;\lambda)=\lambda\sum_{j=1}^p p_j||\beta_j||_i^\gamma \tag{6.8}
 \]</span></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Sparse Group Lasso &amp; Adaptive Sparse Group Lasso</li>
@@ -449,7 +449,7 @@ P(\beta;\lambda)=\lambda\sum_{j=1}^p p_j||\beta_j||_i^\gamma \tag{10.12}
 <p><span class="math inline">\(Sparse \; Group \; Lasso\)</span>与<span class="math inline">\(Adaptive \; Sparse \; Group \; Lasso\)</span>都是基于<span class="math inline">\(Lasso\)</span>的惩罚方法，两者的惩罚函数分别为</p>
 <p><span class="math display" id="eq:eq9">\[
 P_{SGL}(\beta;\lambda_1,\lambda_2)=\lambda_1\sum_{j=1}^p ||\beta_j||+\lambda_2||\beta||_1 \\
-P_{adSGL}(\beta;\lambda_1,\lambda_2)=\lambda_1\sum_{j=1}^p w_j||\beta_j||_2+\lambda_2\xi&#39;|\beta| \tag{10.13}
+P_{adSGL}(\beta;\lambda_1,\lambda_2)=\lambda_1\sum_{j=1}^p w_j||\beta_j||_2+\lambda_2\xi&#39;|\beta| \tag{6.9}
 \]</span></p>
 <p>由于#SGL#是<span class="math inline">\(Lasso\)</span>和<span class="math inline">\(Group \; Lasso\)</span>的线性组合，两者在理论上都不满足<span class="math inline">\(Oracle\)</span>性质，预期<span class="math inline">\(SGL\)</span>也不满足<span class="math inline">\(Oracle\)</span>性质。而<span class="math inline">\(adSGL\)</span>通过引入组权重<span class="math inline">\(w\)</span>和单个系数权重<span class="math inline">\(\xi\)</span>，改进<strong>选择一致性和估计一致性</strong>。</p>
 </div>

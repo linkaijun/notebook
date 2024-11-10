@@ -478,16 +478,19 @@ l(\beta)&amp;\approx l(\tilde \beta)+(\beta-\tilde \beta)^T\dot l(\tilde \beta)+
 <p>其中</p>
 <p><span class="math display">\[
 \frac{\partial l(\eta)}{\partial \beta}=\frac{\partial l(\eta)}{\partial \eta}\frac{d\eta}{d\beta}?=(X^T)_{p \times n}l&#39;(\eta)_{n \times 1}=\dot l(\beta)_{p \times1}
-\]</span>
-&gt; 所以<span class="math inline">\((X_{\cdot k})^Tl&#39;(\eta)=\dot l(\beta)_k\)</span>
-&gt;
-&gt; <span class="math inline">\(l&#39;(\eta)\)</span>的表达式到底是什么</p>
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\((X_{\cdot k})^Tl&#39;(\eta)=\dot l(\beta)_k\)</span></p>
+<p><span class="math inline">\(l&#39;(\eta)\)</span>的表达式到底是什么</p>
+</blockquote>
 <p>对于黑塞矩阵仅取其对角线元素而无视其他元素，则</p>
 <p><span class="math display">\[
 l(\beta)\approx\frac{1}{2}(z(\tilde \eta)-X\beta)^Tl&#39;&#39;(\tilde \eta)(z(\tilde \eta)-X\beta)+C(\tilde \eta,\tilde \beta)\\
 z(\tilde \eta)=\tilde \eta-l&#39;&#39;(\tilde \eta)^{-1}l&#39;(\tilde \eta)
-\]</span>
-&gt; 经检验，该表达式没错</p>
+\]</span></p>
+<blockquote>
+<p>经检验，该表达式没错</p>
+</blockquote>
 <p>则</p>
 <p><span class="math display">\[
 \frac{2}{n}l(\beta)\approx\frac{1}{n}(z(\tilde \eta)-X\beta)^Tl&#39;&#39;(\tilde \eta)(z(\tilde \eta)-X\beta)+\frac{2}{n}C(\tilde \eta,\tilde \beta)

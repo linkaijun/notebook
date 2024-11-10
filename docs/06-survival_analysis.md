@@ -200,7 +200,8 @@ $$
 $$
 \frac{\partial l(\eta)}{\partial \beta}=\frac{\partial l(\eta)}{\partial \eta}\frac{d\eta}{d\beta}?=(X^T)_{p \times n}l'(\eta)_{n \times 1}=\dot l(\beta)_{p \times1}
 $$
-> 所以$(X_{\cdot k})^Tl'(\eta)=\dot l(\beta)_k$
+
+> $(X_{\cdot k})^Tl'(\eta)=\dot l(\beta)_k$ 
 > 
 > $l'(\eta)$的表达式到底是什么
 
@@ -210,6 +211,7 @@ $$
 l(\beta)\approx\frac{1}{2}(z(\tilde \eta)-X\beta)^Tl''(\tilde \eta)(z(\tilde \eta)-X\beta)+C(\tilde \eta,\tilde \beta)\\
 z(\tilde \eta)=\tilde \eta-l''(\tilde \eta)^{-1}l'(\tilde \eta)
 $$
+
 > 经检验，该表达式没错
 
 则

@@ -455,36 +455,95 @@ div.csl-indent {
 </div>
 <div id="survival_2_2" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> 算法<a href="survival_2.html#survival_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li>原方法</li>
+</ol>
+<p><span class="math display">\[
+L(\beta)=\prod_{i=1}^m \frac{e^{x_{j(i)}^T\beta}}{\sum_{j \in R_i }e^{x_j^T\beta}}
+\]</span>
+<span class="math display">\[
+\frac{2}{n}l(\beta)=\frac{2}{n}\begin{bmatrix}\sum_{i=1}^mx_{j(i)}^T\beta-\sum_{i=1}^m\log(\sum_{j \in R_i}e^{x_j^T\beta})\end{bmatrix}
+\]</span></p>
+<blockquote>
+<p>原文缺了log前面的求和号</p>
+<p>这里的1/n相当于是权重，2是为了消掉后面的1/2</p>
+</blockquote>
+<p>对对数似然函数进行二阶泰勒展开</p>
+<p><span class="math display">\[
+\begin{aligned}
+l(\beta)&amp;\approx l(\tilde \beta)+(\beta-\tilde \beta)^T\dot l(\tilde \beta)+(\beta-\tilde \beta)^T\ddot l(\tilde \beta)(\beta-\tilde \beta)/2 \\
+&amp;=l(\tilde \beta)+(X\beta-\tilde \eta)^Tl&#39;(\tilde \eta)+(X\beta-\tilde \eta)^Tl&#39;&#39;(\tilde \eta)(X\beta-\tilde \eta)/2
+\end{aligned}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+\frac{\partial l(\eta)}{\partial \beta}=\frac{\partial l(\eta)}{\partial \eta}\frac{d\eta}{d\beta}?=(X^T)_{p \times n}l&#39;(\eta)_{n \times 1}=\dot l(\beta)_{p \times1}
+\]</span>
+&gt; 所以<span class="math inline">\((X_{\cdot k})^Tl&#39;(\eta)=\dot l(\beta)_k\)</span>
+&gt;
+&gt; <span class="math inline">\(l&#39;(\eta)\)</span>的表达式到底是什么</p>
+<p>对于黑塞矩阵仅取其对角线元素而无视其他元素，则</p>
+<p><span class="math display">\[
+l(\beta)\approx\frac{1}{2}(z(\tilde \eta)-X\beta)^Tl&#39;&#39;(\tilde \eta)(z(\tilde \eta)-X\beta)+C(\tilde \eta,\tilde \beta)\\
+z(\tilde \eta)=\tilde \eta-l&#39;&#39;(\tilde \eta)^{-1}l&#39;(\tilde \eta)
+\]</span>
+&gt; 经检验，该表达式没错</p>
+<p>则</p>
+<p><span class="math display">\[
+\frac{2}{n}l(\beta)\approx\frac{1}{n}(z(\tilde \eta)-X\beta)^Tl&#39;&#39;(\tilde \eta)(z(\tilde \eta)-X\beta)+\frac{2}{n}C(\tilde \eta,\tilde \beta)
+\]</span></p>
+<p>故目标函数为</p>
+<p><span class="math display">\[
+M(\beta)=-\frac{1}{n}\sum_{i=1}^nw(\tilde \eta)_i(z(\tilde \eta)_i-x_i^T\beta)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2)
+\]</span></p>
+<p>其中<span class="math inline">\(w(\tilde \eta)_i\)</span>是<span class="math inline">\(l&#39;&#39;(\tilde \eta)\)</span>的第<span class="math inline">\(i\)</span>个对角线元素。</p>
+<blockquote>
+<p>由于是最小化，得添负号，但原文的对数似然函数前面少了负号</p>
+</blockquote>
+<p>对<span class="math inline">\(\beta_k\)</span>求偏导</p>
+<p><span class="math display">\[
+\frac{\partial M}{\partial \beta_k}=\frac{2}{n}\sum_{i=1}^nw(\tilde \eta)_ix_{ik}(z(\tilde \eta)_i-x_i^T\beta)+\lambda\alpha\cdot\textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
+\]</span></p>
+<blockquote>
+<p>至此，目标函数与原文相差负号，但是-x_{ik}的负号与前面的负号抵消掉，所以最终是正号。但这个分子上的2不知道是忘了写了还是前面又默认乘上1/2把2消了。为了与原文一致，后面暂且忽略掉这个2。</p>
+</blockquote>
+<p>令偏导为0，可得</p>
+<p><span class="math display">\[
+\frac{1}{n}\sum_{i=1}^nw_ix_{ik}(z_i-\sum_{j \neq k}x_{ij}\beta_j)-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2\beta_k+\lambda\alpha\cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k=0
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>对<span class="math inline">\(\beta\)</span>求导</li>
+</ol>
 <p>考虑Cox比例风险模型在有结点情况下的似然函数</p>
-<p><span class="math display" id="eq:eq6">\[
-L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_jx_j&#39;\beta})}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^{d_i}} \tag{6.6}
+<p><span class="math display">\[
+L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_jx_j&#39;\beta})}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^{d_i}}
 \]</span></p>
 <p>对数似然函数为</p>
-<p><span class="math display" id="eq:eq7">\[
-l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_j&#39;\beta)-d_i\log(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})] \tag{6.7}
+<p><span class="math display">\[
+l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_j&#39;\beta)-d_i\log(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})]
 \]</span></p>
 <p>分别对<span class="math inline">\(\beta_k\)</span>求一阶导及二阶导</p>
-<p><span class="math display" id="eq:eq8">\[
-\dot l(\beta)_k=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_{jk})-d_i\frac{\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta}}{\sum_{j \in R_i}\omega_je^{x_j&#39;\beta}}] \tag{6.8}
+<p><span class="math display">\[
+\dot l(\beta)_k=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_{jk})-d_i\frac{\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta}}{\sum_{j \in R_i}\omega_je^{x_j&#39;\beta}}]
 \]</span></p>
-<p><span class="math display" id="eq:eq9">\[
-\ddot l(\beta)_k=-\sum_i^m d_i\frac{(\sum_{j \in R_i}\omega_jx_{jk}^2e^{x_j&#39;\beta})(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})-(\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta})^2}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^2} \tag{6.9}
+<p><span class="math display">\[
+\ddot l(\beta)_k=-\sum_i^m d_i\frac{(\sum_{j \in R_i}\omega_jx_{jk}^2e^{x_j&#39;\beta})(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})-(\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta})^2}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^2}
 \]</span></p>
 <p>对对数似然函数进行二阶泰勒展开</p>
-<p><span class="math display" id="eq:eq10">\[
-l(\beta)\approx l(\tilde \beta)+(\beta-\tilde \beta)&#39;\dot l(\tilde \beta)+(\beta - \tilde \beta)&#39;\ddot l(\tilde \beta)(\beta - \tilde \beta)/2 \tag{6.10}
+<p><span class="math display">\[
+l(\beta)\approx l(\tilde \beta)+(\beta-\tilde \beta)&#39;\dot l(\tilde \beta)+(\beta - \tilde \beta)&#39;\ddot l(\tilde \beta)(\beta - \tilde \beta)/2
 \]</span></p>
 <p>为方便计算，令<span class="math inline">\(\ddot l(\beta)=diag\{\ddot l(\beta)_k\}\)</span>，即只取黑塞矩阵主对角线元素。得到如下目标函数</p>
-<p><span class="math display" id="eq:eq11">\[
-M(\beta)= -\sum_{k=1}^p(\beta_k-\tilde \beta_k)\dot l(\tilde \beta)_k-\frac{1}{2}\sum_{k=1}^p \ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2) \tag{6.11}
+<p><span class="math display">\[
+M(\beta)= -\sum_{k=1}^p(\beta_k-\tilde \beta_k)\dot l(\tilde \beta)_k-\frac{1}{2}\sum_{k=1}^p \ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2)
 \]</span></p>
 <p>对<span class="math inline">\(\beta_k\)</span>求偏导，得</p>
-<p><span class="math display" id="eq:eq12">\[
-\frac{\partial M}{\partial \beta_k}=-\dot l(\tilde \beta)_k-\ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)+\lambda \alpha \cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k \tag{6.12}
+<p><span class="math display">\[
+\frac{\partial M}{\partial \beta_k}=-\dot l(\tilde \beta)_k-\ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)+\lambda \alpha \cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
 \]</span></p>
 <p>可得</p>
-<p><span class="math display" id="eq:eq13">\[
-\hat{\beta_k}=\frac{\textrm{sgn}(-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k)\cdot\max(|-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k|-\lambda\alpha, \, 0)}{-\ddot l(\tilde \beta)_k+\lambda(1-\alpha)} \tag{6.13}
+<p><span class="math display">\[
+\hat{\beta_k}=\frac{\textrm{sgn}(-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k)\cdot\max(|-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k|-\lambda\alpha, \, 0)}{-\ddot l(\tilde \beta)_k+\lambda(1-\alpha)}
 \]</span></p>
 <hr />
 <p><span style="color:red">下面的内容是初次尝试，结果并不理想，恼人，故痛定思痛，自己推导，重新来过，也就有了上面的内容，下面的内容就留作纪念吧。</span></p>

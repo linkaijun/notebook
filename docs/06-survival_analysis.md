@@ -286,12 +286,6 @@ $$
 \frac{\partial M}{\partial \beta_k}=-\dot l(\tilde \beta)_k-\ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)+\lambda \alpha \cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
 $$
 
-可得
-
-$$
-\hat{\beta_k}=\frac{\textrm{sgn}(-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k)\cdot\max(|-\dot l(\tilde \beta)_k+\ddot l(\tilde \beta)_k\tilde \beta_k|-\lambda\alpha, \, 0)}{-\ddot l(\tilde \beta)_k+\lambda(1-\alpha)}
-$$
-
 -------------------
 
 <span style='color:red'>下面的内容是初次尝试，结果并不理想，恼人，故痛定思痛，自己推导，重新来过，也就有了上面的内容，下面的内容就留作纪念吧。</span>

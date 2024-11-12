@@ -92,6 +92,7 @@ eq:eq2
 eq:eq3
 eq:eq4
 eq:eq5
+fig:survival-p2
 fig:pop-p1
 fig:pop-p2
 fig:pop-p3

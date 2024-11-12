@@ -117,76 +117,35 @@
 
 1. https://zhuanlan.zhihu.com/p/497968260
 
-## 算法复现 {#survival_2}
+## 论文复现 {#survival_2}
 
 本节内容是对Simon等人[@survival_1]论文的复现。
 
-### 符号 {#survival_2_1}
+观测对象的数据结构为$(y_i,x_i,\delta_i)$，分别表示生存时间、自变量向量、生存结局。其中$\delta_i$取值为1: failure time或0: censoring time。将$\delta=1$的failure time进行排序得到$t_1 \leq t_2 \leq \cdots \leq t_m$。
 
-1. $(y_i,x_i,\delta_i)$
+> 在有结点情况时才有可能取到等号
 
-   $y_i$：生存时间
-   
-   $x_i$：解释变量的向量，$x_i=(x_{i1},\cdots,x_{ip})$
-   
-   $\delta_i$：若为0，则为右删失数据；若为1，则为failure
-   
-2. $t_1<t_2<\cdots<t_m$ & $j(i)$
+事实上，这篇论文有些地方有小错误，因此下面给出自己的推导过程。
 
-   $t_1<t_2<\cdots<t_m$：在$y$中选取$\delta=1$的数据，进行升序排列
-   
-   > 注意是从1到m
-   
-   $j(i)$：$t_i$对应的观测对象$j$
-   
-3. $R_i$
+### 推导 {#survival_2_1}
 
-   满足$t_i \leq y_j$的$j$的集合
-   
-4. $\hat \eta=X\tilde \beta$
-
-5. $z(\tilde \eta)=\tilde \eta-\mathcal{l}''(\tilde \eta)^{-1}l'(\tilde \eta)$
-
-6. $C(\tilde \eta, \tilde \beta)$
-
-   与$\beta$无关的项
-   
-7. $w(\tilde \eta)_i$
-
-   $l''(\tilde \eta)$的第$i$个对角线元素
-   
-8. $C_k$
-
-   满足$t_i \lt y_k$的$i$的集合
-   
-9. $D_i$
-
-   对于有“结”的情况，failure time为$t_i$的集合
-
-10. $\omega_i$
-
-   权重
-
-11. $d_i=\sum_{j \in D_i}\omega_j$
-
-   failure time为$t_i$的观测对象的权重和
-
-### 算法 {#survival_2_2}
-
-1. 原方法
+**1. 无结点情况**
 
 $$
 L(\beta)=\prod_{i=1}^m \frac{e^{x_{j(i)}^T\beta}}{\sum_{j \in R_i }e^{x_j^T\beta}}
 $$
+
+其中$R_i$表示$t_i \leq y_j$的$j$的集合，$j(i)$表示第$i$个failure time对应的观测对象$j$。
+
 $$
 \frac{2}{n}l(\beta)=\frac{2}{n}\begin{bmatrix}\sum_{i=1}^mx_{j(i)}^T\beta-\sum_{i=1}^m\log(\sum_{j \in R_i}e^{x_j^T\beta})\end{bmatrix}
 $$
 
 > 原文缺了log前面的求和号
 > 
-> 这里的1/n相当于是权重，2是为了消掉后面的1/2
+> 这里的1/n相当于是权重，2是为了消掉泰勒展开中的1/2
 
-对对数似然函数进行二阶泰勒展开
+令$\eta=X\beta$，对对数似然函数进行二阶泰勒展开
 
 $$
 \begin{aligned}
@@ -198,27 +157,27 @@ $$
 其中
 
 $$
-\frac{\partial l(\eta)}{\partial \beta}=\frac{\partial l(\eta)}{\partial \eta}\frac{d\eta}{d\beta}?=(X^T)_{p \times n}l'(\eta)_{n \times 1}=\dot l(\beta)_{p \times1}
+\frac{\partial l(\eta)}{\partial \beta}=(X^T)_{p \times n}l'(\eta)_{n \times 1}=\dot l(\beta)_{p \times1}
 $$
 
 > $(X_{\cdot k})^Tl'(\eta)=\dot l(\beta)_k$ 
-> 
-> $l'(\eta)$的表达式到底是什么
 
-对于黑塞矩阵仅取其对角线元素而无视其他元素，则
+整理可得
 
 $$
 l(\beta)\approx\frac{1}{2}(z(\tilde \eta)-X\beta)^Tl''(\tilde \eta)(z(\tilde \eta)-X\beta)+C(\tilde \eta,\tilde \beta)\\
 z(\tilde \eta)=\tilde \eta-l''(\tilde \eta)^{-1}l'(\tilde \eta)
 $$
 
-> 经检验，该表达式没错
+> 经检验，原文该表达式没错
 
 则
 
 $$
 \frac{2}{n}l(\beta)\approx\frac{1}{n}(z(\tilde \eta)-X\beta)^Tl''(\tilde \eta)(z(\tilde \eta)-X\beta)+\frac{2}{n}C(\tilde \eta,\tilde \beta)
 $$
+
+原文指出，为了计算方便，仅取黑塞矩阵的对角线元素而无视其他元素，其余元素对最终结果的影响也较小。
 
 故目标函数为
 
@@ -228,15 +187,50 @@ $$
 
 其中$w(\tilde \eta)_i$是$l''(\tilde \eta)$的第$i$个对角线元素。
 
-> 由于是最小化，得添负号，但原文的对数似然函数前面少了负号
+> 由于是最小化，对数似然函数得添负号，但原文却少了负号
 
-对$\beta_k$求偏导
+下面推导$w(\eta)_i$及$z(\eta)_i$的具体表达式
+
+$$
+l(\eta)=\sum_{i=1}^m (\eta_{j(i)}-\log(\sum_{j \in R_i}e^{\eta_j}))=\sum_{i=1}^m \eta_{j(i)}-\sum_{i=1}^m \log(\sum_{j \in R_i}e^{\eta_j})
+$$
+
+对$\eta_k$求偏导
+
+$$
+l'(\eta)_k=\delta_k-\sum_{i=1}^m \frac{e^{\eta_k}\textrm{I}_{\{y_k \geq t_i\}}}{\sum_{j \in R_i}e^{\eta_j}}=\delta_k-\sum_{i \in C_k}(\frac{e^{\eta_k}}{\sum_{j \in R_i}e^{\eta_j}})
+$$
+
+由于是对$\eta_k$求偏导，因此在$\sum_{i=1}^m \eta_{j(i)}$中，若有$\eta_k$则为1，反之为0。也就是说，只要$y_k$是failure time就为1，是删失数据即为0，等价于$\delta_k$。而对于给定的$i$，$\eta_k$不一定在$\sum_{j \in R_i}e^{\eta_j}$中，因此可根据$R_i$的定义添加示性函数。综合考虑$\sum_{i=1}^m$和$\textrm{I}_{\{y_k \geq t_i\}}$即可发现，$\eta_k$仅出现在$y_k \geq t_i$的$i$的集合中，也就是$C_k$的定义。
+
+$$
+\begin{aligned}
+l''(\eta)_{kk}&=-[e^{\eta_k} \cdot \sum\limits_{i \in C_k}\frac{1}{\sum_{j \in R_i}e^{\eta_j}}+e^{\eta_k}(-\sum_{i \in C_k}\frac{e^{\eta_k}}{(\sum_{j \in R_i}e^{\eta_j})^2})] \\
+&=-\sum_{i \in C_k}\frac{e^{\eta_k}\sum_{j \in R_i}e^{\eta_j}-(e^{\eta_k})^2}{(\sum_{j \in R_i}e^{\eta_j})^2}
+\end{aligned}
+$$
+
+当$\sum_{i=1}^m$转化为$\sum_{i \in C_k}$后，此时$i$对应的$R_i$中必定包含$\eta_k$，因此不用再加示性函数。
+
+> 可见原文的$w(\tilde \eta)_k$缺少了负号
+
+> $w(\tilde \eta)_k$显然小于等于0，因为$R_i$中必定包含索引$k$
+
+$$
+z(\tilde \eta)_k=\tilde \eta_k-\frac{l'(\tilde \eta)_k}{l''(\tilde \eta)_{kk}}=\tilde \eta_k-\frac{\delta_k-\sum\limits_{i \in C_k}(\frac{e^{\eta_k}}{\sum_{j \in R_i}e^{\eta_j}})}{w(\tilde \eta)_k}
+$$
+
+> 和原文相比还是符号有问题
+
+**<span style='color:red'>事实上，这里有一个致命的错误。</span>**当$y_k \lt t_1$时，$C_k$为空集，对应的$w(\tilde \eta)_k=0$，不能取倒数！
+
+之后，对$\beta_k$求偏导
 
 $$
 \frac{\partial M}{\partial \beta_k}=\frac{2}{n}\sum_{i=1}^nw(\tilde \eta)_ix_{ik}(z(\tilde \eta)_i-x_i^T\beta)+\lambda\alpha\cdot\textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
 $$
 
-> 至此，目标函数与原文相差负号，但是-x_{ik}的负号与前面的负号抵消掉，所以最终是正号。但这个分子上的2不知道是忘了写了还是前面又默认乘上1/2把2消了。为了与原文一致，后面暂且忽略掉这个2。
+> 至此，目标函数与原文相差负号，但是$-x_{ik}$的负号与前面的负号抵消掉，所以最终是正号。但这个分子上的2不知道是忘了写了还是前面又默认乘上1/2把2消了。为了与原文一致，后面暂且忽略掉这个2。
 
 令偏导为0，可得
 
@@ -244,568 +238,79 @@ $$
 \frac{1}{n}\sum_{i=1}^nw_ix_{ik}(z_i-\sum_{j \neq k}x_{ij}\beta_j)-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2\beta_k+\lambda\alpha\cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k=0
 $$
 
-2. 对$\beta$求导
+> 行宽有限，这里简记$w(\tilde \eta)_i=w_i$、$z(\tilde \eta)_i=z_i$
 
-考虑Cox比例风险模型在有结点情况下的似然函数
+> 再次强调，这里的1/n事实上就是权重，应该把$w_i/n$看出一个整体
+
+此时可将不含$\beta_k$的第一项记作常数$C$，把后面的三项记作关于$\beta_k$的函数$f(\beta_k)$
 
 $$
-L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_jx_j'\beta})}{(\sum_{j \in R_i}\omega_je^{x_j'\beta})^{d_i}}
+f(\beta_k)=(\lambda(1-\alpha)-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2)\beta_k+\lambda\alpha\cdot\textrm{sgn}(\beta_k)
 $$
+
+由于$w_i \leq 0$，且$f(\beta_k)$为奇函数，则其图像大概为
+
+<div class="figure" style="text-align: center">
+<img src="06-survival_analysis_files/figure-html/survival-p2-1.png" alt="函数图" width="60%" />
+<p class="caption">(\#fig:survival-p2)函数图</p>
+</div>
+
+则该问题就转化为对$C$进行分类讨论，看看$f(\beta_k)$什么时候和横轴相交，求出相交时的横坐标即可。思路已经有了，这里就不展开说了，得到结果如下所示
+
+$$
+\hat\beta_k=-\frac{\textrm{S}(\frac{1}{n}\sum_{i=1}^nw_ix_{ik}(z_i-\sum_{j \neq k}x_{ij}\beta_j),\lambda\alpha)}{-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2+\lambda(1-\alpha)}
+$$
+
+其中$\textrm{S}(x,\lambda)=\textrm{sgn}(x)(|x|-\lambda)_+$。
+
+> 所以原文关于$\hat\beta_k$的解是有问题的
+
+**2. 有结点情况**
+
+有结点情况相较无结点情况就是多了权重，其余步骤都是一样的。
+
+$$
+L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_j\eta_j})}{(\sum_{j \in R_i}\omega_je^{\eta_j})^{d_i}}
+$$
+
+其中$D_i$表示结点为$t_i$的集合，$\omega_j$表示权重，$d_i=\sum_{j \in D_i}\omega_j$。
 
 对数似然函数为
 
 $$
-l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_j'\beta)-d_i\log(\sum_{j \in R_i}\omega_je^{x_j'\beta})]
+l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_j\eta_j)-d_i\log(\sum_{j \in R_i}\omega_je^{\eta_j})]
 $$
 
-分别对$\beta_k$求一阶导及二阶导
+对$\eta_k$求一阶导及二阶导
 
 $$
-\dot l(\beta)_k=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_{jk})-d_i\frac{\sum_{j \in R_i}\omega_jx_{jk}e^{x_j'\beta}}{\sum_{j \in R_i}\omega_je^{x_j'\beta}}]
+l'(\eta)_k=\delta_k\omega_k-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}}{\sum_{j \in R_i}\omega_je^{\eta_j}}
 $$
 
 $$
-\ddot l(\beta)_k=-\sum_i^m d_i\frac{(\sum_{j \in R_i}\omega_jx_{jk}^2e^{x_j'\beta})(\sum_{j \in R_i}\omega_je^{x_j'\beta})-(\sum_{j \in R_i}\omega_jx_{jk}e^{x_j'\beta})^2}{(\sum_{j \in R_i}\omega_je^{x_j'\beta})^2}
+l''(\eta)_{kk}=-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}(\sum_{j \in R_i}\omega_je^{\eta_j})-(\omega_ke^{\eta_k})^2}{(\sum_{j \in R_i}\omega_je^{\eta_j})^2}
 $$
 
-对对数似然函数进行二阶泰勒展开
+> 同样和原文差了负号
+> 
+> 同样没有解决$w(\eta)_k$可能为0的问题。
+> 
+> 你可以试着将其代入到无结点的情况下，也就是把$\omega=1/n$、$d_i=1/n$带进去，就会发现无结点情况下的那个1/n就是权重，应该把那个1/n并到$l''(\tilde \eta)$中，这样无结点和有结点就一致了
+
+则
 
 $$
-l(\beta)\approx l(\tilde \beta)+(\beta-\tilde \beta)'\dot l(\tilde \beta)+(\beta - \tilde \beta)'\ddot l(\tilde \beta)(\beta - \tilde \beta)/2
+z(\tilde \eta)_k=\tilde \eta_k-\frac{\delta_k\omega_k-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}}{\sum_{j \in R_i}\omega_je^{\eta_j}}}{w(\tilde \eta)_k}
 $$
 
-为方便计算，令$\ddot l(\beta)=diag\{\ddot l(\beta)_k\}$，即只取黑塞矩阵主对角线元素。得到如下目标函数
+> z中的eta要不要带权重
 
-$$
-M(\beta)= -\sum_{k=1}^p(\beta_k-\tilde \beta_k)\dot l(\tilde \beta)_k-\frac{1}{2}\sum_{k=1}^p \ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2)
-$$
+$\hat\beta_k$的表达式同无结点情形。
 
-对$\beta_k$求偏导，得
-
-$$
-\frac{\partial M}{\partial \beta_k}=-\dot l(\tilde \beta)_k-\ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)+\lambda \alpha \cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
-$$
-
--------------------
-
-<span style='color:red'>下面的内容是初次尝试，结果并不理想，恼人，故痛定思痛，自己推导，重新来过，也就有了上面的内容，下面的内容就留作纪念吧。</span>
-
-下面是自定义算法。
+### 自定义算法 {#survival_2_2}
 
 
-``` r
-cox_cd <- function(y, X, lambda, alpha, beta_0=NULL, max.iter=100){
-  n = dim(X)[1]
-  status = y[,'status']
-  y = y[,'time']
-  
-  failure_t = y[status==1] %>% sort()
-  R = map(failure_t, ~which(y>=.)) #R中每个元素对应原文的R_i
-  C = map(y, ~which(failure_t<.))
-  
-  # 根据是否有ties运行不同代码
-  if(length(y)==length(unique(y))){
-    # 无ties
-    weight = 1/n #原文无ties情况的1/n就是有ties情况下权重为1/n的情形
-    j_i = as.numeric(y %in% failure_t)   #即原文的j(i)
-    # log_likelihood_beta用于精度判断
-    log_likelihood_beta <- function(beta){
-      term_1 = as.numeric(j_i %*% X %*% beta)
-      # 2.4节有一个递推式，待议
-      term_2 = map_vec(R, function(R_i){
-        map_vec(R_i, ~exp(X[.,] %*% beta)) %>% sum() %>% log()
-      }) %>% sum()
-      result = term_1 - term_2
-      result
-    }
-    
-    # 初始化beta
-    if(is.null(beta_0)){
-      beta = rep(0,dim(X)[2])
-    }else{
-      beta = beta_0
-    }
-    
-    for (i in 1:max.iter) {
-      print(paste0("第", i, "次迭代"))
-      
-      eta = X %*% beta
-      w = map2_vec(C, c(1:length(C)), function(.x, .y){
-        # 计算w_k
-        C_k = .x
-        k = .y   # .y提供位置索引
-        eta_k = as.numeric(eta[k,])
-        exp_eta_k = exp(eta_k)
-        exp_eta_k_2 = exp_eta_k^2
-        w_k = map_vec(C_k, function(i){
-          sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
-          sum_exp_eta_Ri_2 = sum_exp_eta_Ri^2
-          value = (exp_eta_k * sum_exp_eta_Ri - exp_eta_k_2) / sum_exp_eta_Ri_2
-          value
-        }) %>% sum()
-        w_k = -weight * w_k   #该代码的w始终和coxgrad的grad差负号，数值上略微差异
-        w_k
-      })
-      w_sub = map2_vec(C, c(1:length(C)), function(.x, .y){
-        # 计算w_k
-        C_k = .x
-        k = .y   # .y提供位置索引
-        eta_k = as.numeric(eta[k,])
-        exp_eta_k = exp(eta_k)
-        w_sub_k = map_vec(C_k, function(i){
-          sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
-          value = exp_eta_k / sum_exp_eta_Ri
-          value
-        }) %>% sum()
-        w_sub_k = weight * w_sub_k
-        w_sub_k
-      })
-      if(any(w==0)) stop('w中有零')
-      z = eta + (status - w_sub) / w
-      
-      for (k in 1:length(beta)) {
-        denominator = as.numeric(w %*% X[,k]^2 + lambda * (1-alpha))
-        numerator = as.numeric(diag(w) %*% X[,k] %*% (z - X[,-k] %*% beta[-k]))
-        numerator = sign(numerator) * max(abs(numerator), lambda * alpha)
-        beta[k] = numerator/denominator
-      }
-      # 精度判断
-      # 无ties情况下，l_saturated = 0
-      D_null = -2 * log_likelihood_beta(rep(0,length(beta)))
-      D_current = -2 * log_likelihood_beta(beta)
-      if(D_current - D_null >= 0.99 * D_null){
-        print('满足精度要求')
-        paste0('D_current:', D_current)
-        break
-      }
-    }
-    return(beta)
-  }else{
-    # 有ties
-    message('有ties')
-  }
-}
-```
 
 
-``` r
-library(glmnet)
-
-data(CoxExample)
-X <- CoxExample[[1]][1:50,1:5]
-y <- CoxExample[[2]][1:50,]
-
-n = dim(X)[1]
-status = y[,'status']
-y = y[,'time']
-  
-failure_t = y[status==1] %>% sort()
-R = map(failure_t, ~which(y>=.)) #R中每个元素对应原文的R_i
-C = map(y, ~which(failure_t<.))
-
-weight = 1/n #原文无ties情况的1/n就是有ties情况下权重为1/n的情形
-
-# 初始化beta
-beta = rep(0,dim(X)[2])
-
-# 第一次迭代
-eta = X %*% beta
-w_hessian = map2_vec(C, c(1:length(C)), function(.x, .y){
-# 计算w_k
-C_k = .x
-k = .y   # .y提供位置索引
-eta_k = as.numeric(eta[k,])
-exp_eta_k = exp(eta_k)
-exp_eta_k_2 = exp_eta_k^2
-w_k = map_vec(C_k, function(i){
-  sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
-  sum_exp_eta_Ri_2 = sum_exp_eta_Ri^2
-  value = (exp_eta_k * sum_exp_eta_Ri - exp_eta_k_2) / sum_exp_eta_Ri_2
-      value
-  }) %>% sum()
-w_k = -weight * w_k   #该代码的w始终和coxgrad的grad差负号，数值上略微差异
-w_k
-})
-```
-
-下面是源码中计算梯度向量及黑塞矩阵对角线元素的函数。
-
-
-``` r
-fid <- function(x,index) {
-    idup=duplicated(x)
-    if(!any(idup)) list(index_first=index,index_ties=NULL)
-    else {
-        ndup=!idup
-        xu=x[ndup]# first death times
-        index_first=index[ndup]
-        ities=match(x,xu)
-        index_ties=split(index,ities)
-        nties=sapply(index_ties,length)
-        list(index_first=index_first,index_ties=index_ties[nties>1])
-    }
-}
-
-X <- CoxExample[[1]][1:50,1:5]
-y <- CoxExample[[2]][1:50,]
-
-w=rep(1,length(eta))
-w=w/sum(w)
-nobs <- nrow(y)
-time <- y[, "time"]
-d    <- y[, "status"]
-eta <- scale(eta, TRUE, FALSE)
-o <- order(time, d, decreasing = c(FALSE, TRUE))
-exp_eta <- exp(eta)[o]
-time <- time[o]
-d <- d[o]
-w <- w[o]
-rskden <- rev(cumsum(rev(exp_eta*w)))
-dups <- fid(time[d == 1],seq(length(d))[d == 1])
-dd <- d
-ww <- w
-rskcount=cumsum(dd)
-rskdeninv=cumsum((ww/rskden)[dd==1])
-rskdeninv=c(0,rskdeninv)
-grad <- w * (d - exp_eta * rskdeninv[rskcount+1])
-grad[o] <- grad
-rskdeninv2 <- cumsum((ww/(rskden^2))[dd==1])
-rskdeninv2 <- c(0, rskdeninv2)
-w_exp_eta <- w * exp_eta
-diag_hessian <- w_exp_eta^2 * rskdeninv2[rskcount+1] - w_exp_eta * rskdeninv[rskcount+1]
-diag_hessian[o] <- diag_hessian
-```
-
-下面是两个算法在$\beta=0$时第一次迭代的黑塞矩阵对角线元素。数据均来自于`CoxExample`。
-
-
-``` r
-w_hessian
-```
-
-```
-##  [1] -0.0183293825 -0.0035368399 -0.0008510459 -0.0090531224 -0.0049389213
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0064465663 -0.0201293825
-## [11] -0.0124020632 -0.0028709660 -0.0018033986 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0151487122 -0.0056785663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0008510459 -0.0028709660 -0.0042256154
-## [26] -0.0018033986 -0.0201293825  0.0000000000 -0.0201293825 -0.0072783243
-## [31] -0.0013158986 -0.0023158639 -0.0081460929  0.0000000000 -0.0111576188
-## [36] -0.0004164780 -0.0201293825 -0.0028709660 -0.0004164780 -0.0270793825
-## [41] -0.0023158639 -0.0137285938 -0.0233293825 -0.0166764899 -0.0270793825
-## [46] -0.0090531224 -0.0023158639 -0.0013158986 -0.0100503523 -0.0028709660
-```
-
-``` r
-diag_hessian
-```
-
-```
-##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
-## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
-## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
-## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
-## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
-## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
-## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660
-```
-
-以第13个对角线元素为例
-
-
-``` r
-C
-```
-
-```
-## [[1]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21
-## 
-## [[2]]
-## [1] 1 2 3 4 5 6 7
-## 
-## [[3]]
-## [1] 1 2
-## 
-## [[4]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-## 
-## [[5]]
-## [1] 1 2 3 4 5 6 7 8 9
-## 
-## [[6]]
-## [1] 1 2 3 4 5 6
-## 
-## [[7]]
-## integer(0)
-## 
-## [[8]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-## 
-## [[9]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11
-## 
-## [[10]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[11]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17
-## 
-## [[12]]
-## [1] 1 2 3 4 5 6
-## 
-## [[13]]
-## [1] 1 2 3 4
-## 
-## [[14]]
-## [1] 1 2
-## 
-## [[15]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[16]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-## 
-## [[17]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11
-## 
-## [[18]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19
-## 
-## [[19]]
-##  [1]  1  2  3  4  5  6  7  8  9 10
-## 
-## [[20]]
-## [1] 1 2 3 4 5 6
-## 
-## [[21]]
-## integer(0)
-## 
-## [[22]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-## 
-## [[23]]
-## [1] 1 2
-## 
-## [[24]]
-## [1] 1 2 3 4 5 6
-## 
-## [[25]]
-## [1] 1 2 3 4 5 6 7 8
-## 
-## [[26]]
-## [1] 1 2 3 4
-## 
-## [[27]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[28]]
-## integer(0)
-## 
-## [[29]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[30]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12
-## 
-## [[31]]
-## [1] 1 2 3
-## 
-## [[32]]
-## [1] 1 2 3 4 5
-## 
-## [[33]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13
-## 
-## [[34]]
-## integer(0)
-## 
-## [[35]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-## 
-## [[36]]
-## [1] 1
-## 
-## [[37]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[38]]
-## [1] 1 2 3 4 5 6
-## 
-## [[39]]
-## [1] 1
-## 
-## [[40]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
-## 
-## [[41]]
-## [1] 1 2 3 4 5
-## 
-## [[42]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
-## 
-## [[43]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-## 
-## [[44]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-## 
-## [[45]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
-## 
-## [[46]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-## 
-## [[47]]
-## [1] 1 2 3 4 5
-## 
-## [[48]]
-## [1] 1 2 3
-## 
-## [[49]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-## 
-## [[50]]
-## [1] 1 2 3 4 5 6
-```
-
-``` r
-length(R[[1]])
-```
-
-```
-## [1] 47
-```
-
-``` r
-length(R[[2]])
-```
-
-```
-## [1] 45
-```
-
-``` r
-length(R[[3]])
-```
-
-```
-## [1] 42
-```
-
-``` r
-length(R[[4]])
-```
-
-```
-## [1] 40
-```
-
-当$\beta=0$，即$e^{\tilde \eta}=1$时
-
-$$
-w(\tilde \eta)_k=\sum_{i \in C_k}\begin{bmatrix}\frac{e^{\tilde\eta_k}\sum_{j \in R_i }e^{\tilde\eta_j}-(e^{\tilde\eta_k})^2}{(\sum_{j \in R_i }e^{\tilde\eta_j})^2}\end{bmatrix}=\sum_{i \in C_k}\frac{|R_i|-1}{|R_i|^2}
-$$
-
-则$(46/47^2+44/45^2+41/42^2+39/40^2)/50$的结果为0.0018034，但源码的算法结果为-0.0023158639。
-
-而黑塞矩阵对角线元素为0的原因是**C中存在空集**。
-
-究其原因，由$C_k$的定义可知，当$y_k \leq min\{t\}$时，$C_k=\varnothing$；当$y_k=t_1$时，$C_k=\varnothing$；
-
-> $C_k$: the set of $i$ with $t_i \lt y_k$
-
-
-``` r
-y[order(y[,1])[1:5],]
-```
-
-```
-##            time status
-## [1,] 0.01717398      0
-## [2,] 0.03048822      0
-## [3,] 0.03293095      0
-## [4,] 0.04428411      1
-## [5,] 0.04429410      0
-```
-
-对角线第28个元素，也就是$y_{28}=t_1$，根据论文对$C_k$的定义本应为空集，但源码却给出了非零值。若令$C_k:t_i \leq y_k$，则$46/47^2/50=0.000416478$，与源码的数值一致。在此启发下，修改自定义算法中关于$C_k$的定义，得到如下结果
-
-
-``` r
-data(CoxExample)
-X <- CoxExample[[1]][1:50,1:5]
-y <- CoxExample[[2]][1:50,]
-
-n = dim(X)[1]
-status = y[,'status']
-y = y[,'time']
-  
-failure_t = y[status==1] %>% sort()
-R = map(failure_t, ~which(y>=.)) #R中每个元素对应原文的R_i
-C = map(y, ~which(failure_t<=.))  #修改C_k的定义
-
-weight = 1/n #原文无ties情况的1/n就是有ties情况下权重为1/n的情形
-
-# 初始化beta
-beta = rep(0,dim(X)[2])
-
-# 第一次迭代
-eta = X %*% beta
-w_hessian = map2_vec(C, c(1:length(C)), function(.x, .y){
-# 计算w_k
-C_k = .x
-k = .y   # .y提供位置索引
-eta_k = as.numeric(eta[k,])
-exp_eta_k = exp(eta_k)
-exp_eta_k_2 = exp_eta_k^2
-w_k = map_vec(C_k, function(i){
-  sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
-  sum_exp_eta_Ri_2 = sum_exp_eta_Ri^2
-  value = (exp_eta_k * sum_exp_eta_Ri - exp_eta_k_2) / sum_exp_eta_Ri_2
-      value
-  }) %>% sum()
-w_k = -weight * w_k   #该代码的w始终和coxgrad的grad差负号，数值上略微差异
-w_k
-})
-```
-
-
-``` r
-w_hessian
-```
-
-```
-##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
-## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
-## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
-## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
-## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
-## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
-## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660
-```
-
-``` r
-diag_hessian
-```
-
-```
-##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
-## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
-## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
-## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
-## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
-## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
-## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660
-```
 
 

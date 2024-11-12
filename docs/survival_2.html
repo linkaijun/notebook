@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.2 算法复现 | kj的学习笔记</title>
+  <title>6.2 论文复现 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.2 算法复现 | kj的学习笔记" />
+  <meta property="og:title" content="6.2 论文复现 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.2 算法复现 | kj的学习笔记" />
+  <meta name="twitter:title" content="6.2 论文复现 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -325,10 +325,10 @@ div.csl-indent {
 <li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 删失</a></li>
 <li class="chapter" data-level="6.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>6.1.3</b> 函数</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 算法复现</a>
+<li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 论文复现</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>6.2.1</b> 符号</a></li>
-<li class="chapter" data-level="6.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>6.2.2</b> 算法</a></li>
+<li class="chapter" data-level="6.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>6.2.1</b> 推导</a></li>
+<li class="chapter" data-level="6.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>6.2.2</b> 自定义算法</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
@@ -418,57 +418,28 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="survival_2" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> 算法复现<a href="survival_2.html#survival_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<h2><span class="header-section-number">6.2</span> 论文复现<a href="survival_2.html#survival_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <p>本节内容是对Simon等人<span class="citation"><sup>[<a href="#ref-survival_1">1</a>]</sup></span>论文的复现。</p>
-<div id="survival_2_1" class="section level3 hasAnchor" number="6.2.1">
-<h3><span class="header-section-number">6.2.1</span> 符号<a href="survival_2.html#survival_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\((y_i,x_i,\delta_i)\)</span></p>
-<p><span class="math inline">\(y_i\)</span>：生存时间</p>
-<p><span class="math inline">\(x_i\)</span>：解释变量的向量，<span class="math inline">\(x_i=(x_{i1},\cdots,x_{ip})\)</span></p>
-<p><span class="math inline">\(\delta_i\)</span>：若为0，则为右删失数据；若为1，则为failure</p></li>
-<li><p><span class="math inline">\(t_1&lt;t_2&lt;\cdots&lt;t_m\)</span> &amp; <span class="math inline">\(j(i)\)</span></p>
-<p><span class="math inline">\(t_1&lt;t_2&lt;\cdots&lt;t_m\)</span>：在<span class="math inline">\(y\)</span>中选取<span class="math inline">\(\delta=1\)</span>的数据，进行升序排列</p>
+<p>观测对象的数据结构为<span class="math inline">\((y_i,x_i,\delta_i)\)</span>，分别表示生存时间、自变量向量、生存结局。其中<span class="math inline">\(\delta_i\)</span>取值为1: failure time或0: censoring time。将<span class="math inline">\(\delta=1\)</span>的failure time进行排序得到<span class="math inline">\(t_1 \leq t_2 \leq \cdots \leq t_m\)</span>。</p>
 <blockquote>
-<p>注意是从1到m</p>
+<p>在有结点情况时才有可能取到等号</p>
 </blockquote>
-<p><span class="math inline">\(j(i)\)</span>：<span class="math inline">\(t_i\)</span>对应的观测对象<span class="math inline">\(j\)</span></p></li>
-<li><p><span class="math inline">\(R_i\)</span></p>
-<p>满足<span class="math inline">\(t_i \leq y_j\)</span>的<span class="math inline">\(j\)</span>的集合</p></li>
-<li><p><span class="math inline">\(\hat \eta=X\tilde \beta\)</span></p></li>
-<li><p><span class="math inline">\(z(\tilde \eta)=\tilde \eta-\mathcal{l}&#39;&#39;(\tilde \eta)^{-1}l&#39;(\tilde \eta)\)</span></p></li>
-<li><p><span class="math inline">\(C(\tilde \eta, \tilde \beta)\)</span></p>
-<p>与<span class="math inline">\(\beta\)</span>无关的项</p></li>
-<li><p><span class="math inline">\(w(\tilde \eta)_i\)</span></p>
-<p><span class="math inline">\(l&#39;&#39;(\tilde \eta)\)</span>的第<span class="math inline">\(i\)</span>个对角线元素</p></li>
-<li><p><span class="math inline">\(C_k\)</span></p>
-<p>满足<span class="math inline">\(t_i \lt y_k\)</span>的<span class="math inline">\(i\)</span>的集合</p></li>
-<li><p><span class="math inline">\(D_i\)</span></p>
-<p>对于有“结”的情况，failure time为<span class="math inline">\(t_i\)</span>的集合</p></li>
-<li><p><span class="math inline">\(\omega_i\)</span></p></li>
-</ol>
-<p>权重</p>
-<ol start="11" style="list-style-type: decimal">
-<li><span class="math inline">\(d_i=\sum_{j \in D_i}\omega_j\)</span></li>
-</ol>
-<p>failure time为<span class="math inline">\(t_i\)</span>的观测对象的权重和</p>
-</div>
-<div id="survival_2_2" class="section level3 hasAnchor" number="6.2.2">
-<h3><span class="header-section-number">6.2.2</span> 算法<a href="survival_2.html#survival_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<ol style="list-style-type: decimal">
-<li>原方法</li>
-</ol>
+<p>事实上，这篇论文有些地方有小错误，因此下面给出自己的推导过程。</p>
+<div id="survival_2_1" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> 推导<a href="survival_2.html#survival_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><strong>1. 无结点情况</strong></p>
 <p><span class="math display">\[
 L(\beta)=\prod_{i=1}^m \frac{e^{x_{j(i)}^T\beta}}{\sum_{j \in R_i }e^{x_j^T\beta}}
-\]</span>
-<span class="math display">\[
+\]</span></p>
+<p>其中<span class="math inline">\(R_i\)</span>表示<span class="math inline">\(t_i \leq y_j\)</span>的<span class="math inline">\(j\)</span>的集合，<span class="math inline">\(j(i)\)</span>表示第<span class="math inline">\(i\)</span>个failure time对应的观测对象<span class="math inline">\(j\)</span>。</p>
+<p><span class="math display">\[
 \frac{2}{n}l(\beta)=\frac{2}{n}\begin{bmatrix}\sum_{i=1}^mx_{j(i)}^T\beta-\sum_{i=1}^m\log(\sum_{j \in R_i}e^{x_j^T\beta})\end{bmatrix}
 \]</span></p>
 <blockquote>
 <p>原文缺了log前面的求和号</p>
-<p>这里的1/n相当于是权重，2是为了消掉后面的1/2</p>
+<p>这里的1/n相当于是权重，2是为了消掉泰勒展开中的1/2</p>
 </blockquote>
-<p>对对数似然函数进行二阶泰勒展开</p>
+<p>令<span class="math inline">\(\eta=X\beta\)</span>，对对数似然函数进行二阶泰勒展开</p>
 <p><span class="math display">\[
 \begin{aligned}
 l(\beta)&amp;\approx l(\tilde \beta)+(\beta-\tilde \beta)^T\dot l(\tilde \beta)+(\beta-\tilde \beta)^T\ddot l(\tilde \beta)(\beta-\tilde \beta)/2 \\
@@ -477,504 +448,130 @@ l(\beta)&amp;\approx l(\tilde \beta)+(\beta-\tilde \beta)^T\dot l(\tilde \beta)+
 \]</span></p>
 <p>其中</p>
 <p><span class="math display">\[
-\frac{\partial l(\eta)}{\partial \beta}=\frac{\partial l(\eta)}{\partial \eta}\frac{d\eta}{d\beta}?=(X^T)_{p \times n}l&#39;(\eta)_{n \times 1}=\dot l(\beta)_{p \times1}
+\frac{\partial l(\eta)}{\partial \beta}=(X^T)_{p \times n}l&#39;(\eta)_{n \times 1}=\dot l(\beta)_{p \times1}
 \]</span></p>
 <blockquote>
 <p><span class="math inline">\((X_{\cdot k})^Tl&#39;(\eta)=\dot l(\beta)_k\)</span></p>
-<p><span class="math inline">\(l&#39;(\eta)\)</span>的表达式到底是什么</p>
 </blockquote>
-<p>对于黑塞矩阵仅取其对角线元素而无视其他元素，则</p>
+<p>整理可得</p>
 <p><span class="math display">\[
 l(\beta)\approx\frac{1}{2}(z(\tilde \eta)-X\beta)^Tl&#39;&#39;(\tilde \eta)(z(\tilde \eta)-X\beta)+C(\tilde \eta,\tilde \beta)\\
 z(\tilde \eta)=\tilde \eta-l&#39;&#39;(\tilde \eta)^{-1}l&#39;(\tilde \eta)
 \]</span></p>
 <blockquote>
-<p>经检验，该表达式没错</p>
+<p>经检验，原文该表达式没错</p>
 </blockquote>
 <p>则</p>
 <p><span class="math display">\[
 \frac{2}{n}l(\beta)\approx\frac{1}{n}(z(\tilde \eta)-X\beta)^Tl&#39;&#39;(\tilde \eta)(z(\tilde \eta)-X\beta)+\frac{2}{n}C(\tilde \eta,\tilde \beta)
 \]</span></p>
+<p>原文指出，为了计算方便，仅取黑塞矩阵的对角线元素而无视其他元素，其余元素对最终结果的影响也较小。</p>
 <p>故目标函数为</p>
 <p><span class="math display">\[
 M(\beta)=-\frac{1}{n}\sum_{i=1}^nw(\tilde \eta)_i(z(\tilde \eta)_i-x_i^T\beta)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2)
 \]</span></p>
 <p>其中<span class="math inline">\(w(\tilde \eta)_i\)</span>是<span class="math inline">\(l&#39;&#39;(\tilde \eta)\)</span>的第<span class="math inline">\(i\)</span>个对角线元素。</p>
 <blockquote>
-<p>由于是最小化，得添负号，但原文的对数似然函数前面少了负号</p>
+<p>由于是最小化，对数似然函数得添负号，但原文却少了负号</p>
 </blockquote>
-<p>对<span class="math inline">\(\beta_k\)</span>求偏导</p>
+<p>下面推导<span class="math inline">\(w(\eta)_i\)</span>及<span class="math inline">\(z(\eta)_i\)</span>的具体表达式</p>
+<p><span class="math display">\[
+l(\eta)=\sum_{i=1}^m (\eta_{j(i)}-\log(\sum_{j \in R_i}e^{\eta_j}))=\sum_{i=1}^m \eta_{j(i)}-\sum_{i=1}^m \log(\sum_{j \in R_i}e^{\eta_j})
+\]</span></p>
+<p>对<span class="math inline">\(\eta_k\)</span>求偏导</p>
+<p><span class="math display">\[
+l&#39;(\eta)_k=\delta_k-\sum_{i=1}^m \frac{e^{\eta_k}\textrm{I}_{\{y_k \geq t_i\}}}{\sum_{j \in R_i}e^{\eta_j}}=\delta_k-\sum_{i \in C_k}(\frac{e^{\eta_k}}{\sum_{j \in R_i}e^{\eta_j}})
+\]</span></p>
+<p>由于是对<span class="math inline">\(\eta_k\)</span>求偏导，因此在<span class="math inline">\(\sum_{i=1}^m \eta_{j(i)}\)</span>中，若有<span class="math inline">\(\eta_k\)</span>则为1，反之为0。也就是说，只要<span class="math inline">\(y_k\)</span>是failure time就为1，是删失数据即为0，等价于<span class="math inline">\(\delta_k\)</span>。而对于给定的<span class="math inline">\(i\)</span>，<span class="math inline">\(\eta_k\)</span>不一定在<span class="math inline">\(\sum_{j \in R_i}e^{\eta_j}\)</span>中，因此可根据<span class="math inline">\(R_i\)</span>的定义添加示性函数。综合考虑<span class="math inline">\(\sum_{i=1}^m\)</span>和<span class="math inline">\(\textrm{I}_{\{y_k \geq t_i\}}\)</span>即可发现，<span class="math inline">\(\eta_k\)</span>仅出现在<span class="math inline">\(y_k \geq t_i\)</span>的<span class="math inline">\(i\)</span>的集合中，也就是<span class="math inline">\(C_k\)</span>的定义。</p>
+<p><span class="math display">\[
+\begin{aligned}
+l&#39;&#39;(\eta)_{kk}&amp;=-[e^{\eta_k} \cdot \sum\limits_{i \in C_k}\frac{1}{\sum_{j \in R_i}e^{\eta_j}}+e^{\eta_k}(-\sum_{i \in C_k}\frac{e^{\eta_k}}{(\sum_{j \in R_i}e^{\eta_j})^2})] \\
+&amp;=-\sum_{i \in C_k}\frac{e^{\eta_k}\sum_{j \in R_i}e^{\eta_j}-(e^{\eta_k})^2}{(\sum_{j \in R_i}e^{\eta_j})^2}
+\end{aligned}
+\]</span></p>
+<p>当<span class="math inline">\(\sum_{i=1}^m\)</span>转化为<span class="math inline">\(\sum_{i \in C_k}\)</span>后，此时<span class="math inline">\(i\)</span>对应的<span class="math inline">\(R_i\)</span>中必定包含<span class="math inline">\(\eta_k\)</span>，因此不用再加示性函数。</p>
+<blockquote>
+<p>可见原文的<span class="math inline">\(w(\tilde \eta)_k\)</span>缺少了负号</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\(w(\tilde \eta)_k\)</span>显然小于等于0，因为<span class="math inline">\(R_i\)</span>中必定包含索引<span class="math inline">\(k\)</span></p>
+</blockquote>
+<p><span class="math display">\[
+z(\tilde \eta)_k=\tilde \eta_k-\frac{l&#39;(\tilde \eta)_k}{l&#39;&#39;(\tilde \eta)_{kk}}=\tilde \eta_k-\frac{\delta_k-\sum\limits_{i \in C_k}(\frac{e^{\eta_k}}{\sum_{j \in R_i}e^{\eta_j}})}{w(\tilde \eta)_k}
+\]</span></p>
+<blockquote>
+<p>和原文相比还是符号有问题</p>
+</blockquote>
+<p><strong><span style="color:red">事实上，这里有一个致命的错误。</span></strong>当<span class="math inline">\(y_k \lt t_1\)</span>时，<span class="math inline">\(C_k\)</span>为空集，对应的<span class="math inline">\(w(\tilde \eta)_k=0\)</span>，不能取倒数！</p>
+<p>之后，对<span class="math inline">\(\beta_k\)</span>求偏导</p>
 <p><span class="math display">\[
 \frac{\partial M}{\partial \beta_k}=\frac{2}{n}\sum_{i=1}^nw(\tilde \eta)_ix_{ik}(z(\tilde \eta)_i-x_i^T\beta)+\lambda\alpha\cdot\textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
 \]</span></p>
 <blockquote>
-<p>至此，目标函数与原文相差负号，但是-x_{ik}的负号与前面的负号抵消掉，所以最终是正号。但这个分子上的2不知道是忘了写了还是前面又默认乘上1/2把2消了。为了与原文一致，后面暂且忽略掉这个2。</p>
+<p>至此，目标函数与原文相差负号，但是<span class="math inline">\(-x_{ik}\)</span>的负号与前面的负号抵消掉，所以最终是正号。但这个分子上的2不知道是忘了写了还是前面又默认乘上1/2把2消了。为了与原文一致，后面暂且忽略掉这个2。</p>
 </blockquote>
 <p>令偏导为0，可得</p>
 <p><span class="math display">\[
 \frac{1}{n}\sum_{i=1}^nw_ix_{ik}(z_i-\sum_{j \neq k}x_{ij}\beta_j)-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2\beta_k+\lambda\alpha\cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k=0
 \]</span></p>
-<ol start="2" style="list-style-type: decimal">
-<li>对<span class="math inline">\(\beta\)</span>求导</li>
-</ol>
-<p>考虑Cox比例风险模型在有结点情况下的似然函数</p>
+<blockquote>
+<p>行宽有限，这里简记<span class="math inline">\(w(\tilde \eta)_i=w_i\)</span>、<span class="math inline">\(z(\tilde \eta)_i=z_i\)</span></p>
+</blockquote>
+<blockquote>
+<p>再次强调，这里的1/n事实上就是权重，应该把<span class="math inline">\(w_i/n\)</span>看出一个整体</p>
+</blockquote>
+<p>此时可将不含<span class="math inline">\(\beta_k\)</span>的第一项记作常数<span class="math inline">\(C\)</span>，把后面的三项记作关于<span class="math inline">\(\beta_k\)</span>的函数<span class="math inline">\(f(\beta_k)\)</span></p>
 <p><span class="math display">\[
-L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_jx_j&#39;\beta})}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^{d_i}}
+f(\beta_k)=(\lambda(1-\alpha)-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2)\beta_k+\lambda\alpha\cdot\textrm{sgn}(\beta_k)
 \]</span></p>
+<p>由于<span class="math inline">\(w_i \leq 0\)</span>，且<span class="math inline">\(f(\beta_k)\)</span>为奇函数，则其图像大概为</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p2"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p2-1.png" alt="函数图" width="60%" />
+<p class="caption">
+图 6.2: 函数图
+</p>
+</div>
+<p>则该问题就转化为对<span class="math inline">\(C\)</span>进行分类讨论，看看<span class="math inline">\(f(\beta_k)\)</span>什么时候和横轴相交，求出相交时的横坐标即可。思路已经有了，这里就不展开说了，得到结果如下所示</p>
+<p><span class="math display">\[
+\hat\beta_k=-\frac{\textrm{S}(\frac{1}{n}\sum_{i=1}^nw_ix_{ik}(z_i-\sum_{j \neq k}x_{ij}\beta_j),\lambda\alpha)}{-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2+\lambda(1-\alpha)}
+\]</span></p>
+<p>其中<span class="math inline">\(\textrm{S}(x,\lambda)=\textrm{sgn}(x)(|x|-\lambda)_+\)</span>。</p>
+<blockquote>
+<p>所以原文关于<span class="math inline">\(\hat\beta_k\)</span>的解是有问题的</p>
+</blockquote>
+<p><strong>2. 有结点情况</strong></p>
+<p>有结点情况相较无结点情况就是多了权重，其余步骤都是一样的。</p>
+<p><span class="math display">\[
+L(\beta)=\prod_i^m\frac{\exp{(\sum_{j \in D_i}\omega_j\eta_j})}{(\sum_{j \in R_i}\omega_je^{\eta_j})^{d_i}}
+\]</span></p>
+<p>其中<span class="math inline">\(D_i\)</span>表示结点为<span class="math inline">\(t_i\)</span>的集合，<span class="math inline">\(\omega_j\)</span>表示权重，<span class="math inline">\(d_i=\sum_{j \in D_i}\omega_j\)</span>。</p>
 <p>对数似然函数为</p>
 <p><span class="math display">\[
-l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_j&#39;\beta)-d_i\log(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})]
+l(\beta)=\sum_i^{m}[(\sum_{j \in D_i}\omega_j\eta_j)-d_i\log(\sum_{j \in R_i}\omega_je^{\eta_j})]
 \]</span></p>
-<p>分别对<span class="math inline">\(\beta_k\)</span>求一阶导及二阶导</p>
+<p>对<span class="math inline">\(\eta_k\)</span>求一阶导及二阶导</p>
 <p><span class="math display">\[
-\dot l(\beta)_k=\sum_i^{m}[(\sum_{j \in D_i}\omega_jx_{jk})-d_i\frac{\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta}}{\sum_{j \in R_i}\omega_je^{x_j&#39;\beta}}]
+l&#39;(\eta)_k=\delta_k\omega_k-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}}{\sum_{j \in R_i}\omega_je^{\eta_j}}
 \]</span></p>
 <p><span class="math display">\[
-\ddot l(\beta)_k=-\sum_i^m d_i\frac{(\sum_{j \in R_i}\omega_jx_{jk}^2e^{x_j&#39;\beta})(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})-(\sum_{j \in R_i}\omega_jx_{jk}e^{x_j&#39;\beta})^2}{(\sum_{j \in R_i}\omega_je^{x_j&#39;\beta})^2}
+l&#39;&#39;(\eta)_{kk}=-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}(\sum_{j \in R_i}\omega_je^{\eta_j})-(\omega_ke^{\eta_k})^2}{(\sum_{j \in R_i}\omega_je^{\eta_j})^2}
 \]</span></p>
-<p>对对数似然函数进行二阶泰勒展开</p>
-<p><span class="math display">\[
-l(\beta)\approx l(\tilde \beta)+(\beta-\tilde \beta)&#39;\dot l(\tilde \beta)+(\beta - \tilde \beta)&#39;\ddot l(\tilde \beta)(\beta - \tilde \beta)/2
-\]</span></p>
-<p>为方便计算，令<span class="math inline">\(\ddot l(\beta)=diag\{\ddot l(\beta)_k\}\)</span>，即只取黑塞矩阵主对角线元素。得到如下目标函数</p>
-<p><span class="math display">\[
-M(\beta)= -\sum_{k=1}^p(\beta_k-\tilde \beta_k)\dot l(\tilde \beta)_k-\frac{1}{2}\sum_{k=1}^p \ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)^2+\lambda(\alpha\sum_{k=1}^p|\beta_k|+\frac{1}{2}(1-\alpha)\sum_{k=1}^p\beta_k^2)
-\]</span></p>
-<p>对<span class="math inline">\(\beta_k\)</span>求偏导，得</p>
-<p><span class="math display">\[
-\frac{\partial M}{\partial \beta_k}=-\dot l(\tilde \beta)_k-\ddot l(\tilde \beta)_k(\beta_k-\tilde \beta_k)+\lambda \alpha \cdot \textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
-\]</span></p>
-<hr />
-<p><span style="color:red">下面的内容是初次尝试，结果并不理想，恼人，故痛定思痛，自己推导，重新来过，也就有了上面的内容，下面的内容就留作纪念吧。</span></p>
-<p>下面是自定义算法。</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="survival_2.html#cb142-1" tabindex="-1"></a>cox_cd <span class="ot">&lt;-</span> <span class="cf">function</span>(y, X, lambda, alpha, <span class="at">beta_0=</span><span class="cn">NULL</span>, <span class="at">max.iter=</span><span class="dv">100</span>){</span>
-<span id="cb142-2"><a href="survival_2.html#cb142-2" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">1</span>]</span>
-<span id="cb142-3"><a href="survival_2.html#cb142-3" tabindex="-1"></a>  status <span class="ot">=</span> y[,<span class="st">&#39;status&#39;</span>]</span>
-<span id="cb142-4"><a href="survival_2.html#cb142-4" tabindex="-1"></a>  y <span class="ot">=</span> y[,<span class="st">&#39;time&#39;</span>]</span>
-<span id="cb142-5"><a href="survival_2.html#cb142-5" tabindex="-1"></a>  </span>
-<span id="cb142-6"><a href="survival_2.html#cb142-6" tabindex="-1"></a>  failure_t <span class="ot">=</span> y[status<span class="sc">==</span><span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="fu">sort</span>()</span>
-<span id="cb142-7"><a href="survival_2.html#cb142-7" tabindex="-1"></a>  R <span class="ot">=</span> <span class="fu">map</span>(failure_t, <span class="sc">~</span><span class="fu">which</span>(y<span class="sc">&gt;=</span>.)) <span class="co">#R中每个元素对应原文的R_i</span></span>
-<span id="cb142-8"><a href="survival_2.html#cb142-8" tabindex="-1"></a>  C <span class="ot">=</span> <span class="fu">map</span>(y, <span class="sc">~</span><span class="fu">which</span>(failure_t<span class="sc">&lt;</span>.))</span>
-<span id="cb142-9"><a href="survival_2.html#cb142-9" tabindex="-1"></a>  </span>
-<span id="cb142-10"><a href="survival_2.html#cb142-10" tabindex="-1"></a>  <span class="co"># 根据是否有ties运行不同代码</span></span>
-<span id="cb142-11"><a href="survival_2.html#cb142-11" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(y)<span class="sc">==</span><span class="fu">length</span>(<span class="fu">unique</span>(y))){</span>
-<span id="cb142-12"><a href="survival_2.html#cb142-12" tabindex="-1"></a>    <span class="co"># 无ties</span></span>
-<span id="cb142-13"><a href="survival_2.html#cb142-13" tabindex="-1"></a>    weight <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span>n <span class="co">#原文无ties情况的1/n就是有ties情况下权重为1/n的情形</span></span>
-<span id="cb142-14"><a href="survival_2.html#cb142-14" tabindex="-1"></a>    j_i <span class="ot">=</span> <span class="fu">as.numeric</span>(y <span class="sc">%in%</span> failure_t)   <span class="co">#即原文的j(i)</span></span>
-<span id="cb142-15"><a href="survival_2.html#cb142-15" tabindex="-1"></a>    <span class="co"># log_likelihood_beta用于精度判断</span></span>
-<span id="cb142-16"><a href="survival_2.html#cb142-16" tabindex="-1"></a>    log_likelihood_beta <span class="ot">&lt;-</span> <span class="cf">function</span>(beta){</span>
-<span id="cb142-17"><a href="survival_2.html#cb142-17" tabindex="-1"></a>      term_1 <span class="ot">=</span> <span class="fu">as.numeric</span>(j_i <span class="sc">%*%</span> X <span class="sc">%*%</span> beta)</span>
-<span id="cb142-18"><a href="survival_2.html#cb142-18" tabindex="-1"></a>      <span class="co"># 2.4节有一个递推式，待议</span></span>
-<span id="cb142-19"><a href="survival_2.html#cb142-19" tabindex="-1"></a>      term_2 <span class="ot">=</span> <span class="fu">map_vec</span>(R, <span class="cf">function</span>(R_i){</span>
-<span id="cb142-20"><a href="survival_2.html#cb142-20" tabindex="-1"></a>        <span class="fu">map_vec</span>(R_i, <span class="sc">~</span><span class="fu">exp</span>(X[.,] <span class="sc">%*%</span> beta)) <span class="sc">%&gt;%</span> <span class="fu">sum</span>() <span class="sc">%&gt;%</span> <span class="fu">log</span>()</span>
-<span id="cb142-21"><a href="survival_2.html#cb142-21" tabindex="-1"></a>      }) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb142-22"><a href="survival_2.html#cb142-22" tabindex="-1"></a>      result <span class="ot">=</span> term_1 <span class="sc">-</span> term_2</span>
-<span id="cb142-23"><a href="survival_2.html#cb142-23" tabindex="-1"></a>      result</span>
-<span id="cb142-24"><a href="survival_2.html#cb142-24" tabindex="-1"></a>    }</span>
-<span id="cb142-25"><a href="survival_2.html#cb142-25" tabindex="-1"></a>    </span>
-<span id="cb142-26"><a href="survival_2.html#cb142-26" tabindex="-1"></a>    <span class="co"># 初始化beta</span></span>
-<span id="cb142-27"><a href="survival_2.html#cb142-27" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.null</span>(beta_0)){</span>
-<span id="cb142-28"><a href="survival_2.html#cb142-28" tabindex="-1"></a>      beta <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="fu">dim</span>(X)[<span class="dv">2</span>])</span>
-<span id="cb142-29"><a href="survival_2.html#cb142-29" tabindex="-1"></a>    }<span class="cf">else</span>{</span>
-<span id="cb142-30"><a href="survival_2.html#cb142-30" tabindex="-1"></a>      beta <span class="ot">=</span> beta_0</span>
-<span id="cb142-31"><a href="survival_2.html#cb142-31" tabindex="-1"></a>    }</span>
-<span id="cb142-32"><a href="survival_2.html#cb142-32" tabindex="-1"></a>    </span>
-<span id="cb142-33"><a href="survival_2.html#cb142-33" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>max.iter) {</span>
-<span id="cb142-34"><a href="survival_2.html#cb142-34" tabindex="-1"></a>      <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;第&quot;</span>, i, <span class="st">&quot;次迭代&quot;</span>))</span>
-<span id="cb142-35"><a href="survival_2.html#cb142-35" tabindex="-1"></a>      </span>
-<span id="cb142-36"><a href="survival_2.html#cb142-36" tabindex="-1"></a>      eta <span class="ot">=</span> X <span class="sc">%*%</span> beta</span>
-<span id="cb142-37"><a href="survival_2.html#cb142-37" tabindex="-1"></a>      w <span class="ot">=</span> <span class="fu">map2_vec</span>(C, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)), <span class="cf">function</span>(.x, .y){</span>
-<span id="cb142-38"><a href="survival_2.html#cb142-38" tabindex="-1"></a>        <span class="co"># 计算w_k</span></span>
-<span id="cb142-39"><a href="survival_2.html#cb142-39" tabindex="-1"></a>        C_k <span class="ot">=</span> .x</span>
-<span id="cb142-40"><a href="survival_2.html#cb142-40" tabindex="-1"></a>        k <span class="ot">=</span> .y   <span class="co"># .y提供位置索引</span></span>
-<span id="cb142-41"><a href="survival_2.html#cb142-41" tabindex="-1"></a>        eta_k <span class="ot">=</span> <span class="fu">as.numeric</span>(eta[k,])</span>
-<span id="cb142-42"><a href="survival_2.html#cb142-42" tabindex="-1"></a>        exp_eta_k <span class="ot">=</span> <span class="fu">exp</span>(eta_k)</span>
-<span id="cb142-43"><a href="survival_2.html#cb142-43" tabindex="-1"></a>        exp_eta_k_2 <span class="ot">=</span> exp_eta_k<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb142-44"><a href="survival_2.html#cb142-44" tabindex="-1"></a>        w_k <span class="ot">=</span> <span class="fu">map_vec</span>(C_k, <span class="cf">function</span>(i){</span>
-<span id="cb142-45"><a href="survival_2.html#cb142-45" tabindex="-1"></a>          sum_exp_eta_Ri <span class="ot">=</span> <span class="fu">map_vec</span>(R[[i]], <span class="sc">~</span><span class="fu">exp</span>(eta[.,])) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb142-46"><a href="survival_2.html#cb142-46" tabindex="-1"></a>          sum_exp_eta_Ri_2 <span class="ot">=</span> sum_exp_eta_Ri<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb142-47"><a href="survival_2.html#cb142-47" tabindex="-1"></a>          value <span class="ot">=</span> (exp_eta_k <span class="sc">*</span> sum_exp_eta_Ri <span class="sc">-</span> exp_eta_k_2) <span class="sc">/</span> sum_exp_eta_Ri_2</span>
-<span id="cb142-48"><a href="survival_2.html#cb142-48" tabindex="-1"></a>          value</span>
-<span id="cb142-49"><a href="survival_2.html#cb142-49" tabindex="-1"></a>        }) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb142-50"><a href="survival_2.html#cb142-50" tabindex="-1"></a>        w_k <span class="ot">=</span> <span class="sc">-</span>weight <span class="sc">*</span> w_k   <span class="co">#该代码的w始终和coxgrad的grad差负号，数值上略微差异</span></span>
-<span id="cb142-51"><a href="survival_2.html#cb142-51" tabindex="-1"></a>        w_k</span>
-<span id="cb142-52"><a href="survival_2.html#cb142-52" tabindex="-1"></a>      })</span>
-<span id="cb142-53"><a href="survival_2.html#cb142-53" tabindex="-1"></a>      w_sub <span class="ot">=</span> <span class="fu">map2_vec</span>(C, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)), <span class="cf">function</span>(.x, .y){</span>
-<span id="cb142-54"><a href="survival_2.html#cb142-54" tabindex="-1"></a>        <span class="co"># 计算w_k</span></span>
-<span id="cb142-55"><a href="survival_2.html#cb142-55" tabindex="-1"></a>        C_k <span class="ot">=</span> .x</span>
-<span id="cb142-56"><a href="survival_2.html#cb142-56" tabindex="-1"></a>        k <span class="ot">=</span> .y   <span class="co"># .y提供位置索引</span></span>
-<span id="cb142-57"><a href="survival_2.html#cb142-57" tabindex="-1"></a>        eta_k <span class="ot">=</span> <span class="fu">as.numeric</span>(eta[k,])</span>
-<span id="cb142-58"><a href="survival_2.html#cb142-58" tabindex="-1"></a>        exp_eta_k <span class="ot">=</span> <span class="fu">exp</span>(eta_k)</span>
-<span id="cb142-59"><a href="survival_2.html#cb142-59" tabindex="-1"></a>        w_sub_k <span class="ot">=</span> <span class="fu">map_vec</span>(C_k, <span class="cf">function</span>(i){</span>
-<span id="cb142-60"><a href="survival_2.html#cb142-60" tabindex="-1"></a>          sum_exp_eta_Ri <span class="ot">=</span> <span class="fu">map_vec</span>(R[[i]], <span class="sc">~</span><span class="fu">exp</span>(eta[.,])) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb142-61"><a href="survival_2.html#cb142-61" tabindex="-1"></a>          value <span class="ot">=</span> exp_eta_k <span class="sc">/</span> sum_exp_eta_Ri</span>
-<span id="cb142-62"><a href="survival_2.html#cb142-62" tabindex="-1"></a>          value</span>
-<span id="cb142-63"><a href="survival_2.html#cb142-63" tabindex="-1"></a>        }) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb142-64"><a href="survival_2.html#cb142-64" tabindex="-1"></a>        w_sub_k <span class="ot">=</span> weight <span class="sc">*</span> w_sub_k</span>
-<span id="cb142-65"><a href="survival_2.html#cb142-65" tabindex="-1"></a>        w_sub_k</span>
-<span id="cb142-66"><a href="survival_2.html#cb142-66" tabindex="-1"></a>      })</span>
-<span id="cb142-67"><a href="survival_2.html#cb142-67" tabindex="-1"></a>      <span class="cf">if</span>(<span class="fu">any</span>(w<span class="sc">==</span><span class="dv">0</span>)) <span class="fu">stop</span>(<span class="st">&#39;w中有零&#39;</span>)</span>
-<span id="cb142-68"><a href="survival_2.html#cb142-68" tabindex="-1"></a>      z <span class="ot">=</span> eta <span class="sc">+</span> (status <span class="sc">-</span> w_sub) <span class="sc">/</span> w</span>
-<span id="cb142-69"><a href="survival_2.html#cb142-69" tabindex="-1"></a>      </span>
-<span id="cb142-70"><a href="survival_2.html#cb142-70" tabindex="-1"></a>      <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(beta)) {</span>
-<span id="cb142-71"><a href="survival_2.html#cb142-71" tabindex="-1"></a>        denominator <span class="ot">=</span> <span class="fu">as.numeric</span>(w <span class="sc">%*%</span> X[,k]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> lambda <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>alpha))</span>
-<span id="cb142-72"><a href="survival_2.html#cb142-72" tabindex="-1"></a>        numerator <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">diag</span>(w) <span class="sc">%*%</span> X[,k] <span class="sc">%*%</span> (z <span class="sc">-</span> X[,<span class="sc">-</span>k] <span class="sc">%*%</span> beta[<span class="sc">-</span>k]))</span>
-<span id="cb142-73"><a href="survival_2.html#cb142-73" tabindex="-1"></a>        numerator <span class="ot">=</span> <span class="fu">sign</span>(numerator) <span class="sc">*</span> <span class="fu">max</span>(<span class="fu">abs</span>(numerator), lambda <span class="sc">*</span> alpha)</span>
-<span id="cb142-74"><a href="survival_2.html#cb142-74" tabindex="-1"></a>        beta[k] <span class="ot">=</span> numerator<span class="sc">/</span>denominator</span>
-<span id="cb142-75"><a href="survival_2.html#cb142-75" tabindex="-1"></a>      }</span>
-<span id="cb142-76"><a href="survival_2.html#cb142-76" tabindex="-1"></a>      <span class="co"># 精度判断</span></span>
-<span id="cb142-77"><a href="survival_2.html#cb142-77" tabindex="-1"></a>      <span class="co"># 无ties情况下，l_saturated = 0</span></span>
-<span id="cb142-78"><a href="survival_2.html#cb142-78" tabindex="-1"></a>      D_null <span class="ot">=</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log_likelihood_beta</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="fu">length</span>(beta)))</span>
-<span id="cb142-79"><a href="survival_2.html#cb142-79" tabindex="-1"></a>      D_current <span class="ot">=</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log_likelihood_beta</span>(beta)</span>
-<span id="cb142-80"><a href="survival_2.html#cb142-80" tabindex="-1"></a>      <span class="cf">if</span>(D_current <span class="sc">-</span> D_null <span class="sc">&gt;=</span> <span class="fl">0.99</span> <span class="sc">*</span> D_null){</span>
-<span id="cb142-81"><a href="survival_2.html#cb142-81" tabindex="-1"></a>        <span class="fu">print</span>(<span class="st">&#39;满足精度要求&#39;</span>)</span>
-<span id="cb142-82"><a href="survival_2.html#cb142-82" tabindex="-1"></a>        <span class="fu">paste0</span>(<span class="st">&#39;D_current:&#39;</span>, D_current)</span>
-<span id="cb142-83"><a href="survival_2.html#cb142-83" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb142-84"><a href="survival_2.html#cb142-84" tabindex="-1"></a>      }</span>
-<span id="cb142-85"><a href="survival_2.html#cb142-85" tabindex="-1"></a>    }</span>
-<span id="cb142-86"><a href="survival_2.html#cb142-86" tabindex="-1"></a>    <span class="fu">return</span>(beta)</span>
-<span id="cb142-87"><a href="survival_2.html#cb142-87" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
-<span id="cb142-88"><a href="survival_2.html#cb142-88" tabindex="-1"></a>    <span class="co"># 有ties</span></span>
-<span id="cb142-89"><a href="survival_2.html#cb142-89" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&#39;有ties&#39;</span>)</span>
-<span id="cb142-90"><a href="survival_2.html#cb142-90" tabindex="-1"></a>  }</span>
-<span id="cb142-91"><a href="survival_2.html#cb142-91" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="survival_2.html#cb143-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
-<span id="cb143-2"><a href="survival_2.html#cb143-2" tabindex="-1"></a></span>
-<span id="cb143-3"><a href="survival_2.html#cb143-3" tabindex="-1"></a><span class="fu">data</span>(CoxExample)</span>
-<span id="cb143-4"><a href="survival_2.html#cb143-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb143-5"><a href="survival_2.html#cb143-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>
-<span id="cb143-6"><a href="survival_2.html#cb143-6" tabindex="-1"></a></span>
-<span id="cb143-7"><a href="survival_2.html#cb143-7" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">1</span>]</span>
-<span id="cb143-8"><a href="survival_2.html#cb143-8" tabindex="-1"></a>status <span class="ot">=</span> y[,<span class="st">&#39;status&#39;</span>]</span>
-<span id="cb143-9"><a href="survival_2.html#cb143-9" tabindex="-1"></a>y <span class="ot">=</span> y[,<span class="st">&#39;time&#39;</span>]</span>
-<span id="cb143-10"><a href="survival_2.html#cb143-10" tabindex="-1"></a>  </span>
-<span id="cb143-11"><a href="survival_2.html#cb143-11" tabindex="-1"></a>failure_t <span class="ot">=</span> y[status<span class="sc">==</span><span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="fu">sort</span>()</span>
-<span id="cb143-12"><a href="survival_2.html#cb143-12" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">map</span>(failure_t, <span class="sc">~</span><span class="fu">which</span>(y<span class="sc">&gt;=</span>.)) <span class="co">#R中每个元素对应原文的R_i</span></span>
-<span id="cb143-13"><a href="survival_2.html#cb143-13" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">map</span>(y, <span class="sc">~</span><span class="fu">which</span>(failure_t<span class="sc">&lt;</span>.))</span>
-<span id="cb143-14"><a href="survival_2.html#cb143-14" tabindex="-1"></a></span>
-<span id="cb143-15"><a href="survival_2.html#cb143-15" tabindex="-1"></a>weight <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span>n <span class="co">#原文无ties情况的1/n就是有ties情况下权重为1/n的情形</span></span>
-<span id="cb143-16"><a href="survival_2.html#cb143-16" tabindex="-1"></a></span>
-<span id="cb143-17"><a href="survival_2.html#cb143-17" tabindex="-1"></a><span class="co"># 初始化beta</span></span>
-<span id="cb143-18"><a href="survival_2.html#cb143-18" tabindex="-1"></a>beta <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="fu">dim</span>(X)[<span class="dv">2</span>])</span>
-<span id="cb143-19"><a href="survival_2.html#cb143-19" tabindex="-1"></a></span>
-<span id="cb143-20"><a href="survival_2.html#cb143-20" tabindex="-1"></a><span class="co"># 第一次迭代</span></span>
-<span id="cb143-21"><a href="survival_2.html#cb143-21" tabindex="-1"></a>eta <span class="ot">=</span> X <span class="sc">%*%</span> beta</span>
-<span id="cb143-22"><a href="survival_2.html#cb143-22" tabindex="-1"></a>w_hessian <span class="ot">=</span> <span class="fu">map2_vec</span>(C, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)), <span class="cf">function</span>(.x, .y){</span>
-<span id="cb143-23"><a href="survival_2.html#cb143-23" tabindex="-1"></a><span class="co"># 计算w_k</span></span>
-<span id="cb143-24"><a href="survival_2.html#cb143-24" tabindex="-1"></a>C_k <span class="ot">=</span> .x</span>
-<span id="cb143-25"><a href="survival_2.html#cb143-25" tabindex="-1"></a>k <span class="ot">=</span> .y   <span class="co"># .y提供位置索引</span></span>
-<span id="cb143-26"><a href="survival_2.html#cb143-26" tabindex="-1"></a>eta_k <span class="ot">=</span> <span class="fu">as.numeric</span>(eta[k,])</span>
-<span id="cb143-27"><a href="survival_2.html#cb143-27" tabindex="-1"></a>exp_eta_k <span class="ot">=</span> <span class="fu">exp</span>(eta_k)</span>
-<span id="cb143-28"><a href="survival_2.html#cb143-28" tabindex="-1"></a>exp_eta_k_2 <span class="ot">=</span> exp_eta_k<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb143-29"><a href="survival_2.html#cb143-29" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="fu">map_vec</span>(C_k, <span class="cf">function</span>(i){</span>
-<span id="cb143-30"><a href="survival_2.html#cb143-30" tabindex="-1"></a>  sum_exp_eta_Ri <span class="ot">=</span> <span class="fu">map_vec</span>(R[[i]], <span class="sc">~</span><span class="fu">exp</span>(eta[.,])) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb143-31"><a href="survival_2.html#cb143-31" tabindex="-1"></a>  sum_exp_eta_Ri_2 <span class="ot">=</span> sum_exp_eta_Ri<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb143-32"><a href="survival_2.html#cb143-32" tabindex="-1"></a>  value <span class="ot">=</span> (exp_eta_k <span class="sc">*</span> sum_exp_eta_Ri <span class="sc">-</span> exp_eta_k_2) <span class="sc">/</span> sum_exp_eta_Ri_2</span>
-<span id="cb143-33"><a href="survival_2.html#cb143-33" tabindex="-1"></a>      value</span>
-<span id="cb143-34"><a href="survival_2.html#cb143-34" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb143-35"><a href="survival_2.html#cb143-35" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="sc">-</span>weight <span class="sc">*</span> w_k   <span class="co">#该代码的w始终和coxgrad的grad差负号，数值上略微差异</span></span>
-<span id="cb143-36"><a href="survival_2.html#cb143-36" tabindex="-1"></a>w_k</span>
-<span id="cb143-37"><a href="survival_2.html#cb143-37" tabindex="-1"></a>})</span></code></pre></div>
-<p>下面是源码中计算梯度向量及黑塞矩阵对角线元素的函数。</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="survival_2.html#cb144-1" tabindex="-1"></a>fid <span class="ot">&lt;-</span> <span class="cf">function</span>(x,index) {</span>
-<span id="cb144-2"><a href="survival_2.html#cb144-2" tabindex="-1"></a>    idup<span class="ot">=</span><span class="fu">duplicated</span>(x)</span>
-<span id="cb144-3"><a href="survival_2.html#cb144-3" tabindex="-1"></a>    <span class="cf">if</span>(<span class="sc">!</span><span class="fu">any</span>(idup)) <span class="fu">list</span>(<span class="at">index_first=</span>index,<span class="at">index_ties=</span><span class="cn">NULL</span>)</span>
-<span id="cb144-4"><a href="survival_2.html#cb144-4" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb144-5"><a href="survival_2.html#cb144-5" tabindex="-1"></a>        ndup<span class="ot">=</span><span class="sc">!</span>idup</span>
-<span id="cb144-6"><a href="survival_2.html#cb144-6" tabindex="-1"></a>        xu<span class="ot">=</span>x[ndup]<span class="co"># first death times</span></span>
-<span id="cb144-7"><a href="survival_2.html#cb144-7" tabindex="-1"></a>        index_first<span class="ot">=</span>index[ndup]</span>
-<span id="cb144-8"><a href="survival_2.html#cb144-8" tabindex="-1"></a>        ities<span class="ot">=</span><span class="fu">match</span>(x,xu)</span>
-<span id="cb144-9"><a href="survival_2.html#cb144-9" tabindex="-1"></a>        index_ties<span class="ot">=</span><span class="fu">split</span>(index,ities)</span>
-<span id="cb144-10"><a href="survival_2.html#cb144-10" tabindex="-1"></a>        nties<span class="ot">=</span><span class="fu">sapply</span>(index_ties,length)</span>
-<span id="cb144-11"><a href="survival_2.html#cb144-11" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">index_first=</span>index_first,<span class="at">index_ties=</span>index_ties[nties<span class="sc">&gt;</span><span class="dv">1</span>])</span>
-<span id="cb144-12"><a href="survival_2.html#cb144-12" tabindex="-1"></a>    }</span>
-<span id="cb144-13"><a href="survival_2.html#cb144-13" tabindex="-1"></a>}</span>
-<span id="cb144-14"><a href="survival_2.html#cb144-14" tabindex="-1"></a></span>
-<span id="cb144-15"><a href="survival_2.html#cb144-15" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb144-16"><a href="survival_2.html#cb144-16" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>
-<span id="cb144-17"><a href="survival_2.html#cb144-17" tabindex="-1"></a></span>
-<span id="cb144-18"><a href="survival_2.html#cb144-18" tabindex="-1"></a>w<span class="ot">=</span><span class="fu">rep</span>(<span class="dv">1</span>,<span class="fu">length</span>(eta))</span>
-<span id="cb144-19"><a href="survival_2.html#cb144-19" tabindex="-1"></a>w<span class="ot">=</span>w<span class="sc">/</span><span class="fu">sum</span>(w)</span>
-<span id="cb144-20"><a href="survival_2.html#cb144-20" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(y)</span>
-<span id="cb144-21"><a href="survival_2.html#cb144-21" tabindex="-1"></a>time <span class="ot">&lt;-</span> y[, <span class="st">&quot;time&quot;</span>]</span>
-<span id="cb144-22"><a href="survival_2.html#cb144-22" tabindex="-1"></a>d    <span class="ot">&lt;-</span> y[, <span class="st">&quot;status&quot;</span>]</span>
-<span id="cb144-23"><a href="survival_2.html#cb144-23" tabindex="-1"></a>eta <span class="ot">&lt;-</span> <span class="fu">scale</span>(eta, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb144-24"><a href="survival_2.html#cb144-24" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">order</span>(time, d, <span class="at">decreasing =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>))</span>
-<span id="cb144-25"><a href="survival_2.html#cb144-25" tabindex="-1"></a>exp_eta <span class="ot">&lt;-</span> <span class="fu">exp</span>(eta)[o]</span>
-<span id="cb144-26"><a href="survival_2.html#cb144-26" tabindex="-1"></a>time <span class="ot">&lt;-</span> time[o]</span>
-<span id="cb144-27"><a href="survival_2.html#cb144-27" tabindex="-1"></a>d <span class="ot">&lt;-</span> d[o]</span>
-<span id="cb144-28"><a href="survival_2.html#cb144-28" tabindex="-1"></a>w <span class="ot">&lt;-</span> w[o]</span>
-<span id="cb144-29"><a href="survival_2.html#cb144-29" tabindex="-1"></a>rskden <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">cumsum</span>(<span class="fu">rev</span>(exp_eta<span class="sc">*</span>w)))</span>
-<span id="cb144-30"><a href="survival_2.html#cb144-30" tabindex="-1"></a>dups <span class="ot">&lt;-</span> <span class="fu">fid</span>(time[d <span class="sc">==</span> <span class="dv">1</span>],<span class="fu">seq</span>(<span class="fu">length</span>(d))[d <span class="sc">==</span> <span class="dv">1</span>])</span>
-<span id="cb144-31"><a href="survival_2.html#cb144-31" tabindex="-1"></a>dd <span class="ot">&lt;-</span> d</span>
-<span id="cb144-32"><a href="survival_2.html#cb144-32" tabindex="-1"></a>ww <span class="ot">&lt;-</span> w</span>
-<span id="cb144-33"><a href="survival_2.html#cb144-33" tabindex="-1"></a>rskcount<span class="ot">=</span><span class="fu">cumsum</span>(dd)</span>
-<span id="cb144-34"><a href="survival_2.html#cb144-34" tabindex="-1"></a>rskdeninv<span class="ot">=</span><span class="fu">cumsum</span>((ww<span class="sc">/</span>rskden)[dd<span class="sc">==</span><span class="dv">1</span>])</span>
-<span id="cb144-35"><a href="survival_2.html#cb144-35" tabindex="-1"></a>rskdeninv<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,rskdeninv)</span>
-<span id="cb144-36"><a href="survival_2.html#cb144-36" tabindex="-1"></a>grad <span class="ot">&lt;-</span> w <span class="sc">*</span> (d <span class="sc">-</span> exp_eta <span class="sc">*</span> rskdeninv[rskcount<span class="sc">+</span><span class="dv">1</span>])</span>
-<span id="cb144-37"><a href="survival_2.html#cb144-37" tabindex="-1"></a>grad[o] <span class="ot">&lt;-</span> grad</span>
-<span id="cb144-38"><a href="survival_2.html#cb144-38" tabindex="-1"></a>rskdeninv2 <span class="ot">&lt;-</span> <span class="fu">cumsum</span>((ww<span class="sc">/</span>(rskden<span class="sc">^</span><span class="dv">2</span>))[dd<span class="sc">==</span><span class="dv">1</span>])</span>
-<span id="cb144-39"><a href="survival_2.html#cb144-39" tabindex="-1"></a>rskdeninv2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, rskdeninv2)</span>
-<span id="cb144-40"><a href="survival_2.html#cb144-40" tabindex="-1"></a>w_exp_eta <span class="ot">&lt;-</span> w <span class="sc">*</span> exp_eta</span>
-<span id="cb144-41"><a href="survival_2.html#cb144-41" tabindex="-1"></a>diag_hessian <span class="ot">&lt;-</span> w_exp_eta<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> rskdeninv2[rskcount<span class="sc">+</span><span class="dv">1</span>] <span class="sc">-</span> w_exp_eta <span class="sc">*</span> rskdeninv[rskcount<span class="sc">+</span><span class="dv">1</span>]</span>
-<span id="cb144-42"><a href="survival_2.html#cb144-42" tabindex="-1"></a>diag_hessian[o] <span class="ot">&lt;-</span> diag_hessian</span></code></pre></div>
-<p>下面是两个算法在<span class="math inline">\(\beta=0\)</span>时第一次迭代的黑塞矩阵对角线元素。数据均来自于<code>CoxExample</code>。</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="survival_2.html#cb145-1" tabindex="-1"></a>w_hessian</span></code></pre></div>
-<pre><code>##  [1] -0.0183293825 -0.0035368399 -0.0008510459 -0.0090531224 -0.0049389213
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0064465663 -0.0201293825
-## [11] -0.0124020632 -0.0028709660 -0.0018033986 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0151487122 -0.0056785663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0008510459 -0.0028709660 -0.0042256154
-## [26] -0.0018033986 -0.0201293825  0.0000000000 -0.0201293825 -0.0072783243
-## [31] -0.0013158986 -0.0023158639 -0.0081460929  0.0000000000 -0.0111576188
-## [36] -0.0004164780 -0.0201293825 -0.0028709660 -0.0004164780 -0.0270793825
-## [41] -0.0023158639 -0.0137285938 -0.0233293825 -0.0166764899 -0.0270793825
-## [46] -0.0090531224 -0.0023158639 -0.0013158986 -0.0100503523 -0.0028709660</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="survival_2.html#cb147-1" tabindex="-1"></a>diag_hessian</span></code></pre></div>
-<pre><code>##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
-## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
-## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
-## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
-## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
-## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
-## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660</code></pre>
-<p>以第13个对角线元素为例</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="survival_2.html#cb149-1" tabindex="-1"></a>C</span></code></pre></div>
-<pre><code>## [[1]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21
-## 
-## [[2]]
-## [1] 1 2 3 4 5 6 7
-## 
-## [[3]]
-## [1] 1 2
-## 
-## [[4]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-## 
-## [[5]]
-## [1] 1 2 3 4 5 6 7 8 9
-## 
-## [[6]]
-## [1] 1 2 3 4 5 6
-## 
-## [[7]]
-## integer(0)
-## 
-## [[8]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-## 
-## [[9]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11
-## 
-## [[10]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[11]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17
-## 
-## [[12]]
-## [1] 1 2 3 4 5 6
-## 
-## [[13]]
-## [1] 1 2 3 4
-## 
-## [[14]]
-## [1] 1 2
-## 
-## [[15]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[16]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-## 
-## [[17]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11
-## 
-## [[18]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19
-## 
-## [[19]]
-##  [1]  1  2  3  4  5  6  7  8  9 10
-## 
-## [[20]]
-## [1] 1 2 3 4 5 6
-## 
-## [[21]]
-## integer(0)
-## 
-## [[22]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-## 
-## [[23]]
-## [1] 1 2
-## 
-## [[24]]
-## [1] 1 2 3 4 5 6
-## 
-## [[25]]
-## [1] 1 2 3 4 5 6 7 8
-## 
-## [[26]]
-## [1] 1 2 3 4
-## 
-## [[27]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[28]]
-## integer(0)
-## 
-## [[29]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[30]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12
-## 
-## [[31]]
-## [1] 1 2 3
-## 
-## [[32]]
-## [1] 1 2 3 4 5
-## 
-## [[33]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13
-## 
-## [[34]]
-## integer(0)
-## 
-## [[35]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-## 
-## [[36]]
-## [1] 1
-## 
-## [[37]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-## 
-## [[38]]
-## [1] 1 2 3 4 5 6
-## 
-## [[39]]
-## [1] 1
-## 
-## [[40]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
-## 
-## [[41]]
-## [1] 1 2 3 4 5
-## 
-## [[42]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
-## 
-## [[43]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-## 
-## [[44]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-## 
-## [[45]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
-## 
-## [[46]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-## 
-## [[47]]
-## [1] 1 2 3 4 5
-## 
-## [[48]]
-## [1] 1 2 3
-## 
-## [[49]]
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-## 
-## [[50]]
-## [1] 1 2 3 4 5 6</code></pre>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="survival_2.html#cb151-1" tabindex="-1"></a><span class="fu">length</span>(R[[<span class="dv">1</span>]])</span></code></pre></div>
-<pre><code>## [1] 47</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="survival_2.html#cb153-1" tabindex="-1"></a><span class="fu">length</span>(R[[<span class="dv">2</span>]])</span></code></pre></div>
-<pre><code>## [1] 45</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="survival_2.html#cb155-1" tabindex="-1"></a><span class="fu">length</span>(R[[<span class="dv">3</span>]])</span></code></pre></div>
-<pre><code>## [1] 42</code></pre>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="survival_2.html#cb157-1" tabindex="-1"></a><span class="fu">length</span>(R[[<span class="dv">4</span>]])</span></code></pre></div>
-<pre><code>## [1] 40</code></pre>
-<p>当<span class="math inline">\(\beta=0\)</span>，即<span class="math inline">\(e^{\tilde \eta}=1\)</span>时</p>
-<p><span class="math display">\[
-w(\tilde \eta)_k=\sum_{i \in C_k}\begin{bmatrix}\frac{e^{\tilde\eta_k}\sum_{j \in R_i }e^{\tilde\eta_j}-(e^{\tilde\eta_k})^2}{(\sum_{j \in R_i }e^{\tilde\eta_j})^2}\end{bmatrix}=\sum_{i \in C_k}\frac{|R_i|-1}{|R_i|^2}
-\]</span></p>
-<p>则<span class="math inline">\((46/47^2+44/45^2+41/42^2+39/40^2)/50\)</span>的结果为0.0018034，但源码的算法结果为-0.0023158639。</p>
-<p>而黑塞矩阵对角线元素为0的原因是<strong>C中存在空集</strong>。</p>
-<p>究其原因，由<span class="math inline">\(C_k\)</span>的定义可知，当<span class="math inline">\(y_k \leq min\{t\}\)</span>时，<span class="math inline">\(C_k=\varnothing\)</span>；当<span class="math inline">\(y_k=t_1\)</span>时，<span class="math inline">\(C_k=\varnothing\)</span>；</p>
 <blockquote>
-<p><span class="math inline">\(C_k\)</span>: the set of <span class="math inline">\(i\)</span> with <span class="math inline">\(t_i \lt y_k\)</span></p>
+<p>同样和原文差了负号</p>
+<p>同样没有解决<span class="math inline">\(w(\eta)_k\)</span>可能为0的问题。</p>
+<p>你可以试着将其代入到无结点的情况下，也就是把<span class="math inline">\(\omega=1/n\)</span>、<span class="math inline">\(d_i=1/n\)</span>带进去，就会发现无结点情况下的那个1/n就是权重，应该把那个1/n并到<span class="math inline">\(l&#39;&#39;(\tilde \eta)\)</span>中，这样无结点和有结点就一致了</p>
 </blockquote>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="survival_2.html#cb159-1" tabindex="-1"></a>y[<span class="fu">order</span>(y[,<span class="dv">1</span>])[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>],]</span></code></pre></div>
-<pre><code>##            time status
-## [1,] 0.01717398      0
-## [2,] 0.03048822      0
-## [3,] 0.03293095      0
-## [4,] 0.04428411      1
-## [5,] 0.04429410      0</code></pre>
-<p>对角线第28个元素，也就是<span class="math inline">\(y_{28}=t_1\)</span>，根据论文对<span class="math inline">\(C_k\)</span>的定义本应为空集，但源码却给出了非零值。若令<span class="math inline">\(C_k:t_i \leq y_k\)</span>，则<span class="math inline">\(46/47^2/50=0.000416478\)</span>，与源码的数值一致。在此启发下，修改自定义算法中关于<span class="math inline">\(C_k\)</span>的定义，得到如下结果</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="survival_2.html#cb161-1" tabindex="-1"></a><span class="fu">data</span>(CoxExample)</span>
-<span id="cb161-2"><a href="survival_2.html#cb161-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb161-3"><a href="survival_2.html#cb161-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>
-<span id="cb161-4"><a href="survival_2.html#cb161-4" tabindex="-1"></a></span>
-<span id="cb161-5"><a href="survival_2.html#cb161-5" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">1</span>]</span>
-<span id="cb161-6"><a href="survival_2.html#cb161-6" tabindex="-1"></a>status <span class="ot">=</span> y[,<span class="st">&#39;status&#39;</span>]</span>
-<span id="cb161-7"><a href="survival_2.html#cb161-7" tabindex="-1"></a>y <span class="ot">=</span> y[,<span class="st">&#39;time&#39;</span>]</span>
-<span id="cb161-8"><a href="survival_2.html#cb161-8" tabindex="-1"></a>  </span>
-<span id="cb161-9"><a href="survival_2.html#cb161-9" tabindex="-1"></a>failure_t <span class="ot">=</span> y[status<span class="sc">==</span><span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="fu">sort</span>()</span>
-<span id="cb161-10"><a href="survival_2.html#cb161-10" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">map</span>(failure_t, <span class="sc">~</span><span class="fu">which</span>(y<span class="sc">&gt;=</span>.)) <span class="co">#R中每个元素对应原文的R_i</span></span>
-<span id="cb161-11"><a href="survival_2.html#cb161-11" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">map</span>(y, <span class="sc">~</span><span class="fu">which</span>(failure_t<span class="sc">&lt;=</span>.))  <span class="co">#修改C_k的定义</span></span>
-<span id="cb161-12"><a href="survival_2.html#cb161-12" tabindex="-1"></a></span>
-<span id="cb161-13"><a href="survival_2.html#cb161-13" tabindex="-1"></a>weight <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span>n <span class="co">#原文无ties情况的1/n就是有ties情况下权重为1/n的情形</span></span>
-<span id="cb161-14"><a href="survival_2.html#cb161-14" tabindex="-1"></a></span>
-<span id="cb161-15"><a href="survival_2.html#cb161-15" tabindex="-1"></a><span class="co"># 初始化beta</span></span>
-<span id="cb161-16"><a href="survival_2.html#cb161-16" tabindex="-1"></a>beta <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="fu">dim</span>(X)[<span class="dv">2</span>])</span>
-<span id="cb161-17"><a href="survival_2.html#cb161-17" tabindex="-1"></a></span>
-<span id="cb161-18"><a href="survival_2.html#cb161-18" tabindex="-1"></a><span class="co"># 第一次迭代</span></span>
-<span id="cb161-19"><a href="survival_2.html#cb161-19" tabindex="-1"></a>eta <span class="ot">=</span> X <span class="sc">%*%</span> beta</span>
-<span id="cb161-20"><a href="survival_2.html#cb161-20" tabindex="-1"></a>w_hessian <span class="ot">=</span> <span class="fu">map2_vec</span>(C, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(C)), <span class="cf">function</span>(.x, .y){</span>
-<span id="cb161-21"><a href="survival_2.html#cb161-21" tabindex="-1"></a><span class="co"># 计算w_k</span></span>
-<span id="cb161-22"><a href="survival_2.html#cb161-22" tabindex="-1"></a>C_k <span class="ot">=</span> .x</span>
-<span id="cb161-23"><a href="survival_2.html#cb161-23" tabindex="-1"></a>k <span class="ot">=</span> .y   <span class="co"># .y提供位置索引</span></span>
-<span id="cb161-24"><a href="survival_2.html#cb161-24" tabindex="-1"></a>eta_k <span class="ot">=</span> <span class="fu">as.numeric</span>(eta[k,])</span>
-<span id="cb161-25"><a href="survival_2.html#cb161-25" tabindex="-1"></a>exp_eta_k <span class="ot">=</span> <span class="fu">exp</span>(eta_k)</span>
-<span id="cb161-26"><a href="survival_2.html#cb161-26" tabindex="-1"></a>exp_eta_k_2 <span class="ot">=</span> exp_eta_k<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb161-27"><a href="survival_2.html#cb161-27" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="fu">map_vec</span>(C_k, <span class="cf">function</span>(i){</span>
-<span id="cb161-28"><a href="survival_2.html#cb161-28" tabindex="-1"></a>  sum_exp_eta_Ri <span class="ot">=</span> <span class="fu">map_vec</span>(R[[i]], <span class="sc">~</span><span class="fu">exp</span>(eta[.,])) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb161-29"><a href="survival_2.html#cb161-29" tabindex="-1"></a>  sum_exp_eta_Ri_2 <span class="ot">=</span> sum_exp_eta_Ri<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb161-30"><a href="survival_2.html#cb161-30" tabindex="-1"></a>  value <span class="ot">=</span> (exp_eta_k <span class="sc">*</span> sum_exp_eta_Ri <span class="sc">-</span> exp_eta_k_2) <span class="sc">/</span> sum_exp_eta_Ri_2</span>
-<span id="cb161-31"><a href="survival_2.html#cb161-31" tabindex="-1"></a>      value</span>
-<span id="cb161-32"><a href="survival_2.html#cb161-32" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span>
-<span id="cb161-33"><a href="survival_2.html#cb161-33" tabindex="-1"></a>w_k <span class="ot">=</span> <span class="sc">-</span>weight <span class="sc">*</span> w_k   <span class="co">#该代码的w始终和coxgrad的grad差负号，数值上略微差异</span></span>
-<span id="cb161-34"><a href="survival_2.html#cb161-34" tabindex="-1"></a>w_k</span>
-<span id="cb161-35"><a href="survival_2.html#cb161-35" tabindex="-1"></a>})</span></code></pre></div>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="survival_2.html#cb162-1" tabindex="-1"></a>w_hessian</span></code></pre></div>
-<pre><code>##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
-## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
-## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
-## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
-## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
-## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
-## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="survival_2.html#cb164-1" tabindex="-1"></a>diag_hessian</span></code></pre></div>
-<pre><code>##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
-##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
-## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
-## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
-## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
-## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
-## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
-## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
-## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
-## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660</code></pre>
+<p>则</p>
+<p><span class="math display">\[
+z(\tilde \eta)_k=\tilde \eta_k-\frac{\delta_k\omega_k-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}}{\sum_{j \in R_i}\omega_je^{\eta_j}}}{w(\tilde \eta)_k}
+\]</span></p>
+<blockquote>
+<p>z中的eta要不要带权重</p>
+</blockquote>
+<p><span class="math inline">\(\hat\beta_k\)</span>的表达式同无结点情形。</p>
+</div>
+<div id="survival_2_2" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> 自定义算法<a href="survival_2.html#survival_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 
 </div>
 </div>

@@ -66,58 +66,112 @@
    
    例如核酸检验，第一次阴性，第二次阳性，那大概就是在这个时间段内被感染了，但不知道什么时候被感染。
 
-### 函数 {#survival_1_3}
-
-1. 生存函数
-
-   记$T$为代表生存时间的随机变量，则其密度函数$f(t)$为
-   
-   $$
-   f(t)=\lim_{\Delta t \rightarrow 0} \frac{P(t \leq T \leq t+\Delta t)}{\Delta t} (\#eq:eq1)
-   $$
-   
-   记其累积分布函数为
-   
-   $$
-   F(t)=P(T \leq t) (\#eq:eq2)
-   $$
-   
-   定义**生存函数**为
-   
-   $$
-   S(t)=P(T \gt t)=1-F(t) (\#eq:eq3)
-   $$
-   
-   > $T \gt t$具有“生存”的意味
-   
-2. 危险函数
-
-   $$
-   \begin{aligned}
-   h(t)&=\lim_{\Delta t \rightarrow 0}\frac{P(t \leq T \leq t+\Delta t \mid T \geq t)}{\Delta t} \\
-   &= \lim_{\Delta t \rightarrow 0}\frac{F(t+\Delta t)-F(t)}{(1-F(t))\Delta t} \\
-   &= \frac{f(t)}{S(t)} \\
-   &= \frac{d}{dt}(-\ln S(t))
-   \end{aligned} (\#eq:eq4)
-   $$
-   
-   由定义可知，危险函数代表了即时事件发生率。
-   
-   故累积危险函数为
-   
-   $$
-   H(t)=\int_0^t h(u)du=-\ln S(t)  (\#eq:eq5)
-   $$
-
-> 生存函数和危险函数、累积危险函数可以互相推导得到
-
 ----------
 
 参考资料
 
 1. https://zhuanlan.zhihu.com/p/497968260
 
-## 论文复现 {#survival_2}
+## 函数 {#survival_2}
+
+1. 生存函数
+
+   记$X$为代表生存时间的随机变量，则其密度函数$f(x)$为
+   
+   $$
+   f(x)=\lim_{\Delta x \rightarrow 0} \frac{P(x \leq X \leq x+\Delta x)}{\Delta x} (\#eq:eq1)
+   $$
+   
+   记其累积分布函数为
+   
+   $$
+   F(x)=P(X \leq x) (\#eq:eq2)
+   $$
+   
+   定义**生存函数**为
+   
+   $$
+   S(x)=P(X \gt x)=1-F(x)=\int_x^\infty f(t)dt (\#eq:eq3)
+   $$
+   
+   > $T \gt t$具有“生存”的意味
+   
+   则
+   
+   $$
+   f(x)=-\frac{dS(x)}{dx}
+   $$
+   
+   当$X$是离散随机变量时，记$P(X=x_j)=p(x_j),j=1,2,\dots$。此时的生存函数为
+   
+   $$
+   S(x)=P(X \gt x)=\sum_{x_j \gt x}p(x_j)
+   $$
+   
+2. 危险函数
+
+   $$
+   \begin{aligned}
+   b(x)&=\lim_{\Delta x \rightarrow 0}\frac{P(x \leq X \leq x+\Delta x \mid X \geq x)}{\Delta x} \\
+   &= \lim_{\Delta x \rightarrow 0}\frac{F(x+\Delta x)-F(x)}{(1-F(x))\Delta x} \\
+   &= \frac{f(x)}{S(x)} \\
+   &= \frac{d}{dx}(-\ln S(x))
+   \end{aligned} (\#eq:eq4)
+   $$
+   
+   > 这种导函数与原函数在分子分母的情况可以考虑为对数函数求导
+   
+   由定义可知，危险函数代表了目标事件的即时发生率。
+   
+   根据危险函数可得累积危险函数
+   
+   $$
+   H(x)=\int_0^x b(u)du=-\ln S(x)  (\#eq:eq5)
+   $$
+   
+   则
+   
+   $$
+   S(x)=\exp\{-H(x)\}=\exp\{-\int_0^x b(u)du\}
+   $$
+   
+   当$X$是离散随机变量时，则
+   
+   $$
+   b(x_j)=P(x_j \leq X \lt x_{j+1}|X \geq x_j)=\frac{p(x_j)}{S(x_{j-1})},\quad j=1,2,\dots
+   $$
+   
+   注意$S(x)=P(X \gt x)$、$S(x_0)=1$、$p(x_j)=S(x_{j-1})-S(x_j)$，则
+   
+   $$
+   b(x_j)=1-\frac{S(x_j)}{S(x_{j-1})}
+   $$
+   
+   则
+   
+   $$
+   \begin{aligned}
+   S(x)&=\prod_{x_j \leq x} \frac{S(x_j)}{S(x_{j-1})} \\
+   &=\prod_{x_j \leq x}(1-(1-\frac{S(x_j)}{S(x_{j-1})})) \\
+   &=\prod_{x_j \leq x}(1-b(x_j))
+   \end{aligned}
+   $$
+   
+3. 平均剩余寿命
+
+$$
+\begin{aligned}
+mrl(x)=E(X-x|X \gt x)&=\int_x^\infty(t-x)f(t|X \gt x)dt \\ &=\int_x^\infty\frac{(t-x)f(t)}{S(x)}dt \\
+&=\frac{\int_x^\infty(x-t)dS(t)}{S(x)} \\
+&=\frac{S(t)(x-t)|^\infty_x+\int_x^\infty S(t)dt}{S(x)} \\
+&=\frac{\int_x^\infty S(t)dt}{S(x)}
+\end{aligned}
+$$
+
+> 注意$dS(x)=-f(x)dx$
+
+
+## 论文复现 {#survival_3}
 
 本节内容是对Simon等人[@survival_1]论文的复现。
 
@@ -125,9 +179,9 @@
 
 > 在有结点情况时才有可能取到等号
 
-事实上，这篇论文有些地方有小错误，因此下面给出自己的推导过程。
+**事实上，这篇论文有些地方有小错误，因此下面给出自己的推导过程。**
 
-### 推导 {#survival_2_1}
+### 推导 {#survival_3_1}
 
 **1. 无结点情况**
 
@@ -295,7 +349,7 @@ $$
 > 
 > 同样没有解决$w(\eta)_k$可能为0的问题。
 > 
-> 你可以试着将其代入到无结点的情况下，也就是把$\omega=1/n$、$d_i=1/n$带进去，就会发现无结点情况下的那个1/n就是权重，应该把那个1/n并到$l''(\tilde \eta)$中，这样无结点和有结点就一致了
+> 你可以试着将其代入到无结点的情况下，也就是把$\omega_j=d_i=1/n$带进去，就会发现无结点情况下的那个1/n就是权重，应该把那个1/n并到$l''(\tilde \eta)$中，这样无结点和有结点就一致了
 
 则
 
@@ -307,7 +361,727 @@ $$
 
 $\hat\beta_k$的表达式同无结点情形。
 
-### 自定义算法 {#survival_2_2}
+### 自定义算法 {#survival_3_2}
+
+<span style='color:blue'>*由于当前技术难以缩减计算时间，故自定义算法暂且放弃“正则化路径”功能*</span>
+
+
+``` r
+# **************参数输入**************
+# y：矩阵，要求第一列为观测时间，第二列为状态
+# X：自变量矩阵
+# weight：权重向量，长度同样本量
+# beta_0：迭代的初始值
+# lambda/alpha：正则化参数
+# max.iter：最大迭代次数
+# trace：是否展示迭代过程
+cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, trace = FALSE){
+  # 设置输出对象
+  outcome = list(
+    weight = NULL,
+    lambda = NULL,
+    alpha = NULL,
+    beta = NULL,
+    D_null = NULL,
+    D_current = NULL
+  )
+  outcome$lambda = lambda
+  outcome$alpha = alpha
+  
+  status = y[,2]
+  y = y[,1]
+  n = length(y)
+  
+  failure_t = y[status==1] %>% unique() %>% sort()
+  R = map(failure_t, ~which(y>=.))   #R_i
+  C = map(y, ~which(failure_t<=.))   #C_k
+  
+  # 根据是否有ties运行不同代码
+  if(length(y)==length(unique(y))){
+    # 无结点
+    weight = 1/n #原文无ties情况的1/n就是有ties情况下权重为1/n的情形
+    outcome$weight = weight
+    
+    # log_likelihood_beta用于精度判断
+    log_likelihood_beta <- function(beta){
+      term_1 = as.numeric(status %*% X %*% beta)   #在无结点情况下，j(i)与status等价
+      term_2 = map_vec(R, function(R_i){
+        map_vec(R_i, ~exp(X[.,] %*% beta)) %>% sum() %>% log()
+      }) %>% sum()
+      result = term_1 - term_2
+      result
+    }
+    
+    # 初始化beta
+    if(is.null(beta_0)){
+      beta = rep(0,dim(X)[2])
+    }else{
+      beta = beta_0
+    }
+    
+    D_null = 2 * map_vec(R, ~length(.) %>% log()) %>% sum()   #用于判断精度
+    outcome$D_null = D_null
+    
+    for (i in 1:max.iter) {
+      if(trace == TRUE) cat(paste0("第", i, "次迭代"))
+      
+      eta = X %*% beta
+      eta = scale(eta, TRUE, FALSE) # 源码有这个，为了保持一致我也加上去了
+      hessian = map2_vec(C, c(1:length(C)), function(C_k, k){
+        # 计算w_k
+        C_k = C_k
+        k = k   # .y提供位置索引
+        eta_k = as.numeric(eta[k,])
+        exp_eta_k = exp(eta_k)
+        exp_eta_k_2 = exp_eta_k^2
+        w_k = map_vec(C_k, function(i){
+          sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
+          sum_exp_eta_Ri_2 = sum_exp_eta_Ri^2
+          value = (exp_eta_k * sum_exp_eta_Ri - exp_eta_k_2) / sum_exp_eta_Ri_2
+          value
+        }) %>% sum()
+        w_k = -weight * w_k   # 无结点情况的1/n就相当于是权重
+        w_k
+      })
+      grad = map2_vec(C, c(1:length(C)), function(.x, .y){
+        # 计算w_k
+        C_k = .x
+        k = .y   # .y提供位置索引
+        eta_k = as.numeric(eta[k,])
+        exp_eta_k = exp(eta_k)
+        w_prior_k = map_vec(C_k, function(i){
+          sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
+          value = exp_eta_k / sum_exp_eta_Ri
+          value
+        }) %>% sum()
+        w_prior_k
+      })
+      grad = weight * (status - grad)
+      if(any(hessian==0)){
+        if(trace == TRUE) cat('w_k中有零')
+        hessian[which(hessian == 0)] = 0.0000001
+      }
+      z = eta - grad / hessian
+      
+      last_beta = beta
+      # 坐标下降法
+      for (k in 1:length(beta)) {
+        denominator = as.numeric(hessian %*% X[,k]^2 + lambda * (1-alpha))
+        numerator = as.numeric(t(diag(hessian) %*% X[,k]) %*% (z - X[,-k] %*% beta[-k]))
+        numerator = sign(numerator) * max(abs(numerator), lambda * alpha)
+        beta[k] = numerator/denominator
+      }
+      # 精度判断
+      # 无ties情况下，l_saturated = 0
+      D_current = -2 * log_likelihood_beta(beta)
+      outcome$D_current = D_current
+      
+      if(D_current - D_null >= 0.99 * D_null){
+        if(trace == TRUE) cat('满足精度要求')
+        break
+      }
+      if(all(round(last_beta, 7) == round(beta, 7))){
+        if(trace == TRUE) cat('系数不再更新')
+        break
+      }
+      if(trace == TRUE) cat(beta)
+    }
+    outcome$beta = beta
+    
+    return(outcome)
+  }else{
+    # 有ties
+    if(is.null(weight)){
+      weight = rep(1, n)/n   #若不指定权重，则默认为1/n
+    }else{
+      if(length(weight) == n){
+        if(sum(weight) == 1){
+          weight   #若权重和为1，则可以
+        }else{
+          weight = weight/sum(weight)   #若权重和不为1，则标准化
+        }
+      }else{
+        cat('权重向量长度不匹配')
+      }
+    }
+    outcome$weight = weight
+    
+    D = map(failure_t, ~which(y == . & status==1))
+    d = map_vec(D, ~sum(weight[.]))
+    # log_likelihood_beta用于精度判断
+    log_likelihood_beta <- function(beta){
+      term_1 = as.numeric(status %*% diag(weight) %*% X %*% beta)   #第一项等价于所有的failure time的加权和
+      term_2 = map_vec(R, function(R_i){
+        map_vec(R_i, ~weight[.] * exp(X[.,] %*% beta)) %>% sum() %>% log()
+      }) %*% d
+      result = term_1 - as.numeric(term_2)
+      result
+    }
+    
+    # 初始化beta
+    if(is.null(beta_0)){
+      beta = rep(0,dim(X)[2])
+    }else{
+      beta = beta_0
+    }
+    
+    # 用于精度判断
+    l_null = -map_vec(R, function(R_i){
+      map_vec(R_i, ~weight[.]) %>% sum() %>% log()
+    }) %*% d %>% as.numeric()
+    l_saturated = -as.numeric(d %*% log(d))
+    D_null = 2 * (l_saturated - l_null)
+    outcome$D_null = D_null
+    
+    for (i in 1:max.iter) {
+      if(trace == TRUE) cat(paste0("第", i, "次迭代"))
+      
+      eta = X %*% beta
+      eta = scale(eta, TRUE, FALSE)   #源码有这个，为了保持一致我也加上去了
+      hessian = map2_vec(C, c(1:length(C)), function(C_k, k){
+        # 计算w_k
+        C_k = C_k
+        k = k   # .y提供位置索引
+        eta_k = as.numeric(eta[k,])
+        weight_exp_eta_k = weight[k] * exp(eta_k)
+        weight_exp_eta_k_2 = (weight_exp_eta_k)^2
+        w_k = map_vec(C_k, function(i){
+          weight_sum_exp_eta_Ri = map_vec(R[[i]], ~weight[.] * exp(eta[.,])) %>% sum()
+          weight_sum_exp_eta_Ri_2 = weight_sum_exp_eta_Ri^2
+          value = d[i] * (weight_exp_eta_k * weight_sum_exp_eta_Ri - weight_exp_eta_k_2) / weight_sum_exp_eta_Ri_2
+          value
+        }) %>% sum()
+        w_k = -w_k   #权重已经包含在w_k里面了
+        w_k
+      })
+      grad = map2_vec(C, c(1:length(C)), function(.x, .y){
+        # 计算w_k
+        C_k = .x
+        k = .y   # .y提供位置索引
+        eta_k = as.numeric(eta[k,])
+        weight_exp_eta_k = weight[k] * exp(eta_k)
+        w_prior_k = map_vec(C_k, function(i){
+          weight_sum_exp_eta_Ri = map_vec(R[[i]], ~weight[.] * exp(eta[.,])) %>% sum()
+          value = d[i] * weight_exp_eta_k / weight_sum_exp_eta_Ri
+          value
+        }) %>% sum()
+        w_prior_k = status[k] * weight[k]-w_prior_k
+        w_prior_k
+      })
+      
+      if(any(hessian==0)){
+        if(trace == TRUE) cat('w_k中有零')
+        hessian[which(hessian == 0)] = 0.0000001
+      }
+      z = eta - grad / hessian
+      
+      last_beta = beta
+      for (k in 1:length(beta)) {
+        denominator = as.numeric(hessian %*% X[,k]^2 + lambda * (1-alpha))
+        numerator = as.numeric(t(diag(hessian) %*% X[,k]) %*% (z - X[,-k] %*% beta[-k]))
+        numerator = sign(numerator) * max(abs(numerator), lambda * alpha)
+        beta[k] = numerator/denominator
+      }
+      # 精度判断
+      D_current = 2 * (l_saturated - log_likelihood_beta(beta))
+      outcome$D_current = D_current
+      
+      if(D_current - D_null >= 0.99 * D_null){
+        cat('满足精度要求')
+        break
+      }
+      if(all(round(last_beta, 7) == round(beta, 7))){
+        if(trace == TRUE) cat('系数不再更新')
+        break
+      }
+      if(trace == TRUE) cat(beta)
+    }
+    outcome$beta = beta
+    
+    return(outcome)
+  }
+}
+```
+
+### 数据模拟 {#survival_3_3}
+
+模拟所用数据集来自`glmnet`包的`data(CoxExample)`数据集。
+
+内容总结：
+
+- 自定义算法的梯度向量、黑塞矩阵对角线元素与源码计算结果基本一致。其中黑塞矩阵对角线元素可能会出现0，因此为其加上非常小的数(0.0000001)。
+
+- 对于收敛条件，对于无结点情况，自定义算法与原函数的结果完全一致，但在有结点情况则存在差异。但结果表明，无论是自定义算法还是原函数，不一定都按该收敛条件停止迭代。因此，为自定义算法增加新的收敛条件：当本次迭代结果与上次迭代结果相比变动得微乎其微时停止迭代。而在有结点的情况，原函数的$D(0)$与自定义算法的$D(0)$却不是一个量级。
+
+- 对自定义算法随机选取初始值，发现均能收敛到相同结果，表明自定义算法具有一定的稳健性。但与原函数的结果还存在差异。
+
+<span style='color:red'>综上，自定义算法是对论文内容的复刻，因此在未提及的细节处必定与原函数存在差异，从而导致结果的差异。但此次复刻不失为一次有益的探索。</span>
+
+---------------
+
+**首先检验自定义算法中梯度向量及黑塞矩阵的正确性。**
+
+
+``` r
+library(glmnet)
+data(CoxExample)
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+head(X)
+```
+
+```
+##            [,1]       [,2]        [,3]       [,4]        [,5]
+## [1,] -0.8767670 -0.6135224 -0.56757380  0.6621599  1.82218019
+## [2,] -0.7463894 -1.7519457  0.28545898  1.1392105  0.80178007
+## [3,]  1.3759148 -0.2641132  0.88727408  0.3841870  0.05751801
+## [4,]  0.2375820  0.7859162 -0.89670281 -0.8339338 -0.58237643
+## [5,]  0.1086275  0.4665686 -0.57637261  1.7041314  0.32750715
+## [6,]  1.2027213 -0.4187073 -0.05735193  0.5948491  0.44328682
+```
+
+``` r
+head(y)
+```
+
+```
+##            time status
+## [1,] 1.76877757      1
+## [2,] 0.54528404      1
+## [3,] 0.04485918      0
+## [4,] 0.85032298      0
+## [5,] 0.61488426      1
+## [6,] 0.29860939      0
+```
+
+
+``` r
+status = y[,2]
+y = y[,1]
+n = length(y)
+
+failure_t = y[status==1] %>% sort()
+R = map(failure_t, ~which(y>=.)) #R中每个元素对应原文的R_i
+C = map(y, ~which(failure_t<=.))
+
+# 无ties
+weight = 1/n #原文无ties情况的1/n就是有ties情况下权重为1/n的情形
+  
+# 初始化beta
+beta = rep(0,dim(X)[2])
+
+eta = X %*% beta
+eta = scale(eta, TRUE, FALSE)  #源码有这个中心化的操作，为了保持一致，这里也加上
+
+# 梯度向量
+my_grad = map2_vec(C, c(1:length(C)), function(.x, .y){
+  # 计算w_k
+  C_k = .x
+  k = .y   # .y提供位置索引
+  eta_k = as.numeric(eta[k,])
+  exp_eta_k = exp(eta_k)
+  w_prior_k = map_vec(C_k, function(i){
+    sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
+    value = exp_eta_k / sum_exp_eta_Ri
+    value
+  }) %>% sum()
+  w_prior_k
+})
+my_grad = weight * (status - my_grad)
+
+# 黑塞矩阵对角线元素
+hessian = map2_vec(C, c(1:length(C)), function(C_k, k){
+  # 计算w_k
+  C_k = C_k
+  k = k   # .y提供位置索引
+  eta_k = as.numeric(eta[k,])
+  exp_eta_k = exp(eta_k)
+  exp_eta_k_2 = exp_eta_k^2
+  w_k = map_vec(C_k, function(i){
+    sum_exp_eta_Ri = map_vec(R[[i]], ~exp(eta[.,])) %>% sum()
+    sum_exp_eta_Ri_2 = sum_exp_eta_Ri^2
+    value = (exp_eta_k * sum_exp_eta_Ri - exp_eta_k_2) / sum_exp_eta_Ri_2
+    value
+  }) %>% sum()
+  w_k = -weight * w_k   # 无结点情况的1/n就相当于是权重
+  w_k
+  })
+my_hessian = hessian
+```
+
+下面是源码中关于梯度向量和黑塞矩阵的计算。
+
+
+``` r
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+
+fid <- function(x,index) {
+  idup=duplicated(x)
+  if(!any(idup)) list(index_first=index,index_ties=NULL)
+  else {
+    ndup=!idup
+    xu=x[ndup]# first death times
+    index_first=index[ndup]
+    ities=match(x,xu)
+    index_ties=split(index,ities)
+    nties=sapply(index_ties,length)
+    list(index_first=index_first,index_ties=index_ties[nties>1])
+  }
+}
+
+w=rep(1,length(eta))
+w=w/sum(w)
+nobs <- nrow(y)
+time <- y[, "time"]
+d    <- y[, "status"]
+eta <- scale(eta, TRUE, FALSE)
+o <- order(time, d, decreasing = c(FALSE, TRUE))
+exp_eta <- exp(eta)[o]
+time <- time[o]
+d <- d[o]
+w <- w[o]
+rskden <- rev(cumsum(rev(exp_eta*w)))
+dups <- fid(time[d == 1],seq(length(d))[d == 1])
+dd <- d
+ww <- w
+rskcount=cumsum(dd)
+rskdeninv=cumsum((ww/rskden)[dd==1])
+rskdeninv=c(0,rskdeninv)
+grad <- w * (d - exp_eta * rskdeninv[rskcount+1])
+grad[o] <- grad   #源码的梯度向量
+rskdeninv2 <- cumsum((ww/(rskden^2))[dd==1])
+rskdeninv2 <- c(0, rskdeninv2)
+w_exp_eta <- w * exp_eta
+diag_hessian <- w_exp_eta^2 * rskdeninv2[rskcount+1] - w_exp_eta * rskdeninv[rskcount+1]
+diag_hessian[o] <- diag_hessian   #源码的黑塞矩阵对角线
+```
+
+梯度向量对比。
+
+
+``` r
+my_grad   #我的梯度向量
+```
+
+```
+##  [1] -0.0014031776  0.0156521479 -0.0008699764 -0.0093888607  0.0141421764
+##  [6] -0.0029439112  0.0000000000 -0.0404031776  0.0124726112 -0.0214031776
+## [11]  0.0056201324  0.0163664336  0.0176275174 -0.0008699764 -0.0214031776
+## [16] -0.0116179628 -0.0066578236  0.0024150042  0.0133421764 -0.0029439112
+## [21]  0.0000000000 -0.0104414923  0.0186538332 -0.0029439112  0.0149114072
+## [26] -0.0018461668 -0.0214031776  0.0195744681 -0.0054031776  0.0115635203
+## [31] -0.0013461668 -0.0023724826  0.0106111393  0.0000000000  0.0070487038
+## [36]  0.0191300236 -0.0214031776 -0.0029439112 -0.0004255319 -0.0204031776
+## [41]  0.0170560888  0.0040816709 -0.0104031776  0.0005968224 -0.0304031776
+## [46]  0.0095585077 -0.0023724826  0.0181538332  0.0083820372 -0.0029439112
+```
+
+``` r
+grad      #源码的梯度向量
+```
+
+```
+##  [1] -0.0014031776  0.0156521479 -0.0008699764 -0.0093888607  0.0141421764
+##  [6] -0.0029439112  0.0000000000 -0.0404031776  0.0124726112 -0.0214031776
+## [11]  0.0056201324  0.0163664336  0.0176275174 -0.0008699764 -0.0214031776
+## [16] -0.0116179628 -0.0066578236  0.0024150042  0.0133421764 -0.0029439112
+## [21]  0.0000000000 -0.0104414923  0.0186538332 -0.0029439112  0.0149114072
+## [26] -0.0018461668 -0.0214031776  0.0195744681 -0.0054031776  0.0115635203
+## [31] -0.0013461668 -0.0023724826  0.0106111393  0.0000000000  0.0070487038
+## [36]  0.0191300236 -0.0214031776 -0.0029439112 -0.0004255319 -0.0204031776
+## [41]  0.0170560888  0.0040816709 -0.0104031776  0.0005968224 -0.0304031776
+## [46]  0.0095585077 -0.0023724826  0.0181538332  0.0083820372 -0.0029439112
+```
+
+黑塞矩阵对角线元素对比。
+
+
+``` r
+my_hessian    #我的黑塞矩阵对角线元素
+```
+
+```
+##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
+##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
+## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
+## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
+## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
+## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
+## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
+## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
+## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
+## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660
+```
+
+``` r
+diag_hessian  #源码的黑塞矩阵对角线元素
+```
+
+```
+##  [1] -0.0201293825 -0.0042256154 -0.0008510459 -0.0090531224 -0.0056785663
+##  [6] -0.0028709660  0.0000000000 -0.0320793825 -0.0072783243 -0.0201293825
+## [11] -0.0137285938 -0.0035368399 -0.0023158639 -0.0008510459 -0.0201293825
+## [16] -0.0111576188 -0.0064465663 -0.0166764899 -0.0064465663 -0.0028709660
+## [21]  0.0000000000 -0.0100503523 -0.0013158986 -0.0028709660 -0.0049389213
+## [26] -0.0018033986 -0.0201293825 -0.0004164780 -0.0233293825 -0.0081460929
+## [31] -0.0013158986 -0.0023158639 -0.0090531224  0.0000000000 -0.0124020632
+## [36] -0.0008510459 -0.0201293825 -0.0028709660 -0.0004164780 -0.0320793825
+## [41] -0.0028709660 -0.0151487122 -0.0270793825 -0.0183293825 -0.0270793825
+## [46] -0.0100503523 -0.0023158639 -0.0018033986 -0.0111576188 -0.0028709660
+```
+
+可见，二者基本一致。
+
+> 当用`my_grad==grad`及`my_hessian==diag_hessian`比较是否一致时，小部分是`FALSE`，但单从展示的数值上来看，几乎是一致的，可见差异微乎其微。
+
+需要注意的是，正如前面提到的，$w(\tilde \eta)_k$可能为0。**无论是自定义算法还是源码都输出了0（第7,21,34个对角线元素），但源码的函数能够运行下去，而自定义算法则不行，说明原文遗漏了一些细节。**
+
+> 当$y_k \lt t_1$时，$C_k$即为空集，则对应的$w(\tilde \eta)_k=0$
+> 
+> 即使删掉$C_k$为空集的观测对象，结果也与原函数不一致
+
+<span style='color:red'>**鉴于此，为$w(\tilde \eta)_k=0$的元素加上非常小的数(0.0000001)以确保代码能够正确运行。**</span>
+
+--------------
+
+**其次检验收敛条件。**
+
+原文中使用$D(0)$与$D(\beta_{current})$作为收敛条件。$D(\cdot)$的内核就是对数似然函数，不妨先确定自定义算法中关于对数似然函数的定义是否正确。
+
+用自定义算法中的`log_likelihood_beta()`函数计算$D(0)$
+
+
+``` r
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+log_likelihood_beta <- function(beta){
+  term_1 = as.numeric(status %*% X %*% beta)   #在无结点情况下，j(i)与status等价
+  term_2 = map_vec(R, function(R_i){
+    map_vec(R_i, ~exp(X[.,] %*% beta)) %>% sum() %>% log()
+  }) %>% sum()
+  result = term_1 - term_2
+  result
+}
+
+status = y[,2]
+y = y[,1]
+n = length(y)
+failure_t = y[status==1] %>% unique() %>% sort()   #t_i
+R = map(failure_t, ~which(y>=.))   #R_i
+D_null <- (-2) * log_likelihood_beta(rep(0,5))
+D_null
+```
+
+```
+## [1] 145.1673
+```
+
+原函数也会输出$D(0)$
+
+
+``` r
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+source_result <- glmnet(X,y,family = 'cox', lambda=0.02, alpha=0.5)
+source_result$nulldev
+```
+
+```
+## [1] 145.1673
+```
+
+可见二者是一致的。
+
+再看看$D(\beta_{current})$。原函数输出的结果中有`dev.ratio`一项，其值为$dev.ratio = 1-D(\beta_{current})/D(0)$。因此可根据`dev.ratio`及`nulldev`两项输出值计算$D(\beta_{current})$
+
+
+``` r
+# 原函数输出的D_current
+source_result$nulldev - source_result$dev.ratio * source_result$nulldev
+```
+
+```
+## [1] 132.0468
+```
+
+``` r
+# 自定义算法log_likelihood_beta()函数输出的D_current
+-2 * log_likelihood_beta(source_result$beta@x)
+```
+
+```
+## [1] 132.0468
+```
+
+因此无论是$D(0)$还是$D(\beta_{current})$，自定义算法都是与原函数一致的。
+
+需要注意的是，在实际迭代中，自定义算法并没有通过收敛条件停止迭代，而是达到最大迭代次数后才停下来。同样，原函数的结果表明$D(0)$与$D(\beta_{current})$也没有满足收敛条件。由此可知，**原函数的结果并不一定都是根据收敛条件来停止迭代。**在自定义算法的迭代中，发现在一定迭代次数后，$\hat \beta$的数值表面上没有变化，因而设置另外的收敛条件，**当前后两次$\hat \beta$的变化微乎其微时，停止迭代。**
+
+> “表面上没有变化”指的是在R输出的有限长度数值中长得都一样，但用`all(beta==last_beta)`判断时却为`FALSE`
+
+而对于有结点的情况，则有点差异。
+
+
+``` r
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+y[36:50,] <- y[1:15,]   #设置重复数据
+
+status = y[,2]
+y = y[,1]
+n = length(y)
+weight = rep(1, n)/n
+
+failure_t = y[status==1] %>% unique() %>% sort()
+R = map(failure_t, ~which(y>=.))   #R_i
+
+D = map(failure_t, ~which(y == . & status==1))
+d = map_vec(D, ~sum(weight[.]))
+# log_likelihood_beta用于精度判断
+log_likelihood_beta <- function(beta){
+  term_1 = as.numeric(status %*% diag(weight) %*% X %*% beta)   #第一项等价于所有的failure time的加权和
+  term_2 = map_vec(R, function(R_i){
+    map_vec(R_i, ~weight[.] * exp(X[.,] %*% beta)) %>% sum() %>% log()
+  }) %*% d
+  result = term_1 - as.numeric(term_2)
+  result
+}
+```
+
+
+``` r
+# 自定义算法
+l_null = log_likelihood_beta(rep(0,5))
+l_null
+```
+
+```
+## [1] 0.5402271
+```
+
+``` r
+# 原文提到的简化算法
+l_null_simple = -map_vec(R, function(R_i){
+      map_vec(R_i, ~weight[.]) %>% sum() %>% log()
+    }) %*% d %>% as.numeric()
+l_null_simple
+```
+
+```
+## [1] 0.5402271
+```
+
+
+原文提到的关于$l_{null}$的快速算法和自定义算法中的`log_likelihood_beta(0)`函数结果一致。接着计算$D_{null}$
+
+
+``` r
+# 自定义算法
+l_saturated = -as.numeric(d %*% log(d))
+D_null = 2 * (l_saturated - l_null)
+D_null
+```
+
+```
+## [1] 2.387955
+```
+
+``` r
+D_null * 50
+```
+
+```
+## [1] 119.3977
+```
+
+和原函数的$D_{null}$进行对比
+
+
+``` r
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+y[36:50,] <- y[1:15,]   #设置重复数据
+
+source_result <- glmnet(X,y,family = 'cox', lambda=0.02, alpha=0.5)
+source_result$nulldev
+```
+
+```
+## [1] 119.3977
+```
+
+``` r
+source_result$beta
+```
+
+```
+## 5 x 1 sparse Matrix of class "dgCMatrix"
+##            s0
+## V1  0.1261175
+## V2 -0.3690040
+## V3  .        
+## V4  0.1141002
+## V5 -0.3313418
+```
+
+自定义算法得到的$D_{null}$与原函数输出的结果差了50倍。既然原文提到的关于$l_{null}$的快速算法和自定义算法中的`log_likelihood_beta(0)`函数结果一致，那么说明原函数暗中调整了倍数。因此，对于收敛条件的判定，如果$D_{null}$与$D(\beta_{current})$都做了倍数调整的话，那么结果也是不变的，所以无需过分在意这里的倍数差异。另外，原函数没有输出第三个变量的$\hat \beta$，所以无法进一步判断自定义算法的$D(\beta_{current})$与原函数的$D(\beta_{current})$是否一致，至少能看出来自定义算法和原函数还是存在差异（毕竟原函数没有输出第三个变量的系数，但自定义函数可以），归根结底还是论文提供的细节太少了。
+
+-----------
+
+上述自定义算法的结果都是基于$\beta=0$的初始值开始迭代，下面通过**随机化初始值**看看自定义算法的稳健性。
+
+
+``` r
+X <- CoxExample[[1]][1:50,1:5]
+y <- CoxExample[[2]][1:50,]
+set.seed(111)
+for (i in 1:10) {
+  cat(paste0("----------第", i, "次迭代----------"))
+  cat('\n')
+  beta_0 = runif(5,min=0,max=1)
+  my_result = cox_cd(y, X, beta_0 = beta_0, lambda=0.02, alpha=0.5, trace = FALSE)
+  cat(my_result$beta)
+  cat('\n')
+}
+```
+
+```
+## ----------第1次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+## ----------第2次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+## ----------第3次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+## ----------第4次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+## ----------第5次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+## ----------第6次迭代----------
+## 0.395017 -0.8420385 -0.1444031 0.363653 -0.5357859
+## ----------第7次迭代----------
+## 0.395017 -0.8420385 -0.1444031 0.363653 -0.5357859
+## ----------第8次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+## ----------第9次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+## ----------第10次迭代----------
+## 0.395017 -0.8420384 -0.1444031 0.363653 -0.5357859
+```
+
+
+``` r
+source_result <- glmnet(X,y,family = 'cox', lambda=0.02, alpha=0.5)
+source_result$beta@x #原函数的结果
+```
+
+```
+## [1]  0.2800404 -0.6870509 -0.1062398  0.3150430 -0.4588579
+```
+
+<span style='color:red'>**据此可知自定义算法具有一定的稳健性，但与原函数的结果存在一定差异。**</span>
+
+
 
 
 

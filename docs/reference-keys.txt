@@ -245,10 +245,11 @@ survival
 survival_1
 survival_1_1
 survival_1_2
-survival_1_3
 survival_2
-survival_2_1
-survival_2_2
+survival_3
+survival_3_1
+survival_3_2
+survival_3_3
 network
 network_1
 network_1_1

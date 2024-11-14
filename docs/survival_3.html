@@ -566,10 +566,36 @@ l&#39;&#39;(\eta)_{kk}=-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}(\sum_{j \in 
 <p><span class="math display">\[
 z(\tilde \eta)_k=\tilde \eta_k-\frac{\delta_k\omega_k-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}}{\sum_{j \in R_i}\omega_je^{\eta_j}}}{w(\tilde \eta)_k}
 \]</span></p>
-<blockquote>
-<p>z中的eta要不要带权重</p>
-</blockquote>
 <p><span class="math inline">\(\hat\beta_k\)</span>的表达式同无结点情形。</p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>收敛条件</strong></li>
+</ol>
+<p>定义<span class="math inline">\(D(\beta)\)</span>为</p>
+<p><span class="math display">\[
+D(\beta)=2(l_{saturated}-l(\beta))
+\]</span></p>
+<p>则</p>
+<p><span class="math display">\[
+D_{null}=D(0)=2(l_{saturated}-l_{null})
+\]</span></p>
+<p>收敛条件为</p>
+<p><span class="math display">\[
+D(\beta_{current})-D_{null} \geq 0.99D_{null}
+\]</span></p>
+<p>特别地，原文提供了简单的计算公式。在无结点情况下</p>
+<p><span class="math display">\[
+l_{saturated}=0\\
+\]</span></p>
+<p><span class="math display">\[
+l_{null}=-\sum_{i=1}^m \log|R_i|
+\]</span></p>
+<p>在有结点情况下</p>
+<p><span class="math display">\[
+l_{null}=-\sum_{i=1}^m d_i \log(\sum_{j \in R_i}w_j)
+\]</span></p>
+<p><span class="math display">\[
+l_{saturated}=-\sum_{i=1}^m d_i \log(d_i)
+\]</span></p>
 </div>
 <div id="survival_3_2" class="section level3 hasAnchor" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> 自定义算法<a href="survival_3.html#survival_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>

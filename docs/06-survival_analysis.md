@@ -357,9 +357,47 @@ $$
 z(\tilde \eta)_k=\tilde \eta_k-\frac{\delta_k\omega_k-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}}{\sum_{j \in R_i}\omega_je^{\eta_j}}}{w(\tilde \eta)_k}
 $$
 
-> z中的eta要不要带权重
-
 $\hat\beta_k$的表达式同无结点情形。
+
+3. **收敛条件**
+
+定义$D(\beta)$为
+
+$$
+D(\beta)=2(l_{saturated}-l(\beta))
+$$
+
+则
+
+$$
+D_{null}=D(0)=2(l_{saturated}-l_{null})
+$$
+
+收敛条件为
+
+$$
+D(\beta_{current})-D_{null} \geq 0.99D_{null}
+$$
+
+特别地，原文提供了简单的计算公式。在无结点情况下
+
+$$
+l_{saturated}=0\\
+$$
+
+$$
+l_{null}=-\sum_{i=1}^m \log|R_i|
+$$
+
+在有结点情况下
+
+$$
+l_{null}=-\sum_{i=1}^m d_i \log(\sum_{j \in R_i}w_j)
+$$
+
+$$
+l_{saturated}=-\sum_{i=1}^m d_i \log(d_i)
+$$
 
 ### 自定义算法 {#survival_3_2}
 

@@ -304,25 +304,25 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
-<li class="chapter" data-level="5" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>5</b> 随机森林</a>
+<li class="chapter" data-level="5" data-path="tree.html"><a href="tree.html"><i class="fa fa-check"></i><b>5</b> 决策树与随机森林</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>5.1</b> R实现</a>
+<li class="chapter" data-level="5.1" data-path="tree_1.html"><a href="tree_1.html"><i class="fa fa-check"></i><b>5.1</b> 决策树</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>5.1.1</b> randomForest</a></li>
-<li class="chapter" data-level="5.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 其余函数</a></li>
+<li class="chapter" data-level="5.1.1" data-path="tree_1.html"><a href="tree_1.html#tree_1_1"><i class="fa fa-check"></i><b>5.1.1</b> 分类树</a></li>
+<li class="chapter" data-level="5.1.2" data-path="tree_1.html"><a href="tree_1.html#tree_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 回归树</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>5.2</b> 数据模拟</a>
+<li class="chapter" data-level="5.2" data-path="tree_2.html"><a href="tree_2.html"><i class="fa fa-check"></i><b>5.2</b> 随机森林</a></li>
+<li class="chapter" data-level="5.3" data-path="tree_3.html"><a href="tree_3.html"><i class="fa fa-check"></i><b>5.3</b> R实现</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 分类任务</a></li>
-<li class="chapter" data-level="5.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 回归任务</a></li>
+<li class="chapter" data-level="5.3.1" data-path="tree_3.html"><a href="tree_3.html#tree_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 决策树</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tree_3.html"><a href="tree_3.html#tree_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 随机森林</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>6</b> 生存分析</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>6.1</b> 基本概念</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 生存数据</a></li>
-<li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 删失</a></li>
+<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 删失数据</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 函数</a></li>
 <li class="chapter" data-level="6.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>6.3</b> 论文复现</a>
@@ -400,6 +400,8 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>11.4</b> 异构数据的整合分析</a></li>
 <li class="chapter" data-level="11.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>11.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
+<li class="part"><span><b>VI 生活</b></span></li>
+<li class="chapter" data-level="12" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>12</b> 羽毛球修炼手册</a></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -420,84 +422,139 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="survival_1" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> 基本概念<a href="survival_1.html#survival_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>在生存分析中，我们最关心的数据是从某个起始点开始到一个特定事件发生所经过的时间间隔，即<strong>time to event</strong>，也称“生存时间数据”。不妨令<span class="math inline">\(X\)</span>表示观测对象真实的生存时间，令<span class="math inline">\(T\)</span>表示观测到的并记录下来的生存时间。在实际研究中，由于多种因素的影响，我们不一定能够获取完整的生存时间数据，即<span class="math inline">\(X \neq T\)</span>，因此有必要对数据类型进行区分，以便构建相应的模型。</p>
 <div id="survival_1_1" class="section level3 hasAnchor" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> 生存数据<a href="survival_1.html#survival_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>在随访期（观察期）内，我们关心研究对象生存了多长时间，感兴趣的事件是否有发生。因此，每一个研究对象都可以由<strong>生存时间、生存结局</strong>这两个指标去描述。</p>
-<p>在实践中，我们不可能有无限的时间去持续观察样本，因此会设置一段观察期。<strong>生存时间</strong>指的是样本自被观察起直到目标事件发生或者观察期止、中途丢失的持续时间，无论该样本是一开始就在还是中途加入。</p>
-<p>若样本在观察期内确实发生了我们感兴趣的事件，那么我们可以记录该样本的<strong>生存时间</strong>及<strong>生存结局</strong>，不妨将其<strong>生存结局</strong>记为<strong>1</strong>(failure)。而对于那些在观察期内目标事件尚未发生或中途丢失的样本，我们同样可以记录其<strong>生存时间</strong>，并将其<strong>生存结局</strong>记为<strong>0</strong>(censoring)，称之为<strong>删失</strong>。</p>
-<p>下面给出示例。</p>
+<h3><span class="header-section-number">6.1.1</span> 删失数据<a href="survival_1.html#survival_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="survival_1_1_1" class="section level4 hasAnchor" number="6.1.1.1">
+<h4><span class="header-section-number">6.1.1.1</span> 右删失<a href="survival_1.html#survival_1_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<ol style="list-style-type: decimal">
+<li><p>Type I censoring</p>
+<p>人为预先设置右删失时间点<span class="math inline">\(C_r\)</span>，则<span class="math inline">\(T\)</span>的表达式为</p>
+<p><span class="math display">\[
+T = \begin{cases}
+X, &amp;\text{if } X \leq C_r \\
+C_r, &amp;\text{if } X \gt C_r
+\end{cases}
+\]</span></p>
+<p>为方便记录，令<span class="math inline">\(\delta=I\{X \leq C_r\}\)</span>，则数据对为<span class="math inline">\((T, \delta)\)</span>。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p1"></span>
-<img src="06-survival_analysis_files/figure-html/survival-p1-1.png" alt="生存数据示例" width="80%" />
+<img src="06-survival_analysis_files/figure-html/survival-p1-1.png" alt="Type I censoring" width="80%" />
 <p class="caption">
-图 6.1: 生存数据示例
+图 6.1: Type I censoring
 </p>
 </div>
-<p>图中<span style="color:red">红点</span>代表目标事件的发生，<span style="color:blue">蓝点</span>代表样本丢失。由图可知第一个和第三个观测对象的<strong>生存结局</strong>是<strong>1</strong>，其余对象的<strong>生存结局</strong>是<strong>0</strong>。</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">id</th>
-<th align="center">生存时间</th>
-<th align="center">生存结局</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center">6.0</td>
-<td align="center">1</td>
-</tr>
-<tr class="even">
-<td align="center">2</td>
-<td align="center">8.0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center">1.5</td>
-<td align="center">1</td>
-</tr>
-<tr class="even">
-<td align="center">4</td>
-<td align="center">3.0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center">5</td>
-<td align="center">2.5</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
+<p>图中<span style="color:red">红点</span>代表目标事件在观察期内发生，<span style="color:blue">蓝点</span>代表右删失数据。</p>
+<blockquote>
+<p>红、蓝点的含义下同</p>
+</blockquote>
+<p><strong>例子：</strong>就像一个水桶，我们能观测到的水量肯定小于等于水桶的容量，倘若接的水比水桶的容量还要多，那么就会溢出来，我们也就观测不到了，只会留下一个印象——水满了。</p></li>
+<li><p>Progressive Type I censoring</p>
+<p>Progressive Type I censoring相较Type I censoring，人为预先设置了多个右删失时间点，因次也称“逐步删失”。这种设置有个好处，就是能够控制成本。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p2"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p2-1.png" alt="Progressive Type I censoring" width="80%" />
+<p class="caption">
+图 6.2: Progressive Type I censoring
+</p>
 </div>
-<div id="survival_1_2" class="section level3 hasAnchor" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> 删失<a href="survival_1.html#survival_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>当我们无法准确获取研究对象自被观察起<strong>至目标事件发生</strong>的生存时间，便称这样的数据为<strong>删失数据</strong>，对应的生存时间为<strong>不完全生存时间或截尾值</strong>。</p>
-<p><strong>删失</strong>的原因有很多：</p>
+<p><strong>例子：</strong>假如你一开始招募了多个志愿者参与研究。让志愿者参与到研究当中是有成本的，而你的预算是有上限的。因此，当试验进行了一段时间后，你发现你的资金不足以支持你同时对多名志愿者进行观察，于是在某天），你决定让某些志愿者退出研究，仅留下部分志愿者继续观察。当然，其中有志愿者会自然地退出研究，因为他们的目标事件已经发生了。</p></li>
+<li><p>Generalized Type I censoring</p>
+<p>此前的右删失数据都有相同的时间起点，而Generalized Type I censoring允许观测对象在不同时间点被纳入到研究当中，但具有统一的删失时间点。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p3"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p3-1.png" alt="Generalized Type I censoring" width="80%" />
+<p class="caption">
+图 6.3: Generalized Type I censoring
+</p>
+</div>
+<p>由于我们更加关心生存时间的长度，不在乎什么时候开始，因此图<a href="survival_1.html#fig:survival-p3">6.3</a>可变形为下图</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p4"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p4-1.png" alt="Generalized Type I censoring" width="80%" />
+<p class="caption">
+图 6.4: Generalized Type I censoring
+</p>
+</div>
+<p>注意到该图仅用蓝点表示右删失数据点，而没有统一的竖线表示<span class="math inline">\(C_r\)</span>。</p>
+<p>如果你还是想知道观测对象什么时候加入到研究中，图<a href="survival_1.html#fig:survival-p3">6.3</a>还可变形为下图</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p5"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p5-1.png" alt="Generalized Type I censoring" width="80%" />
+<p class="caption">
+图 6.5: Generalized Type I censoring
+</p>
+</div>
+<p>纵坐标记录了观测对象参与到研究中的时长，即<strong>time to event</strong>；横坐标记录了观测对象什么时候加入到研究中；最右边的黑色实线表示研究预先设定的右删失时间点。显然，对于Generalized Type I censoring数据，右删失数据点必定落在右边的黑色实线上。</p>
+<p><strong>例子：</strong>就像一个公司从创立到倒闭，考虑“职工辞职”这个目标事件，那么总会有人中途加入或中途离开。其中“公司创立”对应着研究开始，“公司倒闭”对应着删失时间点<span class="math inline">\(C_r\)</span>。而<strong>time to event</strong>对应的就是该职工在公司工作的时长，也就是我们感兴趣的“资历”，而不在乎他什么时候加入到这个公司。</p></li>
+<li><p>Type II censoring</p>
+<p>Type II相较Type I并没有直接设置右删失时间点，而是预先设置有<span class="math inline">\(r\)</span>个观测对象发生目标事件，将剩余的尚未发生目标事件的观测对象都记为右删失数据。也就是说Type II censoring的右删失时间点与次序统计量<span class="math inline">\(T_{(r)}\)</span>有关。这种设置能够有效地节约时间和控制成本。</p>
+<p>若共有5个观测对象，设置<span class="math inline">\(r=3\)</span>，则如下图所示</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p6"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p6-1.png" alt="Type II censoring" width="80%" />
+<p class="caption">
+图 6.6: Type II censoring
+</p>
+</div>
+<p><strong>例子：</strong>就像在一场选拔性比赛中，看谁能最快任务。现在共有100位参赛者，需要筛选出3名种子选手。于是当季军产生时这个比赛就已经结束了。</p></li>
+<li><p>Progressive Type II censoring</p>
+<p>Type II表示该类型数据需要预先设置参数<span class="math inline">\(r\)</span>，Progressive表示需要预先设置多个<span class="math inline">\(r\)</span>。考虑两次删失的情形，我们预先设置了<span class="math inline">\(r_1\)</span>和<span class="math inline">\(r_2\)</span>，当总共<span class="math inline">\(n\)</span>个观测对象中有<span class="math inline">\(r_1\)</span>个观测对象率先发生了目标事件，那么这<span class="math inline">\(r_1\)</span>个观测对象的<strong>time to event</strong>将会被记录下来，同时出于对成本的考虑，我们还会将<span class="math inline">\(n_1-r_1\)</span>个观测对象移除研究，继续观察剩余的<span class="math inline">\(n-n_1\)</span>个观测对象，直到又有<span class="math inline">\(r_2\)</span>个观测对象发生目标事件，此时则有<span class="math inline">\(n-n_1-r_2\)</span>个观测对象被记录为右删失数据。也就是说，Progressive Type II censoring的删失时间点与次序统计量<span class="math inline">\(T_{(r_1)}\)</span>、<span class="math inline">\(T_{(n_1+r_2)}\)</span>有关。</p>
+<blockquote>
+<p>务必与Progressive Type I censoring联系起来</p>
+</blockquote>
+<p>对于10个观测对象，我们设置<span class="math inline">\(r_1=r_2=2\)</span>，同时出于成本的考虑，在出现<span class="math inline">\(r_1\)</span>个目标事件时主动去除2个观测对象，则剩下6个观测对象进入到第二轮中。如下所示</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p7"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p7-1.png" alt="Progressive Type II censoring" width="80%" />
+<p class="caption">
+图 6.7: Progressive Type II censoring
+</p>
+</div>
+<p><strong>例子：</strong>想不出了。</p></li>
+<li><p>Random censoring</p>
+<p>出于某些原因，部分观测对象可能会观测不到，也就不知道其具体的生存时间，于是被记为右删失数据。</p>
+<p>可能的原因：</p>
 <ul>
-<li><p>观察期结束了目标事件都还没有发生</p></li>
-<li><p>观察对象失联，中途丢失</p></li>
-<li><p>观察对象终止于其他事件</p></li>
-<li><p>…</p>
-<p>例如我们对“肺癌”感兴趣，但患者还患有其他疾病，可能因其他疾病而死亡。</p></li>
+<li>观测对象失联，丢失了</li>
+<li>观察对象终止于其他事件</li>
+<li>…</li>
 </ul>
-<p><strong>删失</strong>的类型可分为如下三种：</p>
-<ol style="list-style-type: decimal">
-<li><p>右删失</p>
-<p>真正的生存时间大于或等于观测到的生存时间。</p>
-<p>例如研究对象直至观测期满都未发生目标事件，或者研究对象中途退出研究，我们不知道目标事件会在之后的什么时候发生，但至少比我们观测到的生存时间要长。</p></li>
-<li><p>左删失</p>
-<p>真正的生存时间小于或等于观测到的生存时间。</p>
-<p>例如想测试某个零件的使用寿命，但该零件内部已经有裂痕存在，因此实际观测到的使用寿命一定比新零件的使用寿命要短。</p></li>
-<li><p>区间删失</p>
-<p>只知道目标事件是在某个时间段内发生的，但不知道具体时间。</p>
-<p>例如核酸检验，第一次阴性，第二次阳性，那大概就是在这个时间段内被感染了，但不知道什么时候被感染。</p></li>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p8"></span>
+<img src="06-survival_analysis_files/figure-html/survival-p8-1.png" alt="Random censoring" width="80%" />
+<p class="caption">
+图 6.8: Random censoring
+</p>
+</div>
+<p><strong>例子：</strong>例如我们对“肺癌”感兴趣，但患者还患有其他疾病，可能因其他疾病而死亡，此时也算是右删失。</p></li>
 </ol>
-<hr />
-<p>参考资料</p>
-<ol style="list-style-type: decimal">
-<li><a href="https://zhuanlan.zhihu.com/p/497968260" class="uri" target="_blank">https://zhuanlan.zhihu.com/p/497968260</a></li>
-</ol>
+</div>
+<div id="survival_1_1_2" class="section level4 hasAnchor" number="6.1.1.2">
+<h4><span class="header-section-number">6.1.1.2</span> 左删失<a href="survival_1.html#survival_1_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>对于左删失时间点<span class="math inline">\(C_l\)</span>，则<span class="math inline">\(T\)</span>的表达式为</p>
+<p><span class="math display">\[
+T = \begin{cases}
+C_l, &amp;\text{if } X \lt C_l \\
+X, &amp;\text{if } X \geq C_l
+\end{cases}
+\]</span></p>
+<p>为方便记录，令<span class="math inline">\(\epsilon=I\{X\geq C_l\}\)</span>，则数据对为<span class="math inline">\((T,\epsilon)\)</span></p>
+<p><strong>例子：</strong>考虑疾病的发生，当一个人进医院进行体检时，若检测出患有某种疾病，则肯定是在体检之前就已经染上了疾病，但不知道是什么时候染上的，那么在医院体检的时间点就是左删失时间点<span class="math inline">\(C_l\)</span>。</p>
+</div>
+<div id="survival_1_1_3" class="section level4 hasAnchor" number="6.1.1.3">
+<h4><span class="header-section-number">6.1.1.3</span> 双删失<a href="survival_1.html#survival_1_1_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>根据右删失和左删失的概念，考虑研究中可能同时存在右删失数据和左删失数据，即双删失。</p>
+<blockquote>
+<p>双删失更像是一种现象（右删失与左删失同时在某些研究中出现的现象），而不是数据类型</p>
+</blockquote>
+<p>记数据对为<span class="math inline">\((T, \delta)\)</span>，其中<span class="math inline">\(T=max(min(X, C_r), C_l)\)</span>。<span class="math inline">\(\delta\)</span>定义为<span class="math inline">\(\delta=I\{X \leq C_r\} - 2I\{X \lt C_l\}\)</span>，当<span class="math inline">\(\delta=1\)</span>时，表示正常的生存时间，当<span class="math inline">\(\delta=0\)</span>时，表示右删失数据，当<span class="math inline">\(\delta=-1\)</span>时，表示左删失数据。</p>
+<blockquote>
+<p>如果左删失的定义没错的话，感觉应该是<span class="math inline">\(X \lt C_l\)</span>而不是<span class="math inline">\(X \leq C_l\)</span></p>
+</blockquote>
+<p><strong>例子：</strong>假如你问某人什么时候开始打的羽毛球，你可能得到的回答有：1.我20年11月13号开始打的；2.不记得了，至少大学前就开始打了；3.我还没打过。这三个回答分别对应正常的生存时间、左删失数据和右删失数据（还没打过说明目标事件尚未发生，以后可能会打，即为右删失）。</p>
+</div>
+<div id="survival_1_1_4" class="section level4 hasAnchor" number="6.1.1.4">
+<h4><span class="header-section-number">6.1.1.4</span> 区间删失<a href="survival_1.html#survival_1_1_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>对于观测对象<span class="math inline">\(i\)</span>，只记得<span class="math inline">\(X\)</span>是落在区间<span class="math inline">\((L_i,R_i]\)</span>中，但不知道具体的时间点，此时即为“区间删失”。</p>
+<p>区间删失是右删失、左删失的一般化。例如右删失可表示为<span class="math inline">\((C_r,+\infty)\)</span>，左删失可表示为<span class="math inline">\((0,C_l)\)</span></p>
+<blockquote>
+<p>这里貌似也涉及到左删失的定义问题，别再过分纠结区间的开闭问题了</p>
+</blockquote>
+<p><strong>例子：</strong>在测核酸的时候，第一次为阴性，第二次为阳性，说明是在第一次和第二次检测之间感染的。</p>
+</div>
 </div>
 </div>
             </section>

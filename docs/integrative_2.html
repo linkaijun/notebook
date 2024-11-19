@@ -304,25 +304,25 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
-<li class="chapter" data-level="5" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>5</b> 随机森林</a>
+<li class="chapter" data-level="5" data-path="tree.html"><a href="tree.html"><i class="fa fa-check"></i><b>5</b> 决策树与随机森林</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>5.1</b> R实现</a>
+<li class="chapter" data-level="5.1" data-path="tree_1.html"><a href="tree_1.html"><i class="fa fa-check"></i><b>5.1</b> 决策树</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>5.1.1</b> randomForest</a></li>
-<li class="chapter" data-level="5.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 其余函数</a></li>
+<li class="chapter" data-level="5.1.1" data-path="tree_1.html"><a href="tree_1.html#tree_1_1"><i class="fa fa-check"></i><b>5.1.1</b> 分类树</a></li>
+<li class="chapter" data-level="5.1.2" data-path="tree_1.html"><a href="tree_1.html#tree_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 回归树</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>5.2</b> 数据模拟</a>
+<li class="chapter" data-level="5.2" data-path="tree_2.html"><a href="tree_2.html"><i class="fa fa-check"></i><b>5.2</b> 随机森林</a></li>
+<li class="chapter" data-level="5.3" data-path="tree_3.html"><a href="tree_3.html"><i class="fa fa-check"></i><b>5.3</b> R实现</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 分类任务</a></li>
-<li class="chapter" data-level="5.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 回归任务</a></li>
+<li class="chapter" data-level="5.3.1" data-path="tree_3.html"><a href="tree_3.html#tree_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 决策树</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tree_3.html"><a href="tree_3.html#tree_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 随机森林</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>6</b> 生存分析</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>6.1</b> 基本概念</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 生存数据</a></li>
-<li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 删失</a></li>
+<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 删失数据</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 函数</a></li>
 <li class="chapter" data-level="6.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>6.3</b> 论文复现</a>
@@ -400,6 +400,8 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>11.4</b> 异构数据的整合分析</a></li>
 <li class="chapter" data-level="11.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>11.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
+<li class="part"><span><b>VI 生活</b></span></li>
+<li class="chapter" data-level="12" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>12</b> 羽毛球修炼手册</a></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -423,12 +425,12 @@ div.csl-indent {
 <p>假设有<span class="math inline">\(M\)</span>个数据集，<span class="math inline">\(p\)</span>个解释变量。第<span class="math inline">\(m\)</span>个数据集的样本量为<span class="math inline">\(n^{(m)}\)</span>，因变量<span class="math inline">\(y^{(m)}\)</span>为<span class="math inline">\(n^{(m)} \times 1\)</span>向量，解释变量<span class="math inline">\(X^{(m)}\)</span>为<span class="math inline">\(n^{m} \times p\)</span>矩阵，假设数据已经被标准化。</p>
 <p>对第<span class="math inline">\(m\)</span>个数据集建立如下模型：</p>
 <p><span class="math display" id="eq:eq1">\[
-y^{(m)}=X^{(m)}\beta^{(m)}+\epsilon^{(m)} \tag{6.1}
+y^{(m)}=X^{(m)}\beta^{(m)}+\epsilon^{(m)} \tag{5.1}
 \]</span></p>
 <p>其中，<span class="math inline">\(\beta^{(m)}=(\beta_1^{(m)}, \cdots,\beta_p^{(m)})&#39;\)</span>为回归系数，<span class="math inline">\(\epsilon^{(m)}\)</span>满足<span class="math inline">\(E(\epsilon^{(m)})=0\)</span>、<span class="math inline">\(Var(\epsilon^{(m)})=\sigma^2_{(m)}\)</span>。</p>
 <p>由此拓展到所有数据集中，则</p>
 <p><span class="math display" id="eq:eq2">\[
-\beta=\textrm{argmin}\{L(X,y;\beta)+P(\beta;\lambda)\} \tag{6.2}
+\beta=\textrm{argmin}\{L(X,y;\beta)+P(\beta;\lambda)\} \tag{5.2}
 \]</span></p>
 <p>其中<span class="math inline">\(y=(y^{(1)&#39;},\cdots,y^{(M)&#39;})&#39;\)</span>为<span class="math inline">\(\sum\limits_{m=1}^M n^{(m)} \times 1\)</span>的因变量，<span class="math inline">\(X=diag(X^{(1)},\cdots,X^{(m)})\)</span>为<span class="math inline">\(\sum\limits_{m=1}^M n^{(m)} \times Mp\)</span>的设计矩阵，<span class="math inline">\(\beta=(\beta^{(1)&#39;},\cdots,\beta^{(M)&#39;})&#39;\)</span>为<span class="math inline">\(Mp \times 1\)</span>的未知参数向量。<span class="math inline">\(L(X,y;\beta)=\sum\limits_{i=1}^M L(X^{(m)},y^{(m)};\beta^{(m)})\)</span>是所有数据集上的损失之和，<span class="math inline">\(L(\cdot)\)</span>可取平方损失或负向对数似然损失。<span class="math inline">\(P(\lambda;\beta)\)</span>是惩罚函数，<span class="math inline">\(\lambda\)</span>用于调控惩罚力度，<span class="math inline">\(\lambda\)</span>越大，惩罚力度越大，<span class="math inline">\(\beta\)</span>被压缩得越严重，估计为零的回归系数也就越多。</p>
 <p><span class="math display">\[

@@ -304,25 +304,25 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
-<li class="chapter" data-level="5" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>5</b> 随机森林</a>
+<li class="chapter" data-level="5" data-path="tree.html"><a href="tree.html"><i class="fa fa-check"></i><b>5</b> 决策树与随机森林</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>5.1</b> R实现</a>
+<li class="chapter" data-level="5.1" data-path="tree_1.html"><a href="tree_1.html"><i class="fa fa-check"></i><b>5.1</b> 决策树</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>5.1.1</b> randomForest</a></li>
-<li class="chapter" data-level="5.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 其余函数</a></li>
+<li class="chapter" data-level="5.1.1" data-path="tree_1.html"><a href="tree_1.html#tree_1_1"><i class="fa fa-check"></i><b>5.1.1</b> 分类树</a></li>
+<li class="chapter" data-level="5.1.2" data-path="tree_1.html"><a href="tree_1.html#tree_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 回归树</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>5.2</b> 数据模拟</a>
+<li class="chapter" data-level="5.2" data-path="tree_2.html"><a href="tree_2.html"><i class="fa fa-check"></i><b>5.2</b> 随机森林</a></li>
+<li class="chapter" data-level="5.3" data-path="tree_3.html"><a href="tree_3.html"><i class="fa fa-check"></i><b>5.3</b> R实现</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 分类任务</a></li>
-<li class="chapter" data-level="5.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 回归任务</a></li>
+<li class="chapter" data-level="5.3.1" data-path="tree_3.html"><a href="tree_3.html#tree_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 决策树</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tree_3.html"><a href="tree_3.html#tree_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 随机森林</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>6</b> 生存分析</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>6.1</b> 基本概念</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 生存数据</a></li>
-<li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 删失</a></li>
+<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 删失数据</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 函数</a></li>
 <li class="chapter" data-level="6.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>6.3</b> 论文复现</a>
@@ -400,6 +400,8 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>11.4</b> 异构数据的整合分析</a></li>
 <li class="chapter" data-level="11.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>11.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
+<li class="part"><span><b>VI 生活</b></span></li>
+<li class="chapter" data-level="12" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>12</b> 羽毛球修炼手册</a></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -426,7 +428,7 @@ div.csl-indent {
 </ol>
 <p><span class="math inline">\(L_2 \; Group \; Bridge\)</span>为组内<span class="math inline">\(L_2\)</span>惩罚，组间<span class="math inline">\(Bridge\)</span>惩罚，其惩罚函数为</p>
 <p><span class="math display" id="eq:eq3">\[
-P(\beta;\lambda,\gamma)=\lambda\sum_{j=1}^p ||\beta_j||^\gamma=\lambda\sum_{j=1}^p((\sum_{i=1}^M (\beta_j^{(i)})^2)^{1/2})^\gamma \tag{6.3}
+P(\beta;\lambda,\gamma)=\lambda\sum_{j=1}^p ||\beta_j||^\gamma=\lambda\sum_{j=1}^p((\sum_{i=1}^M (\beta_j^{(i)})^2)^{1/2})^\gamma \tag{5.3}
 \]</span></p>
 <p>若以<span class="math inline">\(Group \; Lasso\)</span>估计作为初始值进行迭代估计，可以证明<strong><span class="math inline">\(L_2 \; Group \; Bridge\)</span>满足选择一致性</strong>。</p>
 <ol start="2" style="list-style-type: decimal">
@@ -434,7 +436,7 @@ P(\beta;\lambda,\gamma)=\lambda\sum_{j=1}^p ||\beta_j||^\gamma=\lambda\sum_{j=1}
 </ol>
 <p><span class="math inline">\(L_2 \; Group \; MCP\)</span>组内为<span class="math inline">\(L_2\)</span>惩罚，组间为<span class="math inline">\(MCP\)</span>惩罚，其惩罚函数为</p>
 <p><span class="math display" id="eq:eq4">\[
-P(\beta;\lambda,a)=\sum_{j=1}^p P_{MCP}(||\beta_j||;\lambda,a) \tag{6.4}
+P(\beta;\lambda,a)=\sum_{j=1}^p P_{MCP}(||\beta_j||;\lambda,a) \tag{5.4}
 \]</span></p>
 <p>关于<span class="math inline">\(MCP\)</span>函数的介绍可以参见<a href="@#penalty_3_2_2" target="_blank">Mnet</a>。</p>
 <ol start="3" style="list-style-type: decimal">
@@ -442,7 +444,7 @@ P(\beta;\lambda,a)=\sum_{j=1}^p P_{MCP}(||\beta_j||;\lambda,a) \tag{6.4}
 </ol>
 <p><span class="math inline">\(Group \; Lasso\)</span>组内和组间都是<span class="math inline">\(L_1\)</span>惩罚，其惩罚函数形式为</p>
 <p><span class="math display" id="eq:eq5">\[
-P(\beta;\lambda)=\lambda\sum_{j=1}^p ||\beta_j|| \tag{6.5}
+P(\beta;\lambda)=\lambda\sum_{j=1}^p ||\beta_j|| \tag{5.5}
 \]</span></p>
 </div>
             </section>

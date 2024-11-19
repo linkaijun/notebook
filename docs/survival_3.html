@@ -304,25 +304,25 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a></li>
-<li class="chapter" data-level="5" data-path="rf.html"><a href="rf.html"><i class="fa fa-check"></i><b>5</b> 随机森林</a>
+<li class="chapter" data-level="5" data-path="tree.html"><a href="tree.html"><i class="fa fa-check"></i><b>5</b> 决策树与随机森林</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="rf_1.html"><a href="rf_1.html"><i class="fa fa-check"></i><b>5.1</b> R实现</a>
+<li class="chapter" data-level="5.1" data-path="tree_1.html"><a href="tree_1.html"><i class="fa fa-check"></i><b>5.1</b> 决策树</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="rf_1.html"><a href="rf_1.html#rf_1_1"><i class="fa fa-check"></i><b>5.1.1</b> randomForest</a></li>
-<li class="chapter" data-level="5.1.2" data-path="rf_1.html"><a href="rf_1.html#rf_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 其余函数</a></li>
+<li class="chapter" data-level="5.1.1" data-path="tree_1.html"><a href="tree_1.html#tree_1_1"><i class="fa fa-check"></i><b>5.1.1</b> 分类树</a></li>
+<li class="chapter" data-level="5.1.2" data-path="tree_1.html"><a href="tree_1.html#tree_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 回归树</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="rf_2.html"><a href="rf_2.html"><i class="fa fa-check"></i><b>5.2</b> 数据模拟</a>
+<li class="chapter" data-level="5.2" data-path="tree_2.html"><a href="tree_2.html"><i class="fa fa-check"></i><b>5.2</b> 随机森林</a></li>
+<li class="chapter" data-level="5.3" data-path="tree_3.html"><a href="tree_3.html"><i class="fa fa-check"></i><b>5.3</b> R实现</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="rf_2.html"><a href="rf_2.html#rf_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 分类任务</a></li>
-<li class="chapter" data-level="5.2.2" data-path="rf_2.html"><a href="rf_2.html#rf_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 回归任务</a></li>
+<li class="chapter" data-level="5.3.1" data-path="tree_3.html"><a href="tree_3.html#tree_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 决策树</a></li>
+<li class="chapter" data-level="5.3.2" data-path="tree_3.html"><a href="tree_3.html#tree_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 随机森林</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>6</b> 生存分析</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>6.1</b> 基本概念</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 生存数据</a></li>
-<li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 删失</a></li>
+<li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 删失数据</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 函数</a></li>
 <li class="chapter" data-level="6.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>6.3</b> 论文复现</a>
@@ -400,6 +400,8 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>11.4</b> 异构数据的整合分析</a></li>
 <li class="chapter" data-level="11.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>11.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
+<li class="part"><span><b>VI 生活</b></span></li>
+<li class="chapter" data-level="12" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>12</b> 羽毛球修炼手册</a></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -526,10 +528,10 @@ z(\tilde \eta)_k=\tilde \eta_k-\frac{l&#39;(\tilde \eta)_k}{l&#39;&#39;(\tilde \
 f(\beta_k)=(\lambda(1-\alpha)-\frac{1}{n}\sum_{i=1}^nw_ix_{ik}^2)\beta_k+\lambda\alpha\cdot\textrm{sgn}(\beta_k)
 \]</span></p>
 <p>由于<span class="math inline">\(w_i \leq 0\)</span>，且<span class="math inline">\(f(\beta_k)\)</span>为奇函数，则其图像大概为</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-p2"></span>
-<img src="06-survival_analysis_files/figure-html/survival-p2-1.png" alt="函数图" width="60%" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:survival-px"></span>
+<img src="06-survival_analysis_files/figure-html/survival-px-1.png" alt="函数图" width="60%" />
 <p class="caption">
-图 6.2: 函数图
+图 6.9: 函数图
 </p>
 </div>
 <p>则该问题就转化为对<span class="math inline">\(C\)</span>进行分类讨论，看看<span class="math inline">\(f(\beta_k)\)</span>什么时候和横轴相交，求出相交时的横坐标即可。思路已经有了，这里就不展开说了，得到结果如下所示</p>

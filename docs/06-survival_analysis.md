@@ -1,76 +1,164 @@
 
 
-
 # 生存分析 {#survival}
 
 生存分析方法研究一个感兴趣的事件发生的时间。该事件可以是死亡、离婚、戒烟、设备故障等等。因此，“生存”二字不应与狭义上的“死亡”绑定，应当将“生存”视作一种“持续”，“死亡”则对应“事件的发生”。
 
 ## 基本概念 {#survival_1}
 
-### 生存数据 {#survival_1_1}
+在生存分析中，我们最关心的数据是从某个起始点开始到一个特定事件发生所经过的时间间隔，即**time to event**，也称“生存时间数据”。不妨令$X$表示观测对象真实的生存时间，令$T$表示观测到的并记录下来的生存时间。在实际研究中，由于多种因素的影响，我们不一定能够获取完整的生存时间数据，即$X \neq T$，因此有必要对数据类型进行区分，以便构建相应的模型。
 
-在随访期（观察期）内，我们关心研究对象生存了多长时间，感兴趣的事件是否有发生。因此，每一个研究对象都可以由**生存时间、生存结局**这两个指标去描述。
+### 删失数据 {#survival_1_1}
 
-在实践中，我们不可能有无限的时间去持续观察样本，因此会设置一段观察期。**生存时间**指的是样本自被观察起直到目标事件发生或者观察期止、中途丢失的持续时间，无论该样本是一开始就在还是中途加入。
+#### 右删失 {#survival_1_1_1}
 
-若样本在观察期内确实发生了我们感兴趣的事件，那么我们可以记录该样本的**生存时间**及**生存结局**，不妨将其**生存结局**记为**1**(failure)。而对于那些在观察期内目标事件尚未发生或中途丢失的样本，我们同样可以记录其**生存时间**，并将其**生存结局**记为**0**(censoring)，称之为**删失**。
+1. Type I censoring
 
-下面给出示例。
+   人为预先设置右删失时间点$C_r$，则$T$的表达式为
 
-<div class="figure" style="text-align: center">
-<img src="06-survival_analysis_files/figure-html/survival-p1-1.png" alt="生存数据示例" width="80%" />
-<p class="caption">(\#fig:survival-p1)生存数据示例</p>
-</div>
+   $$
+   T = \begin{cases} 
+   X, &\text{if } X \leq C_r \\
+   C_r, &\text{if } X \gt C_r
+   \end{cases}
+   $$
 
-图中<span style='color:red'>红点</span>代表目标事件的发生，<span style='color:blue'>蓝点</span>代表样本丢失。由图可知第一个和第三个观测对象的**生存结局**是**1**，其余对象的**生存结局**是**0**。
+   为方便记录，令$\delta=I\{X \leq C_r\}$，则数据对为$(T, \delta)$。
 
-
-| id | 生存时间 | 生存结局 |
-|:--:|:--------:|:--------:|
-| 1  |   6.0    |    1     |
-| 2  |   8.0    |    0     |
-| 3  |   1.5    |    1     |
-| 4  |   3.0    |    0     |
-| 5  |   2.5    |    0     |
-
-### 删失 {#survival_1_2}
-
-当我们无法准确获取研究对象自被观察起**至目标事件发生**的生存时间，便称这样的数据为**删失数据**，对应的生存时间为**不完全生存时间或截尾值**。
-
-**删失**的原因有很多：
-
-- 观察期结束了目标事件都还没有发生
-- 观察对象失联，中途丢失
-- 观察对象终止于其他事件
-- ...
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p1-1.png" alt="Type I censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p1)Type I censoring</p>
+   </div>
    
-   例如我们对“肺癌”感兴趣，但患者还患有其他疾病，可能因其他疾病而死亡。
+   图中<span style='color:red'>红点</span>代表目标事件在观察期内发生，<span style='color:blue'>蓝点</span>代表右删失数据。
    
-**删失**的类型可分为如下三种：
-
-1. 右删失
-
-   真正的生存时间大于或等于观测到的生存时间。
+   > 红、蓝点的含义下同
    
-   例如研究对象直至观测期满都未发生目标事件，或者研究对象中途退出研究，我们不知道目标事件会在之后的什么时候发生，但至少比我们观测到的生存时间要长。
+      
+   **例子：**就像一个水桶，我们能观测到的水量肯定小于等于水桶的容量，倘若接的水比水桶的容量还要多，那么就会溢出来，我们也就观测不到了，只会留下一个印象——水满了。
+
+2. Progressive Type I censoring
+
+   Progressive Type I censoring相较Type I censoring，人为预先设置了多个右删失时间点，因次也称“逐步删失”。这种设置有个好处，就是能够控制成本。
+
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p2-1.png" alt="Progressive Type I censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p2)Progressive Type I censoring</p>
+   </div>
    
-2. 左删失
+   **例子：**假如你一开始招募了多个志愿者参与研究。让志愿者参与到研究当中是有成本的，而你的预算是有上限的。因此，当试验进行了一段时间后，你发现你的资金不足以支持你同时对多名志愿者进行观察，于是在某天），你决定让某些志愿者退出研究，仅留下部分志愿者继续观察。当然，其中有志愿者会自然地退出研究，因为他们的目标事件已经发生了。
 
-   真正的生存时间小于或等于观测到的生存时间。
+3. Generalized Type I censoring
+
+   此前的右删失数据都有相同的时间起点，而Generalized Type I censoring允许观测对象在不同时间点被纳入到研究当中，但具有统一的删失时间点。
    
-   例如想测试某个零件的使用寿命，但该零件内部已经有裂痕存在，因此实际观测到的使用寿命一定比新零件的使用寿命要短。
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p3-1.png" alt="Generalized Type I censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p3)Generalized Type I censoring</p>
+   </div>
    
-3. 区间删失
-
-   只知道目标事件是在某个时间段内发生的，但不知道具体时间。
+   由于我们更加关心生存时间的长度，不在乎什么时候开始，因此图\@ref(fig:survival-p3)可变形为下图
    
-   例如核酸检验，第一次阴性，第二次阳性，那大概就是在这个时间段内被感染了，但不知道什么时候被感染。
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p4-1.png" alt="Generalized Type I censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p4)Generalized Type I censoring</p>
+   </div>
+   
+   注意到该图仅用蓝点表示右删失数据点，而没有统一的竖线表示$C_r$。
+   
+   如果你还是想知道观测对象什么时候加入到研究中，图\@ref(fig:survival-p3)还可变形为下图
+   
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p5-1.png" alt="Generalized Type I censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p5)Generalized Type I censoring</p>
+   </div>
+   
+   纵坐标记录了观测对象参与到研究中的时长，即**time to event**；横坐标记录了观测对象什么时候加入到研究中；最右边的黑色实线表示研究预先设定的右删失时间点。显然，对于Generalized Type I censoring数据，右删失数据点必定落在右边的黑色实线上。
+   
+   
+   **例子：**就像一个公司从创立到倒闭，考虑“职工辞职”这个目标事件，那么总会有人中途加入或中途离开。其中“公司创立”对应着研究开始，“公司倒闭”对应着删失时间点$C_r$。而**time to event**对应的就是该职工在公司工作的时长，也就是我们感兴趣的“资历”，而不在乎他什么时候加入到这个公司。
+   
+4. Type II censoring
 
-----------
+   Type II相较Type I并没有直接设置右删失时间点，而是预先设置有$r$个观测对象发生目标事件，将剩余的尚未发生目标事件的观测对象都记为右删失数据。也就是说Type II censoring的右删失时间点与次序统计量$T_{(r)}$有关。这种设置能够有效地节约时间和控制成本。
+   
+   若共有5个观测对象，设置$r=3$，则如下图所示
+   
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p6-1.png" alt="Type II censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p6)Type II censoring</p>
+   </div>
+   
+   **例子：**就像在一场选拔性比赛中，看谁能最快任务。现在共有100位参赛者，需要筛选出3名种子选手。于是当季军产生时这个比赛就已经结束了。
+   
+5. Progressive Type II censoring
 
-参考资料
+   Type II表示该类型数据需要预先设置参数$r$，Progressive表示需要预先设置多个$r$。考虑两次删失的情形，我们预先设置了$r_1$和$r_2$，当总共$n$个观测对象中有$r_1$个观测对象率先发生了目标事件，那么这$r_1$个观测对象的**time to event**将会被记录下来，同时出于对成本的考虑，我们还会将$n_1-r_1$个观测对象移除研究，继续观察剩余的$n-n_1$个观测对象，直到又有$r_2$个观测对象发生目标事件，此时则有$n-n_1-r_2$个观测对象被记录为右删失数据。也就是说，Progressive Type II censoring的删失时间点与次序统计量$T_{(r_1)}$、$T_{(n_1+r_2)}$有关。
+   
+   > 务必与Progressive Type I censoring联系起来
+   
+   对于10个观测对象，我们设置$r_1=r_2=2$，同时出于成本的考虑，在出现$r_1$个目标事件时主动去除2个观测对象，则剩下6个观测对象进入到第二轮中。如下所示
+   
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p7-1.png" alt="Progressive Type II censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p7)Progressive Type II censoring</p>
+   </div>
+   
+   **例子：**想不出了。
 
-1. https://zhuanlan.zhihu.com/p/497968260
+6. Random censoring
+
+   出于某些原因，部分观测对象可能会观测不到，也就不知道其具体的生存时间，于是被记为右删失数据。
+   
+   可能的原因：
+   
+   - 观测对象失联，丢失了
+   - 观察对象终止于其他事件
+   - ...
+   
+   <div class="figure" style="text-align: center">
+   <img src="06-survival_analysis_files/figure-html/survival-p8-1.png" alt="Random censoring" width="80%" />
+   <p class="caption">(\#fig:survival-p8)Random censoring</p>
+   </div>
+   
+   **例子：**例如我们对“肺癌”感兴趣，但患者还患有其他疾病，可能因其他疾病而死亡，此时也算是右删失。
+   
+#### 左删失 {#survival_1_1_2}
+
+对于左删失时间点$C_l$，则$T$的表达式为
+
+$$
+T = \begin{cases} 
+C_l, &\text{if } X \lt C_l \\
+X, &\text{if } X \geq C_l
+\end{cases}
+$$
+
+为方便记录，令$\epsilon=I\{X\geq C_l\}$，则数据对为$(T,\epsilon)$
+
+**例子：**考虑疾病的发生，当一个人进医院进行体检时，若检测出患有某种疾病，则肯定是在体检之前就已经染上了疾病，但不知道是什么时候染上的，那么在医院体检的时间点就是左删失时间点$C_l$。
+
+#### 双删失 {#survival_1_1_3}
+
+根据右删失和左删失的概念，考虑研究中可能同时存在右删失数据和左删失数据，即双删失。
+
+> 双删失更像是一种现象（右删失与左删失同时在某些研究中出现的现象），而不是数据类型
+
+记数据对为$(T, \delta)$，其中$T=max(min(X, C_r), C_l)$。$\delta$定义为$\delta=I\{X \leq C_r\} - 2I\{X \lt C_l\}$，当$\delta=1$时，表示正常的生存时间，当$\delta=0$时，表示右删失数据，当$\delta=-1$时，表示左删失数据。
+
+> 如果左删失的定义没错的话，感觉应该是$X \lt C_l$而不是$X \leq C_l$
+
+**例子：**假如你问某人什么时候开始打的羽毛球，你可能得到的回答有：1.我20年11月13号开始打的；2.不记得了，至少大学前就开始打了；3.我还没打过。这三个回答分别对应正常的生存时间、左删失数据和右删失数据（还没打过说明目标事件尚未发生，以后可能会打，即为右删失）。
+
+#### 区间删失 {#survival_1_1_4}
+
+对于观测对象$i$，只记得$X$是落在区间$(L_i,R_i]$中，但不知道具体的时间点，此时即为“区间删失”。
+
+区间删失是右删失、左删失的一般化。例如右删失可表示为$(C_r,+\infty)$，左删失可表示为$(0,C_l)$
+
+> 这里貌似也涉及到左删失的定义问题，别再过分纠结区间的开闭问题了
+
+**例子：**在测核酸的时候，第一次为阴性，第二次为阳性，说明是在第一次和第二次检测之间感染的。
 
 ## 函数 {#survival_2}
 
@@ -305,8 +393,8 @@ $$
 由于$w_i \leq 0$，且$f(\beta_k)$为奇函数，则其图像大概为
 
 <div class="figure" style="text-align: center">
-<img src="06-survival_analysis_files/figure-html/survival-p2-1.png" alt="函数图" width="60%" />
-<p class="caption">(\#fig:survival-p2)函数图</p>
+<img src="06-survival_analysis_files/figure-html/survival-px-1.png" alt="函数图" width="60%" />
+<p class="caption">(\#fig:survival-px)函数图</p>
 </div>
 
 则该问题就转化为对$C$进行分类讨论，看看$f(\beta_k)$什么时候和横轴相交，求出相交时的横坐标即可。思路已经有了，这里就不展开说了，得到结果如下所示

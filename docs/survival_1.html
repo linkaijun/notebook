@@ -323,6 +323,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>6.1</b> 基本概念</a>
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 删失数据</a></li>
+<li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 截断数据</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 函数</a></li>
 <li class="chapter" data-level="6.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>6.3</b> 论文复现</a>
@@ -555,6 +556,13 @@ X, &amp;\text{if } X \geq C_l
 </blockquote>
 <p><strong>例子：</strong>在测核酸的时候，第一次为阴性，第二次为阳性，说明是在第一次和第二次检测之间感染的。</p>
 </div>
+</div>
+<div id="survival_1_2" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> 截断数据<a href="survival_1.html#survival_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>对于删失数据，虽然我们不知道具体的生存时间，但至少我们是接触到了观测对象，并且掌握了生存时间的部分信息（可能大于或小于某个值，或者在某个区间内）。<strong>而对于截断数据，研究对象并没有进入到我们的观察窗口，更谈不上其携带的生存时间信息。</strong></p>
+<p>设置一个观察窗口<span class="math inline">\((Y_L,Y_R)\)</span>，当<span class="math inline">\(Y_R=+\infty\)</span>时，只有<span class="math inline">\(X \gt Y_L\)</span>的研究对象才能被纳入到我们的研究中；当<span class="math inline">\(Y_L=0\)</span>时，只有<span class="math inline">\(X \leq Y_R\)</span>的研究对象才能被纳入到我们的研究中。也就是说，进入到我们的研究中是需要门槛的、有条件的，而且这种条件往往与系统性原因有关（例如研究设计）。</p>
+<p><strong>例子1：</strong>如果要研究老人的预期寿命，并在退休中心开展调查。该研究忽略了那些年龄未到退休中心准入门槛的老人，但这些老人也应该属于本研究的范畴之中。这属于<strong>左截断数据</strong>。</p>
+<p><strong>例子2：</strong>利用天文望远镜观测天体。100年前观测到的天体数量和如今能观测到的天体数量绝对是不一样的。只是以前设备落后，精度有限，观测不到那么多的天体。因此这属于<strong>右截断数据</strong>。</p>
 </div>
 </div>
             </section>

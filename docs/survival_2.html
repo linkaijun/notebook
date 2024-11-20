@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.2 函数 | kj的学习笔记</title>
+  <title>6.2 参数估计 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.2 函数 | kj的学习笔记" />
+  <meta property="og:title" content="6.2 参数估计 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.2 函数 | kj的学习笔记" />
+  <meta name="twitter:title" content="6.2 参数估计 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -324,8 +324,14 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 删失数据</a></li>
 <li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 截断数据</a></li>
+<li class="chapter" data-level="6.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>6.1.3</b> 函数</a></li>
+<li class="chapter" data-level="6.1.4" data-path="survival_1.html"><a href="survival_1.html#survival_1_4"><i class="fa fa-check"></i><b>6.1.4</b> 似然函数</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 函数</a></li>
+<li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>6.2.1</b> KM估计</a></li>
+<li class="chapter" data-level="6.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>6.2.2</b> NA估计</a></li>
+</ul></li>
 <li class="chapter" data-level="6.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>6.3</b> 论文复现</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 推导</a></li>
@@ -422,82 +428,196 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="survival_2" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> 函数<a href="survival_2.html#survival_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<ol style="list-style-type: decimal">
-<li><p>生存函数</p>
-<p>记<span class="math inline">\(X\)</span>为代表生存时间的随机变量，则其密度函数<span class="math inline">\(f(x)\)</span>为</p>
-<p><span class="math display" id="eq:eq1">\[
-f(x)=\lim_{\Delta x \rightarrow 0} \frac{P(x \leq X \leq x+\Delta x)}{\Delta x} \tag{5.1}
+<h2><span class="header-section-number">6.2</span> 参数估计<a href="survival_2.html#survival_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>这里主要对右删失数据进行讨论，以此来对第<a href="survival_1.html#survival_1_3" target="_blank">6.1.3</a>节中的函数进行估计。因此，数据结构为<span class="math inline">\((T,\delta)\)</span>，并假设各个对象的删失时间与其<strong>time to event</strong>无关。</p>
+<p>假如有<span class="math inline">\(n\)</span>个观测样本，并且允许重复数据(ties)的出现，那么有<span class="math inline">\(D\)</span>个不同的<strong>time to event</strong><span class="math inline">\(t_1 \lt t_2 \lt \cdots \lt t_D\)</span>。在<span class="math inline">\(t_i\)</span>上有<span class="math inline">\(d_i\)</span>个<span class="math inline">\(\delta=1\)</span>的个体，并且此时还有<span class="math inline">\(Y_i=\sum_{j=1}^nI(X_j \geq t_i)=|R_i|\)</span>个个体存在，则此时的风险函数可估计为<span class="math inline">\(b_i(x)=d_i/Y_i\)</span>。</p>
+<blockquote>
+<p><span class="math inline">\(R_i\)</span>表示<span class="math inline">\(t_i\)</span>时刻的风险集合，即在时刻<span class="math inline">\(t_i\)</span>时刻还存活的个体</p>
+</blockquote>
+<p>例子如下所示</p>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<caption><span id="tab:survival-t1">表 6.1: </span>原始数据</caption>
+<thead>
+<tr class="header">
+<th align="center">subject</th>
+<th align="center">time</th>
+<th align="center">delta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">a</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">b</td>
+<td align="center">5</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">c</td>
+<td align="center">3</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">d</td>
+<td align="center">4</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">e</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">f</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<caption><span id="tab:survival-t1">表 6.1: </span>排序后的数据</caption>
+<thead>
+<tr class="header">
+<th align="center">subject</th>
+<th align="center">time</th>
+<th align="center">delta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">a</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">e</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">c</td>
+<td align="center">3</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">f</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">d</td>
+<td align="center">4</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">b</td>
+<td align="center">5</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><span class="math inline">\(t_1=2;\; d_1=2; \; R(t_1)=\{a,e,f,c,d,b\}; \; Y_1=6\)</span></p></li>
+<li><p><span class="math inline">\(t_2=3;\; d_2=1; \; R(t_2)=\{f,c,d,b\}; \; Y_2=4\)</span></p></li>
+<li><p><span class="math inline">\(t_3=4;\; d_3=1; \; R(t_3)=\{d,b\}; \; Y_3=2\)</span></p></li>
+</ul>
+<div id="survival_2_1" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> KM估计<a href="survival_2.html#survival_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>Kaplan和Meier提出了KM估计，也称Product-Limit estimator。</p>
+<p>根据式<a href="survival_1.html#eq:survival-eq13">(6.13)</a>，KM估计给出了生存函数的估计</p>
+<p><span class="math display" id="eq:survival-eq19">\[
+\hat S(t)=\begin{cases}
+1, &amp; \textrm{if} \; t \lt t_1 \\
+\prod_{t_i \lt t}[1-\frac{d_i}{y_i}], &amp; \textrm{if} \; t_1 \leq t
+\end{cases} \tag{6.19}
 \]</span></p>
-<p>记其累积分布函数为</p>
-<p><span class="math display" id="eq:eq2">\[
-F(x)=P(X \leq x) \tag{5.2}
-\]</span></p>
-<p>定义<strong>生存函数</strong>为</p>
-<p><span class="math display" id="eq:eq3">\[
-S(x)=P(X \gt x)=1-F(x)=\int_x^\infty f(t)dt \tag{5.3}
+<p>注意到，当最大的观测值是完整生存时间时，<span class="math inline">\(\hat S(t)=0\)</span>；当最大的观测值是右删失时，<span class="math inline">\(\hat S(t)\)</span>则为一个常数，此时就很难定义取值大于该点时对应的生存函数。</p>
+<p>对此，当<span class="math inline">\(t \gt t_{max}\)</span>时，有如下三种备选方法：</p>
+<ul>
+<li><p><span class="math inline">\(\hat S(t)=0\)</span></p></li>
+<li><p><span class="math inline">\(\hat S(t)=\hat S(t_{max})\)</span></p></li>
+<li><p><span class="math inline">\(\hat S(t)=\exp\{\frac{t\ln[\hat S(t_{max})]}{t_{max}}\}\)</span></p></li>
+</ul>
+<blockquote>
+<p>第三种方法对应的生存函数是衰减的并趋于零</p>
+</blockquote>
+<p><span class="math inline">\(\hat S(t)\)</span>的方差估计为</p>
+<p><span class="math display" id="eq:survival-eq20">\[
+\hat{V}[\hat S(t)]=\{\hat S(t)\}^2 \sum_{t_i \leq t} \frac{d_i}{Y_i(Y_i-d_i)} \tag{6.20}
 \]</span></p>
 <blockquote>
-<p><span class="math inline">\(T \gt t\)</span>具有“生存”的意味</p>
+<p>可以直接记</p>
 </blockquote>
-<p>则</p>
-<p><span class="math display">\[
-f(x)=-\frac{dS(x)}{dx}
+<p>考虑式<a href="survival_1.html#eq:survival-eq9">(6.9)</a>，有</p>
+<p><span class="math display" id="eq:survival-eq21">\[
+\hat H(t)=-\ln [\hat S(t)] \tag{6.21}
 \]</span></p>
-<p>当<span class="math inline">\(X\)</span>是离散随机变量时，记<span class="math inline">\(P(X=x_j)=p(x_j),j=1,2,\dots\)</span>。此时的生存函数为</p>
-<p><span class="math display">\[
-S(x)=P(X \gt x)=\sum_{x_j \gt x}p(x_j)
-\]</span></p></li>
-<li><p>危险函数</p>
-<p><span class="math display" id="eq:eq4">\[
+<hr />
+<p>在计算<span class="math inline">\(\hat V[\hat H(t)]\)</span>前介绍<span class="math inline">\(\delta\)</span>方法：</p>
+<p>已知:<span class="math inline">\(\hat \beta - \beta_0 \stackrel{d}{\rightarrow} N(0, V(\hat \beta))\)</span>，若<span class="math inline">\(f(x)\)</span>是连续的且一阶导不为0，求<span class="math inline">\(f(\hat \beta)-f(\beta_0)\)</span>的渐近分布。</p>
+<p>首先对<span class="math inline">\(f(\hat \beta)\)</span>进行一阶泰勒展开</p>
+<p><span class="math display" id="eq:survival-eq22">\[
 \begin{aligned}
-b(x)&amp;=\lim_{\Delta x \rightarrow 0}\frac{P(x \leq X \leq x+\Delta x \mid X \geq x)}{\Delta x} \\
-&amp;= \lim_{\Delta x \rightarrow 0}\frac{F(x+\Delta x)-F(x)}{(1-F(x))\Delta x} \\
-&amp;= \frac{f(x)}{S(x)} \\
-&amp;= \frac{d}{dx}(-\ln S(x))
-\end{aligned} \tag{5.4}
-\]</span></p>
-<blockquote>
-<p>这种导函数与原函数在分子分母的情况可以考虑为对数函数求导</p>
-</blockquote>
-<p>由定义可知，危险函数代表了目标事件的即时发生率。</p>
-<p>根据危险函数可得累积危险函数</p>
-<p><span class="math display" id="eq:eq5">\[
-H(x)=\int_0^x b(u)du=-\ln S(x)  \tag{5.5}
-\]</span></p>
-<p>则</p>
-<p><span class="math display">\[
-S(x)=\exp\{-H(x)\}=\exp\{-\int_0^x b(u)du\}
-\]</span></p>
-<p>当<span class="math inline">\(X\)</span>是离散随机变量时，则</p>
-<p><span class="math display">\[
-b(x_j)=P(x_j \leq X \lt x_{j+1}|X \geq x_j)=\frac{p(x_j)}{S(x_{j-1})},\quad j=1,2,\dots
-\]</span></p>
-<p>注意<span class="math inline">\(S(x)=P(X \gt x)\)</span>、<span class="math inline">\(S(x_0)=1\)</span>、<span class="math inline">\(p(x_j)=S(x_{j-1})-S(x_j)\)</span>，则</p>
-<p><span class="math display">\[
-b(x_j)=1-\frac{S(x_j)}{S(x_{j-1})}
-\]</span></p>
-<p>则</p>
-<p><span class="math display">\[
-\begin{aligned}
-S(x)&amp;=\prod_{x_j \leq x} \frac{S(x_j)}{S(x_{j-1})} \\
-&amp;=\prod_{x_j \leq x}(1-(1-\frac{S(x_j)}{S(x_{j-1})})) \\
-&amp;=\prod_{x_j \leq x}(1-b(x_j))
+f(\hat \beta) &amp;\approx f(\beta_0)+f&#39;(\beta_0)(\hat \beta-\beta_0) \\
+f(\hat \beta)-f(\beta_0) &amp; \approx f&#39;(\beta_0)(\hat \beta-\beta_0)
 \end{aligned}
-\]</span></p></li>
-<li><p>平均剩余寿命</p></li>
-</ol>
-<p><span class="math display">\[
+\tag{6.22}
+\]</span></p>
+<p>则</p>
+<p><span class="math display" id="eq:survival-eq23">\[
 \begin{aligned}
-mrl(x)=E(X-x|X \gt x)&amp;=\int_x^\infty(t-x)f(t|X \gt x)dt \\ &amp;=\int_x^\infty\frac{(t-x)f(t)}{S(x)}dt \\
-&amp;=\frac{\int_x^\infty(x-t)dS(t)}{S(x)} \\
-&amp;=\frac{S(t)(x-t)|^\infty_x+\int_x^\infty S(t)dt}{S(x)} \\
-&amp;=\frac{\int_x^\infty S(t)dt}{S(x)}
-\end{aligned}
+V(f(\hat \beta)-f(\beta_0))&amp;\approx V(f&#39;(\beta_0)(\hat \beta-\beta_0)) \\
+&amp;\approx \{f&#39;(\beta_0)\}^2V(\hat \beta)
+\end{aligned} \tag{6.23}
+\]</span></p>
+<p>故</p>
+<p><span class="math display" id="eq:survival-eq24">\[
+f(\hat \beta)-f(\beta_0) \stackrel{d}{\rightarrow} N(0, \{f&#39;(\beta_0)\}^2V(\hat \beta)) \tag{6.24}
+\]</span></p>
+<hr />
+<p>则</p>
+<p><span class="math display" id="eq:survival-eq25">\[
+\hat V(\hat H(t))=\frac{1}{\{\hat S(t)\}^2}\hat{V}[\hat S(t)]= \sum_{t_i \leq t} \frac{d_i}{Y_i(Y_i-d_i)} \tag{6.25}
+\]</span></p>
+</div>
+<div id="survival_2_2" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> NA估计<a href="survival_2.html#survival_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>NA估计由Nelson和Aalen提出，该方法首先给出了累积风险函数的估计</p>
+<p><span class="math display" id="eq:survival-eq26">\[
+\tilde H(t)=\begin{cases}
+0, &amp; \textrm{if} \; t \lt t_1 \\
+\sum_{t_i \leq t} \frac{d_i}{Y_i}, &amp;\textrm{if} \; t_1 \leq t
+\end{cases} \tag{6.26}
 \]</span></p>
 <blockquote>
-<p>注意<span class="math inline">\(dS(x)=-f(x)dx\)</span></p>
+<p><span class="math inline">\(\hat b(t_i)=d_i/Y_i\)</span></p>
 </blockquote>
+<p>给出该估计量的方差</p>
+<p><span class="math display" id="eq:survival-eq27">\[
+\tilde V(\tilde H(t))=\sum_{t_i \leq t} \frac{d_i}{Y_i^2} \tag{6.27}
+\]</span></p>
+<p>根据式<a href="survival_1.html#eq:survival-eq10">(6.10)</a>，有</p>
+<p><span class="math display" id="eq:survival-eq28">\[
+\tilde S(t)=\exp[- \tilde H(t)] \tag{6.28}
+\]</span></p>
+<p>由<span class="math inline">\(\delta\)</span>方法可知</p>
+<p><span class="math display" id="eq:survival-eq29">\[
+\tilde V(\tilde S(t))=\{-\exp[-\tilde H(t)]\}^2 \tilde V(\tilde H(t))=\{\tilde S(t)\}^2\sum_{t_i \leq t}\frac{d_i}{Y_i^2} \tag{6.29}
+\]</span></p>
+</div>
 </div>
             </section>
 

@@ -17,19 +17,19 @@
 物理学上的引力模型为：
    
 $$
-F_{ij}=G\frac{M_iM_j}{d_{ij}^2} (\#eq:model1)
+F_{ij}=G\frac{M_iM_j}{d_{ij}^2} (\#eq:network-eq1)
 $$
 
-其中F~ij~表示个体之间的相互作用力，G为常数，M~i~和M~j~分别表示个体i和j的质量，d~ij~为两者之间的距离。将式\@ref(eq:model1)稍加修改，即可转化为对两个个体之间某种联系的度量。
+其中F~ij~表示个体之间的相互作用力，G为常数，M~i~和M~j~分别表示个体i和j的质量，d~ij~为两者之间的距离。将式\@ref(eq:network-eq1)稍加修改，即可转化为对两个个体之间某种联系的度量。
 
 何勇[@network_1]、张正峰[@network_2]的文章都以引力模型为媒介来构造地区之间的联系。以何勇的文章为例，其文章将引力模型引入到文旅产业融合领域，得到下面的模型：
 
 $$
-F_{ij}=K_{ij}\frac{\sqrt[3]{D_i \times P_i \times M_i} \times \sqrt[3]{D_j \times P_j \times M_j}}{d_{ij}^2} (\#eq:model2)
+F_{ij}=K_{ij}\frac{\sqrt[3]{D_i \times P_i \times M_i} \times \sqrt[3]{D_j \times P_j \times M_j}}{d_{ij}^2} (\#eq:network-eq2)
 $$
 
 $$
-K_{ij}=\frac{P_i}{P_i+P_j} \times \frac{M_i}{M_i+M_j} (\#eq:model3)
+K_{ij}=\frac{P_i}{P_i+P_j} \times \frac{M_i}{M_i+M_j} (\#eq:network-eq3)
 $$
 
 其中F~ij~为两个城市之间的文旅产业融合质量空间引力强度，D、P、M分别代表城市的文旅产业耦合度、文化产业增加值和国内旅游收入，d~ij~代表城市之间的公路距离。K~ij~为修正系数，用于刻画两个城市之间F~ij~的非对称性。如果没有修正系数K，那么F~ij~将是对称的，即F~ij~=F~ji~。故该网络为加权有向网络。之后为了进行[QAP分析](#network_3_4)而将原始矩阵的平均值作为阈值，把原始矩阵转化为0-1矩阵。

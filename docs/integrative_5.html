@@ -324,8 +324,14 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>6.1.1</b> 删失数据</a></li>
 <li class="chapter" data-level="6.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 截断数据</a></li>
+<li class="chapter" data-level="6.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>6.1.3</b> 函数</a></li>
+<li class="chapter" data-level="6.1.4" data-path="survival_1.html"><a href="survival_1.html#survival_1_4"><i class="fa fa-check"></i><b>6.1.4</b> 似然函数</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 函数</a></li>
+<li class="chapter" data-level="6.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>6.2</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>6.2.1</b> KM估计</a></li>
+<li class="chapter" data-level="6.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>6.2.2</b> NA估计</a></li>
+</ul></li>
 <li class="chapter" data-level="6.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>6.3</b> 论文复现</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 推导</a></li>
@@ -424,13 +430,13 @@ div.csl-indent {
 <div id="integrative_5" class="section level2 hasAnchor" number="11.5">
 <h2><span class="header-section-number">11.5</span> 具有网络结构关系的整合分析<a href="integrative_5.html#integrative_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <p>在同一个数据集中，不同解释变量之间可能存在相互作用关系（也意味着是系数间的相互作用关系），从而形成了一张网络结构图，此种关系称为“数据集内部结构”。针对网络结构的惩罚函数如下所示</p>
-<p><span class="math display" id="eq:eq10">\[
-P(\beta;\lambda)=\lambda\sum_{1 \leq j,k \leq p}a_{jk}(\frac{||\beta_j||_2}{\sqrt{M_j}}-\frac{||\beta_k||_2}{\sqrt{M_k}})^2 \tag{10.13}
+<p><span class="math display" id="eq:integrative-eq10">\[
+P(\beta;\lambda)=\lambda\sum_{1 \leq j,k \leq p}a_{jk}(\frac{||\beta_j||_2}{\sqrt{M_j}}-\frac{||\beta_k||_2}{\sqrt{M_k}})^2 \tag{11.10}
 \]</span></p>
 <p>其中<span class="math inline">\(a_{jk}\)</span>由网络图得到，描述了两个节点之间是否相连以及链接的强度。若<span class="math inline">\(X_j\)</span>和<span class="math inline">\(X_k\)</span>越相似，则其惩罚越重(<span class="math inline">\(a_{jk}\)</span>越大)，从而拉近<span class="math inline">\(\beta_j\)</span>和<span class="math inline">\(\beta_k\)</span>之间的距离，它们的估计值越相近。</p>
 <p>同一解释变量在不同数据集中的系数存在某种相似性，称之为“跨数据集结构”。对此有<span class="math inline">\(Contrast\)</span>惩罚，惩罚函数如下所示</p>
-<p><span class="math display" id="eq:eq11">\[
-P_C(\beta)=\lambda\sum_{j=1}^p \sum_{k \neq l} a_j^{(kl)}(\beta_j^{(k)}-\beta_j^{(l)})^2 \tag{10.14}
+<p><span class="math display" id="eq:integrative-eq11">\[
+P_C(\beta)=\lambda\sum_{j=1}^p \sum_{k \neq l} a_j^{(kl)}(\beta_j^{(k)}-\beta_j^{(l)})^2 \tag{11.11}
 \]</span></p>
 <p>其中<span class="math inline">\(a_j^{(kl)}=I(sgn(\beta_j^{(k)})=sgn(\beta_j^{(l)}))\)</span>。简而言之，就是若<span class="math inline">\(\beta_j^{(k)}\)</span>和<span class="math inline">\(\beta_j^{(l)}\)</span>的符号相同，则<span class="math inline">\(a_j^{(kl)}\)</span>取1，那么在最小化的目标下会拉近<span class="math inline">\(\beta_j^{(k)}\)</span>和<span class="math inline">\(\beta_j^{(l)}\)</span>之间的距离，反之为0。</p>
 

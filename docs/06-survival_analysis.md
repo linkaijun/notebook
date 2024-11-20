@@ -20,7 +20,7 @@
    T = \begin{cases} 
    X, &\text{if } X \leq C_r \\
    C_r, &\text{if } X \gt C_r
-   \end{cases}
+   \end{cases}  (\#eq:survival-eq1)
    $$
 
    为方便记录，令$\delta=I\{X \leq C_r\}$，则数据对为$(T, \delta)$。
@@ -131,10 +131,10 @@ $$
 T = \begin{cases} 
 C_l, &\text{if } X \lt C_l \\
 X, &\text{if } X \geq C_l
-\end{cases}
+\end{cases} (\#eq:survival-eq2)
 $$
 
-为方便记录，令$\epsilon=I\{X\geq C_l\}$，则数据对为$(T,\epsilon)$
+为方便记录，令$\varepsilon=I\{X\geq C_l\}$，则数据对为$(T,\varepsilon)$
 
 **例子：**考虑疾病的发生，当一个人进医院进行体检时，若检测出患有某种疾病，则肯定是在体检之前就已经染上了疾病，但不知道是什么时候染上的，那么在医院体检的时间点就是左删失时间点$C_l$。
 
@@ -170,26 +170,26 @@ $$
 
 **例子2：**利用天文望远镜观测天体。100年前观测到的天体数量和如今能观测到的天体数量绝对是不一样的。只是以前设备落后，精度有限，观测不到那么多的天体。因此这属于**右截断数据**。
 
-## 函数 {#survival_2}
+### 函数 {#survival_1_3}
 
 1. 生存函数
 
    记$X$为代表生存时间的随机变量，则其密度函数$f(x)$为
    
    $$
-   f(x)=\lim_{\Delta x \rightarrow 0} \frac{P(x \leq X \leq x+\Delta x)}{\Delta x} (\#eq:eq1)
+   f(x)=\lim_{\Delta x \rightarrow 0} \frac{P(x \leq X \leq x+\Delta x)}{\Delta x} (\#eq:survival-eq3)
    $$
    
    记其累积分布函数为
    
    $$
-   F(x)=P(X \leq x) (\#eq:eq2)
+   F(x)=P(X \leq x) (\#eq:survival-eq4)
    $$
    
    定义**生存函数**为
    
    $$
-   S(x)=P(X \gt x)=1-F(x)=\int_x^\infty f(t)dt (\#eq:eq3)
+   S(x)=P(X \gt x)=1-F(x)=\int_x^\infty f(t)dt (\#eq:survival-eq5)
    $$
    
    > $T \gt t$具有“生存”的意味
@@ -197,16 +197,16 @@ $$
    则
    
    $$
-   f(x)=-\frac{dS(x)}{dx}
+   f(x)=-\frac{dS(x)}{dx} (\#eq:survival-eq6)
    $$
    
    当$X$是离散随机变量时，记$P(X=x_j)=p(x_j),j=1,2,\dots$。此时的生存函数为
    
    $$
-   S(x)=P(X \gt x)=\sum_{x_j \gt x}p(x_j)
+   S(x)=P(X \gt x)=\sum_{x_j \gt x}p(x_j) (\#eq:survival-eq7)
    $$
    
-2. 危险函数
+2. 风险函数
 
    $$
    \begin{aligned}
@@ -214,35 +214,35 @@ $$
    &= \lim_{\Delta x \rightarrow 0}\frac{F(x+\Delta x)-F(x)}{(1-F(x))\Delta x} \\
    &= \frac{f(x)}{S(x)} \\
    &= \frac{d}{dx}(-\ln S(x))
-   \end{aligned} (\#eq:eq4)
+   \end{aligned} (\#eq:survival-eq8)
    $$
    
    > 这种导函数与原函数在分子分母的情况可以考虑为对数函数求导
    
-   由定义可知，危险函数代表了目标事件的即时发生率。
+   由定义可知，风险函数代表了目标事件的即时发生率。
    
-   根据危险函数可得累积危险函数
+   根据风险函数可得累积风险函数
    
    $$
-   H(x)=\int_0^x b(u)du=-\ln S(x)  (\#eq:eq5)
+   H(x)=\int_0^x b(u)du=-\ln S(x)  (\#eq:survival-eq9)
    $$
    
    则
    
    $$
-   S(x)=\exp\{-H(x)\}=\exp\{-\int_0^x b(u)du\}
+   S(x)=\exp\{-H(x)\}=\exp\{-\int_0^x b(u)du\} (\#eq:survival-eq10)
    $$
    
    当$X$是离散随机变量时，则
    
    $$
-   b(x_j)=P(x_j \leq X \lt x_{j+1}|X \geq x_j)=\frac{p(x_j)}{S(x_{j-1})},\quad j=1,2,\dots
+   b(x_j)=P(x_j \leq X \lt x_{j+1}|X \geq x_j)=\frac{p(x_j)}{S(x_{j-1})},\quad j=1,2,\dots (\#eq:survival-eq11)
    $$
    
    注意$S(x)=P(X \gt x)$、$S(x_0)=1$、$p(x_j)=S(x_{j-1})-S(x_j)$，则
    
    $$
-   b(x_j)=1-\frac{S(x_j)}{S(x_{j-1})}
+   b(x_j)=1-\frac{S(x_j)}{S(x_{j-1})} (\#eq:survival-eq12)
    $$
    
    则
@@ -252,7 +252,7 @@ $$
    S(x)&=\prod_{x_j \leq x} \frac{S(x_j)}{S(x_{j-1})} \\
    &=\prod_{x_j \leq x}(1-(1-\frac{S(x_j)}{S(x_{j-1})})) \\
    &=\prod_{x_j \leq x}(1-b(x_j))
-   \end{aligned}
+   \end{aligned} (\#eq:survival-eq13)
    $$
    
 3. 平均剩余寿命
@@ -263,10 +263,210 @@ mrl(x)=E(X-x|X \gt x)&=\int_x^\infty(t-x)f(t|X \gt x)dt \\ &=\int_x^\infty\frac{
 &=\frac{\int_x^\infty(x-t)dS(t)}{S(x)} \\
 &=\frac{S(t)(x-t)|^\infty_x+\int_x^\infty S(t)dt}{S(x)} \\
 &=\frac{\int_x^\infty S(t)dt}{S(x)}
-\end{aligned}
+\end{aligned} (\#eq:survival-eq14)
 $$
 
 > 注意$dS(x)=-f(x)dx$
+
+### 似然函数 {#survival_1_4}
+
+对于完整的生存时间，其密度函数为$f(x)$。而对于删失数据和截断数据，则有另外的表达。
+
+$$
+\begin{aligned}
+Right-censored &: S(C_r) \\
+Left-censored &: 1-S(C_l) \\
+Interval-censored &: S(L)-S(R) \\
+Left-truncated &: f(x)/S(Y_L) \\
+Right-truncated &: f(x)/(1-S(Y_R)) \\
+Interval-truncated &: f(x)/(S(Y_L)-S(Y_R))
+\end{aligned} (\#eq:survival-eq15)
+$$
+
+> 注意$f/S$的形式是条件概率的含义
+
+以删失数据为例，似然函数可以表示为
+
+$$
+L \propto \prod_{i \in D}f(x_i)\prod_{i \in R}S(C_r)\prod_{i \in L}(1-S(C_l))\prod_{i \in I}[S(L_i)-S(R_i)] (\#eq:survival-eq16)
+$$
+
+其中$D$、$R$、$L$、$I$都是对应的数据类型集合。
+
+根据数据类型写出对应的元素即可。下面举个例子。
+
+假设$X_i \stackrel{i.i.d}{\sim} Exp(\lambda)$，观测数据为$(T_i,\delta_i)$，其中$\delta_i=I(T_i \leq C_i)$表示是否为右删失数据。则似然函数为
+
+$$
+L(\lambda)=\prod_{i=1}^n \{\lambda \exp(-\lambda T_i)\}^{\delta_i}\{\exp (-\lambda T_i)\}^{(1-\delta_i)} (\#eq:survival-eq17)
+$$
+
+可得极大似然估计为
+
+$$
+\hat \lambda=\frac{\sum_{i=1}^n \delta_i}{\sum_{i=1}^nX_i} (\#eq:survival-eq18)
+$$
+
+## 参数估计 {#survival_2}
+
+这里主要对右删失数据进行讨论，以此来对第[6.1.3](#survival_1_3)节中的函数进行估计。因此，数据结构为$(T,\delta)$，并假设各个对象的删失时间与其**time to event**无关。
+
+假如有$n$个观测样本，并且允许重复数据(ties)的出现，那么有$D$个不同的**time to event**$t_1 \lt t_2 \lt \cdots \lt t_D$。在$t_i$上有$d_i$个$\delta=1$的个体，并且此时还有$Y_i=\sum_{j=1}^nI(X_j \geq t_i)=|R_i|$个个体存在，则此时的风险函数可估计为$b_i(x)=d_i/Y_i$。
+
+> $R_i$表示$t_i$时刻的风险集合，即在时刻$t_i$时刻还存活的个体
+
+例子如下所示
+
+
+<table class="kable_wrapper">
+<tbody>
+  <tr>
+   <td> 
+
+Table: (\#tab:survival-t1)原始数据
+
+| subject | time | delta |
+|:-------:|:----:|:-----:|
+|    a    |  2   |   1   |
+|    b    |  5   |   0   |
+|    c    |  3   |   0   |
+|    d    |  4   |   1   |
+|    e    |  2   |   1   |
+|    f    |  3   |   1   |
+
+ </td>
+   <td> 
+
+Table: (\#tab:survival-t1)排序后的数据
+
+| subject | time | delta |
+|:-------:|:----:|:-----:|
+|    a    |  2   |   1   |
+|    e    |  2   |   1   |
+|    c    |  3   |   0   |
+|    f    |  3   |   1   |
+|    d    |  4   |   1   |
+|    b    |  5   |   0   |
+
+ </td>
+  </tr>
+</tbody>
+</table>
+
+- $t_1=2;\; d_1=2; \; R(t_1)=\{a,e,f,c,d,b\}; \; Y_1=6$
+
+- $t_2=3;\; d_2=1; \; R(t_2)=\{f,c,d,b\}; \; Y_2=4$
+
+- $t_3=4;\; d_3=1; \; R(t_3)=\{d,b\}; \; Y_3=2$
+
+### KM估计 {#survival_2_1}
+
+Kaplan和Meier提出了KM估计，也称Product-Limit estimator。
+
+根据式\@ref(eq:survival-eq13)，KM估计给出了生存函数的估计
+
+$$
+\hat S(t)=\begin{cases}
+1, & \textrm{if} \; t \lt t_1 \\
+\prod_{t_i \lt t}[1-\frac{d_i}{y_i}], & \textrm{if} \; t_1 \leq t
+\end{cases} (\#eq:survival-eq19)
+$$
+
+注意到，当最大的观测值是完整生存时间时，$\hat S(t)=0$；当最大的观测值是右删失时，$\hat S(t)$则为一个常数，此时就很难定义取值大于该点时对应的生存函数。
+
+对此，当$t \gt t_{max}$时，有如下三种备选方法：
+
+- $\hat S(t)=0$
+
+- $\hat S(t)=\hat S(t_{max})$
+
+- $\hat S(t)=\exp\{\frac{t\ln[\hat S(t_{max})]}{t_{max}}\}$
+
+> 第三种方法对应的生存函数是衰减的并趋于零
+
+$\hat S(t)$的方差估计为
+
+$$
+\hat{V}[\hat S(t)]=\{\hat S(t)\}^2 \sum_{t_i \leq t} \frac{d_i}{Y_i(Y_i-d_i)} (\#eq:survival-eq20)
+$$
+
+> 可以直接记
+
+考虑式\@ref(eq:survival-eq9)，有
+
+$$
+\hat H(t)=-\ln [\hat S(t)] (\#eq:survival-eq21)
+$$
+
+-----
+
+在计算$\hat V[\hat H(t)]$前介绍$\delta$方法：
+
+已知:$\hat \beta - \beta_0 \stackrel{d}{\rightarrow} N(0, V(\hat \beta))$，若$f(x)$是连续的且一阶导不为0，求$f(\hat \beta)-f(\beta_0)$的渐近分布。
+
+首先对$f(\hat \beta)$进行一阶泰勒展开
+
+$$
+\begin{aligned}
+f(\hat \beta) &\approx f(\beta_0)+f'(\beta_0)(\hat \beta-\beta_0) \\
+f(\hat \beta)-f(\beta_0) & \approx f'(\beta_0)(\hat \beta-\beta_0)
+\end{aligned}
+(\#eq:survival-eq22)
+$$
+
+则
+
+$$
+\begin{aligned}
+V(f(\hat \beta)-f(\beta_0))&\approx V(f'(\beta_0)(\hat \beta-\beta_0)) \\
+&\approx \{f'(\beta_0)\}^2V(\hat \beta)
+\end{aligned} (\#eq:survival-eq23)
+$$
+
+故
+
+$$
+f(\hat \beta)-f(\beta_0) \stackrel{d}{\rightarrow} N(0, \{f'(\beta_0)\}^2V(\hat \beta)) (\#eq:survival-eq24)
+$$
+
+-----
+
+则
+
+$$
+\hat V(\hat H(t))=\frac{1}{\{\hat S(t)\}^2}\hat{V}[\hat S(t)]= \sum_{t_i \leq t} \frac{d_i}{Y_i(Y_i-d_i)} (\#eq:survival-eq25)
+$$
+
+### NA估计 {#survival_2_2}
+
+NA估计由Nelson和Aalen提出，该方法首先给出了累积风险函数的估计
+
+$$
+\tilde H(t)=\begin{cases}
+0, & \textrm{if} \; t \lt t_1 \\
+\sum_{t_i \leq t} \frac{d_i}{Y_i}, &\textrm{if} \; t_1 \leq t 
+\end{cases} (\#eq:survival-eq26)
+$$
+
+> $\hat b(t_i)=d_i/Y_i$
+
+给出该估计量的方差
+
+$$
+\tilde V(\tilde H(t))=\sum_{t_i \leq t} \frac{d_i}{Y_i^2} (\#eq:survival-eq27)
+$$
+
+根据式\@ref(eq:survival-eq10)，有
+
+$$
+\tilde S(t)=\exp[- \tilde H(t)] (\#eq:survival-eq28)
+$$
+
+由$\delta$方法可知
+
+$$
+\tilde V(\tilde S(t))=\{-\exp[-\tilde H(t)]\}^2 \tilde V(\tilde H(t))=\{\tilde S(t)\}^2\sum_{t_i \leq t}\frac{d_i}{Y_i^2} (\#eq:survival-eq29)
+$$
 
 
 ## 论文复现 {#survival_3}

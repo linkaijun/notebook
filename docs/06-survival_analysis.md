@@ -468,8 +468,136 @@ $$
 \tilde V(\tilde S(t))=\{-\exp[-\tilde H(t)]\}^2 \tilde V(\tilde H(t))=\{\tilde S(t)\}^2\sum_{t_i \leq t}\frac{d_i}{Y_i^2} (\#eq:survival-eq29)
 $$
 
+## 置信区间与置信带 {#survival_3}
 
-## 论文复现 {#survival_3}
+在这一节，根据KM估计来构建置信区间和置信带。
+
+### 置信区间 {#survival_3_1}
+
+#### Linear CI {#survival_3_1_1}
+
+记
+
+$$
+\sigma^2_S(t)=\frac{\hat V[\hat S(t)]}{\hat S^2(t)} (\#eq:survival-eq30)
+$$
+
+则
+
+$$
+\hat V[\hat S(t)]=\hat S(t)^2\sigma^2_S(t) (\#eq:survival-eq31)
+$$
+
+则可得KM估计的渐近正态分布为
+
+$$
+\frac{\hat S(t)-S(t)}{\sqrt{\hat V[\hat S(t)]}} \sim N(0,1) (\#eq:survival-eq32)
+$$
+
+易得$S(t)$在$t_0$时刻的$1-\alpha$置信区间为
+
+$$
+\hat S(t_0) \mp Z_{1-\alpha/2}\sigma_S(t_0)\hat S(t_0) (\#eq:survival-eq33)
+$$
+
+> 该区间是对称区间
+
+#### Log-Transformed CI {#survival_3_1_2}
+
+考虑累积风险函数的对数形式$\ln [-\ln \hat S(t_0)]$，根据$\delta$方法，可得其渐近分布为
+
+$$
+\ln [-\ln \hat S(t)]-\ln [-\ln S(t)] \sim N(0,\frac{\sigma_S^2(t)}{\ln^2 \hat S(t)}) (\#eq:survival-eq34)
+$$
+
+故$t_0$时刻的置信区间为
+
+$$
+\ln [-\ln\hat S(t_0)] \mp Z_{1-\alpha/2}(-\sigma_S(t_0)/\ln \hat S(t_0)) (\#eq:survival-eq35)
+$$
+
+> $\ln \hat S(t_0) \lt 0$
+
+由于我们关注$S(t_0)$的置信区间，则需要对该置信区间进行转化，转化后的置信区间为
+
+$$
+\begin{aligned}
+\ln [-\ln \hat S(t_0)]-Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) &\leq \ln [-\ln S(t_0)] \leq \ln [-\ln \hat S(t_0)]+Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) \\
+-\ln \hat S(t_0) \cdot \exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} &\leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \exp\{-\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} \\
+-\ln \hat S(t_0) \cdot \theta &\leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \theta^{-1} \\
+\ln \hat S(t_0)^\theta &\geq \ln S(t_0) \geq \ln \hat S(t_0)^{\theta^{-1}} \\
+\hat S(t_0)^{\theta^{-1}} &\leq S(t_0) \leq \hat S(t_0)^\theta
+\end{aligned} (\#eq:survival-eq36)
+$$
+
+其中$\theta=\exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\}$。
+
+#### Arcsine-Square Root Transformed CI {#survival_3_1_3}
+
+考虑$\arcsin\{\hat S^{\frac{1}{2}}(x)\}$，则其渐近分布为
+
+$$
+\arcsin\{\hat S^{\frac{1}{2}}(t)\}-\arcsin\{S^{\frac{1}{2}}(t)\} \sim N(0,\frac{\sigma^2_S(t)\hat S(t)}{4(1-\hat S(t))}) (\#eq:survival-eq37)
+$$
+
+同样也可将置信区间进行转化
+
+$$
+\begin{aligned}
+L &\leq \arcsin\{S^{\frac{1}{2}}(t_0)\} \leq R \\
+\sin \{\max [0,L]\} &\leq S^{\frac{1}{2}}(t_0) \leq \sin \{\min [\frac{\pi}{2},R]\} \\
+\sin^2 \{\max [0,L]\} &\leq S(t_0) \leq \sin^2 \{\min [\frac{\pi}{2},R]\}
+\end{aligned} (\#eq:survival-eq38)
+$$
+
+> 注意$\arcsin x$的定义域与值域
+
+其中
+
+$$
+L=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}-\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)} \\
+R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)} (\#eq:survival-eq39)
+$$
+
+### 置信带 {#survival_3_2}
+
+置信区间给出了$t$在某点处的一个$1-\alpha$区间。而置信带则给出了$t$在某个区间内的一个$1-\alpha$区间，即$1-\alpha=P(L(t)\leq S(t) \leq U(t)), \; \forall t \in (t_L, t_U)$，则称区间$[L(t),U(t)]$为置信带。
+
+由于置信带需要查表才能得到，故不多做介绍，仅了解即可。
+
+### 平均生存时间 {#survival_3_3}
+
+平均生存时间定义为
+
+$$
+\mu = E(x)=\int_0^\infty tf(t)dt=\int_0^\infty S(t)dt (\#eq:survival-eq40)
+$$
+
+> 利用分部积分即可转化为$S(t)$
+
+故区间$[0, \tau]$上的平均生存时间估计为
+
+$$
+\hat \mu_\tau=\int_0^\tau \hat S(t)dt (\#eq:survival-eq41)
+$$
+
+其中$\tau$是$t_{max}$或最大的删失值。
+
+而$\hat \mu_\tau$的方差为
+
+$$
+\hat V(\hat \mu_\tau)=\sum_{i=1}^D \{[\int_{t_i}^\tau \hat S(t)dt]^2\frac{d_i}{Y_i(Y_i-d_i)}\} (\#eq:survival-eq42)
+$$
+
+相应的置信区间为
+
+$$
+[\hat \mu_\tau-Z_{1-\alpha/2}\sqrt{\hat V(\hat \mu_\tau)},\hat \mu_\tau+Z_{1-\alpha/2}\sqrt{\hat V(\hat \mu_\tau)}] (\#eq:survival-eq43)
+$$
+
+## 四 {#survival_4}
+
+## 论文复现 {#survival_5}
 
 本节内容是对Simon等人[@survival_1]论文的复现。
 
@@ -479,7 +607,7 @@ $$
 
 **事实上，这篇论文有些地方有小错误，因此下面给出自己的推导过程。**
 
-### 推导 {#survival_3_1}
+### 推导 {#survival_5_1}
 
 **1. 无结点情况**
 
@@ -697,7 +825,7 @@ $$
 l_{saturated}=-\sum_{i=1}^m d_i \log(d_i)
 $$
 
-### 自定义算法 {#survival_3_2}
+### 自定义算法 {#survival_5_2}
 
 <span style='color:blue'>*由于当前技术难以缩减计算时间，故自定义算法暂且放弃“正则化路径”功能*</span>
 
@@ -939,7 +1067,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
 }
 ```
 
-### 数据模拟 {#survival_3_3}
+### 数据模拟 {#survival_5_3}
 
 模拟所用数据集来自`glmnet`包的`data(CoxExample)`数据集。
 

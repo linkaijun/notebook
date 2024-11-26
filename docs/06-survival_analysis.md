@@ -887,7 +887,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
     outcome$D_null = D_null
     
     for (i in 1:max.iter) {
-      if(trace == TRUE) cat(paste0("第", i, "次迭代"))
+      if(trace == TRUE) cat(paste0("-----第", i, "次迭代-----\n"))
       
       eta = X %*% beta
       eta = scale(eta, TRUE, FALSE) # 源码有这个，为了保持一致我也加上去了
@@ -922,7 +922,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
       })
       grad = weight * (status - grad)
       if(any(hessian==0)){
-        if(trace == TRUE) cat('w_k中有零')
+        if(trace == TRUE) cat('=====w_k中有零=====\n')
         hessian[which(hessian == 0)] = 0.0000001
       }
       z = eta - grad / hessian
@@ -940,15 +940,22 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
       D_current = -2 * log_likelihood_beta(beta)
       outcome$D_current = D_current
       
-      if(D_current - D_null >= 0.99 * D_null){
-        if(trace == TRUE) cat('满足精度要求')
+      # 和原文的收敛条件不同，感觉这样更符合逻辑，详见“自定义算法检验”
+      if(D_null - D_current >= 0.99 * D_null){
+        if(trace == TRUE){
+          cat(paste0(beta, '\n'))
+          cat('<<<<<满足精度要求>>>>>\n')
+        }
         break
       }
       if(all(round(last_beta, 7) == round(beta, 7))){
-        if(trace == TRUE) cat('系数不再更新')
+        if(trace == TRUE){
+          cat(paste0(beta, '\n'))
+          cat('<<<<<系数不再更新>>>>>\n')
+        }
         break
       }
-      if(trace == TRUE) cat(beta)
+      if(trace == TRUE) cat(paste0(beta,'\n'))
     }
     outcome$beta = beta
     
@@ -965,7 +972,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
           weight = weight/sum(weight)   #若权重和不为1，则标准化
         }
       }else{
-        cat('权重向量长度不匹配')
+        cat('权重向量长度不匹配\n')
       }
     }
     outcome$weight = weight
@@ -998,7 +1005,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
     outcome$D_null = D_null
     
     for (i in 1:max.iter) {
-      if(trace == TRUE) cat(paste0("第", i, "次迭代"))
+      if(trace == TRUE) cat(paste0("-----第", i, "次迭代-----\n"))
       
       eta = X %*% beta
       eta = scale(eta, TRUE, FALSE)   #源码有这个，为了保持一致我也加上去了
@@ -1034,7 +1041,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
       })
       
       if(any(hessian==0)){
-        if(trace == TRUE) cat('w_k中有零')
+        if(trace == TRUE) cat('=====w_k中有零=====\n')
         hessian[which(hessian == 0)] = 0.0000001
       }
       z = eta - grad / hessian
@@ -1050,15 +1057,21 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
       D_current = 2 * (l_saturated - log_likelihood_beta(beta))
       outcome$D_current = D_current
       
-      if(D_current - D_null >= 0.99 * D_null){
-        cat('满足精度要求')
+      if(D_null - D_current >= 0.99 * D_null){
+        if(trace == TRUE){
+          cat(paste0(beta, '\n'))
+          cat('<<<<<满足精度要求>>>>>\n')
+        }
         break
       }
       if(all(round(last_beta, 7) == round(beta, 7))){
-        if(trace == TRUE) cat('系数不再更新')
+        if(trace == TRUE){
+          cat(paste0(beta, '\n'))
+          cat('<<<<<系数不再更新>>>>>\n')
+        }
         break
       }
-      if(trace == TRUE) cat(beta)
+      if(trace == TRUE) cat(paste0(beta,'\n'))
     }
     outcome$beta = beta
     
@@ -1067,7 +1080,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
 }
 ```
 
-### 数据模拟 {#survival_5_3}
+### 自定义算法检验 {#survival_5_3}
 
 模拟所用数据集来自`glmnet`包的`data(CoxExample)`数据集。
 
@@ -1075,15 +1088,13 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
 
 - 自定义算法的梯度向量、黑塞矩阵对角线元素与源码计算结果基本一致。其中黑塞矩阵对角线元素可能会出现0，因此为其加上非常小的数(0.0000001)。
 
-- 对于收敛条件，对于无结点情况，自定义算法与原函数的结果完全一致，但在有结点情况则存在差异。但结果表明，无论是自定义算法还是原函数，不一定都按该收敛条件停止迭代。因此，为自定义算法增加新的收敛条件：当本次迭代结果与上次迭代结果相比变动得微乎其微时停止迭代。而在有结点的情况，原函数的$D(0)$与自定义算法的$D(0)$却不是一个量级。
+- 对于收敛条件，对于无结点情况，自定义算法与原函数的结果完全一致，但在有结点情况则存在差异。同时有理由怀疑除了原文给出的收敛条件外，还有其他的收敛条件，并且原文的收敛条件可能有误。
 
 - 对自定义算法随机选取初始值，发现均能收敛到相同结果，表明自定义算法具有一定的稳健性。但与原函数的结果还存在差异。
 
 <span style='color:red'>综上，自定义算法是对论文内容的复刻，因此在未提及的细节处必定与原函数存在差异，从而导致结果的差异。但此次复刻不失为一次有益的探索。</span>
 
----------------
-
-**首先检验自定义算法中梯度向量及黑塞矩阵的正确性。**
+### 梯度向量与黑塞矩阵 {#survival_5_3_1}
 
 
 ``` r
@@ -1307,11 +1318,13 @@ diag_hessian  #源码的黑塞矩阵对角线元素
 
 <span style='color:red'>**鉴于此，为$w(\tilde \eta)_k=0$的元素加上非常小的数(0.0000001)以确保代码能够正确运行。**</span>
 
---------------
-
-**其次检验收敛条件。**
+#### 收敛条件 {#survival_5_3_2}
 
 原文中使用$D(0)$与$D(\beta_{current})$作为收敛条件。$D(\cdot)$的内核就是对数似然函数，不妨先确定自定义算法中关于对数似然函数的定义是否正确。
+
+------------
+
+先考虑无结点的情况。此时$l_{saturated}=0$
 
 用自定义算法中的`log_likelihood_beta()`函数计算$D(0)$
 
@@ -1378,11 +1391,58 @@ source_result$nulldev - source_result$dev.ratio * source_result$nulldev
 ## [1] 132.0468
 ```
 
-因此无论是$D(0)$还是$D(\beta_{current})$，自定义算法都是与原函数一致的。
+因此无论是$D(0)$还是$D(\beta_{current})$，均表明自定义算法中的`log_likelihood_beta()`是正确的。
 
-需要注意的是，在实际迭代中，自定义算法并没有通过收敛条件停止迭代，而是达到最大迭代次数后才停下来。同样，原函数的结果表明$D(0)$与$D(\beta_{current})$也没有满足收敛条件。由此可知，**原函数的结果并不一定都是根据收敛条件来停止迭代。**在自定义算法的迭代中，发现在一定迭代次数后，$\hat \beta$的数值表面上没有变化，因而设置另外的收敛条件，**当前后两次$\hat \beta$的变化微乎其微时，停止迭代。**
+注意，$D(\beta_{current})=132$，$D(0)=145$，根本没法满足原文的收敛条件。进一步地，对数据集进行随机抽样，看看原函数是否有按原文的收敛条件停止迭代。
 
-> “表面上没有变化”指的是在R输出的有限长度数值中长得都一样，但用`all(beta==last_beta)`判断时却为`FALSE`
+
+``` r
+set.seed(111)
+
+result <- rep(NA, 100)
+
+for (i in 1:100) {
+  obs <- sample(1:1000,500)
+  index <- sample(1:30,15)
+  
+  X <- CoxExample[[1]][obs,index]
+  y <- CoxExample[[2]][obs,]
+  
+  source_result <- glmnet(X,y,family = 'cox', lambda=0.02, alpha=0.5)
+  
+  D_beta = source_result$nulldev - source_result$dev.ratio * source_result$nulldev
+  D_null = source_result$nulldev
+  
+  convergence = D_beta-D_null >= 0.99*D_null
+  result[i] = convergence
+}
+sum(result)
+```
+
+```
+## [1] 0
+```
+
+可见，在100次的随机抽样中，原函数没有一次根据原文所给的收敛条件停止迭代。下面，再来细看原文的收敛条件
+
+$$
+\begin{aligned}
+D(\beta_{current})-D_{null} &\geq 0.99D_{null} \\
+2(l_{saturated}-l(\beta))-2(l_{saturated}-l_{null}) &\geq 0.99 \ast 2(l_{saturated}-l_{null}) \\
+l_{null}-l(\beta) &\geq 0.99(l_{saturated}-l_{null}) \\
+\frac{l_{null}-l(\beta)}{l_{saturated}-l_{null}} &\geq 0.99
+\end{aligned}
+$$
+
+注意到，$l_{saturated}$是对数似然函数在理论上的最大值，故$l_{saturated}-l_{null} \gt 0$。一般来说，如果引入$X\beta$有助于解释的话，那么$l(\beta) \gt l_{null}$，则原文的收敛条件必不可能满足。若分子改为$l(\beta)-l_{null}$则较为合理，表示引入$X\beta$后多解释的那一部分信息，那么收敛条件就变为考察这部分信息是否占$l_{saturated}-l_{null}$的绝大部分。
+
+> 自定义算法的收敛条件已按$D_{null}-D(\beta_{current}) \geq 0.99D_{null}$设置
+
+既然原文给出的收敛条件有问题，并且随机抽样的结果也表明不符合给出的收敛条件，但原函数却收敛了，说明原函数还设置了其他收敛条件。鉴于此，**自定义算法会在前后两次$\hat \beta$的变化微乎其微时停止迭代**。
+
+> “微乎其微”是指保留7位小数后相等
+
+-----------
 
 而对于有结点的情况，则有点差异。
 
@@ -1436,7 +1496,6 @@ l_null_simple
 ## [1] 0.5402271
 ```
 
-
 原文提到的关于$l_{null}$的快速算法和自定义算法中的`log_likelihood_beta(0)`函数结果一致。接着计算$D_{null}$
 
 
@@ -1489,9 +1548,13 @@ source_result$beta
 ## V5 -0.3313418
 ```
 
-自定义算法得到的$D_{null}$与原函数输出的结果差了50倍。既然原文提到的关于$l_{null}$的快速算法和自定义算法中的`log_likelihood_beta(0)`函数结果一致，那么说明原函数暗中调整了倍数。因此，对于收敛条件的判定，如果$D_{null}$与$D(\beta_{current})$都做了倍数调整的话，那么结果也是不变的，所以无需过分在意这里的倍数差异。另外，原函数没有输出第三个变量的$\hat \beta$，所以无法进一步判断自定义算法的$D(\beta_{current})$与原函数的$D(\beta_{current})$是否一致，至少能看出来自定义算法和原函数还是存在差异（毕竟原函数没有输出第三个变量的系数，但自定义函数可以），归根结底还是论文提供的细节太少了。
+> 自定义算法输出的$\beta$向量为
+> 
+> 0.18386651 -0.43987813 -0.03533338  0.13130503 -0.36330350
 
------------
+自定义算法得到的$D_{null}$与原函数输出的结果差了50倍。既然原文提到的关于$l_{null}$的快速算法和自定义算法中的`log_likelihood_beta(0)`函数结果一致，那么说明原函数暗中调整了倍数。因此，对于收敛条件的判定，如果$D_{null}$与$D(\beta_{current})$都做了倍数调整的话，那么结果也是不变的，所以无需过分在意这里的倍数差异。另外，原函数没有输出第三个变量的$\hat \beta$，至少能看出来自定义算法和原函数还是存在差异（毕竟原函数没有输出第三个变量的系数，但自定义函数可以），归根结底还是论文提供的细节太少了。
+
+#### 随机化初始值 {#survival_5_3_3}
 
 上述自定义算法的结果都是基于$\beta=0$的初始值开始迭代，下面通过**随机化初始值**看看自定义算法的稳健性。
 

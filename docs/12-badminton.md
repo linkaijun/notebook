@@ -22,6 +22,42 @@
 
 ...
 
+## 发球 {#ball_1}
+
+### 正手发球 {#ball_1_1}
+
+https://www.bilibili.com/video/BV1DE4nevEcx/?spm_id_from=333.999.0.0&vd_source=1ff1a8ac5564814fec4d27cae552f90e
+
+https://www.bilibili.com/video/BV1Hv4y1u7LX?spm_id_from=333.788.recommend_more_video.-1&vd_source=1ff1a8ac5564814fec4d27cae552f90e
+
+技术要点：
+
+1. 左手拿球，放在身体右前侧，这样转身时才能打到球。
+
+2. 大臂小臂处于一条直线，**手腕处于展腕的状态**（向外展）。让球自由下落时开始转身，伴随着手臂移动，**确保在转体后才击球**。
+
+3. 击球后向左肩上方收拍。
+
+### 反手发球 {#ball_1_2}
+
+https://www.bilibili.com/video/BV1B142197XG/?spm_id_from=333.999.0.0&vd_source=1ff1a8ac5564814fec4d27cae552f90e
+
+技术要点：
+
+1. 反手握拍，大拇指顶着考上的位置，方便控制力度。
+
+2. 左手食指、大拇指捏住球毛，球头朝下，但也可以有一定的倾斜角度，看个人习惯。
+
+3. 拍子呈倾斜角度，大概45°左右。
+
+4. 左脚在后，右脚在前，为挥拍留出空间。
+
+5. 击球时依靠小臂推动，体会“推送”这个词的感觉，切勿手腕发力，避免发球太高。
+
+
+
+
+
 
 
 

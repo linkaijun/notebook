@@ -342,7 +342,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 置信区间</a></li>
 <li class="chapter" data-level="6.3.2" data-path="survival_3.html"><a href="survival_3.html#survival_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 置信带</a></li>
-<li class="chapter" data-level="6.3.3" data-path="survival_3.html"><a href="survival_3.html#survival_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 平均生存时间</a></li>
+<li class="chapter" data-level="6.3.3" data-path="survival_3.html"><a href="survival_3.html#survival_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 平均生存时间的置信区间</a></li>
+<li class="chapter" data-level="6.3.4" data-path="survival_3.html"><a href="survival_3.html#survival_3_4"><i class="fa fa-check"></i><b>6.3.4</b> 分位数的置信区间</a></li>
+<li class="chapter" data-level="6.3.5" data-path="survival_3.html"><a href="survival_3.html#survival_3_5"><i class="fa fa-check"></i><b>6.3.5</b> 左截断数据的置信区间</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>6.4</b> 四</a></li>
 <li class="chapter" data-level="6.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>6.5</b> 论文复现</a>
@@ -421,7 +423,14 @@ div.csl-indent {
 <li class="chapter" data-level="11.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>11.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
 <li class="part"><span><b>VI 生活</b></span></li>
-<li class="chapter" data-level="12" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>12</b> 羽毛球修炼手册</a></li>
+<li class="chapter" data-level="12" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>12</b> 羽毛球修炼手册</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>12.1</b> 发球</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>12.1.1</b> 正手发球</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>12.1.2</b> 反手发球</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -482,13 +491,13 @@ div.csl-indent {
 </blockquote>
 <p>由于我们关注<span class="math inline">\(S(t_0)\)</span>的置信区间，则需要对该置信区间进行转化，转化后的置信区间为</p>
 <p><span class="math display" id="eq:survival-eq36">\[
-\begin{aligned}
-\ln [-\ln \hat S(t_0)]-Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) &amp;\leq \ln [-\ln S(t_0)] \leq \ln [-\ln \hat S(t_0)]+Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) \\
--\ln \hat S(t_0) \cdot \exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} &amp;\leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \exp\{-\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} \\
--\ln \hat S(t_0) \cdot \theta &amp;\leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \theta^{-1} \\
-\ln \hat S(t_0)^\theta &amp;\geq \ln S(t_0) \geq \ln \hat S(t_0)^{\theta^{-1}} \\
-\hat S(t_0)^{\theta^{-1}} &amp;\leq S(t_0) \leq \hat S(t_0)^\theta
-\end{aligned} \tag{6.36}
+\begin{array}{c}
+\ln [-\ln \hat S(t_0)]-Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) \leq \ln [-\ln S(t_0)] \leq \ln [-\ln \hat S(t_0)]+Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) \\
+-\ln \hat S(t_0) \cdot \exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} \leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \exp\{-\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} \\
+-\ln \hat S(t_0) \cdot \theta \leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \theta^{-1} \\
+\ln \hat S(t_0)^\theta \geq \ln S(t_0) \geq \ln \hat S(t_0)^{\theta^{-1}} \\
+\hat S(t_0)^{\theta^{-1}} \leq S(t_0) \leq \hat S(t_0)^\theta
+\end{array} \tag{6.36}
 \]</span></p>
 <p>其中<span class="math inline">\(\theta=\exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\}\)</span>。</p>
 </div>
@@ -500,19 +509,21 @@ div.csl-indent {
 \]</span></p>
 <p>同样也可将置信区间进行转化</p>
 <p><span class="math display" id="eq:survival-eq38">\[
-\begin{aligned}
-L &amp;\leq \arcsin\{S^{\frac{1}{2}}(t_0)\} \leq R \\
-\sin \{\max [0,L]\} &amp;\leq S^{\frac{1}{2}}(t_0) \leq \sin \{\min [\frac{\pi}{2},R]\} \\
-\sin^2 \{\max [0,L]\} &amp;\leq S(t_0) \leq \sin^2 \{\min [\frac{\pi}{2},R]\}
-\end{aligned} \tag{6.38}
+\begin{array}{c}
+L \leq \arcsin\{S^{\frac{1}{2}}(t_0)\} \leq R \\
+\sin \{\max [0,L]\} \leq S^{\frac{1}{2}}(t_0) \leq \sin \{\min [\frac{\pi}{2},R]\} \\
+\sin^2 \{\max [0,L]\} \leq S(t_0) \leq \sin^2 \{\min [\frac{\pi}{2},R]\}
+\end{array} \tag{6.38}
 \]</span></p>
 <blockquote>
 <p>注意<span class="math inline">\(\arcsin x\)</span>的定义域与值域</p>
 </blockquote>
 <p>其中</p>
 <p><span class="math display" id="eq:survival-eq39">\[
+\begin{array}{c}
 L=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}-\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)} \\
-R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)} \tag{6.39}
+R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)}
+\end{array} \tag{6.39}
 \]</span></p>
 </div>
 </div>
@@ -522,7 +533,7 @@ R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat 
 <p>由于置信带需要查表才能得到，故不多做介绍，仅了解即可。</p>
 </div>
 <div id="survival_3_3" class="section level3 hasAnchor" number="6.3.3">
-<h3><span class="header-section-number">6.3.3</span> 平均生存时间<a href="survival_3.html#survival_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<h3><span class="header-section-number">6.3.3</span> 平均生存时间的置信区间<a href="survival_3.html#survival_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>平均生存时间定义为</p>
 <p><span class="math display" id="eq:survival-eq40">\[
 \mu = E(x)=\int_0^\infty tf(t)dt=\int_0^\infty S(t)dt \tag{6.40}
@@ -543,6 +554,22 @@ R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat 
 <p><span class="math display" id="eq:survival-eq43">\[
 [\hat \mu_\tau-Z_{1-\alpha/2}\sqrt{\hat V(\hat \mu_\tau)},\hat \mu_\tau+Z_{1-\alpha/2}\sqrt{\hat V(\hat \mu_\tau)}] \tag{6.43}
 \]</span></p>
+</div>
+<div id="survival_3_4" class="section level3 hasAnchor" number="6.3.4">
+<h3><span class="header-section-number">6.3.4</span> 分位数的置信区间<a href="survival_3.html#survival_3_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>生存函数的分位数定义为<span class="math inline">\(x_p = \inf\{t:S(t) \leq 1-p \}\)</span>，则<span class="math inline">\(x_p\)</span>的km估计为<span class="math inline">\(\hat x_p=\inf\{t:\hat S(t) \leq 1-p \}\)</span>。</p>
+<p>进一步的，Brookmeyer和Crowley给出了分位数置信区间的三种形式。</p>
+<p><span class="math display">\[
+\begin{array}{c}
+-Z_{1-\alpha/2} \leq \frac{\hat S(t)-(1-p)}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2} \\
+-Z_{1-\alpha/2} \leq \frac{\{\ln [-\ln (\hat S(t))]-\ln [-\ln(1-p)]\}\hat S(t)\ln (\hat S(t))}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2} \\
+-Z_{1-\alpha/2} \leq \frac{2[arcsin(\hat S^{\frac{1}{2}}(t))-arcsin(1-p)^{\frac{1}{2}}][\hat S(t)(1-\hat S(t))]^{1/2}}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2}
+\end{array}
+\]</span></p>
+</div>
+<div id="survival_3_5" class="section level3 hasAnchor" number="6.3.5">
+<h3><span class="header-section-number">6.3.5</span> 左截断数据的置信区间<a href="survival_3.html#survival_3_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>有疑问</p>
 </div>
 </div>
             </section>

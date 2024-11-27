@@ -368,7 +368,7 @@ Kaplan和Meier提出了KM估计，也称Product-Limit estimator。
 $$
 \hat S(t)=\begin{cases}
 1, & \textrm{if} \; t \lt t_1 \\
-\prod_{t_i \lt t}[1-\frac{d_i}{y_i}], & \textrm{if} \; t_1 \leq t
+\prod_{t_i \leq t}[1-\frac{d_i}{y_i}], & \textrm{if} \; t_1 \leq t
 \end{cases} (\#eq:survival-eq19)
 $$
 
@@ -521,13 +521,13 @@ $$
 由于我们关注$S(t_0)$的置信区间，则需要对该置信区间进行转化，转化后的置信区间为
 
 $$
-\begin{aligned}
-\ln [-\ln \hat S(t_0)]-Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) &\leq \ln [-\ln S(t_0)] \leq \ln [-\ln \hat S(t_0)]+Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) \\
--\ln \hat S(t_0) \cdot \exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} &\leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \exp\{-\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} \\
--\ln \hat S(t_0) \cdot \theta &\leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \theta^{-1} \\
-\ln \hat S(t_0)^\theta &\geq \ln S(t_0) \geq \ln \hat S(t_0)^{\theta^{-1}} \\
-\hat S(t_0)^{\theta^{-1}} &\leq S(t_0) \leq \hat S(t_0)^\theta
-\end{aligned} (\#eq:survival-eq36)
+\begin{array}{c}
+\ln [-\ln \hat S(t_0)]-Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) \leq \ln [-\ln S(t_0)] \leq \ln [-\ln \hat S(t_0)]+Z(-\frac{\sigma_S(t_0)}{\ln \hat S(t_0)}) \\
+-\ln \hat S(t_0) \cdot \exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} \leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \exp\{-\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\} \\
+-\ln \hat S(t_0) \cdot \theta \leq -\ln S(t_0) \leq -\ln \hat S(t_0) \cdot \theta^{-1} \\
+\ln \hat S(t_0)^\theta \geq \ln S(t_0) \geq \ln \hat S(t_0)^{\theta^{-1}} \\
+\hat S(t_0)^{\theta^{-1}} \leq S(t_0) \leq \hat S(t_0)^\theta
+\end{array} (\#eq:survival-eq36)
 $$
 
 其中$\theta=\exp\{\frac{Z\sigma_S(t_0)}{\ln \hat S(t_0)}\}$。
@@ -543,11 +543,11 @@ $$
 同样也可将置信区间进行转化
 
 $$
-\begin{aligned}
-L &\leq \arcsin\{S^{\frac{1}{2}}(t_0)\} \leq R \\
-\sin \{\max [0,L]\} &\leq S^{\frac{1}{2}}(t_0) \leq \sin \{\min [\frac{\pi}{2},R]\} \\
-\sin^2 \{\max [0,L]\} &\leq S(t_0) \leq \sin^2 \{\min [\frac{\pi}{2},R]\}
-\end{aligned} (\#eq:survival-eq38)
+\begin{array}{c}
+L \leq \arcsin\{S^{\frac{1}{2}}(t_0)\} \leq R \\
+\sin \{\max [0,L]\} \leq S^{\frac{1}{2}}(t_0) \leq \sin \{\min [\frac{\pi}{2},R]\} \\
+\sin^2 \{\max [0,L]\} \leq S(t_0) \leq \sin^2 \{\min [\frac{\pi}{2},R]\}
+\end{array} (\#eq:survival-eq38)
 $$
 
 > 注意$\arcsin x$的定义域与值域
@@ -555,8 +555,10 @@ $$
 其中
 
 $$
+\begin{array}{c}
 L=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}-\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)} \\
-R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)} (\#eq:survival-eq39)
+R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat S(t_0)}{1-\hat S(t_0)}
+\end{array} (\#eq:survival-eq39)
 $$
 
 ### 置信带 {#survival_3_2}
@@ -565,7 +567,7 @@ $$
 
 由于置信带需要查表才能得到，故不多做介绍，仅了解即可。
 
-### 平均生存时间 {#survival_3_3}
+### 平均生存时间的置信区间 {#survival_3_3}
 
 平均生存时间定义为
 
@@ -595,7 +597,27 @@ $$
 [\hat \mu_\tau-Z_{1-\alpha/2}\sqrt{\hat V(\hat \mu_\tau)},\hat \mu_\tau+Z_{1-\alpha/2}\sqrt{\hat V(\hat \mu_\tau)}] (\#eq:survival-eq43)
 $$
 
+### 分位数的置信区间 {#survival_3_4}
+
+生存函数的分位数定义为$x_p = \inf\{t:S(t) \leq 1-p \}$，则$x_p$的km估计为$\hat x_p=\inf\{t:\hat S(t) \leq 1-p \}$。
+
+进一步的，Brookmeyer和Crowley给出了分位数置信区间的三种形式。
+
+$$
+\begin{array}{c}
+-Z_{1-\alpha/2} \leq \frac{\hat S(t)-(1-p)}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2} \\
+-Z_{1-\alpha/2} \leq \frac{\{\ln [-\ln (\hat S(t))]-\ln [-\ln(1-p)]\}\hat S(t)\ln (\hat S(t))}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2} \\
+-Z_{1-\alpha/2} \leq \frac{2[arcsin(\hat S^{\frac{1}{2}}(t))-arcsin(1-p)^{\frac{1}{2}}][\hat S(t)(1-\hat S(t))]^{1/2}}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2}
+\end{array}
+$$
+
+### 左截断数据的置信区间 {#survival_3_5}
+
+有疑问
+
 ## 四 {#survival_4}
+
+
 
 ## 论文复现 {#survival_5}
 

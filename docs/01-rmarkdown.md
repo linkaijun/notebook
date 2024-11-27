@@ -131,7 +131,7 @@ n个'\#'代表第n级标题，注意'\#'后面跟空格。
 ```
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p5.jpg" alt="不同等级的标题" height="270px" />
+<img src="./pic/rmarkdown/p5.jpg" alt="不同等级的标题" width="106" height="270px" />
 <p class="caption">(\#fig:rmd-p5)不同等级的标题</p>
 </div>
 
@@ -146,7 +146,7 @@ n个'\#'代表第n级标题，注意'\#'后面跟空格。
 ```
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p6.jpg" alt="标题标识符"  />
+<img src="./pic/rmarkdown/p6.jpg" alt="标题标识符" width="68" />
 <p class="caption">(\#fig:rmd-p6)标题标识符</p>
 </div>
 
@@ -169,7 +169,7 @@ n个'\#'代表第n级标题，注意'\#'后面跟空格。
 ```
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p7.jpg" alt="字体样式"  />
+<img src="./pic/rmarkdown/p7.jpg" alt="字体样式" width="142" />
 <p class="caption">(\#fig:rmd-p7)字体样式</p>
 </div>
 
@@ -1106,12 +1106,12 @@ date: "`r format(Sys.time(),'%Y-%m-%d')`",
 3.  在文献资源平台上找到需要的参考文献，并导出`Bibtex`引用格式。这里以“万方”为例。
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p11.jpg" alt="点击引用"  />
+<img src="./pic/rmarkdown/p11.jpg" alt="点击引用" width="412" />
 <p class="caption">(\#fig:rmd-p11)点击引用</p>
 </div>
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p12.jpg" alt="点击Bibtex"  />
+<img src="./pic/rmarkdown/p12.jpg" alt="点击Bibtex" width="578" />
 <p class="caption">(\#fig:rmd-p12)点击Bibtex</p>
 </div>
 
@@ -1164,7 +1164,7 @@ notice: '@张红梅'
 ```
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p13.jpg" alt="参考文献示例"  />
+<img src="./pic/rmarkdown/p13.jpg" alt="参考文献示例" width="330" />
 <p class="caption">(\#fig:rmd-p13)参考文献示例</p>
 </div>
 
@@ -1259,8 +1259,8 @@ DiagrammeR::grViz("digraph {
 ```
 
 ```{=html}
-<div id="htmlwidget-08e0619af3c5944e1869" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-08e0619af3c5944e1869">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f6adb1fc00a847af1760" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f6adb1fc00a847af1760">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ``` r
@@ -1273,8 +1273,8 @@ DiagrammeR::mermaid('
 ```
 
 ```{=html}
-<div id="htmlwidget-71875d994205ea9e6543" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-71875d994205ea9e6543">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-09a0f25405faa2833d89" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-09a0f25405faa2833d89">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 ```
 
 相关语法介绍可详见`graphviz`[官网](https://www.graphviz.org/doc/info/lang.html)和`mermaid`[官网](https://mermaid.nodejs.cn/syntax/flowchart.html)（有中英文官网，这个是中文的）。
@@ -1516,7 +1516,7 @@ output:
 ```
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p15.jpg" alt="选项卡"  />
+<img src="./pic/rmarkdown/p15.jpg" alt="选项卡" width="198" />
 <p class="caption">(\#fig:rmd-p15)选项卡</p>
 </div>
 
@@ -1635,7 +1635,7 @@ output:
 或者，你也可以自定义CSS样式（如何引入css样式[详见1.5.3节](#rmd_5_3)），为代码块或输出分配新的类名。
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p16.jpg" alt="自定义代码块及其输出样式" height="600px" />
+<img src="./pic/rmarkdown/p16.jpg" alt="自定义代码块及其输出样式" width="298" height="600px" />
 <p class="caption">(\#fig:rmd-p16)自定义代码块及其输出样式</p>
 </div>
 
@@ -1773,7 +1773,7 @@ xfun::pkg_load2(c("htmltools", "mime"))
 对此，你需要下载`rticles`包。下载完成后，在新建rmarkdown文件时选中`From Template`，从中找到`CTeX Documents`模板即可。
 
 <div class="figure" style="text-align: center">
-<img src="./pic/rmarkdown/p17.jpg" alt="中文文档模板" height="600px" />
+<img src="./pic/rmarkdown/p17.jpg" alt="中文文档模板" width="373" height="600px" />
 <p class="caption">(\#fig:rmd-p17)中文文档模板</p>
 </div>
 

@@ -350,7 +350,6 @@ div.csl-indent {
 <li class="chapter" data-level="6.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_1"><i class="fa fa-check"></i><b>6.5.1</b> 推导</a></li>
 <li class="chapter" data-level="6.5.2" data-path="survival_5.html"><a href="survival_5.html#survival_5_2"><i class="fa fa-check"></i><b>6.5.2</b> 自定义算法</a></li>
 <li class="chapter" data-level="6.5.3" data-path="survival_5.html"><a href="survival_5.html#survival_5_3"><i class="fa fa-check"></i><b>6.5.3</b> 自定义算法检验</a></li>
-<li class="chapter" data-level="6.5.4" data-path="survival_5.html"><a href="survival_5.html#survival_5_3_1"><i class="fa fa-check"></i><b>6.5.4</b> 梯度向量与黑塞矩阵</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
@@ -879,9 +878,8 @@ l_{saturated}=-\sum_{i=1}^m d_i \log(d_i)
 <li><p>对自定义算法随机选取初始值，发现均能收敛到相同结果，表明自定义算法具有一定的稳健性。但与原函数的结果还存在差异。</p></li>
 </ul>
 <p><span style="color:red">综上，自定义算法是对论文内容的复刻，因此在未提及的细节处必定与原函数存在差异，从而导致结果的差异。但此次复刻不失为一次有益的探索。</span></p>
-</div>
-<div id="survival_5_3_1" class="section level3 hasAnchor" number="6.5.4">
-<h3><span class="header-section-number">6.5.4</span> 梯度向量与黑塞矩阵<a href="survival_5.html#survival_5_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="survival_5_3_1" class="section level4 hasAnchor" number="6.5.3.1">
+<h4><span class="header-section-number">6.5.3.1</span> 梯度向量与黑塞矩阵<a href="survival_5.html#survival_5_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="survival_5.html#cb143-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
 <span id="cb143-2"><a href="survival_5.html#cb143-2" tabindex="-1"></a><span class="fu">data</span>(CoxExample)</span>
 <span id="cb143-3"><a href="survival_5.html#cb143-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
@@ -1052,8 +1050,9 @@ l_{saturated}=-\sum_{i=1}^m d_i \log(d_i)
 <p>即使删掉<span class="math inline">\(C_k\)</span>为空集的观测对象，结果也与原函数不一致</p>
 </blockquote>
 <p><span style="color:red"><strong>鉴于此，为<span class="math inline">\(w(\tilde \eta)_k=0\)</span>的元素加上非常小的数(0.0000001)以确保代码能够正确运行。</strong></span></p>
-<div id="survival_5_3_2" class="section level4 hasAnchor" number="6.5.4.1">
-<h4><span class="header-section-number">6.5.4.1</span> 收敛条件<a href="survival_5.html#survival_5_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+</div>
+<div id="survival_5_3_2" class="section level4 hasAnchor" number="6.5.3.2">
+<h4><span class="header-section-number">6.5.3.2</span> 收敛条件<a href="survival_5.html#survival_5_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>原文中使用<span class="math inline">\(D(0)\)</span>与<span class="math inline">\(D(\beta_{current})\)</span>作为收敛条件。<span class="math inline">\(D(\cdot)\)</span>的内核就是对数似然函数，不妨先确定自定义算法中关于对数似然函数的定义是否正确。</p>
 <hr />
 <p>先考虑无结点的情况。此时<span class="math inline">\(l_{saturated}=0\)</span></p>
@@ -1196,8 +1195,8 @@ l_{null}-l(\beta) &amp;\geq 0.99(l_{saturated}-l_{null}) \\
 </blockquote>
 <p>自定义算法得到的<span class="math inline">\(D_{null}\)</span>与原函数输出的结果差了50倍。既然原文提到的关于<span class="math inline">\(l_{null}\)</span>的快速算法和自定义算法中的<code>log_likelihood_beta(0)</code>函数结果一致，那么说明原函数暗中调整了倍数。因此，对于收敛条件的判定，如果<span class="math inline">\(D_{null}\)</span>与<span class="math inline">\(D(\beta_{current})\)</span>都做了倍数调整的话，那么结果也是不变的，所以无需过分在意这里的倍数差异。另外，原函数没有输出第三个变量的<span class="math inline">\(\hat \beta\)</span>，至少能看出来自定义算法和原函数还是存在差异（毕竟原函数没有输出第三个变量的系数，但自定义函数可以），归根结底还是论文提供的细节太少了。</p>
 </div>
-<div id="survival_5_3_3" class="section level4 hasAnchor" number="6.5.4.2">
-<h4><span class="header-section-number">6.5.4.2</span> 随机化初始值<a href="survival_5.html#survival_5_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<div id="survival_5_3_3" class="section level4 hasAnchor" number="6.5.3.3">
+<h4><span class="header-section-number">6.5.3.3</span> 随机化初始值<a href="survival_5.html#survival_5_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>上述自定义算法的结果都是基于<span class="math inline">\(\beta=0\)</span>的初始值开始迭代，下面通过<strong>随机化初始值</strong>看看自定义算法的稳健性。</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="survival_5.html#cb180-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> CoxExample[[<span class="dv">1</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
 <span id="cb180-2"><a href="survival_5.html#cb180-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> CoxExample[[<span class="dv">2</span>]][<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,]</span>

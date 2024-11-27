@@ -1094,7 +1094,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
 
 <span style='color:red'>综上，自定义算法是对论文内容的复刻，因此在未提及的细节处必定与原函数存在差异，从而导致结果的差异。但此次复刻不失为一次有益的探索。</span>
 
-### 梯度向量与黑塞矩阵 {#survival_5_3_1}
+#### 梯度向量与黑塞矩阵 {#survival_5_3_1}
 
 
 ``` r

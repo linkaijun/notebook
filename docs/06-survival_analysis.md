@@ -608,12 +608,52 @@ $$
 -Z_{1-\alpha/2} \leq \frac{\hat S(t)-(1-p)}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2} \\
 -Z_{1-\alpha/2} \leq \frac{\{\ln [-\ln (\hat S(t))]-\ln [-\ln(1-p)]\}\hat S(t)\ln (\hat S(t))}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2} \\
 -Z_{1-\alpha/2} \leq \frac{2[arcsin(\hat S^{\frac{1}{2}}(t))-arcsin(1-p)^{\frac{1}{2}}][\hat S(t)(1-\hat S(t))]^{1/2}}{\hat V^{1/2}[\hat S(t)]} \leq Z_{1-\alpha/2}
-\end{array}
+\end{array} (\#eq:survival-eq44)
 $$
 
 ### 左截断数据的置信区间 {#survival_3_5}
 
-有疑问
+不妨先举个例子
+
+
+``` r
+df <- tibble(
+  id = as.factor(c('A','B','C')),
+  start = c(0,0,4),
+  end = c(2,3,6)
+)
+ggplot()+
+  geom_segment(data=df, aes(x=start, xend=end, y=fct_rev(id),yend=fct_rev(id)))+
+  geom_point(aes(x=0,y=3), color='red',size=3)+
+  geom_point(aes(x=0,y=2), color='red', size=3)+
+  geom_point(aes(x=4,y=1), color='blue',size=3)+
+  theme_minimal()+
+  labs(x='time', y='id')
+```
+
+<img src="06-survival_analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+在这个例子中，A、B都是在一开始就进入到研究中的，而C是中途加进来的。也就是说，我们一开始是观测不到C的。因此在原有的计算规则下，我们有如下结果
+
+- $t_1=2;\; d_1=1; \; R(t_1)=\{A,B\}; \; Y_1=2; \; \hat S(t_1)=1/2$
+- $t_2=3;\; d_2=1; \; R(t_2)=\{B\}; \; Y_2=1; \; \hat S(t_2)=0$
+- $t_3=6;\; d_3=1; \; R(t_3)=\{C\}; \; Y_3=1; \; \hat S(t_3)=0$
+
+明明C能够生存到$t_2$之后，只是之前没有观测到，但生存函数的估计却在$t_2$时刻估计为0，存在一些问题。
+
+鉴于此，我们需要拓展$Y_i$的定义：**在$t_i$时刻前进入到研究中并在$t_i$时刻仍存活的个体，或者在$t_i$时刻之后进入到研究中并且其生存时长大于等于$t_i$的个体都会被计入。**
+
+- $t_1=2;\; d_1=1; \; R(t_1)=\{A,B,C\}; \; Y_1=3; \; \hat S(t_1)=2/3$
+- $t_2=3;\; d_2=1; \; R(t_2)=\{B,C\}; \; Y_2=2; \; \hat S(t_2)=1/3$
+- $t_3=6;\; d_3=1; \; R(t_3)=\{C\}; \; Y_3=1; \; \hat S(t_3)=0$
+
+这样，对于生存函数的估计我们就得考虑条件概率，即$P(X \gt t |X \geq L)=S(t)/S(L)$。当然，当对象一开始就纳入到研究中，那么$L=0$，按以前的操作来就行。这里只是将研究工具拓展到左截断数据。
+
+$$
+\hat S_L(t)=S(t)/S(L)=\prod_{L \leq t_i \leq t}[1-\frac{d_i}{Y_i}] (\#eq:survival-eq45)
+$$
+
+左截断数据需要对改变生存函数的估计，其他构造置信区间的操作同正常情况。
 
 ## 四 {#survival_4}
 
@@ -627,9 +667,9 @@ $$
 
 > 在有结点情况时才有可能取到等号
 
-**事实上，这篇论文有些地方有小错误，因此下面给出自己的推导过程。**
-
 ### 推导 {#survival_5_1}
+
+> 以下内容为个人推导，与原文略有出入
 
 **1. 无结点情况**
 
@@ -643,8 +683,6 @@ $$
 \frac{2}{n}l(\beta)=\frac{2}{n}\begin{bmatrix}\sum_{i=1}^mx_{j(i)}^T\beta-\sum_{i=1}^m\log(\sum_{j \in R_i}e^{x_j^T\beta})\end{bmatrix}
 $$
 
-> 原文缺了log前面的求和号
-> 
 > 这里的1/n相当于是权重，2是为了消掉泰勒展开中的1/2
 
 令$\eta=X\beta$，对对数似然函数进行二阶泰勒展开
@@ -689,7 +727,7 @@ $$
 
 其中$w(\tilde \eta)_i$是$l''(\tilde \eta)$的第$i$个对角线元素。
 
-> 由于是最小化，对数似然函数得添负号，但原文却少了负号
+> 由于是最小化，对数似然函数得添负号
 
 下面推导$w(\eta)_i$及$z(\eta)_i$的具体表达式
 
@@ -714,15 +752,12 @@ $$
 
 当$\sum_{i=1}^m$转化为$\sum_{i \in C_k}$后，此时$i$对应的$R_i$中必定包含$\eta_k$，因此不用再加示性函数。
 
-> 可见原文的$w(\tilde \eta)_k$缺少了负号
-
 > $w(\tilde \eta)_k$显然小于等于0，因为$R_i$中必定包含索引$k$
 
 $$
 z(\tilde \eta)_k=\tilde \eta_k-\frac{l'(\tilde \eta)_k}{l''(\tilde \eta)_{kk}}=\tilde \eta_k-\frac{\delta_k-\sum\limits_{i \in C_k}(\frac{e^{\eta_k}}{\sum_{j \in R_i}e^{\eta_j}})}{w(\tilde \eta)_k}
 $$
 
-> 和原文相比还是符号有问题
 
 **<span style='color:red'>事实上，这里有一个致命的错误。</span>**当$y_k \lt t_1$时，$C_k$为空集，对应的$w(\tilde \eta)_k=0$，不能取倒数！
 
@@ -732,7 +767,7 @@ $$
 \frac{\partial M}{\partial \beta_k}=\frac{2}{n}\sum_{i=1}^nw(\tilde \eta)_ix_{ik}(z(\tilde \eta)_i-x_i^T\beta)+\lambda\alpha\cdot\textrm{sgn}(\beta_k)+\lambda(1-\alpha)\beta_k
 $$
 
-> 至此，目标函数与原文相差负号，但是$-x_{ik}$的负号与前面的负号抵消掉，所以最终是正号。但这个分子上的2不知道是忘了写了还是前面又默认乘上1/2把2消了。为了与原文一致，后面暂且忽略掉这个2。
+> 对于这个分子上的2，可以将其并到$\lambda$中从而忽略掉这个2，毕竟$\lambda$是数据驱动的参数。
 
 令偏导为0，可得
 
@@ -765,8 +800,6 @@ $$
 
 其中$\textrm{S}(x,\lambda)=\textrm{sgn}(x)(|x|-\lambda)_+$。
 
-> 所以原文关于$\hat\beta_k$的解是有问题的
-
 **2. 有结点情况**
 
 有结点情况相较无结点情况就是多了权重，其余步骤都是一样的。
@@ -793,8 +826,6 @@ $$
 l''(\eta)_{kk}=-\sum_{i \in C_k}d_i\frac{\omega_ke^{\eta_k}(\sum_{j \in R_i}\omega_je^{\eta_j})-(\omega_ke^{\eta_k})^2}{(\sum_{j \in R_i}\omega_je^{\eta_j})^2}
 $$
 
-> 同样和原文差了负号
-> 
 > 同样没有解决$w(\eta)_k$可能为0的问题。
 > 
 > 你可以试着将其代入到无结点的情况下，也就是把$\omega_j=d_i=1/n$带进去，就会发现无结点情况下的那个1/n就是权重，应该把那个1/n并到$l''(\tilde \eta)$中，这样无结点和有结点就一致了

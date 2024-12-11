@@ -23,7 +23,7 @@ $$
 &(1) \; a_i'a_i=1 \\
 &(2) \; a_i'\Sigma a_j=0, \; j=1,2,\dots,i-1 \\
 &(3) \; Var(Z_i)= \max_{a'a=1, \,a_i'\Sigma a_j=0 \\ j=1,2,\dots,i-1} Var(a'X)
-\end{aligned} (\#eq:ms-eq1)
+\end{aligned} (\#eq:ms-eq2)
 $$
 
 ### 总体主成分 {#ms_1_1}

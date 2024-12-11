@@ -615,22 +615,6 @@ $$
 
 不妨先举个例子
 
-
-``` r
-df <- tibble(
-  id = as.factor(c('A','B','C')),
-  start = c(0,0,4),
-  end = c(2,3,6)
-)
-ggplot()+
-  geom_segment(data=df, aes(x=start, xend=end, y=fct_rev(id),yend=fct_rev(id)))+
-  geom_point(aes(x=0,y=3), color='red',size=3)+
-  geom_point(aes(x=0,y=2), color='red', size=3)+
-  geom_point(aes(x=4,y=1), color='blue',size=3)+
-  theme_minimal()+
-  labs(x='time', y='id')
-```
-
 <img src="06-survival_analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 在这个例子中，A、B都是在一开始就进入到研究中的，而C是中途加进来的。也就是说，我们一开始是观测不到C的。因此在原有的计算规则下，我们有如下结果

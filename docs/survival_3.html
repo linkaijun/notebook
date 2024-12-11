@@ -570,18 +570,6 @@ R=\arcsin\{\hat S^{\frac{1}{2}}(t_0)\}+\frac{Z\sigma_S(t_0)}{2}\sqrt \frac{\hat 
 <div id="survival_3_5" class="section level3 hasAnchor" number="6.3.5">
 <h3><span class="header-section-number">6.3.5</span> 左截断数据的置信区间<a href="survival_3.html#survival_3_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>不妨先举个例子</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="survival_3.html#cb142-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb142-2"><a href="survival_3.html#cb142-2" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>)),</span>
-<span id="cb142-3"><a href="survival_3.html#cb142-3" tabindex="-1"></a>  <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">4</span>),</span>
-<span id="cb142-4"><a href="survival_3.html#cb142-4" tabindex="-1"></a>  <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">6</span>)</span>
-<span id="cb142-5"><a href="survival_3.html#cb142-5" tabindex="-1"></a>)</span>
-<span id="cb142-6"><a href="survival_3.html#cb142-6" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
-<span id="cb142-7"><a href="survival_3.html#cb142-7" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data=</span>df, <span class="fu">aes</span>(<span class="at">x=</span>start, <span class="at">xend=</span>end, <span class="at">y=</span><span class="fu">fct_rev</span>(id),<span class="at">yend=</span><span class="fu">fct_rev</span>(id)))<span class="sc">+</span></span>
-<span id="cb142-8"><a href="survival_3.html#cb142-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">y=</span><span class="dv">3</span>), <span class="at">color=</span><span class="st">&#39;red&#39;</span>,<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
-<span id="cb142-9"><a href="survival_3.html#cb142-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">y=</span><span class="dv">2</span>), <span class="at">color=</span><span class="st">&#39;red&#39;</span>, <span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
-<span id="cb142-10"><a href="survival_3.html#cb142-10" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">4</span>,<span class="at">y=</span><span class="dv">1</span>), <span class="at">color=</span><span class="st">&#39;blue&#39;</span>,<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
-<span id="cb142-11"><a href="survival_3.html#cb142-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb142-12"><a href="survival_3.html#cb142-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;time&#39;</span>, <span class="at">y=</span><span class="st">&#39;id&#39;</span>)</span></code></pre></div>
 <p><img src="06-survival_analysis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>在这个例子中，A、B都是在一开始就进入到研究中的，而C是中途加进来的。也就是说，我们一开始是观测不到C的。因此在原有的计算规则下，我们有如下结果</p>
 <ul>

@@ -639,19 +639,311 @@ $$
 
 左截断数据需要对改变生存函数的估计，其他构造置信区间的操作同正常情况。
 
-## 四 {#survival_4}
+## 假设检验 {#survival_4}
+
+### 单样本检验 {#survival_4_1}
+
+在时间段$0 < t\leq \tau$内，考虑如下假设检验
+
+$$
+\begin{aligned}
+&H_0: b(t)=b_0(t) \quad \textrm{for all} \; t \\
+&H_1: b(t) \neq b_0(t) \quad \textrm{for some} \; t
+\end{aligned}
+$$
+
+> $\tau$为最大的非右删失生存时间
+
+一个自然的想法就是看看$b(t)$与$b_0(t)$之间的差距大不大，如果较大的话就说明应当拒绝原假设。于是给出下面的检验统计量
+
+$$
+\begin{aligned}
+Z(\tau)&=O(\tau)-E(\tau) \\
+&=\sum_{i=1}^D W(t_i)\frac{d_i}{Y(t_i)}-\int_0^\tau W(t)b_0(t)dt
+\end{aligned} (\#eq:survival-eq46)
+$$
+
+其中$O(\tau)$为观测到的加权累积风险函数，$E(\tau)$为原假设下的加权累积风险函数，$W(t)$为权重函数。特别地，当$Y(t)=0$时$W(t)=0$。
+
+在原假设下，$Z(\tau)$的方差为
+
+$$
+V[Z(\tau)]=\int_0^\tau W^2(t)\frac{b_0(t)}{Y(t)}dt (\#eq:survival-eq47)
+$$
+
+**在大样本下，当$H_0$为真时，统计量$\frac{Z(\tau)^2}{V[Z(\tau)]}$服从卡方分布。**
+
+统计量$\frac{Z(\tau)}{V[Z(\tau)]^{1/2}}$被用于进行$b(t)>b_0(t)$的单侧检验。当原假设为真且样本量较大时，该统计量就服从标准正态分布。
+
+> 为什么只能右侧？
+
+- Log-Rank Test
+
+   **设置权重函数为$W(t)=Y(t)$**。不失一般性，考虑可能存在的[左截断数据](#survival_3_5)，记$T_j$为第$j$个对象在研究中发生目标事件时的时间，$L_j$为第$j$个对象进入到研究时的时间。
+
+   那么$O(\tau)=\sum_{i=1}^D d_i$表示在$\tau$时刻及之前观测到的事件总数，并且有
+
+$$
+\begin{aligned}
+E(\tau) &= \int_0^\tau W(t)b_0(t)dt \\
+&= \int_0^\tau Y(t)b_0(t)dt \\
+&= \int_0^\tau \sum_{j=1}^n I(X_j \geq t)b_0(t)dt \\
+&= \sum_{j=1}^n \int_{L_j}^{T_j} b_0(t)dt \\
+&= \sum_{j=1}^n [H_0(T_j)-H_0(L_j)]
+\end{aligned} (\#eq:survival-eq48)
+$$
+
+   > 对于第$j$个对象，他不一定存活到$\tau$时刻，在$T_j$到$\tau$的时间段里是不存在该对象的，因此直接取$T_j$。若不是左截断数据，则$L_j$=0。
+
+   同理可得
+
+$$
+V[Z(\tau)]=\int_0^\tau W^2(t)\frac{b_0(t)}{Y(t)}dt=\int_0^\tau W(t)b_0(t)dt=E(\tau) (\#eq:survival-eq49)
+$$
+
+- Fleming-Harrington Test
+
+   Harrington和Fleming提出了如下权重函数族
+
+$$
+W_{HF}(t)=Y(t)S_0(t)^p [1-S_0(t)]^q, \;\; p \geq 0 \;\; \textrm{and} \;\; q \geq 0 (\#eq:survival-eq50)
+$$
+
+   其中$S_0(t)=\exp[-H_0(t)]$是原假设下的生存函数。注意到生存函数是一个递减的函数，因此当$p>q$时会给予前面的数据较大的权重，当$p<q$时会给予后面的数据较大的权重，当$p=q\neq0$时前后一视同仁，当$p=q=0$时就是log-rank权重。
+
+   > 权重函数就是一个调节器，可根据实际需要来放大或缩小对应时间段的差异。
+
+### 多样本检验 {#survival_4_2}
+
+对于$K(K \geq 2)$个组别，给出如下假设
+
+$$
+H_0: b_1(t)=b_2(t)=\cdots=b_K(t)=b(t), \quad \textrm{for all } t \leq \tau \\
+H_1: \textrm{at least one of the } b_j(t) \textrm{ is different for some } t \leq \tau 
+$$
+
+> 这里的$\tau$是各个组别中最大生存时间的最小值，即$\tau = \min\{\tau_1, \tau_2, \cdots, \tau_K\}$
+
+数据处理流程：
+
+1. 混合多组样本，得到$t_1 \lt t_2 \lt \cdots \lt t_D$
+
+2. 记录第$j$组样本中各个时点的事件发生数，得到$d_{1j},\, d_{2j} \cdots, \, d_{Dj}$
+
+3. 记录第$j$组样本中各个时点处于风险集的人数，得到$Y_{1j},\, Y_{2j} \cdots, \, Y_{Dj}$
+
+4. 记录混合样本中各个时点的事件发生数，即$d_i=\sum_{j=1}^K d_{ij}$
+
+5. 记录混合样本中各个时点处于风险集的人数，即$Y_i=\sum_{j=1}^K Y_{ij}$
+
+据此得到如下检验统计量
+
+$$
+Z_j(\tau)=\sum_{i=1}^D W_j(t_i)(\frac{d_{ij}}{Y_{ij}}-\frac{d_i}{Y_i}), \quad j=1, \cdots, K (\#eq:survival-eq51)
+$$
+
+这个统计量度量了第$j$组样本的风险率和总体风险率之间的差距。如果原假设为真的话，那么对于每一组样本而言这个差距应该会很小。同样，当$Y_{ij}=0$时有$W_j(t_i)=0$。
+
+一般，权重函数被设置为$W_j(t_i)=Y_{ij}W(t_i)$，则
+
+$$
+Z_j(\tau)=\sum_{i=1}^D W(t_i)[d_{ij}-Y_{ij}(\frac{d_i}{Y_i})], \quad j=1, \cdots, K (\#eq:survival-eq52)
+$$
+
+> $W_j(t_i)$中的$j$意味着每组有不同的权重函数；$W_j(t_i)=Y_{ij}W(t_i)$则假设各个组的权重函数有公共的部分，即$W(t_i)$，不同之处在于$Y_{ij}$
+
+可得$Z_j(\tau)$的方差为
+
+$$
+\hat \sigma_{jj}=\sum_{i=1}^D W(t_i)^2 \frac{Y_{ij}}{Y_i}(1-\frac{Y_{ij}}{Y_i})(\frac{Y_i-d_i}{Y_i-1})d_i, \; j=1, \cdots, K (\#eq:survival-eq53)
+$$
+
+$Z_j(\tau)$与$Z_g(\tau)$的协方差为
+
+$$
+\hat \sigma_{jg} = -\sum_{i=1}^D W(t_i)^2 \frac{Y_{ij}}{Y_i}\frac{Y_{ig}}{Y_i}(1-\frac{Y_{ij}}{Y_i})(\frac{Y_i-d_i}{Y_i-1})d_i, \; g\neq j (\#eq:survival-eq54)
+$$
+
+> 注意到不同组的统计量$Z(\tau)$之间不独立，因为都用到了$d_i$和$Y_i$，而$d_i$和$Y_i$又集合了不同组的信息
+
+因此在原假设下有
+
+$$
+\begin{pmatrix}
+Z_1(\tau) \\
+\vdots \\
+Z_K(\tau)
+\end{pmatrix} \stackrel{d}\longrightarrow N(0, \Sigma) (\#eq:survival-eq55)
+$$
+
+于是我们可以对其进行标准化处理，并求其平方和，根据卡方分布进行检验。但需注意到
+
+$$
+\begin{aligned}
+\sum_{j=1}^K Z_j(\tau)&=\sum_{j=1}^K\sum_{i=1}^D W(t_i)(d_{ij}-\frac{d_iY_{ij}}{Y_i}) \\
+&=\sum_{i=1}^D W(t_i)\sum_{j=1}^K(d_{ij}-\frac{d_iY_{ij}}{Y_i}) \\
+&= \sum_{i=1}^D W(t_i)(d_i-d_i) \\
+&= 0
+\end{aligned} (\#eq:survival-eq56)
+$$
+
+因此$\Sigma$是不满秩的，于是我们仅需其中$K-1$个统计量。方便起见，取其前$K-1$个统计量来构造卡方分布，则
+
+$$
+\begin{pmatrix} Z_1(\tau),\cdots,Z_{K-1}(\tau) \end{pmatrix} \Sigma_{(-K)}^{-1}\begin{pmatrix} Z_1(\tau) \\ \vdots \\ Z_{K-1}(\tau)\end{pmatrix} \sim \chi^2(K-1) (\#eq:survival-eq57)
+$$
+
+其中$\Sigma_{(-K)}^{-1}$表示去掉第$K$个统计量后的协方差阵。
+
+> 例如当$K=2$时，就可以直接选择其中一个$Z(\tau)$根据标准正态分布进行假设检验
+
+- Log-Rank Test
+
+   当$W(t)=1$时，即为log-rank test。当K个不同群体的风险率彼此成比例时，该方法具有最佳的检测能力。
+
+- Gehan's Test (Wilcoxon-Breslow-Gehan Test)
+
+   设置权重函数为$W(t_i)=Y_i$。不难发现，当时间越早，$Y_i$越大，对应的权重越大，也就是说该权重函数会对靠前时间段的差异会更为敏感。
+
+> 需要关注目标事件发生的时间及删失时间的分布情况，但不同组的删失状况不同时，可能会导致错误的结果
+
+- Tarone-Ware test
+
+   设置权重函数为$W(t_i)=Y_i^{\frac{1}{2}}$。和Gehan's test类似的效果，都会给靠前时间段的差异较大的权重。
+   
+- Peto-Peto test
+
+设置权重函数为$W(t_i)=\tilde S(t_i)$，其中$\tilde S(t)=\prod_\limits{t_i \leq t}(1-\frac{d_i}{Y_i+1})$。由于$\tilde S(t)$类似混合后的KM估计生存函数，因此这个权重函数是递减的，会给前面时间段较大的权重。
+
+- Modified Peto-Peto test
+
+   设置权重函数为$W(t_i)=\frac{\tilde S(t_i)Y_i}{Y_i+1}$。
+   
+- Fleming-Harrington test
+
+   权重函数为$W_{p,q}(t_i)=\hat S(t_{i-1})^p[1-\hat S(t_{i-1})]^q$，其中$p , q \geq 0$，$\hat S(t)$是混合样本的KM估计生存函数。
+   
+   当$p=q=0$时，即为Log-Rank Test。
+   
+   当$p=1, \;q=0$时，即为Mann-Whitney-Wilcoxon Test。
+   
+   当$q=0, \;p>0$时，会给前面时间段较大的权重。
+   
+   当$p=0, \;q>0$时，会给后面时间段较大的权重。
+   
+> 最核心的问题还是权重函数的选择。一般采用Log-Rank Test或Gehan's Test。但还是得根据实际需要来选择。
+
+### 趋势性检验 {#survival_4_3}
+
+若想要检验各个组别的风险函数是否存在某种趋势，给出如下假设
+
+$$
+H_0: b_1(t)=b_2(t)=\cdots=b_K(t)=b(t), \quad \textrm{for } t \leq \tau \\
+H_A:b_1(t)\leq b_2(t) \leq \cdots \leq b_K(t), \quad \textrm{for } t \leq \tau
+$$
+
+还是考虑式\@ref(eq:survival-eq52)的检验统计量
+
+$$
+Z_j(\tau)=\sum_{i=1}^D W(t_i)[d_{ij}-Y_{ij}(\frac{d_i}{Y_i})], \quad j=1, \cdots, K
+$$
+
+> 前面定义的方差、协方差、权重函数都是适用的
+
+若备择假设成立，较小的风险函数对应的$Z(\tau)$统计量会更容易为负，因为和混合样本得到的$\frac{d_i}{Y_i}$相比，$\frac{d_{ij}}{Y_{ij}}$会更小。同理，对于较大的风险函数对应的$Z(\tau)$统计量会更容易为正。
+
+现引入一个scores序列$a_1 < a_2 < \cdots < a_K$，一般取$a_j=j$。构造如下检验统计量
+
+$$
+Z=\frac{\sum_{j=1}^K a_j Z_j(\tau)}{\sqrt{\sum_{j=1}^K \sum_{g=1}^K a_ja_g \hat \sigma_{jg}}}  (\#eq:survival-eq58)
+$$
+
+> 分母的存在主要是为了让他为标准正态分布。关键是分子，$a_j$的作用相当于一个递增的放大器
+
+当原假设为真时，在大样本下检验统计量$Z$服从标准正态分布。若$Z> Z_{1-\alpha}$，则拒绝原假设。正如前面说的，风险函数较小的$Z(\tau)$容易为负，风险函数较大的$Z(\tau)$容易为正，再加上递增序列$a$的放大作用，为正的部分放大的倍数要比为负的部分大，因此检验统计量$Z$总体表现为较大的正值，因此是右侧检验。
+
+> 趋势性检验仅在已知备择假设具体大小顺序的时候才能适用
+
+### 分层检验 {#survival_4_4}
+
+考虑“辛普森悖论”的影响，有时需要根据分层变量来对样本先进行分层，再进行假设检验。
+
+假设样本可根据某分层变量分成M个水平，给出如下假设
+
+$$
+H_0: b_{1s}(t)=b_{2s}(t)=\cdots=b_{Ks}(t), \; \textrm{for } s=1, \cdots, M, \; t < \tau \\
+H_A: \textrm{at least one of the } h_{js}(t) \textrm{ is different for some } s \textrm{ and } t < τ
+$$
+
+于是每一层的检验统计量、方差、协方差分别为
+
+$$
+Z_{js}(\tau)=\sum_{i=1}^D W(t_i)[d_{ijs}-Y_{ijs}(\frac{d_{is}}{Y_{is}})] (\#eq:survival-eq59)
+$$
+
+$$
+\hat \sigma_{jjs}=\sum_{i=1}^D W(t_i)^2 \frac{Y_{ijs}}{Y_{is}}(1-\frac{Y_{ijs}}{Y_{is}})(\frac{Y_{is}-d_{is}}{Y_{is}-1})d_{is}, \; j=1, \cdots, K (\#eq:survival-eq60)
+$$
+
+$$
+\hat \sigma_{jgs}=-\sum_{i=1}^D W(t_i)^2 \frac{Y_{ijs}}{Y_{is}}\frac{Y_{igs}}{Y_{is}}(\frac{Y_{is}-d_{is}}{Y_{is}-1})d_{is}, \; j \neq g (\#eq:survival-eq61)
+$$
+
+据此得到总的检验统计量、方差和协方差
+
+$$
+Z_{j \cdot}(\tau) = \sum_{s=1}^M Z_{js}(\tau) (\#eq:survival-eq62)
+$$
+
+$$
+\hat \sigma_{jj \cdot}=\sum_{s=1}^M \hat \sigma_{jjs} (\#eq:survival-eq63)
+$$
+
+$$
+\hat \sigma_{jg \cdot} = \sum_{s=1}^M \hat \sigma_{jgs} (\#eq:survival-eq64)
+$$
+
+同理构造卡方统计量进行检验
+
+$$
+\begin{pmatrix} Z_{1\cdot}(\tau), \cdots, Z_{K-1 \cdot}(\tau) \end{pmatrix} \Sigma_{\cdot}^{-1} \begin{pmatrix} Z_{1\cdot}(\tau) \\ \vdots \\ Z_{K-1 \cdot}(\tau) \end{pmatrix} \sim \chi^2(K-1) (\#eq:survival-eq65)
+$$
+
+> 在原假设为真且为大样本的条件下
 
 
 
-## 论文复现 {#survival_5}
+## Cox比例风险模型 {#survival_5}
 
-本节内容是对Simon等人[@survival_1]论文的复现。
+对于数据$X_i=(X_{i1},\dots, X_{ip})^T$，风险函数被定义为
+
+$$
+h_i(t)=h_0(t)\exp\{x_{i1}\beta_1+\dots+x_{ip}\beta_p\}=h_0(t)e^{X_i^T\beta} (\#eq:survival-eq66)
+$$
+
+其中$h_0(t)$被称为基线风险函数。
+
+> 截距项被归到$h_0(t)$里了
+
+考虑$h_i(t|x)=h_0(t)e^{x_{i1}\beta_1}$，称
+
+$$
+\frac{h_i(t|x+1)}{h_i(t|x)}=\frac{h_0(t)e^{x_{i1}\beta_1}e^{\beta_1}}{h_0(t)e^{x_{i1}\beta_1}}=e^{\beta_1} (\#eq:survival-eq67)
+$$
+这样的关系为“比例”关系。
+
+
+------
+
+### Regularization Paths for Cox’s Proportional Hazards Model via Coordinate Descent {#survival_5_x}
+
+下面的内容是对Simon等人[@survival_1]论文的复现。
 
 观测对象的数据结构为$(y_i,x_i,\delta_i)$，分别表示生存时间、自变量向量、生存结局。其中$\delta_i$取值为1: failure time或0: censoring time。将$\delta=1$的failure time进行排序得到$t_1 \leq t_2 \leq \cdots \leq t_m$。
 
 > 在有结点情况时才有可能取到等号
 
-### 推导 {#survival_5_1}
+#### 推导 {#survival_5_x_1}
 
 > 以下内容为个人推导，与原文略有出入
 
@@ -862,7 +1154,7 @@ $$
 l_{saturated}=-\sum_{i=1}^m d_i \log(d_i)
 $$
 
-### 自定义算法 {#survival_5_2}
+#### 自定义算法 {#survival_5_x_2}
 
 <span style='color:blue'>*由于当前技术难以缩减计算时间，故自定义算法暂且放弃“正则化路径”功能*</span>
 
@@ -1117,7 +1409,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
 }
 ```
 
-### 自定义算法检验 {#survival_5_3}
+#### 自定义算法检验 {#survival_5_x_3}
 
 模拟所用数据集来自`glmnet`包的`data(CoxExample)`数据集。
 
@@ -1131,7 +1423,7 @@ cox_cd <- function(y, X, weight=NULL, beta_0=NULL, lambda, alpha, max.iter=100, 
 
 <span style='color:red'>综上，自定义算法是对论文内容的复刻，因此在未提及的细节处必定与原函数存在差异，从而导致结果的差异。但此次复刻不失为一次有益的探索。</span>
 
-#### 梯度向量与黑塞矩阵 {#survival_5_3_1}
+**1. 梯度向量与黑塞矩阵**
 
 
 ``` r
@@ -1355,11 +1647,9 @@ diag_hessian  #源码的黑塞矩阵对角线元素
 
 <span style='color:red'>**鉴于此，为$w(\tilde \eta)_k=0$的元素加上非常小的数(0.0000001)以确保代码能够正确运行。**</span>
 
-#### 收敛条件 {#survival_5_3_2}
+**2. 收敛条件**
 
 原文中使用$D(0)$与$D(\beta_{current})$作为收敛条件。$D(\cdot)$的内核就是对数似然函数，不妨先确定自定义算法中关于对数似然函数的定义是否正确。
-
-------------
 
 先考虑无结点的情况。此时$l_{saturated}=0$
 
@@ -1479,8 +1769,6 @@ $$
 
 > “微乎其微”是指保留7位小数后相等
 
------------
-
 而对于有结点的情况，则有点差异。
 
 
@@ -1591,7 +1879,7 @@ source_result$beta
 
 自定义算法得到的$D_{null}$与原函数输出的结果差了50倍。既然原文提到的关于$l_{null}$的快速算法和自定义算法中的`log_likelihood_beta(0)`函数结果一致，那么说明原函数暗中调整了倍数。因此，对于收敛条件的判定，如果$D_{null}$与$D(\beta_{current})$都做了倍数调整的话，那么结果也是不变的，所以无需过分在意这里的倍数差异。另外，原函数没有输出第三个变量的$\hat \beta$，至少能看出来自定义算法和原函数还是存在差异（毕竟原函数没有输出第三个变量的系数，但自定义函数可以），归根结底还是论文提供的细节太少了。
 
-#### 随机化初始值 {#survival_5_3_3}
+**3. 随机化初始值**
 
 上述自定义算法的结果都是基于$\beta=0$的初始值开始迭代，下面通过**随机化初始值**看看自定义算法的稳健性。
 
@@ -1644,11 +1932,5 @@ source_result$beta@x #原函数的结果
 ```
 
 <span style='color:red'>**据此可知自定义算法具有一定的稳健性，但与原函数的结果存在一定差异。**</span>
-
-
-
-
-
-
 
 

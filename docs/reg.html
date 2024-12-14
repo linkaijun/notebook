@@ -346,12 +346,16 @@ div.csl-indent {
 <li class="chapter" data-level="6.3.4" data-path="survival_3.html"><a href="survival_3.html#survival_3_4"><i class="fa fa-check"></i><b>6.3.4</b> 分位数的置信区间</a></li>
 <li class="chapter" data-level="6.3.5" data-path="survival_3.html"><a href="survival_3.html#survival_3_5"><i class="fa fa-check"></i><b>6.3.5</b> 左截断数据的置信区间</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>6.4</b> 四</a></li>
-<li class="chapter" data-level="6.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>6.5</b> 论文复现</a>
+<li class="chapter" data-level="6.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>6.4</b> 假设检验</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_1"><i class="fa fa-check"></i><b>6.5.1</b> 推导</a></li>
-<li class="chapter" data-level="6.5.2" data-path="survival_5.html"><a href="survival_5.html#survival_5_2"><i class="fa fa-check"></i><b>6.5.2</b> 自定义算法</a></li>
-<li class="chapter" data-level="6.5.3" data-path="survival_5.html"><a href="survival_5.html#survival_5_3"><i class="fa fa-check"></i><b>6.5.3</b> 自定义算法检验</a></li>
+<li class="chapter" data-level="6.4.1" data-path="survival_4.html"><a href="survival_4.html#survival_4_1"><i class="fa fa-check"></i><b>6.4.1</b> 单样本检验</a></li>
+<li class="chapter" data-level="6.4.2" data-path="survival_4.html"><a href="survival_4.html#survival_4_2"><i class="fa fa-check"></i><b>6.4.2</b> 多样本检验</a></li>
+<li class="chapter" data-level="6.4.3" data-path="survival_4.html"><a href="survival_4.html#survival_4_3"><i class="fa fa-check"></i><b>6.4.3</b> 趋势性检验</a></li>
+<li class="chapter" data-level="6.4.4" data-path="survival_4.html"><a href="survival_4.html#survival_4_4"><i class="fa fa-check"></i><b>6.4.4</b> 分层检验</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>6.5</b> Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_x"><i class="fa fa-check"></i><b>6.5.1</b> Regularization Paths for Cox’s Proportional Hazards Model via Coordinate Descent</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
@@ -452,11 +456,11 @@ div.csl-indent {
 <div id="reg" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">3</span> 应用回归分析<a href="reg.html#reg" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h1>
 <p>回归模型的分类如下所示：</p>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-cc550b176bef24834f1b" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-cc550b176bef24834f1b">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-993f37c016ee090ec3cc" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-993f37c016ee090ec3cc">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>回归模型的建模步骤如下所示：</p>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-9d159f1634b08783957b" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9d159f1634b08783957b">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-ce182b0d201a21fbd797" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-ce182b0d201a21fbd797">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
             </section>
 

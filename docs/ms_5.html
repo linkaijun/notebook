@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 决策树 | kj的学习笔记</title>
+  <title>4.5 典型相关分析 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 决策树 | kj的学习笔记" />
+  <meta property="og:title" content="4.5 典型相关分析 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 决策树 | kj的学习笔记" />
+  <meta name="twitter:title" content="4.5 典型相关分析 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tree.html"/>
-<link rel="next" href="tree_2.html"/>
+<link rel="prev" href="ms_4.html"/>
+<link rel="next" href="tree.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -475,78 +475,28 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tree_1" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> 决策树<a href="tree_1.html#tree_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="tree_1_1" class="section level3 hasAnchor" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> 分类树<a href="tree_1.html#tree_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>分类树考虑响应变量为分类变量的情形，以叶结点处数量最多的类别作为叶结点的类别标签。首先考虑决策树是如何“生长”的，也就是根据什么准则来分裂结点。我们总是希望分裂后的结点中的样本尽可能的属于同一类别，即该结点有着较高的“纯度”。<strong>一言以蔽之，划分的过程就是从混乱走向有序的过程。</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>信息增益</p>
-<p>考虑在结点<span class="math inline">\(D\)</span>中的所有样本共属于<span class="math inline">\(M\)</span>个类别，考虑信息熵<span class="math inline">\(Ent(D)\)</span></p>
-<p><span class="math display" id="eq:tree-eq1">\[
-\textrm{Ent}(D)=-\sum_{m=1}^Mp_m \log_2p_m \tag{5.1}
+<div id="ms_5" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> 典型相关分析<a href="ms_5.html#ms_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>设X为随机向量，Y为随机变量，且满足<span class="math inline">\(Cov\begin{pmatrix} X \\ Y\end{pmatrix}=\begin{pmatrix} \Sigma_{XX} &amp; \Sigma_{XY} \\ \Sigma_{YX} &amp; \sigma_{Y} \end{pmatrix}, \, E\begin{pmatrix} X \\ Y\end{pmatrix}=0\)</span>，则<strong>复相关系数</strong>定义如下</p>
+<p><span class="math display" id="eq:ms-eq49">\[
+\max_{a \in R^p} \rho(Y,a&#39;X)= \max_{a \in R^p} \frac{a&#39; \Sigma_{XY}}{\sigma_Y\sqrt{a&#39;\Sigma_{XX}a}}=\frac{1}{\sigma_Y}\sqrt{\Sigma_{YX}\Sigma_{XX}^{-1}\Sigma_{XY}} \tag{4.49}
 \]</span></p>
-<p>如何理解信息熵？可以这样简单理解：对于不确定的、离谱的事情，人们就会拿不准，从而产生疑惑，想要知道更多的信息，此时信息熵就大；而对于确定的、理所应当的事情，人们就会很有把握，不会多问，此时信息熵就小。举个例子，一枚正常硬币猜正反，无论猜正面朝上还是猜反面朝上，概率都是0.5，因此只能瞎猜，没有什么把握。但对于一枚有特殊倾向的硬币，即正面朝上概率为0.9，那么大家自然都会猜正面朝上，并且有很大的把握。<strong>因此，信息熵是对不确定性的度量，信息熵越大，越不确定。</strong></p>
-<p>由此可得<strong>信息增益</strong>的定义：</p>
-<p><span class="math display" id="eq:tree-eq2">\[
-\textrm{Gain}(D,x)=\textrm{Ent}(D)-\sum_{v=1}^V\frac{n_v}{n}\textrm{Ent}(D^v) \tag{5.2}
+<p>设X为p维随机向量，Y为q维随机向量，且满足<span class="math inline">\(Cov\begin{pmatrix} X \\ Y\end{pmatrix}=\Sigma=\begin{pmatrix} \Sigma_{XX} &amp; \Sigma_{XY} \\ \Sigma_{YX} &amp; \Sigma_{YY} \end{pmatrix} &gt; 0\)</span>，设<span class="math inline">\(a_1,\,b_1\)</span>分别为p维和q维任意非零的常数向量，使得</p>
+<p><span class="math display" id="eq:ms-eq50">\[
+\max_{Var(a_1&#39;X)=1,Var(b_1&#39;Y)=1} \rho(a_1&#39;X,b_1&#39;Y)=\max_{Var(a_1&#39;X)=1,Var(b_1&#39;Y)=1}a_1&#39;\Sigma_{XY}b_1 \tag{4.50}
 \]</span></p>
-<p>其中<span class="math inline">\(x\)</span>表示某个特征，<span class="math inline">\(V\)</span>表示该特征有多少个取值，<span class="math inline">\(n\)</span>和<span class="math inline">\(n_v\)</span>分别表示原结点与各个分支结点的样本量。</p>
-<blockquote>
-<p>若<span class="math inline">\(x\)</span>是连续变量，则可将其离散化，并且连续变量可以在后续划分中进一步细分，而离散变量只能使用一次。</p>
-</blockquote>
-<p>我们要寻求合适的特征使得划分后的子结点与原结点相比信息熵平均下降得最多。这就是信息增益的准则。</p></li>
-<li><p>增益率</p>
-<p>信息增益准则对取值数目较多的特征有所偏好。由此引入<strong>增益率</strong>，其定义为</p>
-<p><span class="math display" id="eq:tree-eq3">\[
-\textrm{Gain_ratio}(D,x)=\frac{\textrm{Gain}(D,x)}{\textrm{IV(x)}} \tag{5.3}
-\]</span></p>
-<p>其中</p>
-<p><span class="math display" id="eq:tree-eq4">\[
-\textrm{IV}(x)=-\sum_{v=1}^V\frac{n_v}{n}\textrm{log}_2\frac{n_v}{n} \tag{5.4}
-\]</span></p>
-<p>事实上，<span class="math inline">\(\textrm{IV}(x)\)</span>就是信息熵的形式，可以视作某种对<span class="math inline">\(x\)</span>取值数量的惩罚。</p></li>
-<li><p>基尼系数</p>
-<p>定义基尼系数</p>
-<p><span class="math display" id="eq:tree-eq5">\[
-\textrm{Gini}(D)=\sum_{m=1}^Mp_m(1-p_m)=1-\sum_{m=1}^Mp_m^2 \tag{5.5}
-\]</span></p>
-<p>直观来看，基尼系数衡量的就是从结点<span class="math inline">\(D\)</span>中随机抽取两个样本，其类别不一致的概率。因此基尼系数越小，该结点纯度越高。</p></li>
-</ol>
-<p>正如园艺里需要对植物进行修剪一样，决策树也能进行<strong>剪枝</strong>。决策树的剪枝策略分为<strong>预剪枝</strong>和<strong>后剪枝</strong>。</p>
-<ul>
-<li><p>预剪枝</p>
-<p>在决策树的生成过程中，对每个结点在分裂前进行估计，若对该结点划分不能提高泛化能力，则停止划分并将该结点设置为叶结点。</p>
-<p><strong>预剪枝降低了过拟合的风险，但存在欠拟合的可能。</strong></p></li>
-<li><p>后剪枝</p>
-<p>先完整地生成决策树，然后自下而上地对所有非叶结点进行考察。若将该非叶结点替换为叶结点后能够提升泛化性能，则进行替换。</p>
-<p><strong>后剪枝消耗的时间比预剪枝长，但欠拟合的风险较小，其泛化性能往往优于预剪枝策略。</strong></p></li>
-</ul>
+<p>则称<span class="math inline">\((a_1&#39;X,b_1Y)\)</span>为第1对<strong>典型相关变量</strong>，他们之间的相关系数为第1<strong>典型相关系数</strong>。</p>
+<p>接下来同主成分分析一样，要求第k典型相关系数，要求第k对典型变量与前k-1对典型变量均不相关，并且要求第k典型相关系数在<span class="math inline">\(Var(a_k&#39;X)=Var(b_k&#39;Y)=1\)</span>的约束下是最大的。</p>
+
 </div>
-<div id="tree_1_2" class="section level3 hasAnchor" number="5.1.2">
-<h3><span class="header-section-number">5.1.2</span> 回归树<a href="tree_1.html#tree_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>回归树考虑响应变量为连续变量的情形，以叶结点的响应变量平均值作为该叶结点的预测值。</p>
-<p>回归树划分结点的准则多种多样，但都是类似的，如最小化平方误差MSE、最小化均方根误差RMSE、最小化平均绝对误差MAE等。</p>
-<p>同样，回归树也能进行<strong>剪枝</strong>操作。</p>
-<ul>
-<li><p>预剪枝</p>
-<p>回归树的预剪枝策略可以设置一个样本量阈值，当结点分裂后的样本量小于该阈值，则不进行分裂。</p></li>
-<li><p>后剪枝</p>
-<p>后剪枝可以采取<strong>代价复杂性剪枝</strong>的策略，即先生成一棵完整的树，然后考虑如下的惩罚残差平方和函数</p>
-<p><span class="math display" id="eq:tree-eq6">\[
-\textrm{SSE}+\lambda|T|  \tag{5.6}
-\]</span></p>
-<p>其中<span class="math inline">\(|T|\)</span>表示该棵决策树叶结点的数量。<span class="math inline">\(\lambda\)</span>的值可通过交叉验证的方法进行确定。</p></li>
-</ul>
-</div>
-</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="tree.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tree_2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ms_4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tree.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

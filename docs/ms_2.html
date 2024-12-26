@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 决策树 | kj的学习笔记</title>
+  <title>4.2 因子分析 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 决策树 | kj的学习笔记" />
+  <meta property="og:title" content="4.2 因子分析 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 决策树 | kj的学习笔记" />
+  <meta name="twitter:title" content="4.2 因子分析 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tree.html"/>
-<link rel="next" href="tree_2.html"/>
+<link rel="prev" href="ms_1.html"/>
+<link rel="next" href="ms_3.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -475,69 +475,207 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tree_1" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> 决策树<a href="tree_1.html#tree_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="tree_1_1" class="section level3 hasAnchor" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> 分类树<a href="tree_1.html#tree_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>分类树考虑响应变量为分类变量的情形，以叶结点处数量最多的类别作为叶结点的类别标签。首先考虑决策树是如何“生长”的，也就是根据什么准则来分裂结点。我们总是希望分裂后的结点中的样本尽可能的属于同一类别，即该结点有着较高的“纯度”。<strong>一言以蔽之，划分的过程就是从混乱走向有序的过程。</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>信息增益</p>
-<p>考虑在结点<span class="math inline">\(D\)</span>中的所有样本共属于<span class="math inline">\(M\)</span>个类别，考虑信息熵<span class="math inline">\(Ent(D)\)</span></p>
-<p><span class="math display" id="eq:tree-eq1">\[
-\textrm{Ent}(D)=-\sum_{m=1}^Mp_m \log_2p_m \tag{5.1}
+<div id="ms_2" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 因子分析<a href="ms_2.html#ms_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>因子分析是一种降维的方法，通过探寻变量的潜在结构，将其归纳为较少的因子，从而实现降维的目的。</p>
+<div id="ms_2_1" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 正交因子模型<a href="ms_2.html#ms_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>设X为可观测的p维随机向量，其均值为<span class="math inline">\(\mu\)</span>，协方差矩阵为<span class="math inline">\(\Sigma\)</span>，则正交因子模型可被表示为</p>
+<p><span class="math display" id="eq:ms-eq16">\[
+\begin{array}{c}
+X=AF+\mu+\varepsilon \\
+E(F)=0, \; Cov(F)=I_m \\
+E(\varepsilon)=0, \; Cov(\varepsilon)=\Psi=diag(\psi_1,...,\psi_2) \\
+Cov(F,\varepsilon)=0
+\end{array} \tag{4.16}
 \]</span></p>
-<p>如何理解信息熵？可以这样简单理解：对于不确定的、离谱的事情，人们就会拿不准，从而产生疑惑，想要知道更多的信息，此时信息熵就大；而对于确定的、理所应当的事情，人们就会很有把握，不会多问，此时信息熵就小。举个例子，一枚正常硬币猜正反，无论猜正面朝上还是猜反面朝上，概率都是0.5，因此只能瞎猜，没有什么把握。但对于一枚有特殊倾向的硬币，即正面朝上概率为0.9，那么大家自然都会猜正面朝上，并且有很大的把握。<strong>因此，信息熵是对不确定性的度量，信息熵越大，越不确定。</strong></p>
-<p>由此可得<strong>信息增益</strong>的定义：</p>
-<p><span class="math display" id="eq:tree-eq2">\[
-\textrm{Gain}(D,x)=\textrm{Ent}(D)-\sum_{v=1}^V\frac{n_v}{n}\textrm{Ent}(D^v) \tag{5.2}
-\]</span></p>
-<p>其中<span class="math inline">\(x\)</span>表示某个特征，<span class="math inline">\(V\)</span>表示该特征有多少个取值，<span class="math inline">\(n\)</span>和<span class="math inline">\(n_v\)</span>分别表示原结点与各个分支结点的样本量。</p>
 <blockquote>
-<p>若<span class="math inline">\(x\)</span>是连续变量，则可将其离散化，并且连续变量可以在后续划分中进一步细分，而离散变量只能使用一次。</p>
+<p>可通过中心化处理而消去<span class="math inline">\(\mu\)</span></p>
 </blockquote>
-<p>我们要寻求合适的特征使得划分后的子结点与原结点相比信息熵平均下降得最多。这就是信息增益的准则。</p></li>
-<li><p>增益率</p>
-<p>信息增益准则对取值数目较多的特征有所偏好。由此引入<strong>增益率</strong>，其定义为</p>
-<p><span class="math display" id="eq:tree-eq3">\[
-\textrm{Gain_ratio}(D,x)=\frac{\textrm{Gain}(D,x)}{\textrm{IV(x)}} \tag{5.3}
+<p>其中<span class="math inline">\(A\)</span>为<span class="math inline">\(p \times m\)</span>的因子载荷矩阵，<span class="math inline">\(F=(F_1, ...,F_m)&#39;\)</span>为<strong>公共因子</strong>向量，<span class="math inline">\(\varepsilon=(\varepsilon_1,...,\varepsilon_p)&#39;\)</span>为<strong>特殊因子</strong>向量。</p>
+<p>则X的协差阵可表示为</p>
+<p><span class="math display" id="eq:ms-eq17">\[
+\Sigma = Cov(X)=Cov(AF+\mu+\varepsilon)=ACov(F)A&#39;+Cov(\varepsilon)=AA&#39;+\Psi \tag{4.17}
 \]</span></p>
-<p>其中</p>
-<p><span class="math display" id="eq:tree-eq4">\[
-\textrm{IV}(x)=-\sum_{v=1}^V\frac{n_v}{n}\textrm{log}_2\frac{n_v}{n} \tag{5.4}
+<p>若X已进行标准化处理，则</p>
+<p><span class="math display" id="eq:ms-eq18">\[
+R=AA&#39;+\Psi \tag{4.18}
 \]</span></p>
-<p>事实上，<span class="math inline">\(\textrm{IV}(x)\)</span>就是信息熵的形式，可以视作某种对<span class="math inline">\(x\)</span>取值数量的惩罚。</p></li>
-<li><p>基尼系数</p>
-<p>定义基尼系数</p>
-<p><span class="math display" id="eq:tree-eq5">\[
-\textrm{Gini}(D)=\sum_{m=1}^Mp_m(1-p_m)=1-\sum_{m=1}^Mp_m^2 \tag{5.5}
-\]</span></p>
-<p>直观来看，基尼系数衡量的就是从结点<span class="math inline">\(D\)</span>中随机抽取两个样本，其类别不一致的概率。因此基尼系数越小，该结点纯度越高。</p></li>
+<blockquote>
+<p>由于<span class="math inline">\(\Psi\)</span>是对角阵，则<span class="math inline">\(\Sigma\)</span>和<span class="math inline">\(R\)</span>的非对角线元素全部由因子载荷矩阵A决定</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li>因子载荷矩阵的统计意义</li>
 </ol>
-<p>正如园艺里需要对植物进行修剪一样，决策树也能进行<strong>剪枝</strong>。决策树的剪枝策略分为<strong>预剪枝</strong>和<strong>后剪枝</strong>。</p>
-<ul>
-<li><p>预剪枝</p>
-<p>在决策树的生成过程中，对每个结点在分裂前进行估计，若对该结点划分不能提高泛化能力，则停止划分并将该结点设置为叶结点。</p>
-<p><strong>预剪枝降低了过拟合的风险，但存在欠拟合的可能。</strong></p></li>
-<li><p>后剪枝</p>
-<p>先完整地生成决策树，然后自下而上地对所有非叶结点进行考察。若将该非叶结点替换为叶结点后能够提升泛化性能，则进行替换。</p>
-<p><strong>后剪枝消耗的时间比预剪枝长，但欠拟合的风险较小，其泛化性能往往优于预剪枝策略。</strong></p></li>
-</ul>
-</div>
-<div id="tree_1_2" class="section level3 hasAnchor" number="5.1.2">
-<h3><span class="header-section-number">5.1.2</span> 回归树<a href="tree_1.html#tree_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>回归树考虑响应变量为连续变量的情形，以叶结点的响应变量平均值作为该叶结点的预测值。</p>
-<p>回归树划分结点的准则多种多样，但都是类似的，如最小化平方误差MSE、最小化均方根误差RMSE、最小化平均绝对误差MAE等。</p>
-<p>同样，回归树也能进行<strong>剪枝</strong>操作。</p>
-<ul>
-<li><p>预剪枝</p>
-<p>回归树的预剪枝策略可以设置一个样本量阈值，当结点分裂后的样本量小于该阈值，则不进行分裂。</p></li>
-<li><p>后剪枝</p>
-<p>后剪枝可以采取<strong>代价复杂性剪枝</strong>的策略，即先生成一棵完整的树，然后考虑如下的惩罚残差平方和函数</p>
-<p><span class="math display" id="eq:tree-eq6">\[
-\textrm{SSE}+\lambda|T|  \tag{5.6}
+<p><span class="math display" id="eq:ms-eq19">\[
+\begin{aligned}
+Cov(X,F)&amp;=E[X-E(X)][F-E(F)]&#39; \\
+&amp;=E[(X-\mu)F&#39;] \\
+&amp;= E[(AF+\varepsilon)F&#39;] \\
+&amp;= AE(FF&#39;)+E(\varepsilon F&#39;) \\
+&amp;= A
+\end{aligned} \tag{4.19}
 \]</span></p>
-<p>其中<span class="math inline">\(|T|\)</span>表示该棵决策树叶结点的数量。<span class="math inline">\(\lambda\)</span>的值可通过交叉验证的方法进行确定。</p></li>
-</ul>
+<p>由此可知，对于原始数据而言，因子载荷矩阵A记录了X与F之间的协方差，即<span class="math inline">\(a_{ij}=Cov(X_i,F_j)\)</span>。</p>
+<p>若对原始数据X进行标准化处理得到<span class="math inline">\(X^*\)</span>，则</p>
+<p><span class="math display" id="eq:ms-eq20">\[
+\rho_{ij}=\frac{Cov(X_i,F_j)}{\sqrt{Var(X_i)}\sqrt{Var(F_j)}}=Cov(X_i, F_j)=a_{ij} \tag{4.20}
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>变量共同度的统计意义</li>
+</ol>
+<p>由式<a href="ms_2.html#eq:ms-eq16">(4.16)</a>可得</p>
+<p><span class="math display" id="eq:ms-eq21">\[
+Var(X_i)=\sigma_{ii}=\sum_{j=1}^m a_{ij}^2+\psi_i:=h_i+\psi_i \tag{4.21}
+\]</span></p>
+<p>其中<span class="math inline">\(h_i\)</span>表现为全部公共因子对<span class="math inline">\(X_i\)</span>的变异程度的解释，反映了<span class="math inline">\(X_i\)</span>对公共因子的依赖程度，称为<strong>变量共同度</strong>，即因子载荷矩阵A的<strong>行元素平方和</strong>。</p>
+<ol start="3" style="list-style-type: decimal">
+<li>公共因子方差贡献的统计意义</li>
+</ol>
+<p><span class="math display" id="eq:ms-eq22">\[
+\sum_{i=1}^p Var(X_i) = \sum_{i=1}^p a_{i1}^2Var(F_1)+...+\sum_{i=1}^pa_{im}^2Var(F_m)+\sum_{i=1}^pVar(\varepsilon):=\sum_{j=1}^m q_j+\sum_{i=1}^p \psi_i \tag{4.22}
+\]</span></p>
+<p>其中<span class="math inline">\(q_j=\sum_{i=1}^p a_{ij}^2\)</span>，是因子载荷矩阵的列元素之和，反映了第j个公共因子对变量X的贡献及其相对重要性。进一步地，称<span class="math inline">\(\frac{q_j}{\sum_{i=1}^pVar(X_i)}\)</span>为公共因子<span class="math inline">\(F_j\)</span>所解释的总方差的比例。</p>
+<p>性质：</p>
+<ol style="list-style-type: decimal">
+<li><p>因子分析具有尺度不变性</p>
+<p>即对随机向量X的各个分量进行尺度放缩<span class="math inline">\(X^*=CX, \; C=diag(c_1,...,c_p)\)</span>后的随机向量<span class="math inline">\(X^*\)</span>仍满足正交因子模型的条件，且公共因子<span class="math inline">\(F\)</span>不变。</p></li>
+</ol>
+<blockquote>
+<p><span class="math inline">\(CX=C\mu+CAF+C\varepsilon\)</span>，可将<span class="math inline">\(CA\)</span>视作<span class="math inline">\(A^*\)</span>因此公共因子<span class="math inline">\(F\)</span>不变，变的是载荷矩阵</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li><p>因子载荷矩阵不唯一</p>
+<p>对于<span class="math inline">\(AF\)</span>，可以有任一正交矩阵<span class="math inline">\(\Gamma\)</span>，使得<span class="math inline">\(AF=(A\Gamma)(\Gamma&#39;F)\)</span>，其中可将<span class="math inline">\(A\Gamma\)</span>视作<span class="math inline">\(A^*\)</span>，将<span class="math inline">\(\Gamma&#39;F\)</span>视作<span class="math inline">\(F^*\)</span>，进行因子旋转后仍保持正交因子模型的条件。</p></li>
+</ol>
+<blockquote>
+<p>正交矩阵的作用相当于进行旋转</p>
+</blockquote>
+</div>
+<div id="ms_2_3" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> 参数估计<a href="ms_2.html#ms_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在参数估计前，得先判断变量之间是否存在足够强的相关关系来进行因子分析。</p>
+<ol style="list-style-type: decimal">
+<li><p>KMO检验</p>
+<p>KMO检验用于检查变量间的相关性和偏相关性。KMO统计量的取值越接近1，表明变量间的相关性越强，偏相关性越弱，因子分析的效果越好。KMO统计量的值一般在0.7以上比较适合做因子分析。</p></li>
+</ol>
+<blockquote>
+<p>R语言：<code>KMO()</code></p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Bartlett球形检验</p>
+<p>Bartlett球形检验的原假设是变量的相关阵是单位阵，当拒绝原假设时，则说明变量间具有相关性，因子分析有效。</p></li>
+</ol>
+<blockquote>
+<p>R语言：<code>psych::cortest.bartlett()</code></p>
+</blockquote>
+<div id="ms_2_3_1" class="section level4 hasAnchor" number="4.2.2.1">
+<h4><span class="header-section-number">4.2.2.1</span> 主成分法<a href="ms_2.html#ms_2_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>令<span class="math inline">\(\Sigma\)</span>的特征值为<span class="math inline">\(\lambda_1 \geq \lambda_2 \geq ... \geq \lambda_p \geq 0\)</span>，对<span class="math inline">\(\Sigma\)</span>进行谱分解</p>
+<p><span class="math display" id="eq:ms-eq23">\[
+\begin{aligned}
+\Sigma &amp;= P\Lambda P&#39; \\
+&amp;= \sum_{i=1}^p \lambda_ip_ip_i&#39; \\
+&amp;= \sum_{i=1}^m \lambda_ip_ip_i&#39;+\sum_{i=m+1}^p \lambda_ip_ip_i&#39; \\
+&amp;\approx
+\begin{pmatrix} \sqrt{\lambda_1}p_1 &amp; ... &amp; \sqrt{\lambda_m}p_m \end{pmatrix}
+\begin{pmatrix} \sqrt{\lambda_1}p_1&#39; \\ \vdots \\ \sqrt{\lambda_m}p_m&#39; \end{pmatrix} +
+\begin{pmatrix} \psi_1 &amp; \cdots &amp; 0 \\
+\vdots &amp; \ddots &amp; \vdots \\
+0 &amp; \cdots &amp; \psi_p \end{pmatrix} \\
+&amp;= \hat A \hat A&#39;+\hat \Psi
+\end{aligned} \tag{4.23}
+\]</span></p>
+<p>对<span class="math inline">\(\Sigma\)</span>进行谱分解，取特征值较大的前m个特征值及对应的特征向量构成因子载荷矩阵A，忽视掉其余较小的特征值及对应的特征向量。其中的<span class="math inline">\(\psi_i\)</span>则通过<span class="math inline">\(\hat \psi_i = \sigma_{ii}-\sum_{j=1}^m a_{ij}^2\)</span>计算得到。</p>
+<blockquote>
+<p>此时因子载荷矩阵中的每一列都是<span class="math inline">\(\sqrt{\lambda_i}p_i\)</span>。特别的，当<span class="math inline">\(\lambda_{m+1}=...=\lambda_p=0\)</span>时，此时有<span class="math inline">\(\Sigma=\hat A \hat A&#39;\)</span>，表明<span class="math inline">\(\hat A=P\Lambda^{\frac{1}{2}}\)</span>就是真实的载荷矩阵</p>
+<p>当然也可以对变量进行标准化后利用主成分法进行求解。此时公共因子<span class="math inline">\(F_j\)</span>的贡献为<span class="math inline">\(q_j=\sum_{i=1}^p \hat a_{ij}^2=||\sqrt{\lambda_j}p_j||^2 = \lambda_j\)</span></p>
+<p>m的选择可参考主成分分析</p>
+</blockquote>
+</div>
+<div id="ms_2_3_2" class="section level4 hasAnchor" number="4.2.2.2">
+<h4><span class="header-section-number">4.2.2.2</span> 主因子法<a href="ms_2.html#ms_2_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>由于因子具有尺度不变性，对X进行标准化后得到</p>
+<p><span class="math display" id="eq:ms-eq24">\[
+R=AA&#39;+\Psi \tag{4.24}
+\]</span></p>
+<p>若<span class="math inline">\(R\)</span>和<span class="math inline">\(\Psi\)</span>都已知，则称<span class="math inline">\(R^*=R-\Psi=AA&#39;\)</span>为“约相关矩阵”。</p>
+<p>其中<span class="math inline">\(R\)</span>可表示为</p>
+<p><span class="math display" id="eq:ms-eq25">\[
+\begin{cases}
+\rho_{ij}=a_{i1}a_{j1}+a_{i2}a_{j2}+...+a_{im}a_{jm} \quad &amp;1 \leq i \neq j \leq q \\
+\rho_{ii} = a_{i1}^2 + a_{i2}^2 + ...+a_{im}^2+\psi_i = h_i+\psi_i=1 \quad &amp;i=1,2,...,p
+\end{cases} \tag{4.25}
+\]</span></p>
+<p><span class="math inline">\(R^*\)</span>可表示为</p>
+<p><span class="math display" id="eq:ms-eq26">\[
+\begin{cases}
+\rho_{ij}=a_{i1}a_{j1}+a_{i2}a_{j2}+...+a_{im}a_{jm} \quad &amp;1 \leq i \neq j \leq q \\
+\rho_{ii} = a_{i1}^2 + a_{i2}^2 + ...+a_{im}^2= h_i \quad &amp;i=1,2,...,p
+\end{cases} \tag{4.26}
+\]</span></p>
+<blockquote>
+<p>关键点为<span class="math inline">\(h_i=1-\psi_i\)</span></p>
+</blockquote>
+<p>设<span class="math inline">\(R^*\)</span>的特征值为<span class="math inline">\(\lambda_1^* \geq \lambda_2^* \geq ... \geq \lambda_p^* \geq 0\)</span>，对应的特征向量为<span class="math inline">\(p_i^*\)</span>，此时可对<span class="math inline">\(R^*\)</span>进行谱分解，得到</p>
+<p><span class="math display" id="eq:ms-eq27">\[
+R^*=R-\Psi=\hat A \hat A&#39; \approx \begin{pmatrix} \sqrt{\lambda_1^*}p_1^* &amp; ... &amp; \sqrt{\lambda_m^*}p_m^* \end{pmatrix}
+\begin{pmatrix} \sqrt{\lambda_1^*}p_1^{*&#39;} \\ \vdots \\ \sqrt{\lambda_m^*}p_m^{*&#39;} \end{pmatrix} \tag{4.27}
+\]</span></p>
+<p>此时<span class="math inline">\(\hat A = \begin{pmatrix} \sqrt{\lambda_1^*}p_1^* &amp; ... &amp; \sqrt{\lambda_m^*}p_m^* \end{pmatrix}\)</span>，特殊因子方差的估计为<span class="math inline">\(\hat \psi_i = 1-\sum_{j=1}^m \hat a_{ij}^2\)</span></p>
+<blockquote>
+<p>主因子法的前提是得知道<span class="math inline">\(\Psi\)</span>，但在实际中<span class="math inline">\(\Psi\)</span>一般未知，因此可根据样本进行估计。也可根据迭代算法，根据初始值<span class="math inline">\(\Psi^{(0)}\)</span>开始迭代，得到<span class="math inline">\(\hat A^{(1)}\)</span>，再根据<span class="math inline">\(\hat A^{(1)}\)</span>得到<span class="math inline">\(\Psi^{(1)}\)</span>，不断重复，直至收敛</p>
+</blockquote>
+</div>
+<div id="ms_2_3_3" class="section level4 hasAnchor" number="4.2.2.3">
+<h4><span class="header-section-number">4.2.2.3</span> 极大似然法<a href="ms_2.html#ms_2_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>假设公共因子<span class="math inline">\(F \sim N_m(0,I)\)</span>，特殊因子<span class="math inline">\(\varepsilon\sim N_p(0,\Psi)\)</span>，且相互独立，则<span class="math inline">\(X \sim N_p(\mu, \Sigma)\)</span>。构造似然函数如下所示</p>
+<p><span class="math display" id="eq:ms-eq28">\[
+L(\mu, \Sigma)=(2\pi)^{-\frac{np}{2}}|\Sigma|^{-\frac{n}{2}}\exp[-\frac{1}{2}\sum_{i=1}^n(X_{(i)}-\mu)&#39;\Sigma^{-1}(X_{(i)}-\mu)] \tag{4.28}
+\]</span></p>
+<p>其中<span class="math inline">\(\mu\)</span>的极大似然估计为<span class="math inline">\(\hat \mu = \bar X\)</span>，回代可得</p>
+<p><span class="math display" id="eq:ms-eq29">\[
+\begin{aligned}
+L(\Sigma)&amp;=(2\pi)^{-\frac{np}{2}}|\Sigma|^{-\frac{n}{2}}\exp[-\frac{1}{2}\sum_{i=1}^n(X_{(i)}-\bar X)&#39;\Sigma^{-1}(X_{(i)}-\bar X)] \\
+&amp;= (2\pi)^{-\frac{np}{2}}|\Sigma|^{-\frac{n}{2}}\exp[-\frac{1}{2}tr(\sum_{i=1}^n(X_{(i)}-\bar X)&#39;\Sigma^{-1}(X_{(i)}-\bar X))] \\
+&amp;= (2\pi)^{-\frac{np}{2}}|\Sigma|^{-\frac{n}{2}}\exp[-\frac{1}{2}tr(\sum_{i=1}^n(X_{(i)}-\bar X)(X_{(i)}-\bar X)&#39;\Sigma^{-1})] \\
+&amp;= (2\pi)^{-\frac{np}{2}}|\Sigma|^{-\frac{n}{2}}\exp[-\frac{1}{2}tr(D\Sigma^{-1})]
+\end{aligned} \tag{4.29}
+\]</span></p>
+<p>其中<span class="math inline">\(D=\sum_{i=1}^n(X_{(i)}-\bar X)(X_{(i)}-\bar X)&#39;\)</span>为样本离差阵。</p>
+<p>根据<span class="math inline">\(\Sigma = AA&#39;+\Psi\)</span>，则</p>
+<p><span class="math display" id="eq:ms-eq30">\[
+L(A,\Psi)=(2\pi)^{-\frac{np}{2}}|AA&#39;+\Psi|^{-\frac{n}{2}}\exp[-\frac{1}{2}tr(D(AA&#39;+\Psi)^{-1})] \tag{4.30}
+\]</span></p>
+<p>求解<span class="math inline">\(\hat A\)</span>和<span class="math inline">\(\hat \Psi\)</span>使得对数似然函数<span class="math inline">\(\ln L(A,\Psi)\)</span>达到最大即可。</p>
+</div>
+<div id="ms_2_3_4" class="section level4 hasAnchor" number="4.2.2.4">
+<h4><span class="header-section-number">4.2.2.4</span> R语言实现<a href="ms_2.html#ms_2_3_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>R语言<code>factanal()</code>、<code>psych::fa()</code></p>
+</div>
+</div>
+<div id="ms_2_4" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> 因子旋转<a href="ms_2.html#ms_2_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>前面已经介绍了正交因子模型的因子载荷矩阵不唯一。为了因子载荷矩阵的可解释性，可对因子载荷矩阵进行旋转，常用的方法有<strong>最大方差旋转法</strong>，该方法使得各列载荷向量的方差尽可能地大，从而在一列载荷向量上同时出现较大的载荷与较小的载荷，则该因子主要表现为较大的载荷。</p>
+</div>
+<div id="ms_2_5" class="section level3 hasAnchor" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> 因子得分<a href="ms_2.html#ms_2_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>Bartlett因子得分和Thomson因子得分。</p>
+</div>
+<div id="ms_2_6" class="section level3 hasAnchor" number="4.2.5">
+<h3><span class="header-section-number">4.2.5</span> 因子分析和主成分分析的区别与联系<a href="ms_2.html#ms_2_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>区别：</p>
+<ol style="list-style-type: decimal">
+<li><p>主成分分析中主成分是变量的线性组合；而因子分析中自变量是因子的线性组合</p></li>
+<li><p>主成分分析中的主成分不可旋转且唯一，在解释性上稍差；因子分析中的因子不唯一，可以通过因子旋转来获取较好的解释性</p></li>
+<li><p>主成分分析只能通过对协方差阵进行特征分解来获取主成分；因子分析能够通过主成分法、主因子法、极大似然法等多种方法进行估计</p></li>
+</ol>
+<p>联系：</p>
+<ol style="list-style-type: decimal">
+<li><p>二者都是以降维为目的，希望通过少量彼此不相关的主成分或因子来反映原始变量的绝大部分信息</p></li>
+<li><p>二者分析的变量间均需要具有一定的相关性</p></li>
+<li><p>二者都可运用原始变量的协差阵或相关阵进行求解</p></li>
+</ol>
 </div>
 </div>
             </section>
@@ -545,8 +683,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="tree.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tree_2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ms_1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ms_3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 决策树 | kj的学习笔记</title>
+  <title>4.3 判别分析 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 决策树 | kj的学习笔记" />
+  <meta property="og:title" content="4.3 判别分析 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 决策树 | kj的学习笔记" />
+  <meta name="twitter:title" content="4.3 判别分析 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tree.html"/>
-<link rel="next" href="tree_2.html"/>
+<link rel="prev" href="ms_2.html"/>
+<link rel="next" href="ms_4.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -475,69 +475,178 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tree_1" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> 决策树<a href="tree_1.html#tree_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="tree_1_1" class="section level3 hasAnchor" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> 分类树<a href="tree_1.html#tree_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>分类树考虑响应变量为分类变量的情形，以叶结点处数量最多的类别作为叶结点的类别标签。首先考虑决策树是如何“生长”的，也就是根据什么准则来分裂结点。我们总是希望分裂后的结点中的样本尽可能的属于同一类别，即该结点有着较高的“纯度”。<strong>一言以蔽之，划分的过程就是从混乱走向有序的过程。</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>信息增益</p>
-<p>考虑在结点<span class="math inline">\(D\)</span>中的所有样本共属于<span class="math inline">\(M\)</span>个类别，考虑信息熵<span class="math inline">\(Ent(D)\)</span></p>
-<p><span class="math display" id="eq:tree-eq1">\[
-\textrm{Ent}(D)=-\sum_{m=1}^Mp_m \log_2p_m \tag{5.1}
+<div id="ms_3" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 判别分析<a href="ms_3.html#ms_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div id="ms_3_1" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> 距离判别<a href="ms_3.html#ms_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>根据样品距离各个总体的远近来判断该样品属于哪个总体。记<span class="math inline">\(d(X,G_i)\)</span>表示样品<span class="math inline">\(X\)</span>到总体<span class="math inline">\(G_i\)</span>的距离，则判别法则可表示为</p>
+<p><span class="math display" id="eq:ms-eq31">\[
+\delta(X) = \mathop{\arg\max}\limits_{i} \; d(X,G_i) \tag{4.31}
 \]</span></p>
-<p>如何理解信息熵？可以这样简单理解：对于不确定的、离谱的事情，人们就会拿不准，从而产生疑惑，想要知道更多的信息，此时信息熵就大；而对于确定的、理所应当的事情，人们就会很有把握，不会多问，此时信息熵就小。举个例子，一枚正常硬币猜正反，无论猜正面朝上还是猜反面朝上，概率都是0.5，因此只能瞎猜，没有什么把握。但对于一枚有特殊倾向的硬币，即正面朝上概率为0.9，那么大家自然都会猜正面朝上，并且有很大的把握。<strong>因此，信息熵是对不确定性的度量，信息熵越大，越不确定。</strong></p>
-<p>由此可得<strong>信息增益</strong>的定义：</p>
-<p><span class="math display" id="eq:tree-eq2">\[
-\textrm{Gain}(D,x)=\textrm{Ent}(D)-\sum_{v=1}^V\frac{n_v}{n}\textrm{Ent}(D^v) \tag{5.2}
+<p>距离取马氏距离<span class="math inline">\(d(X,G_i)=(X-\mu)&#39;\Sigma_i^{-1}(X-\mu)\)</span>，其中<span class="math inline">\(\Sigma_i\)</span>表示总体<span class="math inline">\(G_i\)</span>的协方差矩阵。</p>
+<div id="ms_3_1_1" class="section level4 hasAnchor" number="4.3.1.1">
+<h4><span class="header-section-number">4.3.1.1</span> 两总体且具有相同协差阵<a href="ms_3.html#ms_3_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>当两总体<span class="math inline">\(\Sigma_1=\Sigma_2=\Sigma\)</span>时，有</p>
+<p><span class="math display" id="eq:ms-eq32">\[
+\begin{aligned}
+&amp;d(X,G_1)-d(X,G_2) \\
+=&amp; (X-\mu_1)&#39;\Sigma^{-1}(X-\mu_1)-(X-\mu_2)&#39;\Sigma^{-1}(X-\mu_2) \\
+&amp;= X&#39;\Sigma^{-1}X-2X&#39;\Sigma^{-1}\mu_1+\mu_1&#39;\Sigma^{-1}\mu_1-(X&#39;\Sigma^{-1}X-2X&#39;\Sigma^{-1}\mu_2+\mu_2&#39;\Sigma^{-1}\mu_2) \\
+&amp;= 2X&#39;\Sigma^{-1}(\mu_2-\mu_1)+\mu_1&#39;\Sigma^{-1}\mu_1-\mu_2&#39;\Sigma^{-1}\mu_2 \\
+&amp;= 2X&#39;\Sigma^{-1}(\mu_2-\mu_1)+(\mu_1+\mu_2)&#39;\Sigma^{-1}(\mu_1-\mu_2) \\
+&amp;= -2(X-\frac{\mu_1+\mu_2}{2})&#39;\Sigma^{-1}(\mu_1-\mu_2) \\
+&amp;= -2(X-\bar \mu)&#39;a \\
+&amp;= -2a&#39;(X-\bar \mu)
+\end{aligned} \tag{4.32}
 \]</span></p>
-<p>其中<span class="math inline">\(x\)</span>表示某个特征，<span class="math inline">\(V\)</span>表示该特征有多少个取值，<span class="math inline">\(n\)</span>和<span class="math inline">\(n_v\)</span>分别表示原结点与各个分支结点的样本量。</p>
+<p>其中<span class="math inline">\(\bar \mu=\frac{\mu_1+\mu_2}{2}\)</span>，<span class="math inline">\(a=\Sigma^{-1}(\mu_1-\mu_2)\)</span>，称a为<strong>判别系数向量</strong>。</p>
+<p>称<span class="math inline">\(W(X)=a&#39;(X-\bar \mu)\)</span>为判别函数，则</p>
+<p><span class="math display" id="eq:ms-eq33">\[
+\begin{cases}
+X\in G_1, &amp;\textrm{if } W(X) \geq 0 \\
+X\in G_2, &amp;\textrm{if } W(X) \lt 0
+\end{cases} \tag{4.33}
+\]</span></p>
+<p>进一步地，当已知总体分布时，不妨令<span class="math inline">\(G_1 \sim N_p(\mu_1, \Sigma)\)</span>，则当<span class="math inline">\(X \in G_1\)</span>时，<span class="math inline">\(W(X)=a&#39;(X-\bar \mu) \sim N(a&#39;(\mu_1-\mu_2)/2,a&#39;\Sigma a)\)</span>。</p>
+<p>根据<span class="math inline">\(a=\Sigma^{-1}(\mu_1-\mu_2)\)</span>，又有<span class="math inline">\((\mu_1-\mu_2)=\Sigma\Sigma^{-1}(\mu_1-\mu_2)=\Sigma a\)</span>，故令<span class="math inline">\(\Delta^2=(\mu_1-\mu_2)&#39;\Sigma^{-1} (\mu_1-\mu_2) = a&#39;(\mu_1-\mu_2)=a&#39;\Sigma a\)</span>。则<span class="math inline">\(W(X) \sim N(\frac{1}{2}\Delta^2,\Delta^2)\)</span>，故误判概率为</p>
+<p><span class="math display" id="eq:ms-eq34">\[
+P(2|1) = P(W(X)&lt;0|X\in G_1)=\Phi(-\frac{\Delta}{2}) \tag{4.34}
+\]</span></p>
+<p>同理，对于<span class="math inline">\(G_2 \sim N_p(\mu_2, \Sigma)\)</span>，当<span class="math inline">\(X \in G_2\)</span>时，有<span class="math inline">\(W(X)\sim N(-\frac{1}{2}\Delta^2,\Delta^2)\)</span>，误判概率为</p>
+<p><span class="math display" id="eq:ms-eq35">\[
+P(1|2)=P(W(X) \geq 0|X \in G_2)=1-\Phi(\frac{\Delta}{2})=\Phi(-\frac{\Delta}{2}) \tag{4.35}
+\]</span></p>
 <blockquote>
-<p>若<span class="math inline">\(x\)</span>是连续变量，则可将其离散化，并且连续变量可以在后续划分中进一步细分，而离散变量只能使用一次。</p>
+<p>在实践中，常用样本均值替代总体均值，样本方差替代总体方差，若假设等方差，则使用联合估计</p>
 </blockquote>
-<p>我们要寻求合适的特征使得划分后的子结点与原结点相比信息熵平均下降得最多。这就是信息增益的准则。</p></li>
-<li><p>增益率</p>
-<p>信息增益准则对取值数目较多的特征有所偏好。由此引入<strong>增益率</strong>，其定义为</p>
-<p><span class="math display" id="eq:tree-eq3">\[
-\textrm{Gain_ratio}(D,x)=\frac{\textrm{Gain}(D,x)}{\textrm{IV(x)}} \tag{5.3}
-\]</span></p>
-<p>其中</p>
-<p><span class="math display" id="eq:tree-eq4">\[
-\textrm{IV}(x)=-\sum_{v=1}^V\frac{n_v}{n}\textrm{log}_2\frac{n_v}{n} \tag{5.4}
-\]</span></p>
-<p>事实上，<span class="math inline">\(\textrm{IV}(x)\)</span>就是信息熵的形式，可以视作某种对<span class="math inline">\(x\)</span>取值数量的惩罚。</p></li>
-<li><p>基尼系数</p>
-<p>定义基尼系数</p>
-<p><span class="math display" id="eq:tree-eq5">\[
-\textrm{Gini}(D)=\sum_{m=1}^Mp_m(1-p_m)=1-\sum_{m=1}^Mp_m^2 \tag{5.5}
-\]</span></p>
-<p>直观来看，基尼系数衡量的就是从结点<span class="math inline">\(D\)</span>中随机抽取两个样本，其类别不一致的概率。因此基尼系数越小，该结点纯度越高。</p></li>
+<p>若不能假定总体为正态分布时，可用样本的误判比例替代误判概率。</p>
+<ol style="list-style-type: decimal">
+<li><p>回代法</p>
+<p>用所有样本构造判别函数，再用该判别函数去判断样品所属总体，计算误判比例。</p></li>
+<li><p>划分样本</p>
+<p>将所有样本划分为训练集和验证集，训练集用于构造判别函数，验证集用于计算误判比例。</p></li>
+<li><p>交叉验证法</p>
+<p>分别从<span class="math inline">\(G_1\)</span>、<span class="math inline">\(G_2\)</span>中各取出1个观测值，再用剩余观测值来构造判别函数，根据判别函数来对这两个观测值进行判断，记录判断结果。不断重复这个过程，最后计算误判比例。</p></li>
 </ol>
-<p>正如园艺里需要对植物进行修剪一样，决策树也能进行<strong>剪枝</strong>。决策树的剪枝策略分为<strong>预剪枝</strong>和<strong>后剪枝</strong>。</p>
-<ul>
-<li><p>预剪枝</p>
-<p>在决策树的生成过程中，对每个结点在分裂前进行估计，若对该结点划分不能提高泛化能力，则停止划分并将该结点设置为叶结点。</p>
-<p><strong>预剪枝降低了过拟合的风险，但存在欠拟合的可能。</strong></p></li>
-<li><p>后剪枝</p>
-<p>先完整地生成决策树，然后自下而上地对所有非叶结点进行考察。若将该非叶结点替换为叶结点后能够提升泛化性能，则进行替换。</p>
-<p><strong>后剪枝消耗的时间比预剪枝长，但欠拟合的风险较小，其泛化性能往往优于预剪枝策略。</strong></p></li>
-</ul>
 </div>
-<div id="tree_1_2" class="section level3 hasAnchor" number="5.1.2">
-<h3><span class="header-section-number">5.1.2</span> 回归树<a href="tree_1.html#tree_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>回归树考虑响应变量为连续变量的情形，以叶结点的响应变量平均值作为该叶结点的预测值。</p>
-<p>回归树划分结点的准则多种多样，但都是类似的，如最小化平方误差MSE、最小化均方根误差RMSE、最小化平均绝对误差MAE等。</p>
-<p>同样，回归树也能进行<strong>剪枝</strong>操作。</p>
-<ul>
-<li><p>预剪枝</p>
-<p>回归树的预剪枝策略可以设置一个样本量阈值，当结点分裂后的样本量小于该阈值，则不进行分裂。</p></li>
-<li><p>后剪枝</p>
-<p>后剪枝可以采取<strong>代价复杂性剪枝</strong>的策略，即先生成一棵完整的树，然后考虑如下的惩罚残差平方和函数</p>
-<p><span class="math display" id="eq:tree-eq6">\[
-\textrm{SSE}+\lambda|T|  \tag{5.6}
+<div id="ms_3_1_2" class="section level4 hasAnchor" number="4.3.1.2">
+<h4><span class="header-section-number">4.3.1.2</span> 其他情形<a href="ms_3.html#ms_3_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>这里的其他情形是指多总体的或协差阵不相同的情况，核心思想还是找到最小的<span class="math inline">\(d(X,G_i)\)</span>。</p>
+<p>例如多总体且协差阵相同时，有</p>
+<p><span class="math display" id="eq:ms-eq35">\[
+d(X,G_i)=X&#39;\Sigma^{-1}X-2\mu_i&#39; \Sigma^{-1} X+\mu_i&#39;\Sigma^{-1} \mu_i=X&#39;\Sigma^{-1}X-2(I_i&#39;X+c_i) \tag{4.35}
 \]</span></p>
-<p>其中<span class="math inline">\(|T|\)</span>表示该棵决策树叶结点的数量。<span class="math inline">\(\lambda\)</span>的值可通过交叉验证的方法进行确定。</p></li>
-</ul>
+<p>其中<span class="math inline">\(I_i=\Sigma^{-1}\mu_i, \; c_i=-\frac{1}{2}\mu_i&#39;\Sigma^{-1}\mu_i\)</span>。可以看到，<span class="math inline">\(d(X,G_i)\)</span>中的<span class="math inline">\(X&#39;\Sigma^{-1}X\)</span>是固定的，因此判别规则即为<span class="math inline">\(X\in G_i, \textrm{if }I_i&#39;X+c_i=\max\limits_{j}(I&#39;_jX+c_j)\)</span>。</p>
+</div>
+</div>
+<div id="ms_3_2" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> 贝叶斯判别<a href="ms_3.html#ms_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>贝叶斯判别相较于距离判别法多考虑了先验信息，并根据样本信息得到后验概率分布，通过后验概率分布来进行统计推断。</p>
+<p>假设有k个总体G，各个总体的概率密度函数为<span class="math inline">\(f_i(x)\)</span>，先验概率为<span class="math inline">\(q_i\)</span>，则根据样本得到的后验概率为</p>
+<p><span class="math display" id="eq:ms-eq36">\[
+P(G_i|x)=\frac{q_if_i(x)}{\sum_{j=1}^kq_jf_j(x)} \tag{4.36}
+\]</span></p>
+<blockquote>
+<p>先验概率可根据历史资料或经验得到，或者用训练样本中各类所占比例作为先验概率，或者直接令各类先验概率均相等</p>
+</blockquote>
+<div id="ms_3_2_1" class="section level4 hasAnchor" number="4.3.2.1">
+<h4><span class="header-section-number">4.3.2.1</span> 最大后验概率法<a href="ms_3.html#ms_3_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>根据样品计算得到的后验概率进行判别，取最大后验概率对应的总体作为样品的判别结果，即</p>
+<p><span class="math display" id="eq:ms-eq37">\[
+X \in G_i, \quad \textrm{if } P(G_i|x)=\max\limits_{j} P(G_j|x) \tag{4.37}
+\]</span></p>
+<p>当总体为正态分布时，对应的密度函数为</p>
+<p><span class="math display" id="eq:ms-eq38">\[
+f_i(x)=(2\pi)^{-\frac{p}{2}}|\Sigma_i|^{-\frac{1}{2}}\exp(-\frac{1}{2}(x-\mu_i)&#39;\Sigma_i^{-1}(x-\mu_i))=(2\pi)^{-\frac{p}{2}}|\Sigma_i|^{-\frac{1}{2}}\exp(-\frac{1}{2}d(x,G_i)) \tag{4.38}
+\]</span></p>
+<p>则后验概率为</p>
+<p><span class="math display" id="eq:ms-eq39">\[
+\begin{aligned}
+P(G_i|x)&amp;=\frac{q_i(2\pi)^{-\frac{p}{2}}|\Sigma_i|^{-\frac{1}{2}}\exp(-\frac{1}{2}d(x,G_i))}{\sum_{j=1}^k q_j(2\pi)^{-\frac{p}{2}}|\Sigma_j|^{-\frac{1}{2}}\exp(-\frac{1}{2}d(x,G_j))} \\
+&amp;= \frac{q_i|\Sigma_i|^{-\frac{1}{2}}\exp(-\frac{1}{2}d(x,G_i))}{\sum_{j=1}^k q_j |\Sigma_j|^{-\frac{1}{2}}\exp(-\frac{1}{2}d(x,G_j))} \\
+&amp;= \frac{\exp (-\frac{1}{2}d(x,G_i)+\ln q_i-\frac{1}{2}\ln |\Sigma_i|)}{\sum_{j=1}^k \exp (-\frac{1}{2}d(x,G_j)+\ln q_j-\frac{1}{2}\ln |\Sigma_j|)} \\
+&amp;= \frac{\exp [-\frac{1}{2}(d(x,G_i)-2\ln q_i+\ln |\Sigma_i|)]}{\sum_{j=1}^k \exp [-\frac{1}{2}(d(x,G_j)-2\ln q_j+\ln |\Sigma_j|)]}
+\end{aligned} \tag{4.39}
+\]</span></p>
+<p>当假定先验概率均相等或者协差阵均相等时，对应的<span class="math inline">\(q\)</span>和<span class="math inline">\(|\Sigma|\)</span>均可消掉。不妨令<span class="math inline">\(D(x,G_i)=d(x,G_i)+\ln|\Sigma_i|-2\ln q_i\)</span>，称其为广义平方距离，则正态假设下的最大后验概率法等价于</p>
+<p><span class="math display" id="eq:ms-eq40">\[
+X \in G_i, \quad \textrm{if } D(x,G_i)=\min\limits_{j} D(x,G_j) \tag{4.40}
+\]</span></p>
+<blockquote>
+<p>注意<span class="math inline">\(\exp\)</span>里面有负号，所以最大化就变成最小化了</p>
+</blockquote>
+</div>
+<div id="ms_3_2_2" class="section level4 hasAnchor" number="4.3.2.2">
+<h4><span class="header-section-number">4.3.2.2</span> 最小期望误判代价法<a href="ms_3.html#ms_3_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>以两总体的情形为例，沿用最大后验概率法中的记号，并引入误判损失，记为<span class="math inline">\(C(2|1),\,C(1|2)\)</span>，分别表示来自总体<span class="math inline">\(G_1\)</span>却被误判为<span class="math inline">\(G_2\)</span>的损失和来自总体<span class="math inline">\(G_2\)</span>却被误判为<span class="math inline">\(G_1\)</span>的损失。在判别规则下，<span class="math inline">\(R^p\)</span>空间被划分为两个空间<span class="math inline">\(R_1\)</span>和<span class="math inline">\(R_2\)</span>，且$R_1 R_2=, ,R_1 R_2= $。</p>
+<p>因此，若样品来自<span class="math inline">\(G_1\)</span>，则正确判别的概率为</p>
+<p><span class="math display" id="eq:ms-eq41">\[
+P(1|1)=P(x\in R_1 | x \in G_1)=\int_{R_1}f_1(x)dx \tag{4.41}
+\]</span></p>
+<p>误判的概率为</p>
+<p><span class="math display" id="eq:ms-eq42">\[
+P(2|1)=P(x\in R_2 | x \in G_1)=\int_{R_2}f_1(x)dx \tag{4.42}
+\]</span></p>
+<p>若样品来自<span class="math inline">\(G_2\)</span>同理。</p>
+<p>定义期望误判损失(Expected Cost of Misclassification)</p>
+<p><span class="math display" id="eq:ms-eq43">\[
+\begin{aligned}
+ECM&amp;=E(C(l|i)) \\
+&amp;= C(2|1)P(x\in G_1, x\in R_2)+C(1|2)P(x\in G_2, x\in R_1) \\
+&amp;= C(2|1)P(x \in R_2 | x \in G_1)P(x \in G_1)+C(1|2)P(x \in R_1 | x \in G_2)P(x \in G_2) \\
+&amp;= C(2|1)P(2|1)q_1+C(1|2)P(1|2)q_2 \\
+&amp;= C(2|1)q_1\int_{R_2}f_1(x)dx+C(1|2)q_2\int_{R_1}f_2(x)dx \\
+&amp;= C(2|1)q_1\int_{R_2}f_1(x)dx+C(1|2)q_2(1-\int_{R_2}f_2(x)dx) \\
+&amp;= \int_{R_2} [C(2|1)q_1f_1(x)-C(1|2)q_2f_2(x)]dx + C(1|2)q_2 \\
+&amp;\propto \int_{R_2} [C(2|1)q_1f_1(x)-C(1|2)q_2f_2(x)]dx \\
+&amp;=1- \int_{R_1} [C(2|1)q_1f_1(x)-C(1|2)q_2f_2(x)]dx
+\end{aligned} \tag{4.43}
+\]</span></p>
+<p>积分是曲线下的有向面积，当<span class="math inline">\(C(2|1)q_1f_1(x)-C(1|2)q_2f_2(x)\geq 0\)</span>时，对其积分会变大，为了最小化ECM，应归为<span class="math inline">\(R_1\)</span>，同理，当<span class="math inline">\(C(2|1)q_1f_1(x)-C(1|2)q_2f_2(x)\lt 0\)</span>时，应归为<span class="math inline">\(R_2\)</span>，即</p>
+<p><span class="math display" id="eq:ms-eq44">\[
+R_1=\{x:C(2|1)q_1f_1(x)\geq C(1|2)q_2f_2(x)\} \\
+R_2=\{x:C(2|1)q_1f_1(x) \lt C(1|2)q_2f_2(x)\} \tag{4.44}
+\]</span></p>
+<p>当总体为正态分布，且协差阵相等时，则</p>
+<p><span class="math display" id="eq:ms-eq45">\[
+\begin{aligned}
+C(2|1)q_1f_1(x) &amp;\geq C(1|2)q_2f_2(x) \\
+\frac{f_1(x)}{f_2(x)} &amp;\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
+\frac{\exp\{-\frac{1}{2}(x-\mu_1)&#39;\Sigma^{-1}(x-\mu_1)\}}{\exp\{-\frac{1}{2}(x-\mu_2)&#39;\Sigma^{-1}(x-\mu_2)\}} &amp;\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
+\exp\{-\frac{1}{2}[(x-\mu_1)&#39;\Sigma^{-1}(x-\mu_1)-(x-\mu_2)&#39;\Sigma^{-1}(x-\mu_2)]\} &amp;\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
+\exp\{-\frac{1}{2}[-2x&#39;\Sigma^{-1}\mu_1+\mu_1&#39;\Sigma^{-1}\mu_1+2x&#39;\Sigma^{-1}\mu_2-\mu_2&#39;\Sigma^{-1}\mu_2]\} &amp;\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
+\exp\{-\frac{1}{2}[-2x&#39;\Sigma^{-1}(\mu_1-\mu_2)+(\mu_1+\mu_2)&#39;\Sigma^{-1}(\mu_1-\mu_2)]\} &amp;\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
+\exp\{(x-\frac{\mu_1+\mu_2}{2})&#39;\Sigma^{-1}(\mu_1-\mu_2) \} &amp;\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
+a&#39;(x-\bar \mu) \geq \ln{[\frac{C(1|2)q_2}{C(2|1)q_1}]}
+\end{aligned} \tag{4.45}
+\]</span></p>
+<p>其中<span class="math inline">\(a=\Sigma^{-1}(\mu_1-\mu_2), \, \bar \mu =\frac{\mu_1+\mu_2}{2}\)</span>。这等价于</p>
+<p><span class="math display" id="eq:ms-eq46">\[
+R_1=\{x:a&#39;(x-\bar \mu) \geq \ln{[\frac{C(1|2)q_2}{C(2|1)q_1}]}\} \\
+R_2=\{x:a&#39;(x-\bar \mu) \lt \ln{[\frac{C(1|2)q_2}{C(2|1)q_1}]}\} \tag{4.46}
+\]</span></p>
+<blockquote>
+<p>这里出现了距离判别中的<span class="math inline">\(a&#39;(x-\bar \mu)\)</span>，当不考虑先验概率和误判代价时，距离判别和贝叶斯判别等价</p>
+</blockquote>
+<p>上述假定了两总体是正态的，且协差阵相等的情形，倘若协差阵不相等时，同第<a href="@#ms_3_1_2" target="_blank">4.3.1.2节</a>一样，直接把正态密度函数的指数部分看成马氏距离<span class="math inline">\(d(x,G_i)\)</span>，并且保留<span class="math inline">\(|\Sigma_i|\)</span>，再进行讨论。</p>
+<p>更一般的情形则是</p>
+<p><span class="math display" id="eq:ms-eq47">\[
+\begin{aligned}
+ECM&amp;=E[C(l|i)] \\
+&amp;=\sum_{i=1}^k\sum_{l=1}^k C(l|i)P(x\in G_i,x \in R_l) \\
+&amp;= \sum_{i=1}^k\sum_{l=1}^k C(l|i)P(x \in R_l|x\in G_i)P(x\in G_i) \\
+&amp;= \sum_{i=1}^k\sum_{l=1}^k C(l|i)P(l|i)q_i \\
+&amp;= \sum_{l=1}^k\sum_{i=1}^k C(l|i)P(l|i)q_i
+\end{aligned} \tag{4.47}
+\]</span></p>
+<p>最后两行虽然都是对所有情形的遍历，但内外求和顺序的不同代表着其思想也是不同。倒数第二行的外层是对<span class="math inline">\(i\)</span>求和，内层是对<span class="math inline">\(l\)</span>求和，其含义是先确定样品所属的总体，再考虑把该样品判给其他总体所带来的损失和。而最后一行的外层是对<span class="math inline">\(l\)</span>求和，内层是对<span class="math inline">\(i\)</span>求和，其含义是先确定把样品判别给某一总体，再考虑不同总体下的样品判别给该总体的损失和。显然，后者更符合我们判别的诉求，也就是把样品归类，并计算这样做的平均代价。因此让ECM最小的判别规则为</p>
+<p><span class="math display" id="eq:ms-eq48">\[
+R_t=\{x:\sum_{i\neq t}^k C(t|i)P(t|i)q_i = \min_{l} \sum_{i\neq l}^k C(l|i)P(l|i)q_i\} \tag{4.48}
+\]</span></p>
+<blockquote>
+<p>考虑<span class="math inline">\(ECM=10=2+4+1+3\)</span>，这意味着现在有四个总体，把这个样品判别给这四个总体会分别带来2、4、1、3的平均损失，我们要最小化ECM，因此会选择平均损失为1的那个总体作为该样品的判别结果</p>
+</blockquote>
+</div>
 </div>
 </div>
             </section>
@@ -545,8 +654,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="tree.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tree_2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ms_2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ms_4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

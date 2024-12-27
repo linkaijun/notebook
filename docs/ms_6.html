@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>参考文献 | kj的学习笔记</title>
+  <title>4.5 聚类分析 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="参考文献 | kj的学习笔记" />
+  <meta property="og:title" content="4.5 聚类分析 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="参考文献 | kj的学习笔记" />
+  <meta name="twitter:title" content="4.5 聚类分析 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ball_1.html"/>
-
+<link rel="prev" href="ms_5.html"/>
+<link rel="next" href="ms_7.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -482,120 +482,135 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="参考文献" class="section level1 unnumbered hasAnchor">
-<h1>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h1>
-<div id="refs" class="references csl-bib-body" entry-spacing="0">
-<div class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">SIMON N. FRIEDMAN J H. HASTIE T. 等. Regularization paths for Cox’s proportional hazards model via coordinate descent[J]. Journal of Statistical Software, 2011, 39: 1-13.</div>
+<div id="ms_6" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> 聚类分析<a href="ms_6.html#ms_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div id="ms_6_1" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> 距离与相似性的度量<a href="ms_6.html#ms_6_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="ms_6_1_1" class="section level4 hasAnchor" number="4.5.1.1">
+<h4><span class="header-section-number">4.5.1.1</span> 距离的度量<a href="ms_6.html#ms_6_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>距离的定义应当具有如下性质</p>
+<ol style="list-style-type: decimal">
+<li><p>非负性：<span class="math inline">\(d_{ij} \geq 0\)</span></p></li>
+<li><p>对称性：<span class="math inline">\(d_{ij}=d_{ji}\)</span></p></li>
+<li><p>三角不等式： <span class="math inline">\(d_{ij} \leq d_{ik} + d_{kj}\)</span></p></li>
+</ol>
+<p>常用的距离有闵可夫斯基距离、欧氏距离、马氏距离、曼哈顿距离。</p>
 </div>
-<div class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">何勇. 石伟. 陈旭辉. 基于社会网络分析的文旅产业融合空间结构研究[J]. 东南大学学报（哲学社会科学版）, 2024, 26(3): 107-116.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">张正峰. 张栋. 基于社会网络分析的京津冀地区碳排放空间关联与碳平衡分区[J]. 中国环境科学, 2023, 43(4): 2057-2068.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">邱志萍. 刘举胜. 何建佳. 我国商贸流通网络的结构特征及驱动因素——基于引力模型的社会网络分析[J]. 中国流通经济, 2023, 37(2): 31-42.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">张露露. 刘安诺. 尤梅. 等. 社区老年人老化态度的潜在剖面分析及其与社会网络的关系[J]. 军事护理, 2024, 41(8): 39-42, 73.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">黄文胜. 肖利斌. 郑向敏. 民营酒店员工社会网络类型和结构特性研究——基于中心性、凝聚子群的视角[J]. 企业经济, 2020(5): 87-94.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[7] </div><div class="csl-right-inline">张鑫. 刘秉权. 王晓龙. 复杂网络中社区发现方法的研究[J]. 计算机工程与应用, 2015, 51(24): 1-7.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[8] </div><div class="csl-right-inline">端祥宇. 袁冠. 孟凡荣. 动态社区发现方法研究综述[J]. 计算机科学与探索, 2021, 15(4): 612-630.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[9] </div><div class="csl-right-inline">刘军. QAP:测量"关系"之间关系的一种方法[J]. 社会, 2007, 27(4): 164-174.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[10] </div><div class="csl-right-inline">姜小鱼. 陈秧分. 农业对外投资布局对母国参与全球价值链的影响——基于社会网络分析视角[J]. 华中农业大学学报（社会科学版）, 2023(3): 44-53.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[11] </div><div class="csl-right-inline">王珊珊. 孙程九. 经济制裁是否破坏了增加值贸易网络——基于全球制裁数据的社会网络分析[J]. 国际贸易问题, 2023(2): 74-91.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[12] </div><div class="csl-right-inline">张亚明. 付尧飞. 宋雯婕. 等. 社交媒体时代全球智库国际传播力研究:基于87家智库Twitter账户的社交网络分析[J]. 智库理论与实践, 2024, 9(2): 48-59.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[13] </div><div class="csl-right-inline">FRIEDMAN J. HASTIE T. TIBSHIRANI R. Regularization paths for generalized linear models via coordinate descent[J]. Journal of Statistical Software, 2010, 33(1): 1.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[14] </div><div class="csl-right-inline">FAN J. LI R. Variable selection via nonconcave penalized likelihood and its oracle properties[J]. Journal of the American Statistical Association, 2001, 96(456): 1348-1360.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[15] </div><div class="csl-right-inline">TIBSHIRANI R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 1996, 58(1): 267-288.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[16] </div><div class="csl-right-inline">DONOHO D L. JOHNSTONE I M. Ideal spatial adaptation by wavelet shrinkage[J/OL]. Biometrika, 1994, 81: 425-455. <a href="https://api.semanticscholar.org/CorpusID:239520">https://api.semanticscholar.org/CorpusID:239520</a>.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[17] </div><div class="csl-right-inline">ZOU. HUI. The Adaptive Lasso and Its Oracle Properties[J]. Publications of the American Statistical Association, 2006, 101(476): 1418-1429.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[18] </div><div class="csl-right-inline">王小燕. 谢邦昌. 马双鸽. 等. 高维数据下群组变量选择的惩罚方法综述[J]. 数理统计与管理, 2015, 34(6): 978-988.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[19] </div><div class="csl-right-inline">HOERL A E. KENNARD R W. Ridge regression: Biased estimation for nonorthogonal problems[J]. Technometrics, 1970, 12(1): 55-67.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[20] </div><div class="csl-right-inline">ZOU H. HASTIE T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 2005, 67(2): 301-320.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[21] </div><div class="csl-right-inline">ZHANG C H. Penalized linear unbiased selection[J]. Department of Statistics and Bioinformatics, Rutgers University, 2007, 3(2010): 894-942.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[22] </div><div class="csl-right-inline">EFRON B. HASTIE T. TIBSHIRANI J R. Least Angle Regression[J]. Annals of Statistics, 2004, 32(2): 407-451.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[23] </div><div class="csl-right-inline">HUANG J. BREHENY P. LEE S. 等. The Mnet method for variable selection[J]. Statistica Sinica, 2016: 903-923.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[24] </div><div class="csl-right-inline">ZENG L. XIE J. Group variable selection via SCAD-L2[J/OL]. Statistics, 2014, 48: 49-66. <a href="https://api.semanticscholar.org/CorpusID:14065404">https://api.semanticscholar.org/CorpusID:14065404</a>.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[25] </div><div class="csl-right-inline">ZENG L. XIE J. Group variable selection for data with dependent structures[J]. Journal of Statistical Computation and Simulation, 2012, 82(1): 95-106.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[26] </div><div class="csl-right-inline">YUAN M. LIN Y. Model selection and estimation in regression with grouped variables[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 2006, 68(1): 49-67.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[27] </div><div class="csl-right-inline">ZHAO P. ROCHA G. YU B. The composite absolute penalties family for grouped and hierarchical variable selection[J]. 2009.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[28] </div><div class="csl-right-inline">HUANG J. MA S. XIE H. 等. A group bridge approach for variable selection[J]. Biometrika, 2009, 96(2): 339-355.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[29] </div><div class="csl-right-inline">BREHENY P. HUANG J. Penalized methods for bi-level variable selection[J]. Statistics and Its Interface, 2009, 2(3): 369.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[30] </div><div class="csl-right-inline">SIMON N. FRIEDMAN J. HASTIE T. 等. A Sparse-Group Lasso[J]. Journal of Computational and Graphical Statistics: A Joint Publication of American Statistical Association, Institute of Mathematical Statistics, Interface Foundation of North America, 2013, 22(2): 231-245.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[31] </div><div class="csl-right-inline">马双鸽. 王小燕. 方匡南. 大数据的整合分析方法[J]. 统计研究, 2015, 32(11): 3-11.</div>
+<div id="ms_6_1_2" class="section level4 hasAnchor" number="4.5.1.2">
+<h4><span class="header-section-number">4.5.1.2</span> 相似性的度量<a href="ms_6.html#ms_6_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>有时可能会对指标之间进行聚类，指标间的距离常用相似系数进行度量。相似系数具有如下性质</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(c_{ij}= \pm 1 \Leftrightarrow X_i=aX_j, \, a\neq 0\)</span></p></li>
+<li><p><span class="math inline">\(|c_{ij}| \leq 1\)</span>，若<span class="math inline">\(|c_{ij}|\)</span>越接近1则变量间关系越密切，越接近0则关系越疏远</p></li>
+<li><p><span class="math inline">\(c_{ij}=c_{ji}\)</span></p></li>
+</ol>
+<p>常用的相似系数有相关系数、夹角余弦。</p>
+<blockquote>
+<p>距离与相似系数之间可以相互转化</p>
+</blockquote>
 </div>
 </div>
-
+<div id="ms_6_2" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> 系统聚类<a href="ms_6.html#ms_6_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="ms_6_2_1" class="section level4 hasAnchor" number="4.5.2.1">
+<h4><span class="header-section-number">4.5.2.1</span> 类与类之间的距离<a href="ms_6.html#ms_6_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<ol style="list-style-type: decimal">
+<li>最短距离法：<span class="math inline">\(D_{KL} = \min\limits_{i\in G_K, j \in G_L} \{d_{ij}\}\)</span></li>
+</ol>
+<blockquote>
+<p>适用于长条形的或不规则现状的类，对球形类的效果不是很好</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>最长距离法：<span class="math inline">\(D_{KL} = \max\limits_{i\in G_K, j \in G_L} \{d_{ij}\}\)</span></li>
+</ol>
+<blockquote>
+<p>倾向于产生直径相等的类，易受异常值的影响</p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>类平均法：<span class="math inline">\(D_{KL}=\frac{\sum_{i\in G_K, j \in G_L}d_{ij}}{n_Kn_L}\)</span></li>
+</ol>
+<blockquote>
+<p>两类中所有距离的平均数，倾向于先合并方差小的类，而且偏向于产生方差相同的类</p>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>中间距离法：<span class="math inline">\(D_{MJ}^2=\frac{1}{2}D_{KJ}^2+\frac{1}{2}D_{LJ}^2-\frac{1}{4}D_{KL}^2\)</span></li>
+</ol>
+<blockquote>
+<p>平行四边形的对角线的中线距离，</p>
+</blockquote>
+<ol start="5" style="list-style-type: decimal">
+<li>重心法：<span class="math inline">\(D_{KL}^2 = ||\bar X_K - \bar X_L||^2 = (\bar X_K-\bar X_L)&#39;(\bar X_K-\bar X_L)\)</span></li>
+</ol>
+<blockquote>
+<p>注意这里是平方距离，是重心差的内积。和其他系统聚类方法相比在处理异常值方面更稳健</p>
+</blockquote>
+<ol start="6" style="list-style-type: decimal">
+<li>Ward法：<span class="math inline">\(D_{KL}^2 = ||\bar X_K - \bar X_L||^2/(\frac{1}{n_K}+\frac{1}{n_L})\)</span></li>
+</ol>
+<blockquote>
+<p>在重心法的基础上多除了各自数量的倒数和。该法倾向于先合并样品少的类，且对异常值非常敏感</p>
+</blockquote>
+<p>下面是不同形状数据及各种距离的系统聚类方法效果。</p>
+<ol style="list-style-type: decimal">
+<li><p>能完全分开的球状数据</p>
+<p>各种距离的系统聚类方法均适用。</p></li>
+<li><p>不能完全分开的球状数据</p>
+<ul>
+<li><p>Ward法、类平均法、重心法的聚类形状差不多，Ward法比较适合样本大小相等的球状数据的聚类。</p></li>
+<li><p>最短距离法最差。</p></li>
+</ul></li>
+<li><p>样本大小不等的球状数据</p>
+<p>重心法的聚类效果最好，类平均法偏向产生方差相等的类。</p></li>
+<li><p>并排拉长的数据</p>
+<ul>
+<li><p>最短距离法效果最好。</p></li>
+<li><p>Ward法、类平均法、重心法都不行。数据进行预处理后可以得到较好的聚类结果。</p></li>
+</ul></li>
+<li><p>非球状数据</p>
+<ul>
+<li><p>最短距离法聚类效果最好。</p></li>
+<li><p>Ward法、类平均法、重心法都不行，即使对数据进行预处理后仍不起作用。</p></li>
+</ul></li>
+</ol>
+<p>系统距离的特点：</p>
+<ol style="list-style-type: decimal">
+<li><p>无需事先指定类的数目。</p></li>
+<li><p>需要确定相异度（距离/相似性系数）和联接度量准则。</p></li>
+<li><p>运算量较大，适用于小规模数据。</p></li>
+<li><p>一旦完成合并或分裂，则无法撤销或修正。</p></li>
+</ol>
 </div>
-
-
-
-
-
-
-
-
+</div>
+<div id="ms_6_3" class="section level3 hasAnchor" number="4.5.3">
+<h3><span class="header-section-number">4.5.3</span> Kmeans<a href="ms_6.html#ms_6_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>算法步骤：</p>
+<ol style="list-style-type: decimal">
+<li><p>输入观测样本数据和聚类数目K。</p></li>
+<li><p>随机将所有观测样本分配到K个类中，作为样本初始类。</p></li>
+<li><p>分别计算K个类的中心<span class="math inline">\(\bar x^{(i)}, \, i=1,...,K\)</span>。</p></li>
+<li><p>计算每个观测样本到其所属类的中心的平方距离<span class="math inline">\(SSE=\sum_{i=1}^K\sum_{j\in G_i} ||x_j-\bar x^{(i)}||^2\)</span>。</p></li>
+<li><p>重新将每个观测样本分配到距离其最近的类中心所在的类中，使得SSE减少。</p></li>
+<li><p>重复第3-5步，直至SSE不在减少，得到最终的聚类结果。</p></li>
+</ol>
+<p>kmeans聚类的特点：</p>
+<ol style="list-style-type: decimal">
+<li><p>核心思想是使同类内所有样本点的总体差异性尽可能小。</p></li>
+<li><p>适用于中大规模样本数据。</p></li>
+<li><p>需要事先指定聚类的数目K。</p></li>
+<li><p>不同的初始类可能会导致不同结果。</p></li>
+<li><p>适用于发现球状类。</p></li>
+<li><p>可能会陷入局部解。</p></li>
+<li><p>对异常值非常敏感。</p></li>
+</ol>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="ball_1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="ms_5.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ms_7.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

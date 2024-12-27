@@ -1,6 +1,273 @@
 # 应用多元统计 {#ms}
 
-## 主成分分析 {#ms_1}
+## 多元正态分布 {#ms_2}
+
+### 多元分布的基本运算性质 {#ms_2_1}
+
+1. $E(tr(AX))=tr(E(AX))=tr(AE(X))$
+
+2. $Cov(AX,BY)=ACov(X,Y)B', \, Cov(AX)=ACov(X)A'$
+
+3. $E(X'AX)=tr(A\Sigma)+\mu'A\mu$
+
+证：
+
+$$
+\begin{aligned}
+E(X'AX)&=E[tr(X'AX)] \\
+&=E[tr(AXX')] \\
+&=tr(AE(XX')) \\
+&=tr(A(\Sigma+\mu\mu')) \\
+&=tr(A\Sigma)+tr(A\mu\mu') \\
+&=tr(A\Sigma)+tr(\mu'A\mu) \\
+&=tr(A\Sigma)+\mu'A\mu
+\end{aligned} (\#eq:ms-eq51)
+$$
+
+其中$Cov(X)=\Sigma=E(XX')-\mu\mu'$。
+
+4. 若$X \sim \varphi_X(t), \, Y=AX+A$，则$\varphi_Y(t)=\exp(it'a)\varphi_X(A't)$
+
+证：
+
+$$
+\begin{aligned}
+\varphi_Y(t)&=E(e^{it'Y}) \\
+&= E(e^{it'(AX+a)}) \\
+&= e^{it'a}E(e^{it'AX}) \\
+&= e^{it'a}E(e^{i(A't)'X}) \\
+&= e^{it'a}\varphi_X(A't)
+\end{aligned} (\#eq:ms-eq52)
+$$
+
+5. 若X，Y相互独立且维数相同，则$\varphi_{X+Y}(t)=\varphi_X(t)\varphi_Y(t)$。
+
+证：
+
+$$
+\begin{aligned}
+\varphi_{X+Y}(t)&=E(e^{it'(X+Y)}) \\
+&=E(e^{it'X}e^{it'Y}) \\
+&= E(e^{it'X})E(e^{it'Y}) \\
+&= \varphi_X(t)\varphi_Y(t)
+\end{aligned} (\#eq:ms-eq53)
+$$
+
+-----
+一元正态分布$N(\mu,\sigma^2)$的特征函数
+
+$$
+\begin{aligned}
+E(e^{itX})&=\int_{-\infty}^{\infty}\exp(itx)\frac{1}{\sqrt{2\pi}\sigma}\exp[-\frac{(x-\mu)^2}{2\sigma^2}]dx \\
+&= \frac{1}{\sqrt{2\pi}\sigma} \int_{-\infty}^{\infty}\exp[-\frac{(x-\mu)^2-2\sigma^2itx}{2\sigma^2}]dx \\
+&=\frac{1}{\sqrt{2\pi}\sigma} \int_{-\infty}^{\infty}\exp[-\frac{(x-\sigma^2it-\mu)^2+\sigma^4t^2-2\sigma^2itu}{2\sigma^2}]dx \\
+&= \frac{1}{\sqrt{2\pi}\sigma} \exp(\frac{-\sigma^2t^2}{2}+itu) \int_{-\infty}^{\infty}\exp[-\frac{(x-\sigma^2it-\mu)^2}{2\sigma^2}]dx \\
+&\stackrel{y=(\frac{x-\sigma^2it-\mu}{\sigma})}\Longrightarrow \frac{1}{\sqrt{2\pi}} \exp(\frac{-\sigma^2t^2}{2}+itu)\int_{-\infty}^{\infty} \exp[-\frac{y^2}{2}]dy \\
+&=\exp(\frac{-\sigma^2t^2}{2}+itu)
+\end{aligned} (\#eq:ms-eq54)
+$$
+
+-----
+
+### 多元正态分布的定义 {#ms_2_2}
+
+1. 概率密度函数
+
+$$
+f(x)=\frac{1}{(2\pi)^{\frac{p}{2}}|\Sigma|^{\frac{1}{2}}}\exp(-\frac{1}{2}(x-\mu)'\Sigma^{-1}(x-\mu))  (\#eq:ms-eq55)
+$$
+
+   该定义要求$\Sigma > 0$，记$X\sim N_p(\mu, \Sigma)$。
+
+2. 特征函数
+
+$$
+\varphi_X(t)=\exp(it'\mu-\frac{1}{2}t'\Sigma t) (\#eq:ms-eq56)
+$$
+
+   该定义要求$\Sigma \geq 0$，记$X\sim N_p(\mu, \Sigma)$。
+
+3. 线性组合1
+
+   设$Y_1,...Y_q \stackrel{iid}\sim N(0,1)$，A时$p \times q$常数矩阵，$\mu$为$p \times 1$常数向量，称q维随机向量$Y=(Y_1,...,Y_p)'$的线性组合$X=AY+\mu$的分布为p维正态分布，记记$X\sim N_p(\mu, \Sigma)$，其中$\Sigma=AA'$。
+   
+4. 线性组合2
+
+   若p维随机向量$X=(X_1,...,X_p)'$的任意线性组合均服从一元正态分布，则称X为p维正态分布，记为$X\sim N_p(\mu, \Sigma)$。
+
+-----
+二元正态分布$N(\mu_1,\mu_2,\sigma_1^2,\sigma_2^2,\rho)$的概率密度函数
+
+$$
+f(x,y)=\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\exp\{-\frac{[\frac{(x-\mu_1)^2}{\sigma^2}-2\rho\frac{(x-\mu_1)(y-\mu_2)}{\sigma_1\sigma_2}+\frac{(y-\mu_2)^2}{\sigma^2}]}{2(1-\rho^2)}\} (\#eq:ms-eq57)
+$$
+
+-----
+
+### 正态分布的条件分布和独立性  {#ms_2_3}
+
+#### 条件分布 {#ms_2_3_1}
+
+设$X \sim N_p(\mu, \Sigma), p \geq 2$，将$X,\,\mu, \, \Sigma$进行相同的分块，即$X=\begin{pmatrix} X^{(1)} \\ X^{(2)} \end{pmatrix}, \mu=\begin{pmatrix} \mu^{(1)} \\ \mu^{(2)} \end{pmatrix}, \Sigma=\begin{pmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{pmatrix}>0$，其中$X^{(1)}$为q维向量，$X^{(2)}$为p-q维向量。
+
+1. 给定$X^{(2)}=x^{(2)}$时，$(X^{(1)}|X^{(2)}=x^{(2)}) \sim N_q(\mu_{1 \cdot 2},\Sigma_{11 \cdot 2})$，其中$\mu_{1 \cdot 2}=\mu^{(1)}+\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)}), \, \Sigma_{11 \cdot 2}=\Sigma_{11}-\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}$。
+
+证1：
+
+由分块矩阵逆的性质可知
+
+$$
+\Sigma^{-1}=\begin{pmatrix} \Sigma_{11 \cdot 2}^{-1} & -\Sigma_{11 \cdot 2}^{-1}\Sigma_{12}\Sigma_{22}^{-1} \\ -\Sigma_{22}^{-1}\Sigma_{21}\Sigma_{11 \cdot 2}^{-1} & \Sigma_{22}^{-1}+\Sigma_{22}^{-1}\Sigma_{21}\Sigma_{11 \cdot 2}^{-1}\Sigma_{12}\Sigma_{22}^{-1} \end{pmatrix} (\#eq:ms-eq58)
+$$
+
+由条件密度函数定义可得
+
+$$
+\begin{aligned}
+f(x^{(1)}|x^{(2)}) &= \frac{f(x^{(1)},x^{(2)})}{f_{X^{(2)}}(x^{(2)})} \\
+&=\frac{(2\pi)^{-\frac{p}{2}}|\Sigma|^{-\frac{1}{2}} \exp(-\frac{1}{2}(x-\mu)'\Sigma^{-1}(x-\mu))}{(2\pi)^{-\frac{p-q}{2}}|\Sigma_{22}|^{-\frac{1}{2}} \exp(-\frac{1}{2}(x^{(2)}-\mu^{(2)})'\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)}))}
+\end{aligned} (\#eq:ms-eq58)
+$$
+
+根据$(x-\mu)'=\begin{pmatrix} x^{(1)}-\mu^{(1)} \\ x^{(2)}-\mu^{(2)} \end{pmatrix}'$，及式\@ref(eq:ms-eq58)，可得
+
+$$
+\begin{aligned}
+&\quad (x-\mu)'\Sigma^{-1}(x-\mu)-(x^{(2)}-\mu^{(2)})'\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)}) \\
+&=(x^{(1)}-\mu^{(1)})'\Sigma_{11 \cdot 2}^{-1}(x^{(1)}-\mu^{(1)})-(x^{(2)}-\mu^{(2)})'(\Sigma_{22}^{-1}\Sigma_{21}\Sigma_{11 \cdot 2}^{-1})(x^{(1)}-\mu^{(1)}) \\
+&-(x^{(1)}-\mu^{(1)})'\Sigma_{11 \cdot 2}^{-1}\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)}) \\
+&+ (x^{(2)}-\mu^{(2)})'(\Sigma_{22}^{-1}+\Sigma_{22}^{-1}\Sigma_{21}\Sigma_{11 \cdot 2}^{-1}\Sigma_{12}\Sigma_{22}^{-1})(x^{(2)}-\mu^{(2)}) \\
+&- (x^{(2)}-\mu^{(2)})'\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)}) \\
+&= (x^{(1)}-\mu^{(1)})'\Sigma_{11 \cdot 2}^{-1}(x^{(1)}-\mu^{(1)}-\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)})) \\
+&-(x^{(2)}-\mu^{(2)})'\Sigma_{22}^{-1}\Sigma_{21}\Sigma_{11 \cdot 2}^{-1}(x^{(1)}-\mu^{(1)}-\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)})) \\
+&= ((x^{(1)}-\mu^{(1)})'-(x^{(2)}-\mu^{(2)})'\Sigma_{22}^{-1}\Sigma_{21})\Sigma_{11\cdot 2}^{-1}(x^{(1)}-\mu^{(1)}-\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)})) \\
+&\stackrel{\mu_{1 \cdot 2}=\mu^{(1)}+\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)})}\Rightarrow (x^{(1)}-\mu_{1\cdot 2})'\Sigma_{11 \cdot 2}^{-1}(x^{(1)}-\mu_{1\cdot 2})
+\end{aligned}  (\#eq:ms-eq59)
+$$
+
+则
+
+$$
+\begin{aligned}
+f(x^{(1)}|x^{(2)})&=(2\pi)^{-\frac{q}{2}}|\Sigma_{11\cdot 2}|^{-\frac{1}{2}} \exp(-\frac{1}{2}(x^{(1)}-\mu_{1\cdot 2})'\Sigma_{11 \cdot 2}^{-1}(x^{(1)}-\mu_{1\cdot 2}))
+\end{aligned} (\#eq:ms-eq60)
+$$
+
+故$(X^{(1)}|X^{(2)}=x^{(2)}) \sim N_q(\mu_{1 \cdot 2},\Sigma_{11 \cdot 2})$。
+
+证2：
+
+令$Y^{(1)}=X^{(1)}-\Sigma_{12}\Sigma_{22}^{-1}X_2^{(2)}$，$Y^{(2)}=X^{(2)}$，则有
+
+$$
+Y=
+\begin{pmatrix}
+Y^{(1)} \\
+Y^{(2)}
+\end{pmatrix}=
+\begin{pmatrix}
+I & -\Sigma_{12}\Sigma_{22}^{-1} \\
+0 & I
+\end{pmatrix}
+\begin{pmatrix}
+X^{(1)} \\
+X^{(2)}
+\end{pmatrix}=
+AX (\#eq:ms-eq61)
+$$
+
+因为$X \sim N_p(\mu, \Sigma)$，所以$Y \sim N_p(A\mu, A\Sigma A')$。
+
+其中
+
+$$
+A\mu = 
+\begin{pmatrix}
+\mu_1-\Sigma_{12}\Sigma_{22}^{-1}\mu_2 \\
+\mu_2
+\end{pmatrix} (\#eq:ms-eq62)
+$$
+
+$$
+\begin{aligned}
+A\Sigma A' &= 
+\begin{pmatrix}
+I & -\Sigma_{12}\Sigma_{22}^{-1} \\
+0 & I
+\end{pmatrix}
+\begin{pmatrix}
+\Sigma_{11} & \Sigma_{12} \\
+\Sigma_{21} & \Sigma_{22}
+\end{pmatrix}
+\begin{pmatrix}
+I & 0 \\
+-\Sigma_{22}^{-1}\Sigma_{12} & I
+\end{pmatrix} \\
+&= 
+\begin{pmatrix}
+\Sigma_{11}-\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21} & 0 \\
+0 & \Sigma_{22}
+\end{pmatrix} \\
+&= \begin{pmatrix}
+\Sigma_{11 \cdot 2}& 0 \\
+0 & \Sigma_{22}
+\end{pmatrix}
+\end{aligned}  (\#eq:ms-eq63)
+$$
+
+故$Y^{(1)}$与$Y^{(2)}$独立。
+
+已知$Y^{(1)} \sim N_q(\mu_1-\Sigma_{12}\Sigma_{22}^{-1}\mu_2,\Sigma_{11 \cdot 2})$，当给定$X^{(2)}=x^{(2)}$，即$Y^{(2)}=y^{(2)}$的条件下，$X^{(1)}=Y^{(1)}+\Sigma_{12}\Sigma_{22}^{-1}x^{(2)} \sim N_q(\mu_1+\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu_2),\Sigma_{11 \cdot 2})$。
+
+> 同理，给定$X^{(2)}=x^{(2)}$时，$(X^{(1)}|X^{(2)}=x^{(2)}) \sim N_q(\mu_{1 \cdot 2},\Sigma_{11 \cdot 2})$，其中$\mu_{1 \cdot 2}=\mu^{(1)}+\Sigma_{12}\Sigma_{22}^{-1}(x^{(2)}-\mu^{(2)}), \, \Sigma_{11 \cdot 2}=\Sigma_{11}-\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}$
+
+#### 独立性 {#ms_2_3_2}
+
+设$X \sim N_p(\mu,\Sigma),\, Y=AX+a, \, Z= BX+b$，则Y和Z独立当且仅当$A\Sigma B'=0$。
+
+证：
+
+$$
+W=\begin{pmatrix} Y \\ Z \end{pmatrix}=\begin{pmatrix} A \\ B \end{pmatrix}X+\begin{pmatrix} a \\ b \end{pmatrix} \\
+W\sim N\begin{pmatrix} \begin{pmatrix} A\mu+a \\ B\mu +b\end{pmatrix},\begin{pmatrix} A\Sigma A' & A\Sigma B' \\ B\Sigma A' & B\Sigma B'\end{pmatrix} \end{pmatrix} (\#eq:ms-eq64)
+$$
+
+显然当$A\Sigma B'=0$时，非主对角线元素为0，此时Y与Z独立。
+
+### 偏相关系数与全相关系数  {#ms_2_4}
+
+#### 偏相关系数  {#ms_2_4_1}
+
+对于$(X^{(1)}|X^{(2)}=x^{(2)})\sim N_q(\mu_{1\cdot 2},\Sigma_{11 \cdot 2})$，有$E(X^{(1)}|X^{(2)})=\mu_{1 \cdot 2}=\mu^{(1)}+\Sigma_{12}\Sigma_{22}^{-1}(X^{(2)}-\mu^{(2)})$，该形式与回归分析中的条件期望回归类似，因此可将$\Sigma_{12}\Sigma_{22}^{-1}$视为$X^{(1)}$对$X^{(2)}$的回归系数。记$\Sigma_{11 \cdot 2}=(\sigma_{ij \cdot q+1,...,p})_{q \times q}$，则称$r_{ij \cdot q+1,...,p}=\frac{\sigma_{ij \cdot q+1,...,p}}{(\sigma_{ii \cdot q+1,...,p}\sigma_{jj \cdot q+1,...,p})^{\frac{1}{2}}}$为在给定$X^{(2)}$条件下$X_i$和$X_j$的偏相关系数。
+
+> 就是在给定条件下对条件协差阵求相关系数
+
+#### 全相关系数  {#ms_2_4_2}
+
+对于随机向量X和随机变量y，设$Z=\begin{pmatrix} X \\ y \end{pmatrix} \sim N\begin{pmatrix} \begin{pmatrix} \mu_X \\ \mu_y \end{pmatrix} , \begin{pmatrix} \Sigma_{XX} & \Sigma_{Xy} \\ \Sigma_{yX} & \Sigma_{yy} \end{pmatrix} \end{pmatrix} $，称$R=\begin{pmatrix} \frac{\Sigma_{yX}\Sigma_{XX}^{-1}\Sigma_{Xy}}{\sigma_{yy}} \end{pmatrix}^{\frac{1}{2}}$为y与X的全相关系数。
+
+> 随机向量拼上随机变量，其中$\Sigma_{yX}$为$1 \times p$维向量，$\Sigma_{Xy}$为$p \times 1$维向量
+> 
+> 可以简记为大协差阵拆出两个标量构造分式，其中分母是$\sigma_{yy}$，这个分式取根号就是全相关系数
+
+特别的，$R=\max\limits_{Cov(a'X)=1} corr(y,a'X)$。
+
+证：
+
+$$
+\begin{aligned}
+(corr(y,a'X))^2&= \frac{Cov^2(y,a'X)}{Cov(y)Cov(a'X)} \\
+&= \frac{(\Sigma_{yX}a)^2}{\sigma_{yy}a'\Sigma_{XX}a} \\
+&\leq \frac{(\Sigma_{Xy}'\Sigma_{XX}^{-1}\Sigma_{Xy})(a'\Sigma_{XX}a)}{\sigma_{yy}a'\Sigma_{XX}a} \\
+&= \frac{(\Sigma_{Xy}'\Sigma_{XX}^{-1}\Sigma_{Xy})}{\sigma_{yy}} \\
+&= \frac{\Sigma_{yX}\Sigma_{XX}^{-1}\Sigma_{Xy}}{\sigma_{yy}} \\
+&= R^2
+\end{aligned} (\#eq:ms-eq65)
+$$
+
+> Cauchy-Schwarz不等式：设$B>0$，则$(x'y)^2 \leq (x'Bx)(y'B^{-1}y)$。这里选取$B=\Sigma_{XX}$是为了把分母的$a'\Sigma_{XX}a$消掉
+
+## 主成分分析 {#ms_3}
 
 **定义：**对原始变量进行线性变换构造出互不相关的主成分，主成分涵盖了原始变量的绝大部分信息。
 
@@ -26,9 +293,9 @@ $$
 \end{aligned} (\#eq:ms-eq2)
 $$
 
-### 总体主成分 {#ms_1_1}
+### 总体主成分 {#ms_3_1}
 
-#### 基于协差阵的总体主成分 {#ms_1_1_1}
+#### 基于协差阵的总体主成分 {#ms_3_1_1}
 
 总体主成分的导出如下所示。不妨先求解第一主成分。
 
@@ -106,7 +373,11 @@ $$
 
 4. $\sum_{k=1}^p\rho^2(Z_k,X_i)=\sum_{k=1}^p \frac{\lambda_k a_{ik}^2}{\sigma_{ii}}=\frac{1}{\sigma_{ii}}\sum_{k=1}^p \lambda_k a_{ik}^2=1$
 
+> 横向的，表示所有主成分对某个原始变量的方差解释百分比为100%
+
 5. $\sum_{i=1}^p \sigma_{ii}\rho^2(Z_k,X_i)=\sum_{i=1}^p \sigma_{ii}\frac{\lambda_ka_{ik}^2}{\sigma_{ii}}=\lambda_k\sum_{i=1}^pa_{ik}^2=\lambda_k$
+
+> 纵向的，表示单个主成分对所有原始变量的方差贡献，即为特征根
 
 > 3.$e_i$为第$i$个位置上为1，其余位置为0的列向量
 > 
@@ -124,7 +395,7 @@ $$
 
 3. 方差贡献率(前m个主成分对$X_i$的贡献率)：$v_i^{(m)}=\frac{\sum_{k=1}^m \lambda_k a_{ik}^2}{\sigma_{ii}}$
 
-#### 基于相关阵的总体主成分 {#ms_1_1_2}
+#### 基于相关阵的总体主成分 {#ms_3_1_2}
 
 考虑变量量纲不同的影响，对数据进行标准化处理，得到$X_i^*=\frac{X_i-\mu_i}{\sqrt{\sigma_{ii}}}$，此时$X^*$的协差阵即为$X$的相关阵$R$。
 
@@ -152,7 +423,7 @@ $$
 
 4. 实际问题处理中，考虑是否需要避免出现方差最大主成分和原始变量呈线性比例关系的分析结果
 
-### 样本主成分 {#ms_1_2}
+### 样本主成分 {#ms_3_2}
 
 定义观测矩阵为
 
@@ -186,7 +457,7 @@ $$
 \tilde R=(r_{ij})_{p \times p}, \quad r_{ij}=\frac{s_{ij}}{\sqrt{s_{ii}s_{jj}}} (\#eq:ms-eq14)
 $$
 
-#### 基于协差阵的样本主成分 {#ms_1_2_1}
+#### 基于协差阵的样本主成分 {#ms_3_2_1}
 
 记样本协差阵S的特征根和单位正交特征向量为$(\hat \lambda_i, \hat a_i)$，则第i个样本主成分为$\hat Z_i=\hat a_i'X$。
 
@@ -210,13 +481,13 @@ $$
 
 类似的，总的样本方差为$\sum_{i=1}^p s_{ii}=\sum_{i=1}^p \hat \lambda_i$，样本相关系数为$r(\hat Z_k, X_i)=\frac{\sqrt{\hat \lambda_k}\hat a_{ik}}{\sqrt{s_{ii}}}$。
 
-#### 基于相关阵的样本主成分 {#ms_1_2_2}
+#### 基于相关阵的样本主成分 {#ms_3_2_2}
 
 同样先对数据做标准化处理，标准化后的数据的协差阵即为原始数据的相关阵，其余操作同基于相关阵的总体主成分，只需要注意使用关于样本的符号即可。
 
-### 关于主成分 {#ms_1_3}
+### 关于主成分 {#ms_3_3}
 
-#### 主成分的局限性 {#ms_1_3_1}
+#### 主成分的局限性 {#ms_3_3_1}
 
 1. 仅考虑了原始变量的正交/线性变换。
 
@@ -226,7 +497,7 @@ $$
 
 4. PCA容易受到异常点的影响。
 
-#### 如何选取主成分个数 {#ms_1_3_2}
+#### 如何选取主成分个数 {#ms_3_3_2}
 
 1. 前m个主成分的累积贡献率达到某个阈值，如80%或85%以上。
 
@@ -234,7 +505,7 @@ $$
 
 3. 绘制碎石图看拐点。
 
-#### R语言实现 {#ms_1_3_3}
+#### R语言实现 {#ms_3_3_3}
 
 PCA相对较为简单，可以自定义函数，如下所示
 
@@ -286,11 +557,11 @@ my_pca <- function(sigma){
 
 或者调用R中的函数`princomp()`、`psych::principal()`。
 
-## 因子分析 {#ms_2}
+## 因子分析 {#ms_4}
 
 因子分析是一种降维的方法，通过探寻变量的潜在结构，将其归纳为较少的因子，从而实现降维的目的。
 
-### 正交因子模型 {#ms_2_1}
+### 正交因子模型 {#ms_4_1}
 
 设X为可观测的p维随机向量，其均值为$\mu$，协方差矩阵为$\Sigma$，则正交因子模型可被表示为
 
@@ -373,7 +644,7 @@ $$
    
 > 正交矩阵的作用相当于进行旋转
 
-### 参数估计 {#ms_2_3}
+### 参数估计 {#ms_4_3}
 
 在参数估计前，得先判断变量之间是否存在足够强的相关关系来进行因子分析。
 
@@ -389,7 +660,7 @@ $$
    
 > R语言：`psych::cortest.bartlett()`
 
-#### 主成分法 {#ms_2_3_1}
+#### 主成分法 {#ms_4_3_1}
 
 令$\Sigma$的特征值为$\lambda_1 \geq \lambda_2 \geq ... \geq \lambda_p \geq 0$，对$\Sigma$进行谱分解
 
@@ -416,7 +687,7 @@ $$
 >
 > m的选择可参考主成分分析
 
-#### 主因子法 {#ms_2_3_2}
+#### 主因子法 {#ms_4_3_2}
 
 由于因子具有尺度不变性，对X进行标准化后得到
 
@@ -457,7 +728,7 @@ $$
 
 > 主因子法的前提是得知道$\Psi$，但在实际中$\Psi$一般未知，因此可根据样本进行估计。也可根据迭代算法，根据初始值$\Psi^{(0)}$开始迭代，得到$\hat A^{(1)}$，再根据$\hat A^{(1)}$得到$\Psi^{(1)}$，不断重复，直至收敛
 
-#### 极大似然法 {#ms_2_3_3}
+#### 极大似然法 {#ms_4_3_3}
 
 假设公共因子$F \sim N_m(0,I)$，特殊因子$\varepsilon\sim N_p(0,\Psi)$，且相互独立，则$X \sim N_p(\mu, \Sigma)$。构造似然函数如下所示
 
@@ -486,19 +757,19 @@ $$
 
 求解$\hat A$和$\hat \Psi$使得对数似然函数$\ln L(A,\Psi)$达到最大即可。
 
-#### R语言实现 {#ms_2_3_4}
+#### R语言实现 {#ms_4_3_4}
 
 R语言`factanal()`、`psych::fa()`
 
-### 因子旋转 {#ms_2_4}
+### 因子旋转 {#ms_4_4}
 
 前面已经介绍了正交因子模型的因子载荷矩阵不唯一。为了因子载荷矩阵的可解释性，可对因子载荷矩阵进行旋转，常用的方法有**最大方差旋转法**，该方法使得各列载荷向量的方差尽可能地大，从而在一列载荷向量上同时出现较大的载荷与较小的载荷，则该因子主要表现为较大的载荷。
 
-### 因子得分 {#ms_2_5}
+### 因子得分 {#ms_4_5}
 
 Bartlett因子得分和Thomson因子得分。
 
-### 因子分析和主成分分析的区别与联系 {#ms_2_6}
+### 因子分析和主成分分析的区别与联系 {#ms_4_6}
 
 区别：
 
@@ -516,9 +787,9 @@ Bartlett因子得分和Thomson因子得分。
 
 3. 二者都可运用原始变量的协差阵或相关阵进行求解
 
-## 判别分析 {#ms_3}
+## 判别分析 {#ms_5}
 
-### 距离判别 {#ms_3_1}
+### 距离判别 {#ms_5_1}
 
 根据样品距离各个总体的远近来判断该样品属于哪个总体。记$d(X,G_i)$表示样品$X$到总体$G_i$的距离，则判别法则可表示为
 
@@ -528,7 +799,7 @@ $$
 
 距离取马氏距离$d(X,G_i)=(X-\mu)'\Sigma_i^{-1}(X-\mu)$，其中$\Sigma_i$表示总体$G_i$的协方差矩阵。
 
-#### 两总体且具有相同协差阵 {#ms_3_1_1}
+#### 两总体且具有相同协差阵 {#ms_5_1_1}
 
 当两总体$\Sigma_1=\Sigma_2=\Sigma$时，有
 
@@ -586,7 +857,7 @@ $$
 
    分别从$G_1$、$G_2$中各取出1个观测值，再用剩余观测值来构造判别函数，根据判别函数来对这两个观测值进行判断，记录判断结果。不断重复这个过程，最后计算误判比例。
 
-#### 其他情形 {#ms_3_1_2}
+#### 其他情形 {#ms_5_1_2}
 
 这里的其他情形是指多总体的或协差阵不相同的情况，核心思想还是找到最小的$d(X,G_i)$。
 
@@ -598,7 +869,7 @@ $$
 
 其中$I_i=\Sigma^{-1}\mu_i, \; c_i=-\frac{1}{2}\mu_i'\Sigma^{-1}\mu_i$。可以看到，$d(X,G_i)$中的$X'\Sigma^{-1}X$是固定的，因此判别规则即为$X\in G_i, \textrm{if }I_i'X+c_i=\max\limits_{j}(I'_jX+c_j)$。
 
-### 贝叶斯判别 {#ms_3_2}
+### 贝叶斯判别 {#ms_5_2}
 
 贝叶斯判别相较于距离判别法多考虑了先验信息，并根据样本信息得到后验概率分布，通过后验概率分布来进行统计推断。
 
@@ -610,7 +881,7 @@ $$
 
 > 先验概率可根据历史资料或经验得到，或者用训练样本中各类所占比例作为先验概率，或者直接令各类先验概率均相等
 
-#### 最大后验概率法 {#ms_3_2_1}
+#### 最大后验概率法 {#ms_5_2_1}
 
 根据样品计算得到的后验概率进行判别，取最大后验概率对应的总体作为样品的判别结果，即
 
@@ -643,7 +914,7 @@ $$
 
 > 注意$\exp$里面有负号，所以最大化就变成最小化了
 
-#### 最小期望误判代价法 {#ms_3_2_2}
+#### 最小期望误判代价法 {#ms_5_2_2}
 
 以两总体的情形为例，沿用最大后验概率法中的记号，并引入误判损失，记为$C(2|1),\,C(1|2)$，分别表示来自总体$G_1$却被误判为$G_2$的损失和来自总体$G_2$却被误判为$G_1$的损失。在判别规则下，$R^p$空间被划分为两个空间$R_1$和$R_2$，且$R_1 \cup R_2=\Omega, \,R_1 \cap R_2= \phi $。
 
@@ -695,7 +966,7 @@ C(2|1)q_1f_1(x) &\geq C(1|2)q_2f_2(x) \\
 \exp\{-\frac{1}{2}[-2x'\Sigma^{-1}\mu_1+\mu_1'\Sigma^{-1}\mu_1+2x'\Sigma^{-1}\mu_2-\mu_2'\Sigma^{-1}\mu_2]\} &\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
 \exp\{-\frac{1}{2}[-2x'\Sigma^{-1}(\mu_1-\mu_2)+(\mu_1+\mu_2)'\Sigma^{-1}(\mu_1-\mu_2)]\} &\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
 \exp\{(x-\frac{\mu_1+\mu_2}{2})'\Sigma^{-1}(\mu_1-\mu_2) \} &\geq \frac{C(1|2)q_2}{C(2|1)q_1} \\
-a'(x-\bar \mu) \geq \ln{[\frac{C(1|2)q_2}{C(2|1)q_1}]}
+a'(x-\bar \mu) &\geq \ln{[\frac{C(1|2)q_2}{C(2|1)q_1}]}
 \end{aligned} (\#eq:ms-eq45)
 $$
 
@@ -708,7 +979,7 @@ $$
 
 > 这里出现了距离判别中的$a'(x-\bar \mu)$，当不考虑先验概率和误判代价时，距离判别和贝叶斯判别等价
 
-上述假定了两总体是正态的，且协差阵相等的情形，倘若协差阵不相等时，同第[4.3.1.2节](@#ms_3_1_2)一样，直接把正态密度函数的指数部分看成马氏距离$d(x,G_i)$，并且保留$|\Sigma_i|$，再进行讨论。
+上述假定了两总体是正态的，且协差阵相等的情形，倘若协差阵不相等时，同第[4.3.1.2节](@#ms_5_1_2)一样，直接把正态密度函数的指数部分看成马氏距离$d(x,G_i)$，并且保留$|\Sigma_i|$，再进行讨论。
 
 更一般的情形则是
 
@@ -730,11 +1001,11 @@ $$
 
 > 考虑$ECM=10=2+4+1+3$，这意味着现在有四个总体，把这个样品判别给这四个总体会分别带来2、4、1、3的平均损失，我们要最小化ECM，因此会选择平均损失为1的那个总体作为该样品的判别结果
 
-## 聚类分析 {#ms_4}
+## 聚类分析 {#ms_6}
 
-### 距离与相似性的度量 {#ms_4_1}
+### 距离与相似性的度量 {#ms_6_1}
 
-#### 距离的度量 {#ms_4_1_1}
+#### 距离的度量 {#ms_6_1_1}
 
 距离的定义应当具有如下性质
 
@@ -746,7 +1017,7 @@ $$
 
 常用的距离有闵可夫斯基距离、欧氏距离、马氏距离、曼哈顿距离。
 
-#### 相似性的度量 {#ms_4_1_2}
+#### 相似性的度量 {#ms_6_1_2}
 
 有时可能会对指标之间进行聚类，指标间的距离常用相似系数进行度量。相似系数具有如下性质
 
@@ -760,9 +1031,9 @@ $$
 
 > 距离与相似系数之间可以相互转化
 
-### 系统聚类 {#ms_4_2}
+### 系统聚类 {#ms_6_2}
 
-#### 类与类之间的距离 {#ms_4_2_1}
+#### 类与类之间的距离 {#ms_6_2_1}
 
 1. 最短距离法：$D_{KL} = \min\limits_{i\in G_K, j \in G_L} \{d_{ij}\}$
 
@@ -826,7 +1097,7 @@ $$
 
 4. 一旦完成合并或分裂，则无法撤销或修正。
 
-### Kmeans {#ms_4_3}
+### Kmeans {#ms_6_3}
 
 算法步骤：
 
@@ -858,7 +1129,7 @@ kmeans聚类的特点：
 
 7. 对异常值非常敏感。
 
-## 典型相关分析 {#ms_5}
+## 典型相关分析 {#ms_7}
 
 设X为随机向量，Y为随机变量，且满足$Cov\begin{pmatrix} X \\ Y\end{pmatrix}=\begin{pmatrix} \Sigma_{XX} & \Sigma_{XY} \\ \Sigma_{YX} & \sigma_{Y} \end{pmatrix}, \, E\begin{pmatrix} X \\ Y\end{pmatrix}=0$，则**复相关系数**定义如下
 

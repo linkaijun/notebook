@@ -1,5 +1,386 @@
 # 应用多元统计 {#ms}
 
+## 矩阵运算 {#ms_1}
+
+### Kronecker积 {#ms_1_1}
+
+设$A=(a_{ij})_{m \times n}, \, B=(b_{ij})_{p \times q}$，则称矩阵$C=(a_{ij}B)_{mp \times nq}$为矩阵A和矩阵B的Kronecker积，记为$C=A\otimes B$。
+
+性质：
+
+1. $(A_1 \otimes B_1)(A_2 \otimes B_2)=(A_1A_2)\otimes(B_1B_2)$
+
+证：
+
+不妨记$A_1=(a_{ij}^{(1)})=\begin{pmatrix} a_{1 \cdot }^{(1)} \\ a_{2 \cdot}^{(1)} \\ \vdots \\ a_{m \cdot}^{(1)} \end{pmatrix},\, A_2=(a_{ij}^{(2)})=\begin{pmatrix} a_{\cdot 1}^{(2)} & a_{\cdot 2}^{(2)} & \cdots & a_{\cdot n}^{(2)} \end{pmatrix}$，则
+
+$$
+\begin{aligned}
+(A_1 \otimes B_1)(A_2 \otimes B_2)&=(a_{ij}^{(1)}B_1)(a_{ij}^{(2)}B_2) \\
+&=(a_{i \cdot}^{(1)}a_{\cdot j}^{(2)}B_1B_2) \\
+&= (a_{i \cdot}^{(1)}a_{\cdot j}^{(2)})\otimes (B_1B_2) \\
+&=(A_1A_2)\otimes (B_1B_2)
+\end{aligned} (\#eq:ms-eq66)
+$$
+
+> 这里进行了简写，注意只要矩阵运算中出现小写字母，代表该矩阵的元素
+
+2. $(A\otimes B)'=A' \otimes B'$
+
+证：
+
+$$
+\begin{aligned}
+(A\otimes B)'&=(a_{ij}B)' \\
+&= (a_{ji}B') \\
+&= A' \otimes B'
+\end{aligned} (\#eq:ms-eq67)
+$$
+
+3. $(A\otimes B)^{-1}=A^{-1} \otimes B^{-1}$
+
+证：
+
+$$
+\begin{aligned}
+(A \otimes B) \cdot (A^{-1} \otimes B^{-1})&=(AA^{-1}) \otimes (BB^{-1})\\
+&=I \otimes I\\
+&=I\\
+\Rightarrow  (A \otimes B)^{-1} &=A^{-1} \otimes B^{-1}
+\end{aligned} (\#eq:ms-eq68)
+$$
+
+4. 若A，B均为方阵，则$tr(A\otimes B)=tr(A) \cdot tr(B)$
+
+证：
+
+$$
+\begin{aligned}
+tr(A\otimes B)&=tr(a_{ij}B) \\
+&= \sum_{i}\sum_{j}a_{ii}b_{jj} \\
+&= \sum_{i}a_{ii}\sum_{j}b_{jj} \\
+&= tr(A) \cdot tr(B)
+\end{aligned} (\#eq:ms-eq69)
+$$
+
+5. $||A \otimes B||=||A|| \cdot ||B||$
+
+证：
+
+$$
+\begin{aligned}
+||A \otimes B||=...
+\end{aligned}  (\#eq:ms-eq69)
+$$
+
+6. $rank(A \otimes B)=rank(A) \cdot rank(B)$
+
+证：
+
+不妨记矩阵$A_{m\times n}$前p行为极大线性无关组，矩阵$B_{h\times k}$前q行为极大线性无关组，对$A\otimes B$进行行化简，如下所示：
+
+$$
+\begin{aligned}
+A \otimes B =
+&\begin{pmatrix}
+a_{11}B & a_{12}B & \cdots & a_{1n}B \\
+\vdots  & \vdots  & \vdots & \vdots  \\
+a_{m1}B & a_{m2}B & \cdots & a_{mn}B
+\end{pmatrix}\\
+\overset {a} \Rightarrow 
+&\begin{pmatrix}
+a_{11}B & a_{12}B & \cdots & a_{1n}B \\
+\vdots  & \vdots  & \vdots & \vdots  \\
+a_{p1}B & a_{p2}B & \cdots & a_{pn}B \\
+0       & 0       & \cdots & 0       \\
+\vdots  & \vdots  & \vdots & \vdots  \\
+0       & 0       & \cdots & 0       \\
+\end{pmatrix}\\
+\overset {b} \Rightarrow 
+&\begin{pmatrix}
+a_{11}b_{11} & \cdots & a_{11}b_{1k} &  \cdots & a_{1n}b_{11} & \cdots & a_{1n}b_{1k}\\
+\vdots  & \vdots  & \vdots & \vdots & \vdots  & \vdots  & \vdots \\
+a_{11}b_{q1} & \cdots & a_{11}b_{qk} & \cdots &  a_{1n}b_{q1} & \cdots & a_{1n}b_{qk} \\
+\vdots  & \vdots  & \vdots & \vdots & \vdots  & \vdots  & \vdots \\
+a_{p1}b_{11} & \cdots & a_{p1}b_{1k} &  \cdots & a_{pn}b_{11} & \cdots & a_{pn}b_{1k}\\
+\vdots  & \vdots  & \vdots & \vdots & \vdots  & \vdots  & \vdots \\
+a_{p1}b_{q1} & \cdots & a_{p1}b_{qk} & \cdots &  a_{pn}b_{q1} & \cdots & a_{pn}b_{qk} \\
+0 & \cdots & 0 & \cdots & 0 & \cdots & 0 \\
+\vdots  & \vdots  & \vdots & \vdots & \vdots  & \vdots  & \vdots \\
+0 & \cdots & 0 & \cdots & 0 & \cdots & 0 
+\end{pmatrix}
+\end{aligned} (\#eq:ms-eq70)
+$$
+
+### 拉直 {#ms_1_2}
+
+设$A=(a_1,...,a_n)$是一个$m \times n$矩阵，其中$a_i=(a_{1i},...,a_{mi})'$。将矩阵A按列向量$a_1,...,a_n$依次排成一个$mn \times 1$的向量，即$vec(A)=\begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{pmatrix}$，称$vec(A)$为矩阵A的按列拉直运算，同理，记$rvec(A)$为矩阵A的按行拉直运算。显然，有$rvec(A)=(vec(A'))'$。
+
+1. $tr(AB)=(vec(A'))'vec(B)$
+
+证：
+
+$$
+\begin{aligned}
+tr(AB)&= \sum_i a_{i \cdot}b_{\cdot i} \\
+&= (a_{i \cdot})(b_{\cdot i}) \\
+&= rvec(A)vec(B) \\
+&= (vec(A'))'vec(B)
+\end{aligned} (\#eq:ms-eq71)
+$$
+
+> 第二行表示元素为A的行向量的行向量与元素为B的列向量的列向量的内积
+
+2. $vec(ABC)=(C' \otimes A)vec(B)$
+
+证：
+
+令$C_{m \times n}=(c_{ij})=(c_1,...,c_n), \, B=(b_1,...,b_m)$，则
+
+$$
+\begin{aligned}
+(C' \otimes A)vec(B)&=
+\begin{pmatrix} c_{11}A & c_{21}A & \cdots & c_{m1}A \\ 
+c_{12}A & c_{22}A & \cdots & c_{m2}A \\
+\vdots & \vdots & \ddots & \vdots \\
+c_{1n}A & c_{2n}A & \cdots & c_{mn}A
+\end{pmatrix}
+\begin{pmatrix}
+b_1 \\
+b_2 \\
+\vdots \\
+b_m
+\end{pmatrix} \\
+&= \begin{pmatrix} A\sum (c_{i1} b_i) \\
+A\sum (c_{i2} b_i) \\
+\vdots \\ 
+A\sum (c_{in} b_i)
+\end{pmatrix} \\
+&= \begin{pmatrix} ABc_1 \\
+ABc_2 \\
+\vdots \\ 
+ABc_n
+\end{pmatrix} \\
+&= vec(ABC)
+\end{aligned} (\#eq:ms-eq71)
+$$
+
+3. $tr(ABC)=(vec(A'))'(I \otimes B)vec(C)$
+
+证：
+
+令$A=\begin{pmatrix}a_{1 \cdot} \\ a_{2 \cdot} \\ \vdots \\ a_{m \cdot}\end{pmatrix}$
+
+$$
+\begin{aligned}
+tr(ABC)&=tr(AB \cdot C) \\
+&= [vec((AB)')]'vec(C) \\
+&= rvec(AB)vec(C) \\
+&= \begin{pmatrix}a_{1 \cdot}B & a_{2 \cdot}B & \cdots & a_{m \cdot}B \end{pmatrix} vec(C) \\
+&= \begin{pmatrix}a_{1 \cdot} & a_{2 \cdot} & \cdots & a_{m \cdot} \end{pmatrix} diag\{B, B , \cdots ,B\}vec(C) \\
+&=rvec(A)(I \otimes B)vec(C) \\
+&= (vec(A'))'(I \otimes B)vec(C)
+\end{aligned} (\#eq:ms-eq72)
+$$
+
+### 减号逆与加号逆 {#ms_1_3}
+
+#### 减号逆 {#ms_1_3_1}
+
+对于一个$m \times n$的矩阵A，一切满足方程组$AXA=A$的矩阵X称为矩阵A的广义逆，记为$A^{-}$，也称减号逆。
+
+1. 减号逆不唯一
+
+证：
+
+令A是一个$m \times n$矩阵，rank(A)=r, 若$A=P \begin{pmatrix} I_r & 0 \\ 0 & 0  \end{pmatrix} Q$，P和Q分别为m阶、n阶矩阵，则
+
+$$
+A^{-} = Q^{-1} \begin{pmatrix} I_r & B \\ C & D  \end{pmatrix} P^{-1}  (\#eq:ms-eq73)
+$$
+
+其中B，C，D为适当阶数的任意矩阵。
+
+2. 对任意矩阵A，有$A'A(A'A)^{-}A'=A',\;A(A'A)^{-}A'A=A$
+
+证：
+
+令$A'A(A'A)^{-}A'=X$，$A(A'A)^{-}A'A=Y$，则可得：
+   
+$$
+\begin{aligned}
+A'A(A'A)^{-}A'&= X \\
+A'A(A'A)^{-}A'A &= XA \\
+A'A &= XA \\
+(A'-X)A &= 0 \\
+A'(A-X') &= 0 \\
+\end{aligned} (\#eq:ms-eq74)
+$$
+故$X=A'$必为该方程的解，即$A'A(A'A)^{-}A'=A'$。
+   
+$$
+\begin{aligned}
+A(A'A)^{-}A'A &= Y \\
+A'A(A'A)^{-}A'A &= A'Y \\
+A'A &= A'Y \\
+A'(A-Y) &= 0
+\end{aligned} (\#eq:ms-eq75)
+$$
+
+故$Y=A$必为方程的解，即$A(A'A)^{-}A'A=Y$。
+
+3. 设相容线性方程组$Ax=b$，则
+
+   - 对任一广义逆$A^{-}, \, x=A^{-}b$必为解
+   
+   证：
+   
+   $$
+   \begin{aligned}
+   Ax&=b \\
+   AA^{-}Ax&=AA^{-}b \\
+   Ax&=AA^{-}b \\
+   A(x-A^{-}b)&=0 \\
+   x&=A^{-}b
+   \end{aligned} (\#eq:ms-eq76)
+   $$
+   
+   - 齐次方程组$Ax=0$的通解为$x=(I-A^-A)z$，z为任意向量，$A^-$为任一固定的广义逆
+   
+   证：
+   
+   $$
+   \begin{aligned}
+   A &= AA^{-}A \\
+   Az &= AA^{-}Az \\
+   A(Iz-A^{-}Az) &= 0 \\
+   A(I-A^{-}A)z &= 0
+   \end{aligned} (\#eq:ms-eq77)
+   $$
+   
+   - $Ax=b$的通解为$x=A^-b+(I-A^-A)z$，z为任意向量，$A^-$为任一固定的广义逆
+   
+   证：
+   
+   由上述可得，$Ax=b$的通解为$Ax=b$的特解加上$Ax=0$的通解，即$x=A^{-}b+(I-A^{-}A)z$
+
+#### 加号逆 {#ms_1_3_2}
+
+设A为任一矩阵，若矩阵X满足$(1)AXA=A;\;(2)XAX=X; \; (3)(AX)'=AX; \; (4)(XA)'=XA$，则称X为A的Moore-Penrose广义逆，记为$A^+$，也称加号逆或伪逆。
+
+1. 每个矩阵均存在加号逆且唯一
+
+存在性，证：
+
+设A是一个$m \times n$矩阵，$rank(A)=r$，若A的奇异值分解$A=U\begin{pmatrix} \Lambda_r & 0 \\0 & 0 \end{pmatrix}V'=UDV'$，U和V分别为m阶、n阶正交矩阵。令$X=V\begin{pmatrix} \Lambda_r^{-1} & 0 \\0 & 0 \end{pmatrix}U'=V\tilde DU'$，则
+
+$$
+\begin{aligned}
+&AXA=(UDV')(V\tilde D U')(UDV')=UDV'=A \\
+&XAX= (V\tilde D U')(UDV')(V\tilde D U')=V\tilde D U'=X \\
+&(AX)'=(UDV'V\tilde D U')'=(UU')'=UU'=UDV'V\tilde D U'=AX\\
+&(XA)'=(V\tilde D U'UDV')'=(VV')'= VV'=VDU'U\tilde D V'=XA
+\end{aligned} (\#eq:ms-eq78)
+$$
+
+即$X=A^+$。
+
+唯一性，证：
+
+令X，Y均满足伪逆的四个条件，即X，Y均为A的加号逆
+
+$$
+\begin{aligned}
+X&=XAX\\
+&=X(AX)' \\
+&=XX'A' \\
+&=XX'(AYA)' \\
+&=X(AX)'(AY)' \\
+&=XAX(AY) \\
+&=XAY \\
+&=(XA)'Y \\
+&=A'X'Y \\
+&=A'X'(YAY) \\
+&=A'X'(YA)'Y \\
+&=A'X'A'Y'Y \\
+&=(AXA)'Y'Y \\
+&=A'Y'Y \\
+&=(YA)'Y \\
+&=YAY \\
+&=Y
+\end{aligned} (\#eq:ms-eq79)
+$$
+
+2. $A^+=A'(AA')^+=(A'A)^+A'$
+
+证：
+
+令矩阵A的秩为r，则其奇异值分解为$A=U\begin{pmatrix} \Lambda_r & 0 \\ 0 & 0 \end{pmatrix}V'$，对应的有$AA'=U\begin{pmatrix} \Lambda_r^2 & 0 \\ 0 & 0 \end{pmatrix}U', \; A'A=V\begin{pmatrix} \Lambda_r^2 & 0 \\ 0 & 0 \end{pmatrix}V'$。
+
+$$
+\begin{aligned}
+A'(AA')^+ &= A'U\begin{pmatrix} \Lambda_r^{-2} & 0 \\ 0 & 0 \end{pmatrix}U' \\
+&=V\begin{pmatrix} \Lambda_r & 0 \\ 0 & 0 \end{pmatrix}U'U\begin{pmatrix} \Lambda_r^{-2} & 0 \\ 0 & 0 \end{pmatrix}U' \\
+&=V\begin{pmatrix} \Lambda_r^{-1} & 0 \\ 0 & 0 \end{pmatrix}U' \\
+&=A^+
+\end{aligned}  (\#eq:ms-eq80)
+$$
+
+同理，$A^+=(A'A)^+A'$。
+
+### 分块矩阵 {#ms_1_4}
+
+将矩阵$A_{n \times p}$分成四块：$A=\begin{pmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{pmatrix}$，即为分块矩阵。
+
+1. 若A为方阵，$A_{11}$也为方阵，则
+
+   - 当$|A_{11}| \neq 0$时，$|A|=|A_{11}||A_{22 \cdot 1}|$，其中$A_{22 \cdot 1}=A_{22}-A_{21}A_{11}^{-1}A_{12}$
+   
+   证：
+
+   令分块矩阵左乘$\begin{pmatrix} I & 0 \\ -A_{21}A_{11}^{-1} & I\end{pmatrix}$，右乘$\begin{pmatrix} I & -A_{11}^{-1}A_{12} \\ 0 & I\end{pmatrix}$，可得
+
+   $$
+   \begin{pmatrix} I & 0 \\ -A_{21}A_{11}^{-1} & I\end{pmatrix}\begin{pmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{pmatrix}\begin{pmatrix} I & -A_{11}^{-1}A_{12} \\ 0 & I\end{pmatrix}=\begin{pmatrix} A_{11} & 0 \\ 0 & A_{22 \cdot 1} \end{pmatrix} (\#eq:ms-eq81)
+   $$
+   
+   其中$A_{22 \cdot 1}=A_{22}-A_{21}A_{11}^{-1}A_{12}$。等式左右两边取行列式即可。
+   
+   - 当$|A_{22}| \neq 0$时，$|A|=|A_{11 \cdot 2}||A_{22}|$，其中$A_{11 \cdot 2}=A_{11}-A_{12}A_{22}^{-1}A_{21}$。
+   
+   证：
+   
+   同理。
+
+2. 若A为可逆方阵，$A_{11}$和$A_{22}$均为方阵，则
+
+   - 当$|A_{11}|\neq 0$时，$A^{-1}=\begin{pmatrix} A_{11}^{-1} + A_{11}^{-1}A_{12}A_{22 \cdot 1}^{-1}A_{21}A_{11}^{-1} & -A_{11}^{-1}A_{12}A_{22 \cdot 1}^{-1} \\ -A_{22 \cdot 1}^{-1}A_{21}A_{11}^{-1} & A_{22\cdot 1}^{-1} \end{pmatrix}$。
+   
+   证：
+   
+   由式\@ref(eq:ms-eq81)可知，
+   
+   $$
+   \begin{aligned}
+   \begin{pmatrix} A_{11} & 0 \\ 0 & A_{22 \cdot 1} \end{pmatrix}^{-1}&=\begin{pmatrix} I & -A_{11}^{-1}A_{12} \\ 0 & I\end{pmatrix}^{-1}\begin{pmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{pmatrix}^{-1}\begin{pmatrix} I & 0 \\ -A_{21}A_{11}^{-1} & I\end{pmatrix}^{-1} \\
+   \begin{pmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{pmatrix}^{-1}&=\begin{pmatrix} I & -A_{11}^{-1}A_{12} \\ 0 & I\end{pmatrix}\begin{pmatrix} A_{11} & 0 \\ 0 & A_{22 \cdot 1} \end{pmatrix}^{-1}\begin{pmatrix} I & 0 \\ -A_{21}A_{11}^{-1} & I\end{pmatrix} \\
+   &=\begin{pmatrix} I & -A_{11}^{-1}A_{12} \\ 0 & I\end{pmatrix}\begin{pmatrix} A_{11}^{-1} & 0 \\ 0 & A_{22 \cdot 1}^{-1} \end{pmatrix}\begin{pmatrix} I & 0 \\ -A_{21}A_{11}^{-1} & I\end{pmatrix} \\
+   &= \begin{pmatrix} A_{11}^{-1} + A_{11}^{-1}A_{12}A_{22 \cdot 1}^{-1}A_{21}A_{11}^{-1} & -A_{11}^{-1}A_{12}A_{22 \cdot 1}^{-1} \\ -A_{22 \cdot 1}^{-1}A_{21}A_{11}^{-1} & A_{22\cdot 1}^{-1} \end{pmatrix}
+   \end{aligned} (\#eq:ms-eq82)
+   $$
+   
+   - 当$|A_{22}|\neq 0$时，$A^{-1}=\begin{pmatrix} A_{11 \cdot 2}^{-1}  & -A_{11 \cdot 2}^{-1}A_{12}A_{22}^{-1} \\ -A_{22}^{-1}A_{21}A_{11\cdot 2}^{-1} & A_{22\cdot 1}^{-1}+ A_{22}^{-1}A_{21}A_{11 \cdot 2}^{-1}A_{12}A_{22}^{-1} \end{pmatrix}$。
+   
+   证：
+   
+   同理。
+   
+   - 当$|A_{11}|\neq 0, \;|A_{22}|\neq 0$时，$A^{-1}=\begin{pmatrix} A_{11 \cdot 2}^{-1}  & -A_{11}^{-1}A_{12}A_{22 \cdot 1}^{-1} \\ -A_{22}^{-1}A_{21}A_{11\cdot 2}^{-1} & A_{22\cdot 1}^{-1} \end{pmatrix}$。
+   
+   证：
+   
+   同理。
+
 ## 多元正态分布 {#ms_2}
 
 ### 多元分布的基本运算性质 {#ms_2_1}

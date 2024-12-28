@@ -911,8 +911,6 @@ $$
 
 > 在原假设为真且为大样本的条件下
 
-
-
 ## Cox比例风险模型 {#survival_5}
 
 对于数据$X_i=(X_{i1},\dots, X_{ip})^T$，风险函数被定义为
@@ -931,6 +929,31 @@ $$
 \frac{h_i(t|x+1)}{h_i(t|x)}=\frac{h_0(t)e^{x_{i1}\beta_1}e^{\beta_1}}{h_0(t)e^{x_{i1}\beta_1}}=e^{\beta_1} (\#eq:survival-eq67)
 $$
 这样的关系为“比例”关系。
+
+### 偏对数似然函数 {#survival_5_1}
+
+现有数据$(T_i,\delta_i, Z_i)$，其中$T_i$表示记录的生存时间，$\delta_i$表示删失状态（1为非删失，0为删失），$Z_i$表示协变量。
+
+回顾式\@ref(eq:survival-eq15)，写出Cox比例风险模型的似然函数。
+
+$$
+\begin{aligned}
+L(\theta)&=\prod_{i=1}^n \{f(\tau_i)\}^{\delta_i}\{S(\tau_i)\}^{1-\delta_i} \\
+&= \prod_{i=1}^n \{h(\tau_i)\}^{\delta_i}S(\tau_i) \\
+&= \prod_{i=1}^n [\{h_0(\tau_i)\exp(\beta^TZ_i)\}^{\delta_i}\exp\{-H_0(\tau_i)\exp(\beta^TZ_i)\}] \\
+&= [\prod_{i=1}^n \{h_0(\tau_i)\exp(\beta^TZ_i)\}^{\delta_i}][\prod_{i=1}^n\exp\{-H_0(\tau_i)\exp(\beta^TZ_i)\}] \\
+&= [\prod_{j=1}^D h_0(\tau_j)\exp(\beta^TZ_{(j)})] \exp\{-\sum_{i=1}^n\sum_{t_j \leq T_i}h_0(\tau_j)\exp(\beta^TZ_i)\} \\
+&= [\prod_{j=1}^D h_0(\tau_j)\exp(\beta^TZ_{(j)})] \exp\{-\sum_{j=1}^D\sum_{i \in R_j}h_0(\tau_j)\exp(\beta^TZ_i)\}
+\end{aligned}
+$$
+
+> $h(t)=\frac{f(t)}{S(t)},\; S(t)=\exp\{-H(t)\}$
+> 
+> D表示非删失的对象数，指数处的$\delta_i$等价于就是对非删失的对象累乘
+> 
+> $H_0(t)=\int_0^t h_0(x)dx$，在实际中就是对不同死亡时刻的$h_0(\tau)$累加
+> 
+> $R_j$表示$T_i \geq T_j$的$i$的集合
 
 
 ------

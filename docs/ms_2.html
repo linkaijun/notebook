@@ -720,16 +720,17 @@ W\sim N\begin{pmatrix} \begin{pmatrix} A\mu+a \\ B\mu +b\end{pmatrix},\begin{pma
 </div>
 <div id="ms_2_4_2" class="section level4 hasAnchor" number="4.2.4.2">
 <h4><span class="header-section-number">4.2.4.2</span> 全相关系数<a href="ms_2.html#ms_2_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-对于随机向量X和随机变量y，设$Z=
-<span class="math display">\[\begin{pmatrix} X \\ y \end{pmatrix}\]</span>
-N
-<span class="math display">\[\begin{pmatrix} \begin{pmatrix} \mu_X \\ \mu_y \end{pmatrix} , \begin{pmatrix} \Sigma_{XX} &amp; \Sigma_{Xy} \\ \Sigma_{yX} &amp; \Sigma_{yy} \end{pmatrix} \end{pmatrix}\]</span>
-<span class="math inline">\(，称\)</span>R=
-<span class="math display">\[\begin{pmatrix} \frac{\Sigma_{yX}\Sigma_{XX}^{-1}\Sigma_{Xy}}{\sigma_{yy}} \end{pmatrix}\]</span>
-<p>^{}$为y与X的全相关系数。</p>
+<p>对于随机向量X和随机变量y，设
+<span class="math display">\[
+Z=\begin{pmatrix} X \\ y \end{pmatrix} \sim N\begin{pmatrix} \begin{pmatrix} \mu_X \\ \mu_y \end{pmatrix} , \begin{pmatrix} \Sigma_{XX} &amp; \Sigma_{Xy} \\ \Sigma_{yX} &amp; \sigma_{yy} \end{pmatrix} \end{pmatrix}
+\]</span></p>
+<p>称</p>
+<p><span class="math display">\[R=\begin{pmatrix} \frac{\Sigma_{yX}\Sigma_{XX}^{-1}\Sigma_{Xy}}{\sigma_{yy}} \end{pmatrix}^{\frac{1}{2}}
+\]</span>
+为y与X的全相关系数。</p>
 <blockquote>
 <p>随机向量拼上随机变量，其中<span class="math inline">\(\Sigma_{yX}\)</span>为<span class="math inline">\(1 \times p\)</span>维向量，<span class="math inline">\(\Sigma_{Xy}\)</span>为<span class="math inline">\(p \times 1\)</span>维向量</p>
-<p>可以简记为大协差阵拆出两个标量构造分式，其中分母是<span class="math inline">\(\sigma_{yy}\)</span>，这个分式取根号就是全相关系数</p>
+<p>可以简记为大协差阵拆出两个标量构造分式，其中分母是<span class="math inline">\(\sigma_{yy}\)</span>，整个分式取根号就是全相关系数</p>
 </blockquote>
 <p>特别的，<span class="math inline">\(R=\max\limits_{Cov(a&#39;X)=1} corr(y,a&#39;X)\)</span>。</p>
 <p>证：</p>

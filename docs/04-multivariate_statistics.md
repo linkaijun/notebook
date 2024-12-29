@@ -625,11 +625,20 @@ $$
 
 #### 全相关系数  {#ms_2_4_2}
 
-对于随机向量X和随机变量y，设$Z=\begin{pmatrix} X \\ y \end{pmatrix} \sim N\begin{pmatrix} \begin{pmatrix} \mu_X \\ \mu_y \end{pmatrix} , \begin{pmatrix} \Sigma_{XX} & \Sigma_{Xy} \\ \Sigma_{yX} & \Sigma_{yy} \end{pmatrix} \end{pmatrix} $，称$R=\begin{pmatrix} \frac{\Sigma_{yX}\Sigma_{XX}^{-1}\Sigma_{Xy}}{\sigma_{yy}} \end{pmatrix}^{\frac{1}{2}}$为y与X的全相关系数。
+对于随机向量X和随机变量y，设
+$$
+Z=\begin{pmatrix} X \\ y \end{pmatrix} \sim N\begin{pmatrix} \begin{pmatrix} \mu_X \\ \mu_y \end{pmatrix} , \begin{pmatrix} \Sigma_{XX} & \Sigma_{Xy} \\ \Sigma_{yX} & \sigma_{yy} \end{pmatrix} \end{pmatrix}
+$$
+
+称
+
+$$R=\begin{pmatrix} \frac{\Sigma_{yX}\Sigma_{XX}^{-1}\Sigma_{Xy}}{\sigma_{yy}} \end{pmatrix}^{\frac{1}{2}}
+$$
+为y与X的全相关系数。
 
 > 随机向量拼上随机变量，其中$\Sigma_{yX}$为$1 \times p$维向量，$\Sigma_{Xy}$为$p \times 1$维向量
 > 
-> 可以简记为大协差阵拆出两个标量构造分式，其中分母是$\sigma_{yy}$，这个分式取根号就是全相关系数
+> 可以简记为大协差阵拆出两个标量构造分式，其中分母是$\sigma_{yy}$，整个分式取根号就是全相关系数
 
 特别的，$R=\max\limits_{Cov(a'X)=1} corr(y,a'X)$。
 

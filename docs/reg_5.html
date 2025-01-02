@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="reg_4.html"/>
-<link rel="next" href="ms.html"/>
+<link rel="next" href="reg_6.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -302,6 +302,11 @@ div.csl-indent {
 <li class="chapter" data-level="3.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>3.5.4</b> 方差</a></li>
 <li class="chapter" data-level="3.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态性</a></li>
 <li class="chapter" data-level="3.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>3.5.6</b> 残差</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>3.6</b> 显著性检验</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>3.6.1</b> 一元</a></li>
+<li class="chapter" data-level="3.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>3.6.2</b> 多元</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a>
@@ -805,19 +810,59 @@ Cov(e) &amp;= Cov((I-H)Y) \\
 &amp;= (I-H)E(\varepsilon\varepsilon&#39;)(I-H)&#39; \\
 &amp;= \sigma^2 (I-H)
 \end{aligned} \tag{3.54}
-\]</span></p></li>
+\]</span></p>
+<ul>
+<li><span class="math inline">\(Cov(e,\hat Y)\)</span></li>
 </ul>
-
+<p><span class="math display" id="eq:model55">\[
+\begin{aligned}
+Cov(e,\hat Y)&amp;=Cov((I-H)Y,HY) \\
+&amp;=(I-H)Cov(Y)H&#39; \\
+&amp;=(I-H)Cov(X\beta+\varepsilon)H \\
+&amp;=(I-H)H \\
+&amp;=H-H^2 \\
+&amp;=0
+\end{aligned} \tag{3.55}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(Cov(e,\hat y_0)\)</span></li>
+</ul>
+<p><span class="math display" id="eq:model56">\[
+\begin{aligned}
+Cov(e,\hat y_0)&amp;=Cov((I-H)Y,x_0&#39;(X&#39;X)^{-1}X&#39;Y) \\
+&amp;=(I-H)X(X&#39;X)^{-1}x_0 \\
+&amp;=(X(X&#39;X)^{-1}-X(X&#39;X)^{-1}X&#39;X(X&#39;X)^{-1})x_0 \\
+&amp;=0
+\end{aligned} \tag{3.56}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(Cov(e,\hat \beta)\)</span></li>
+</ul>
+<p><span class="math display" id="eq:model57">\[
+\begin{aligned}
+Cov(e,\hat \beta)&amp;=Cov((I-H)Y,(X&#39;X)^{-1}X&#39;Y) \\
+&amp;= (I-H)X(X&#39;X)^{-1} \\
+&amp;= X(X&#39;X)^{-1}-X(X&#39;X)^{-1}X&#39;X(X&#39;X)^{-1} \\
+&amp;= 0
+\end{aligned} \tag{3.57}
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(X&#39;e=0\)</span></p>
+<p>参见式<a href="reg_4.html#eq:model20">(3.20)</a></p></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>在正规方程组中，我们得到的一阶导条件为<span class="math inline">\(X&#39;e=0\)</span>。从几何视角来看，残差向量<span class="math inline">\(e\)</span>正交于X张成的列空间，因此凡是X列空间中的向量均与<span class="math inline">\(e\)</span>不相关</p>
+</blockquote>
 </div>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
 <a href="reg_4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reg_6.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -303,6 +303,11 @@ div.csl-indent {
 <li class="chapter" data-level="3.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态性</a></li>
 <li class="chapter" data-level="3.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>3.5.6</b> 残差</a></li>
 </ul></li>
+<li class="chapter" data-level="3.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>3.6</b> 显著性检验</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>3.6.1</b> 一元</a></li>
+<li class="chapter" data-level="3.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>3.6.2</b> 多元</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a>
 <ul>
@@ -515,7 +520,7 @@ Q(\beta_0,\beta_1)&amp;=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2=\sum^n_{i=1}\vare
 \end{array}
 \right. \tag{3.11}
 \]</span></p>
-<p>式<a href="reg_3.html#eq:model6">(3.6)</a>等价于：</p>
+<p>式<a href="reg_4.html#eq:model11">(3.11)</a>等价于：</p>
 <p><span class="math display" id="eq:model12">\[
 \left\{
 \begin{array}{ll}
@@ -524,6 +529,9 @@ Q(\beta_0,\beta_1)&amp;=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2=\sum^n_{i=1}\vare
 \end{array}
 \right. \tag{3.12}
 \]</span></p>
+<blockquote>
+<p>这个关系式非常重要</p>
+</blockquote>
 <p>将求和式展开，并稍加整理，可得：</p>
 <p><span class="math display" id="eq:model13">\[
 \left\{
@@ -561,11 +569,12 @@ n\bar x (\bar y-\hat \beta_1 \bar x) + \hat \beta_1\sum_{i=1}^n x_i^2 &amp;= \su
 <p>而对于<span class="math inline">\(\sigma^2\)</span>，很自然地会用残差<span class="math inline">\(e\)</span>进行估计，常用无偏估计量<span class="math inline">\(\hat \sigma^2\)</span>进行估计：</p>
 <p><span class="math display" id="eq:model16">\[
 \hat \sigma^2=\frac{\sum\limits_{i=1}^n e_i^2}{n-2} \tag{3.16}
-\]</span></p>
-<p><strong>在多元回归部分会给出更为详细的证明。</strong></p>
+\]</span></p></li>
+</ol>
 <blockquote>
-<p>正规方程中，X与<span class="math inline">\(\varepsilon\)</span>的内积为0，几何视角来看就是误差向量与设计矩阵张成的空间正交。</p>
-</blockquote></li>
+<p>在多元回归部分会给出更为详细的证明。</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
 <li><p>极大似然估计</p>
 <p>在<span class="math inline">\(y\sim~N(\beta_0+\beta_1x,\sigma^2)\)</span>的假定下，写出对数似然函数：</p>
 <p><span class="math display" id="eq:model17">\[
@@ -609,6 +618,7 @@ Q(\beta) &amp;= (Y-X \beta)&#39;(Y-X \beta)\\
 \end{aligned} \tag{3.20}
 \]</span></p>
 <blockquote>
+<p>一阶导条件等价于<span class="math inline">\(X&#39;(Y-X\hat \beta)=X&#39;e=0\)</span>，其中<span class="math inline">\(e\)</span>为残差，牢记<span class="math inline">\(X&#39;e=0\)</span></p>
 <p>为了确保有解，要求自变量之间无多重共线性，即矩阵X列满秩，故矩阵X’X可逆。</p>
 </blockquote>
 <p>故最小二乘估计为<span class="math inline">\(\hat \beta=(X&#39;X)^{-1}Y\)</span>。</p>

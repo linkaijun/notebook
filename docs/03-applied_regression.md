@@ -6,16 +6,16 @@
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-22074b3488ebe5591597" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-22074b3488ebe5591597">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-e939626922ae4e7f8d38" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-e939626922ae4e7f8d38">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 回归模型的建模步骤如下所示：
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-62c33129fc7350518945" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-62c33129fc7350518945">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-5c02ec6d00da58fa6c5a" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5c02ec6d00da58fa6c5a">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## 引言 {#reg_1}
@@ -251,7 +251,7 @@ $$
    \right. (\#eq:model11)
    $$
 
-   式\@ref(eq:model6)等价于：
+   式\@ref(eq:model11)等价于：
 
    $$
    \left\{
@@ -261,6 +261,8 @@ $$
    \end{array}
    \right. (\#eq:model12)
    $$
+   
+   > 这个关系式非常重要
 
    将求和式展开，并稍加整理，可得：
 
@@ -310,9 +312,7 @@ $$
    \hat \sigma^2=\frac{\sum\limits_{i=1}^n e_i^2}{n-2} (\#eq:model16)
    $$
 
-   **在多元回归部分会给出更为详细的证明。**
-
-   > 正规方程中，X与$\varepsilon$的内积为0，几何视角来看就是误差向量与设计矩阵张成的空间正交。
+> 在多元回归部分会给出更为详细的证明。
 
 2. 极大似然估计
 
@@ -364,7 +364,9 @@ $$
    \hat \beta&=(X'X)^{-1}X'Y
    \end{aligned} (\#eq:model20)
    $$
-
+   
+   > 一阶导条件等价于$X'(Y-X\hat \beta)=X'e=0$，其中$e$为残差，牢记$X'e=0$
+   > 
    > 为了确保有解，要求自变量之间无多重共线性，即矩阵X列满秩，故矩阵X'X可逆。
 
    故最小二乘估计为$\hat \beta=(X'X)^{-1}Y$。
@@ -792,6 +794,143 @@ $$
    &= \sigma^2 (I-H)
    \end{aligned} (\#eq:model47)
    $$
+   
+   - $Cov(e,\hat Y)$
+   
+   $$
+   \begin{aligned}
+   Cov(e,\hat Y)&=Cov((I-H)Y,HY) \\
+   &=(I-H)Cov(Y)H' \\
+   &=(I-H)Cov(X\beta+\varepsilon)H \\
+   &=(I-H)H \\
+   &=H-H^2 \\
+   &=0
+   \end{aligned} (\#eq:model55)
+   $$
+   
+   - $Cov(e,\hat y_0)$
+   
+   $$
+   \begin{aligned}
+   Cov(e,\hat y_0)&=Cov((I-H)Y,x_0'(X'X)^{-1}X'Y) \\
+   &=(I-H)X(X'X)^{-1}x_0 \\
+   &=(X(X'X)^{-1}-X(X'X)^{-1}X'X(X'X)^{-1})x_0 \\
+   &=0
+   \end{aligned} (\#eq:model56)
+   $$
+   
+   - $Cov(e,\hat \beta)$
+   
+   $$
+   \begin{aligned}
+   Cov(e,\hat \beta)&=Cov((I-H)Y,(X'X)^{-1}X'Y) \\
+   &= (I-H)X(X'X)^{-1} \\
+   &= X(X'X)^{-1}-X(X'X)^{-1}X'X(X'X)^{-1} \\
+   &= 0
+   \end{aligned} (\#eq:model57)
+   $$
+   
+   - $X'e=0$
+   
+      参见式\@ref(eq:model20)
+      
+> 在正规方程组中，我们得到的一阶导条件为$X'e=0$。从几何视角来看，残差向量$e$正交于X张成的列空间，因此凡是X列空间中的向量均与$e$不相关
+
+## 显著性检验 {#reg_6}
+
+由于显著性检验依赖于最小二乘估计的分布，在前述内容中已经说明最小二乘估计服从正态分布，因此该部分内容严重依赖于随机扰动项的正态性、同方差、无自相关假定。
+
+### 一元 {#reg_6_1}
+
+#### 区间估计 {#reg_6_1_1}
+
+根据式\@ref(eq:model48)已知$\hat \beta_1$的分布，由于$\sigma^2$未知，因此采用式\@ref(eq:model16)的$\hat \sigma^2$进行替代，进而构造t统计量进行区间估计。
+
+$$
+\begin{gather}
+t=\frac{\hat \beta_1-\beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \sim t(n-2) \\
+P\begin{pmatrix}\begin{vmatrix}\frac{\hat \beta_1-\beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{vmatrix} < t_{\alpha/2}(n-2)\end{pmatrix}=1-\alpha \\
+\begin{pmatrix} \hat \beta_1-t_{\alpha/2}(n-2) \sqrt{\frac{\hat \sigma^2}{L_{xx}}}, \; \hat \beta_1+t_{\alpha/2}(n-2) \sqrt{\frac{\hat \sigma^2}{L_{xx}}}\end{pmatrix}
+\end{gather}  (\#eq:model58)
+$$
+
+> 我们在乎自变量是否能解释因变量的变动，因此$\hat \beta_0$的区间估计，包括下面的显著性检验都不对$\hat \beta_0$进行讨论
+
+#### t检验 {#reg_6_1_2}
+
+t检验用于检验单个回归系数是否显著。
+
+对于假设检验问题
+
+$$
+H_0:\beta_1=0 \quad vs \quad H_1:\beta_1 \neq 0
+$$
+
+在原假设下有$\hat \beta_1 \sim N(0, \sigma^2/L_{xx})$，同样用式\@ref(eq:model16)的$\hat \sigma^2$替代$\sigma^2$，进而构造t统计量进行显著性检验。
+
+$$
+t=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} (\#eq:model59)
+$$
+
+在原假设下$t \sim t(n-2)$，当$|t| \geq t_{\alpha/2}(n-2)$时拒绝原假设。
+
+#### F检验 {#reg_6_1_3}
+
+F检验用于检验整个回归方程是否显著，也就是说检验因变量是否与至少一个自变量存在线性关系。特别的，一元场合只有一个自变量，因此F检验也就相当于检验$\beta_1$是否为0。
+
+对于假设检验问题
+
+$$
+H_0:\beta_1=0 \quad vs \quad H_1:\beta_1 \neq 0
+$$
+
+构造F统计量
+
+$$
+F=\frac{SSR/1}{SSE/(n-2)} (\#eq:model60)
+$$
+
+其中$SST=\sum_{i=1}^n(y_i-\bar y)^2, \; SSR=\sum_{i=1}^n(\hat y_i -\bar y)^2, \; SSE=\sum_{i=1}^n(y_i-\hat y_i)^2$。
+
+在原假设下$F \sim F(1,n-2)$，当$F \geq F_\alpha(1,n-2)$时，拒绝原假设。
+
+-----
+***平方和分解式***
+
+$$
+\begin{aligned}
+SST&=\sum_{i=1}^n(y_i-\bar y)^2 \\
+&= \sum_{i=1}^n(y_i-\hat y_i+\hat y_i-\bar y)^2 \\
+&=\sum_{i=1}^n(\hat y_i - \bar y)^ + \sum_{i=1}^n (y_i-\hat y_i)^2 + 2\sum_{i=1}^n(y_i-\hat y_i)(\hat y_i - \bar y) \\
+&= SSR+SSE+2\sum_{i=1}^n(y_i-\hat y_i)\hat y_i - 2\bar y \sum_{i=1}^n (y_i-\hat y_i) \\
+&= SSR+SSE+2\sum_{i=1}^n e_i(\hat \beta_0+\hat \beta_1x_i)-2\bar y \sum_{i=1}^n e_i \\
+&= SSR+SSE +2\hat \beta_0 \sum_{i=1}^n e_i+2\hat \beta_1 \sum_{i=1}^n e_ix_i \\
+&= SSR+SSE
+\end{aligned} (\#eq:model61)
+$$
+
+> 回顾式\@ref(eq:model12)的性质
+
+关于式\@ref(eq:model60)的原理，可参考王松桂《线性统计模型：线性回归与方差分析》中的定理4.1.1，该定理包括
+
+(a) $RSS/\sigma^2 \sim \chi^2_{n-p}$
+
+(b) 若约束条件$A\beta=b$成立，则$(RSS_H-RSS/\sigma^2) \sim \chi^2_m$
+
+(c) $RSS$与$RSS_H-RSS$相互独立
+
+(d) 当约束条件$A\beta=b$成立，则
+
+$$
+F_H = \frac{(RSS_H-RSS)/m}{RSS/(n-p)} \sim F_{m,n-p}
+$$
+
+其中$RSS_H$表示受约束的最小二乘估计对应的残差平方和。
+
+-----
+
+
+### 多元 {#reg_6_2}
 
 
 

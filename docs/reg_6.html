@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12.1 发球 | kj的学习笔记</title>
+  <title>3.6 显著性检验 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12.1 发球 | kj的学习笔记" />
+  <meta property="og:title" content="3.6 显著性检验 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12.1 发球 | kj的学习笔记" />
+  <meta name="twitter:title" content="3.6 显著性检验 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ball.html"/>
-<link rel="next" href="参考文献.html"/>
+<link rel="prev" href="reg_5.html"/>
+<link rel="next" href="ms.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -496,30 +496,104 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ball_1" class="section level2 hasAnchor" number="12.1">
-<h2><span class="header-section-number">12.1</span> 发球<a href="ball_1.html#ball_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="ball_1_1" class="section level3 hasAnchor" number="12.1.1">
-<h3><span class="header-section-number">12.1.1</span> 正手发球<a href="ball_1.html#ball_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p><a href="https://www.bilibili.com/video/BV1DE4nevEcx/?spm_id_from=333.999.0.0&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" class="uri" target="_blank">https://www.bilibili.com/video/BV1DE4nevEcx/?spm_id_from=333.999.0.0&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e</a></p>
-<p><a href="https://www.bilibili.com/video/BV1Hv4y1u7LX?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" class="uri" target="_blank">https://www.bilibili.com/video/BV1Hv4y1u7LX?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e</a></p>
-<p>技术要点：</p>
-<ol style="list-style-type: decimal">
-<li><p>左手拿球，放在身体右前侧，这样转身时才能打到球。</p></li>
-<li><p>大臂小臂处于一条直线，<strong>手腕处于展腕的状态</strong>（向外展）。让球自由下落时开始转身，伴随着手臂移动，<strong>确保在转体后才击球</strong>。</p></li>
-<li><p>击球后向左肩上方收拍。</p></li>
-</ol>
+<div id="reg_6" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> 显著性检验<a href="reg_6.html#reg_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>由于显著性检验依赖于最小二乘估计的分布，在前述内容中已经说明最小二乘估计服从正态分布，因此该部分内容严重依赖于随机扰动项的正态性、同方差、无自相关假定。</p>
+<div id="reg_6_1" class="section level3 hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> 一元<a href="reg_6.html#reg_6_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="reg_6_1_1" class="section level4 hasAnchor" number="3.6.1.1">
+<h4><span class="header-section-number">3.6.1.1</span> 区间估计<a href="reg_6.html#reg_6_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>根据式<a href="reg_5.html#eq:model48">(3.44)</a>已知<span class="math inline">\(\hat \beta_1\)</span>的分布，由于<span class="math inline">\(\sigma^2\)</span>未知，因此采用式<a href="reg_4.html#eq:model16">(3.16)</a>的<span class="math inline">\(\hat \sigma^2\)</span>进行替代，进而构造t统计量进行区间估计。</p>
+<p><span class="math display" id="eq:model58">\[
+\begin{gather}
+t=\frac{\hat \beta_1-\beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \sim t(n-2) \\
+P\begin{pmatrix}\begin{vmatrix}\frac{\hat \beta_1-\beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{vmatrix} &lt; t_{\alpha/2}(n-2)\end{pmatrix}=1-\alpha \\
+\begin{pmatrix} \hat \beta_1-t_{\alpha/2}(n-2) \sqrt{\frac{\hat \sigma^2}{L_{xx}}}, \; \hat \beta_1+t_{\alpha/2}(n-2) \sqrt{\frac{\hat \sigma^2}{L_{xx}}}\end{pmatrix}
+\end{gather}  \tag{3.58}
+\]</span></p>
+<blockquote>
+<p>我们在乎自变量是否能解释因变量的变动，因此<span class="math inline">\(\hat \beta_0\)</span>的区间估计，包括下面的显著性检验都不对<span class="math inline">\(\hat \beta_0\)</span>进行讨论</p>
+</blockquote>
 </div>
-<div id="ball_1_2" class="section level3 hasAnchor" number="12.1.2">
-<h3><span class="header-section-number">12.1.2</span> 反手发球<a href="ball_1.html#ball_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p><a href="https://www.bilibili.com/video/BV1B142197XG/?spm_id_from=333.999.0.0&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" class="uri" target="_blank">https://www.bilibili.com/video/BV1B142197XG/?spm_id_from=333.999.0.0&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e</a></p>
-<p>技术要点：</p>
-<ol style="list-style-type: decimal">
-<li><p>反手握拍，大拇指顶着考上的位置，方便控制力度。</p></li>
-<li><p>左手食指、大拇指捏住球毛，球头朝下，但也可以有一定的倾斜角度，看个人习惯。</p></li>
-<li><p>拍子呈倾斜角度，大概45°左右。</p></li>
-<li><p>左脚在后，右脚在前，为挥拍留出空间。</p></li>
-<li><p>击球时依靠小臂推动，体会“推送”这个词的感觉，切勿手腕发力，避免发球太高。</p></li>
-</ol>
+<div id="reg_6_1_2" class="section level4 hasAnchor" number="3.6.1.2">
+<h4><span class="header-section-number">3.6.1.2</span> t检验<a href="reg_6.html#reg_6_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>t检验用于检验单个回归系数是否显著。</p>
+<p>对于假设检验问题</p>
+<p><span class="math display">\[
+H_0:\beta_1=0 \quad vs \quad H_1:\beta_1 \neq 0
+\]</span></p>
+<p>在原假设下有<span class="math inline">\(\hat \beta_1 \sim N(0, \sigma^2/L_{xx})\)</span>，同样用式<a href="reg_4.html#eq:model16">(3.16)</a>的<span class="math inline">\(\hat \sigma^2\)</span>替代<span class="math inline">\(\sigma^2\)</span>，进而构造t统计量进行显著性检验。</p>
+<p><span class="math display" id="eq:model59">\[
+t=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \tag{3.59}
+\]</span></p>
+<p>在原假设下<span class="math inline">\(t \sim t(n-2)\)</span>，当<span class="math inline">\(|t| \geq t_{\alpha/2}(n-2)\)</span>时拒绝原假设。</p>
+</div>
+<div id="reg_6_1_3" class="section level4 hasAnchor" number="3.6.1.3">
+<h4><span class="header-section-number">3.6.1.3</span> F检验<a href="reg_6.html#reg_6_1_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>F检验用于检验整个回归方程是否显著，也就是说检验因变量是否与至少一个自变量存在线性关系。特别的，一元场合只有一个自变量，因此F检验也就相当于检验<span class="math inline">\(\beta_1\)</span>是否为0。</p>
+<p>对于假设检验问题</p>
+<p><span class="math display">\[
+H_0:\beta_1=0 \quad vs \quad H_1:\beta_1 \neq 0
+\]</span></p>
+<p>构造F统计量</p>
+<p><span class="math display" id="eq:model60">\[
+F=\frac{SSR/1}{SSE/(n-2)} \tag{3.60}
+\]</span></p>
+<p>其中<span class="math inline">\(SST=\sum_{i=1}^n(y_i-\bar y)^2, \; SSR=\sum_{i=1}^n(\hat y_i -\bar y)^2, \; SSE=\sum_{i=1}^n(y_i-\hat y_i)^2\)</span>。</p>
+<p>在原假设下<span class="math inline">\(F \sim F(1,n-2)\)</span>，当<span class="math inline">\(F \geq F_\alpha(1,n-2)\)</span>时，拒绝原假设。</p>
+<table style="width:8%;">
+<colgroup>
+<col width="8%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong><em>平方和分解式</em></strong></td>
+</tr>
+<tr class="even">
+<td><span class="math display" id="eq:model61">\[
+\begin{aligned}
+SST&amp;=\sum_{i=1}^n(y_i-\bar y)^2 \\
+&amp;= \sum_{i=1}^n(y_i-\hat y_i+\hat y_i-\bar y)^2 \\
+&amp;=\sum_{i=1}^n(\hat y_i - \bar y)^ + \sum_{i=1}^n (y_i-\hat y_i)^2 + 2\sum_{i=1}^n(y_i-\hat y_i)(\hat y_i - \bar y) \\
+&amp;= SSR+SSE+2\sum_{i=1}^n(y_i-\hat y_i)\hat y_i - 2\bar y \sum_{i=1}^n (y_i-\hat y_i) \\
+&amp;= SSR+SSE+2\sum_{i=1}^n e_i(\hat \beta_0+\hat \beta_1x_i)-2\bar y \sum_{i=1}^n e_i \\
+&amp;= SSR+SSE +2\hat \beta_0 \sum_{i=1}^n e_i+2\hat \beta_1 \sum_{i=1}^n e_ix_i \\
+&amp;= SSR+SSE
+\end{aligned} \tag{3.61}
+\]</span></td>
+</tr>
+<tr class="odd">
+<td>&gt; 回顾式<a href="reg_4.html#eq:model12">(3.12)</a>的性质</td>
+</tr>
+<tr class="even">
+<td>关于式<a href="reg_6.html#eq:model60">(3.60)</a>的原理，可参考王松桂《线性统计模型：线性回归与方差分析》中的定理4.1.1，该定理包括</td>
+</tr>
+<tr class="odd">
+<td>(a) <span class="math inline">\(RSS/\sigma^2 \sim \chi^2_{n-p}\)</span></td>
+</tr>
+<tr class="even">
+<td>(b) 若约束条件<span class="math inline">\(A\beta=b\)</span>成立，则<span class="math inline">\((RSS_H-RSS/\sigma^2) \sim \chi^2_m\)</span></td>
+</tr>
+<tr class="odd">
+<td>(c) <span class="math inline">\(RSS\)</span>与<span class="math inline">\(RSS_H-RSS\)</span>相互独立</td>
+</tr>
+<tr class="even">
+<td>(d) 当约束条件<span class="math inline">\(A\beta=b\)</span>成立，则</td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[
+F_H = \frac{(RSS_H-RSS)/m}{RSS/(n-p)} \sim F_{m,n-p}
+\]</span></td>
+</tr>
+<tr class="even">
+<td>其中<span class="math inline">\(RSS_H\)</span>表示受约束的最小二乘估计对应的残差平方和。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="reg_6_2" class="section level3 hasAnchor" number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> 多元<a href="reg_6.html#reg_6_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 
 </div>
 </div>
@@ -529,8 +603,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="ball.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reg_5.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

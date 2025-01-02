@@ -300,7 +300,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.5.2" data-path="reg_5.html"><a href="reg_5.html#reg_5_2"><i class="fa fa-check"></i><b>3.5.2</b> 无偏性</a></li>
 <li class="chapter" data-level="3.5.3" data-path="reg_5.html"><a href="reg_5.html#reg_5_3"><i class="fa fa-check"></i><b>3.5.3</b> 有效性</a></li>
 <li class="chapter" data-level="3.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>3.5.4</b> 方差</a></li>
-<li class="chapter" data-level="3.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态分布</a></li>
+<li class="chapter" data-level="3.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>3.5.5</b> 正态性</a></li>
+<li class="chapter" data-level="3.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>3.5.6</b> 残差</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a>
@@ -492,7 +493,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="reg_5" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> 最小二乘估计的性质<a href="reg_5.html#reg_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<p>根据高斯-马尔科夫定理，在满足假定的前提下，最小二乘估计为最优线性无偏估计(best linear unbiased estimator，BLUE)。再探讨性质之前，请先回忆一元及多元场合的最小二乘估计值，式<a href="reg_4.html#eq:model15">(3.15)</a>和式<a href="reg_4.html#eq:model20">(3.20)</a>。</p>
+<p>根据高斯-马尔科夫定理，在满足假定的前提下，最小二乘估计为<strong>最优线性无偏估计(best linear unbiased estimator，BLUE)</strong>。再探讨性质之前，请先回忆一元及多元场合的最小二乘估计值，式<a href="reg_4.html#eq:model15">(3.15)</a>和式<a href="reg_4.html#eq:model20">(3.20)</a>。</p>
 <div id="reg_5_1" class="section level3 hasAnchor" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> 线性<a href="reg_5.html#reg_5_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <ul>
@@ -516,16 +517,27 @@ div.csl-indent {
 &amp;= \sum\limits_{i=1}^n {1 \over n}y_i - \sum\limits_{i=1}^n {(x_i-\bar x)\bar x \over L_{xx}} y_i \\
 &amp;= \sum\limits_{i=1}^n [{1 \over n} - {(x_i-\bar x)\bar x \over L_{xx}}]y_i
 \end{aligned} \tag{3.27}
+\]</span></p>
+<p>对于拟合值<span class="math inline">\(\hat y_i\)</span>有</p>
+<p><span class="math display" id="eq:model50">\[
+\hat y_i=\hat \beta_0+\hat \beta_1x_i=\sum_{j=1}^n [\frac{1}{n}+\frac{(x_i-\bar x)(x_j-\bar x)}{L_{xx}}]y_j=\sum_{j=1}^n h_{ij}y_j \tag{3.28}
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(h_{ij}=h_{ji}\)</span></p>
+</blockquote>
+<p>对于给定的新值<span class="math inline">\(x_0\)</span>，对应的预测值<span class="math inline">\(\hat y_0\)</span>有</p>
+<p><span class="math display" id="eq:model51">\[
+\hat y_0=\hat \beta_0+\hat \beta_1x_0=\sum_{j=1}^n [\frac{1}{n}+\frac{(x_0-\bar x)(x_j-\bar x)}{L_{xx}}]y_j=\sum_{j=1}^n h_{0j}y_j \tag{3.29}
 \]</span></p></li>
 <li><p>多元场合</p>
 <p><span class="math display" id="eq:model28">\[
 \begin{aligned}
 \hat \beta &amp;= (X&#39;X)^{-1}X&#39;Y \\
-&amp;= (X&#39;X)^{-1}X&#39;(X\beta+\epsilon) \\
-&amp;= \beta+(X&#39;X)^{-1}X&#39;\epsilon
-\end{aligned} \tag{3.28}
+&amp;= (X&#39;X)^{-1}X&#39;(X\beta+ \varepsilon) \\
+&amp;= \beta+(X&#39;X)^{-1}X&#39; \varepsilon
+\end{aligned} \tag{3.30}
 \]</span></p>
-<p>注意到<span class="math inline">\(\hat \beta\)</span>不仅是<span class="math inline">\(y\)</span>的线性组合，还是<span class="math inline">\(\epsilon\)</span>的线性组合。</p></li>
+<p>注意到<span class="math inline">\(\hat \beta\)</span>不仅是<span class="math inline">\(y\)</span>的线性组合，还是$ $的线性组合。</p></li>
 </ul>
 <blockquote>
 <p>除了最小二乘估计是线性的，由最小二乘估计推得的拟合值、预测值与残差也都是线性的。</p>
@@ -542,7 +554,7 @@ E(\hat \beta_1)&amp;= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} E(y_i) \\
 &amp;= \sum_{i=1}^n {(x_i-\bar x)x_i \over L_{xx}}\beta_1 \\
 &amp;= {L_{xx} \over L_{xx}}\beta_1 \\
 &amp;= \beta_1
-\end{aligned} \tag{3.29}
+\end{aligned} \tag{3.31}
 \]</span></p>
 <p><span class="math display" id="eq:model30">\[
 \begin{aligned}
@@ -551,7 +563,7 @@ E(\hat \beta_0)&amp;=E(\bar y)-E(\hat \beta_1)\bar x \\
 &amp;= {\sum\limits_{i=1}^n (\beta_0 + \beta_1 x) \over n}-\beta_1 \bar x \\
 &amp;= \beta_0 + \beta_1 \bar x -\beta_1 \bar x \\
 &amp;= \beta_0
-\end{aligned} \tag{3.30}
+\end{aligned} \tag{3.32}
 \]</span></p></li>
 <li><p>多元场合</p>
 <p><span class="math display" id="eq:model31">\[
@@ -560,7 +572,7 @@ E(\hat \beta)&amp;=E((X&#39;X)^{-1}X&#39;Y) \\
 &amp;= (X&#39;X)^{-1}X&#39;E(Y) \\
 &amp;= (X&#39;X)^{-1}X&#39;X\beta \\
 &amp;= \beta
-\end{aligned} \tag{3.31}
+\end{aligned} \tag{3.33}
 \]</span></p></li>
 </ul>
 </div>
@@ -576,7 +588,7 @@ E(\tilde \beta_1)&amp;=E(\sum\limits_{i=1}^n c_iy_i) \\
 &amp;= \sum\limits_{i=1}^n c_i(\beta_0+\beta_1x_i) \\
 &amp;= \beta_0 \sum\limits_{i=1}^n c_i + \beta_1 \sum\limits_{i=1}^n c_ix_i \\
 &amp;= \beta_1
-\end{aligned} \tag{3.32}
+\end{aligned} \tag{3.34}
 \]</span></p>
 <p>根据无偏性，可知<span class="math inline">\(\tilde \beta_1\)</span>满足<span class="math inline">\(\sum\limits_{i=1}^n c_i=0\)</span>和<span class="math inline">\(\sum\limits_{i=1}^n c_ix_i=1\)</span>。</p>
 <p><span class="math display" id="eq:model33">\[
@@ -587,7 +599,7 @@ Var(\tilde \beta_1)&amp;=\sum\limits_{i=1}^n c_i^2Var(y_i) \\
 &amp;= \sigma^2[\sum\limits_{i=1}^n(c_i-k_i)^2+\sum\limits_{i=1}^nk_i^2+\sum\limits_{i=1}^n2(c_i-k_i)k_i] \\
 &amp;= \sum\limits_{i=1}^n(c_i-k_i)^2 \sigma^2 + Var(\hat \beta_1) \\
 Var(\tilde \beta_1) &amp;\geq Var(\hat \beta_1)
-\end{aligned} \tag{3.33}
+\end{aligned} \tag{3.35}
 \]</span></p>
 <p>注意到<span class="math inline">\(\sum\limits_{i=1}^n c_i=0\)</span>和<span class="math inline">\(\sum\limits_{i=1}^n c_ix_i=1\)</span>，其中</p>
 <p><span class="math display" id="eq:model34">\[
@@ -596,7 +608,7 @@ Var(\tilde \beta_1) &amp;\geq Var(\hat \beta_1)
 &amp;=2\sum\limits_{i=1}^n c_i{(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2\sum\limits_{i=1}^n ({(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2})^2 \\
 &amp;= 2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2} \\
 &amp;= 0
-\end{aligned} \tag{3.34}
+\end{aligned} \tag{3.36}
 \]</span></p>
 <p>关于<span class="math inline">\(\hat \beta_0\)</span>的证明也是类似的，略。</p></li>
 <li><p>多元场合</p>
@@ -607,7 +619,7 @@ E(\tilde \beta)&amp;=[(X&#39;X)^{-1}X&#39;+A]E(Y) \\
 &amp;= [(X&#39;X)^{-1}X&#39;+A]X\beta \\
 &amp;= \beta +AX\beta \\
 &amp;= \beta
-\end{aligned} \tag{3.35}
+\end{aligned} \tag{3.37}
 \]</span></p>
 <p>根据无偏性，可知<span class="math inline">\(AX=0\)</span>。</p>
 <p><span class="math display" id="eq:model36">\[
@@ -618,7 +630,7 @@ Cov(\hat \beta)&amp;=[(X&#39;X)^{-1}X&#39;]Cov(Y)[(X&#39;X)^{-1}X&#39;]&#39; \\
 Cov(\tilde \beta)&amp;=[(X&#39;X)^{-1}X&#39;+A]Cov(Y)[(X&#39;X)^{-1}X&#39;+A]&#39; \\
 &amp;= [(X&#39;X)^{-1}X&#39;+A]\sigma^2I_n[(X&#39;X)^{-1}X&#39;+A]&#39; \\
 &amp;= \sigma^2 [(X&#39;X)^{-1}+AA&#39;]
-\end{aligned} \tag{3.36}
+\end{aligned} \tag{3.38}
 \]</span></p>
 <blockquote>
 <p>注意到<span class="math inline">\(AX=0\)</span></p>
@@ -639,7 +651,7 @@ Var(\hat \beta_1)&amp;=Var(\sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} y_i) \\
 &amp;= \sum_{i=1}^n {(x_i-\bar x)^2 \over L_{xx}^2}\sigma^2 \\
 &amp;= {L_{xx} \over L_{xx}^2}\sigma^2 \\
 &amp;= {\sigma^2 \over L_{xx}}
-\end{aligned} \tag{3.37}
+\end{aligned} \tag{3.39}
 \]</span></p>
 <ul>
 <li><span class="math inline">\(Var(\hat{\beta_0})\)</span></li>
@@ -650,7 +662,7 @@ Var(\hat \beta_0)&amp;=Var(\bar y - \hat \beta_1 \bar x) \\
 &amp;= Var(\bar y)+\bar x^2Var(\hat \beta)-2Cov(\bar y,\hat \beta_1 \bar x) \\
 &amp;= {\sigma^2 \over n}+\bar x^2{\sigma^2 \over L_{xx}} \\
 &amp;= [{1 \over n}+{\bar x^2 \over L_{xx}}]\sigma^2
-\end{aligned} \tag{3.38}
+\end{aligned} \tag{3.40}
 \]</span></p>
 <p>其中</p>
 <p><span class="math display" id="eq:model39">\[
@@ -660,10 +672,10 @@ Cov(\bar y,\hat \beta_1 \bar x)&amp;={\bar x^2 \over n}Cov(\sum_{i=1}^n y_i,\sum
 &amp;= {\bar x^2 \sigma^2 \over n} \sum_{i=1}^n k_i \\
 &amp;= {\bar x^2 \sigma^2 \over n} \sum_{i=1}^n {x_i-\bar x \over L_{xx}} \\
 &amp;= 0
-\end{aligned} \tag{3.39}
+\end{aligned} \tag{3.41}
 \]</span></p>
 <blockquote>
-<p>注意有<span class="math inline">\(Cov(\epsilon_i,\epsilon_j)=0\)</span>，则<span class="math inline">\(Cov(y_i,y_j)=0\)</span></p>
+<p>注意有<span class="math inline">\(Cov( \varepsilon_i, \varepsilon_j)=0\)</span>，则<span class="math inline">\(Cov(y_i,y_j)=0\)</span></p>
 </blockquote>
 <ul>
 <li><span class="math inline">\(Cov(\hat \beta_0,\hat \beta_1)\)</span></li>
@@ -674,12 +686,60 @@ Cov(\hat \beta_0,\hat \beta_1) &amp;= Cov(\bar y - \hat \beta_1 \bar x,\hat \bet
 &amp;= Cov(\bar y,\hat \beta_1)-\bar xCov(\hat \beta_1,\hat \beta_1) \\
 &amp;= 0-\bar x {\sigma^2 \over L_{xx}} \\
 &amp;= -{\bar x \over L_{xx}}\sigma^2
-\end{aligned} \tag{3.40}
+\end{aligned} \tag{3.42}
+\]</span></p></li>
+<li><p>多元场合</p>
+<p><span class="math display" id="eq:model46">\[
+\begin{aligned}
+Cov(\hat \beta) &amp;= E[(\hat \beta-E(\hat \beta))(\hat \beta-E(\hat \beta))&#39;] \\
+&amp;= E[(\hat \beta-\beta)(\hat \beta-\beta)&#39;] \\
+&amp;= E[(X&#39;X)^{-1}X&#39; \varepsilon  \varepsilon &#39; X(X&#39;X)^{-1}] \\
+&amp;= (X&#39;X)^{-1}X&#39;E( \varepsilon  \varepsilon &#39;) X(X&#39;X)^{-1} \\
+&amp;= (X&#39;X)^{-1}X&#39;\sigma^2I_n X(X&#39;X)^{-1} \\
+&amp;= \sigma^2(X&#39;X)^{-1}
+\end{aligned} \tag{3.43}
+\]</span></p></li>
+</ul>
+</div>
+<div id="reg_5_5" class="section level3 hasAnchor" number="3.5.5">
+<h3><span class="header-section-number">3.5.5</span> 正态性<a href="reg_5.html#reg_5_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ul>
+<li><p>一元场合</p>
+<p>根据式<a href="reg_5.html#eq:model26">(3.26)</a>和式<a href="reg_5.html#eq:model27">(3.27)</a>、式<a href="reg_5.html#eq:model29">(3.31)</a>和式<a href="reg_5.html#eq:model30">(3.32)</a>、式<a href="reg_5.html#eq:model37">(3.39)</a>和式<a href="reg_5.html#eq:model38">(3.40)</a>可知，<span class="math inline">\(\hat \beta_1\)</span>和<span class="math inline">\(\hat \beta_0\)</span>服从正态分布。</p>
+<p><span class="math display" id="eq:model48">\[
+\begin{gather}
+\hat \beta_1 \sim N(\beta_1, \frac{\sigma^2}{L_{xx}}) \\
+\hat \beta_0 \sim N(\beta_0, [\frac{1}{n}+\frac{\bar x^2}{L_{xx}}]\sigma^2)
+\end{gather} \tag{3.44}
+\]</span>
+&gt; <span class="math inline">\(\hat \beta_1\)</span>的正态性源自y的正态性，而y的正态性又源自<span class="math inline">\(\varepsilon\)</span>的正态性</p></li>
+<li><p>多元场合</p>
+<p>根据式<a href="reg_5.html#eq:model28">(3.30)</a>、式<a href="reg_5.html#eq:model31">(3.33)</a>、式<a href="reg_5.html#eq:model46">(3.43)</a>可知，<span class="math inline">\(\hat \beta\)</span>服从正态分布。</p>
+<p><span class="math display" id="eq:model49">\[
+\hat \beta \sim N(\beta, \sigma^2(X&#39;X)^{-1}) \tag{3.45}
+\]</span></p></li>
+</ul>
+</div>
+<div id="reg_5_6" class="section level3 hasAnchor" number="3.5.6">
+<h3><span class="header-section-number">3.5.6</span> 残差<a href="reg_5.html#reg_5_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ul>
+<li><p>一元场合</p>
+<ul>
+<li>线性表示</li>
+</ul>
+<p>根据式<a href="reg_5.html#eq:model50">(3.28)</a>，对于残差<span class="math inline">\(e_i\)</span>有</p>
+<p><span class="math display" id="eq:model52">\[
+e_i=y_i-\hat y_i=y_i-\sum_{j=1}^n h_{ij}y_j \tag{3.46}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(E(e_i)\)</span></li>
+</ul>
+<p><span class="math display" id="eq:model53">\[
+E(e_i)=E(y_i-\hat y_i)=(\beta_0+\beta_1 x_i)-(\beta_0+\beta_1 x_i)=0 \tag{3.47}
 \]</span></p>
 <ul>
 <li><span class="math inline">\(Cov(e_i,e_j)\)</span></li>
 </ul>
-<p>令<span class="math inline">\(e_i=y_i-\hat{y_i}=y_i-\sum\limits_{j=1}^nh_{ij}y_j\)</span>，其中<span class="math inline">\(h_{ij}={1 \over n}+{(x_i-\bar{x})(x_j-\bar{x}) \over L_{xx}}\)</span>，显然有<span class="math inline">\(h_{ij}=h_{ji}\)</span>。</p>
 <p>当<span class="math inline">\(i \neq j\)</span>时：</p>
 <p><span class="math display" id="eq:model41">\[
 \begin{aligned}
@@ -687,7 +747,7 @@ Cov(e_i,e_j)&amp;=Cov(y_i-\sum\limits_{k=1}^nh_{ik}y_k \, , \, y_j-\sum\limits_{
 &amp;= -Cov(y_i \, , \, h_{ji}y_i)-Cov(y_j \, , \, h_{ij}y_j)+\sum\limits_{k=1}^n h_{ik}h_{jk}Cov(y_i \, , \, y_j) \\
 &amp;= -h_{ji}\sigma^2-h_{ij}\sigma^2+h_{ij}\sigma^2 \\
 &amp;= -h_{ij}\sigma^2
-\end{aligned} \tag{3.41}
+\end{aligned} \tag{3.48}
 \]</span></p>
 <p>其中</p>
 <p><span class="math display" id="eq:model42">\[
@@ -695,7 +755,7 @@ Cov(e_i,e_j)&amp;=Cov(y_i-\sum\limits_{k=1}^nh_{ik}y_k \, , \, y_j-\sum\limits_{
 \sum\limits_{k=1}^n h_{ik}h_{jk}&amp;=\sum\limits_{k=1}^n [{1 \over n^2} + {(x_k-\bar{x})(x_j-\bar{x}+x_i-\bar{x}) \over nL_{xx}}+{(x_i-\bar{x})(x_j-\bar{x})(x_k-\bar{x})^2 \over L_{xx}^2}] \\
 &amp;= {1 \over n} + {(x_i-\bar{x})(x_j-\bar{x}) \over L_{xx}} \\
 &amp;= h_{ij}
-\end{aligned} \tag{3.42}
+\end{aligned} \tag{3.49}
 \]</span></p>
 <p>当<span class="math inline">\(i = j\)</span>时：</p>
 <p><span class="math display" id="eq:model43">\[
@@ -706,7 +766,7 @@ Cov(e_i \, , \, e_i)&amp;=Var(e_i) \\
 &amp;= \sigma^2 + \sigma^2 \sum\limits_{j=1}^n h_{ij}^2-2h_{ii}\sigma^2 \\
 &amp;= \sigma^2+h_{ii}\sigma^2-2h_{ii}\sigma^2 \\
 &amp;= (1-h_{ii})\sigma^2
-\end{aligned} \tag{3.43}
+\end{aligned} \tag{3.50}
 \]</span></p>
 <p>其中</p>
 <p><span class="math display" id="eq:model44">\[
@@ -714,7 +774,7 @@ Cov(e_i \, , \, e_i)&amp;=Var(e_i) \\
 \sum\limits_{j=1}^n h_{ij}^2 &amp;= \sum\limits_{j=1}^n [{1 \over n^2}+{(x_i-\bar{x})^2(x_j-\bar{x})^2 \over L_{xx}^2}+{2(x_i-\bar{x})(x_j-\bar{x}) \over nL_{xx}}] \\
 &amp;= {1 \over n}+{(x_i-\bar{x})^2 \over L_{xx}} \\
 &amp;= h_{ii}
-\end{aligned} \tag{3.44}
+\end{aligned} \tag{3.51}
 \]</span></p>
 <p>故</p>
 <p><span class="math display" id="eq:model45">\[
@@ -722,35 +782,30 @@ Cov(e_i\, , \, e_j)=
 \begin{cases}
 (1-h_{ii})\sigma^2, &amp;i=j \\
 -h_{ij}\sigma^2, &amp;i \neq j
-\end{cases} \tag{3.45}
+\end{cases} \tag{3.52}
 \]</span></p></li>
 <li><p>多元场合</p>
-<p><span class="math display" id="eq:model46">\[
-\begin{aligned}
-Cov(\hat \beta) &amp;= E[(\hat \beta-E(\hat \beta))(\hat \beta-E(\hat \beta))&#39;] \\
-&amp;= E[(\hat \beta-\beta)(\hat \beta-\beta)&#39;] \\
-&amp;= E[(X&#39;X)^{-1}X&#39;\epsilon \epsilon &#39; X(X&#39;X)^{-1}] \\
-&amp;= (X&#39;X)^{-1}X&#39;E(\epsilon \epsilon &#39;) X(X&#39;X)^{-1} \\
-&amp;= (X&#39;X)^{-1}X&#39;\sigma^2I_n X(X&#39;X)^{-1} \\
-&amp;= \sigma^2(X&#39;X)^{-1}
-\end{aligned} \tag{3.46}
+<ul>
+<li>线性表示</li>
+</ul>
+<p>式<a href="reg_4.html#eq:model22">(3.22)</a>给出了残差的表达式为<span class="math inline">\(e=Y-HY=(I-H)Y=(I-H)\varepsilon\)</span></p>
+<ul>
+<li><span class="math inline">\(E(e)\)</span></li>
+</ul>
+<p><span class="math display" id="eq:model54">\[
+E(e)=E[(I-H)\varepsilon]=0  \tag{3.53}
 \]</span></p>
+<ul>
+<li><span class="math inline">\(Cov(e)\)</span></li>
+</ul>
 <p><span class="math display" id="eq:model47">\[
 \begin{aligned}
 Cov(e) &amp;= Cov((I-H)Y) \\
-&amp;= Cov((I-H)\epsilon) \\
-&amp;= (I-H)E(\epsilon\epsilon&#39;)(I-H)&#39; \\
+&amp;= Cov((I-H) \varepsilon) \\
+&amp;= (I-H)E( \varepsilon \varepsilon&#39;)(I-H)&#39; \\
 &amp;= \sigma^2 (I-H)
-\end{aligned} \tag{3.47}
+\end{aligned} \tag{3.54}
 \]</span></p></li>
-</ul>
-</div>
-<div id="reg_5_5" class="section level3 hasAnchor" number="3.5.5">
-<h3><span class="header-section-number">3.5.5</span> 正态分布<a href="reg_5.html#reg_5_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<ul>
-<li><p>一元场合</p>
-<p>$$</p>
-<p>$$</p></li>
 </ul>
 
 </div>

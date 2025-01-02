@@ -60,6 +60,8 @@ eq:model24
 eq:model25
 eq:model26
 eq:model27
+eq:model50
+eq:model51
 eq:model28
 eq:model29
 eq:model30
@@ -73,12 +75,17 @@ eq:model37
 eq:model38
 eq:model39
 eq:model40
+eq:model46
+eq:model48
+eq:model49
+eq:model52
+eq:model53
 eq:model41
 eq:model42
 eq:model43
 eq:model44
 eq:model45
-eq:model46
+eq:model54
 eq:model47
 eq:ms-eq66
 eq:ms-eq67
@@ -410,6 +417,7 @@ reg_5_2
 reg_5_3
 reg_5_4
 reg_5_5
+reg_5_6
 ms
 ms_1
 ms_1_1

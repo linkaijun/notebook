@@ -498,9 +498,9 @@ div.csl-indent {
 <p><span class="math display" id="eq:model1">\[
 \left\{
 \begin{array}{c}
-y=\beta_0+\beta_1x+ \varepsilon\\
-E( \varepsilon|x)=0\\
-Var( \varepsilon|x)=\sigma^2   
+y=\beta_0+\beta_1x+\varepsilon\\
+E(\varepsilon|x)=0\\
+Var(\varepsilon|x)=\sigma^2   
 \end{array}
 \right. \tag{3.1}
 \]</span></p>
@@ -520,7 +520,7 @@ Var(y|x)=\sigma^2
 <p>结合假定，可知<span class="math inline">\(y\sim~N(\beta_0+\beta_1x,\sigma^2)\)</span>。</p>
 <p><strong><em>为什么考虑y的条件期望？</em></strong></p>
 <ul>
-<li><p>由于$ <span class="math inline">\(的存在，我们无法直接估计出参数\)</span>_0<span class="math inline">\(和\)</span>_1<span class="math inline">\(。结合零均值的假定，我们可以对模型左右两边取期望来消掉\)</span> $的影响。同时需要注意的是，该期望是条件期望，我们更关注当x取固定值时y的均值。</p></li>
+<li><p>由于<span class="math inline">\(\varepsilon\)</span>的存在，我们无法直接估计出参数<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>。结合零均值的假定，我们可以对模型左右两边取期望来消掉<span class="math inline">\(\varepsilon\)</span>的影响。同时需要注意的是，该期望是条件期望，我们更关注当x取固定值时y的均值。</p></li>
 <li><p>如果从最优化的角度进行思考，假设对y的任意预测为<span class="math inline">\(f(x)\)</span>，y的条件期望为<span class="math inline">\(g(x)=E(y|x)\)</span>，则g(x)是y的最佳预测。</p>
 <p><span class="math display" id="eq:model3">\[
 \begin{align}
@@ -537,12 +537,12 @@ E(y-f(x))^2&amp;=E(y-g(x)+g(x)-f(x))^2\\
 </blockquote>
 <p>上述都是针对总体的理论模型，而对于样本数据<span class="math inline">\((x_i,y_i)\)</span>，则有:</p>
 <p><span class="math display" id="eq:model4">\[
-y_i=\hat y_i + \hat  \varepsilon=\hat \beta_0+ \hat \beta_1x_i+e_i \tag{3.4}
+y_i=\hat y_i + \hat \varepsilon=\hat \beta_0+ \hat \beta_1x_i+e_i \tag{3.4}
 \]</span></p>
 <p><span class="math display" id="eq:model5">\[
 \hat y_i=\hat \beta_0+ \hat \beta_1x_i \tag{3.5}
 \]</span></p>
-<p>其中式<a href="reg_3.html#eq:model4">(3.4)</a>为样本回归模型，式<a href="reg_3.html#eq:model5">(3.5)</a>为样本回归方程（也称经验回归方程），<span class="math inline">\(\hat y\)</span>和<span class="math inline">\(e\)</span>（残差）分别是对<span class="math inline">\(E(y|x)\)</span>和$ $的估计。</p>
+<p>其中式<a href="reg_3.html#eq:model4">(3.4)</a>为样本回归模型，式<a href="reg_3.html#eq:model5">(3.5)</a>为样本回归方程（也称经验回归方程），<span class="math inline">\(\hat y\)</span>和<span class="math inline">\(e\)</span>（残差）分别是对<span class="math inline">\(E(y|x)\)</span>和<span class="math inline">\(\varepsilon\)</span>的估计。</p>
 <blockquote>
 <p>无论总体还是样本，带随机扰动项或者残差的叫“回归模型”，不带的叫“回归方程”或“回归函数”。</p>
 </blockquote>
@@ -552,9 +552,9 @@ y_i=\hat y_i + \hat  \varepsilon=\hat \beta_0+ \hat \beta_1x_i+e_i \tag{3.4}
 <p><span class="math display" id="eq:model6">\[
 \left\{
 \begin{array}{c}
-y=\beta_0+\beta_1x_1+...+\beta_px_p+ \varepsilon\\
-E( \varepsilon|x)=0\\
-Var( \varepsilon|x)=\sigma^2   
+y=\beta_0+\beta_1x_1+...+\beta_px_p+\varepsilon\\
+E(\varepsilon|x)=0\\
+Var(\varepsilon|x)=\sigma^2   
 \end{array}
 \right. \tag{3.6}
 \]</span></p>
@@ -572,9 +572,9 @@ Var(y|x)=\sigma^2
 <p><span class="math display" id="eq:model8">\[
 \left\{
 \begin{array}{ll}
-Y=X\beta+ \varepsilon\\
-E( \varepsilon)=0\\
-Var( \varepsilon)=\sigma^2I_n
+Y=X\beta+\varepsilon\\
+E(\varepsilon)=0\\
+Var(\varepsilon)=\sigma^2I_n
 \end{array}
 \right. \tag{3.8}
 \]</span></p>

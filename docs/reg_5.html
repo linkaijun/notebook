@@ -533,11 +533,11 @@ div.csl-indent {
 <p><span class="math display" id="eq:model28">\[
 \begin{aligned}
 \hat \beta &amp;= (X&#39;X)^{-1}X&#39;Y \\
-&amp;= (X&#39;X)^{-1}X&#39;(X\beta+ \varepsilon) \\
-&amp;= \beta+(X&#39;X)^{-1}X&#39; \varepsilon
+&amp;= (X&#39;X)^{-1}X&#39;(X\beta+\varepsilon) \\
+&amp;= \beta+(X&#39;X)^{-1}X&#39;\varepsilon
 \end{aligned} \tag{3.30}
 \]</span></p>
-<p>注意到<span class="math inline">\(\hat \beta\)</span>不仅是<span class="math inline">\(y\)</span>的线性组合，还是$ $的线性组合。</p></li>
+<p>注意到<span class="math inline">\(\hat \beta\)</span>不仅是<span class="math inline">\(y\)</span>的线性组合，还是<span class="math inline">\(\varepsilon\)</span>的线性组合。</p></li>
 </ul>
 <blockquote>
 <p>除了最小二乘估计是线性的，由最小二乘估计推得的拟合值、预测值与残差也都是线性的。</p>
@@ -675,7 +675,7 @@ Cov(\bar y,\hat \beta_1 \bar x)&amp;={\bar x^2 \over n}Cov(\sum_{i=1}^n y_i,\sum
 \end{aligned} \tag{3.41}
 \]</span></p>
 <blockquote>
-<p>注意有<span class="math inline">\(Cov( \varepsilon_i, \varepsilon_j)=0\)</span>，则<span class="math inline">\(Cov(y_i,y_j)=0\)</span></p>
+<p>注意有<span class="math inline">\(Cov(\varepsilon_i,\varepsilon_j)=0\)</span>，则<span class="math inline">\(Cov(y_i,y_j)=0\)</span></p>
 </blockquote>
 <ul>
 <li><span class="math inline">\(Cov(\hat \beta_0,\hat \beta_1)\)</span></li>
@@ -693,8 +693,8 @@ Cov(\hat \beta_0,\hat \beta_1) &amp;= Cov(\bar y - \hat \beta_1 \bar x,\hat \bet
 \begin{aligned}
 Cov(\hat \beta) &amp;= E[(\hat \beta-E(\hat \beta))(\hat \beta-E(\hat \beta))&#39;] \\
 &amp;= E[(\hat \beta-\beta)(\hat \beta-\beta)&#39;] \\
-&amp;= E[(X&#39;X)^{-1}X&#39; \varepsilon  \varepsilon &#39; X(X&#39;X)^{-1}] \\
-&amp;= (X&#39;X)^{-1}X&#39;E( \varepsilon  \varepsilon &#39;) X(X&#39;X)^{-1} \\
+&amp;= E[(X&#39;X)^{-1}X&#39;\varepsilon \varepsilon &#39; X(X&#39;X)^{-1}] \\
+&amp;= (X&#39;X)^{-1}X&#39;E(\varepsilon \varepsilon &#39;) X(X&#39;X)^{-1} \\
 &amp;= (X&#39;X)^{-1}X&#39;\sigma^2I_n X(X&#39;X)^{-1} \\
 &amp;= \sigma^2(X&#39;X)^{-1}
 \end{aligned} \tag{3.43}
@@ -801,8 +801,8 @@ E(e)=E[(I-H)\varepsilon]=0  \tag{3.53}
 <p><span class="math display" id="eq:model47">\[
 \begin{aligned}
 Cov(e) &amp;= Cov((I-H)Y) \\
-&amp;= Cov((I-H) \varepsilon) \\
-&amp;= (I-H)E( \varepsilon \varepsilon&#39;)(I-H)&#39; \\
+&amp;= Cov((I-H)\varepsilon) \\
+&amp;= (I-H)E(\varepsilon\varepsilon&#39;)(I-H)&#39; \\
 &amp;= \sigma^2 (I-H)
 \end{aligned} \tag{3.54}
 \]</span></p></li>

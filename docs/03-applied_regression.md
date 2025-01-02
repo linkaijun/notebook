@@ -6,16 +6,16 @@
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-5a1024bfface56ac1da7" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-5a1024bfface56ac1da7">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-22074b3488ebe5591597" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-22074b3488ebe5591597">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 回归模型的建模步骤如下所示：
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-ae3d72ef174159597dc7" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-ae3d72ef174159597dc7">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-62c33129fc7350518945" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-62c33129fc7350518945">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## 引言 {#reg_1}
@@ -31,7 +31,7 @@
 - 相关关系：变量间客观存在的非确定性数量对应关系
 
    $$
-   y=f(x_1, ..., x_p,  \varepsilon)
+   y=f(x_1, ..., x_p, \varepsilon)
    $$
 
 ------------------------------------------------------------------------
@@ -55,12 +55,12 @@
 ### 回归模型的一般形式 {#reg_1_2}
 
 $$
-y=f(x_1, ..., x_p,  \varepsilon)
+y=f(x_1, ..., x_p, \varepsilon)
 $$
 
-其中y为因变量（响应变量、被解释变量），x为自变量（预测变量、解释变量），$ \varepsilon$为模型误差（随机扰动项）。
+其中y为因变量（响应变量、被解释变量），x为自变量（预测变量、解释变量），$\varepsilon$为模型误差（随机扰动项）。
 
-$ \varepsilon$包含的内容：
+$\varepsilon$包含的内容：
 
 - 被忽略的解释变量
 - 变量数值的观测误差
@@ -69,11 +69,11 @@ $ \varepsilon$包含的内容：
 
 ## 假定 {#reg_2}
 
-1. 零均值：$E( \varepsilon)=0$
-2. 同方差：$Var( \varepsilon)=\sigma^2$
-3. 无自相关：$Cov( \varepsilon_i, \varepsilon_j)=0$
-4. 无内生性：$Cov(X_i, \varepsilon)=0$
-5. 随机扰动项$ \varepsilon$服从正态分布
+1. 零均值：$E(\varepsilon)=0$
+2. 同方差：$Var(\varepsilon)=\sigma^2$
+3. 无自相关：$Cov(\varepsilon_i,\varepsilon_j)=0$
+4. 无内生性：$Cov(X_i,\varepsilon)=0$
+5. 随机扰动项$\varepsilon$服从正态分布
 6. 自变量为非随机变量，且无多重共线性
 7. 模型是正确设定的，具有线性关系
 
@@ -92,9 +92,9 @@ $ \varepsilon$包含的内容：
 $$
 \left\{
 \begin{array}{c}
-y=\beta_0+\beta_1x+ \varepsilon\\
-E( \varepsilon|x)=0\\
-Var( \varepsilon|x)=\sigma^2   
+y=\beta_0+\beta_1x+\varepsilon\\
+E(\varepsilon|x)=0\\
+Var(\varepsilon|x)=\sigma^2   
 \end{array}
 \right. (\#eq:model1)
 $$ 
@@ -118,7 +118,7 @@ $$
 
 ***为什么考虑y的条件期望？***
 
-- 由于$ \varepsilon$的存在，我们无法直接估计出参数$\beta_0$和$\beta_1$。结合零均值的假定，我们可以对模型左右两边取期望来消掉$ \varepsilon$的影响。同时需要注意的是，该期望是条件期望，我们更关注当x取固定值时y的均值。
+- 由于$\varepsilon$的存在，我们无法直接估计出参数$\beta_0$和$\beta_1$。结合零均值的假定，我们可以对模型左右两边取期望来消掉$\varepsilon$的影响。同时需要注意的是，该期望是条件期望，我们更关注当x取固定值时y的均值。
 
 - 如果从最优化的角度进行思考，假设对y的任意预测为$f(x)$，y的条件期望为$g(x)=E(y|x)$，则g(x)是y的最佳预测。
 
@@ -138,14 +138,14 @@ $$
 上述都是针对总体的理论模型，而对于样本数据$(x_i,y_i)$，则有:
 
 $$
-y_i=\hat y_i + \hat  \varepsilon=\hat \beta_0+ \hat \beta_1x_i+e_i (\#eq:model4)
+y_i=\hat y_i + \hat \varepsilon=\hat \beta_0+ \hat \beta_1x_i+e_i (\#eq:model4)
 $$
 
 $$
 \hat y_i=\hat \beta_0+ \hat \beta_1x_i (\#eq:model5)
 $$
 
-其中式\@ref(eq:model4)为样本回归模型，式\@ref(eq:model5)为样本回归方程（也称经验回归方程），$\hat y$和$e$（残差）分别是对$E(y|x)$和$ \varepsilon$的估计。
+其中式\@ref(eq:model4)为样本回归模型，式\@ref(eq:model5)为样本回归方程（也称经验回归方程），$\hat y$和$e$（残差）分别是对$E(y|x)$和$\varepsilon$的估计。
 
 > 无论总体还是样本，带随机扰动项或者残差的叫“回归模型”，不带的叫“回归方程”或“回归函数”。
 
@@ -154,9 +154,9 @@ $$
 $$
 \left\{
 \begin{array}{c}
-y=\beta_0+\beta_1x_1+...+\beta_px_p+ \varepsilon\\
-E( \varepsilon|x)=0\\
-Var( \varepsilon|x)=\sigma^2   
+y=\beta_0+\beta_1x_1+...+\beta_px_p+\varepsilon\\
+E(\varepsilon|x)=0\\
+Var(\varepsilon|x)=\sigma^2   
 \end{array}
 \right. (\#eq:model6)
 $$ 
@@ -179,9 +179,9 @@ $$
 $$
 \left\{
 \begin{array}{ll}
-Y=X\beta+ \varepsilon\\
-E( \varepsilon)=0\\
-Var( \varepsilon)=\sigma^2I_n 
+Y=X\beta+\varepsilon\\
+E(\varepsilon)=0\\
+Var(\varepsilon)=\sigma^2I_n 
 \end{array}
 \right. (\#eq:model8)
 $$
@@ -212,12 +212,12 @@ X=
 \vdots\\
 \beta_n
 \end{pmatrix}
- \varepsilon=
+\varepsilon=
 \begin{pmatrix}
- \varepsilon_1\\
- \varepsilon_2\\
+\varepsilon_1\\
+\varepsilon_2\\
 \vdots\\
- \varepsilon_n 
+\varepsilon_n 
 \end{pmatrix} (\#eq:model9)
 $$
 
@@ -233,7 +233,7 @@ $$
 
    $$
    \begin{align}
-   Q(\beta_0,\beta_1)&=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2=\sum^n_{i=1} \varepsilon^2\\
+   Q(\beta_0,\beta_1)&=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2=\sum^n_{i=1}\varepsilon^2\\
    \Rightarrow Q(\hat \beta_0,\hat \beta_1)&=\underset{\hat \beta_0, \hat \beta_1} {\arg\min} \sum^n_{i=1}(y_i-\hat \beta_0-\hat \beta_1x_i)^2\\
    &=\underset{\hat \beta_0, \hat \beta_1} {\arg\min} \sum^n_{i=1}(y_i-\hat y_i)^2\\
    &=\underset{\hat \beta_0, \hat \beta_1} {\arg\min} \sum^n_{i=1}e_i^2 
@@ -326,7 +326,7 @@ $$
 
 3. 矩估计
 
-   在前提假定中规定了$E( \varepsilon)=0$及$Cov(X_i, \varepsilon)=E(X_i \varepsilon)=0$，注意到残差$e$是对$ \varepsilon$的估计，则用样本矩估计总体矩有：
+   在前提假定中规定了$E(\varepsilon)=0$及$Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0$，注意到残差$e$是对$\varepsilon$的估计，则用样本矩估计总体矩有：
 
    $$
    \left\{
@@ -386,13 +386,13 @@ $$
    e &= Y-\hat Y\\
    &=Y-HY\\
    &=(I-H)Y\\
-   &=(I-H)(X\beta+ \varepsilon)\\
-   &=X\beta-HX\beta+(I-H) \varepsilon\\
-   &=(I-H) \varepsilon
+   &=(I-H)(X\beta+\varepsilon)\\
+   &=X\beta-HX\beta+(I-H)\varepsilon\\
+   &=(I-H)\varepsilon
    \end{aligned} (\#eq:model22)
    $$
 
-   之后对残差平方和$SSE=e'e= \varepsilon'(I-H) \varepsilon$取期望：
+   之后对残差平方和$SSE=e'e=\varepsilon'(I-H)\varepsilon$取期望：
 
    > tr(AB)=tr(BA)
    >
@@ -400,10 +400,10 @@ $$
 
    $$
    \begin{aligned}
-   E(SSE)&=E( \varepsilon'(I-H) \varepsilon)\\
-   &=E[tr( \varepsilon'(I-H) \varepsilon)]\\
-   &=E[tr((I-H) \varepsilon \varepsilon')]\\
-   &=tr((I-H)E( \varepsilon \varepsilon'))\\
+   E(SSE)&=E(\varepsilon'(I-H)\varepsilon)\\
+   &=E[tr(\varepsilon'(I-H)\varepsilon)]\\
+   &=E[tr((I-H)\varepsilon\varepsilon')]\\
+   &=tr((I-H)E(\varepsilon\varepsilon'))\\
    &=\sigma^2 tr(I-H)\\
    &=\sigma^2 [n-tr(H)]\\
    &=\sigma^2 [n-tr(X(X'X)^{-1}X')]\\
@@ -426,7 +426,7 @@ $$
 
 3. 矩估计
 
-   在多元场合，注意到前提假定$E( \varepsilon)=0$和$Cov(X_i, \varepsilon)=E(X_i \varepsilon)=0$，对应的样本矩条件为：
+   在多元场合，注意到前提假定$E(\varepsilon)=0$和$Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0$，对应的样本矩条件为：
 
    $$
    {1 \over n}X'(Y-X\hat \beta)=0\\
@@ -437,7 +437,7 @@ $$
 
 > 无论一元还是多元，最小二乘估计、极大似然估计和矩估计都用到了零均值、无内生性、无多重共线性（多元场合）的前提假定，其中极大似然估计额外运用了正态分布的假定。可以发现，估计的核心都是$X'(Y-X\hat \beta)=0$，或者说是$X'e=0$。
 >
-> 注意X'的第一行都是1，用来满足$E( \varepsilon)=0$的条件。其余行为不同自变量的观测值，用来满足$Cov(X_i, \varepsilon)=E(X_i \varepsilon)=0$的条件。
+> 注意X'的第一行都是1，用来满足$E(\varepsilon)=0$的条件。其余行为不同自变量的观测值，用来满足$Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0$的条件。
 
 ### 几何视角 {#reg_4_3}
 
@@ -494,12 +494,12 @@ $$
    $$
    \begin{aligned}
    \hat \beta &= (X'X)^{-1}X'Y \\
-   &= (X'X)^{-1}X'(X\beta+ \varepsilon) \\
-   &= \beta+(X'X)^{-1}X' \varepsilon
+   &= (X'X)^{-1}X'(X\beta+\varepsilon) \\
+   &= \beta+(X'X)^{-1}X'\varepsilon
    \end{aligned} (\#eq:model28)
    $$
 
-   注意到$\hat \beta$不仅是$y$的线性组合，还是$ \varepsilon$的线性组合。
+   注意到$\hat \beta$不仅是$y$的线性组合，还是$\varepsilon$的线性组合。
 
 > 除了最小二乘估计是线性的，由最小二乘估计推得的拟合值、预测值与残差也都是线性的。
 
@@ -648,7 +648,7 @@ $$
    \end{aligned} (\#eq:model39)
    $$
 
-   > 注意有$Cov( \varepsilon_i, \varepsilon_j)=0$，则$Cov(y_i,y_j)=0$
+   > 注意有$Cov(\varepsilon_i,\varepsilon_j)=0$，则$Cov(y_i,y_j)=0$
    
    - $Cov(\hat \beta_0,\hat \beta_1)$
    
@@ -667,8 +667,8 @@ $$
    \begin{aligned}
    Cov(\hat \beta) &= E[(\hat \beta-E(\hat \beta))(\hat \beta-E(\hat \beta))'] \\
    &= E[(\hat \beta-\beta)(\hat \beta-\beta)'] \\
-   &= E[(X'X)^{-1}X' \varepsilon  \varepsilon ' X(X'X)^{-1}] \\
-   &= (X'X)^{-1}X'E( \varepsilon  \varepsilon ') X(X'X)^{-1} \\
+   &= E[(X'X)^{-1}X'\varepsilon \varepsilon ' X(X'X)^{-1}] \\
+   &= (X'X)^{-1}X'E(\varepsilon \varepsilon ') X(X'X)^{-1} \\
    &= (X'X)^{-1}X'\sigma^2I_n X(X'X)^{-1} \\
    &= \sigma^2(X'X)^{-1}
    \end{aligned} (\#eq:model46)
@@ -787,8 +787,8 @@ $$
    $$
    \begin{aligned}
    Cov(e) &= Cov((I-H)Y) \\
-   &= Cov((I-H) \varepsilon) \\
-   &= (I-H)E( \varepsilon \varepsilon')(I-H)' \\
+   &= Cov((I-H)\varepsilon) \\
+   &= (I-H)E(\varepsilon\varepsilon')(I-H)' \\
    &= \sigma^2 (I-H)
    \end{aligned} (\#eq:model47)
    $$

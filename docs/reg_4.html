@@ -500,7 +500,7 @@ div.csl-indent {
 <p>对于离差平方和<span class="math inline">\(Q(\beta_0,\beta_1)\)</span>，最小二乘法考虑寻找合适的<span class="math inline">\(\hat \beta_0\)</span>与<span class="math inline">\(\hat \beta_1\)</span>使得残差平方和<span class="math inline">\(Q(\hat \beta_0,\hat \beta_1)\)</span>最小。</p>
 <p><span class="math display" id="eq:model10">\[
 \begin{align}
-Q(\beta_0,\beta_1)&amp;=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2=\sum^n_{i=1} \varepsilon^2\\
+Q(\beta_0,\beta_1)&amp;=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2=\sum^n_{i=1}\varepsilon^2\\
 \Rightarrow Q(\hat \beta_0,\hat \beta_1)&amp;=\underset{\hat \beta_0, \hat \beta_1} {\arg\min} \sum^n_{i=1}(y_i-\hat \beta_0-\hat \beta_1x_i)^2\\
 &amp;=\underset{\hat \beta_0, \hat \beta_1} {\arg\min} \sum^n_{i=1}(y_i-\hat y_i)^2\\
 &amp;=\underset{\hat \beta_0, \hat \beta_1} {\arg\min} \sum^n_{i=1}e_i^2
@@ -573,7 +573,7 @@ n\bar x (\bar y-\hat \beta_1 \bar x) + \hat \beta_1\sum_{i=1}^n x_i^2 &amp;= \su
 \]</span></p>
 <p>分别对<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>、<span class="math inline">\(\sigma^2\)</span>求偏导，可得对应的估计量。其中<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>与最小二乘估计的结果一致，但<span class="math inline">\(\sigma^2\)</span>的估计量为<span class="math inline">\(\hat \sigma^2={\sum\limits_{i=1}^n e_i^2 \over n}\)</span>，是有偏估计量。</p></li>
 <li><p>矩估计</p>
-<p>在前提假定中规定了<span class="math inline">\(E( \varepsilon)=0\)</span>及<span class="math inline">\(Cov(X_i, \varepsilon)=E(X_i \varepsilon)=0\)</span>，注意到残差<span class="math inline">\(e\)</span>是对$ $的估计，则用样本矩估计总体矩有：</p>
+<p>在前提假定中规定了<span class="math inline">\(E(\varepsilon)=0\)</span>及<span class="math inline">\(Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0\)</span>，注意到残差<span class="math inline">\(e\)</span>是对<span class="math inline">\(\varepsilon\)</span>的估计，则用样本矩估计总体矩有：</p>
 <p><span class="math display" id="eq:model18">\[
 \left\{
 \begin{array}{ll}
@@ -626,22 +626,22 @@ Q(\beta) &amp;= (Y-X \beta)&#39;(Y-X \beta)\\
 e &amp;= Y-\hat Y\\
 &amp;=Y-HY\\
 &amp;=(I-H)Y\\
-&amp;=(I-H)(X\beta+ \varepsilon)\\
-&amp;=X\beta-HX\beta+(I-H) \varepsilon\\
-&amp;=(I-H) \varepsilon
+&amp;=(I-H)(X\beta+\varepsilon)\\
+&amp;=X\beta-HX\beta+(I-H)\varepsilon\\
+&amp;=(I-H)\varepsilon
 \end{aligned} \tag{3.22}
 \]</span></p>
-<p>之后对残差平方和<span class="math inline">\(SSE=e&#39;e= \varepsilon&#39;(I-H) \varepsilon\)</span>取期望：</p>
+<p>之后对残差平方和<span class="math inline">\(SSE=e&#39;e=\varepsilon&#39;(I-H)\varepsilon\)</span>取期望：</p>
 <blockquote>
 <p>tr(AB)=tr(BA)</p>
 <p>I和H为n阶矩阵；X为p+1阶矩阵</p>
 </blockquote>
 <p><span class="math display" id="eq:model23">\[
 \begin{aligned}
-E(SSE)&amp;=E( \varepsilon&#39;(I-H) \varepsilon)\\
-&amp;=E[tr( \varepsilon&#39;(I-H) \varepsilon)]\\
-&amp;=E[tr((I-H) \varepsilon \varepsilon&#39;)]\\
-&amp;=tr((I-H)E( \varepsilon \varepsilon&#39;))\\
+E(SSE)&amp;=E(\varepsilon&#39;(I-H)\varepsilon)\\
+&amp;=E[tr(\varepsilon&#39;(I-H)\varepsilon)]\\
+&amp;=E[tr((I-H)\varepsilon\varepsilon&#39;)]\\
+&amp;=tr((I-H)E(\varepsilon\varepsilon&#39;))\\
 &amp;=\sigma^2 tr(I-H)\\
 &amp;=\sigma^2 [n-tr(H)]\\
 &amp;=\sigma^2 [n-tr(X(X&#39;X)^{-1}X&#39;)]\\
@@ -657,7 +657,7 @@ E(SSE)&amp;=E( \varepsilon&#39;(I-H) \varepsilon)\\
 \]</span></p>
 <p>要使对数似然函数取得最大值，则需最小化<span class="math inline">\((Y-X\beta)&#39;(Y-X\beta)\)</span>，与式<a href="reg_4.html#eq:model19">(3.19)</a>一致，故<span class="math inline">\(\hat \beta_{MLE}\)</span>结果与最小二乘估计一致。而<span class="math inline">\(\sigma^2\)</span>的估计量为<span class="math inline">\(\hat \sigma^2={(Y-X\beta)&#39;(Y-X\beta) \over n}\)</span>，同一元场合。</p></li>
 <li><p>矩估计</p>
-<p>在多元场合，注意到前提假定<span class="math inline">\(E( \varepsilon)=0\)</span>和<span class="math inline">\(Cov(X_i, \varepsilon)=E(X_i \varepsilon)=0\)</span>，对应的样本矩条件为：</p>
+<p>在多元场合，注意到前提假定<span class="math inline">\(E(\varepsilon)=0\)</span>和<span class="math inline">\(Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0\)</span>，对应的样本矩条件为：</p>
 <p><span class="math display" id="eq:model25">\[
 {1 \over n}X&#39;(Y-X\hat \beta)=0\\
 \Rightarrow \hat \beta =(X&#39;X)^{-1}X&#39;Y \tag{3.25}
@@ -666,7 +666,7 @@ E(SSE)&amp;=E( \varepsilon&#39;(I-H) \varepsilon)\\
 </ol>
 <blockquote>
 <p>无论一元还是多元，最小二乘估计、极大似然估计和矩估计都用到了零均值、无内生性、无多重共线性（多元场合）的前提假定，其中极大似然估计额外运用了正态分布的假定。可以发现，估计的核心都是<span class="math inline">\(X&#39;(Y-X\hat \beta)=0\)</span>，或者说是<span class="math inline">\(X&#39;e=0\)</span>。</p>
-<p>注意X’的第一行都是1，用来满足<span class="math inline">\(E( \varepsilon)=0\)</span>的条件。其余行为不同自变量的观测值，用来满足<span class="math inline">\(Cov(X_i, \varepsilon)=E(X_i \varepsilon)=0\)</span>的条件。</p>
+<p>注意X’的第一行都是1，用来满足<span class="math inline">\(E(\varepsilon)=0\)</span>的条件。其余行为不同自变量的观测值，用来满足<span class="math inline">\(Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0\)</span>的条件。</p>
 </blockquote>
 </div>
 <div id="reg_4_3" class="section level3 hasAnchor" number="3.4.3">

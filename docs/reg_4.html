@@ -290,9 +290,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="reg_4.html"><a href="reg_4.html"><i class="fa fa-check"></i><b>3.4</b> 参数估计</a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>3.4.1</b> 一元</a></li>
-<li class="chapter" data-level="3.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>3.4.2</b> 多元</a></li>
-<li class="chapter" data-level="3.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>3.4.3</b> 几何视角</a></li>
+<li class="chapter" data-level="3.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>3.4.1</b> 最小二乘估计</a></li>
+<li class="chapter" data-level="3.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>3.4.2</b> 极大似然估计</a></li>
+<li class="chapter" data-level="3.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>3.4.3</b> 矩估计</a></li>
+<li class="chapter" data-level="3.4.4" data-path="reg_4.html"><a href="reg_4.html#reg_4_4"><i class="fa fa-check"></i><b>3.4.4</b> 几何视角</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="reg_5.html"><a href="reg_5.html"><i class="fa fa-check"></i><b>3.5</b> 最小二乘估计的性质</a>
 <ul>
@@ -305,9 +306,17 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>3.6</b> 显著性检验</a>
 <ul>
-<li class="chapter" data-level="3.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>3.6.1</b> 一元</a></li>
-<li class="chapter" data-level="3.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>3.6.2</b> 多元</a></li>
+<li class="chapter" data-level="3.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>3.6.1</b> 区间估计</a></li>
+<li class="chapter" data-level="3.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>3.6.2</b> t检验</a></li>
+<li class="chapter" data-level="3.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>3.6.3</b> F检验</a></li>
+<li class="chapter" data-level="3.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>3.6.4</b> 样本决定系数</a></li>
 </ul></li>
+<li class="chapter" data-level="3.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>3.7</b> 预测</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>3.7.1</b> 预测因变量新值的均值</a></li>
+<li class="chapter" data-level="3.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>3.7.2</b> 预测因变量的新值</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>3.8</b> 重要的等式关系</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a>
 <ul>
@@ -499,9 +508,9 @@ div.csl-indent {
 <div id="reg_4" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> 参数估计<a href="reg_4.html#reg_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <div id="reg_4_1" class="section level3 hasAnchor" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> 一元<a href="reg_4.html#reg_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p>最小二乘估计</p>
+<h3><span class="header-section-number">3.4.1</span> 最小二乘估计<a href="reg_4.html#reg_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="reg_4_1_1" class="section level4 hasAnchor" number="3.4.1.1">
+<h4><span class="header-section-number">3.4.1.1</span> 一元场合<a href="reg_4.html#reg_4_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>对于离差平方和<span class="math inline">\(Q(\beta_0,\beta_1)\)</span>，最小二乘法考虑寻找合适的<span class="math inline">\(\hat \beta_0\)</span>与<span class="math inline">\(\hat \beta_1\)</span>使得残差平方和<span class="math inline">\(Q(\hat \beta_0,\hat \beta_1)\)</span>最小。</p>
 <p><span class="math display" id="eq:model10">\[
 \begin{align}
@@ -530,7 +539,7 @@ Q(\beta_0,\beta_1)&amp;=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2=\sum^n_{i=1}\vare
 \right. \tag{3.12}
 \]</span></p>
 <blockquote>
-<p>这个关系式非常重要</p>
+<p><span style="color: red; font-weight: bold">这个关系式非常重要</span></p>
 </blockquote>
 <p>将求和式展开，并稍加整理，可得：</p>
 <p><span class="math display" id="eq:model13">\[
@@ -569,42 +578,20 @@ n\bar x (\bar y-\hat \beta_1 \bar x) + \hat \beta_1\sum_{i=1}^n x_i^2 &amp;= \su
 <p>而对于<span class="math inline">\(\sigma^2\)</span>，很自然地会用残差<span class="math inline">\(e\)</span>进行估计，常用无偏估计量<span class="math inline">\(\hat \sigma^2\)</span>进行估计：</p>
 <p><span class="math display" id="eq:model16">\[
 \hat \sigma^2=\frac{\sum\limits_{i=1}^n e_i^2}{n-2} \tag{3.16}
-\]</span></p></li>
-</ol>
+\]</span></p>
 <blockquote>
 <p>在多元回归部分会给出更为详细的证明。</p>
 </blockquote>
-<ol start="2" style="list-style-type: decimal">
-<li><p>极大似然估计</p>
-<p>在<span class="math inline">\(y\sim~N(\beta_0+\beta_1x,\sigma^2)\)</span>的假定下，写出对数似然函数：</p>
-<p><span class="math display" id="eq:model17">\[
-\ln (L)=-{n \over 2} \ln (2\pi \sigma^2) - {1 \over 2\sigma^2} \sum_{i=1}^n [y_i-(\beta_0+\beta_1x_i)]^2 \tag{3.17}
-\]</span></p>
-<p>分别对<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>、<span class="math inline">\(\sigma^2\)</span>求偏导，可得对应的估计量。其中<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>与最小二乘估计的结果一致，但<span class="math inline">\(\sigma^2\)</span>的估计量为<span class="math inline">\(\hat \sigma^2={\sum\limits_{i=1}^n e_i^2 \over n}\)</span>，是有偏估计量。</p></li>
-<li><p>矩估计</p>
-<p>在前提假定中规定了<span class="math inline">\(E(\varepsilon)=0\)</span>及<span class="math inline">\(Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0\)</span>，注意到残差<span class="math inline">\(e\)</span>是对<span class="math inline">\(\varepsilon\)</span>的估计，则用样本矩估计总体矩有：</p>
-<p><span class="math display" id="eq:model18">\[
-\left\{
-\begin{array}{ll}
-{1 \over n} \sum\limits_{i=1}^n (y_i-\hat \beta_0-\hat \beta_1 x_i)=0 \\
-{1 \over n} \sum\limits_{i=1}^n (y_i-\hat \beta_0-\hat \beta_1 x_i)x_i=0
-\end{array}
-\right. \tag{3.18}
-\]</span></p>
-<p>与式<a href="reg_3.html#eq:model8">(3.8)</a>一致，则估计结果与最小二乘估计相同。</p></li>
-</ol>
 </div>
-<div id="reg_4_2" class="section level3 hasAnchor" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> 多元<a href="reg_4.html#reg_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p>最小二乘估计</p>
+<div id="reg_4_1_2" class="section level4 hasAnchor" number="3.4.1.2">
+<h4><span class="header-section-number">3.4.1.2</span> 多元场合<a href="reg_4.html#reg_4_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>对于离差平方和<span class="math inline">\(Q(\beta)\)</span>有</p>
 <p><span class="math display" id="eq:model19">\[
 \begin{aligned}
 Q(\beta) &amp;= (Y-X \beta)&#39;(Y-X \beta)\\
 &amp;=Y&#39;Y- \beta&#39;X&#39;Y-Y&#39;X \beta+\beta&#39;X&#39;X \beta\\
 &amp;=Y&#39;Y-2\beta&#39;X&#39;Y+\beta&#39;X&#39;X \beta
-\end{aligned} \tag{3.19}
+\end{aligned} \tag{3.17}
 \]</span></p>
 <blockquote>
 <p>注意<span class="math inline">\(\beta&#39;X&#39;Y\)</span>和<span class="math inline">\(Y&#39;X \beta\)</span>都是标量。</p>
@@ -615,16 +602,16 @@ Q(\beta) &amp;= (Y-X \beta)&#39;(Y-X \beta)\\
 \begin{aligned}
 \Rightarrow X&#39;X\hat \beta &amp;= X&#39;Y\\
 \hat \beta&amp;=(X&#39;X)^{-1}X&#39;Y
-\end{aligned} \tag{3.20}
+\end{aligned} \tag{3.18}
 \]</span></p>
 <blockquote>
-<p>一阶导条件等价于<span class="math inline">\(X&#39;(Y-X\hat \beta)=X&#39;e=0\)</span>，其中<span class="math inline">\(e\)</span>为残差，牢记<span class="math inline">\(X&#39;e=0\)</span></p>
+<p>一阶导条件等价于<span class="math inline">\(X&#39;(Y-X\hat \beta)=X&#39;e=0\)</span>，其中<span class="math inline">\(e\)</span>为残差，<span style="color: red; font-weight: bold">牢记<span class="math inline">\(X&#39;e=0\)</span></span></p>
 <p>为了确保有解，要求自变量之间无多重共线性，即矩阵X列满秩，故矩阵X’X可逆。</p>
 </blockquote>
 <p>故最小二乘估计为<span class="math inline">\(\hat \beta=(X&#39;X)^{-1}Y\)</span>。</p>
 <p>对于拟合值<span class="math inline">\(\hat Y\)</span>，有：</p>
 <p><span class="math display" id="eq:model21">\[
-\hat Y = X \hat \beta = X(X&#39;X)^{-1}X&#39;Y=HY \tag{3.21}
+\hat Y = X \hat \beta = X(X&#39;X)^{-1}X&#39;Y=HY \tag{3.19}
 \]</span></p>
 <p>其中<span class="math inline">\(H=X(X&#39;X)^{-1}X&#39;\)</span>为n阶<strong>对称幂等矩阵</strong>，即<span class="math inline">\(H=H&#39;\)</span>和<span class="math inline">\(H=H^2\)</span>。<span class="math inline">\(H\)</span>也称为<strong>投影矩阵</strong>。</p>
 <blockquote>
@@ -639,7 +626,7 @@ e &amp;= Y-\hat Y\\
 &amp;=(I-H)(X\beta+\varepsilon)\\
 &amp;=X\beta-HX\beta+(I-H)\varepsilon\\
 &amp;=(I-H)\varepsilon
-\end{aligned} \tag{3.22}
+\end{aligned} \tag{3.20}
 \]</span></p>
 <p>之后对残差平方和<span class="math inline">\(SSE=e&#39;e=\varepsilon&#39;(I-H)\varepsilon\)</span>取期望：</p>
 <blockquote>
@@ -657,30 +644,61 @@ E(SSE)&amp;=E(\varepsilon&#39;(I-H)\varepsilon)\\
 &amp;=\sigma^2 [n-tr(X(X&#39;X)^{-1}X&#39;)]\\
 &amp;=\sigma^2 [n-tr((X&#39;X)^{-1}X&#39;X)]\\
 &amp;=\sigma^2 [n-p-1]\\
-\end{aligned}  \tag{3.23}
+\end{aligned}  \tag{3.21}
 \]</span></p>
-<p>故<span class="math inline">\(\sigma^2\)</span>的无偏估计为<span class="math inline">\(\hat \sigma^2={SSE \over n-p-1}\)</span></p></li>
-<li><p>极大似然估计</p>
+<p>故<span class="math inline">\(\sigma^2\)</span>的无偏估计为<span class="math inline">\(\hat \sigma^2={SSE \over n-p-1}\)</span></p>
+</div>
+</div>
+<div id="reg_4_2" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> 极大似然估计<a href="reg_4.html#reg_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="reg_4_2_1" class="section level4 hasAnchor" number="3.4.2.1">
+<h4><span class="header-section-number">3.4.2.1</span> 一元场合<a href="reg_4.html#reg_4_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>在<span class="math inline">\(y\sim~N(\beta_0+\beta_1x,\sigma^2)\)</span>的假定下，写出对数似然函数：</p>
+<p><span class="math display" id="eq:model17">\[
+\ln (L)=-{n \over 2} \ln (2\pi \sigma^2) - {1 \over 2\sigma^2} \sum_{i=1}^n [y_i-(\beta_0+\beta_1x_i)]^2 \tag{3.22}
+\]</span></p>
+<p>分别对<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>、<span class="math inline">\(\sigma^2\)</span>求偏导，可得对应的估计量。其中<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>与最小二乘估计的结果一致，但<span class="math inline">\(\sigma^2\)</span>的估计量为<span class="math inline">\(\hat \sigma^2={\sum\limits_{i=1}^n e_i^2 \over n}\)</span>，是有偏估计量。</p>
+</div>
+<div id="reg_4_2_2" class="section level4 hasAnchor" number="3.4.2.2">
+<h4><span class="header-section-number">3.4.2.2</span> 多元场合<a href="reg_4.html#reg_4_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>注意到有<span class="math inline">\(Y \sim N(X\beta, \sigma^2I_n)\)</span>。故对数似然函数为：</p>
 <p><span class="math display" id="eq:model24">\[
-\ln L=-{n \over 2}\ln (2\pi)-{n \over 2}\ln (\sigma^2)-{1 \over 2\sigma^2}(Y-X\beta)&#39;(Y-X\beta) \tag{3.24}
+\ln L=-{n \over 2}\ln (2\pi)-{n \over 2}\ln (\sigma^2)-{1 \over 2\sigma^2}(Y-X\beta)&#39;(Y-X\beta) \tag{3.23}
 \]</span></p>
-<p>要使对数似然函数取得最大值，则需最小化<span class="math inline">\((Y-X\beta)&#39;(Y-X\beta)\)</span>，与式<a href="reg_4.html#eq:model19">(3.19)</a>一致，故<span class="math inline">\(\hat \beta_{MLE}\)</span>结果与最小二乘估计一致。而<span class="math inline">\(\sigma^2\)</span>的估计量为<span class="math inline">\(\hat \sigma^2={(Y-X\beta)&#39;(Y-X\beta) \over n}\)</span>，同一元场合。</p></li>
-<li><p>矩估计</p>
+<p>要使对数似然函数取得最大值，则需最小化<span class="math inline">\((Y-X\beta)&#39;(Y-X\beta)\)</span>，与式<a href="reg_4.html#eq:model19">(3.17)</a>一致，故<span class="math inline">\(\hat \beta_{MLE}\)</span>结果与最小二乘估计一致。而<span class="math inline">\(\sigma^2\)</span>的估计量为<span class="math inline">\(\hat \sigma^2={(Y-X\beta)&#39;(Y-X\beta) \over n}\)</span>，同一元场合。</p>
+</div>
+</div>
+<div id="reg_4_3" class="section level3 hasAnchor" number="3.4.3">
+<h3><span class="header-section-number">3.4.3</span> 矩估计<a href="reg_4.html#reg_4_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="reg_4_3_1" class="section level4 hasAnchor" number="3.4.3.1">
+<h4><span class="header-section-number">3.4.3.1</span> 一元场合<a href="reg_4.html#reg_4_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>在前提假定中规定了<span class="math inline">\(E(\varepsilon)=0\)</span>及<span class="math inline">\(Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0\)</span>，注意到残差<span class="math inline">\(e\)</span>是对<span class="math inline">\(\varepsilon\)</span>的估计，则用样本矩估计总体矩有：</p>
+<p><span class="math display" id="eq:model18">\[
+\left\{
+\begin{array}{ll}
+{1 \over n} \sum\limits_{i=1}^n (y_i-\hat \beta_0-\hat \beta_1 x_i)=0 \\
+{1 \over n} \sum\limits_{i=1}^n (y_i-\hat \beta_0-\hat \beta_1 x_i)x_i=0
+\end{array}
+\right. \tag{3.24}
+\]</span></p>
+<p>与式<a href="reg_3.html#eq:model8">(3.8)</a>一致，则估计结果与最小二乘估计相同。</p>
+</div>
+<div id="reg_4_3_2" class="section level4 hasAnchor" number="3.4.3.2">
+<h4><span class="header-section-number">3.4.3.2</span> 多元场合<a href="reg_4.html#reg_4_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>在多元场合，注意到前提假定<span class="math inline">\(E(\varepsilon)=0\)</span>和<span class="math inline">\(Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0\)</span>，对应的样本矩条件为：</p>
 <p><span class="math display" id="eq:model25">\[
 {1 \over n}X&#39;(Y-X\hat \beta)=0\\
 \Rightarrow \hat \beta =(X&#39;X)^{-1}X&#39;Y \tag{3.25}
 \]</span></p>
-<p>可得矩估计的结果和最小二乘估计相同。</p></li>
-</ol>
+<p>可得矩估计的结果和最小二乘估计相同。</p>
 <blockquote>
 <p>无论一元还是多元，最小二乘估计、极大似然估计和矩估计都用到了零均值、无内生性、无多重共线性（多元场合）的前提假定，其中极大似然估计额外运用了正态分布的假定。可以发现，估计的核心都是<span class="math inline">\(X&#39;(Y-X\hat \beta)=0\)</span>，或者说是<span class="math inline">\(X&#39;e=0\)</span>。</p>
 <p>注意X’的第一行都是1，用来满足<span class="math inline">\(E(\varepsilon)=0\)</span>的条件。其余行为不同自变量的观测值，用来满足<span class="math inline">\(Cov(X_i,\varepsilon)=E(X_i\varepsilon)=0\)</span>的条件。</p>
 </blockquote>
 </div>
-<div id="reg_4_3" class="section level3 hasAnchor" number="3.4.3">
-<h3><span class="header-section-number">3.4.3</span> 几何视角<a href="reg_4.html#reg_4_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+</div>
+<div id="reg_4_4" class="section level3 hasAnchor" number="3.4.4">
+<h3><span class="header-section-number">3.4.4</span> 几何视角<a href="reg_4.html#reg_4_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <video src="./video/Projection.mp4" controls width="800px" height="600px">
 </video>
 <p><a href="https://www.bilibili.com/video/BV1eFxMeKEpM/" target="_blank">B站：最小二乘与投影矩阵</a></p>

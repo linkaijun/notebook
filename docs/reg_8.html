@@ -309,7 +309,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>3.6.1</b> 区间估计</a></li>
 <li class="chapter" data-level="3.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>3.6.2</b> t检验</a></li>
 <li class="chapter" data-level="3.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>3.6.3</b> F检验</a></li>
-<li class="chapter" data-level="3.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>3.6.4</b> 样本决定系数</a></li>
+<li class="chapter" data-level="3.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>3.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="3.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>3.6.5</b> 样本决定系数</a></li>
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>3.7</b> 预测</a>
 <ul>
@@ -531,6 +532,19 @@ R^2=\frac{SSR}{SST}=\frac{\hat \beta_1^2 L_{xx}}{L_{yy}}=\frac{L_{xy}^2}{L_{xx}L
 <blockquote>
 <p>这也可以视作<span class="math inline">\(\hat \beta_1\)</span>与样本相关系数的关系</p>
 </blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>t检验统计量与偏F统计量的关系</li>
+</ol>
+<p><span class="math display">\[
+t_j^2=F_j
+\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>调整的<span class="math inline">\(R^2\)</span></li>
+</ol>
+<p><span class="math display">\[
+R_{adj}^2 = 1-\frac{SSE/(n-p-1)}{SST/(n-1)}=1-\frac{n-1}{n-p-1}(1-R^2)
+\]</span></p>
+<p>方差分析表</p>
 
 </div>
 <!-- </div> -->

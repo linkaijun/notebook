@@ -309,7 +309,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>3.6.1</b> 区间估计</a></li>
 <li class="chapter" data-level="3.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>3.6.2</b> t检验</a></li>
 <li class="chapter" data-level="3.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>3.6.3</b> F检验</a></li>
-<li class="chapter" data-level="3.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>3.6.4</b> 样本决定系数</a></li>
+<li class="chapter" data-level="3.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>3.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="3.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>3.6.5</b> 样本决定系数</a></li>
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>3.7</b> 预测</a>
 <ul>
@@ -508,20 +509,49 @@ div.csl-indent {
 <div id="reg_6" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> 显著性检验<a href="reg_6.html#reg_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <p>由于显著性检验依赖于最小二乘估计的分布，在前述内容中已经说明最小二乘估计服从正态分布，因此该部分内容严重依赖于随机扰动项的正态性、同方差、无自相关假定。</p>
+<p>同时，在显著性检验中涉及t检验和F检验，这就依赖如下条件</p>
+<p><span class="math display" id="eq:model78">\[
+\frac{SSE}{\sigma^2} \sim \chi^2(n-p-1) \tag{3.63}
+\]</span></p>
+<p>证：</p>
+<p><span class="math display" id="eq:model79">\[
+   \begin{aligned}
+   \frac{SSE}{\sigma^2}&amp;=\frac{e&#39;e}{\sigma^2} \\
+   &amp;=\frac{\varepsilon&#39;(I-H)\varepsilon}{\sigma^2} \\
+   &amp;=\frac{\varepsilon&#39;}{\sigma}(I-H)\frac{\varepsilon}{\sigma}
+   \end{aligned} \tag{3.64}
+   \]</span></p>
+<p>已知<span class="math inline">\(\varepsilon \sim N(0, \sigma^2I)\)</span>，则<span class="math inline">\(\frac{\varepsilon}{\sigma} \sim N(0,I)\)</span>。</p>
+<p>由于式<a href="reg_6.html#eq:model79">(3.64)</a>为二次型，且矩阵<span class="math inline">\((I-H)\)</span>为秩为<span class="math inline">\(n-p-1\)</span>的对称幂等矩阵，故存在某种正交变换使得式<a href="reg_6.html#eq:model79">(3.64)</a>的二次型化为相互独立的变量平方和，也就是卡方分布，其中自由度就是矩阵<span class="math inline">\((I-H)\)</span>的秩。
+同时，根据式<a href="reg_5.html#eq:model57">(3.62)</a>可知<span class="math inline">\(\hat \beta\)</span>与<span class="math inline">\(SSE/\sigma^2\)</span>。</p>
 <div id="reg_6_1" class="section level3 hasAnchor" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> 区间估计<a href="reg_6.html#reg_6_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <div id="reg_6_1_1" class="section level4 hasAnchor" number="3.6.1.1">
 <h4><span class="header-section-number">3.6.1.1</span> 一元场合<a href="reg_6.html#reg_6_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>根据式<a href="reg_5.html#eq:model48">(3.44)</a>已知<span class="math inline">\(\hat \beta_1\)</span>的分布，由于<span class="math inline">\(\sigma^2\)</span>未知，因此采用式<a href="reg_4.html#eq:model16">(3.16)</a>的<span class="math inline">\(\hat \sigma^2\)</span>进行替代，进而构造t统计量进行区间估计。</p>
+<p>根据式<a href="reg_5.html#eq:model48">(3.45)</a>已知<span class="math inline">\(\hat \beta_1\)</span>的分布，由于<span class="math inline">\(\sigma^2\)</span>未知，因此采用式<a href="reg_4.html#eq:model16">(3.16)</a>的<span class="math inline">\(\hat \sigma^2\)</span>进行替代，进而构造t统计量进行区间估计。</p>
 <p><span class="math display" id="eq:model58">\[
 \begin{gather}
 t=\frac{\hat \beta_1-\beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \sim t(n-2) \\
 P\begin{pmatrix}\begin{vmatrix}\frac{\hat \beta_1-\beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{vmatrix} &lt; t_{\alpha/2}(n-2)\end{pmatrix}=1-\alpha \\
 \begin{pmatrix} \hat \beta_1-t_{\alpha/2}(n-2) \sqrt{\frac{\hat \sigma^2}{L_{xx}}}, \; \hat \beta_1+t_{\alpha/2}(n-2) \sqrt{\frac{\hat \sigma^2}{L_{xx}}}\end{pmatrix}
-\end{gather}  \tag{3.62}
+\end{gather}  \tag{3.65}
 \]</span></p>
 <blockquote>
 <p>我们在乎自变量是否能解释因变量的变动，因此<span class="math inline">\(\hat \beta_0\)</span>的区间估计，包括下面的显著性检验都不对<span class="math inline">\(\hat \beta_0\)</span>进行讨论</p>
+</blockquote>
+</div>
+<div id="reg_6_1_2" class="section level4 hasAnchor" number="3.6.1.2">
+<h4><span class="header-section-number">3.6.1.2</span> 多元场合<a href="reg_6.html#reg_6_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>回顾式<a href="reg_5.html#eq:model49">(3.46)</a>，可知<span class="math inline">\(\hat \beta_j \sim N(\beta_j, \sigma^2c_{jj})\)</span>，其中<span class="math inline">\(c_{jj}\)</span>表示<span class="math inline">\((X&#39;X)^{-1}\)</span>的第<span class="math inline">\(j+1\)</span>个主对角线元素，故有</p>
+<p><span class="math display" id="eq:model75">\[
+\begin{gather}
+t=\frac{\hat \beta_j-\beta_j}{\sqrt{\hat \sigma^2c_{jj}}} \sim t(n-p-1) \\
+P\begin{pmatrix}\begin{vmatrix}\frac{\hat \beta_j-\beta_j}{\sqrt{\hat \sigma^2c_{jj}}}\end{vmatrix} &lt; t_{\alpha/2}(n-p-1)\end{pmatrix}=1-\alpha \\
+\begin{pmatrix} \hat \beta_j-t_{\alpha/2}(n-p-1) \sqrt{\hat \sigma^2 c_{jj}}, \; \hat \beta_j+t_{\alpha/2}(n-p-1) \sqrt{\hat \sigma^2 c_{jj}}\end{pmatrix}
+\end{gather}  \tag{3.66}
+\]</span></p>
+<blockquote>
+<p>挖坑，回归系数向量的置信域（置信椭球）</p>
 </blockquote>
 </div>
 </div>
@@ -536,9 +566,30 @@ H_0:\beta_1=0 \quad vs \quad H_1:\beta_1 \neq 0
 \]</span></p>
 <p>在原假设下有<span class="math inline">\(\hat \beta_1 \sim N(0, \sigma^2/L_{xx})\)</span>，同样用式<a href="reg_4.html#eq:model16">(3.16)</a>的<span class="math inline">\(\hat \sigma^2\)</span>替代<span class="math inline">\(\sigma^2\)</span>，进而构造t统计量进行显著性检验。</p>
 <p><span class="math display" id="eq:model59">\[
-t=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \tag{3.63}
+t=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \tag{3.67}
 \]</span></p>
 <p>在原假设下<span class="math inline">\(t \sim t(n-2)\)</span>，当<span class="math inline">\(|t| \geq t_{\alpha/2}(n-2)\)</span>时拒绝原假设。</p>
+</div>
+<div id="reg_6_2_2" class="section level4 hasAnchor" number="3.6.2.2">
+<h4><span class="header-section-number">3.6.2.2</span> 多元场合<a href="reg_6.html#reg_6_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>对于假设检验问题</p>
+<p><span class="math display">\[
+H_0:\beta_j=0 \quad vs \quad H_1:\beta_j \neq 0
+\]</span></p>
+<p>在原假设下有<span class="math inline">\(\hat \beta_j \sim N(0,\sigma^2 c_{jj})\)</span>，故构造检验统计量</p>
+<p><span class="math display" id="eq:model76">\[
+t_j=\frac{\hat \beta_j}{\sqrt{\hat \sigma^2 c_{jj}}}  \tag{3.68}
+\]</span></p>
+<p>在原假设下<span class="math inline">\(t_j \sim t(n-p-1)\)</span>，当<span class="math inline">\(|t_j| \geq t_{\alpha/2}(n-p-1)\)</span>时拒绝原假设。</p>
+<p>考虑更一般的假设检验问题</p>
+<p><span class="math display">\[
+H_0:c&#39;\beta=0 \quad vs \quad H_1:c&#39;\beta \neq 0
+\]</span></p>
+<p>有<span class="math inline">\(c&#39;\hat \beta \sim N(c&#39;\beta, \sigma^2c&#39;(X&#39;X)^{-1}c)\)</span>，故</p>
+<p><span class="math display" id="eq:model77">\[
+t=\frac{c&#39;\hat \beta}{\sqrt{\hat \sigma^2c&#39;(X&#39;X)^{-1}c}} \tag{3.69}
+\]</span></p>
+<p>原假设下有<span class="math inline">\(t \sim t(n-p-1)\)</span>，当<span class="math inline">\(|t| \geq t(n-p-1)\)</span>时拒绝原假设</p>
 </div>
 </div>
 <div id="reg_6_3" class="section level3 hasAnchor" number="3.6.3">
@@ -552,10 +603,24 @@ H_0:\beta_1=0 \quad vs \quad H_1:\beta_1 \neq 0
 \]</span></p>
 <p>构造F统计量</p>
 <p><span class="math display" id="eq:model60">\[
-F=\frac{SSR/1}{SSE/(n-2)} \tag{3.64}
+F=\frac{SSR/1}{SSE/(n-2)} \tag{3.70}
 \]</span></p>
 <p>其中<span class="math inline">\(SST=\sum_{i=1}^n(y_i-\bar y)^2, \; SSR=\sum_{i=1}^n(\hat y_i -\bar y)^2, \; SSE=\sum_{i=1}^n(y_i-\hat y_i)^2\)</span>。</p>
 <p>在原假设下<span class="math inline">\(F \sim F(1,n-2)\)</span>，当<span class="math inline">\(F \geq F_\alpha(1,n-2)\)</span>时，拒绝原假设。</p>
+<p>注意到，在一元线性回归中，F统计量与t统计量有如下关系式</p>
+<p><span class="math display" id="eq:model66">\[
+t^2=\begin{pmatrix}\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{pmatrix}^2=\frac{\hat \beta_1^2L_{xx}}{SSE/(n-2))}=\frac{SSR}{SSE/(n-2)}=F  \tag{3.71}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display" id="eq:model67">\[
+\begin{aligned}
+SSR&amp;=\sum_{i=1}^n (\hat y_i - \bar y)^2 \\
+&amp;= \sum_{i=1}^n (\hat \beta_0 + \hat \beta_1x_i-\bar y)^2 \\
+&amp;= \sum_{i=1}^n (\bar y - \hat \beta_1 \bar x + \hat \beta_1x_i-\bar y)^2 \\
+&amp;= \sum_{i=1}^n \hat \beta_1^2(x_i-\bar x)^2 \\
+&amp;= \hat \beta_1^2 L_{xx}
+\end{aligned} \tag{3.72}
+\]</span></p>
 <table style="width:11%;">
 <colgroup>
 <col width="11%" />
@@ -574,14 +639,14 @@ SST&amp;=\sum_{i=1}^n(y_i-\bar y)^2 \\
 &amp;= SSR+SSE+2\sum_{i=1}^n e_i(\hat \beta_0+\hat \beta_1x_i)-2\bar y \sum_{i=1}^n e_i \\
 &amp;= SSR+SSE +2\hat \beta_0 \sum_{i=1}^n e_i+2\hat \beta_1 \sum_{i=1}^n e_ix_i \\
 &amp;= SSR+SSE
-\end{aligned} \tag{3.65}
+\end{aligned} \tag{3.73}
 \]</span></td>
 </tr>
 <tr class="odd">
 <td>注意式<a href="reg_4.html#eq:model12">(3.12)</a>表明<span class="math inline">\(\sum_{i=1}^n e_i=0, \; \sum_{i=1}^n e_ix_i=0\)</span>。</td>
 </tr>
 <tr class="even">
-<td>关于式<a href="reg_6.html#eq:model60">(3.64)</a>的原理，可参考1999年王松桂《线性统计模型：线性回归与方差分析》中的定理4.1.1，该定理包括</td>
+<td>关于式<a href="reg_6.html#eq:model60">(3.70)</a>的原理，可参考1999年王松桂《线性统计模型：线性回归与方差分析》中的定理4.1.1，该定理包括</td>
 </tr>
 <tr class="odd">
 <td>(a) <span class="math inline">\(RSS/\sigma^2 \sim \chi^2_{n-p}\)</span></td>
@@ -605,37 +670,112 @@ F_H = \frac{(RSS_H-RSS)/m}{RSS/(n-p)} \sim F_{m,n-p}
 </tr>
 </tbody>
 </table>
-<p>注意到，在一元线性回归中，F统计量与t统计量有如下关系式</p>
-<p><span class="math display" id="eq:model66">\[
-t^2=\begin{pmatrix}\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{pmatrix}^2=\frac{\hat \beta_1^2L_{xx}}{SSE/(n-2))}=\frac{SSR}{SSE/(n-2)}=F  \tag{3.66}
+</div>
+<div id="reg_6_3_2" class="section level4 hasAnchor" number="3.6.3.2">
+<h4><span class="header-section-number">3.6.3.2</span> 多元场合<a href="reg_6.html#reg_6_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>整个回归方程的显著性检验同样采用F检验进行。</p>
+<p>对于假设检验问题</p>
+<p><span class="math display">\[
+H_0: \beta_1=...=\beta_p=0 \quad vs \quad H_1: \exists \beta_i \neq 0, \; i\in \{1,...,p\}
 \]</span></p>
-<p>其中</p>
-<p><span class="math display" id="eq:model67">\[
-\begin{aligned}
-SSR&amp;=\sum_{i=1}^n (\hat y_i - \bar y)^2 \\
-&amp;= \sum_{i=1}^n (\hat \beta_0 + \hat \beta_1x_i-\bar y)^2 \\
-&amp;= \sum_{i=1}^n (\bar y - \hat \beta_1 \bar x + \hat \beta_1x_i-\bar y)^2 \\
-&amp;= \sum_{i=1}^n \hat \beta_1^2(x_i-\bar x)^2 \\
-&amp;= \hat \beta_1^2 L_{xx}
-\end{aligned} \tag{3.67}
+<p>构造F统计量</p>
+<p><span class="math display" id="eq:model81">\[
+F=\frac{SSR/p}{SSE/(n-p-1)} \tag{3.74}
 \]</span></p>
+<p>在原假设下，<span class="math inline">\(F\sim F(p,n-p-1)\)</span>，当<span class="math inline">\(F \geq F_\alpha(p,n-p-1)\)</span>时即可拒绝原假设。</p>
+<p>下面对F检验进行推广。</p>
+<p>考虑部分回归系数的显著性检验问题，不妨令<span class="math inline">\(\beta_2\)</span>为<span class="math inline">\(\beta\)</span>中假设系数为0的那部分系数，对应的自变量有<span class="math inline">\(p^*\)</span>个，记为<span class="math inline">\(X_2\)</span>。剩余的系数和自变量个数为<span class="math inline">\(\beta_1\)</span>和<span class="math inline">\(p-p^*\)</span>个，自变量记为<span class="math inline">\(X_1\)</span>。</p>
+<blockquote>
+<p>更一般的线性假设问题及证明可参考1999年王松桂《线性统计模型：线性回归与方差分析》中的4.1节，其中的线性假设为<span class="math inline">\(A\beta=b\)</span></p>
+</blockquote>
+<p>对于假设检验问题</p>
+<p><span class="math display">\[
+H_0:\beta_2=0 \quad vs \quad H_1:\beta_2 \neq 0
+\]</span></p>
+<p>对于同一样本，无约束回归与有约束回归对应的<span class="math inline">\(SST\)</span>都是一致的。而在约束条件<span class="math inline">\(\beta_2=0\)</span>下，对应的残差平方和<span class="math inline">\(SSE^*\)</span>必定大于等于无约束条件下的残差平方和<span class="math inline">\(SSE\)</span>，即<span class="math inline">\(SSE^* \geq SSE\)</span>。注意到有<span class="math inline">\(SSR-SSR^*=SSE^*-SSE\)</span>，结合式<a href="reg_6.html#eq:model78">(3.63)</a>，在原假设下有</p>
+<p><span class="math display" id="eq:model80">\[
+F=\frac{(SSE^*-SSE)/(p-p^*)}{SSE/(n-p-1)} \sim F(p-p^*,n-p-1) \tag{3.75}
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(SSE^\*/\sigma^2 \sim chi^2(n-p^\*-1)\)</span></p>
+<p><span class="math inline">\(SSE/\sigma^2 \sim chi^2(n-p-1)\)</span></p>
+<p><span class="math inline">\((SSE^\*-SSE)/\sigma^2 \sim \chi^2(p-p^\*)\)</span></p>
+</blockquote>
+<p>因此，该检验统计量通过度量<span class="math inline">\(SSE^*-SSE\)</span>的差异大小来检验约束条件是否显著存在。若约束条件真的存在，则<span class="math inline">\(SSE^*-SSE\)</span>之间的差异自然就小；若约束条件不存在，则<span class="math inline">\(SSE^*-SSE\)</span>之间的差异自然就大。</p>
+<hr />
+<p><strong><em>多元场合的平方和分解式的表达</em></strong></p>
+<p><span class="math display" id="eq:model82">\[
+\begin{gather}
+SST=\sum_{i=1}^n(y_i-\bar y)^2=\sum_{i=1}^n [(1-\frac{1}{n})y_i -\frac{1}{n}\sum_{j \neq i}y_j]^2=Y&#39;(I-\frac{1}{n}1_n1_n&#39;)Y \\
+SSE=\sum_{i=1}^n(y_i-\hat y_i)^2=Y&#39;(I-H)Y \\
+SSR=SST-SSE=Y&#39;(H-\frac{1}{n}1_n1_n&#39;)Y
+\end{gather} \tag{3.76}
+\]</span></p>
+<p>其中<span class="math inline">\(1_n\)</span>表示长度为n且元素均为1的向量。</p>
+<hr />
 </div>
 </div>
 <div id="reg_6_4" class="section level3 hasAnchor" number="3.6.4">
-<h3><span class="header-section-number">3.6.4</span> 样本决定系数<a href="reg_6.html#reg_6_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<h3><span class="header-section-number">3.6.4</span> 偏F检验<a href="reg_6.html#reg_6_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在多元场合中，根据式<a href="reg_6.html#eq:model80">(3.75)</a>的启示，可以假设某一自变量对应的回归系数为0，根据约束前后残差平方和的差异大小来判断该自变量的重要性，称此检验为<strong>偏F检验</strong>。</p>
+<p>假设检验问题为</p>
+<p><span class="math inline">\(H_0:\beta_j=0 \quad vs \quad H_1:\beta_j \neq 0\)</span></p>
+<p>则检验统计量为</p>
+<p><span class="math display" id="eq:model83">\[
+F_j=\frac{(SSE_{(-j)}-SSE)/1}{SSE/(n-p-1)} \tag{3.77}
+\]</span></p>
+<p>其中<span class="math inline">\(SSE_{(-i)}\)</span>表示去掉第<span class="math inline">\(i\)</span>个自变量后所拟合模型的残差平方和。在原假设下，由<span class="math inline">\(F_i \sim F(1,n-p-1)\)</span>。当<span class="math inline">\(F \geq F_\alpha(1,n-p-1)\)</span>时拒绝原假设。</p>
+<p>若约束前后残差平方和变化过大，说明该自变量较为重要，此时<span class="math inline">\(F_i\)</span>的值会较大，倾向于拒绝原假设。</p>
+<p><span class="math inline">\(\beta_j\)</span>的t检验统计量与偏F检验统计量有如下关系</p>
+<p><span class="math display" id="eq:model84">\[
+t_j^2=F_j  \tag{3.78}
+\]</span></p>
+<p>证：挖坑</p>
+</div>
+<div id="reg_6_5" class="section level3 hasAnchor" number="3.6.5">
+<h3><span class="header-section-number">3.6.5</span> 样本决定系数<a href="reg_6.html#reg_6_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>样本决定系数定义如下</p>
 <p><span class="math display" id="eq:model68">\[
-R^2=\frac{SSR}{SST} \tag{3.68}
+R^2=\frac{SSR}{SST}=\frac{\sum_{i=1}^n (\hat y_i-\bar y)^2}{\sum_{i=1}^n (y_i-\bar y)^2} \tag{3.79}
 \]</span></p>
 <p>也称拟合优度、判定系数、确定系数。</p>
 <p><span class="math inline">\(R^2\)</span>反映了因变量的变异(SST)中可以由自变量解释(SSR)的比例.</p>
 <blockquote>
 <p>关于<span class="math inline">\(R^2\)</span>这里推荐阅读统计之都的文章<a href="https://zhuanlan.zhihu.com/p/649208435" target="_blank">《为什么我不是R方的粉丝》</a></p>
 </blockquote>
+<div id="reg_6_5_1" class="section level4 hasAnchor" number="3.6.5.1">
+<h4><span class="header-section-number">3.6.5.1</span> 一元场合<a href="reg_6.html#reg_6_5_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>在一元线性回归中，<span class="math inline">\(R^2\)</span>与样本相关系数具有如下关系</p>
 <p><span class="math display" id="eq:model69">\[
-R^2=\frac{SSR}{SST}=\frac{\hat \beta_1^2 L_{xx}}{L_{yy}}=\frac{L_{xy}^2}{L_{xx}L_{yy}}=r^2 \tag{3.69}
+R^2=\frac{SSR}{SST}=\frac{\hat \beta_1^2 L_{xx}}{L_{yy}}=\frac{L_{xy}^2}{L_{xx}L_{yy}}=r^2 \tag{3.80}
 \]</span></p>
+</div>
+<div id="reg_6_5_2" class="section level4 hasAnchor" number="3.6.5.2">
+<h4><span class="header-section-number">3.6.5.2</span> 多元场合<a href="reg_6.html#reg_6_5_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>在多元场合中，样本决定系数<span class="math inline">\(R^2\)</span>与<span class="math inline">\(Cor(\hat Y, Y)\)</span>具有如下关系</p>
+<p><span class="math display" id="eq:model85">\[
+\begin{aligned}
+Cor(\hat Y, Y)&amp;=\frac{(\hat Y - 1_n\bar y)&#39;(Y-1_n\bar y)}{\sqrt{SSR \times SST}} \\
+&amp;= \frac{(\hat Y - 1_n\bar y)&#39;(\hat Y + e -1_n\bar y)}{\sqrt{SSR \times SST}} \\
+&amp;= \frac{(\hat Y - 1_n\bar y)&#39;(\hat Y-1_n\bar y)+(\hat Y - 1_n\bar y)&#39;e}{\sqrt{SSR \times SST}} \\
+&amp;= \frac{SSR+0}{\sqrt{SSR \times SST}} \\
+&amp;= \sqrt{\frac{SSR}{SST}} \\
+&amp;= \sqrt{R^2}
+\end{aligned} \tag{3.81}
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(e\)</span>与<span class="math inline">\(\hat Y\)</span>正交，且<span class="math inline">\(\sum_{i=1}^n e_i=0\)</span></p>
+</blockquote>
+<p>定义样本复相关系数为</p>
+<p><span class="math display" id="eq:model86">\[
+R=\sqrt{R^2}=\sqrt{\frac{SSR}{SST}}  \tag{3.82}
+\]</span></p>
+<p>定义调整的<span class="math inline">\(R^2\)</span>为</p>
+<p><span class="math display" id="eq:model86">\[
+R_{adj}^2 = 1-\frac{SSE/(n-p-1)}{SST/(n-1)}=1-\frac{n-1}{n-p-1}(1-R^2) \tag{3.82}
+\]</span></p>
+<p>普通<span class="math inline">\(R^2\)</span>会随着自变量的增加而单调增加，而调整的<span class="math inline">\(R^2\)</span>相较于普通<span class="math inline">\(R^2\)</span>多了对自变量个数的惩罚，因此可用于不同自变量个数下不同模型之间拟合效果的比较。</p>
+</div>
 </div>
 </div>
             </section>

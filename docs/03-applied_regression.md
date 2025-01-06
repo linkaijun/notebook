@@ -6,16 +6,16 @@
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-d766a0a612277c55a920" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d766a0a612277c55a920">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-189a0f711be5c95e22c0" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-189a0f711be5c95e22c0">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 回归模型的建模步骤如下所示：
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-d82ba77cba6ee148ea65" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d82ba77cba6ee148ea65">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-fca0132ed0b5f77762f3" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-fca0132ed0b5f77762f3">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## 引言 {#reg_1}
@@ -455,174 +455,180 @@ $$
 
 ### 线性 {#reg_5_1}
 
-- 一元场合
+#### 一元场合 {#reg_5_1_1}
 
-   式\@ref(eq:model15)给出了最小二乘估计，对其稍加整理即可发现$\beta$是$y$的线性组合。
+式\@ref(eq:model15)给出了最小二乘估计，对其稍加整理即可发现$\beta$是$y$的线性组合。
 
-   $$
-   \begin{aligned}
-   \hat{\beta_1} &= {L_{xy} \over L_{xx}} \\
-   &= {\sum\limits_{i=1}^n (x_i-\bar x)(y_i - \bar y) \over L_{xx}} \\
-   &= {\sum\limits_{i=1}^n (x_i-\bar x)y_i \over L_{xx}} \\
-   &= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} y_i \\
-   &= \sum_{i=1}^n k_i y_i
-   \end{aligned} (\#eq:model26)
-   $$
+$$
+\begin{aligned}
+\hat{\beta_1} &= {L_{xy} \over L_{xx}} \\
+&= {\sum\limits_{i=1}^n (x_i-\bar x)(y_i - \bar y) \over L_{xx}} \\
+&= {\sum\limits_{i=1}^n (x_i-\bar x)y_i \over L_{xx}} \\
+&= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} y_i \\
+&= \sum_{i=1}^n k_i y_i
+\end{aligned} (\#eq:model26)
+$$
 
-   > $L_{xx}$相当于一个常数，可以放进去或提出来。
+> $L_{xx}$相当于一个常数，可以放进去或提出来。
 
-   $$
-   \begin{aligned}
-   \hat \beta_0 &= \bar y - \hat \beta_1 \bar x \\
-   &= \sum\limits_{i=1}^n {1 \over n}y_i - \sum\limits_{i=1}^n {(x_i-\bar x)\bar x \over L_{xx}} y_i \\
-   &= \sum\limits_{i=1}^n [{1 \over n} - {(x_i-\bar x)\bar x \over L_{xx}}]y_i
-   \end{aligned} (\#eq:model27)
-   $$
+$$
+\begin{aligned}
+\hat \beta_0 &= \bar y - \hat \beta_1 \bar x \\
+&= \sum\limits_{i=1}^n {1 \over n}y_i - \sum\limits_{i=1}^n {(x_i-\bar x)\bar x \over L_{xx}} y_i \\
+&= \sum\limits_{i=1}^n [{1 \over n} - {(x_i-\bar x)\bar x \over L_{xx}}]y_i
+\end{aligned} (\#eq:model27)
+$$
    
-   对于拟合值$\hat y_i$有
+对于拟合值$\hat y_i$有
    
-   $$
-   \hat y_i=\hat \beta_0+\hat \beta_1x_i=\sum_{j=1}^n [\frac{1}{n}+\frac{(x_i-\bar x)(x_j-\bar x)}{L_{xx}}]y_j=\sum_{j=1}^n h_{ij}y_j (\#eq:model50)
-   $$
+$$
+\hat y_i=\hat \beta_0+\hat \beta_1x_i=\sum_{j=1}^n [\frac{1}{n}+\frac{(x_i-\bar x)(x_j-\bar x)}{L_{xx}}]y_j=\sum_{j=1}^n h_{ij}y_j (\#eq:model50)
+$$
    
-   > $h_{ij}=h_{ji}$
+> $h_{ij}=h_{ji}$
    
-   对于给定的新值$x_0$，对应的预测值$\hat y_0$有
+对于给定的新值$x_0$，对应的预测值$\hat y_0$有
    
-   $$
-   \hat y_0=\hat \beta_0+\hat \beta_1x_0=\sum_{j=1}^n [\frac{1}{n}+\frac{(x_0-\bar x)(x_j-\bar x)}{L_{xx}}]y_j=\sum_{j=1}^n h_{0j}y_j (\#eq:model51)
-   $$
+$$
+\hat y_0=\hat \beta_0+\hat \beta_1x_0=\sum_{j=1}^n [\frac{1}{n}+\frac{(x_0-\bar x)(x_j-\bar x)}{L_{xx}}]y_j=\sum_{j=1}^n h_{0j}y_j (\#eq:model51)
+$$
 
-- 多元场合
+#### 多元场合 {#reg_5_1_2}
 
 对于最小二乘估计$\hat \beta$有
 
-   $$
-   \begin{aligned}
-   \hat \beta &= (X'X)^{-1}X'Y \\
-   &= (X'X)^{-1}X'(X\beta+\varepsilon) \\
-   &= \beta+(X'X)^{-1}X'\varepsilon
-   \end{aligned} (\#eq:model28)
-   $$
+$$
+\begin{aligned}
+\hat \beta &= (X'X)^{-1}X'Y \\
+&= (X'X)^{-1}X'(X\beta+\varepsilon) \\
+&= \beta+(X'X)^{-1}X'\varepsilon
+\end{aligned} (\#eq:model28)
+$$
 
-   注意到$\hat \beta$不仅是$y$的线性组合，还是$\varepsilon$的线性组合。
+注意到$\hat \beta$不仅是$y$的线性组合，还是$\varepsilon$的线性组合。
 
 对于拟合值向量$\hat Y$，参照式\@ref(eq:model21)有$\hat Y = HY$。
 
-对于
+对于预测值$\hat y_0$，有
+
+$$
+\hat y_0 = x_0'\hat \beta=x_0'(X'X)^{-1}X'Y (\#eq:model74)
+$$
+
+对于残差向量$e$，参照式\@ref(eq:model22)，有$e=(I-H)Y=(I-H)\varepsilon$。
 
 ### 无偏性 {#reg_5_2}
 
-- 一元场合
+#### 一元场合  {#reg_5_2_1}
 
-   $$
-   \begin{aligned}
-   E(\hat \beta_1)&= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} E(y_i) \\
-   &= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}}(\beta_0+\beta_1x_i) \\
-   &= \sum_{i=1}^n {(x_i-\bar x)x_i \over L_{xx}}\beta_1 \\
-   &= {L_{xx} \over L_{xx}}\beta_1 \\
-   &= \beta_1
-   \end{aligned} (\#eq:model29)
-   $$
+$$
+\begin{aligned}
+E(\hat \beta_1)&= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}} E(y_i) \\
+&= \sum_{i=1}^n {(x_i-\bar x) \over L_{xx}}(\beta_0+\beta_1x_i) \\
+&= \sum_{i=1}^n {(x_i-\bar x)x_i \over L_{xx}}\beta_1 \\
+&= {L_{xx} \over L_{xx}}\beta_1 \\
+&= \beta_1
+\end{aligned} (\#eq:model29)
+$$
 
-   $$
-   \begin{aligned}
-   E(\hat \beta_0)&=E(\bar y)-E(\hat \beta_1)\bar x \\
-   &= {\sum\limits_{i=1}^n E(y_i) \over n}-\beta_1 \bar x \\
-   &= {\sum\limits_{i=1}^n (\beta_0 + \beta_1 x) \over n}-\beta_1 \bar x \\
-   &= \beta_0 + \beta_1 \bar x -\beta_1 \bar x \\
-   &= \beta_0
-   \end{aligned} (\#eq:model30)
-   $$
+$$
+\begin{aligned}
+E(\hat \beta_0)&=E(\bar y)-E(\hat \beta_1)\bar x \\
+&= {\sum\limits_{i=1}^n E(y_i) \over n}-\beta_1 \bar x \\
+&= {\sum\limits_{i=1}^n (\beta_0 + \beta_1 x) \over n}-\beta_1 \bar x \\
+&= \beta_0 + \beta_1 \bar x -\beta_1 \bar x \\
+&= \beta_0
+\end{aligned} (\#eq:model30)
+$$
 
-- 多元场合
+#### 多元场合 {#reg_5_2_2}
 
-   $$
-   \begin{aligned}
-   E(\hat \beta)&=E((X'X)^{-1}X'Y) \\
-   &= (X'X)^{-1}X'E(Y) \\
-   &= (X'X)^{-1}X'X\beta \\
-   &= \beta
-   \end{aligned} (\#eq:model31)
-   $$
+$$
+\begin{aligned}
+E(\hat \beta)&=E((X'X)^{-1}X'Y) \\
+&= (X'X)^{-1}X'E(Y) \\
+&= (X'X)^{-1}X'X\beta \\
+&= \beta
+\end{aligned} (\#eq:model31)
+$$
 
 ### 有效性 {#reg_5_3}
 
-- 一元场合
+#### 一元场合 {#reg_5_3_1}
 
-   不妨令$\tilde \beta_1=\sum\limits_{i=1}^n c_iy_i$也是$\beta_1$的无偏估计。
+不妨令$\tilde \beta_1=\sum\limits_{i=1}^n c_iy_i$也是$\beta_1$的无偏估计。
 
-   $$
-   \begin{aligned}
-   E(\tilde \beta_1)&=E(\sum\limits_{i=1}^n c_iy_i) \\
-   &= \sum\limits_{i=1}^n c_iE(y_i) \\
-   &= \sum\limits_{i=1}^n c_i(\beta_0+\beta_1x_i) \\
-   &= \beta_0 \sum\limits_{i=1}^n c_i + \beta_1 \sum\limits_{i=1}^n c_ix_i \\
-   &= \beta_1
-   \end{aligned} (\#eq:model32)
-   $$
+$$
+\begin{aligned}
+E(\tilde \beta_1)&=E(\sum\limits_{i=1}^n c_iy_i) \\
+&= \sum\limits_{i=1}^n c_iE(y_i) \\
+&= \sum\limits_{i=1}^n c_i(\beta_0+\beta_1x_i) \\
+&= \beta_0 \sum\limits_{i=1}^n c_i + \beta_1 \sum\limits_{i=1}^n c_ix_i \\
+&= \beta_1
+\end{aligned} (\#eq:model32)
+$$
 
-   根据无偏性，可知$\tilde \beta_1$满足$\sum\limits_{i=1}^n c_i=0$和$\sum\limits_{i=1}^n c_ix_i=1$。
+根据无偏性，可知$\tilde \beta_1$满足$\sum\limits_{i=1}^n c_i=0$和$\sum\limits_{i=1}^n c_ix_i=1$。
 
-   $$
-   \begin{aligned}
-   Var(\tilde \beta_1)&=\sum\limits_{i=1}^n c_i^2Var(y_i) \\
-   &= \sum\limits_{i=1}^n c_i^2 \sigma^2 \\
-   &= \sum\limits_{i=1}^n (c_i-k_i+k_i)^2 \sigma^2 \\
-   &= \sigma^2[\sum\limits_{i=1}^n(c_i-k_i)^2+\sum\limits_{i=1}^nk_i^2+\sum\limits_{i=1}^n2(c_i-k_i)k_i] \\
-   &= \sum\limits_{i=1}^n(c_i-k_i)^2 \sigma^2 + Var(\hat \beta_1) \\
-   Var(\tilde \beta_1) &\geq Var(\hat \beta_1)
-   \end{aligned} (\#eq:model33)
-   $$
+$$
+\begin{aligned}
+Var(\tilde \beta_1)&=\sum\limits_{i=1}^n c_i^2Var(y_i) \\
+&= \sum\limits_{i=1}^n c_i^2 \sigma^2 \\
+&= \sum\limits_{i=1}^n (c_i-k_i+k_i)^2 \sigma^2 \\
+&= \sigma^2[\sum\limits_{i=1}^n(c_i-k_i)^2+\sum\limits_{i=1}^nk_i^2+\sum\limits_{i=1}^n2(c_i-k_i)k_i] \\
+&= \sum\limits_{i=1}^n(c_i-k_i)^2 \sigma^2 + Var(\hat \beta_1) \\
+Var(\tilde \beta_1) &\geq Var(\hat \beta_1)
+\end{aligned} (\#eq:model33)
+$$
 
-   注意到$\sum\limits_{i=1}^n c_i=0$和$\sum\limits_{i=1}^n c_ix_i=1$，其中
+注意到$\sum\limits_{i=1}^n c_i=0$和$\sum\limits_{i=1}^n c_ix_i=1$，其中
 
-   $$
-   \begin{aligned}
-   \sum\limits_{i=1}^n2(c_i-k_i)k_i &= 2\sum\limits_{i=1}^n c_ik_i-2\sum\limits_{i=1}^n k_i^2 \\
-   &=2\sum\limits_{i=1}^n c_i{(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2\sum\limits_{i=1}^n ({(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2})^2 \\
-   &= 2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2} \\
-   &= 0
-   \end{aligned} (\#eq:model34)
-   $$
+$$
+\begin{aligned}
+\sum\limits_{i=1}^n2(c_i-k_i)k_i &= 2\sum\limits_{i=1}^n c_ik_i-2\sum\limits_{i=1}^n k_i^2 \\
+&=2\sum\limits_{i=1}^n c_i{(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2\sum\limits_{i=1}^n ({(x_i-\bar x) \over \sum\limits_{i=1}^n (x_i-\bar x)^2})^2 \\
+&= 2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2}-2{1 \over \sum\limits_{i=1}^n (x_i-\bar x)^2} \\
+&= 0
+\end{aligned} (\#eq:model34)
+$$
 
-   关于$\hat \beta_0$的证明也是类似的，略。
+关于$\hat \beta_0$的证明也是类似的，略。
 
-- 多元场合
+#### 多元场合  {#reg_5_3_2}
 
-   不妨令$\tilde \beta=[(X'X)^{-1}X'+A]Y$是$\beta$的无偏估计。
+不妨令$\tilde \beta=[(X'X)^{-1}X'+A]Y$是$\beta$的无偏估计。
 
-   $$
-   \begin{aligned}
-   E(\tilde \beta)&=[(X'X)^{-1}X'+A]E(Y) \\
-   &= [(X'X)^{-1}X'+A]X\beta \\
-   &= \beta +AX\beta \\
-   &= \beta
-   \end{aligned} (\#eq:model35)
-   $$
+$$
+\begin{aligned}
+E(\tilde \beta)&=[(X'X)^{-1}X'+A]E(Y) \\
+&= [(X'X)^{-1}X'+A]X\beta \\
+&= \beta +AX\beta \\
+&= \beta
+\end{aligned} (\#eq:model35)
+$$
 
-   根据无偏性，可知$AX=0$。
+根据无偏性，可知$AX=0$。
 
-   $$
-   \begin{aligned}
-   Cov(\hat \beta)&=[(X'X)^{-1}X']Cov(Y)[(X'X)^{-1}X']' \\
-   &= [(X'X)^{-1}X']\sigma^2I_n[(X'X)^{-1}X']' \\
-   &= \sigma^2 (X'X)^{-1} \\
-   Cov(\tilde \beta)&=[(X'X)^{-1}X'+A]Cov(Y)[(X'X)^{-1}X'+A]' \\
-   &= [(X'X)^{-1}X'+A]\sigma^2I_n[(X'X)^{-1}X'+A]' \\
-   &= \sigma^2 [(X'X)^{-1}+AA'] 
-   \end{aligned} (\#eq:model36)
-   $$
+$$
+\begin{aligned}
+Cov(\hat \beta)&=[(X'X)^{-1}X']Cov(Y)[(X'X)^{-1}X']' \\
+&= [(X'X)^{-1}X']\sigma^2I_n[(X'X)^{-1}X']' \\
+&= \sigma^2 (X'X)^{-1} \\
+Cov(\tilde \beta)&=[(X'X)^{-1}X'+A]Cov(Y)[(X'X)^{-1}X'+A]' \\
+&= [(X'X)^{-1}X'+A]\sigma^2I_n[(X'X)^{-1}X'+A]' \\
+&= \sigma^2 [(X'X)^{-1}+AA'] 
+\end{aligned} (\#eq:model36)
+$$
 
-   > 注意到$AX=0$
+> 注意到$AX=0$
 
-   由于$AA'$是半正定矩阵（非负定），则$Cov(\tilde \beta) \geq Cov(\hat \beta)$。
+由于$AA'$是半正定矩阵（非负定），则$Cov(\tilde \beta) \geq Cov(\hat \beta)$。
 
 ### 方差 {#reg_5_4}
 
-- 一元场合
+#### 一元场合  {#reg_5_4_1}
 
-   - $Var(\hat{\beta_1})$
+- $Var(\hat{\beta_1})$
    
    $$
    \begin{aligned}
@@ -633,7 +639,7 @@ $$
    \end{aligned} (\#eq:model37)
    $$
    
-   - $Var(\hat{\beta_0})$
+- $Var(\hat{\beta_0})$
    
    $$
    \begin{aligned}
@@ -658,7 +664,7 @@ $$
 
    > 注意有$Cov(\varepsilon_i,\varepsilon_j)=0$，则$Cov(y_i,y_j)=0$
    
-   - $Cov(\hat \beta_0,\hat \beta_1)$
+- $Cov(\hat \beta_0,\hat \beta_1)$
    
    $$
    \begin{aligned}
@@ -669,46 +675,54 @@ $$
    \end{aligned} (\#eq:model40)
    $$
 
-- 多元场合
+#### 多元场合  {#reg_5_4_2}
 
-   $$
-   \begin{aligned}
-   Cov(\hat \beta) &= E[(\hat \beta-E(\hat \beta))(\hat \beta-E(\hat \beta))'] \\
-   &= E[(\hat \beta-\beta)(\hat \beta-\beta)'] \\
-   &= E[(X'X)^{-1}X'\varepsilon \varepsilon ' X(X'X)^{-1}] \\
-   &= (X'X)^{-1}X'E(\varepsilon \varepsilon ') X(X'X)^{-1} \\
-   &= (X'X)^{-1}X'\sigma^2I_n X(X'X)^{-1} \\
-   &= \sigma^2(X'X)^{-1}
-   \end{aligned} (\#eq:model46)
-   $$
+$$
+\begin{aligned}
+Cov(\hat \beta) &= E[(\hat \beta-E(\hat \beta))(\hat \beta-E(\hat \beta))'] \\
+&= E[(\hat \beta-\beta)(\hat \beta-\beta)'] \\
+&= E[(X'X)^{-1}X'\varepsilon \varepsilon ' X(X'X)^{-1}] \\
+&= (X'X)^{-1}X'E(\varepsilon \varepsilon ') X(X'X)^{-1} \\
+&= (X'X)^{-1}X'\sigma^2I_n X(X'X)^{-1} \\
+&= \sigma^2(X'X)^{-1}
+\end{aligned} (\#eq:model46)
+$$
 
 ### 正态性 {#reg_5_5}
 
-- 一元场合 
+#### 一元场合  {#reg_5_5_1}
 
-   根据式\@ref(eq:model26)和式\@ref(eq:model27)、式\@ref(eq:model29)和式\@ref(eq:model30)、式\@ref(eq:model37)和式\@ref(eq:model38)可知，$\hat \beta_1$和$\hat \beta_0$服从正态分布。
+根据式\@ref(eq:model26)和式\@ref(eq:model27)、式\@ref(eq:model29)和式\@ref(eq:model30)、式\@ref(eq:model37)和式\@ref(eq:model38)可知，$\hat \beta_1$和$\hat \beta_0$服从正态分布。
    
-   $$
-   \begin{gather}
-   \hat \beta_1 \sim N(\beta_1, \frac{\sigma^2}{L_{xx}}) \\
-   \hat \beta_0 \sim N(\beta_0, [\frac{1}{n}+\frac{\bar x^2}{L_{xx}}]\sigma^2) 
-   \end{gather} (\#eq:model48)
-   $$
+$$
+\begin{gather}
+\hat \beta_1 \sim N(\beta_1, \frac{\sigma^2}{L_{xx}}) \\
+\hat \beta_0 \sim N(\beta_0, [\frac{1}{n}+\frac{\bar x^2}{L_{xx}}]\sigma^2) 
+\end{gather} (\#eq:model48)
+$$
+
 > $\hat \beta_1$的正态性源自y的正态性，而y的正态性又源自$\varepsilon$的正态性
+> 
+> 因此，凡是能被$y$线性表示的都具有正态性，详见多元场合
 
-- 多元场合
+#### 多元场合  {#reg_5_5_2}
 
-   根据式\@ref(eq:model28)、式\@ref(eq:model31)、式\@ref(eq:model46)可知，$\hat \beta$服从正态分布。
+凡是能被$Y$线性表示的都具有正态性。
    
-   $$
-   \hat \beta \sim N(\beta, \sigma^2(X'X)^{-1}) (\#eq:model49)
-   $$
+$$
+\begin{gather}
+\hat \beta \sim N(\beta, \sigma^2(X'X)^{-1}) \\
+\hat Y = HY \sim N(X\beta, \sigma^2H) \\
+\hat y_0 = x_0'(X'X)^{-1}X'Y \sim N(x_0'\beta, \sigma^2x_0'(X'X)^{-1}x_0) \\
+e=(I-H)Y \sim N(0, \sigma^2(I-H))
+\end{gather} (\#eq:model49)
+$$
 
 ### 残差 {#reg_5_6}
 
-- 一元场合
+#### 一元场合  {#reg_5_6_1}
 
-   - 线性表示
+- 线性表示
 
    根据式\@ref(eq:model50)，对于残差$e_i$有
    
@@ -716,13 +730,13 @@ $$
    e_i=y_i-\hat y_i=y_i-\sum_{j=1}^n h_{ij}y_j (\#eq:model52)
    $$
 
-   - $E(e_i)$
+- $E(e_i)$
    
    $$
    E(e_i)=E(y_i-\hat y_i)=(\beta_0+\beta_1 x_i)-(\beta_0+\beta_1 x_i)=0 (\#eq:model53)
    $$
    
-   - $Cov(e_i,e_j)$
+- $Cov(e_i,e_j)$
    
    当$i \neq j$时：
 
@@ -783,7 +797,7 @@ $$
    
    > 杠杆值度量了自变量空间中第$i$个观测点偏离样本中心的程度。当杠杆值越大时，对应的$Var(e_i)$越小，在几何上表现为较远的观测点会把回归线尽可能地拉到自身周边，从而降低自身的残差值。对应的观测点也称之为<span style='color: red; font-weight: bold'>高杠杆点</span>
    
-   - $Cov(e_i, \hat y_j)$
+- $Cov(e_i, \hat y_j)$
    
    对任意的$i$和$j$，由式\@ref(eq:model50)和式\@ref(eq:model52)可得
    
@@ -797,7 +811,7 @@ $$
    \end{aligned} (\#eq:model62)
    $$
    
-   - $Cov(e_i, \hat y_0)$
+- $Cov(e_i, \hat y_0)$
    
    由式\@ref(eq:model51)可得
    
@@ -811,7 +825,7 @@ $$
    \end{aligned} (\#eq:model63)
    $$
    
-   - $Cov(e_i, \hat \beta_0)$
+- $Cov(e_i, \hat \beta_0)$
    
    由式\@ref(eq:model27)可得
    
@@ -825,7 +839,7 @@ $$
    \end{aligned}  (\#eq:model64)
    $$
    
-   - $Cov(e_i, \hat \beta_1)$
+- $Cov(e_i, \hat \beta_1)$
    
    由式\@ref(eq:model26)可得
    
@@ -838,24 +852,24 @@ $$
    \end{aligned} (\#eq:model65)
    $$
    
-   - $\sum_{i=1}^n e_i = \sum_{i=1}^n x_ie_i=0$
+- $\sum_{i=1}^n e_i = \sum_{i=1}^n x_ie_i=0$
    
    参见式\@ref(eq:model12)
    
 
-- 多元场合
+#### 多元场合 {#reg_5_6_2}
 
-   - 线性表示
+- 线性表示
    
    式\@ref(eq:model22)给出了残差的表达式为$e=Y-HY=(I-H)Y=(I-H)\varepsilon$
    
-   - $E(e)$
+- $E(e)$
    
    $$
    E(e)=E[(I-H)\varepsilon]=0  (\#eq:model54)
    $$
    
-   - $Cov(e)$
+- $Cov(e)$
 
    $$
    \begin{aligned}
@@ -866,50 +880,73 @@ $$
    \end{aligned} (\#eq:model47)
    $$
    
-   - $Cov(e,\hat Y)$
+- $Cov(e,\hat Y)$
    
    $$
    \begin{aligned}
    Cov(e,\hat Y)&=Cov((I-H)Y,HY) \\
    &=(I-H)Cov(Y)H' \\
    &=(I-H)Cov(X\beta+\varepsilon)H \\
-   &=(I-H)H \\
-   &=H-H^2 \\
+   &=\sigma^2(I-H)H \\
+   &=\sigma^2(H-H^2) \\
    &=0
    \end{aligned} (\#eq:model55)
    $$
    
-   - $Cov(e,\hat y_0)$
+- $Cov(e,\hat y_0)$
    
    $$
    \begin{aligned}
    Cov(e,\hat y_0)&=Cov((I-H)Y,x_0'(X'X)^{-1}X'Y) \\
-   &=(I-H)X(X'X)^{-1}x_0 \\
-   &=(X(X'X)^{-1}-X(X'X)^{-1}X'X(X'X)^{-1})x_0 \\
+   &=\sigma^2(I-H)X(X'X)^{-1}x_0 \\
+   &=\sigma^2(X(X'X)^{-1}-X(X'X)^{-1}X'X(X'X)^{-1})x_0 \\
    &=0
    \end{aligned} (\#eq:model56)
    $$
    
-   - $Cov(e,\hat \beta)$
+- $Cov(e,\hat \beta)$
    
    $$
    \begin{aligned}
    Cov(e,\hat \beta)&=Cov((I-H)Y,(X'X)^{-1}X'Y) \\
-   &= (I-H)X(X'X)^{-1} \\
-   &= X(X'X)^{-1}-X(X'X)^{-1}X'X(X'X)^{-1} \\
+   &= \sigma^2(I-H)X(X'X)^{-1} \\
+   &= \sigma^2[X(X'X)^{-1}-X(X'X)^{-1}X'X(X'X)^{-1}] \\
    &= 0
    \end{aligned} (\#eq:model57)
    $$
    
-   - $X'e=0$
+> 由于$e$和$\hat \beta$都是$Y$的线性组合，因此都服从正态分布，故协方差为0表示$e$和$\hat \beta$之间独立，同样的也有SSE或$\hat \sigma^2$与$\hat \beta$独立
    
-      参见式\@ref(eq:model20)
+- $X'e=0$
+   
+   参见式\@ref(eq:model20)
       
 > 在正规方程组中，我们得到的一阶导条件为$X'e=0$。从几何视角来看，残差向量$e$正交于X张成的列空间，因此凡是X列空间中的向量均与$e$不相关
 
 ## 显著性检验 {#reg_6}
 
 由于显著性检验依赖于最小二乘估计的分布，在前述内容中已经说明最小二乘估计服从正态分布，因此该部分内容严重依赖于随机扰动项的正态性、同方差、无自相关假定。
+
+同时，在显著性检验中涉及t检验和F检验，这就依赖如下条件
+
+$$
+\frac{SSE}{\sigma^2} \sim \chi^2(n-p-1) (\#eq:model78) 
+$$
+
+证：
+
+   $$
+   \begin{aligned}
+   \frac{SSE}{\sigma^2}&=\frac{e'e}{\sigma^2} \\
+   &=\frac{\varepsilon'(I-H)\varepsilon}{\sigma^2} \\
+   &=\frac{\varepsilon'}{\sigma}(I-H)\frac{\varepsilon}{\sigma} 
+   \end{aligned} (\#eq:model79) 
+   $$
+
+   已知$\varepsilon \sim N(0, \sigma^2I)$，则$\frac{\varepsilon}{\sigma} \sim N(0,I)$。
+
+   由于式\@ref(eq:model79)为二次型，且矩阵$(I-H)$为秩为$n-p-1$的对称幂等矩阵，故存在某种正交变换使得式\@ref(eq:model79)的二次型化为相互独立的变量平方和，也就是卡方分布，其中自由度就是矩阵$(I-H)$的秩。
+   同时，根据式\@ref(eq:model57)可知$\hat \beta$与$SSE/\sigma^2$。
 
 ### 区间估计 {#reg_6_1}
 
@@ -926,6 +963,20 @@ P\begin{pmatrix}\begin{vmatrix}\frac{\hat \beta_1-\beta_1}{\sqrt{\hat \sigma^2/L
 $$
 
 > 我们在乎自变量是否能解释因变量的变动，因此$\hat \beta_0$的区间估计，包括下面的显著性检验都不对$\hat \beta_0$进行讨论
+
+#### 多元场合 {#reg_6_1_2}
+
+回顾式\@ref(eq:model49)，可知$\hat \beta_j \sim N(\beta_j, \sigma^2c_{jj})$，其中$c_{jj}$表示$(X'X)^{-1}$的第$j+1$个主对角线元素，故有
+
+$$
+\begin{gather}
+t=\frac{\hat \beta_j-\beta_j}{\sqrt{\hat \sigma^2c_{jj}}} \sim t(n-p-1) \\
+P\begin{pmatrix}\begin{vmatrix}\frac{\hat \beta_j-\beta_j}{\sqrt{\hat \sigma^2c_{jj}}}\end{vmatrix} < t_{\alpha/2}(n-p-1)\end{pmatrix}=1-\alpha \\
+\begin{pmatrix} \hat \beta_j-t_{\alpha/2}(n-p-1) \sqrt{\hat \sigma^2 c_{jj}}, \; \hat \beta_j+t_{\alpha/2}(n-p-1) \sqrt{\hat \sigma^2 c_{jj}}\end{pmatrix}
+\end{gather}  (\#eq:model75)
+$$
+
+> 挖坑，回归系数向量的置信域（置信椭球）
 
 ### t检验 {#reg_6_2}
 
@@ -946,6 +997,36 @@ t=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} (\#eq:model59)
 $$
 
 在原假设下$t \sim t(n-2)$，当$|t| \geq t_{\alpha/2}(n-2)$时拒绝原假设。
+
+#### 多元场合 {#reg_6_2_2}
+
+对于假设检验问题
+
+$$
+H_0:\beta_j=0 \quad vs \quad H_1:\beta_j \neq 0
+$$
+
+在原假设下有$\hat \beta_j \sim N(0,\sigma^2 c_{jj})$，故构造检验统计量
+
+$$
+t_j=\frac{\hat \beta_j}{\sqrt{\hat \sigma^2 c_{jj}}}  (\#eq:model76)
+$$
+
+在原假设下$t_j \sim t(n-p-1)$，当$|t_j| \geq t_{\alpha/2}(n-p-1)$时拒绝原假设。
+
+考虑更一般的假设检验问题
+
+$$
+H_0:c'\beta=0 \quad vs \quad H_1:c'\beta \neq 0
+$$
+ 
+有$c'\hat \beta \sim N(c'\beta, \sigma^2c'(X'X)^{-1}c)$，故
+
+$$
+t=\frac{c'\hat \beta}{\sqrt{\hat \sigma^2c'(X'X)^{-1}c}} (\#eq:model77)
+$$
+
+原假设下有$t \sim t(n-p-1)$，当$|t| \geq t(n-p-1)$时拒绝原假设
 
 ### F检验 {#reg_6_3}
 
@@ -968,6 +1049,24 @@ $$
 其中$SST=\sum_{i=1}^n(y_i-\bar y)^2, \; SSR=\sum_{i=1}^n(\hat y_i -\bar y)^2, \; SSE=\sum_{i=1}^n(y_i-\hat y_i)^2$。
 
 在原假设下$F \sim F(1,n-2)$，当$F \geq F_\alpha(1,n-2)$时，拒绝原假设。
+
+注意到，在一元线性回归中，F统计量与t统计量有如下关系式
+
+$$
+t^2=\begin{pmatrix}\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{pmatrix}^2=\frac{\hat \beta_1^2L_{xx}}{SSE/(n-2))}=\frac{SSR}{SSE/(n-2)}=F  (\#eq:model66)
+$$
+
+其中
+
+$$
+\begin{aligned}
+SSR&=\sum_{i=1}^n (\hat y_i - \bar y)^2 \\
+&= \sum_{i=1}^n (\hat \beta_0 + \hat \beta_1x_i-\bar y)^2 \\
+&= \sum_{i=1}^n (\bar y - \hat \beta_1 \bar x + \hat \beta_1x_i-\bar y)^2 \\
+&= \sum_{i=1}^n \hat \beta_1^2(x_i-\bar x)^2 \\
+&= \hat \beta_1^2 L_{xx}
+\end{aligned} (\#eq:model67)
+$$
 
 -------
 ***平方和分解式***
@@ -1004,30 +1103,98 @@ $$
 
 -------
 
-注意到，在一元线性回归中，F统计量与t统计量有如下关系式
+#### 多元场合 {#reg_6_3_2}
+
+整个回归方程的显著性检验同样采用F检验进行。
+
+对于假设检验问题
 
 $$
-t^2=\begin{pmatrix}\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{pmatrix}^2=\frac{\hat \beta_1^2L_{xx}}{SSE/(n-2))}=\frac{SSR}{SSE/(n-2)}=F  (\#eq:model66)
+H_0: \beta_1=...=\beta_p=0 \quad vs \quad H_1: \exists \beta_i \neq 0, \; i\in \{1,...,p\}
 $$
 
-其中
+构造F统计量
 
 $$
-\begin{aligned}
-SSR&=\sum_{i=1}^n (\hat y_i - \bar y)^2 \\
-&= \sum_{i=1}^n (\hat \beta_0 + \hat \beta_1x_i-\bar y)^2 \\
-&= \sum_{i=1}^n (\bar y - \hat \beta_1 \bar x + \hat \beta_1x_i-\bar y)^2 \\
-&= \sum_{i=1}^n \hat \beta_1^2(x_i-\bar x)^2 \\
-&= \hat \beta_1^2 L_{xx}
-\end{aligned} (\#eq:model67)
+F=\frac{SSR/p}{SSE/(n-p-1)} (\#eq:model81)
 $$
 
-### 样本决定系数 {#reg_6_4}
+在原假设下，$F\sim F(p,n-p-1)$，当$F \geq F_\alpha(p,n-p-1)$时即可拒绝原假设。
+
+下面对F检验进行推广。
+
+考虑部分回归系数的显著性检验问题，不妨令$\beta_2$为$\beta$中假设系数为0的那部分系数，对应的自变量有$p^*$个，记为$X_2$。剩余的系数和自变量个数为$\beta_1$和$p-p^*$个，自变量记为$X_1$。
+
+> 更一般的线性假设问题及证明可参考1999年王松桂《线性统计模型：线性回归与方差分析》中的4.1节，其中的线性假设为$A\beta=b$
+
+对于假设检验问题
+
+$$
+H_0:\beta_2=0 \quad vs \quad H_1:\beta_2 \neq 0
+$$
+
+对于同一样本，无约束回归与有约束回归对应的$SST$都是一致的。而在约束条件$\beta_2=0$下，对应的残差平方和$SSE^*$必定大于等于无约束条件下的残差平方和$SSE$，即$SSE^* \geq SSE$。注意到有$SSR-SSR^*=SSE^*-SSE$，结合式\@ref(eq:model78)，在原假设下有
+
+$$
+F=\frac{(SSE^*-SSE)/(p-p^*)}{SSE/(n-p-1)} \sim F(p-p^*,n-p-1) (\#eq:model80)
+$$
+
+> $SSE^\*/\sigma^2 \sim chi^2(n-p^\*-1)$
+> 
+> $SSE/\sigma^2 \sim chi^2(n-p-1)$ 
+> 
+> $(SSE^\*-SSE)/\sigma^2 \sim \chi^2(p-p^\*)$
+
+因此，该检验统计量通过度量$SSE^*-SSE$的差异大小来检验约束条件是否显著存在。若约束条件真的存在，则$SSE^*-SSE$之间的差异自然就小；若约束条件不存在，则$SSE^*-SSE$之间的差异自然就大。
+
+-----
+
+***多元场合的平方和分解式的表达***
+
+$$
+\begin{gather}
+SST=\sum_{i=1}^n(y_i-\bar y)^2=\sum_{i=1}^n [(1-\frac{1}{n})y_i -\frac{1}{n}\sum_{j \neq i}y_j]^2=Y'(I-\frac{1}{n}1_n1_n')Y \\
+SSE=\sum_{i=1}^n(y_i-\hat y_i)^2=Y'(I-H)Y \\
+SSR=SST-SSE=Y'(H-\frac{1}{n}1_n1_n')Y
+\end{gather} (\#eq:model82)
+$$
+
+其中$1_n$表示长度为n且元素均为1的向量。
+
+-----
+
+### 偏F检验 {#reg_6_4}
+
+在多元场合中，根据式\@ref(eq:model80)的启示，可以假设某一自变量对应的回归系数为0，根据约束前后残差平方和的差异大小来判断该自变量的重要性，称此检验为**偏F检验**。
+
+假设检验问题为
+
+$H_0:\beta_j=0 \quad vs \quad H_1:\beta_j \neq 0$
+
+则检验统计量为
+
+$$
+F_j=\frac{(SSE_{(-j)}-SSE)/1}{SSE/(n-p-1)} (\#eq:model83)
+$$
+
+其中$SSE_{(-i)}$表示去掉第$i$个自变量后所拟合模型的残差平方和。在原假设下，由$F_i \sim F(1,n-p-1)$。当$F \geq F_\alpha(1,n-p-1)$时拒绝原假设。
+
+若约束前后残差平方和变化过大，说明该自变量较为重要，此时$F_i$的值会较大，倾向于拒绝原假设。
+
+$\beta_j$的t检验统计量与偏F检验统计量有如下关系
+
+$$
+t_j^2=F_j  (\#eq:model84)
+$$
+
+证：挖坑
+
+### 样本决定系数 {#reg_6_5}
 
 样本决定系数定义如下
 
 $$
-R^2=\frac{SSR}{SST} (\#eq:model68)
+R^2=\frac{SSR}{SST}=\frac{\sum_{i=1}^n (\hat y_i-\bar y)^2}{\sum_{i=1}^n (y_i-\bar y)^2} (\#eq:model68)
 $$
 
 也称拟合优度、判定系数、确定系数。
@@ -1036,11 +1203,44 @@ $R^2$反映了因变量的变异(SST)中可以由自变量解释(SSR)的比例.
 
 > 关于$R^2$这里推荐阅读统计之都的文章[《为什么我不是R方的粉丝》](https://zhuanlan.zhihu.com/p/649208435)
 
+#### 一元场合 {#reg_6_5_1}
+
 在一元线性回归中，$R^2$与样本相关系数具有如下关系
 
 $$
 R^2=\frac{SSR}{SST}=\frac{\hat \beta_1^2 L_{xx}}{L_{yy}}=\frac{L_{xy}^2}{L_{xx}L_{yy}}=r^2 (\#eq:model69)
 $$
+
+#### 多元场合 {#reg_6_5_2}
+
+在多元场合中，样本决定系数$R^2$与$Cor(\hat Y, Y)$具有如下关系
+
+$$
+\begin{aligned}
+Cor(\hat Y, Y)&=\frac{(\hat Y - 1_n\bar y)'(Y-1_n\bar y)}{\sqrt{SSR \times SST}} \\
+&= \frac{(\hat Y - 1_n\bar y)'(\hat Y + e -1_n\bar y)}{\sqrt{SSR \times SST}} \\
+&= \frac{(\hat Y - 1_n\bar y)'(\hat Y-1_n\bar y)+(\hat Y - 1_n\bar y)'e}{\sqrt{SSR \times SST}} \\
+&= \frac{SSR+0}{\sqrt{SSR \times SST}} \\
+&= \sqrt{\frac{SSR}{SST}} \\
+&= \sqrt{R^2}
+\end{aligned} (\#eq:model85)
+$$
+
+> $e$与$\hat Y$正交，且$\sum_{i=1}^n e_i=0$
+
+定义样本复相关系数为
+
+$$
+R=\sqrt{R^2}=\sqrt{\frac{SSR}{SST}}  (\#eq:model86)
+$$
+
+定义调整的$R^2$为
+
+$$
+R_{adj}^2 = 1-\frac{SSE/(n-p-1)}{SST/(n-1)}=1-\frac{n-1}{n-p-1}(1-R^2) (\#eq:model86)
+$$
+
+普通$R^2$会随着自变量的增加而单调增加，而调整的$R^2$相较于普通$R^2$多了对自变量个数的惩罚，因此可用于不同自变量个数下不同模型之间拟合效果的比较。
 
 ## 预测 {#reg_7}
 
@@ -1048,10 +1248,10 @@ $$
 
 #### 一元场合 {#reg_7_1_1}
 
-回顾式\@ref(eq:model2)，注意我们的线性回归模型是对$E(y|x)$，即因变量的条件均值进行回归。因此，给定自变量$x_0$，对$E(y|x)$的一个自然的点估计就是
+回顾式\@ref(eq:model2)，注意我们的线性回归模型是对$E(y|x)$，简记为$E(y)$，即对因变量的条件均值进行回归。因此，给定自变量$x_0$，对$E(y)$的一个自然的点估计就是
 
 $$
-\hat E(y_0|x_0)=\hat y_0=\hat \beta_0 + \hat \beta_1 x_0 (\#eq:model70)
+\hat E(y_0)=\hat y_0=\hat \beta_0 + \hat \beta_1 x_0 (\#eq:model70)
 $$
 
 根据式\@ref(eq:model51)，可知
@@ -1063,16 +1263,31 @@ $$
 构造枢轴量
 
 $$
-\frac{\hat y_0 - E(y_0|x_0)}{\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}} \sim t(n-2)  (\#eq:model72)
+\frac{\hat y_0 - E(y_0)}{\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}} \sim t(n-2)  (\#eq:model72)
 $$
 
-故$E(y_0|x_0)$的区间估计为$\hat y_0 \pm t_{\alpha/2}(n-2)\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}$。
+故$E(y_0)$的区间估计为$\hat y_0 \pm t_{\alpha/2}(n-2)\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}$。
+
+#### 多元场合 {#reg_7_1_2}
+
+同样，一个自然的点估计就是$\hat y_0$。
+
+在正态假设下，有
+
+$$
+\begin{gather}
+\hat y_0 = x_0'(X'X)^{-1}X'Y \sim N(x_0'\beta, \sigma^2x_0'(X'X)^{-1}x_0) \\
+\hat y_0-E(y_0) \sim N(0, \sigma^2x_0'(X'X)^{-1}x_0) \\
+t=\frac{\hat y_0 -E(y_0)}{\sqrt{\hat \sigma^2x_0'(X'X)^{-1}x_0}} \sim t(n-p-1) \\
+\hat y_0 \pm t_{\alpha/2}(n-p-1)\sqrt{\hat \sigma^2x_0'(X'X)^{-1}x_0}
+\end{gather} (\#eq:model87)
+$$
 
 ### 预测因变量的新值 {#reg_7_2}
 
 #### 一元场合  {#reg_7_2_1}
 
-因变量的新值为$y_0$，相较于因变量的均值$E(y_0|x_0)$，我们需要考虑随机扰动项的影响，即$y_0=E(y_0|x_0)+\varepsilon$。
+因变量的新值为$y_0$，相较于因变量的均值$E(y_0)$，我们需要考虑随机扰动项的影响，即$y_0=E(y_0)+\varepsilon$。
 
 对$y_0$的点估计依旧是$\hat y_0$。
 
@@ -1084,7 +1299,20 @@ $$
 
 其中方差里的“1”就是纳入了随机扰动项的影响。同样用$\hat \sigma^2$来估计$\sigma^2$，根据t分布得到区间估计为$\hat y_0 \pm t_{\alpha/2}(n-2)\sqrt{\hat \sigma^2(1+\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}$。
 
+#### 多元场合  {#reg_7_2_2}
 
+同样，点估计为$\hat y_0$。
+
+在正态性假设下，有
+
+$$
+\begin{gather}
+\hat y_0 = x_0'(X'X)^{-1}X'Y \sim N(x_0'\beta, \sigma^2x_0'(X'X)^{-1}x_0) \\
+y_0-\hat y_0 \sim N(0, \sigma^2(1+x_0'(X'X)^{-1}x_0)) \\
+t=\frac{y_0-\hat y_0}{\sqrt{\hat \sigma^2(1+x_0'(X'X)^{-1}x_0})} \sim t(n-p-1) \\
+\hat y_0 \pm t_{\alpha/2}(n-p-1)\sqrt{\hat \sigma^2(1+x_0'(X'X)^{-1}x_0)}
+\end{gather} (\#eq:model88)
+$$
 
 ## 重要的等式关系 {#reg_8}
 
@@ -1111,3 +1339,17 @@ R^2=\frac{SSR}{SST}=\frac{\hat \beta_1^2 L_{xx}}{L_{yy}}=\frac{L_{xy}^2}{L_{xx}L
 $$
 
 > 这也可以视作$\hat \beta_1$与样本相关系数的关系
+
+3. t检验统计量与偏F统计量的关系
+
+$$
+t_j^2=F_j
+$$
+
+4. 调整的$R^2$
+
+$$
+R_{adj}^2 = 1-\frac{SSE/(n-p-1)}{SST/(n-1)}=1-\frac{n-1}{n-p-1}(1-R^2)
+$$
+
+方差分析表

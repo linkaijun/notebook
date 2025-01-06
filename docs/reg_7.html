@@ -309,7 +309,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>3.6.1</b> 区间估计</a></li>
 <li class="chapter" data-level="3.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>3.6.2</b> t检验</a></li>
 <li class="chapter" data-level="3.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>3.6.3</b> F检验</a></li>
-<li class="chapter" data-level="3.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>3.6.4</b> 样本决定系数</a></li>
+<li class="chapter" data-level="3.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>3.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="3.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>3.6.5</b> 样本决定系数</a></li>
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>3.7</b> 预测</a>
 <ul>
@@ -511,32 +512,58 @@ div.csl-indent {
 <h3><span class="header-section-number">3.7.1</span> 预测因变量新值的均值<a href="reg_7.html#reg_7_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <div id="reg_7_1_1" class="section level4 hasAnchor" number="3.7.1.1">
 <h4><span class="header-section-number">3.7.1.1</span> 一元场合<a href="reg_7.html#reg_7_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>回顾式<a href="reg_3.html#eq:model2">(3.2)</a>，注意我们的线性回归模型是对<span class="math inline">\(E(y|x)\)</span>，即因变量的条件均值进行回归。因此，给定自变量<span class="math inline">\(x_0\)</span>，对<span class="math inline">\(E(y|x)\)</span>的一个自然的点估计就是</p>
+<p>回顾式<a href="reg_3.html#eq:model2">(3.2)</a>，注意我们的线性回归模型是对<span class="math inline">\(E(y|x)\)</span>，简记为<span class="math inline">\(E(y)\)</span>，即对因变量的条件均值进行回归。因此，给定自变量<span class="math inline">\(x_0\)</span>，对<span class="math inline">\(E(y)\)</span>的一个自然的点估计就是</p>
 <p><span class="math display" id="eq:model70">\[
-\hat E(y_0|x_0)=\hat y_0=\hat \beta_0 + \hat \beta_1 x_0 \tag{3.70}
+\hat E(y_0)=\hat y_0=\hat \beta_0 + \hat \beta_1 x_0 \tag{3.83}
 \]</span></p>
 <p>根据式<a href="reg_5.html#eq:model51">(3.29)</a>，可知</p>
 <p><span class="math display" id="eq:model71">\[
-\hat y_0 = \hat \beta_0 + \hat \beta_1x_0 \sim N(\beta_0+\beta_1 x_0, (\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})\sigma^2) \tag{3.71}
+\hat y_0 = \hat \beta_0 + \hat \beta_1x_0 \sim N(\beta_0+\beta_1 x_0, (\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})\sigma^2) \tag{3.84}
 \]</span></p>
 <p>构造枢轴量</p>
 <p><span class="math display" id="eq:model72">\[
-\frac{\hat y_0 - E(y_0|x_0)}{\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}} \sim t(n-2)  \tag{3.72}
+\frac{\hat y_0 - E(y_0)}{\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}} \sim t(n-2)  \tag{3.85}
 \]</span></p>
-<p>故<span class="math inline">\(E(y_0|x_0)\)</span>的区间估计为<span class="math inline">\(\hat y_0 \pm t_{\alpha/2}(n-2)\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}\)</span>。</p>
+<p>故<span class="math inline">\(E(y_0)\)</span>的区间估计为<span class="math inline">\(\hat y_0 \pm t_{\alpha/2}(n-2)\sqrt{\hat \sigma^2(\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}\)</span>。</p>
+</div>
+<div id="reg_7_1_2" class="section level4 hasAnchor" number="3.7.1.2">
+<h4><span class="header-section-number">3.7.1.2</span> 多元场合<a href="reg_7.html#reg_7_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>同样，一个自然的点估计就是<span class="math inline">\(\hat y_0\)</span>。</p>
+<p>在正态假设下，有</p>
+<p><span class="math display" id="eq:model87">\[
+\begin{gather}
+\hat y_0 = x_0&#39;(X&#39;X)^{-1}X&#39;Y \sim N(x_0&#39;\beta, \sigma^2x_0&#39;(X&#39;X)^{-1}x_0) \\
+\hat y_0-E(y_0) \sim N(0, \sigma^2x_0&#39;(X&#39;X)^{-1}x_0) \\
+t=\frac{\hat y_0 -E(y_0)}{\sqrt{\hat \sigma^2x_0&#39;(X&#39;X)^{-1}x_0}} \sim t(n-p-1) \\
+\hat y_0 \pm t_{\alpha/2}(n-p-1)\sqrt{\hat \sigma^2x_0&#39;(X&#39;X)^{-1}x_0}
+\end{gather} \tag{3.86}
+\]</span></p>
 </div>
 </div>
 <div id="reg_7_2" class="section level3 hasAnchor" number="3.7.2">
 <h3><span class="header-section-number">3.7.2</span> 预测因变量的新值<a href="reg_7.html#reg_7_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <div id="reg_7_2_1" class="section level4 hasAnchor" number="3.7.2.1">
 <h4><span class="header-section-number">3.7.2.1</span> 一元场合<a href="reg_7.html#reg_7_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>因变量的新值为<span class="math inline">\(y_0\)</span>，相较于因变量的均值<span class="math inline">\(E(y_0|x_0)\)</span>，我们需要考虑随机扰动项的影响，即<span class="math inline">\(y_0=E(y_0|x_0)+\varepsilon\)</span>。</p>
+<p>因变量的新值为<span class="math inline">\(y_0\)</span>，相较于因变量的均值<span class="math inline">\(E(y_0)\)</span>，我们需要考虑随机扰动项的影响，即<span class="math inline">\(y_0=E(y_0)+\varepsilon\)</span>。</p>
 <p>对<span class="math inline">\(y_0\)</span>的点估计依旧是<span class="math inline">\(\hat y_0\)</span>。</p>
 <p>对<span class="math inline">\(y_0\)</span>的区间估计则先构造出枢轴量，有</p>
 <p><span class="math display" id="eq:model73">\[
-y_0 - \hat y_0 \sim N(0,(1+\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})\sigma^2) \tag{3.73}
+y_0 - \hat y_0 \sim N(0,(1+\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})\sigma^2) \tag{3.87}
 \]</span></p>
 <p>其中方差里的“1”就是纳入了随机扰动项的影响。同样用<span class="math inline">\(\hat \sigma^2\)</span>来估计<span class="math inline">\(\sigma^2\)</span>，根据t分布得到区间估计为<span class="math inline">\(\hat y_0 \pm t_{\alpha/2}(n-2)\sqrt{\hat \sigma^2(1+\frac{1}{n}+\frac{(x_0-\bar x)^2}{L_{xx}})}\)</span>。</p>
+</div>
+<div id="reg_7_2_2" class="section level4 hasAnchor" number="3.7.2.2">
+<h4><span class="header-section-number">3.7.2.2</span> 多元场合<a href="reg_7.html#reg_7_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>同样，点估计为<span class="math inline">\(\hat y_0\)</span>。</p>
+<p>在正态性假设下，有</p>
+<p><span class="math display" id="eq:model88">\[
+\begin{gather}
+\hat y_0 = x_0&#39;(X&#39;X)^{-1}X&#39;Y \sim N(x_0&#39;\beta, \sigma^2x_0&#39;(X&#39;X)^{-1}x_0) \\
+y_0-\hat y_0 \sim N(0, \sigma^2(1+x_0&#39;(X&#39;X)^{-1}x_0)) \\
+t=\frac{y_0-\hat y_0}{\sqrt{\hat \sigma^2(1+x_0&#39;(X&#39;X)^{-1}x_0})} \sim t(n-p-1) \\
+\hat y_0 \pm t_{\alpha/2}(n-p-1)\sqrt{\hat \sigma^2(1+x_0&#39;(X&#39;X)^{-1}x_0)}
+\end{gather} \tag{3.88}
+\]</span></p>
 </div>
 </div>
 </div>

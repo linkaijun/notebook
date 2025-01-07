@@ -6,16 +6,16 @@
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-189a0f711be5c95e22c0" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-189a0f711be5c95e22c0">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-513b5bbfb2c1ac4ec4e2" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-513b5bbfb2c1ac4ec4e2">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 回归模型的建模步骤如下所示：
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-fca0132ed0b5f77762f3" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-fca0132ed0b5f77762f3">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-a18f01dda27f12eb8b2b" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-a18f01dda27f12eb8b2b">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## 引言 {#reg_1}
@@ -1139,11 +1139,11 @@ $$
 F=\frac{(SSE^*-SSE)/(p-p^*)}{SSE/(n-p-1)} \sim F(p-p^*,n-p-1) (\#eq:model80)
 $$
 
-> $SSE^\*/\sigma^2 \sim chi^2(n-p^\*-1)$
+> $SSE^{\ast} / \sigma^2 \sim \chi^2(n-p^{\ast}-1)$
 > 
-> $SSE/\sigma^2 \sim chi^2(n-p-1)$ 
+> $SSE/\sigma^2 \sim \chi^2(n-p-1)$ 
 > 
-> $(SSE^\*-SSE)/\sigma^2 \sim \chi^2(p-p^\*)$
+> $(SSE^\ast-SSE) / \sigma^2 \sim \chi^2(p-p^\ast)$
 
 因此，该检验统计量通过度量$SSE^*-SSE$的差异大小来检验约束条件是否显著存在。若约束条件真的存在，则$SSE^*-SSE$之间的差异自然就小；若约束条件不存在，则$SSE^*-SSE$之间的差异自然就大。
 
@@ -1176,6 +1176,8 @@ $H_0:\beta_j=0 \quad vs \quad H_1:\beta_j \neq 0$
 $$
 F_j=\frac{(SSE_{(-j)}-SSE)/1}{SSE/(n-p-1)} (\#eq:model83)
 $$
+
+> $SSE_{(-j)}=Y'(I-H_0)Y, \; H_0=X_0(X_0'X_0)^{-1}X_0'$，其中$X_0$表示剔除变量$x_j$后的设计矩阵
 
 其中$SSE_{(-i)}$表示去掉第$i$个自变量后所拟合模型的残差平方和。在原假设下，由$F_i \sim F(1,n-p-1)$。当$F \geq F_\alpha(1,n-p-1)$时拒绝原假设。
 
@@ -1233,6 +1235,8 @@ $$
 $$
 R=\sqrt{R^2}=\sqrt{\frac{SSR}{SST}}  (\#eq:model86)
 $$
+
+> 反映了因变量与一组自变量间的相关性
 
 定义调整的$R^2$为
 
@@ -1314,13 +1318,318 @@ t=\frac{y_0-\hat y_0}{\sqrt{\hat \sigma^2(1+x_0'(X'X)^{-1}x_0})} \sim t(n-p-1) \
 \end{gather} (\#eq:model88)
 $$
 
-## 重要的等式关系 {#reg_8}
+## 回归系数的解释 {#reg_8}
 
-1. 一元线性回归中F统计量与t统计量的关系
+对于多元线性回归模型
+
+$$
+\left\{
+\begin{array}{c}
+E(y|x)=\beta_0+\beta_1x+...+\beta_px_p\\
+Var(y|x)=\sigma^2   
+\end{array}
+\right.
+$$
+
+截距项$\beta_0$反映了当自变量均取0时因变量的期望。
+
+而对于自变量的回归系数，**理论上来说**，<span style='color:red'>$\beta_i$表示当固定其他自变量不变时，$x_i$每增加一个单位，因变量的期望能够变化$\beta_i$个单位</span>。**实际上**，自变量之间往往具有相关性，可能无法做到固定某些自变量的值而改变其他自变量的值。也就是说，自变量之间所提供的信息是有**重叠**的部分。
+
+考虑自变量$X_i$的影响，记其余自变量对应的设计矩阵为$X_0$，对应的帽子矩阵为$H_0=X_0(X_0'X_0)^{-1}X_0'$，则
+
+$$
+\begin{aligned}
+Y&=X_i\beta_i+X_0\beta_0+\varepsilon \\
+(I-H_0)Y&=(I-H_0)X_i\beta_i+(I-H_0)X_0\beta_0+(I-H_0)\varepsilon \\
+e_{Y|X_0}&=e_{X_i|X_0}\beta_i+(I-H_0)\varepsilon
+\end{aligned}  (\#eq:model:89)
+$$
+
+> 一般的多元线性回归中$e=(I-H)Y$，即$(I-H)$的作用是为了得到残差，而$H$则决定了是对谁而言的残差。像这里的$H_0$是对$X_0$而言的，也就是经过$X_0$调整后的残差
+
+其中$e_{a|b}$表示a对b回归得到的残差，即a中不能由b线性解释的部分，称为“经过b调整后的a”。
+
+上式表明原始多元线性回归中的$\beta_i$与经过$X_0$调整过后的$Y$对经过$X_0$调整过后的$X_i$回归得到的回归系数是一致的。
+
+特别的，经过$X_0$调整过后的$Y$对经过$X_0$调整过后的$X_i$回归的最小二乘估计为
+
+$$
+\hat \beta_i = (X_i'(I-H_0)X_i)^{-1}X_i'(I-H)Y  (\#eq:model:90)
+$$
+
+> 注意有$(I-H_0)=(I-H_0)^2$
+
+既然原始多元线性回归中的$\beta_i$与经过$X_0$调整过后的$Y$对经过$X_0$调整过后的$X_i$回归得到的回归系数是一致的，那么<span style='color: red'>$\beta_i$也反映了经过其余自变量线性调整后$x_i$对$y$额外的贡献，也称$\beta_i$为**偏回归系数**</span>。
+
+于是，称$e_{Y|X_0}$与$e_{X_i|X_0}$的散点图为**偏回归图**或**附加变量图**。
+
+> 对该图拟合最小二乘回归线，其斜率就是$\hat \beta_i$
+> 
+> 若附加变量图中的线性关系越强，说明新增变量$x_i$对已包含其余变量的回归方程增加的贡献就越大
+
+## 中心化与标准化 {#reg_9}
+
+各个变量的量纲不同，会导致原始设计矩阵的数值差异较大，基于该设计矩阵得到的最小二乘估计不具有可比性。
+
+### 中心化 {#reg_9_1}
+
+中心化处理，即变量减去其均值。中心化的意义能够将未知参数的个数降低1，并在一定程度上降低舍入误差。
+
+记$X=\begin{pmatrix}1_n & \tilde X\end{pmatrix}, \; \beta = \begin{pmatrix}\beta_0 \\ \tilde \beta \end{pmatrix}, \; \gamma = \begin{pmatrix}\gamma_0 \\ \tilde \gamma \end{pmatrix}, \; \alpha = \begin{pmatrix}\alpha_0 \\ \tilde \alpha \end{pmatrix}, \;\bar X = \begin{pmatrix} \bar x_1 & \cdots & \bar x_p \end{pmatrix}'$。
+
+> $X$的第一列均为1，$\tilde X$才是纯粹的自变量矩阵，注意区分
+
+则
+
+$$
+\begin{gather}
+\tilde X_c = \begin{pmatrix}I-\frac{1}{n}1_n1_n' \end{pmatrix}\tilde X \\
+Y_c = Y-1_n\bar y
+\end{gather} (\#eq:model91)
+$$
+
+> $1_n$表示长度为n且元素均为1的列向量
+
+其中$(I-\frac{1}{n}1_n1_n')$为中心化矩阵，下标$c$表示经过中心化处理后的矩阵或向量。
+
+对此得到如下样本回归模型及相应的最小二乘估计
+
+- 原始模型
+
+$$
+\begin{gather}
+E(Y)=1_n\beta_0+\tilde X \tilde \beta \\
+\\ 
+\begin{pmatrix} \hat \beta_0 \\ \hat{\tilde \beta} \end{pmatrix}=\begin{pmatrix} \bar y - \bar X'\hat{\tilde \beta} \\ (\tilde X_c'\tilde X_c)^{-1}\tilde X_c' Y \end{pmatrix}
+\end{gather} (\#eq:model91)
+$$
+
+- 对X进行中心化处理
+
+$$
+\begin{gather}
+E(Y)=1_n\gamma_0+\tilde X_c \tilde \gamma \\
+\\ 
+\begin{pmatrix} \hat \gamma_0 \\ \hat{\tilde \gamma} \end{pmatrix}=\begin{pmatrix} \bar y \\ (\tilde X_c'\tilde X_c)^{-1}\tilde X_c' Y \end{pmatrix}=\begin{pmatrix} \bar y \\ \hat{\tilde \beta} \end{pmatrix}
+\end{gather} (\#eq:model92)
+$$
+
+- 对Y和X进行中心化处理
+
+$$
+\begin{gather}
+E(Y_c)=1_n\alpha_0+\tilde X_c \tilde \alpha \\
+\\ 
+\begin{pmatrix} \hat \alpha_0 \\ \hat{\tilde \alpha} \end{pmatrix}=\begin{pmatrix} 0 \\ (\tilde X_c'\tilde X_c)^{-1}\tilde X_c' Y \end{pmatrix}=\begin{pmatrix} 0 \\ \hat{\tilde \beta} \end{pmatrix}
+\end{gather} (\#eq:model93)
+$$
+
+小结：
+
+1. 仅对X进行中心化处理，则斜率项的估计不变，截距项的估计值变为$\bar y$。
+
+2. 对Y和X进行中心化处理，则斜率项的估计不变，截距项的估计值变为0。
+
+3. **自变量和因变量任何形式的位移变化均不改变斜率项的估计值，继而也不改变线性回归模型的拟合优度**。
+
+### 标准化 {#reg_9_2}
+
+变量减去其均值并除以其标准差即为**标准化处理**。标准化处理能够消除量纲不同和数量级差异所带来的影响。
+
+沿用[中心化](##reg_9_1)的记号，并记$D_X=diag(sd(x_1),...,sd(x_p))$。
+
+则
+
+$$
+\begin{gather}
+\tilde X^*=\tilde X_cD_X^{-1}=(I-\frac{1}{n}1_n1_n')\tilde X D_X^{-1} \\
+Y^*=\frac{Y_c}{sd(y)}=\frac{1}{sd(y)}(I-\frac{1}{n}1_n1_n')Y
+\end{gather} (\#eq:model94)
+$$
+
+对此得到如下样本回归模型及相应的最小二乘估计
+
+- 仅对X进行标准化处理
+
+$$
+\begin{gather}
+E(Y)=1_n\delta_0+\tilde X^*\tilde \delta \\
+ \\ 
+\begin{pmatrix} \hat \delta_0 \\ \hat{\tilde \delta} \end{pmatrix}= \begin{pmatrix} \bar y \\ (\tilde{X^{\ast}}'\tilde{X^\ast})^{-1}\tilde{X^{\ast}}'Y \end{pmatrix} = \begin{pmatrix} \bar y \\ D_X\hat{\tilde \beta} \end{pmatrix} 
+\end{gather}  (\#eq:model95)
+$$
+
+- 对Y和X进行标准化处理
+
+$$
+\begin{gather}
+E(Y^*)=1_n\eta_0+\tilde X^*\tilde \eta \\
+ \\ 
+\begin{pmatrix} \hat \eta_0 \\ \hat{\tilde \eta} \end{pmatrix}= \begin{pmatrix} 0 \\ (\tilde{X^{\ast}}'\tilde{X^\ast})^{-1}\tilde{X^{\ast}}'Y^* \end{pmatrix} = \begin{pmatrix} 0 \\ \frac{1}{sd(y)}D_X\hat{\tilde \beta} \end{pmatrix} 
+\end{gather}  (\#eq:model96)
+$$
+
+小结：
+
+1. 仅对X进行标准化处理，由于标准化处理中包含了中心化处理，因此截距项为$\bar y$，而斜率项则为原来的$sd(x_i)$倍。
+
+> $\beta_i^\ast \frac{x_i}{sd(x_i)}=\frac{\beta_i^\ast}{sd(x_i)}x_i=\beta_i x_i$，故$\beta_i^*=sd(x_i)\beta_i$
+
+2. 对Y和X进行标准化处理，则截距项变为0，斜率项为原来的$\frac{sd(x_i)}{sd(y)}$倍。
+
+> $\frac{sd(y)}{sd(x_i)} \beta_i^\ast=\beta_i$，故$\beta_i^\ast = \frac{sd(x_i)}{sd(y)} \beta_i$
+
+3. 标准化涉及到尺度变换和位移变化，因此既有中心化的特征（截距项），又有倍数关系（斜率项）。
+
+## 相关系数与偏相关系数 {#reg_10}
+
+### 样本相关系数 {#reg_10_1}
+
+定义两个变量间的相关系数
+
+$$
+r=\frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_{i=1}^n (x_i-\bar x)^2\sum_{i=1}^n (y_i-\bar y)^2}}=\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}  (\#eq:model97)
+$$
+
+样本相关系数反映了两个变量间<span style='color:red'>**线性关系**</span>的密切程度。特别的，样本相关系数为0并不意味着两个变量之间没有任何关系，只是没有线性相关关系。样本相关系数的大小与样本量有关，当样本量较小时，$|r|$容易接近1，当样本量较大时，$|r|$容易偏小。
+
+#### 样本相关系数的显著性检验 {#reg_10_1_1}
+
+考虑两个变量间的一元线性回归模型。回顾式\@ref(eq:model69)与式\@ref(eq:model60)，可得
+
+$$
+\begin{aligned}
+F&=\frac{SSR/1}{SSE/(n-2)} \\
+&= (n-2)\frac{SSR/SST}{SSE/SST} \\
+&= (n-2)\frac{r^2}{1-r^2} \\
+r^2&=\frac{F}{F+n-2}
+\end{aligned} (\#eq:model98)
+$$
+
+故样本相关系数的显著性检验可通过一元场合的F检验进行，其中$F \sim F(1,n-2)$，原假设为$\rho=0$。
+
+或者根据一元场合式\@ref(eq:model59)可得
+
+$$
+\begin{aligned}
+t&=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \\
+&= \frac{\hat \beta_1\sqrt{L_{xx}}}{\sqrt{SSE/(n-2)}} \\
+&= \frac{\sqrt{n-2}\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}}{\sqrt{SSE/L_{yy}}} \\
+&= \frac{\sqrt{(n-2)}r}{\sqrt{1-r^2}}
+\end{aligned}  (\#eq:model99)
+$$
+
+> 一元场合中还有式\@ref(eq:model66)的关系:$t^2=F$
+
+此时可根据$t \sim t(n-2)$的显著性检验，原假设为$\rho=0$。
+
+### 样本偏相关系数 {#reg_10_2}
+
+简单样本相关系数度量了两个变量间的相关性。但在多元相关分析中，由于受到其他变量的影响，简单样本相关系数并不能反映两个变量间纯粹的相关性，需要控制其他变量的影响，对此引入样本偏相关系数。
+
+- 自变量间的样本偏相关系数
+
+在样本相关阵r中，记$\Delta_{ij}$为r的第i行第i列元素的代数余子式，以$x_1$与$x_2$为例，定义样本偏相关系数为
+
+$$
+r_{12;3,...p}=\frac{-\Delta_{12}}{\sqrt{\Delta_{11}\Delta_{22}}} (\#eq:model100)
+$$
+
+- 因变量与自变量的样本偏相关系数
+
+记除$x_1$之外的自变量为$x_{(-1)}$，$e_{x_1|x_{(-1)}}$和$e_{y|x_{(-1)}}$分别表示$x_1$和$y$对$x_{(-1)}$回归的残差，定义$y$与$x_1$的样本偏相关系数为
+
+$$
+r_{y1;2,...p}=\frac{Cov(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})}{\sqrt{Var(e_{x_1|x_{(-1)}})Var(e_{y|x_{(-1)}})}}=Cor(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}}) (\#eq:model101)
+$$
+
+> 控制其他变量的影响就是考虑这些变量回归后的残差
+
+- 因变量与自变量的样本偏决定系数
+
+定义$y$与$x_1$的样本偏决定系数为
+
+$$
+r_{y1;2,...p}^2 = \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}  (\#eq:model102)
+$$
+
+> 若把$SSE_{(-1)}$看成$SST$，则形式同$R^2$
+
+样本偏决定系数反映了引入该新自变量后，因变量剩余变差的相对减少了。
+
+则$y$与$x_1$的样本偏相关系数也可为
+
+$$
+r_{y1;2,...p} = \sqrt{ \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}} (\#eq:model103)
+$$
+
+正如样本相关系数与F统计量有关系，这里的样本偏相关系数（或者说样本偏决定系数）也与偏F统计量有关系。
+
+同式\@ref(eq:model98)，若把$SSE_{(-1)}$看成$SST$，则同理有
+
+$$
+\begin{aligned}
+F_1&=\frac{(n-p-1)r_{y1;2,...p}^2}{1-r_{y1;2,...p}^2} \\
+r_{y1;2,...p}^2 &= \frac{F_1}{F_1+n-p-1}
+\end{aligned} (\#eq:model104)
+$$
+
+## 重要的定义和等式
+
+1. Gauss-Markov条件
+
+$$
+\begin{gather}
+E(\varepsilon)=0 \\
+Var(\varepsilon_i)=\sigma^2 \\
+Cov(\varepsilon_i, \varepsilon_j)=0, \; i \neq j
+\end{gather}
+$$
+
+2. 一元回归中$\hat \beta_1$与样本相关系数$r$、回归平方和$SSR$
+
+$$
+\begin{aligned}
+r&=\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}} \\
+&= \hat \beta_1 \sqrt{\frac{L_{xx}}{L_{yy}}} \\
+SSR&=\sum_{i=1}^n (\hat y_i -\bar y)^2 \\
+&=\sum_{i=1}^n (\hat \beta_0+\hat \beta_1x_i-\bar y)^2 \\
+&=\sum_{i=1}^n (\hat \beta_1x_i+\bar y -\hat \beta_1 \bar x - \bar y)^2 \\
+&= \hat \beta_1^2 \sum_{i=1}^n (x_i-\bar x)^2 \\
+&= \hat \beta_1^2 L_{xx}
+\end{aligned}
+$$
+
+3. 线性系数$h_{ij}$
+
+$$
+\begin{gather}
+h_{ij}=\frac{1}{n}+\frac{(x_i-\bar x)(x_j -\bar x)}{L_{xx}}=h_{ji}  \\
+\hat y_i = \sum_{j=1}^n h_{ij}y_j \\
+\hat y_0=\sum_{j=1}^n h_{0j}y_j \\
+e_i = y_i - \sum_{j=1}^n h_{ij}y_j \\
+\sum_{j=1}^n h_{ij}^2 = h_{ii} \\
+\sum_{k=1}^n h_{ik}h_{jk} = h_{ij}
+\end{gather}
+$$
+
+   特别的，称$h_{ii}$为杠杆值，度量了自变量空间中第i个数据偏离数据中心的程度。
+   
+   <span style='color:red'>特别的，在证明最小二乘估计的性质时基本上都要将这些估计量转化为y的线性表达，无论一元还是多元</span>。
+
+4. 方差分析表
+
+   列：方差来源|自由度|平方和|均方|F值|p值
+
+   行：回归/残差/总和
+
+5. 一元线性回归中F统计量与t统计量的关系
 
 $$
 t^2=\begin{pmatrix}\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{pmatrix}^2=\frac{\hat \beta_1^2L_{xx}}{SSE/(n-2))}=\frac{SSR}{SSE/(n-2)}=F 
 $$
+
+其中
 
 $$
 \begin{aligned}
@@ -1332,7 +1641,7 @@ SSR&=\sum_{i=1}^n (\hat y_i - \bar y)^2 \\
 \end{aligned}
 $$
 
-2. 一元线性回归中$R^2$与样本相关系数的关系
+6. 一元线性回归中$R^2$与样本相关系数$r$的关系
 
 $$
 R^2=\frac{SSR}{SST}=\frac{\hat \beta_1^2 L_{xx}}{L_{yy}}=\frac{L_{xy}^2}{L_{xx}L_{yy}}=r^2
@@ -1340,16 +1649,107 @@ $$
 
 > 这也可以视作$\hat \beta_1$与样本相关系数的关系
 
-3. t检验统计量与偏F统计量的关系
+7. 帽子矩阵或投影矩阵
+
+$$
+H=X(X'X)^{-1}X'
+$$
+
+   矩阵$H$为对称幂等矩阵，即$H'=H, \; H^2=H$。$I-H$也是对称幂等矩阵。对称幂等矩阵的**秩**和**迹**相等。
+   
+   帽子矩阵的元素就是前面提到的线性系数$h_{ij}$。
+   
+8. 中心化矩阵
+
+$$
+I-\frac{1}{n}1_n1_n'
+$$
+
+9. 多元场合的平方和分解式
+
+$$
+\begin{gather}
+SST=\sum_{i=1}^n(y_i-\bar y)^2=\sum_{i=1}^n [(1-\frac{1}{n})y_i -\frac{1}{n}\sum_{j \neq i}y_j]^2=Y'(I-\frac{1}{n}1_n1_n')Y \\
+SSE=\sum_{i=1}^n(y_i-\hat y_i)^2=Y'(I-H)Y \\
+SSR=SST-SSE=Y'(H-\frac{1}{n}1_n1_n')Y
+\end{gather}
+$$
+
+10. 偏F检验统计量
+
+$$
+F_j = \frac{(SSE_{(-j)}-SSE)/1}{SSE/(n-p-1)}
+$$
+
+11. t检验统计量与偏F统计量的关系
 
 $$
 t_j^2=F_j
 $$
 
-4. 调整的$R^2$
+> 以$SSE_{(-j)}$为中介，为$t_j$检验统计量与样本偏决定系数之间建立了联系。注意$SSE$可通过标准误求得
+
+12. 调整的$R^2$
 
 $$
 R_{adj}^2 = 1-\frac{SSE/(n-p-1)}{SST/(n-1)}=1-\frac{n-1}{n-p-1}(1-R^2)
 $$
 
-方差分析表
+13. 样本决定系数与$Cor(\hat Y, Y)$
+
+$$
+\begin{aligned}
+Cor(\hat Y, Y)&=\frac{(\hat Y - 1_n\bar y)'(Y-1_n\bar y)}{\sqrt{SSR \times SST}} \\
+&= \frac{(\hat Y - 1_n\bar y)'(\hat Y + e -1_n\bar y)}{\sqrt{SSR \times SST}} \\
+&= \frac{(\hat Y - 1_n\bar y)'(\hat Y-1_n\bar y)+(\hat Y - 1_n\bar y)'e}{\sqrt{SSR \times SST}} \\
+&= \frac{SSR+0}{\sqrt{SSR \times SST}} \\
+&= \sqrt{\frac{SSR}{SST}} \\
+&= \sqrt{R^2} \\
+Cor(\hat Y, Y)&=\frac{\sum_{i=1}^n(\hat y_i-\bar y)(y_i-\bar y)}{\sqrt{\sum_{i=1}^n(\hat y_i-\bar y)^2\sum_{i=1}^n(y_i-\bar y)^2}}=\frac{L_{\hat yy}}{\sqrt{L_{\hat y \hat y}L_{yy}}}
+\end{aligned}
+$$
+
+14. 样本复相关系数
+
+$$
+R=\sqrt{R^2}=\sqrt{\frac{SSR}{SST}}
+$$
+
+15. 原始多元线性回归中的$\beta_i$与经过$X_0$调整过后的$Y$对经过$X_0$调整过后的$X_i$回归得到的回归系数是一致的
+
+$$
+(I-H_0)Y=(I-H_0)X_i\beta_i+(I-H_0)\varepsilon
+$$
+
+16. 相关系数的显著性检验
+
+   考虑一元线性回归中的t检验和F检验，根据$r^2=R^2=\frac{SSR}{SST}$的关系式让t统计量和F统计量转化成对应的形式即可。
+   
+17. 样本偏相关系数、样本偏决定系数
+
+   - 自变量间的样本偏相关系数
+   
+   $$
+   r_{12;3,...p}=\frac{-\Delta_{12}}{\sqrt{\Delta_{11}\Delta_{22}}}
+   $$
+   
+   - 因变量与自变量的样本偏相关系数
+   
+   $$
+   r_{y1;2,...p}=\frac{Cov(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})}{\sqrt{Var(e_{x_1|x_{(-1)}})Var(e_{y|x_{(-1)}})}}=Cor(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})=\sqrt{\frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}}
+   $$
+   
+   - 因变量与自变量的样本偏决定系数
+   
+   $$
+   r_{y1;2,...p}^2 = \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}} 
+   $$
+   
+   - 偏F统计量与样本偏决定系数
+   
+   $$
+   \begin{aligned}
+F_1&=\frac{(n-p-1)r_{y1;2,...p}^2}{1-r_{y1;2,...p}^2} \\
+r_{y1;2,...p}^2 &= \frac{F_1}{F_1+n-p-1}
+\end{aligned}
+   $$

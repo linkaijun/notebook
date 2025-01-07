@@ -317,7 +317,18 @@ div.csl-indent {
 <li class="chapter" data-level="3.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>3.7.1</b> 预测因变量新值的均值</a></li>
 <li class="chapter" data-level="3.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>3.7.2</b> 预测因变量的新值</a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>3.8</b> 重要的等式关系</a></li>
+<li class="chapter" data-level="3.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>3.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="3.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>3.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>3.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="3.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>3.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>3.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>3.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="3.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>3.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="重要的定义和等式.html"><a href="重要的定义和等式.html"><i class="fa fa-check"></i><b>3.11</b> 重要的定义和等式</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a>
 <ul>
@@ -697,9 +708,9 @@ H_0:\beta_2=0 \quad vs \quad H_1:\beta_2 \neq 0
 F=\frac{(SSE^*-SSE)/(p-p^*)}{SSE/(n-p-1)} \sim F(p-p^*,n-p-1) \tag{3.75}
 \]</span></p>
 <blockquote>
-<p><span class="math inline">\(SSE^\*/\sigma^2 \sim chi^2(n-p^\*-1)\)</span></p>
-<p><span class="math inline">\(SSE/\sigma^2 \sim chi^2(n-p-1)\)</span></p>
-<p><span class="math inline">\((SSE^\*-SSE)/\sigma^2 \sim \chi^2(p-p^\*)\)</span></p>
+<p><span class="math inline">\(SSE^{\ast} / \sigma^2 \sim \chi^2(n-p^{\ast}-1)\)</span></p>
+<p><span class="math inline">\(SSE/\sigma^2 \sim \chi^2(n-p-1)\)</span></p>
+<p><span class="math inline">\((SSE^\ast-SSE) / \sigma^2 \sim \chi^2(p-p^\ast)\)</span></p>
 </blockquote>
 <p>因此，该检验统计量通过度量<span class="math inline">\(SSE^*-SSE\)</span>的差异大小来检验约束条件是否显著存在。若约束条件真的存在，则<span class="math inline">\(SSE^*-SSE\)</span>之间的差异自然就小；若约束条件不存在，则<span class="math inline">\(SSE^*-SSE\)</span>之间的差异自然就大。</p>
 <hr />
@@ -724,6 +735,9 @@ SSR=SST-SSE=Y&#39;(H-\frac{1}{n}1_n1_n&#39;)Y
 <p><span class="math display" id="eq:model83">\[
 F_j=\frac{(SSE_{(-j)}-SSE)/1}{SSE/(n-p-1)} \tag{3.77}
 \]</span></p>
+<blockquote>
+<p><span class="math inline">\(SSE_{(-j)}=Y&#39;(I-H_0)Y, \; H_0=X_0(X_0&#39;X_0)^{-1}X_0&#39;\)</span>，其中<span class="math inline">\(X_0\)</span>表示剔除变量<span class="math inline">\(x_j\)</span>后的设计矩阵</p>
+</blockquote>
 <p>其中<span class="math inline">\(SSE_{(-i)}\)</span>表示去掉第<span class="math inline">\(i\)</span>个自变量后所拟合模型的残差平方和。在原假设下，由<span class="math inline">\(F_i \sim F(1,n-p-1)\)</span>。当<span class="math inline">\(F \geq F_\alpha(1,n-p-1)\)</span>时拒绝原假设。</p>
 <p>若约束前后残差平方和变化过大，说明该自变量较为重要，此时<span class="math inline">\(F_i\)</span>的值会较大，倾向于拒绝原假设。</p>
 <p><span class="math inline">\(\beta_j\)</span>的t检验统计量与偏F检验统计量有如下关系</p>
@@ -770,6 +784,9 @@ Cor(\hat Y, Y)&amp;=\frac{(\hat Y - 1_n\bar y)&#39;(Y-1_n\bar y)}{\sqrt{SSR \tim
 <p><span class="math display" id="eq:model86">\[
 R=\sqrt{R^2}=\sqrt{\frac{SSR}{SST}}  \tag{3.82}
 \]</span></p>
+<blockquote>
+<p>反映了因变量与一组自变量间的相关性</p>
+</blockquote>
 <p>定义调整的<span class="math inline">\(R^2\)</span>为</p>
 <p><span class="math display" id="eq:model86">\[
 R_{adj}^2 = 1-\frac{SSE/(n-p-1)}{SST/(n-1)}=1-\frac{n-1}{n-p-1}(1-R^2) \tag{3.82}

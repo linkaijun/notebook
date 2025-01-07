@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.8 重要的等式关系 | kj的学习笔记</title>
+  <title>3.8 回归系数的解释 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.8 重要的等式关系 | kj的学习笔记" />
+  <meta property="og:title" content="3.8 回归系数的解释 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.8 重要的等式关系 | kj的学习笔记" />
+  <meta name="twitter:title" content="3.8 回归系数的解释 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="reg_7.html"/>
-<link rel="next" href="ms.html"/>
+<link rel="next" href="reg_9.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -317,7 +317,18 @@ div.csl-indent {
 <li class="chapter" data-level="3.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>3.7.1</b> 预测因变量新值的均值</a></li>
 <li class="chapter" data-level="3.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>3.7.2</b> 预测因变量的新值</a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>3.8</b> 重要的等式关系</a></li>
+<li class="chapter" data-level="3.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>3.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="3.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>3.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>3.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="3.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>3.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>3.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>3.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="3.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>3.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="重要的定义和等式.html"><a href="重要的定义和等式.html"><i class="fa fa-check"></i><b>3.11</b> 重要的定义和等式</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a>
 <ul>
@@ -507,54 +518,52 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="reg_8" class="section level2 hasAnchor" number="3.8">
-<h2><span class="header-section-number">3.8</span> 重要的等式关系<a href="reg_8.html#reg_8" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<ol style="list-style-type: decimal">
-<li>一元线性回归中F统计量与t统计量的关系</li>
-</ol>
+<h2><span class="header-section-number">3.8</span> 回归系数的解释<a href="reg_8.html#reg_8" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>对于多元线性回归模型</p>
 <p><span class="math display">\[
-t^2=\begin{pmatrix}\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}}\end{pmatrix}^2=\frac{\hat \beta_1^2L_{xx}}{SSE/(n-2))}=\frac{SSR}{SSE/(n-2)}=F
+\left\{
+\begin{array}{c}
+E(y|x)=\beta_0+\beta_1x+...+\beta_px_p\\
+Var(y|x)=\sigma^2   
+\end{array}
+\right.
 \]</span></p>
+<p>截距项<span class="math inline">\(\beta_0\)</span>反映了当自变量均取0时因变量的期望。</p>
+<p>而对于自变量的回归系数，<strong>理论上来说</strong>，<span style="color:red"><span class="math inline">\(\beta_i\)</span>表示当固定其他自变量不变时，<span class="math inline">\(x_i\)</span>每增加一个单位，因变量的期望能够变化<span class="math inline">\(\beta_i\)</span>个单位</span>。<strong>实际上</strong>，自变量之间往往具有相关性，可能无法做到固定某些自变量的值而改变其他自变量的值。也就是说，自变量之间所提供的信息是有<strong>重叠</strong>的部分。</p>
+<p>考虑自变量<span class="math inline">\(X_i\)</span>的影响，记其余自变量对应的设计矩阵为<span class="math inline">\(X_0\)</span>，对应的帽子矩阵为<span class="math inline">\(H_0=X_0(X_0&#39;X_0)^{-1}X_0&#39;\)</span>，则</p>
 <p><span class="math display">\[
 \begin{aligned}
-SSR&amp;=\sum_{i=1}^n (\hat y_i - \bar y)^2 \\
-&amp;= \sum_{i=1}^n (\hat \beta_0 + \hat \beta_1x_i-\bar y)^2 \\
-&amp;= \sum_{i=1}^n (\bar y - \hat \beta_1 \bar x + \hat \beta_1x_i-\bar y)^2 \\
-&amp;= \sum_{i=1}^n \hat \beta_1^2(x_i-\bar x)^2 \\
-&amp;= \hat \beta_1^2 L_{xx}
-\end{aligned}
-\]</span></p>
-<ol start="2" style="list-style-type: decimal">
-<li>一元线性回归中<span class="math inline">\(R^2\)</span>与样本相关系数的关系</li>
-</ol>
-<p><span class="math display">\[
-R^2=\frac{SSR}{SST}=\frac{\hat \beta_1^2 L_{xx}}{L_{yy}}=\frac{L_{xy}^2}{L_{xx}L_{yy}}=r^2
+Y&amp;=X_i\beta_i+X_0\beta_0+\varepsilon \\
+(I-H_0)Y&amp;=(I-H_0)X_i\beta_i+(I-H_0)X_0\beta_0+(I-H_0)\varepsilon \\
+e_{Y|X_0}&amp;=e_{X_i|X_0}\beta_i+(I-H_0)\varepsilon
+\end{aligned}  (\#eq:model:89)
 \]</span></p>
 <blockquote>
-<p>这也可以视作<span class="math inline">\(\hat \beta_1\)</span>与样本相关系数的关系</p>
+<p>一般的多元线性回归中<span class="math inline">\(e=(I-H)Y\)</span>，即<span class="math inline">\((I-H)\)</span>的作用是为了得到残差，而<span class="math inline">\(H\)</span>则决定了是对谁而言的残差。像这里的<span class="math inline">\(H_0\)</span>是对<span class="math inline">\(X_0\)</span>而言的，也就是经过<span class="math inline">\(X_0\)</span>调整后的残差</p>
 </blockquote>
-<ol start="3" style="list-style-type: decimal">
-<li>t检验统计量与偏F统计量的关系</li>
-</ol>
+<p>其中<span class="math inline">\(e_{a|b}\)</span>表示a对b回归得到的残差，即a中不能由b线性解释的部分，称为“经过b调整后的a”。</p>
+<p>上式表明原始多元线性回归中的<span class="math inline">\(\beta_i\)</span>与经过<span class="math inline">\(X_0\)</span>调整过后的<span class="math inline">\(Y\)</span>对经过<span class="math inline">\(X_0\)</span>调整过后的<span class="math inline">\(X_i\)</span>回归得到的回归系数是一致的。</p>
+<p>特别的，经过<span class="math inline">\(X_0\)</span>调整过后的<span class="math inline">\(Y\)</span>对经过<span class="math inline">\(X_0\)</span>调整过后的<span class="math inline">\(X_i\)</span>回归的最小二乘估计为</p>
 <p><span class="math display">\[
-t_j^2=F_j
+\hat \beta_i = (X_i&#39;(I-H_0)X_i)^{-1}X_i&#39;(I-H)Y  (\#eq:model:90)
 \]</span></p>
-<ol start="4" style="list-style-type: decimal">
-<li>调整的<span class="math inline">\(R^2\)</span></li>
-</ol>
-<p><span class="math display">\[
-R_{adj}^2 = 1-\frac{SSE/(n-p-1)}{SST/(n-1)}=1-\frac{n-1}{n-p-1}(1-R^2)
-\]</span></p>
-<p>方差分析表</p>
-
+<blockquote>
+<p>注意有<span class="math inline">\((I-H_0)=(I-H_0)^2\)</span></p>
+</blockquote>
+<p>既然原始多元线性回归中的<span class="math inline">\(\beta_i\)</span>与经过<span class="math inline">\(X_0\)</span>调整过后的<span class="math inline">\(Y\)</span>对经过<span class="math inline">\(X_0\)</span>调整过后的<span class="math inline">\(X_i\)</span>回归得到的回归系数是一致的，那么<span style="color: red"><span class="math inline">\(\beta_i\)</span>也反映了经过其余自变量线性调整后<span class="math inline">\(x_i\)</span>对<span class="math inline">\(y\)</span>额外的贡献，也称<span class="math inline">\(\beta_i\)</span>为<strong>偏回归系数</strong></span>。</p>
+<p>于是，称<span class="math inline">\(e_{Y|X_0}\)</span>与<span class="math inline">\(e_{X_i|X_0}\)</span>的散点图为<strong>偏回归图</strong>或<strong>附加变量图</strong>。</p>
+<blockquote>
+<p>对该图拟合最小二乘回归线，其斜率就是<span class="math inline">\(\hat \beta_i\)</span></p>
+<p>若附加变量图中的线性关系越强，说明新增变量<span class="math inline">\(x_i\)</span>对已包含其余变量的回归方程增加的贡献就越大</p>
+</blockquote>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
 <a href="reg_7.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reg_9.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

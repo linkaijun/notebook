@@ -317,7 +317,18 @@ div.csl-indent {
 <li class="chapter" data-level="3.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>3.7.1</b> 预测因变量新值的均值</a></li>
 <li class="chapter" data-level="3.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>3.7.2</b> 预测因变量的新值</a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>3.8</b> 重要的等式关系</a></li>
+<li class="chapter" data-level="3.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>3.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="3.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>3.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>3.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="3.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>3.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>3.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>3.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="3.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>3.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="重要的定义和等式.html"><a href="重要的定义和等式.html"><i class="fa fa-check"></i><b>3.11</b> 重要的定义和等式</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>4</b> 应用多元统计</a>
 <ul>
@@ -707,16 +718,16 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <span id="cb65-9"><a href="rmd_4.html#cb65-9" tabindex="-1"></a><span class="st">  rec1 -&gt; rec2 -&gt; rec3</span></span>
 <span id="cb65-10"><a href="rmd_4.html#cb65-10" tabindex="-1"></a><span class="st">  }&quot;</span>,</span>
 <span id="cb65-11"><a href="rmd_4.html#cb65-11" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-79ddb4bec83dd09706e4" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-79ddb4bec83dd09706e4">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-35e1e87994f5869f43c8" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-35e1e87994f5869f43c8">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rmd_4.html#cb66-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">mermaid</span>(<span class="st">&#39;</span></span>
 <span id="cb66-2"><a href="rmd_4.html#cb66-2" tabindex="-1"></a><span class="st">  graph LR</span></span>
 <span id="cb66-3"><a href="rmd_4.html#cb66-3" tabindex="-1"></a><span class="st">  node_1[Step 1 打开冰箱] --&gt; node_2[Step 2 塞入大象]</span></span>
 <span id="cb66-4"><a href="rmd_4.html#cb66-4" tabindex="-1"></a><span class="st">  node_2[Step 2 塞入大象] --&gt; node_3[Step 3 关上冰箱]</span></span>
 <span id="cb66-5"><a href="rmd_4.html#cb66-5" tabindex="-1"></a><span class="st">  &#39;</span>,</span>
 <span id="cb66-6"><a href="rmd_4.html#cb66-6" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-1183ed33bc7fd955cd82" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1183ed33bc7fd955cd82">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f660c5631c35daf7a152" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f660c5631c35daf7a152">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 <p>相关语法介绍可详见<code>graphviz</code><a href="https://www.graphviz.org/doc/info/lang.html" target="_blank">官网</a>和<code>mermaid</code><a href="https://mermaid.nodejs.cn/syntax/flowchart.html" target="_blank">官网</a>（有中英文官网，这个是中文的）。</p>
 <blockquote>
 <p><code>mermaid</code>官网还介绍了其他类型的图形，例如甘特图、桑基图。</p>

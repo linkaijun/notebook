@@ -548,7 +548,7 @@ div.csl-indent {
 <li><p>调整的<span class="math inline">\(R^2\)</span></p></li>
 <li><p><span class="math inline">\(C_p\)</span>准则</p>
 <p><span class="math display" id="eq:model116">\[
-C_p=\frac{1}{n}(SSE_p+2p\frac{SSE_m}{n-m-1}) \tag{3.114}
+C_p=\frac{1}{n}(SSE_p+2p\frac{SSE_m}{n-m-1}) \tag{3.116}
 \]</span></p>
 <p>其中<span class="math inline">\(SSE_m\)</span>表示全模型的残差平方和，<span class="math inline">\(SSE_p\)</span>表示选模型的残差平方和。</p>
 <blockquote>
@@ -556,12 +556,12 @@ C_p=\frac{1}{n}(SSE_p+2p\frac{SSE_m}{n-m-1}) \tag{3.114}
 </blockquote></li>
 <li><p>AIC</p>
 <p><span class="math display" id="eq:model117">\[
-AIC=-2\ln L(\hat \theta;X)+2p  \tag{3.115}
+AIC=-2\ln L(\hat \theta;X)+2p  \tag{3.117}
 \]</span></p>
 <p>其中<span class="math inline">\(L(\cdot)\)</span>表示模型的似然函数，<span class="math inline">\(\hat \theta\)</span>表示参数<span class="math inline">\(\theta\)</span>的极大似然估计（在多元线性回归模型中就是<span class="math inline">\(\hat \beta\)</span>和<span class="math inline">\(\hat \sigma^2\)</span>），<span class="math inline">\(X\)</span>表示样本。</p></li>
 <li><p>BIC</p>
 <p><span class="math display" id="eq:model118">\[
-BIC=-2\ln L(\hat \theta;X)+p \ln n  \tag{3.116}
+BIC=-2\ln L(\hat \theta;X)+p \ln n  \tag{3.118}
 \]</span></p>
 <p>BIC准则相较于AIC准则增强了对变量个数的惩罚，并新增了对样本数的惩罚。</p></li>
 </ol>

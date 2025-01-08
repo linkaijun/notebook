@@ -6,16 +6,16 @@
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-234258cc70dd23ad3868" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-234258cc70dd23ad3868">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-123f9b48f537dff707f6" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-123f9b48f537dff707f6">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec1_1 [label = \"回归模型\"]\n  rec2_1 [label = \"参数回归模型\"]\n  rec2_2 [label = \"半参数回归模型\"]\n  rec2_3 [label = \"非参数回归模型\"]\n  rec3_1 [label = \"线性回归模型\"]\n  rec3_2 [label = \"非线性回归模型\"]\n  rec4_1 [label = \"一元线性回归模型\"]\n  rec4_2 [label = \"多元线性回归模型\"]\n  rec4_3 [label = \"一元回归\"]\n  rec4_4 [label = \"多元回归\"]\n  \n  rec1_1 -> {rec2_1 rec2_2 rec2_3}\n  rec2_1 -> {rec3_1 rec3_2}\n  rec3_1 -> {rec4_1 rec4_2}\n  rec3_2 -> {rec4_3 rec4_4}\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 回归模型的建模步骤如下所示：
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-e68850e1c5fbd935d896" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-e68850e1c5fbd935d896">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-df28dfb3962347791f3e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-df28dfb3962347791f3e">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n  \n  node [shape = box]\n  edge [arrowsize=0.5]\n  \n  rec1_1 [label = \"实际问题\"]\n  rec1_2 [label = \"设置指标变量\"]\n  rec1_3 [label = \"收集整理数据\"]\n  rec1_4 [label = \"构造理论模型\"]\n  rec2_1 [label = \"修改\"]\n  rec2_2 [label = \"模型诊断\"]\n  rec2_3 [label = \"估计模型参数\"]\n  rec3_1 [label = \"模型运用\"]\n  rec4_1 [label = \"影响因素分析\"]\n  rec4_2 [label = \"决策预测\"]\n  rec4_3 [label = \"变量控制\"]\n  \n  rec1_1 -> rec1_2\n  rec1_2 -> rec1_3\n  rec1_3 -> rec1_4\n  rec1_4 -> rec2_3\n  rec2_3 -> rec2_2\n  rec2_2 -> rec2_1[label=\"否\"]\n  rec2_1 -> rec1_2\n  rec2_2 -> rec3_1[label=\"是\"]\n  rec3_1 -> {rec4_1 rec4_2 rec4_3}[arrowhead=none]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## 引言 {#reg_1}
@@ -743,7 +743,7 @@ $$
    $$
    \begin{aligned}
    Cov(e_i,e_j)&=Cov(y_i-\sum\limits_{k=1}^nh_{ik}y_k \, , \, y_j-\sum\limits_{l=1}^nh_{jl}y_l) \\
-   &= -Cov(y_i \, , \, h_{ji}y_i)-Cov(y_j \, , \, h_{ij}y_j)+\sum\limits_{k=1}^n h_{ik}h_{jk}Cov(y_i \, , \, y_j) \\
+   &= -Cov(y_i \, , \, h_{ji}y_i)-Cov(y_j \, , \, h_{ij}y_j)+\sum\limits_{k=1}^n h_{ik}h_{jk}Cov(y_k \, , \, y_k) \\
    &= -h_{ji}\sigma^2-h_{ij}\sigma^2+h_{ij}\sigma^2 \\
    &= -h_{ij}\sigma^2
    \end{aligned} (\#eq:model41)
@@ -946,7 +946,7 @@ $$
    已知$\varepsilon \sim N(0, \sigma^2I)$，则$\frac{\varepsilon}{\sigma} \sim N(0,I)$。
 
    由于式\@ref(eq:model79)为二次型，且矩阵$(I-H)$为秩为$n-p-1$的对称幂等矩阵，故存在某种正交变换使得式\@ref(eq:model79)的二次型化为相互独立的变量平方和，也就是卡方分布，其中自由度就是矩阵$(I-H)$的秩。
-   同时，根据式\@ref(eq:model57)可知$\hat \beta$与$SSE/\sigma^2$。
+   同时，根据式\@ref(eq:model57)可知$\hat \beta$与$SSE/\sigma^2$独立。
 
 ### 区间估计 {#reg_6_1}
 
@@ -1121,7 +1121,7 @@ $$
 
 在原假设下，$F\sim F(p,n-p-1)$，当$F \geq F_\alpha(p,n-p-1)$时即可拒绝原假设。
 
-下面对F检验进行推广。
+***下面对F检验进行推广。***
 
 考虑部分回归系数的显著性检验问题，不妨令$\beta_2$为$\beta$中假设系数为0的那部分系数，对应的自变量有$p^*$个，记为$X_2$。剩余的系数和自变量个数为$\beta_1$和$p-p^*$个，自变量记为$X_1$。
 
@@ -1342,7 +1342,7 @@ $$
 Y&=X_i\beta_i+X_0\beta_0+\varepsilon \\
 (I-H_0)Y&=(I-H_0)X_i\beta_i+(I-H_0)X_0\beta_0+(I-H_0)\varepsilon \\
 e_{Y|X_0}&=e_{X_i|X_0}\beta_i+(I-H_0)\varepsilon
-\end{aligned}  (\#eq:model:89)
+\end{aligned}  (\#eq:model89)
 $$
 
 > 一般的多元线性回归中$e=(I-H)Y$，即$(I-H)$的作用是为了得到残差，而$H$则决定了是对谁而言的残差。像这里的$H_0$是对$X_0$而言的，也就是经过$X_0$调整后的残差
@@ -1354,7 +1354,7 @@ $$
 特别的，经过$X_0$调整过后的$Y$对经过$X_0$调整过后的$X_i$回归的最小二乘估计为
 
 $$
-\hat \beta_i = (X_i'(I-H_0)X_i)^{-1}X_i'(I-H)Y  (\#eq:model:90)
+\hat \beta_i = (X_i'(I-H_0)X_i)^{-1}X_i'(I-H)Y  (\#eq:model90)
 $$
 
 > 注意有$(I-H_0)=(I-H_0)^2$
@@ -1567,6 +1567,8 @@ $$
 
 同式\@ref(eq:model98)，若把$SSE_{(-1)}$看成$SST$，则同理有
 
+> $SST=\sum_{i=1}^n (y_i-\bar y)^2$又何尝不是均值模型的残差平方和呢？
+
 $$
 \begin{aligned}
 F_1&=\frac{(n-p-1)r_{y1;2,...p}^2}{1-r_{y1;2,...p}^2} \\
@@ -1600,7 +1602,7 @@ SSR&=\sum_{i=1}^n (\hat y_i -\bar y)^2 \\
 \end{aligned}
 $$
 
-3. 线性系数$h_{ij}$
+3. 一元场合的线性系数$h_{ij}$
 
 $$
 \begin{gather}
@@ -1620,8 +1622,6 @@ $$
 4. 方差分析表
 
    列：方差来源|自由度|平方和|均方|F值|p值
-
-   行：回归/残差/总和
 
 5. 一元线性回归中F统计量与t统计量的关系
 
@@ -1887,6 +1887,8 @@ r_{y1;2,...p}^2 &= \frac{F_1}{F_1+n-p-1}
 #### 强影响点  {#reg_12_2_2}
 
 异常点是从因变量的维度讨论的异常数据，高杠杆点是从自变量的角度讨论的异常数据。而综合二者后，称能够对统计推断造成较大影响的点为**强影响点**。
+
+> 杠杆值$h_{ii}$大于两倍杠杆值均值$2\frac{p+1}{n}$即可视为高杠杆点
 
 识别方法：
 

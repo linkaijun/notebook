@@ -548,7 +548,7 @@ div.csl-indent {
 <li><p>学生化残差</p>
 <p>定义<strong>学生化残差</strong>为</p>
 <p><span class="math display" id="eq:model105">\[
-r_i=\frac{e_i}{\sqrt{\widehat{Var}(e_i)}}=\frac{e_i}{\sqrt{(1-h_{ii})\hat \sigma^2}} \tag{3.103}
+r_i=\frac{e_i}{\sqrt{\widehat{Var}(e_i)}}=\frac{e_i}{\sqrt{(1-h_{ii})\hat \sigma^2}} \tag{3.105}
 \]</span></p>
 <p><span class="math inline">\(r_i\)</span>的性质有<span class="math inline">\(E(r_i)=0, \; Var(r_i)=1, \; \rho(r_i,r_j)=\frac{-h_{ij}}{\sqrt{(1-h_{ii})(1-h_{jj})}}\)</span>。</p>
 <p>在实际应用中可<strong>近似</strong>认为<span class="math inline">\(r_i\)</span>相互独立且服从标准正态分布。</p>
@@ -557,7 +557,7 @@ r_i=\frac{e_i}{\sqrt{\widehat{Var}(e_i)}}=\frac{e_i}{\sqrt{(1-h_{ii})\hat \sigma
 <p>在计算残差<span class="math inline">\(e_i\)</span>时，用不包含第i组观测点的数据<span class="math inline">\(Y_{(i)}\)</span>和<span class="math inline">\(X_{(i)}\)</span>进行回归得到回归方程，根据该回归方程对该组观测点进行预测得到<span class="math inline">\(\hat y_{(i)}\)</span>，则删除残差为<span class="math inline">\(e_{(i)}=y_i-\hat y_{(i)}\)</span>。由于删除残差没有用到第i组观测点，因此能够在一定程度上减轻异常点的影响。</p>
 <p>特别的，可证</p>
 <p><span class="math display" id="eq:model106">\[
-e_{(i)}=\frac{e_i}{1-h_{ii}} \tag{3.104}
+e_{(i)}=\frac{e_i}{1-h_{ii}} \tag{3.106}
 \]</span></p>
 <blockquote>
 <p>参考https://zhuanlan.zhihu.com/p/49276967</p>
@@ -565,7 +565,7 @@ e_{(i)}=\frac{e_i}{1-h_{ii}} \tag{3.104}
 <li><p>删除学生化残差</p>
 <p>删除学生化残差定义为</p>
 <p><span class="math display" id="eq:model107">\[
-r_{(i)}=\frac{e_i}{\sqrt{1-h_{ii}}\hat \sigma_{(i)}}=r_i(\frac{n-p-2}{n-p-1-r_i^2})^{\frac{1}{2}} \tag{3.105}
+r_{(i)}=\frac{e_i}{\sqrt{1-h_{ii}}\hat \sigma_{(i)}}=r_i(\frac{n-p-2}{n-p-1-r_i^2})^{\frac{1}{2}} \tag{3.107}
 \]</span></p>
 <p>一般根据<span class="math inline">\(|r_{(i)}|&gt;3\)</span>来判断异常值点。</p></li>
 </ol>
@@ -610,7 +610,7 @@ Y_{(i)}=X_{(i)}\beta_{(i)}+\varepsilon_{(i)} \\
 E(\varepsilon_{(i)})=0\\
 Var(\varepsilon_{(i)})=\sigma^2 I_{n-1}  
 \end{array}
-\right. \tag{3.106}
+\right. \tag{3.108}
 \]</span></p>
 <p>该方法即根据删除残差和删除学生化残差来判断是否为异常点。一般根据<span class="math inline">\(|r_{(i)}|&gt;3\)</span>所对应的数据点判定为异常点。</p>
 <blockquote>
@@ -625,7 +625,7 @@ Y=X\beta+\gamma d_i+\varepsilon \\
 E(\varepsilon)=0\\
 Var(\varepsilon)=\sigma^2 I_{n}  
 \end{array}
-\right. \tag{3.107}
+\right. \tag{3.109}
 \]</span></p>
 <p>其中<span class="math inline">\(d_i\)</span>表示第i个分量为1而其他分量均为0的n维列向量。该模型表示，如果第i个观测点明显偏高或者偏低，那么<span class="math inline">\(d_i\)</span>的系数<span class="math inline">\(\gamma\)</span>应该是显著异于0的，而<span class="math inline">\(\gamma d_i\)</span>会影响到第i个观测点的截距项，因此称“均值漂移模型”。</p></li>
 </ol>
@@ -636,26 +636,29 @@ Var(\varepsilon)=\sigma^2 I_{n}
 <div id="reg_12_2_2" class="section level4 hasAnchor" number="3.12.2.2">
 <h4><span class="header-section-number">3.12.2.2</span> 强影响点<a href="reg_12.html#reg_12_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>异常点是从因变量的维度讨论的异常数据，高杠杆点是从自变量的角度讨论的异常数据。而综合二者后，称能够对统计推断造成较大影响的点为<strong>强影响点</strong>。</p>
+<blockquote>
+<p>杠杆值<span class="math inline">\(h_{ii}\)</span>大于两倍杠杆值均值<span class="math inline">\(2\frac{p+1}{n}\)</span>即可视为高杠杆点</p>
+</blockquote>
 <p>识别方法：</p>
 <ol style="list-style-type: decimal">
 <li><p>Cook距离</p>
 <p>定义Cook距离</p>
 <p><span class="math display" id="eq:model110">\[
-D_i=\frac{(\hat \beta -\hat \beta_{(i)})&#39;X&#39;X(\hat \beta -\hat \beta_{(i)})}{(p+1)\hat \sigma^2} = \frac{1}{p+1}(\frac{h_{ii}}{1-h_{ii}})r_i^2 \tag{3.108}
+D_i=\frac{(\hat \beta -\hat \beta_{(i)})&#39;X&#39;X(\hat \beta -\hat \beta_{(i)})}{(p+1)\hat \sigma^2} = \frac{1}{p+1}(\frac{h_{ii}}{1-h_{ii}})r_i^2 \tag{3.110}
 \]</span></p>
 <p>Cook距离度量了删除第i个数据点前后对回归系数估计值的变化情况。</p>
 <p>一个粗略的判断准则为：当<span class="math inline">\(D_i &lt; 0.5\)</span>，则认为不是强影响点，当<span class="math inline">\(D_i&gt;1\)</span>，则认为是强影响点。</p></li>
 <li><p>Welsch-Kuh统计量(DFFITS准则)</p>
 <p>Welsch-Kuh统计量定义为</p>
 <p><span class="math display" id="eq:model111">\[
-WK_i=\frac{\hat y_i-\hat y_{(i)}}{\sqrt{\hat \sigma^2_{(i)}h_{ii}}}=\sqrt{(\frac{h_{ii}}{1-h_{ii}})r_{(i)}^2} \tag{3.109}
+WK_i=\frac{\hat y_i-\hat y_{(i)}}{\sqrt{\hat \sigma^2_{(i)}h_{ii}}}=\sqrt{(\frac{h_{ii}}{1-h_{ii}})r_{(i)}^2} \tag{3.111}
 \]</span></p>
 <p>DFFITS准则度量了删除第i个数据点前后该点处拟合值的变化情况。</p>
 <p>判断准则为若<span class="math inline">\(|WK_i|&gt;2\sqrt{\frac{p+1}{n-p-1}}\)</span>则视为强影响点。</p></li>
 <li><p>Hadi统计量</p>
 <p>Hadi统计量定义为</p>
 <p><span class="math display" id="eq:model112">\[
-H_i=\frac{h_{ii}}{1-h_{ii}}+\frac{p+1}{1-h_{ii}}\cdot \frac{d_i^2}{1-d_i^2} \tag{3.110}
+H_i=\frac{h_{ii}}{1-h_{ii}}+\frac{p+1}{1-h_{ii}}\cdot \frac{d_i^2}{1-d_i^2} \tag{3.112}
 \]</span></p>
 <p>其中<span class="math inline">\(d_i=\frac{e_i}{SSE}\)</span>称为正规化残差。</p>
 <p>称以<span class="math inline">\(\frac{p+1}{1-h_{ii}}\cdot \frac{d_i^2}{1-d_i^2}\)</span>为横坐标，以<span class="math inline">\(\frac{h_{ii}}{1-h_{ii}}\)</span>为纵坐标的散点图为“位势-残差图”。</p></li>
@@ -712,7 +715,7 @@ H_i=\frac{h_{ii}}{1-h_{ii}}+\frac{p+1}{1-h_{ii}}\cdot \frac{d_i^2}{1-d_i^2} \tag
 <li><p>Box-Cox变换</p>
 <p>对因变量采取如下变换（因变量为正）</p>
 <p><span class="math display" id="eq:model113">\[
-y^{(\lambda)}=\begin{cases} \frac{y^\lambda-1}{\lambda}, &amp;\lambda \neq 0 \\ \ln y , &amp;\lambda=0 \end{cases} \tag{3.111}
+y^{(\lambda)}=\begin{cases} \frac{y^\lambda-1}{\lambda}, &amp;\lambda \neq 0 \\ \ln y , &amp;\lambda=0 \end{cases} \tag{3.113}
 \]</span></p>
 <p>可根据极大似然估计法确定<span class="math inline">\(\lambda\)</span>。Box-Cox变换能够在一定程度上改善数据的非正态性、异方差性、自相关性。但除了对数变换（表示百分比变动）外其余变换都缺乏解释性。</p></li>
 </ol>
@@ -801,7 +804,7 @@ y^{(\lambda)}=\begin{cases} \frac{y^\lambda-1}{\lambda}, &amp;\lambda \neq 0 \\ 
 <li><p>条件数</p>
 <p>考虑标准化后的矩阵<span class="math inline">\(X&#39;X\)</span>，设其特征根为<span class="math inline">\(\lambda_1 \geq \lambda_2 \geq ... \geq \lambda_p \geq0\)</span>，则定义条件数为</p>
 <p><span class="math display" id="eq:model114">\[
-CI_i=\sqrt{\frac{\lambda_1}{\lambda_i}} \tag{3.112}
+CI_i=\sqrt{\frac{\lambda_1}{\lambda_i}} \tag{3.114}
 \]</span></p>
 <p>当条件数大于等于10时就有相对较为严重的多重共线性。</p>
 <blockquote>
@@ -810,7 +813,7 @@ CI_i=\sqrt{\frac{\lambda_1}{\lambda_i}} \tag{3.112}
 <li><p>方差膨胀因子</p>
 <p>定义方差膨胀因子为</p>
 <p><span class="math display" id="eq:model115">\[
-VIF_i = \frac{1}{1-R_i^2} \tag{3.113}
+VIF_i = \frac{1}{1-R_i^2} \tag{3.115}
 \]</span></p>
 <p>其中<span class="math inline">\(R_i^2\)</span>为自变量<span class="math inline">\(x_i\)</span>对其余自变量回归得到的样本决定系数。若<span class="math inline">\(VIF_i \geq 10\)</span>，则认为<span class="math inline">\(x_i\)</span>与其他自变量之间存在较强的多重共线性问题。</p></li>
 </ol>

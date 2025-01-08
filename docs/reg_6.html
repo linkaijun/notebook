@@ -548,7 +548,7 @@ div.csl-indent {
    \]</span></p>
 <p>已知<span class="math inline">\(\varepsilon \sim N(0, \sigma^2I)\)</span>，则<span class="math inline">\(\frac{\varepsilon}{\sigma} \sim N(0,I)\)</span>。</p>
 <p>由于式<a href="reg_6.html#eq:model79">(3.64)</a>为二次型，且矩阵<span class="math inline">\((I-H)\)</span>为秩为<span class="math inline">\(n-p-1\)</span>的对称幂等矩阵，故存在某种正交变换使得式<a href="reg_6.html#eq:model79">(3.64)</a>的二次型化为相互独立的变量平方和，也就是卡方分布，其中自由度就是矩阵<span class="math inline">\((I-H)\)</span>的秩。
-同时，根据式<a href="reg_5.html#eq:model57">(3.62)</a>可知<span class="math inline">\(\hat \beta\)</span>与<span class="math inline">\(SSE/\sigma^2\)</span>。</p>
+同时，根据式<a href="reg_5.html#eq:model57">(3.62)</a>可知<span class="math inline">\(\hat \beta\)</span>与<span class="math inline">\(SSE/\sigma^2\)</span>独立。</p>
 <div id="reg_6_1" class="section level3 hasAnchor" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> 区间估计<a href="reg_6.html#reg_6_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <div id="reg_6_1_1" class="section level4 hasAnchor" number="3.6.1.1">
@@ -708,7 +708,7 @@ H_0: \beta_1=...=\beta_p=0 \quad vs \quad H_1: \exists \beta_i \neq 0, \; i\in \
 F=\frac{SSR/p}{SSE/(n-p-1)} \tag{3.74}
 \]</span></p>
 <p>在原假设下，<span class="math inline">\(F\sim F(p,n-p-1)\)</span>，当<span class="math inline">\(F \geq F_\alpha(p,n-p-1)\)</span>时即可拒绝原假设。</p>
-<p>下面对F检验进行推广。</p>
+<p><strong><em>下面对F检验进行推广。</em></strong></p>
 <p>考虑部分回归系数的显著性检验问题，不妨令<span class="math inline">\(\beta_2\)</span>为<span class="math inline">\(\beta\)</span>中假设系数为0的那部分系数，对应的自变量有<span class="math inline">\(p^*\)</span>个，记为<span class="math inline">\(X_2\)</span>。剩余的系数和自变量个数为<span class="math inline">\(\beta_1\)</span>和<span class="math inline">\(p-p^*\)</span>个，自变量记为<span class="math inline">\(X_1\)</span>。</p>
 <blockquote>
 <p>更一般的线性假设问题及证明可参考1999年王松桂《线性统计模型：线性回归与方差分析》中的4.1节，其中的线性假设为<span class="math inline">\(A\beta=b\)</span></p>

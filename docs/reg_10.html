@@ -537,7 +537,7 @@ div.csl-indent {
 <h3><span class="header-section-number">3.10.1</span> 样本相关系数<a href="reg_10.html#reg_10_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>定义两个变量间的相关系数</p>
 <p><span class="math display" id="eq:model97">\[
-r=\frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_{i=1}^n (x_i-\bar x)^2\sum_{i=1}^n (y_i-\bar y)^2}}=\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}  \tag{3.95}
+r=\frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_{i=1}^n (x_i-\bar x)^2\sum_{i=1}^n (y_i-\bar y)^2}}=\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}  \tag{3.97}
 \]</span></p>
 <p>样本相关系数反映了两个变量间<span style="color:red"><strong>线性关系</strong></span>的密切程度。特别的，样本相关系数为0并不意味着两个变量之间没有任何关系，只是没有线性相关关系。样本相关系数的大小与样本量有关，当样本量较小时，<span class="math inline">\(|r|\)</span>容易接近1，当样本量较大时，<span class="math inline">\(|r|\)</span>容易偏小。</p>
 <div id="reg_10_1_1" class="section level4 hasAnchor" number="3.10.1.1">
@@ -549,7 +549,7 @@ F&amp;=\frac{SSR/1}{SSE/(n-2)} \\
 &amp;= (n-2)\frac{SSR/SST}{SSE/SST} \\
 &amp;= (n-2)\frac{r^2}{1-r^2} \\
 r^2&amp;=\frac{F}{F+n-2}
-\end{aligned} \tag{3.96}
+\end{aligned} \tag{3.98}
 \]</span></p>
 <p>故样本相关系数的显著性检验可通过一元场合的F检验进行，其中<span class="math inline">\(F \sim F(1,n-2)\)</span>，原假设为<span class="math inline">\(\rho=0\)</span>。</p>
 <p>或者根据一元场合式<a href="reg_6.html#eq:model59">(3.67)</a>可得</p>
@@ -559,7 +559,7 @@ t&amp;=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \\
 &amp;= \frac{\hat \beta_1\sqrt{L_{xx}}}{\sqrt{SSE/(n-2)}} \\
 &amp;= \frac{\sqrt{n-2}\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}}{\sqrt{SSE/L_{yy}}} \\
 &amp;= \frac{\sqrt{(n-2)}r}{\sqrt{1-r^2}}
-\end{aligned}  \tag{3.97}
+\end{aligned}  \tag{3.99}
 \]</span></p>
 <blockquote>
 <p>一元场合中还有式<a href="reg_6.html#eq:model66">(3.71)</a>的关系:<span class="math inline">\(t^2=F\)</span></p>
@@ -575,14 +575,14 @@ t&amp;=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \\
 </ul>
 <p>在样本相关阵r中，记<span class="math inline">\(\Delta_{ij}\)</span>为r的第i行第i列元素的代数余子式，以<span class="math inline">\(x_1\)</span>与<span class="math inline">\(x_2\)</span>为例，定义样本偏相关系数为</p>
 <p><span class="math display" id="eq:model100">\[
-r_{12;3,...p}=\frac{-\Delta_{12}}{\sqrt{\Delta_{11}\Delta_{22}}} \tag{3.98}
+r_{12;3,...p}=\frac{-\Delta_{12}}{\sqrt{\Delta_{11}\Delta_{22}}} \tag{3.100}
 \]</span></p>
 <ul>
 <li>因变量与自变量的样本偏相关系数</li>
 </ul>
 <p>记除<span class="math inline">\(x_1\)</span>之外的自变量为<span class="math inline">\(x_{(-1)}\)</span>，<span class="math inline">\(e_{x_1|x_{(-1)}}\)</span>和<span class="math inline">\(e_{y|x_{(-1)}}\)</span>分别表示<span class="math inline">\(x_1\)</span>和<span class="math inline">\(y\)</span>对<span class="math inline">\(x_{(-1)}\)</span>回归的残差，定义<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏相关系数为</p>
 <p><span class="math display" id="eq:model101">\[
-r_{y1;2,...p}=\frac{Cov(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})}{\sqrt{Var(e_{x_1|x_{(-1)}})Var(e_{y|x_{(-1)}})}}=Cor(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}}) \tag{3.99}
+r_{y1;2,...p}=\frac{Cov(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})}{\sqrt{Var(e_{x_1|x_{(-1)}})Var(e_{y|x_{(-1)}})}}=Cor(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}}) \tag{3.101}
 \]</span></p>
 <blockquote>
 <p>控制其他变量的影响就是考虑这些变量回归后的残差</p>
@@ -592,7 +592,7 @@ r_{y1;2,...p}=\frac{Cov(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})}{\sqrt{Var(e_{x_1|x_{(-
 </ul>
 <p>定义<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏决定系数为</p>
 <p><span class="math display" id="eq:model102">\[
-r_{y1;2,...p}^2 = \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}  \tag{3.100}
+r_{y1;2,...p}^2 = \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}  \tag{3.102}
 \]</span></p>
 <blockquote>
 <p>若把<span class="math inline">\(SSE_{(-1)}\)</span>看成<span class="math inline">\(SST\)</span>，则形式同<span class="math inline">\(R^2\)</span></p>
@@ -600,15 +600,18 @@ r_{y1;2,...p}^2 = \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}  \tag{3.100}
 <p>样本偏决定系数反映了引入该新自变量后，因变量剩余变差的相对减少了。</p>
 <p>则<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏相关系数也可为</p>
 <p><span class="math display" id="eq:model103">\[
-r_{y1;2,...p} = \sqrt{ \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}} \tag{3.101}
+r_{y1;2,...p} = \sqrt{ \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}} \tag{3.103}
 \]</span></p>
 <p>正如样本相关系数与F统计量有关系，这里的样本偏相关系数（或者说样本偏决定系数）也与偏F统计量有关系。</p>
-<p>同式<a href="reg_10.html#eq:model98">(3.96)</a>，若把<span class="math inline">\(SSE_{(-1)}\)</span>看成<span class="math inline">\(SST\)</span>，则同理有</p>
+<p>同式<a href="reg_10.html#eq:model98">(3.98)</a>，若把<span class="math inline">\(SSE_{(-1)}\)</span>看成<span class="math inline">\(SST\)</span>，则同理有</p>
+<blockquote>
+<p><span class="math inline">\(SST=\sum_{i=1}^n (y_i-\bar y)^2\)</span>又何尝不是均值模型的残差平方和呢？</p>
+</blockquote>
 <p><span class="math display" id="eq:model104">\[
 \begin{aligned}
 F_1&amp;=\frac{(n-p-1)r_{y1;2,...p}^2}{1-r_{y1;2,...p}^2} \\
 r_{y1;2,...p}^2 &amp;= \frac{F_1}{F_1+n-p-1}
-\end{aligned} \tag{3.102}
+\end{aligned} \tag{3.104}
 \]</span></p>
 </div>
 </div>

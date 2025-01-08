@@ -546,7 +546,7 @@ div.csl-indent {
 \begin{gather}
 \tilde X_c = \begin{pmatrix}I-\frac{1}{n}1_n1_n&#39; \end{pmatrix}\tilde X \\
 Y_c = Y-1_n\bar y
-\end{gather} \tag{3.89}
+\end{gather} \tag{3.91}
 \]</span></p>
 <blockquote>
 <p><span class="math inline">\(1_n\)</span>表示长度为n且元素均为1的列向量</p>
@@ -561,7 +561,7 @@ Y_c = Y-1_n\bar y
 E(Y)=1_n\beta_0+\tilde X \tilde \beta \\
 \\
 \begin{pmatrix} \hat \beta_0 \\ \hat{\tilde \beta} \end{pmatrix}=\begin{pmatrix} \bar y - \bar X&#39;\hat{\tilde \beta} \\ (\tilde X_c&#39;\tilde X_c)^{-1}\tilde X_c&#39; Y \end{pmatrix}
-\end{gather} \tag{3.89}
+\end{gather} \tag{3.91}
 \]</span></p>
 <ul>
 <li>对X进行中心化处理</li>
@@ -571,7 +571,7 @@ E(Y)=1_n\beta_0+\tilde X \tilde \beta \\
 E(Y)=1_n\gamma_0+\tilde X_c \tilde \gamma \\
 \\
 \begin{pmatrix} \hat \gamma_0 \\ \hat{\tilde \gamma} \end{pmatrix}=\begin{pmatrix} \bar y \\ (\tilde X_c&#39;\tilde X_c)^{-1}\tilde X_c&#39; Y \end{pmatrix}=\begin{pmatrix} \bar y \\ \hat{\tilde \beta} \end{pmatrix}
-\end{gather} \tag{3.90}
+\end{gather} \tag{3.92}
 \]</span></p>
 <ul>
 <li>对Y和X进行中心化处理</li>
@@ -581,7 +581,7 @@ E(Y)=1_n\gamma_0+\tilde X_c \tilde \gamma \\
 E(Y_c)=1_n\alpha_0+\tilde X_c \tilde \alpha \\
 \\
 \begin{pmatrix} \hat \alpha_0 \\ \hat{\tilde \alpha} \end{pmatrix}=\begin{pmatrix} 0 \\ (\tilde X_c&#39;\tilde X_c)^{-1}\tilde X_c&#39; Y \end{pmatrix}=\begin{pmatrix} 0 \\ \hat{\tilde \beta} \end{pmatrix}
-\end{gather} \tag{3.91}
+\end{gather} \tag{3.93}
 \]</span></p>
 <p>小结：</p>
 <ol style="list-style-type: decimal">
@@ -599,7 +599,7 @@ E(Y_c)=1_n\alpha_0+\tilde X_c \tilde \alpha \\
 \begin{gather}
 \tilde X^*=\tilde X_cD_X^{-1}=(I-\frac{1}{n}1_n1_n&#39;)\tilde X D_X^{-1} \\
 Y^*=\frac{Y_c}{sd(y)}=\frac{1}{sd(y)}(I-\frac{1}{n}1_n1_n&#39;)Y
-\end{gather} \tag{3.92}
+\end{gather} \tag{3.94}
 \]</span></p>
 <p>对此得到如下样本回归模型及相应的最小二乘估计</p>
 <ul>
@@ -610,7 +610,7 @@ Y^*=\frac{Y_c}{sd(y)}=\frac{1}{sd(y)}(I-\frac{1}{n}1_n1_n&#39;)Y
 E(Y)=1_n\delta_0+\tilde X^*\tilde \delta \\
 \\
 \begin{pmatrix} \hat \delta_0 \\ \hat{\tilde \delta} \end{pmatrix}= \begin{pmatrix} \bar y \\ (\tilde{X^{\ast}}&#39;\tilde{X^\ast})^{-1}\tilde{X^{\ast}}&#39;Y \end{pmatrix} = \begin{pmatrix} \bar y \\ D_X\hat{\tilde \beta} \end{pmatrix}
-\end{gather}  \tag{3.93}
+\end{gather}  \tag{3.95}
 \]</span></p>
 <ul>
 <li>对Y和X进行标准化处理</li>
@@ -620,7 +620,7 @@ E(Y)=1_n\delta_0+\tilde X^*\tilde \delta \\
 E(Y^*)=1_n\eta_0+\tilde X^*\tilde \eta \\
 \\
 \begin{pmatrix} \hat \eta_0 \\ \hat{\tilde \eta} \end{pmatrix}= \begin{pmatrix} 0 \\ (\tilde{X^{\ast}}&#39;\tilde{X^\ast})^{-1}\tilde{X^{\ast}}&#39;Y^* \end{pmatrix} = \begin{pmatrix} 0 \\ \frac{1}{sd(y)}D_X\hat{\tilde \beta} \end{pmatrix}
-\end{gather}  \tag{3.94}
+\end{gather}  \tag{3.96}
 \]</span></p>
 <p>小结：</p>
 <ol style="list-style-type: decimal">

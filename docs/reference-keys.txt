@@ -121,6 +121,8 @@ eq:model72
 eq:model87
 eq:model73
 eq:model88
+eq:model89
+eq:model90
 eq:model91
 eq:model92
 eq:model93

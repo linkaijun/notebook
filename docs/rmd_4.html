@@ -504,13 +504,23 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>11.4</b> 异构数据的整合分析</a></li>
 <li class="chapter" data-level="11.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>11.5</b> 具有网络结构关系的整合分析</a></li>
 </ul></li>
-<li class="part"><span><b>VI 生活</b></span></li>
-<li class="chapter" data-level="12" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>12</b> 羽毛球修炼手册</a>
+<li class="part"><span><b>VI 算法复现</b></span></li>
+<li class="chapter" data-level="12" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>12</b> 算法复现</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>12.1</b> 发球</a>
+<li class="chapter" data-level="12.1" data-path="code_1.html"><a href="code_1.html"><i class="fa fa-check"></i><b>12.1</b> 惩罚Cox比例风险模型</a></li>
+<li class="chapter" data-level="12.2" data-path="code_2.html"><a href="code_2.html"><i class="fa fa-check"></i><b>12.2</b> 异质截距项的线性模型</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>12.1.1</b> 正手发球</a></li>
-<li class="chapter" data-level="12.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>12.1.2</b> 反手发球</a></li>
+<li class="chapter" data-level="12.2.1" data-path="code_2.html"><a href="code_2.html#code_2_1"><i class="fa fa-check"></i><b>12.2.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="12.2.2" data-path="code_2.html"><a href="code_2.html#code_2_2"><i class="fa fa-check"></i><b>12.2.2</b> 数据模拟</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII 生活</b></span></li>
+<li class="chapter" data-level="13" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>13</b> 羽毛球修炼手册</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>13.1</b> 发球</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>13.1.1</b> 正手发球</a></li>
+<li class="chapter" data-level="13.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>13.1.2</b> 反手发球</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
@@ -732,16 +742,16 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <span id="cb65-9"><a href="rmd_4.html#cb65-9" tabindex="-1"></a><span class="st">  rec1 -&gt; rec2 -&gt; rec3</span></span>
 <span id="cb65-10"><a href="rmd_4.html#cb65-10" tabindex="-1"></a><span class="st">  }&quot;</span>,</span>
 <span id="cb65-11"><a href="rmd_4.html#cb65-11" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-bda9f04cf1f357675c84" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bda9f04cf1f357675c84">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bf16fc123cb947ce8c25" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf16fc123cb947ce8c25">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rmd_4.html#cb66-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">mermaid</span>(<span class="st">&#39;</span></span>
 <span id="cb66-2"><a href="rmd_4.html#cb66-2" tabindex="-1"></a><span class="st">  graph LR</span></span>
 <span id="cb66-3"><a href="rmd_4.html#cb66-3" tabindex="-1"></a><span class="st">  node_1[Step 1 打开冰箱] --&gt; node_2[Step 2 塞入大象]</span></span>
 <span id="cb66-4"><a href="rmd_4.html#cb66-4" tabindex="-1"></a><span class="st">  node_2[Step 2 塞入大象] --&gt; node_3[Step 3 关上冰箱]</span></span>
 <span id="cb66-5"><a href="rmd_4.html#cb66-5" tabindex="-1"></a><span class="st">  &#39;</span>,</span>
 <span id="cb66-6"><a href="rmd_4.html#cb66-6" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-2827140740d8c941c788" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2827140740d8c941c788">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d70b33a875a7824af381" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d70b33a875a7824af381">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 <p>相关语法介绍可详见<code>graphviz</code><a href="https://www.graphviz.org/doc/info/lang.html" target="_blank">官网</a>和<code>mermaid</code><a href="https://mermaid.nodejs.cn/syntax/flowchart.html" target="_blank">官网</a>（有中英文官网，这个是中文的）。</p>
 <blockquote>
 <p><code>mermaid</code>官网还介绍了其他类型的图形，例如甘特图、桑基图。</p>

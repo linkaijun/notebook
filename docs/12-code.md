@@ -61,7 +61,7 @@ library(igraph)
 library(R6)
 
 SubgroupIntercept <- R6Class(
-  classname <- 'subgroup_intercept',
+  classname <- 'SubgroupIntercept',
   
   public <- list(
     # 传入参数

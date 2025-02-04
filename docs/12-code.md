@@ -6,7 +6,7 @@
 
 ## 惩罚Cox比例风险模型 {#code_1}
 
-该节是对Simon等人[@survival_1]论文的复现。
+该节是对*Regularization paths for Cox's proportional hazards model via coordinate descent*[@survival_1]论文的复现。
 
 该论文在Cox比例风险模型的基础上添加了弹性网惩罚函数，并利用坐标下降法进行求解，可通过`glmnet`包实现。
 
@@ -14,7 +14,11 @@
 
 ## 异质截距项的线性模型 {#code_2}
 
-该节是对MA等人[@code_2]论文的复现。
+该节是对*A Concave Pairwise Fusion Approach to Subgroup Analysis*[@code_2]论文的复现。
+
+$$
+y_i = \mu_i+\mathbf{x}_i^T\beta+\varepsilon_i (\#eq:code-1)
+$$
 
 该论文在普通线性模型的基础上，考虑了截距项的异质性，即样本内部可能存在亚组，同一亚组共享相同的截距项，不同的亚组之间的截距项不同。该论文利用增广拉格朗日法构造目标函数（引入融合惩罚项$\mu_i-\mu_j=\eta_{ij}$），并通过ADMM算法进行求解。
 
@@ -28,21 +32,48 @@
    - x：矩阵，预测变量
    - scale：是否对x进行标准化，默认为`TRUE`
    - penalty：设置惩罚函数类型(L1、MCP、SCAD)
-   - theta：式(4)二次项的惩罚系数
-   - lambda：惩罚函数中的惩罚系数
-   - gamma：惩罚函数中的正则化因子
+   - $\theta$：ADMM算法的惩罚系数
+   - $\lambda$：惩罚函数中的惩罚系数
+   - $\gamma$：惩罚函数中的正则化因子
    - tol：收敛精度，默认为0.00001
    - max_iter：最大迭代次数，默认为1000
 
-2. 迭代
+2. 其余符号说明
 
-   每次循环按照$\mu, \beta, \delta, \eta, \upsilon$的顺序进行迭代，更新规则详见原文。
+   除了传入参数外，在运算过程中还有其它符号，其含义如下所示。
    
-3. 停止
+   - $\upsilon$：拉格朗日乘子
+   - $Q$：$X(X^TX)^{-1}X^T$
+   - $Delta$：$\{(e_i-e_j), i<j\}^T$，其中$e_i$表示第$i$个分量为1，其余分量为0的n维向量
+   - $\delta\_\mu$：$\mu_i-\mu_j$
+   - $\delta$：$\mu_i-\mu_j+\theta^{-1}\upsilon_{ij}$
+   - $\alpha$：亚组的截距项
+
+3. 初始值
+
+   根据ols估计获取$\beta$、$\mu$、$\eta$、$\upsilon$的初始值。
+
+4. 迭代
+
+   每次循环按照$\mu, \beta, \delta, \eta, \upsilon$的顺序进行迭代。
+   
+   $$
+   \begin{aligned}
+   \mu^{(m+1)}&=(\theta \Delta^T\Delta+I_n-Q)^{-1}((I_n-Q)y+\theta \Delta^T(\eta^{(m)}-\theta^{-1}\upsilon^{(m)})) \\
+   \beta^{(m+1)}&=(X^TX)^{-1}X^T(y-\mu^{(m+1)}) \\
+   \delta_{ij}^{(m+1)}&=\mu_i^{(m+1)}-\mu_j^{(m+1)}+\theta^{-1}\upsilon_{ij}^{(m)} \\
+   \eta_{ij}^{(m+1)}&=\textrm{Penalty} \\
+   \upsilon_{ij}^{(m+1)} &= \upsilon_{ij}^{(m)}+\theta (\mu_i^{(m+1)}-\mu_j^{(m+1)}-\eta_{ij}^{(m+1)})
+   \end{aligned}
+   $$
+   
+   注意$\delta_{ij}$与$\eta_{ij}$是针对每一个分量而言的，得将每一个分量代入惩罚函数才能得到对应的结果。
+   
+5. 停止
 
    当迭代次数达到最大迭代次数或残差$r^{(m+1)}=\Delta\mu^{(m+1)}-\eta^{(m+1)}$的模长足够小时，则停止迭代。
    
-4. 输出
+6. 输出
 
    输出每个观测对象的截距项$\hat \mu_i$，回归系数$\hat \beta$，截距项对应的亚组标签，每个亚组的截距项均值$\hat \alpha_k$。
 
@@ -169,6 +200,7 @@ SubgroupIntercept <- R6Class(
       if(self$lambda <= 0) stop('请选择合适的lambda值')
       if(self$gamma <= 0) stop('请选择合适的gamma值')
       if(self$tol <= 0) stop('请选择合适的精度要求')
+      if(self$max_iter <= 0) stop('请选择合适的最大迭代次数')
     },
     
     # 获取初始值
@@ -806,4 +838,499 @@ result$alpha
 ## 4     4  2.96      2
 ```
 
+## （异质）线性+非线性的Cox比例风险模型 {#code_3}
+
+该节是对*Subgroup detection in the heterogeneous partially linear additive Cox model*[@code_3]论文的复现。
+
+$$
+\lambda(t|X_i,Z_i)=\lambda_0(t)\exp\{X_i^T\beta_i+\sum_{j=1}^q f_j(Z_{ij})\} (\#eq:code-2)
+$$
+
+该论文在Cox比例风险模型的基础上，不单单引入回归系数的异质性，还引入了$f(\cdot)$来捕捉非线性效应。其中$f(\cdot)$利用B-spline去近似，同时也引入融合惩罚项$u_{ik}=\beta_i-\beta_k$与$Y'$，通过majorized ADMM算法进行求解。
+
+### 自定义算法 {#code_3_1}
+
+算法逻辑：
+
+1. 传入参数
+
+   - T：矩阵，必须包含列名“time”和“status”，分别表示观测时间和最终状态
+   - X：具有线性效应、异质性的协变量矩阵
+   - Z：具有非线性效应的协变量矩阵
+   - penalty：惩罚函数类型，SCAD或MCP
+   - K：K-means的聚类个数
+   - $\lambda$：惩罚函数中的惩罚系数
+   - a: 融合惩罚中的正则化因子，默认SCAD是3.7，MCP是2.5
+   - $\theta$：majorized ADMM算法的惩罚系数
+   - df：`splines::bs()`的参数，控制基函数个数，默认为6，详见`splines::bs()`，下同
+   - degree：`splines::bs()`的参数，设置基函数的次数，默认为3
+   - ...：仅在方法`run()`中使用，表示其余`splines::bs()`中的参数
+   - tol：收敛精度，默认为0.00001
+   - max_iter：最大迭代次数，默认为1000
+   
+2. 其余符号说明
+
+   除了传入参数外，在运算过程中还有其它符号，其含义如下所示。
+   
+   - $\beta$：$(\beta_1^T,\cdots,\beta_n^T)^T$，长度为$np$的向量
+   
+   - $\gamma$：$(\gamma_1^T,\cdots,\gamma_q^T)^T$，长度为$dq$的向量，其中$\gamma_j=(\gamma_{j1},\cdots,\gamma_{jd})^T$
+   
+   - $u$：$(u_{ik}^T,i<k)^T$，长度为$\frac{n(n-1)}{2}p$的向量，其中$u_{ik}=\beta_i-\beta_k$
+   
+   - $Y$：$(Y_1,\cdots,Y_n)^T$，长度为$n$的向量，$Y_i=X_i^T\beta_i+B_i(Z_i)^T\gamma$
+   
+   > $Y'$的含义类似，只是与$Y$的更新规则不同
+   
+   - $w$：$(w_1,\cdots,w_n)^T$，长度为$n$的拉格朗日乘子向量
+   
+   - $\nu$：$(\nu_{ik}^T, i<k)^T$，长度为$\frac{n(n-1)}{2}p$的拉格朗日乘子向量
+   
+   - $B$：$(B_1(Z_1),\cdots,B_n(Z_n))^T$，$n\times (dq)$维矩阵，其中每个$B_i(Z_i)$有$q$个分量，每个分量又能由$d$个基函数表示
+   
+   > 就是按列拼接而成的基函数矩阵，并且经过列方向上的中心化处理
+   
+   - $X$：$\textrm{diag}\{X_1^T,\cdots,X_n^T\}$，应该是$n \times (pn)$维矩阵
+   
+   >这里的$\textrm{diag}$是针对$X_i^T$而言的，若把$X_i^T$展开就不是真正意义上的对角阵，而是类似阶梯状的矩阵
+   
+   - $D$：$\{(e_i-e_j), i<j\}^T$，$\frac{n(n-1)}{2} \times n$矩阵，$e_i$是第$i$个分量为1，其余分量为0并且长度为$n$的向量
+   
+   - $A$：$D \otimes I_p$，$\frac{n(n-1)}{2}p \times np$维矩阵
+   
+   - $Q$：$I_n-B(B^TB)^{-1}B^T$
+   
+   - $\tilde g_j$：$\sum_{i=1}^n \delta_iI_{j \in R_i}$，即第$j$个对象出现在所有风险集中的次数
+   
+   - $\nabla_ig(Y'^{(m+1)})$：$-\delta_i+\sum_{k=1}^n \delta_k[\exp (Y_i'^{(m+1)})\cdot I_{i \in R_k}]/[\sum_{l \in R_k} \exp (Y_l'^{(m+1)})]$
+   
+   - $c_{ik}$：$\beta_i-\beta_k+\nu_{ik}/\theta$
+
+3. 初始值
+
+   对矩阵$X$进行K-means聚类，一般聚成2-5类即可。对每一类分别拟合基础的Cox比例风险模型，将回归系数作为对应观测的初始值。其余参数的初始值分别设置为$u^{(0)}=A\beta^{(0)}, w^{(0)}=0,\nu^{(0)}=0,Y^{(0)}=Y'^{(0)}=X\beta^{(0)}+B\gamma^{(0)}$。
+   
+> 原文仅提到根据$X$先进行聚类，再拟合Cox模型，但由于假设$Z$是同质的，如果也先聚类再拟合，得到的各组回归系数并不相同甚至维度也不满足$\gamma$的长度，因此将协变量$Z$转化成$B$后单独拟合Cox模型，将该次回归系数作为$\gamma$的初始值
+
+4. 迭代
+
+   迭代顺序为$\gamma,\beta;Y',Y,u;w,\nu$
+   
+   $$
+   \begin{aligned}
+   \gamma^{(m+1)} &= (B^TB)^{-1}B^T(Y^{(m)}-X\beta^{(m)}+\frac{w^{(m)}}{\theta}) \\
+   \beta^{(m+1)} &= (X^TQX+A^TA)^{-1}[X^TQ(\frac{w^{(m)}}{\theta}+Y^{(m)})+A^T(u^{(m)}-\frac{\nu ^{(m)}}{\theta})] \\
+   Y_i'^{(m+1)} &= X_i^T\beta_i^{(m+1)}+B_i(Z_i)^T\gamma^{(m+1)} \\
+   Y_i^{(m+1)} &= (\tilde g_i + \theta)^{-1} [-\nabla_ig(Y'^{(m+1)})+\tilde g_i Y_i'^{(m+1)} - w_i^{(m)}+\theta (X_i^T\beta_i^{(m+1)}+B_i(Z_i)^T\gamma^{(m+1)})] \\
+   u^{(m+1)} &= \textrm{Penalty} \\
+   w_i^{(m+1)} &= w_i^{(m)}+\theta (Y_i^{(m+1)}-X_i^T\beta^{(m+1)}-B_i(Z_i)^T\gamma^{(m+1)}) \\
+   \nu_{ik}^{(m+1)} &= \nu_{ik}^{(m)}+\theta (\beta_i^{(m+1)}-\beta_k^{(m+1)}-u_{ik}^{(m+1)})
+   \end{aligned}
+   $$
+   
+5. 停止
+
+   设置停止条件为达到最大迭代次数或者残差$r$满足一定的精度要求即可。
+   
+   $$
+   r^{(m+1)} = ||A\beta^{(m+1)}-u^{(m+1)}||+||Y^{(m+1)}-X\beta^{(m+1)}-B\gamma^{(m+1)}||
+   $$
+   
+6. 输出
+
+   
+
+
+``` r
+library(tidyverse)
+library(survival)
+library(splines)
+library(Matrix)
+```
+
+```
+## 
+## 载入程序包：'Matrix'
+```
+
+```
+## The following objects are masked from 'package:tidyr':
+## 
+##     expand, pack, unpack
+```
+
+``` r
+library(igraph)
+library(R6)
+
+SubgroupBeta <- R6Class(
+  classname <-  'SubgroupBeta',
+  
+  public <-  list(
+    # 传入参数
+    T = NULL,           # 观测时间与最终状态
+    X = NULL,           # 具有线性效应、异质性的协变量矩阵
+    Z = NULL,           # 具有非线性效应的协变量矩阵
+    n = NULL,           # 样本容量
+    p = NULL,           # X维度p
+    penalty = NULL,     # 惩罚函数，SCAD或MCP，默认为MCP
+    K = NULL,           # K-means聚类的个数，默认为2
+    lambda = NULL,      # 惩罚函数的惩罚系数
+    a = NULL,           # 融合惩罚中的正则化因子，默认SCAD是3.7，MCP是2.5
+    theta = NULL,       # majorized ADMM算法的惩罚系数
+    df = NULL,          # 基函数个数
+    degree = NULL,      # 基函数的次数
+    bs_args = NULL,     # bs()的其余参数
+    tol = NULL,         # 收敛精度，默认为0.00001
+    max_iter = NULL,    # 最大迭代次数，默认为1000
+    
+    # 初始化
+    initialize = function(T, X, Z, penalty = 'MCP', K = 2, lambda, a = NULL, theta, df = 6, degree = 3, tol = 0.00001, max_iter = 1000){
+      self$T <- T
+      self$X <- X
+      self$Z <- Z
+      self$n <- dim(T)[1]   # 观测数
+      self$p <- dim(X)[2]   # 维度p
+      self$penalty <- penalty
+      self$K <- K
+      self$lambda <- lambda
+      self$a <- a
+      self$theta <- theta
+      self$df <- df
+      self$degree <- degree
+      self$tol <- tol
+      self$max_iter <- max_iter
+    },
+    
+    # 主函数——运行
+    run = function(...){
+      # "..."为bs()的额外参数
+      
+      start_time <- Sys.time()
+      
+      # 检验输入是否合理
+      private$validate()
+      
+      # 获取初始值
+      initial_value <- private$initial_value(...)
+      private$beta <- initial_value[[1]]
+      B <- initial_value[[2]]
+      private$gamma <- initial_value[[3]]
+      X_ls <- initial_value[[4]]
+      private$Y <- initial_value[[5]]
+      private$Y2 <- initial_value[[5]]
+      A <- private$gen_A()
+      private$u <- A %*% unlist(private$beta)
+      private$w <- rep(0, self$n)
+      private$nu <- rep(0, self$n * (self$n-1) * self$p / 2)
+      
+      # 计算矩阵Q
+      Q <- diag(1, ncol = self$n)- B %*% solve(t(B) %*% B) %*% t(B)
+      
+      # 计算向量g
+      g <- private$gen_g()
+      
+      # 计算(B'B)^{-1}B'，用于gamma更新
+      B_ols <- solve(t(B) %*% B) %*% t(B)
+      
+      # 计算(X'QX+A'A)^{-1}与X'Q，用于beta更新
+      X_diag <- map(X_ls, ~matrix(., nrow = 1, byrow = T))
+      X_diag <- do.call(bdiag, X_diag) %>% as.matrix()         # 转化为对角形式的X
+      XQX_AA <- solve(t(X_diag) %*% Q %*% X_diag + t(A) %*% A)
+      XQ <- t(X_diag) %*% Q
+      
+      # 参数迭代
+      for (i in 1:self$max_iter) {
+        print(paste0('正在进行第[', i, ']次迭代'))
+        private$gamma <- private$iter_gamma(private$Y, private$beta, private$w)
+        private$beta <- private$iter_beta(private$w, private$Y, private$u, private$nu)
+        private$Y2 <- private$iter_Y2(private$beta, private$gamma)
+        private$Y <- private$iter_Y(private$Y2, private$w)
+        private$u <- private$iter_u(self$penalty, private$beta, private$nu)
+        private$w <- private$iter_w(private$w, private$Y, private$Y2)
+        private$nu <- private$iter_nu(private$nu, private$beta, private$u)
+        
+        # 终止条件
+        term_1 <- A %*% unlist(private$beta) - private$u
+        term_2 <- private$Y - X_diag %*% unlist(private$beta) - B %*% private$gamma
+        if(norm(term_1, type = '2') + norm(term_2, type = '2') <= self$tol){
+          print('达到精度要求')
+          break
+        }
+      }
+      
+      # beta亚组
+      equal_index <- private$beta %>% 
+        combn(2, function(x) x[[1]] - x[[2]], simplify = FALSE) %>% 
+        map_vec(~ifelse(all(. == 0), 1, 0))
+      label <- private$cluster_beta(equal_index)
+      subgroup_beta <- tibble(label = label, beta = private$beta) %>% 
+        group_by(label) %>% 
+        summarise(size = n(), alpha = unique(beta))
+      
+      result <- list(beta = private$beta, gamma = private$gamma, label = label, alpha = subgroup_beta)
+      
+      return(result)
+    }
+  ),
+  
+  private <- list(
+    # 迭代参数
+    gamma = NULL,        # B样条的回归系数
+    beta = NULL,         # X的回归系数
+    Y2 = NULL,           # Y'
+    Y = NULL,            # Y
+    u = NULL,            # 融合惩罚项
+    w = NULL,            # 拉格朗日乘子
+    nu = NULL,           # 拉格朗日乘子
+    c = NULL,            # beta_i-beta_k+nu_ik/theta
+    delta_beta = NULL,   # beta_i-beta_k
+    
+    # 验证输入是否正确
+    validate = function(){
+      if(!(dim(self$T)[2] == 2 & all(colnames(self$T) %in% c('time', 'status')))) stop('T要求为包含time和status的两列矩阵')
+      if(!is.matrix(self$X)) stop('X要求为矩阵')
+      if(!is.matrix(self$Z)) stop('Z要求为矩阵')
+      if(!self$penalty %in% c('MCP','SCAD')) stop('请选择合适的惩罚函数，SCAD或MCP')
+      if(!(self$K > 0 & self$K == as.integer(self$K))) stop('确保K是正整数')
+      if(self$lambda <= 0) stop('请选择合适的lambda值')
+      if(self$a <= 0) stop('请选择合适的theta值')
+      if(self$theta <= 0) stop('请选择合适的theta值')
+      if(!(self$df > 0 & self$df == as.integer(self$df))) stop('请选择合适的df值')
+      if(!(self$degree > 0 & self$degree == as.integer(self$degree))) stop('请选择合适的degree值')
+      if(self$tol <= 0) stop('请选择合适的精度要求')
+      if(self$max_iter <= 0) stop('请选择合适的最大迭代次数')
+    },
+    
+    # 获取初始值
+    initial_value = function(...){
+      # beta初始值
+      result <- kmeans(self$X, centers = self$K)
+      df <- cbind(self$T, self$X) %>% as_tibble()
+      df$label <- result$cluster        # 添加类别标签
+      df <- df %>% 
+        group_nest(label) %>%           # 分组回归，批量建模
+        mutate(model = map(data, ~coxph(Surv(time, status)~., data=.x)),
+               coef = map(model, ~.x[['coefficients']]))
+      coef <- df$coef %>% as.list()     # 提取每个类别的回归系数向量
+      beta_0 <- coef[result$cluster]    # 为了后续处理方便，beta暂时以列表形式存储
+      
+      # gamma初始值与B
+      B <- asplit(self$Z, 2)   # 按列分割Z矩阵，分别由bs拟合
+      B <- B %>% map(~bs(., df = self$df, degree = self$degree, ...))
+      B <- do.call(cbind, B) %>% scale(center = TRUE, scale = FALSE)   # 列方向的中心化处理
+      df <- cbind(self$T, B) %>% as_tibble()
+      model <- coxph(Surv(time, status)~., data = df)
+      gamma_0 <- model[['coefficients']]
+      
+      # Y与Y'的初始值
+      X_ls <- asplit(self$X, 1)
+      Y_0 <- map2_vec(X_ls, beta_0, ~.x %*% .y) + B %*% gamma_0
+      
+      return(list(beta_0 = beta_0, B = B, gamma_0 = gamma_0, X_ls = X_ls, Y_0 = Y_0))
+    },
+    
+    # 计算矩阵A
+    gen_A = function(){
+      gen_mat <- function(n){
+        mat_1 <- if(n == self$n-1){
+          NULL
+        }else{
+          matrix(0, nrow = self$n-1-n, ncol = n)
+        }
+        mat_2 <- matrix(1, nrow = 1, ncol = n, byrow = T)
+        mat_3 <- diag(-1, nrow=n)
+        mat <- rbind(mat_1, mat_2, mat_3)
+        return(mat)
+      }
+      D <- as.list(c((self$n-1):1)) %>% map(~gen_mat(.))
+      D <- do.call(cbind, D) %>% t()
+      
+      A <- D %x% diag(1, ncol = self$p)
+      
+      return(A)
+    },
+    
+    # 计算g
+    gen_g = function(){
+      status <- self$T[,'status'] %>% as.vector()
+      time <- self$T[,'time'] %>% as.vector()
+      g <- as.list(time) %>% 
+        map(~ifelse(. >= time, 1, 0)) %>% 
+        map_vec(~status %*% .)
+      
+      return(g)
+    },
+    
+    # 计算nabla_g
+    gen_nabla_g = function(Y2){
+      status <- self$T[,'status'] %>% as.vector()
+      time <- self$T[,'time'] %>% as.vector()
+      
+      exp_Y2 <- as.list(exp(Y2))
+      
+      # 向量sum_{l \in R_k} exp(Y2)
+      sum_l_Rk <- as.list(time) %>% 
+        map(~which(. >= time)) %>% 
+        map_vec(~sum(exp(Y2[.])))
+      
+      # 计算nabla_g
+      nabla_g <- as.list(time) %>% 
+        map(~ifelse(. >= time, 1, 0)) %>%    # 计算I_{i \in R_k}
+        map(~. %*% diag(status) %*% sum_l_Rk^(-1)) %>%     # 计算delta与I与{l \in R_k}的复合项
+        map2_vec(exp_Y2, ~.x * .y) - status
+      
+      return(nabla_g)
+    },
+    
+    # 计算c，输出列表
+    gen_c = function(beta, nu){
+      # 这里的beta得是列表形式
+      delta_beta <- beta %>% 
+        combn(2, function(x) x[[1]] - x[[2]], simplify = FALSE) %>% 
+        unlist()
+      c <- delta_beta + nu / self$theta
+      c <- matrix(c, ncol = self$p, byrow = T) %>% asplit(1)
+      
+      return(c)
+    },
+    
+    # gamma迭代式
+    iter_gamma = function(Y_current, beta_current, w_current){
+      # 这里的beta是列表形式
+      X_beta <- map2_vec(X_ls, beta_current, ~.x %*% .y)
+      gamma_next <- B_ols %*% (Y_current - X_beta + w_current / self$theta)
+      
+      return(gamma_next)
+    },
+    
+    # beta迭代式，输出列表
+    iter_beta = function(w_current, Y_current, u_current, nu_current){
+      beta_next <- XQX_AA %*% (XQ %*% (w_current / self$theta + Y_current) + t(A) %*% (u_current - nu_current / self$theta))
+      beta_next <- matrix(beta_next, ncol = self$p, byrow = T) %>% asplit(1)   # 输出列表形式的beta
+      
+      return(beta_next)
+    },
+    
+    # Y2迭代式
+    iter_Y2 = function(beta_next, gamma_next){
+      term_1 <- map2_vec(X_ls, beta_next, ~.x %*% .y)   # X与beta
+      term_2 <- asplit(B,1) %>% map_vec(~. %*% gamma_next)  # B与gamma
+      Y2_next <- term_1 + term_2
+      
+      return(Y2_next)
+    },
+    
+    # Y迭代式
+    iter_Y = function(Y2_next, w_current){
+      nabla_g_next <- private$gen_nabla_g(Y2_next)
+      Y_next <- (g + self$theta)^(-1) * (-nabla_g_next+ g * Y2_next - w_current + self$theta * Y2_next)
+      
+      return(Y_next)
+    },
+    
+    # u迭代式
+    iter_u = function(penalty, beta_next, nu_current){
+      S <- function(c, lambda){
+       result <- max((1 - lambda / norm(c, type = '2')), 0) * c
+       
+        return(result)
+      }
+      
+      c <- private$gen_c(beta_next, nu_current)
+      
+      switch(penalty,
+             'SCAD' = {
+               if(is.null(self$a)) self$a <- 3.7 
+               u_next <- map(c, function(c_ik){
+                 norm_c_ik <- norm(c_ik, type = '2')
+                 if(norm_c_ik <= self$lambda + self$lambda / self$theta){
+                   u_ik <- S(c_ik, self$lambda / self$theta)
+                 }else if(self$lambda + self$lambda / self$theta < norm_c_ik & norm_c_ik <= self$a * self$lambda){
+                   u_ik <- S(c_ik, self$a * self$lambda / ((self$a - 1) * self$theta)) / (1-1/((self$a - 1) * self$theta))
+                 }else {
+                   u_ik <- c_ik
+                 }
+                 
+                 return(u_ik)
+               }) %>% unlist()
+             },
+             'MCP' = {
+               if(is.null(self$a)) self$a <- 2.5
+               u_next <- map(c, function(c_ik){
+                 norm_c_ik <- norm(c_ik, type = '2')
+                 if(norm_c_ik <= self$a * self$lambda){
+                   u_ik <- S(c_ik, self$lambda / self$theta) / (1-1/(self$a * self$theta))
+                 }else {
+                   u_ik <- c_ik
+                 }
+                 
+                 return(u_ik)
+               }) %>% unlist()
+             }
+        
+      )
+      
+      return(u_next)
+    },
+    
+    # w迭代式
+    iter_w = function(w_current, Y_next, Y2_next){
+      w_next <- w_current + self$theta * (Y_next - Y2_next)
+      
+      return(w_next)
+    },
+    
+    # nu迭代式
+    iter_nu = function(nu_current, beta_next, u_next){
+      delta_beta <- beta %>% 
+        combn(2, function(x) x[[1]] - x[[2]], simplify = FALSE) %>% 
+        unlist()
+      nu_next <- nu_current + self$theta * (delta_beta - u_next)
+      
+      return(nu_next)
+    },
+    
+    # 亚组归类 
+    cluster_beta = function(index){
+      mat <- matrix(NA, nrow = self$n, ncol = self$n)
+      mat[lower.tri(mat)] <- index             # 转化为矩阵方便提取索引
+      link <- which(mat == 0, arr.ind = T)
+      node <- data.frame(name = 1:self$n)
+      graph <- graph_from_data_frame(link, directed = F, vertices = node)
+      label <- components(graph)$membership
+      
+      return(label)
+    }
+  )
+)
+```
+
+### 数据模拟 {#code_3_2}
+
+
+``` r
+#-----模拟数据-----
+# case_3
+set.seed(520)
+x_1 <- rnorm(100)
+x_2 <- rnorm(100)
+X <- cbind(x_1, x_2)
+X_diag <- map(asplit(X,1), ~matrix(., nrow = 1, byrow = T))
+X_diag <- do.call(bdiag, X_diag) %>% as.matrix()
+z_1 <- runif(100)
+z_2 <- runif(100)
+f_z1 <- sin((z_1 - 0.5) * pi)
+f_z2 <- cos((z_2 - 0.5) * pi) - 2 / pi
+beta <- c(rep(c(3,3), times = 50), rep(c(-3,-3), times = 50))
+time <- as.vector(-exp(-X_diag %*% beta - f_z1 - f_z2)) * log(runif(100))
+status <- sample(c(1,0), size = 100, replace = TRUE, prob = c(0.8, 0.2))
+
+T <- cbind(time, status)
+X <- cbind(x_1, x_2)
+Z <- cbind(z_1, z_2)
+
+demo <- SubgroupBeta$new(T = T, X = X, Z = Z, penalty = 'MCP', K = 2, lambda = 0.5, a = 2.5, theta = 1, df = 5, degree = 3)
+result <- demo$run()
+```
 

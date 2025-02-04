@@ -393,6 +393,8 @@ eq:integrative-eq8
 eq:integrative-eq9
 eq:integrative-eq10
 eq:integrative-eq11
+eq:code-1
+eq:code-2
 rmd
 rmd_1
 rmd_2
@@ -711,6 +713,9 @@ code_1
 code_2
 code_2_1
 code_2_2
+code_3
+code_3_1
+code_3_2
 ball
 ball_1
 ball_1_1

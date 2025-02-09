@@ -938,7 +938,10 @@ $$
    
 6. 输出
 
-   
+   - beta：列表，X的异质性回归系数
+   - gamma：向量，基函数的回归系数
+   - label：向量，样本亚组标签
+   - alpha：数据框，beta亚组
 
 
 ``` r
@@ -946,20 +949,6 @@ library(tidyverse)
 library(survival)
 library(splines)
 library(Matrix)
-```
-
-```
-## 
-## 载入程序包：'Matrix'
-```
-
-```
-## The following objects are masked from 'package:tidyr':
-## 
-##     expand, pack, unpack
-```
-
-``` r
 library(igraph)
 library(R6)
 

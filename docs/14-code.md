@@ -991,7 +991,6 @@ SubgroupBeta <- R6Class(
     },
     
     # 主函数——运行
-    # trace：是否显示迭代过程
     run = function(trace = TRUE){
       start_time <- proc.time()
       
@@ -1033,9 +1032,9 @@ SubgroupBeta <- R6Class(
         private$beta <- private$iter_beta(XQX_AA, XQ, A, private$w, private$Y, private$u, private$nu)
         private$Y2 <- private$iter_Y2(X_ls, B, g, private$beta, private$gamma)
         private$Y <- private$iter_Y(g, private$Y2, private$w)
-        private$u <- private$iter_u(self$penalty, private$beta, private$nu)
+        private$u <- private$iter_u(self$penalty, private$beta, private$nu, A)
         private$w <- private$iter_w(private$w, private$Y, private$Y2)
-        private$nu <- private$iter_nu(private$nu, private$beta, private$u)
+        private$nu <- private$iter_nu(private$nu, private$beta, private$u, A)
         
         # 终止条件
         term_1 <- A %*% unlist(private$beta) - private$u
@@ -1047,12 +1046,13 @@ SubgroupBeta <- R6Class(
       }
       
       # beta亚组
-      private$beta <- lapply(private$beta, round, digits = 3)
+      private$beta <- lapply(private$beta, round, digits = 2)
       str_beta <- sapply(private$beta, paste, collapse = ',')
       label <- as.numeric(factor(str_beta, levels = unique(str_beta)))
       subgroup_beta <- tibble(label = label, beta = private$beta) %>% 
         group_by(label) %>% 
-        summarise(size = n(), alpha = unique(beta))
+        summarise(size = n(), beta = unique(beta)) %>% 
+        arrange(-size)
       K_hat <- unique(label) %>% length()
       result <- list(beta = private$beta, gamma = private$gamma, label = label, K_hat = K_hat, alpha = subgroup_beta)
       
@@ -1063,8 +1063,6 @@ SubgroupBeta <- R6Class(
     },
     
     # 主函数——调优
-    # seq_lambda：lambda序列
-    # trace：是否显示迭代过程
     tune_lambda = function(seq_lambda, trace = TRUE){
       start_time <- proc.time()
       
@@ -1116,9 +1114,9 @@ SubgroupBeta <- R6Class(
           private$beta <- private$iter_beta(XQX_AA, XQ, A, private$w, private$Y, private$u, private$nu)
           private$Y2 <- private$iter_Y2(X_ls, B, g, private$beta, private$gamma)
           private$Y <- private$iter_Y(g, private$Y2, private$w)
-          private$u <- private$iter_u(self$penalty, private$beta, private$nu)
+          private$u <- private$iter_u(self$penalty, private$beta, private$nu, A)
           private$w <- private$iter_w(private$w, private$Y, private$Y2)
-          private$nu <- private$iter_nu(private$nu, private$beta, private$u)
+          private$nu <- private$iter_nu(private$nu, private$beta, private$u, A)
           
           # 终止条件
           term_1 <- A %*% unlist(private$beta) - private$u
@@ -1136,7 +1134,8 @@ SubgroupBeta <- R6Class(
         label <- as.numeric(factor(str_beta, levels = unique(str_beta)))
         subgroup_beta <- tibble(label = label, beta = private$beta) %>% 
           group_by(label) %>% 
-          summarise(size = n(), alpha = unique(beta))
+          summarise(size = n(), beta = unique(beta)) %>% 
+          arrange(-size)
         K_hat <- unique(label) %>% length()
         
         bic_vec[i] <- private$Bic(private$Y2, K_hat)
@@ -1268,11 +1267,8 @@ SubgroupBeta <- R6Class(
     },
     
     # 计算c，输出列表
-    gen_c = function(beta, nu){
-      # 这里的beta得是列表形式
-      delta_beta <- beta %>% 
-        combn(2, function(x) x[[1]] - x[[2]], simplify = FALSE) %>% 
-        unlist()
+    gen_c = function(beta, nu, A){
+      delta_beta <- A %*% unlist(beta)
       c <- delta_beta + nu / self$theta
       c <- matrix(c, ncol = self$p, byrow = T) %>% asplit(1)
       
@@ -1314,14 +1310,14 @@ SubgroupBeta <- R6Class(
     },
     
     # u迭代式
-    iter_u = function(penalty, beta_next, nu_current){
+    iter_u = function(penalty, beta_next, nu_current, A){
       S <- function(c, lambda){
        result <- max((1 - lambda / norm(c, type = '2')), 0) * c
        
         return(result)
       }
       
-      c <- private$gen_c(beta_next, nu_current)
+      c <- private$gen_c(beta_next, nu_current, A)
       
       switch(penalty,
              'SCAD' = {
@@ -1366,10 +1362,8 @@ SubgroupBeta <- R6Class(
     },
     
     # nu迭代式
-    iter_nu = function(nu_current, beta_next, u_next){
-      delta_beta <- beta_next %>% 
-        combn(2, function(x) x[[1]] - x[[2]], simplify = FALSE) %>% 
-        unlist()
+    iter_nu = function(nu_current, beta_next, u_next, A){
+      delta_beta <- A %*% unlist(beta_next)
       nu_next <- nu_current + self$theta * (delta_beta - u_next)
       
       return(nu_next)
@@ -1398,186 +1392,62 @@ SubgroupBeta <- R6Class(
 
 
 ``` r
-# case1_1 beta = +-0.5
+# case_3
+# 有顺序调整
 set.seed(123)
-X <- rnorm(100)
-Z <- runif(100)
-f_z <- sin(pi*(Z-0.5))
-beta <- rep(c(-0.5,0.5), each=50)
-time <- as.vector(-exp(-diag(X) %*% beta - f_z)) * log(runif(100))
-C <- runif(100, max = 12)            # 删失时间
-Cr <- sum(C <= time) / length(C)     # 刚好是10%删失率
-print(paste0('删失率为：', Cr))
-```
+x_1 <- rnorm(100)
+x_2 <- rnorm(100)
+X <- cbind(x_1, x_2)
+X_cluster <- kmeans(X, centers = 2)
+X_1 <- X[which(X_cluster$cluster == 1),]
+X_2 <- X[which(X_cluster$cluster == 2),]
+X <- rbind(X_1,X_2)
+X_diag <- map(asplit(X,1), ~matrix(., nrow = 1, byrow = T))
+X_diag <- do.call(bdiag, X_diag) %>% as.matrix()
+z_1 <- runif(100)
+z_2 <- runif(100)
+f_z1 <- sin((z_1 - 0.5) * pi)
+f_z2 <- cos((z_2 - 0.5) * pi) - 2 / pi
+beta <- c(rep(c(3,3), times = 50), rep(c(-3,-3), times = 50))
+time <- as.vector(-exp(-X_diag %*% beta - f_z1 - f_z2)) * log(runif(100))
+status <- sample(c(1,0), size = 100, replace = TRUE, prob = c(0.8, 0.2))
 
-```
-## [1] "删失率为：0.1"
-```
-
-``` r
-status <- as.numeric(C <= time)      # 是否删失
-time <- pmin(time, C)                # 观测时间
 T <- cbind(time, status)
-X <- X %>% as.matrix()
-Z <- Z %>% as.matrix()
-case1_1 <- SubgroupBeta$new(T = T, X = X, Z = Z, penalty = 'MCP', K = 2, lambda = 0.06, a = 2.5, theta = 1, df = 6, degree = 3)
-result1_1 <- case1_1$run(trace = FALSE)  # 不显示迭代过程
+Z <- cbind(z_1, z_2)
+
+case3 <- SubgroupBeta$new(T = T, X = X, Z = Z, penalty = 'MCP', K = 2, lambda = 0.1, a = 2.5, theta = 1, df = 6, degree = 3)
+result3 <- case3$run(trace = FALSE)
 ```
 
 ```
-## Warning in coxph.fit(X, Y, istrat, offset, init, control, weights = weights, :
-## Ran out of iterations and did not converge
+##   用户   系统   流逝 
+## 204.81   3.26 210.14
 ```
 
-```
-## Warning in coxph.fit(X, Y, istrat, offset, init, control, weights = weights, :
-## one or more coefficients may be infinite
-```
-
-```
-##  用户  系统  流逝 
-## 34.11  0.22 34.36
-```
 
 ``` r
-result1_1[['alpha']]
+result3$alpha
 ```
 
 ```
 ## # A tibble: 2 × 3
-##   label  size alpha    
+##   label  size beta     
 ##   <dbl> <int> <list>   
-## 1     1    55 <dbl [1]>
-## 2     2    45 <dbl [1]>
+## 1     1    56 <dbl [2]>
+## 2     2    44 <dbl [2]>
 ```
 
 ``` r
-result1_1[['alpha']]$alpha
+result3$alpha$beta
 ```
 
 ```
 ## [[1]]
-## [1] -0.108
+## [1] 2.26 2.19
 ## 
 ## [[2]]
-## [1] 1.848
+## [1] -2.56 -2.54
 ```
 
-----------
 
-
-``` r
-# case1_2 beta = +-1.5
-set.seed(123)
-X <- rnorm(100)
-Z <- runif(100)
-f_z <- sin(pi*(Z-0.5))
-beta <- rep(c(-1.5,1.5), each=50)
-time <- as.vector(-exp(-diag(X) %*% beta - f_z)) * log(runif(100))
-C <- runif(100, max = 12)            # 删失时间
-Cr <- sum(C <= time) / length(C)     # 刚好是10%删失率
-print(paste0('删失率为：', Cr))
-```
-
-```
-## [1] "删失率为：0.1"
-```
-
-``` r
-status <- as.numeric(C <= time)      # 是否删失
-time <- pmin(time, C)                # 观测时间
-T <- cbind(time, status)
-X <- X %>% as.matrix()
-Z <- Z %>% as.matrix()
-case1_2 <- SubgroupBeta$new(T = T, X = X, Z = Z, penalty = 'MCP', K = 2, lambda = 0.06, a = 2.5, theta = 1, df = 6, degree = 3)
-result1_2 <- case1_2$run(trace = FALSE)
-```
-
-```
-##  用户  系统  流逝 
-## 20.57  0.09 20.65
-```
-
-``` r
-result1_2[['alpha']]
-```
-
-```
-## # A tibble: 2 × 3
-##   label  size alpha    
-##   <dbl> <int> <list>   
-## 1     1    55 <dbl [1]>
-## 2     2    45 <dbl [1]>
-```
-
-``` r
-result1_2[['alpha']]$alpha
-```
-
-```
-## [[1]]
-## [1] -0.391
-## 
-## [[2]]
-## [1] 0.634
-```
-
-----------
-
-
-``` r
-# case1_3 beta = +-3
-set.seed(123)
-X <- rnorm(100)
-Z <- runif(100)
-f_z <- sin(pi*(Z-0.5))
-beta <- rep(c(-3,3), each=50)
-time <- as.vector(-exp(-diag(X) %*% beta - f_z)) * log(runif(100))
-C <- runif(100, max = 50)            # 删失时间
-Cr <- sum(C <= time) / length(C)     # 刚好是10%删失率
-print(paste0('删失率为：', Cr))
-```
-
-```
-## [1] "删失率为：0.1"
-```
-
-``` r
-status <- as.numeric(C <= time)      # 是否删失
-time <- pmin(time, C)                # 观测时间
-T <- cbind(time, status)
-X <- X %>% as.matrix()
-Z <- Z %>% as.matrix()
-case1_3 <- SubgroupBeta$new(T = T, X = X, Z = Z, penalty = 'MCP', K = 2, lambda = 0.06, a = 2.5, theta = 1, df = 6, degree = 3)
-result1_3 <- case1_3$run(trace = FALSE)
-```
-
-```
-##  用户  系统  流逝 
-## 42.08  0.20 42.31
-```
-
-``` r
-result1_3[['alpha']]
-```
-
-```
-## # A tibble: 2 × 3
-##   label  size alpha    
-##   <dbl> <int> <list>   
-## 1     1    55 <dbl [1]>
-## 2     2    45 <dbl [1]>
-```
-
-``` r
-result1_3[['alpha']]$alpha
-```
-
-```
-## [[1]]
-## [1] -1.197
-## 
-## [[2]]
-## [1] 0.72
-```
 

@@ -287,9 +287,24 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.6" data-path="sql_2.html"><a href="sql_2.html#sql_2_6"><i class="fa fa-check"></i><b>3.2.6</b> 计算字段</a></li>
 <li class="chapter" data-level="3.2.7" data-path="sql_2.html"><a href="sql_2.html#sql_2_7"><i class="fa fa-check"></i><b>3.2.7</b> 函数</a></li>
 <li class="chapter" data-level="3.2.8" data-path="sql_2.html"><a href="sql_2.html#sql_2_8"><i class="fa fa-check"></i><b>3.2.8</b> 汇总数据</a></li>
+<li class="chapter" data-level="3.2.9" data-path="sql_2.html"><a href="sql_2.html#sql_2_9"><i class="fa fa-check"></i><b>3.2.9</b> 数据分组</a></li>
+<li class="chapter" data-level="3.2.10" data-path="sql_2.html"><a href="sql_2.html#sql_2_10"><i class="fa fa-check"></i><b>3.2.10</b> 子查询</a></li>
+<li class="chapter" data-level="3.2.11" data-path="sql_2.html"><a href="sql_2.html#sql_2_11"><i class="fa fa-check"></i><b>3.2.11</b> 表联结</a></li>
+<li class="chapter" data-level="3.2.12" data-path="sql_2.html"><a href="sql_2.html#sql_2_12"><i class="fa fa-check"></i><b>3.2.12</b> 组合查询</a></li>
+<li class="chapter" data-level="3.2.13" data-path="sql_2.html"><a href="sql_2.html#sql_2_13"><i class="fa fa-check"></i><b>3.2.13</b> 全文本搜索</a></li>
+<li class="chapter" data-level="3.2.14" data-path="sql_2.html"><a href="sql_2.html#sql_2_14"><i class="fa fa-check"></i><b>3.2.14</b> 插入数据</a></li>
+<li class="chapter" data-level="3.2.15" data-path="sql_2.html"><a href="sql_2.html#sql_2_15"><i class="fa fa-check"></i><b>3.2.15</b> 更新数据</a></li>
+<li class="chapter" data-level="3.2.16" data-path="sql_2.html"><a href="sql_2.html#sql_2_16"><i class="fa fa-check"></i><b>3.2.16</b> 表的操作</a></li>
+<li class="chapter" data-level="3.2.17" data-path="sql_2.html"><a href="sql_2.html#sql_2_17"><i class="fa fa-check"></i><b>3.2.17</b> 使用视图</a></li>
+<li class="chapter" data-level="3.2.18" data-path="sql_2.html"><a href="sql_2.html#sql_2_18"><i class="fa fa-check"></i><b>3.2.18</b> 使用存储过程</a></li>
+<li class="chapter" data-level="3.2.19" data-path="sql_2.html"><a href="sql_2.html#sql_2_19"><i class="fa fa-check"></i><b>3.2.19</b> 触发器</a></li>
+<li class="chapter" data-level="3.2.20" data-path="sql_2.html"><a href="sql_2.html#sql_2_20"><i class="fa fa-check"></i><b>3.2.20</b> 事务处理</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a></li>
+<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spider_1.html"><a href="spider_1.html"><i class="fa fa-check"></i><b>4.1</b> 提要</a></li>
+</ul></li>
 <li class="part"><span><b>II 模型与方法</b></span></li>
 <li class="chapter" data-level="5" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>5</b> 应用回归分析</a>
 <ul>
@@ -763,16 +778,16 @@ title: &quot;震惊！`r round(x, 2)`%的人竟干过这种事！&quot;
 <span id="cb65-9"><a href="rmd_4.html#cb65-9" tabindex="-1"></a><span class="st">  rec1 -&gt; rec2 -&gt; rec3</span></span>
 <span id="cb65-10"><a href="rmd_4.html#cb65-10" tabindex="-1"></a><span class="st">  }&quot;</span>,</span>
 <span id="cb65-11"><a href="rmd_4.html#cb65-11" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-1bf8c7b2c5321fb893fc" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1bf8c7b2c5321fb893fc">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8c13341e4b2681ab813b" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8c13341e4b2681ab813b">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rmd_4.html#cb66-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">mermaid</span>(<span class="st">&#39;</span></span>
 <span id="cb66-2"><a href="rmd_4.html#cb66-2" tabindex="-1"></a><span class="st">  graph LR</span></span>
 <span id="cb66-3"><a href="rmd_4.html#cb66-3" tabindex="-1"></a><span class="st">  node_1[Step 1 打开冰箱] --&gt; node_2[Step 2 塞入大象]</span></span>
 <span id="cb66-4"><a href="rmd_4.html#cb66-4" tabindex="-1"></a><span class="st">  node_2[Step 2 塞入大象] --&gt; node_3[Step 3 关上冰箱]</span></span>
 <span id="cb66-5"><a href="rmd_4.html#cb66-5" tabindex="-1"></a><span class="st">  &#39;</span>,</span>
 <span id="cb66-6"><a href="rmd_4.html#cb66-6" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-ad17bcfc91f0f91b37ea" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ad17bcfc91f0f91b37ea">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-48536d21c391a230c5c0" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-48536d21c391a230c5c0">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 <p>相关语法介绍可详见<code>graphviz</code><a href="https://www.graphviz.org/doc/info/lang.html" target="_blank">官网</a>和<code>mermaid</code><a href="https://mermaid.nodejs.cn/syntax/flowchart.html" target="_blank">官网</a>（有中英文官网，这个是中文的）。</p>
 <blockquote>
 <p><code>mermaid</code>官网还介绍了其他类型的图形，例如甘特图、桑基图。</p>

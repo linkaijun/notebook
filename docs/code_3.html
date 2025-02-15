@@ -287,9 +287,24 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.6" data-path="sql_2.html"><a href="sql_2.html#sql_2_6"><i class="fa fa-check"></i><b>3.2.6</b> 计算字段</a></li>
 <li class="chapter" data-level="3.2.7" data-path="sql_2.html"><a href="sql_2.html#sql_2_7"><i class="fa fa-check"></i><b>3.2.7</b> 函数</a></li>
 <li class="chapter" data-level="3.2.8" data-path="sql_2.html"><a href="sql_2.html#sql_2_8"><i class="fa fa-check"></i><b>3.2.8</b> 汇总数据</a></li>
+<li class="chapter" data-level="3.2.9" data-path="sql_2.html"><a href="sql_2.html#sql_2_9"><i class="fa fa-check"></i><b>3.2.9</b> 数据分组</a></li>
+<li class="chapter" data-level="3.2.10" data-path="sql_2.html"><a href="sql_2.html#sql_2_10"><i class="fa fa-check"></i><b>3.2.10</b> 子查询</a></li>
+<li class="chapter" data-level="3.2.11" data-path="sql_2.html"><a href="sql_2.html#sql_2_11"><i class="fa fa-check"></i><b>3.2.11</b> 表联结</a></li>
+<li class="chapter" data-level="3.2.12" data-path="sql_2.html"><a href="sql_2.html#sql_2_12"><i class="fa fa-check"></i><b>3.2.12</b> 组合查询</a></li>
+<li class="chapter" data-level="3.2.13" data-path="sql_2.html"><a href="sql_2.html#sql_2_13"><i class="fa fa-check"></i><b>3.2.13</b> 全文本搜索</a></li>
+<li class="chapter" data-level="3.2.14" data-path="sql_2.html"><a href="sql_2.html#sql_2_14"><i class="fa fa-check"></i><b>3.2.14</b> 插入数据</a></li>
+<li class="chapter" data-level="3.2.15" data-path="sql_2.html"><a href="sql_2.html#sql_2_15"><i class="fa fa-check"></i><b>3.2.15</b> 更新数据</a></li>
+<li class="chapter" data-level="3.2.16" data-path="sql_2.html"><a href="sql_2.html#sql_2_16"><i class="fa fa-check"></i><b>3.2.16</b> 表的操作</a></li>
+<li class="chapter" data-level="3.2.17" data-path="sql_2.html"><a href="sql_2.html#sql_2_17"><i class="fa fa-check"></i><b>3.2.17</b> 使用视图</a></li>
+<li class="chapter" data-level="3.2.18" data-path="sql_2.html"><a href="sql_2.html#sql_2_18"><i class="fa fa-check"></i><b>3.2.18</b> 使用存储过程</a></li>
+<li class="chapter" data-level="3.2.19" data-path="sql_2.html"><a href="sql_2.html#sql_2_19"><i class="fa fa-check"></i><b>3.2.19</b> 触发器</a></li>
+<li class="chapter" data-level="3.2.20" data-path="sql_2.html"><a href="sql_2.html#sql_2_20"><i class="fa fa-check"></i><b>3.2.20</b> 事务处理</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a></li>
+<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spider_1.html"><a href="spider_1.html"><i class="fa fa-check"></i><b>4.1</b> 提要</a></li>
+</ul></li>
 <li class="part"><span><b>II 模型与方法</b></span></li>
 <li class="chapter" data-level="5" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>5</b> 应用回归分析</a>
 <ul>
@@ -654,559 +669,490 @@ r^{(m+1)} = ||A\beta^{(m+1)}-u^{(m+1)}||+||Y^{(m+1)}-X\beta^{(m+1)}-B\gamma^{(m+
 <li>alpha：数据框，beta亚组</li>
 </ul></li>
 </ol>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="code_3.html#cb230-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb230-2"><a href="code_3.html#cb230-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb230-3"><a href="code_3.html#cb230-3" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
-<span id="cb230-4"><a href="code_3.html#cb230-4" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
-<span id="cb230-5"><a href="code_3.html#cb230-5" tabindex="-1"></a><span class="fu">library</span>(R6)</span>
-<span id="cb230-6"><a href="code_3.html#cb230-6" tabindex="-1"></a></span>
-<span id="cb230-7"><a href="code_3.html#cb230-7" tabindex="-1"></a>SubgroupBeta <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(</span>
-<span id="cb230-8"><a href="code_3.html#cb230-8" tabindex="-1"></a>  classname <span class="ot">&lt;-</span>  <span class="st">&#39;SubgroupBeta&#39;</span>,</span>
-<span id="cb230-9"><a href="code_3.html#cb230-9" tabindex="-1"></a>  </span>
-<span id="cb230-10"><a href="code_3.html#cb230-10" tabindex="-1"></a>  public <span class="ot">&lt;-</span>  <span class="fu">list</span>(</span>
-<span id="cb230-11"><a href="code_3.html#cb230-11" tabindex="-1"></a>    <span class="co"># 传入参数</span></span>
-<span id="cb230-12"><a href="code_3.html#cb230-12" tabindex="-1"></a>    <span class="at">T =</span> <span class="cn">NULL</span>,           <span class="co"># 观测时间与最终状态</span></span>
-<span id="cb230-13"><a href="code_3.html#cb230-13" tabindex="-1"></a>    <span class="at">X =</span> <span class="cn">NULL</span>,           <span class="co"># 具有线性效应、异质性的协变量矩阵</span></span>
-<span id="cb230-14"><a href="code_3.html#cb230-14" tabindex="-1"></a>    <span class="at">Z =</span> <span class="cn">NULL</span>,           <span class="co"># 具有非线性效应的协变量矩阵</span></span>
-<span id="cb230-15"><a href="code_3.html#cb230-15" tabindex="-1"></a>    <span class="at">n =</span> <span class="cn">NULL</span>,           <span class="co"># 样本容量</span></span>
-<span id="cb230-16"><a href="code_3.html#cb230-16" tabindex="-1"></a>    <span class="at">p =</span> <span class="cn">NULL</span>,           <span class="co"># X维度p</span></span>
-<span id="cb230-17"><a href="code_3.html#cb230-17" tabindex="-1"></a>    <span class="at">q =</span> <span class="cn">NULL</span>,           <span class="co"># Z维度q</span></span>
-<span id="cb230-18"><a href="code_3.html#cb230-18" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="cn">NULL</span>,     <span class="co"># 惩罚函数，SCAD或MCP，默认为MCP</span></span>
-<span id="cb230-19"><a href="code_3.html#cb230-19" tabindex="-1"></a>    <span class="at">K =</span> <span class="cn">NULL</span>,           <span class="co"># K-means聚类的个数，默认为2</span></span>
-<span id="cb230-20"><a href="code_3.html#cb230-20" tabindex="-1"></a>    <span class="at">lambda =</span> <span class="cn">NULL</span>,      <span class="co"># 惩罚函数的惩罚系数</span></span>
-<span id="cb230-21"><a href="code_3.html#cb230-21" tabindex="-1"></a>    <span class="at">a =</span> <span class="cn">NULL</span>,           <span class="co"># 融合惩罚中的正则化因子，默认SCAD是3.7，MCP是2.5</span></span>
-<span id="cb230-22"><a href="code_3.html#cb230-22" tabindex="-1"></a>    <span class="at">theta =</span> <span class="cn">NULL</span>,       <span class="co"># majorized ADMM算法的惩罚系数</span></span>
-<span id="cb230-23"><a href="code_3.html#cb230-23" tabindex="-1"></a>    <span class="at">df =</span> <span class="cn">NULL</span>,          <span class="co"># 基函数个数</span></span>
-<span id="cb230-24"><a href="code_3.html#cb230-24" tabindex="-1"></a>    <span class="at">degree =</span> <span class="cn">NULL</span>,      <span class="co"># 基函数的次数</span></span>
-<span id="cb230-25"><a href="code_3.html#cb230-25" tabindex="-1"></a>    <span class="at">tol =</span> <span class="cn">NULL</span>,         <span class="co"># 收敛精度，默认为0.001</span></span>
-<span id="cb230-26"><a href="code_3.html#cb230-26" tabindex="-1"></a>    <span class="at">max_iter =</span> <span class="cn">NULL</span>,    <span class="co"># 最大迭代次数，默认为10000</span></span>
-<span id="cb230-27"><a href="code_3.html#cb230-27" tabindex="-1"></a>    </span>
-<span id="cb230-28"><a href="code_3.html#cb230-28" tabindex="-1"></a>    <span class="co"># 初始化</span></span>
-<span id="cb230-29"><a href="code_3.html#cb230-29" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>(T, X, Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, lambda, <span class="at">a =</span> <span class="cn">NULL</span>, theta, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>, <span class="at">tol =</span> <span class="fl">0.001</span>, <span class="at">max_iter =</span> <span class="dv">10000</span>){</span>
-<span id="cb230-30"><a href="code_3.html#cb230-30" tabindex="-1"></a>      self<span class="sc">$</span>T <span class="ot">&lt;-</span> T</span>
-<span id="cb230-31"><a href="code_3.html#cb230-31" tabindex="-1"></a>      self<span class="sc">$</span>X <span class="ot">&lt;-</span> X</span>
-<span id="cb230-32"><a href="code_3.html#cb230-32" tabindex="-1"></a>      self<span class="sc">$</span>Z <span class="ot">&lt;-</span> Z</span>
-<span id="cb230-33"><a href="code_3.html#cb230-33" tabindex="-1"></a>      self<span class="sc">$</span>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(T)[<span class="dv">1</span>]   <span class="co"># 观测数</span></span>
-<span id="cb230-34"><a href="code_3.html#cb230-34" tabindex="-1"></a>      self<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="fu">dim</span>(X)[<span class="dv">2</span>]   <span class="co"># 维度p</span></span>
-<span id="cb230-35"><a href="code_3.html#cb230-35" tabindex="-1"></a>      self<span class="sc">$</span>q <span class="ot">&lt;-</span> <span class="fu">dim</span>(Z)[<span class="dv">2</span>]   <span class="co"># 维度q</span></span>
-<span id="cb230-36"><a href="code_3.html#cb230-36" tabindex="-1"></a>      self<span class="sc">$</span>penalty <span class="ot">&lt;-</span> penalty</span>
-<span id="cb230-37"><a href="code_3.html#cb230-37" tabindex="-1"></a>      self<span class="sc">$</span>K <span class="ot">&lt;-</span> K</span>
-<span id="cb230-38"><a href="code_3.html#cb230-38" tabindex="-1"></a>      self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> lambda</span>
-<span id="cb230-39"><a href="code_3.html#cb230-39" tabindex="-1"></a>      self<span class="sc">$</span>a <span class="ot">&lt;-</span> a</span>
-<span id="cb230-40"><a href="code_3.html#cb230-40" tabindex="-1"></a>      self<span class="sc">$</span>theta <span class="ot">&lt;-</span> theta</span>
-<span id="cb230-41"><a href="code_3.html#cb230-41" tabindex="-1"></a>      self<span class="sc">$</span>df <span class="ot">&lt;-</span> df</span>
-<span id="cb230-42"><a href="code_3.html#cb230-42" tabindex="-1"></a>      self<span class="sc">$</span>degree <span class="ot">&lt;-</span> degree</span>
-<span id="cb230-43"><a href="code_3.html#cb230-43" tabindex="-1"></a>      self<span class="sc">$</span>tol <span class="ot">&lt;-</span> tol</span>
-<span id="cb230-44"><a href="code_3.html#cb230-44" tabindex="-1"></a>      self<span class="sc">$</span>max_iter <span class="ot">&lt;-</span> max_iter</span>
-<span id="cb230-45"><a href="code_3.html#cb230-45" tabindex="-1"></a>    },</span>
-<span id="cb230-46"><a href="code_3.html#cb230-46" tabindex="-1"></a>    </span>
-<span id="cb230-47"><a href="code_3.html#cb230-47" tabindex="-1"></a>    <span class="co"># 主函数——运行</span></span>
-<span id="cb230-48"><a href="code_3.html#cb230-48" tabindex="-1"></a>    <span class="co"># trace：是否显示迭代过程</span></span>
-<span id="cb230-49"><a href="code_3.html#cb230-49" tabindex="-1"></a>    <span class="at">run =</span> <span class="cf">function</span>(<span class="at">trace =</span> <span class="cn">TRUE</span>){</span>
-<span id="cb230-50"><a href="code_3.html#cb230-50" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
-<span id="cb230-51"><a href="code_3.html#cb230-51" tabindex="-1"></a>      </span>
-<span id="cb230-52"><a href="code_3.html#cb230-52" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
-<span id="cb230-53"><a href="code_3.html#cb230-53" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
-<span id="cb230-54"><a href="code_3.html#cb230-54" tabindex="-1"></a>      </span>
-<span id="cb230-55"><a href="code_3.html#cb230-55" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
-<span id="cb230-56"><a href="code_3.html#cb230-56" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
-<span id="cb230-57"><a href="code_3.html#cb230-57" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
-<span id="cb230-58"><a href="code_3.html#cb230-58" tabindex="-1"></a>      B <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
-<span id="cb230-59"><a href="code_3.html#cb230-59" tabindex="-1"></a>      private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
-<span id="cb230-60"><a href="code_3.html#cb230-60" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
-<span id="cb230-61"><a href="code_3.html#cb230-61" tabindex="-1"></a>      private<span class="sc">$</span>Y <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
-<span id="cb230-62"><a href="code_3.html#cb230-62" tabindex="-1"></a>      private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
-<span id="cb230-63"><a href="code_3.html#cb230-63" tabindex="-1"></a>      A <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_A</span>()</span>
-<span id="cb230-64"><a href="code_3.html#cb230-64" tabindex="-1"></a>      private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
-<span id="cb230-65"><a href="code_3.html#cb230-65" tabindex="-1"></a>      private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
-<span id="cb230-66"><a href="code_3.html#cb230-66" tabindex="-1"></a>      private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb230-67"><a href="code_3.html#cb230-67" tabindex="-1"></a>      </span>
-<span id="cb230-68"><a href="code_3.html#cb230-68" tabindex="-1"></a>      <span class="co"># 计算矩阵Q</span></span>
-<span id="cb230-69"><a href="code_3.html#cb230-69" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n)<span class="sc">-</span> B <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
-<span id="cb230-70"><a href="code_3.html#cb230-70" tabindex="-1"></a>      </span>
-<span id="cb230-71"><a href="code_3.html#cb230-71" tabindex="-1"></a>      <span class="co"># 计算向量g</span></span>
-<span id="cb230-72"><a href="code_3.html#cb230-72" tabindex="-1"></a>      g <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_g</span>()</span>
-<span id="cb230-73"><a href="code_3.html#cb230-73" tabindex="-1"></a>      </span>
-<span id="cb230-74"><a href="code_3.html#cb230-74" tabindex="-1"></a>      <span class="co"># 计算(B&#39;B)^{-1}B&#39;，用于gamma更新</span></span>
-<span id="cb230-75"><a href="code_3.html#cb230-75" tabindex="-1"></a>      B_ols <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
-<span id="cb230-76"><a href="code_3.html#cb230-76" tabindex="-1"></a>      </span>
-<span id="cb230-77"><a href="code_3.html#cb230-77" tabindex="-1"></a>      <span class="co"># 计算(X&#39;QX+A&#39;A)^{-1}与X&#39;Q，用于beta更新</span></span>
-<span id="cb230-78"><a href="code_3.html#cb230-78" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(X_ls, <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
-<span id="cb230-79"><a href="code_3.html#cb230-79" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()         <span class="co"># 转化为对角形式的X</span></span>
-<span id="cb230-80"><a href="code_3.html#cb230-80" tabindex="-1"></a>      XQX_AA <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q <span class="sc">%*%</span> X_diag <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> A)</span>
-<span id="cb230-81"><a href="code_3.html#cb230-81" tabindex="-1"></a>      XQ <span class="ot">&lt;-</span> <span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q</span>
-<span id="cb230-82"><a href="code_3.html#cb230-82" tabindex="-1"></a>      </span>
-<span id="cb230-83"><a href="code_3.html#cb230-83" tabindex="-1"></a>      <span class="co"># 参数迭代</span></span>
-<span id="cb230-84"><a href="code_3.html#cb230-84" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
-<span id="cb230-85"><a href="code_3.html#cb230-85" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;正在进行第[&#39;</span>, i, <span class="st">&#39;]次迭代&#39;</span>))</span>
-<span id="cb230-86"><a href="code_3.html#cb230-86" tabindex="-1"></a>        private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_gamma</span>(X_ls, B_ols, private<span class="sc">$</span>Y, private<span class="sc">$</span>beta, private<span class="sc">$</span>w)</span>
-<span id="cb230-87"><a href="code_3.html#cb230-87" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(XQX_AA, XQ, A, private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>u, private<span class="sc">$</span>nu)</span>
-<span id="cb230-88"><a href="code_3.html#cb230-88" tabindex="-1"></a>        private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y2</span>(X_ls, B, g, private<span class="sc">$</span>beta, private<span class="sc">$</span>gamma)</span>
-<span id="cb230-89"><a href="code_3.html#cb230-89" tabindex="-1"></a>        private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y</span>(g, private<span class="sc">$</span>Y2, private<span class="sc">$</span>w)</span>
-<span id="cb230-90"><a href="code_3.html#cb230-90" tabindex="-1"></a>        private<span class="sc">$</span>u <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_u</span>(self<span class="sc">$</span>penalty, private<span class="sc">$</span>beta, private<span class="sc">$</span>nu)</span>
-<span id="cb230-91"><a href="code_3.html#cb230-91" tabindex="-1"></a>        private<span class="sc">$</span>w <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_w</span>(private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>Y2)</span>
-<span id="cb230-92"><a href="code_3.html#cb230-92" tabindex="-1"></a>        private<span class="sc">$</span>nu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_nu</span>(private<span class="sc">$</span>nu, private<span class="sc">$</span>beta, private<span class="sc">$</span>u)</span>
-<span id="cb230-93"><a href="code_3.html#cb230-93" tabindex="-1"></a>        </span>
-<span id="cb230-94"><a href="code_3.html#cb230-94" tabindex="-1"></a>        <span class="co"># 终止条件</span></span>
-<span id="cb230-95"><a href="code_3.html#cb230-95" tabindex="-1"></a>        term_1 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> private<span class="sc">$</span>u</span>
-<span id="cb230-96"><a href="code_3.html#cb230-96" tabindex="-1"></a>        term_2 <span class="ot">&lt;-</span> private<span class="sc">$</span>Y <span class="sc">-</span> X_diag <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> B <span class="sc">%*%</span> private<span class="sc">$</span>gamma</span>
-<span id="cb230-97"><a href="code_3.html#cb230-97" tabindex="-1"></a>        <span class="cf">if</span>((<span class="fu">norm</span>(term_1, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>) <span class="sc">+</span> <span class="fu">norm</span>(term_2, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
-<span id="cb230-98"><a href="code_3.html#cb230-98" tabindex="-1"></a>          <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="st">&#39;达到精度要求&#39;</span>)</span>
-<span id="cb230-99"><a href="code_3.html#cb230-99" tabindex="-1"></a>          <span class="cf">break</span></span>
-<span id="cb230-100"><a href="code_3.html#cb230-100" tabindex="-1"></a>        }</span>
-<span id="cb230-101"><a href="code_3.html#cb230-101" tabindex="-1"></a>      }</span>
-<span id="cb230-102"><a href="code_3.html#cb230-102" tabindex="-1"></a>      </span>
-<span id="cb230-103"><a href="code_3.html#cb230-103" tabindex="-1"></a>      <span class="co"># beta亚组</span></span>
-<span id="cb230-104"><a href="code_3.html#cb230-104" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> <span class="fu">lapply</span>(private<span class="sc">$</span>beta, round, <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb230-105"><a href="code_3.html#cb230-105" tabindex="-1"></a>      str_beta <span class="ot">&lt;-</span> <span class="fu">sapply</span>(private<span class="sc">$</span>beta, paste, <span class="at">collapse =</span> <span class="st">&#39;,&#39;</span>)</span>
-<span id="cb230-106"><a href="code_3.html#cb230-106" tabindex="-1"></a>      label <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(str_beta, <span class="at">levels =</span> <span class="fu">unique</span>(str_beta)))</span>
-<span id="cb230-107"><a href="code_3.html#cb230-107" tabindex="-1"></a>      subgroup_beta <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">label =</span> label, <span class="at">beta =</span> private<span class="sc">$</span>beta) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-108"><a href="code_3.html#cb230-108" tabindex="-1"></a>        <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-109"><a href="code_3.html#cb230-109" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">size =</span> <span class="fu">n</span>(), <span class="at">alpha =</span> <span class="fu">unique</span>(beta))</span>
-<span id="cb230-110"><a href="code_3.html#cb230-110" tabindex="-1"></a>      K_hat <span class="ot">&lt;-</span> <span class="fu">unique</span>(label) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span>
-<span id="cb230-111"><a href="code_3.html#cb230-111" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">gamma =</span> private<span class="sc">$</span>gamma, <span class="at">label =</span> label, <span class="at">K_hat =</span> K_hat, <span class="at">alpha =</span> subgroup_beta)</span>
-<span id="cb230-112"><a href="code_3.html#cb230-112" tabindex="-1"></a>      </span>
-<span id="cb230-113"><a href="code_3.html#cb230-113" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
-<span id="cb230-114"><a href="code_3.html#cb230-114" tabindex="-1"></a>      cost_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span>
-<span id="cb230-115"><a href="code_3.html#cb230-115" tabindex="-1"></a>      <span class="fu">print</span>(cost_time)</span>
-<span id="cb230-116"><a href="code_3.html#cb230-116" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
-<span id="cb230-117"><a href="code_3.html#cb230-117" tabindex="-1"></a>    },</span>
-<span id="cb230-118"><a href="code_3.html#cb230-118" tabindex="-1"></a>    </span>
-<span id="cb230-119"><a href="code_3.html#cb230-119" tabindex="-1"></a>    <span class="co"># 主函数——调优</span></span>
-<span id="cb230-120"><a href="code_3.html#cb230-120" tabindex="-1"></a>    <span class="co"># seq_lambda：lambda序列</span></span>
-<span id="cb230-121"><a href="code_3.html#cb230-121" tabindex="-1"></a>    <span class="co"># trace：是否显示迭代过程</span></span>
-<span id="cb230-122"><a href="code_3.html#cb230-122" tabindex="-1"></a>    <span class="at">tune_lambda =</span> <span class="cf">function</span>(seq_lambda, <span class="at">trace =</span> <span class="cn">TRUE</span>){</span>
-<span id="cb230-123"><a href="code_3.html#cb230-123" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
-<span id="cb230-124"><a href="code_3.html#cb230-124" tabindex="-1"></a>      </span>
-<span id="cb230-125"><a href="code_3.html#cb230-125" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
-<span id="cb230-126"><a href="code_3.html#cb230-126" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
-<span id="cb230-127"><a href="code_3.html#cb230-127" tabindex="-1"></a>      </span>
-<span id="cb230-128"><a href="code_3.html#cb230-128" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
-<span id="cb230-129"><a href="code_3.html#cb230-129" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
-<span id="cb230-130"><a href="code_3.html#cb230-130" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
-<span id="cb230-131"><a href="code_3.html#cb230-131" tabindex="-1"></a>      B <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
-<span id="cb230-132"><a href="code_3.html#cb230-132" tabindex="-1"></a>      private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
-<span id="cb230-133"><a href="code_3.html#cb230-133" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
-<span id="cb230-134"><a href="code_3.html#cb230-134" tabindex="-1"></a>      private<span class="sc">$</span>Y <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
-<span id="cb230-135"><a href="code_3.html#cb230-135" tabindex="-1"></a>      private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
-<span id="cb230-136"><a href="code_3.html#cb230-136" tabindex="-1"></a>      A <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_A</span>()</span>
-<span id="cb230-137"><a href="code_3.html#cb230-137" tabindex="-1"></a>      private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
-<span id="cb230-138"><a href="code_3.html#cb230-138" tabindex="-1"></a>      private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
-<span id="cb230-139"><a href="code_3.html#cb230-139" tabindex="-1"></a>      private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb230-140"><a href="code_3.html#cb230-140" tabindex="-1"></a>      </span>
-<span id="cb230-141"><a href="code_3.html#cb230-141" tabindex="-1"></a>      <span class="co"># 计算矩阵Q</span></span>
-<span id="cb230-142"><a href="code_3.html#cb230-142" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n)<span class="sc">-</span> B <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
-<span id="cb230-143"><a href="code_3.html#cb230-143" tabindex="-1"></a>      </span>
-<span id="cb230-144"><a href="code_3.html#cb230-144" tabindex="-1"></a>      <span class="co"># 计算向量g</span></span>
-<span id="cb230-145"><a href="code_3.html#cb230-145" tabindex="-1"></a>      g <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_g</span>()</span>
-<span id="cb230-146"><a href="code_3.html#cb230-146" tabindex="-1"></a>      </span>
-<span id="cb230-147"><a href="code_3.html#cb230-147" tabindex="-1"></a>      <span class="co"># 计算(B&#39;B)^{-1}B&#39;，用于gamma更新</span></span>
-<span id="cb230-148"><a href="code_3.html#cb230-148" tabindex="-1"></a>      B_ols <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
-<span id="cb230-149"><a href="code_3.html#cb230-149" tabindex="-1"></a>      </span>
-<span id="cb230-150"><a href="code_3.html#cb230-150" tabindex="-1"></a>      <span class="co"># 计算(X&#39;QX+A&#39;A)^{-1}与X&#39;Q，用于beta更新</span></span>
-<span id="cb230-151"><a href="code_3.html#cb230-151" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(X_ls, <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
-<span id="cb230-152"><a href="code_3.html#cb230-152" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()         <span class="co"># 转化为对角形式的X</span></span>
-<span id="cb230-153"><a href="code_3.html#cb230-153" tabindex="-1"></a>      XQX_AA <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q <span class="sc">%*%</span> X_diag <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> A)</span>
-<span id="cb230-154"><a href="code_3.html#cb230-154" tabindex="-1"></a>      XQ <span class="ot">&lt;-</span> <span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q</span>
-<span id="cb230-155"><a href="code_3.html#cb230-155" tabindex="-1"></a>      </span>
-<span id="cb230-156"><a href="code_3.html#cb230-156" tabindex="-1"></a>      bic_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(seq_lambda))</span>
-<span id="cb230-157"><a href="code_3.html#cb230-157" tabindex="-1"></a>      result_ls <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&#39;list&#39;</span>, <span class="at">length =</span> <span class="fu">length</span>(seq_lambda))</span>
-<span id="cb230-158"><a href="code_3.html#cb230-158" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(seq_lambda)) {</span>
-<span id="cb230-159"><a href="code_3.html#cb230-159" tabindex="-1"></a>        self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> seq_lambda[i]</span>
-<span id="cb230-160"><a href="code_3.html#cb230-160" tabindex="-1"></a>        </span>
-<span id="cb230-161"><a href="code_3.html#cb230-161" tabindex="-1"></a>        <span class="co"># Warm Start，仅保留上轮的beta和gamma，其余恢复为初始值设定</span></span>
-<span id="cb230-162"><a href="code_3.html#cb230-162" tabindex="-1"></a>        private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span>Y2    <span class="co"># Y2 = X_beta + B_gamma，因此保留，故Y的初始值与Y2相同</span></span>
-<span id="cb230-163"><a href="code_3.html#cb230-163" tabindex="-1"></a>        private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
-<span id="cb230-164"><a href="code_3.html#cb230-164" tabindex="-1"></a>        private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
-<span id="cb230-165"><a href="code_3.html#cb230-165" tabindex="-1"></a>        private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb230-166"><a href="code_3.html#cb230-166" tabindex="-1"></a>        </span>
-<span id="cb230-167"><a href="code_3.html#cb230-167" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
-<span id="cb230-168"><a href="code_3.html#cb230-168" tabindex="-1"></a>          <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;lambda = &#39;</span>, self<span class="sc">$</span>lambda, <span class="st">&#39;; 第[&#39;</span>, j, <span class="st">&#39;]次迭代&#39;</span>))</span>
-<span id="cb230-169"><a href="code_3.html#cb230-169" tabindex="-1"></a>          private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_gamma</span>(X_ls, B_ols, private<span class="sc">$</span>Y, private<span class="sc">$</span>beta, private<span class="sc">$</span>w)</span>
-<span id="cb230-170"><a href="code_3.html#cb230-170" tabindex="-1"></a>          private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(XQX_AA, XQ, A, private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>u, private<span class="sc">$</span>nu)</span>
-<span id="cb230-171"><a href="code_3.html#cb230-171" tabindex="-1"></a>          private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y2</span>(X_ls, B, g, private<span class="sc">$</span>beta, private<span class="sc">$</span>gamma)</span>
-<span id="cb230-172"><a href="code_3.html#cb230-172" tabindex="-1"></a>          private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y</span>(g, private<span class="sc">$</span>Y2, private<span class="sc">$</span>w)</span>
-<span id="cb230-173"><a href="code_3.html#cb230-173" tabindex="-1"></a>          private<span class="sc">$</span>u <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_u</span>(self<span class="sc">$</span>penalty, private<span class="sc">$</span>beta, private<span class="sc">$</span>nu)</span>
-<span id="cb230-174"><a href="code_3.html#cb230-174" tabindex="-1"></a>          private<span class="sc">$</span>w <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_w</span>(private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>Y2)</span>
-<span id="cb230-175"><a href="code_3.html#cb230-175" tabindex="-1"></a>          private<span class="sc">$</span>nu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_nu</span>(private<span class="sc">$</span>nu, private<span class="sc">$</span>beta, private<span class="sc">$</span>u)</span>
-<span id="cb230-176"><a href="code_3.html#cb230-176" tabindex="-1"></a>          </span>
-<span id="cb230-177"><a href="code_3.html#cb230-177" tabindex="-1"></a>          <span class="co"># 终止条件</span></span>
-<span id="cb230-178"><a href="code_3.html#cb230-178" tabindex="-1"></a>          term_1 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> private<span class="sc">$</span>u</span>
-<span id="cb230-179"><a href="code_3.html#cb230-179" tabindex="-1"></a>          term_2 <span class="ot">&lt;-</span> private<span class="sc">$</span>Y <span class="sc">-</span> X_diag <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> B <span class="sc">%*%</span> private<span class="sc">$</span>gamma</span>
-<span id="cb230-180"><a href="code_3.html#cb230-180" tabindex="-1"></a>          <span class="cf">if</span>((<span class="fu">norm</span>(term_1, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>) <span class="sc">+</span> <span class="fu">norm</span>(term_2, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
-<span id="cb230-181"><a href="code_3.html#cb230-181" tabindex="-1"></a>            <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">cat</span>(<span class="st">&#39;==========</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
-<span id="cb230-182"><a href="code_3.html#cb230-182" tabindex="-1"></a>            <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;lambda = &#39;</span>, self<span class="sc">$</span>lambda, <span class="st">&#39; 达到精度要求&#39;</span>))</span>
-<span id="cb230-183"><a href="code_3.html#cb230-183" tabindex="-1"></a>            <span class="cf">break</span></span>
-<span id="cb230-184"><a href="code_3.html#cb230-184" tabindex="-1"></a>          }</span>
-<span id="cb230-185"><a href="code_3.html#cb230-185" tabindex="-1"></a>        }</span>
-<span id="cb230-186"><a href="code_3.html#cb230-186" tabindex="-1"></a>        </span>
-<span id="cb230-187"><a href="code_3.html#cb230-187" tabindex="-1"></a>        <span class="co"># beta亚组</span></span>
-<span id="cb230-188"><a href="code_3.html#cb230-188" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> <span class="fu">lapply</span>(private<span class="sc">$</span>beta, round, <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb230-189"><a href="code_3.html#cb230-189" tabindex="-1"></a>        str_beta <span class="ot">&lt;-</span> <span class="fu">sapply</span>(private<span class="sc">$</span>beta, paste, <span class="at">collapse =</span> <span class="st">&#39;,&#39;</span>)</span>
-<span id="cb230-190"><a href="code_3.html#cb230-190" tabindex="-1"></a>        label <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(str_beta, <span class="at">levels =</span> <span class="fu">unique</span>(str_beta)))</span>
-<span id="cb230-191"><a href="code_3.html#cb230-191" tabindex="-1"></a>        subgroup_beta <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">label =</span> label, <span class="at">beta =</span> private<span class="sc">$</span>beta) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-192"><a href="code_3.html#cb230-192" tabindex="-1"></a>          <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-193"><a href="code_3.html#cb230-193" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">size =</span> <span class="fu">n</span>(), <span class="at">alpha =</span> <span class="fu">unique</span>(beta))</span>
-<span id="cb230-194"><a href="code_3.html#cb230-194" tabindex="-1"></a>        K_hat <span class="ot">&lt;-</span> <span class="fu">unique</span>(label) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span>
-<span id="cb230-195"><a href="code_3.html#cb230-195" tabindex="-1"></a>        </span>
-<span id="cb230-196"><a href="code_3.html#cb230-196" tabindex="-1"></a>        bic_vec[i] <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">Bic</span>(private<span class="sc">$</span>Y2, K_hat)</span>
-<span id="cb230-197"><a href="code_3.html#cb230-197" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;BIC: &#39;</span>, <span class="fu">round</span>(bic_vec[i],<span class="dv">3</span>)))</span>
-<span id="cb230-198"><a href="code_3.html#cb230-198" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">cat</span>(<span class="st">&#39;==========</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
-<span id="cb230-199"><a href="code_3.html#cb230-199" tabindex="-1"></a>        result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">gamma =</span> private<span class="sc">$</span>gamma, <span class="at">label =</span> label, <span class="at">K_hat =</span> K_hat, <span class="at">alpha =</span> subgroup_beta, </span>
-<span id="cb230-200"><a href="code_3.html#cb230-200" tabindex="-1"></a>                       <span class="at">best_lambda =</span> self<span class="sc">$</span>lambda, <span class="at">BIC =</span> bic_vec[i])</span>
-<span id="cb230-201"><a href="code_3.html#cb230-201" tabindex="-1"></a>        result_ls[[i]] <span class="ot">&lt;-</span> result</span>
-<span id="cb230-202"><a href="code_3.html#cb230-202" tabindex="-1"></a>      }</span>
-<span id="cb230-203"><a href="code_3.html#cb230-203" tabindex="-1"></a>      </span>
-<span id="cb230-204"><a href="code_3.html#cb230-204" tabindex="-1"></a>      best_index <span class="ot">&lt;-</span> <span class="fu">which.min</span>(bic_vec)</span>
-<span id="cb230-205"><a href="code_3.html#cb230-205" tabindex="-1"></a>      best_result <span class="ot">&lt;-</span> result_ls[[best_index]]</span>
-<span id="cb230-206"><a href="code_3.html#cb230-206" tabindex="-1"></a>      </span>
-<span id="cb230-207"><a href="code_3.html#cb230-207" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
-<span id="cb230-208"><a href="code_3.html#cb230-208" tabindex="-1"></a>      <span class="fu">print</span>(end_time <span class="sc">-</span> start_time)</span>
-<span id="cb230-209"><a href="code_3.html#cb230-209" tabindex="-1"></a>      </span>
-<span id="cb230-210"><a href="code_3.html#cb230-210" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">best_result =</span> best_result, <span class="at">BIC =</span> bic_vec))</span>
-<span id="cb230-211"><a href="code_3.html#cb230-211" tabindex="-1"></a>    }</span>
-<span id="cb230-212"><a href="code_3.html#cb230-212" tabindex="-1"></a>  ),</span>
-<span id="cb230-213"><a href="code_3.html#cb230-213" tabindex="-1"></a>  </span>
-<span id="cb230-214"><a href="code_3.html#cb230-214" tabindex="-1"></a>  private <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb230-215"><a href="code_3.html#cb230-215" tabindex="-1"></a>    <span class="co"># 迭代参数</span></span>
-<span id="cb230-216"><a href="code_3.html#cb230-216" tabindex="-1"></a>    <span class="at">gamma =</span> <span class="cn">NULL</span>,        <span class="co"># B样条的回归系数</span></span>
-<span id="cb230-217"><a href="code_3.html#cb230-217" tabindex="-1"></a>    <span class="at">beta =</span> <span class="cn">NULL</span>,         <span class="co"># X的回归系数</span></span>
-<span id="cb230-218"><a href="code_3.html#cb230-218" tabindex="-1"></a>    <span class="at">Y2 =</span> <span class="cn">NULL</span>,           <span class="co"># Y&#39;</span></span>
-<span id="cb230-219"><a href="code_3.html#cb230-219" tabindex="-1"></a>    <span class="at">Y =</span> <span class="cn">NULL</span>,            <span class="co"># Y</span></span>
-<span id="cb230-220"><a href="code_3.html#cb230-220" tabindex="-1"></a>    <span class="at">u =</span> <span class="cn">NULL</span>,            <span class="co"># 融合惩罚项</span></span>
-<span id="cb230-221"><a href="code_3.html#cb230-221" tabindex="-1"></a>    <span class="at">w =</span> <span class="cn">NULL</span>,            <span class="co"># 拉格朗日乘子</span></span>
-<span id="cb230-222"><a href="code_3.html#cb230-222" tabindex="-1"></a>    <span class="at">nu =</span> <span class="cn">NULL</span>,           <span class="co"># 拉格朗日乘子</span></span>
-<span id="cb230-223"><a href="code_3.html#cb230-223" tabindex="-1"></a>    <span class="at">c =</span> <span class="cn">NULL</span>,            <span class="co"># beta_i-beta_k+nu_ik/theta</span></span>
-<span id="cb230-224"><a href="code_3.html#cb230-224" tabindex="-1"></a>    <span class="at">bic =</span> <span class="cn">NULL</span>,          <span class="co"># BIC</span></span>
-<span id="cb230-225"><a href="code_3.html#cb230-225" tabindex="-1"></a>    </span>
-<span id="cb230-226"><a href="code_3.html#cb230-226" tabindex="-1"></a>    <span class="co"># 验证输入是否正确</span></span>
-<span id="cb230-227"><a href="code_3.html#cb230-227" tabindex="-1"></a>    <span class="at">validate =</span> <span class="cf">function</span>(){</span>
-<span id="cb230-228"><a href="code_3.html#cb230-228" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(<span class="fu">dim</span>(self<span class="sc">$</span>T)[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> <span class="fu">all</span>(<span class="fu">colnames</span>(self<span class="sc">$</span>T) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;time&#39;</span>, <span class="st">&#39;status&#39;</span>)))) <span class="fu">stop</span>(<span class="st">&#39;T要求为包含time和status的两列矩阵&#39;</span>)</span>
-<span id="cb230-229"><a href="code_3.html#cb230-229" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>X)) <span class="fu">stop</span>(<span class="st">&#39;X要求为矩阵&#39;</span>)</span>
-<span id="cb230-230"><a href="code_3.html#cb230-230" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>Z)) <span class="fu">stop</span>(<span class="st">&#39;Z要求为矩阵&#39;</span>)</span>
-<span id="cb230-231"><a href="code_3.html#cb230-231" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>self<span class="sc">$</span>penalty <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;MCP&#39;</span>,<span class="st">&#39;SCAD&#39;</span>)) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的惩罚函数，SCAD或MCP&#39;</span>)</span>
-<span id="cb230-232"><a href="code_3.html#cb230-232" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>K <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>K <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>K))) <span class="fu">stop</span>(<span class="st">&#39;确保K是正整数&#39;</span>)</span>
-<span id="cb230-233"><a href="code_3.html#cb230-233" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的lambda值&#39;</span>)</span>
-<span id="cb230-234"><a href="code_3.html#cb230-234" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>a <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
-<span id="cb230-235"><a href="code_3.html#cb230-235" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>theta <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
-<span id="cb230-236"><a href="code_3.html#cb230-236" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>df <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>df <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>df))) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的df值&#39;</span>)</span>
-<span id="cb230-237"><a href="code_3.html#cb230-237" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>degree <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>degree <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>degree))) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的degree值&#39;</span>)</span>
-<span id="cb230-238"><a href="code_3.html#cb230-238" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>tol <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的精度要求&#39;</span>)</span>
-<span id="cb230-239"><a href="code_3.html#cb230-239" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>max_iter <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的最大迭代次数&#39;</span>)</span>
-<span id="cb230-240"><a href="code_3.html#cb230-240" tabindex="-1"></a>    },</span>
-<span id="cb230-241"><a href="code_3.html#cb230-241" tabindex="-1"></a>    </span>
-<span id="cb230-242"><a href="code_3.html#cb230-242" tabindex="-1"></a>    <span class="co"># 获取初始值</span></span>
-<span id="cb230-243"><a href="code_3.html#cb230-243" tabindex="-1"></a>    <span class="at">initial_value =</span> <span class="cf">function</span>(){</span>
-<span id="cb230-244"><a href="code_3.html#cb230-244" tabindex="-1"></a>      <span class="co"># beta初始值</span></span>
-<span id="cb230-245"><a href="code_3.html#cb230-245" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(self<span class="sc">$</span>X, <span class="at">centers =</span> self<span class="sc">$</span>K)</span>
-<span id="cb230-246"><a href="code_3.html#cb230-246" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>T, self<span class="sc">$</span>X) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
-<span id="cb230-247"><a href="code_3.html#cb230-247" tabindex="-1"></a>      df<span class="sc">$</span>label <span class="ot">&lt;-</span> result<span class="sc">$</span>cluster        <span class="co"># 添加类别标签</span></span>
-<span id="cb230-248"><a href="code_3.html#cb230-248" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb230-249"><a href="code_3.html#cb230-249" tabindex="-1"></a>        <span class="fu">group_nest</span>(label) <span class="sc">%&gt;%</span>           <span class="co"># 分组回归，批量建模</span></span>
-<span id="cb230-250"><a href="code_3.html#cb230-250" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span>., <span class="at">data=</span>.x)),</span>
-<span id="cb230-251"><a href="code_3.html#cb230-251" tabindex="-1"></a>               <span class="at">coef =</span> <span class="fu">map</span>(model, <span class="sc">~</span>.x[[<span class="st">&#39;coefficients&#39;</span>]]))</span>
-<span id="cb230-252"><a href="code_3.html#cb230-252" tabindex="-1"></a>      coef <span class="ot">&lt;-</span> df<span class="sc">$</span>coef <span class="sc">%&gt;%</span> <span class="fu">as.list</span>()     <span class="co"># 提取每个类别的回归系数向量</span></span>
-<span id="cb230-253"><a href="code_3.html#cb230-253" tabindex="-1"></a>      beta_0 <span class="ot">&lt;-</span> coef[result<span class="sc">$</span>cluster]    <span class="co"># 为了后续处理方便，beta暂时以列表形式存储</span></span>
-<span id="cb230-254"><a href="code_3.html#cb230-254" tabindex="-1"></a>      </span>
-<span id="cb230-255"><a href="code_3.html#cb230-255" tabindex="-1"></a>      <span class="co"># gamma初始值与B</span></span>
-<span id="cb230-256"><a href="code_3.html#cb230-256" tabindex="-1"></a>      B <span class="ot">&lt;-</span> <span class="fu">asplit</span>(self<span class="sc">$</span>Z, <span class="dv">2</span>)   <span class="co"># 按列分割Z矩阵，分别由bs拟合</span></span>
-<span id="cb230-257"><a href="code_3.html#cb230-257" tabindex="-1"></a>      B <span class="ot">&lt;-</span> B <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">bs</span>(., <span class="at">df =</span> self<span class="sc">$</span>df, <span class="at">degree =</span> self<span class="sc">$</span>degree))</span>
-<span id="cb230-258"><a href="code_3.html#cb230-258" tabindex="-1"></a>      B <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, B) <span class="sc">%&gt;%</span> <span class="fu">scale</span>(<span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)   <span class="co"># 列方向的中心化处理</span></span>
-<span id="cb230-259"><a href="code_3.html#cb230-259" tabindex="-1"></a>      <span class="fu">colnames</span>(B) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;b_&#39;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(B))</span>
-<span id="cb230-260"><a href="code_3.html#cb230-260" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>T, B) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
-<span id="cb230-261"><a href="code_3.html#cb230-261" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span>., <span class="at">data =</span> df)</span>
-<span id="cb230-262"><a href="code_3.html#cb230-262" tabindex="-1"></a>      gamma_0 <span class="ot">&lt;-</span> model[[<span class="st">&#39;coefficients&#39;</span>]]</span>
-<span id="cb230-263"><a href="code_3.html#cb230-263" tabindex="-1"></a>      </span>
-<span id="cb230-264"><a href="code_3.html#cb230-264" tabindex="-1"></a>      <span class="co"># Y与Y&#39;的初始值</span></span>
-<span id="cb230-265"><a href="code_3.html#cb230-265" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> <span class="fu">asplit</span>(self<span class="sc">$</span>X, <span class="dv">1</span>)</span>
-<span id="cb230-266"><a href="code_3.html#cb230-266" tabindex="-1"></a>      Y_0 <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_0, <span class="sc">~</span>.x <span class="sc">%*%</span> .y) <span class="sc">+</span> B <span class="sc">%*%</span> gamma_0</span>
-<span id="cb230-267"><a href="code_3.html#cb230-267" tabindex="-1"></a>      </span>
-<span id="cb230-268"><a href="code_3.html#cb230-268" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">beta_0 =</span> beta_0, <span class="at">B =</span> B, <span class="at">gamma_0 =</span> gamma_0, <span class="at">X_ls =</span> X_ls, <span class="at">Y_0 =</span> Y_0))</span>
-<span id="cb230-269"><a href="code_3.html#cb230-269" tabindex="-1"></a>    },</span>
-<span id="cb230-270"><a href="code_3.html#cb230-270" tabindex="-1"></a>    </span>
-<span id="cb230-271"><a href="code_3.html#cb230-271" tabindex="-1"></a>    <span class="co"># 计算矩阵A</span></span>
-<span id="cb230-272"><a href="code_3.html#cb230-272" tabindex="-1"></a>    <span class="at">gen_A =</span> <span class="cf">function</span>(){</span>
-<span id="cb230-273"><a href="code_3.html#cb230-273" tabindex="-1"></a>      gen_mat <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
-<span id="cb230-274"><a href="code_3.html#cb230-274" tabindex="-1"></a>        mat_1 <span class="ot">&lt;-</span> <span class="cf">if</span>(n <span class="sc">==</span> self<span class="sc">$</span>n<span class="dv">-1</span>){</span>
-<span id="cb230-275"><a href="code_3.html#cb230-275" tabindex="-1"></a>          <span class="cn">NULL</span></span>
-<span id="cb230-276"><a href="code_3.html#cb230-276" tabindex="-1"></a>        }<span class="cf">else</span>{</span>
-<span id="cb230-277"><a href="code_3.html#cb230-277" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n<span class="dv">-1</span><span class="sc">-</span>n, <span class="at">ncol =</span> n)</span>
-<span id="cb230-278"><a href="code_3.html#cb230-278" tabindex="-1"></a>        }</span>
-<span id="cb230-279"><a href="code_3.html#cb230-279" tabindex="-1"></a>        mat_2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> n, <span class="at">byrow =</span> T)</span>
-<span id="cb230-280"><a href="code_3.html#cb230-280" tabindex="-1"></a>        mat_3 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="at">nrow=</span>n, <span class="at">ncol =</span> n)</span>
-<span id="cb230-281"><a href="code_3.html#cb230-281" tabindex="-1"></a>        mat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mat_1, mat_2, mat_3)</span>
-<span id="cb230-282"><a href="code_3.html#cb230-282" tabindex="-1"></a>        <span class="fu">return</span>(mat)</span>
-<span id="cb230-283"><a href="code_3.html#cb230-283" tabindex="-1"></a>      }</span>
-<span id="cb230-284"><a href="code_3.html#cb230-284" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">c</span>((self<span class="sc">$</span>n<span class="dv">-1</span>)<span class="sc">:</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">gen_mat</span>(.))</span>
-<span id="cb230-285"><a href="code_3.html#cb230-285" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, D) <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span>
-<span id="cb230-286"><a href="code_3.html#cb230-286" tabindex="-1"></a>      </span>
-<span id="cb230-287"><a href="code_3.html#cb230-287" tabindex="-1"></a>      A <span class="ot">&lt;-</span> D <span class="sc">%x%</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">nrow =</span> self<span class="sc">$</span>p)</span>
-<span id="cb230-288"><a href="code_3.html#cb230-288" tabindex="-1"></a>      </span>
-<span id="cb230-289"><a href="code_3.html#cb230-289" tabindex="-1"></a>      <span class="fu">return</span>(A)</span>
-<span id="cb230-290"><a href="code_3.html#cb230-290" tabindex="-1"></a>    },</span>
-<span id="cb230-291"><a href="code_3.html#cb230-291" tabindex="-1"></a>    </span>
-<span id="cb230-292"><a href="code_3.html#cb230-292" tabindex="-1"></a>    <span class="co"># 计算g</span></span>
-<span id="cb230-293"><a href="code_3.html#cb230-293" tabindex="-1"></a>    <span class="at">gen_g =</span> <span class="cf">function</span>(){</span>
-<span id="cb230-294"><a href="code_3.html#cb230-294" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb230-295"><a href="code_3.html#cb230-295" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb230-296"><a href="code_3.html#cb230-296" tabindex="-1"></a>      g <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-297"><a href="code_3.html#cb230-297" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">ifelse</span>(. <span class="sc">&gt;=</span> time, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-298"><a href="code_3.html#cb230-298" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span>status <span class="sc">%*%</span> .)</span>
-<span id="cb230-299"><a href="code_3.html#cb230-299" tabindex="-1"></a>      </span>
-<span id="cb230-300"><a href="code_3.html#cb230-300" tabindex="-1"></a>      <span class="fu">return</span>(g)</span>
-<span id="cb230-301"><a href="code_3.html#cb230-301" tabindex="-1"></a>    },</span>
-<span id="cb230-302"><a href="code_3.html#cb230-302" tabindex="-1"></a>    </span>
-<span id="cb230-303"><a href="code_3.html#cb230-303" tabindex="-1"></a>    <span class="co"># 计算nabla_g</span></span>
-<span id="cb230-304"><a href="code_3.html#cb230-304" tabindex="-1"></a>    <span class="at">gen_nabla_g =</span> <span class="cf">function</span>(Y2){</span>
-<span id="cb230-305"><a href="code_3.html#cb230-305" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb230-306"><a href="code_3.html#cb230-306" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb230-307"><a href="code_3.html#cb230-307" tabindex="-1"></a>      </span>
-<span id="cb230-308"><a href="code_3.html#cb230-308" tabindex="-1"></a>      exp_Y2 <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">exp</span>(Y2))</span>
-<span id="cb230-309"><a href="code_3.html#cb230-309" tabindex="-1"></a>      </span>
-<span id="cb230-310"><a href="code_3.html#cb230-310" tabindex="-1"></a>      <span class="co"># 向量sum_{l \in R_k} exp(Y2)</span></span>
-<span id="cb230-311"><a href="code_3.html#cb230-311" tabindex="-1"></a>      sum_l_Rk <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-312"><a href="code_3.html#cb230-312" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">which</span>(. <span class="sc">&lt;=</span> time)) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-313"><a href="code_3.html#cb230-313" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">sum</span>(<span class="fu">exp</span>(Y2[.])))</span>
-<span id="cb230-314"><a href="code_3.html#cb230-314" tabindex="-1"></a>      </span>
-<span id="cb230-315"><a href="code_3.html#cb230-315" tabindex="-1"></a>      <span class="co"># 计算nabla_g</span></span>
-<span id="cb230-316"><a href="code_3.html#cb230-316" tabindex="-1"></a>      nabla_g <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-317"><a href="code_3.html#cb230-317" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">ifelse</span>(. <span class="sc">&gt;=</span> time, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span>    <span class="co"># 计算I_{i \in R_k}</span></span>
-<span id="cb230-318"><a href="code_3.html#cb230-318" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span>. <span class="sc">%*%</span> <span class="fu">diag</span>(status) <span class="sc">%*%</span> sum_l_Rk<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span>     <span class="co"># 计算delta与I与{l \in R_k}的复合项</span></span>
-<span id="cb230-319"><a href="code_3.html#cb230-319" tabindex="-1"></a>        <span class="fu">map2_vec</span>(exp_Y2, <span class="sc">~</span>.x <span class="sc">*</span> .y) <span class="sc">-</span> status</span>
-<span id="cb230-320"><a href="code_3.html#cb230-320" tabindex="-1"></a>      </span>
-<span id="cb230-321"><a href="code_3.html#cb230-321" tabindex="-1"></a>      <span class="fu">return</span>(nabla_g)</span>
-<span id="cb230-322"><a href="code_3.html#cb230-322" tabindex="-1"></a>    },</span>
-<span id="cb230-323"><a href="code_3.html#cb230-323" tabindex="-1"></a>    </span>
-<span id="cb230-324"><a href="code_3.html#cb230-324" tabindex="-1"></a>    <span class="co"># 计算c，输出列表</span></span>
-<span id="cb230-325"><a href="code_3.html#cb230-325" tabindex="-1"></a>    <span class="at">gen_c =</span> <span class="cf">function</span>(beta, nu){</span>
-<span id="cb230-326"><a href="code_3.html#cb230-326" tabindex="-1"></a>      <span class="co"># 这里的beta得是列表形式</span></span>
-<span id="cb230-327"><a href="code_3.html#cb230-327" tabindex="-1"></a>      delta_beta <span class="ot">&lt;-</span> beta <span class="sc">%&gt;%</span> </span>
-<span id="cb230-328"><a href="code_3.html#cb230-328" tabindex="-1"></a>        <span class="fu">combn</span>(<span class="dv">2</span>, <span class="cf">function</span>(x) x[[<span class="dv">1</span>]] <span class="sc">-</span> x[[<span class="dv">2</span>]], <span class="at">simplify =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-329"><a href="code_3.html#cb230-329" tabindex="-1"></a>        <span class="fu">unlist</span>()</span>
-<span id="cb230-330"><a href="code_3.html#cb230-330" tabindex="-1"></a>      c <span class="ot">&lt;-</span> delta_beta <span class="sc">+</span> nu <span class="sc">/</span> self<span class="sc">$</span>theta</span>
-<span id="cb230-331"><a href="code_3.html#cb230-331" tabindex="-1"></a>      c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(c, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">byrow =</span> T) <span class="sc">%&gt;%</span> <span class="fu">asplit</span>(<span class="dv">1</span>)</span>
-<span id="cb230-332"><a href="code_3.html#cb230-332" tabindex="-1"></a>      </span>
-<span id="cb230-333"><a href="code_3.html#cb230-333" tabindex="-1"></a>      <span class="fu">return</span>(c)</span>
-<span id="cb230-334"><a href="code_3.html#cb230-334" tabindex="-1"></a>    },</span>
-<span id="cb230-335"><a href="code_3.html#cb230-335" tabindex="-1"></a>    </span>
-<span id="cb230-336"><a href="code_3.html#cb230-336" tabindex="-1"></a>    <span class="co"># gamma迭代式</span></span>
-<span id="cb230-337"><a href="code_3.html#cb230-337" tabindex="-1"></a>    <span class="at">iter_gamma =</span> <span class="cf">function</span>(X_ls, B_ols, Y_current, beta_current, w_current){</span>
-<span id="cb230-338"><a href="code_3.html#cb230-338" tabindex="-1"></a>      <span class="co"># 这里的beta是列表形式</span></span>
-<span id="cb230-339"><a href="code_3.html#cb230-339" tabindex="-1"></a>      X_beta <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_current, <span class="sc">~</span>.x <span class="sc">%*%</span> .y)</span>
-<span id="cb230-340"><a href="code_3.html#cb230-340" tabindex="-1"></a>      gamma_next <span class="ot">&lt;-</span> B_ols <span class="sc">%*%</span> (Y_current <span class="sc">-</span> X_beta <span class="sc">+</span> w_current <span class="sc">/</span> self<span class="sc">$</span>theta)</span>
-<span id="cb230-341"><a href="code_3.html#cb230-341" tabindex="-1"></a>      </span>
-<span id="cb230-342"><a href="code_3.html#cb230-342" tabindex="-1"></a>      <span class="fu">return</span>(gamma_next)</span>
-<span id="cb230-343"><a href="code_3.html#cb230-343" tabindex="-1"></a>    },</span>
-<span id="cb230-344"><a href="code_3.html#cb230-344" tabindex="-1"></a>    </span>
-<span id="cb230-345"><a href="code_3.html#cb230-345" tabindex="-1"></a>    <span class="co"># beta迭代式，输出列表</span></span>
-<span id="cb230-346"><a href="code_3.html#cb230-346" tabindex="-1"></a>    <span class="at">iter_beta =</span> <span class="cf">function</span>(XQX_AA, XQ, A, w_current, Y_current, u_current, nu_current){</span>
-<span id="cb230-347"><a href="code_3.html#cb230-347" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> XQX_AA <span class="sc">%*%</span> (XQ <span class="sc">%*%</span> (w_current <span class="sc">/</span> self<span class="sc">$</span>theta <span class="sc">+</span> Y_current) <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> (u_current <span class="sc">-</span> nu_current <span class="sc">/</span> self<span class="sc">$</span>theta))</span>
-<span id="cb230-348"><a href="code_3.html#cb230-348" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> <span class="fu">matrix</span>(beta_next, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">byrow =</span> T) <span class="sc">%&gt;%</span> <span class="fu">asplit</span>(<span class="dv">1</span>)   <span class="co"># 输出列表形式的beta</span></span>
-<span id="cb230-349"><a href="code_3.html#cb230-349" tabindex="-1"></a>      </span>
-<span id="cb230-350"><a href="code_3.html#cb230-350" tabindex="-1"></a>      <span class="fu">return</span>(beta_next)</span>
-<span id="cb230-351"><a href="code_3.html#cb230-351" tabindex="-1"></a>    },</span>
-<span id="cb230-352"><a href="code_3.html#cb230-352" tabindex="-1"></a>    </span>
-<span id="cb230-353"><a href="code_3.html#cb230-353" tabindex="-1"></a>    <span class="co"># Y2迭代式</span></span>
-<span id="cb230-354"><a href="code_3.html#cb230-354" tabindex="-1"></a>    <span class="at">iter_Y2 =</span> <span class="cf">function</span>(X_ls, B, g, beta_next, gamma_next){</span>
-<span id="cb230-355"><a href="code_3.html#cb230-355" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_next, <span class="sc">~</span>.x <span class="sc">%*%</span> .y)   <span class="co"># X与beta</span></span>
-<span id="cb230-356"><a href="code_3.html#cb230-356" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> <span class="fu">asplit</span>(B,<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">map_vec</span>(<span class="sc">~</span>. <span class="sc">%*%</span> gamma_next)  <span class="co"># B与gamma</span></span>
-<span id="cb230-357"><a href="code_3.html#cb230-357" tabindex="-1"></a>      Y2_next <span class="ot">&lt;-</span> term_1 <span class="sc">+</span> term_2</span>
-<span id="cb230-358"><a href="code_3.html#cb230-358" tabindex="-1"></a>      </span>
-<span id="cb230-359"><a href="code_3.html#cb230-359" tabindex="-1"></a>      <span class="fu">return</span>(Y2_next)</span>
-<span id="cb230-360"><a href="code_3.html#cb230-360" tabindex="-1"></a>    },</span>
-<span id="cb230-361"><a href="code_3.html#cb230-361" tabindex="-1"></a>    </span>
-<span id="cb230-362"><a href="code_3.html#cb230-362" tabindex="-1"></a>    <span class="co"># Y迭代式</span></span>
-<span id="cb230-363"><a href="code_3.html#cb230-363" tabindex="-1"></a>    <span class="at">iter_Y =</span> <span class="cf">function</span>(g, Y2_next, w_current){</span>
-<span id="cb230-364"><a href="code_3.html#cb230-364" tabindex="-1"></a>      nabla_g_next <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_nabla_g</span>(Y2_next)</span>
-<span id="cb230-365"><a href="code_3.html#cb230-365" tabindex="-1"></a>      Y_next <span class="ot">&lt;-</span> (g <span class="sc">+</span> self<span class="sc">$</span>theta)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>nabla_g_next<span class="sc">+</span> g <span class="sc">*</span> Y2_next <span class="sc">-</span> w_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> Y2_next)</span>
-<span id="cb230-366"><a href="code_3.html#cb230-366" tabindex="-1"></a>      </span>
-<span id="cb230-367"><a href="code_3.html#cb230-367" tabindex="-1"></a>      <span class="fu">return</span>(Y_next)</span>
-<span id="cb230-368"><a href="code_3.html#cb230-368" tabindex="-1"></a>    },</span>
-<span id="cb230-369"><a href="code_3.html#cb230-369" tabindex="-1"></a>    </span>
-<span id="cb230-370"><a href="code_3.html#cb230-370" tabindex="-1"></a>    <span class="co"># u迭代式</span></span>
-<span id="cb230-371"><a href="code_3.html#cb230-371" tabindex="-1"></a>    <span class="at">iter_u =</span> <span class="cf">function</span>(penalty, beta_next, nu_current){</span>
-<span id="cb230-372"><a href="code_3.html#cb230-372" tabindex="-1"></a>      S <span class="ot">&lt;-</span> <span class="cf">function</span>(c, lambda){</span>
-<span id="cb230-373"><a href="code_3.html#cb230-373" tabindex="-1"></a>       result <span class="ot">&lt;-</span> <span class="fu">max</span>((<span class="dv">1</span> <span class="sc">-</span> lambda <span class="sc">/</span> <span class="fu">norm</span>(c, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)), <span class="dv">0</span>) <span class="sc">*</span> c</span>
-<span id="cb230-374"><a href="code_3.html#cb230-374" tabindex="-1"></a>       </span>
-<span id="cb230-375"><a href="code_3.html#cb230-375" tabindex="-1"></a>        <span class="fu">return</span>(result)</span>
-<span id="cb230-376"><a href="code_3.html#cb230-376" tabindex="-1"></a>      }</span>
-<span id="cb230-377"><a href="code_3.html#cb230-377" tabindex="-1"></a>      </span>
-<span id="cb230-378"><a href="code_3.html#cb230-378" tabindex="-1"></a>      c <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_c</span>(beta_next, nu_current)</span>
-<span id="cb230-379"><a href="code_3.html#cb230-379" tabindex="-1"></a>      </span>
-<span id="cb230-380"><a href="code_3.html#cb230-380" tabindex="-1"></a>      <span class="cf">switch</span>(penalty,</span>
-<span id="cb230-381"><a href="code_3.html#cb230-381" tabindex="-1"></a>             <span class="st">&#39;SCAD&#39;</span> <span class="ot">=</span> {</span>
-<span id="cb230-382"><a href="code_3.html#cb230-382" tabindex="-1"></a>               <span class="cf">if</span>(<span class="fu">is.null</span>(self<span class="sc">$</span>a)) self<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="fl">3.7</span> </span>
-<span id="cb230-383"><a href="code_3.html#cb230-383" tabindex="-1"></a>               u_next <span class="ot">&lt;-</span> <span class="fu">map</span>(c, <span class="cf">function</span>(c_ik){</span>
-<span id="cb230-384"><a href="code_3.html#cb230-384" tabindex="-1"></a>                 norm_c_ik <span class="ot">&lt;-</span> <span class="fu">norm</span>(c_ik, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)</span>
-<span id="cb230-385"><a href="code_3.html#cb230-385" tabindex="-1"></a>                 <span class="cf">if</span>(norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>lambda <span class="sc">+</span> self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta){</span>
-<span id="cb230-386"><a href="code_3.html#cb230-386" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta)</span>
-<span id="cb230-387"><a href="code_3.html#cb230-387" tabindex="-1"></a>                 }<span class="cf">else</span> <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">+</span> self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta <span class="sc">&lt;</span> norm_c_ik <span class="sc">&amp;</span> norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda){</span>
-<span id="cb230-388"><a href="code_3.html#cb230-388" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda <span class="sc">/</span> ((self<span class="sc">$</span>a <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> self<span class="sc">$</span>theta)) <span class="sc">/</span> (<span class="dv">1-1</span><span class="sc">/</span>((self<span class="sc">$</span>a <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> self<span class="sc">$</span>theta))</span>
-<span id="cb230-389"><a href="code_3.html#cb230-389" tabindex="-1"></a>                 }<span class="cf">else</span> {</span>
-<span id="cb230-390"><a href="code_3.html#cb230-390" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> c_ik</span>
-<span id="cb230-391"><a href="code_3.html#cb230-391" tabindex="-1"></a>                 }</span>
-<span id="cb230-392"><a href="code_3.html#cb230-392" tabindex="-1"></a>                 </span>
-<span id="cb230-393"><a href="code_3.html#cb230-393" tabindex="-1"></a>                 <span class="fu">return</span>(u_ik)</span>
-<span id="cb230-394"><a href="code_3.html#cb230-394" tabindex="-1"></a>               }) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb230-395"><a href="code_3.html#cb230-395" tabindex="-1"></a>             },</span>
-<span id="cb230-396"><a href="code_3.html#cb230-396" tabindex="-1"></a>             <span class="st">&#39;MCP&#39;</span> <span class="ot">=</span> {</span>
-<span id="cb230-397"><a href="code_3.html#cb230-397" tabindex="-1"></a>               <span class="cf">if</span>(<span class="fu">is.null</span>(self<span class="sc">$</span>a)) self<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb230-398"><a href="code_3.html#cb230-398" tabindex="-1"></a>               u_next <span class="ot">&lt;-</span> <span class="fu">map</span>(c, <span class="cf">function</span>(c_ik){</span>
-<span id="cb230-399"><a href="code_3.html#cb230-399" tabindex="-1"></a>                 norm_c_ik <span class="ot">&lt;-</span> <span class="fu">norm</span>(c_ik, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)</span>
-<span id="cb230-400"><a href="code_3.html#cb230-400" tabindex="-1"></a>                 <span class="cf">if</span>(norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda){</span>
-<span id="cb230-401"><a href="code_3.html#cb230-401" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta) <span class="sc">/</span> (<span class="dv">1-1</span><span class="sc">/</span>(self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>theta))</span>
-<span id="cb230-402"><a href="code_3.html#cb230-402" tabindex="-1"></a>                 }<span class="cf">else</span> {</span>
-<span id="cb230-403"><a href="code_3.html#cb230-403" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> c_ik</span>
-<span id="cb230-404"><a href="code_3.html#cb230-404" tabindex="-1"></a>                 }</span>
-<span id="cb230-405"><a href="code_3.html#cb230-405" tabindex="-1"></a>                 </span>
-<span id="cb230-406"><a href="code_3.html#cb230-406" tabindex="-1"></a>                 <span class="fu">return</span>(u_ik)</span>
-<span id="cb230-407"><a href="code_3.html#cb230-407" tabindex="-1"></a>               }) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
-<span id="cb230-408"><a href="code_3.html#cb230-408" tabindex="-1"></a>             }</span>
-<span id="cb230-409"><a href="code_3.html#cb230-409" tabindex="-1"></a>        </span>
-<span id="cb230-410"><a href="code_3.html#cb230-410" tabindex="-1"></a>      )</span>
-<span id="cb230-411"><a href="code_3.html#cb230-411" tabindex="-1"></a>      </span>
-<span id="cb230-412"><a href="code_3.html#cb230-412" tabindex="-1"></a>      <span class="fu">return</span>(u_next)</span>
-<span id="cb230-413"><a href="code_3.html#cb230-413" tabindex="-1"></a>    },</span>
-<span id="cb230-414"><a href="code_3.html#cb230-414" tabindex="-1"></a>    </span>
-<span id="cb230-415"><a href="code_3.html#cb230-415" tabindex="-1"></a>    <span class="co"># w迭代式</span></span>
-<span id="cb230-416"><a href="code_3.html#cb230-416" tabindex="-1"></a>    <span class="at">iter_w =</span> <span class="cf">function</span>(w_current, Y_next, Y2_next){</span>
-<span id="cb230-417"><a href="code_3.html#cb230-417" tabindex="-1"></a>      w_next <span class="ot">&lt;-</span> w_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (Y_next <span class="sc">-</span> Y2_next)</span>
-<span id="cb230-418"><a href="code_3.html#cb230-418" tabindex="-1"></a>      </span>
-<span id="cb230-419"><a href="code_3.html#cb230-419" tabindex="-1"></a>      <span class="fu">return</span>(w_next)</span>
-<span id="cb230-420"><a href="code_3.html#cb230-420" tabindex="-1"></a>    },</span>
-<span id="cb230-421"><a href="code_3.html#cb230-421" tabindex="-1"></a>    </span>
-<span id="cb230-422"><a href="code_3.html#cb230-422" tabindex="-1"></a>    <span class="co"># nu迭代式</span></span>
-<span id="cb230-423"><a href="code_3.html#cb230-423" tabindex="-1"></a>    <span class="at">iter_nu =</span> <span class="cf">function</span>(nu_current, beta_next, u_next){</span>
-<span id="cb230-424"><a href="code_3.html#cb230-424" tabindex="-1"></a>      delta_beta <span class="ot">&lt;-</span> beta_next <span class="sc">%&gt;%</span> </span>
-<span id="cb230-425"><a href="code_3.html#cb230-425" tabindex="-1"></a>        <span class="fu">combn</span>(<span class="dv">2</span>, <span class="cf">function</span>(x) x[[<span class="dv">1</span>]] <span class="sc">-</span> x[[<span class="dv">2</span>]], <span class="at">simplify =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-426"><a href="code_3.html#cb230-426" tabindex="-1"></a>        <span class="fu">unlist</span>()</span>
-<span id="cb230-427"><a href="code_3.html#cb230-427" tabindex="-1"></a>      nu_next <span class="ot">&lt;-</span> nu_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (delta_beta <span class="sc">-</span> u_next)</span>
-<span id="cb230-428"><a href="code_3.html#cb230-428" tabindex="-1"></a>      </span>
-<span id="cb230-429"><a href="code_3.html#cb230-429" tabindex="-1"></a>      <span class="fu">return</span>(nu_next)</span>
-<span id="cb230-430"><a href="code_3.html#cb230-430" tabindex="-1"></a>    },</span>
-<span id="cb230-431"><a href="code_3.html#cb230-431" tabindex="-1"></a>    </span>
-<span id="cb230-432"><a href="code_3.html#cb230-432" tabindex="-1"></a>    <span class="co"># BIC准则</span></span>
-<span id="cb230-433"><a href="code_3.html#cb230-433" tabindex="-1"></a>    <span class="at">Bic =</span> <span class="cf">function</span>(Y2, K){</span>
-<span id="cb230-434"><a href="code_3.html#cb230-434" tabindex="-1"></a>      <span class="co"># X_beta+B_gamma就是Y2</span></span>
-<span id="cb230-435"><a href="code_3.html#cb230-435" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb230-436"><a href="code_3.html#cb230-436" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb230-437"><a href="code_3.html#cb230-437" tabindex="-1"></a>      </span>
-<span id="cb230-438"><a href="code_3.html#cb230-438" tabindex="-1"></a>      log_sum_l_Ri <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-439"><a href="code_3.html#cb230-439" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">which</span>(. <span class="sc">&lt;=</span> time)) <span class="sc">%&gt;%</span> </span>
-<span id="cb230-440"><a href="code_3.html#cb230-440" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">log</span>(<span class="fu">sum</span>(<span class="fu">exp</span>(Y2[.]))))</span>
-<span id="cb230-441"><a href="code_3.html#cb230-441" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(Y2[status] <span class="sc">-</span> log_sum_l_Ri[status])</span>
-<span id="cb230-442"><a href="code_3.html#cb230-442" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> <span class="fu">log</span>(self<span class="sc">$</span>n <span class="sc">*</span> K <span class="sc">+</span> self<span class="sc">$</span>q) <span class="sc">*</span> <span class="fu">log</span>(self<span class="sc">$</span>n) <span class="sc">*</span> (K <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">+</span> self<span class="sc">$</span>q) <span class="sc">/</span> self<span class="sc">$</span>n</span>
-<span id="cb230-443"><a href="code_3.html#cb230-443" tabindex="-1"></a>      bic <span class="ot">&lt;-</span> term_1 <span class="sc">+</span> term_2</span>
-<span id="cb230-444"><a href="code_3.html#cb230-444" tabindex="-1"></a>      </span>
-<span id="cb230-445"><a href="code_3.html#cb230-445" tabindex="-1"></a>      <span class="fu">return</span>(bic)</span>
-<span id="cb230-446"><a href="code_3.html#cb230-446" tabindex="-1"></a>    }</span>
-<span id="cb230-447"><a href="code_3.html#cb230-447" tabindex="-1"></a>  )</span>
-<span id="cb230-448"><a href="code_3.html#cb230-448" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="code_3.html#cb260-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb260-2"><a href="code_3.html#cb260-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb260-3"><a href="code_3.html#cb260-3" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb260-4"><a href="code_3.html#cb260-4" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb260-5"><a href="code_3.html#cb260-5" tabindex="-1"></a><span class="fu">library</span>(R6)</span>
+<span id="cb260-6"><a href="code_3.html#cb260-6" tabindex="-1"></a></span>
+<span id="cb260-7"><a href="code_3.html#cb260-7" tabindex="-1"></a>SubgroupBeta <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(</span>
+<span id="cb260-8"><a href="code_3.html#cb260-8" tabindex="-1"></a>  classname <span class="ot">&lt;-</span>  <span class="st">&#39;SubgroupBeta&#39;</span>,</span>
+<span id="cb260-9"><a href="code_3.html#cb260-9" tabindex="-1"></a>  </span>
+<span id="cb260-10"><a href="code_3.html#cb260-10" tabindex="-1"></a>  public <span class="ot">&lt;-</span>  <span class="fu">list</span>(</span>
+<span id="cb260-11"><a href="code_3.html#cb260-11" tabindex="-1"></a>    <span class="co"># 传入参数</span></span>
+<span id="cb260-12"><a href="code_3.html#cb260-12" tabindex="-1"></a>    <span class="at">T =</span> <span class="cn">NULL</span>,           <span class="co"># 观测时间与最终状态</span></span>
+<span id="cb260-13"><a href="code_3.html#cb260-13" tabindex="-1"></a>    <span class="at">X =</span> <span class="cn">NULL</span>,           <span class="co"># 具有线性效应、异质性的协变量矩阵</span></span>
+<span id="cb260-14"><a href="code_3.html#cb260-14" tabindex="-1"></a>    <span class="at">Z =</span> <span class="cn">NULL</span>,           <span class="co"># 具有非线性效应的协变量矩阵</span></span>
+<span id="cb260-15"><a href="code_3.html#cb260-15" tabindex="-1"></a>    <span class="at">n =</span> <span class="cn">NULL</span>,           <span class="co"># 样本容量</span></span>
+<span id="cb260-16"><a href="code_3.html#cb260-16" tabindex="-1"></a>    <span class="at">p =</span> <span class="cn">NULL</span>,           <span class="co"># X维度p</span></span>
+<span id="cb260-17"><a href="code_3.html#cb260-17" tabindex="-1"></a>    <span class="at">q =</span> <span class="cn">NULL</span>,           <span class="co"># Z维度q</span></span>
+<span id="cb260-18"><a href="code_3.html#cb260-18" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="cn">NULL</span>,     <span class="co"># 惩罚函数，SCAD或MCP，默认为MCP</span></span>
+<span id="cb260-19"><a href="code_3.html#cb260-19" tabindex="-1"></a>    <span class="at">K =</span> <span class="cn">NULL</span>,           <span class="co"># K-means聚类的个数，默认为2</span></span>
+<span id="cb260-20"><a href="code_3.html#cb260-20" tabindex="-1"></a>    <span class="at">lambda =</span> <span class="cn">NULL</span>,      <span class="co"># 惩罚函数的惩罚系数</span></span>
+<span id="cb260-21"><a href="code_3.html#cb260-21" tabindex="-1"></a>    <span class="at">a =</span> <span class="cn">NULL</span>,           <span class="co"># 融合惩罚中的正则化因子，默认SCAD是3.7，MCP是2.5</span></span>
+<span id="cb260-22"><a href="code_3.html#cb260-22" tabindex="-1"></a>    <span class="at">theta =</span> <span class="cn">NULL</span>,       <span class="co"># majorized ADMM算法的惩罚系数</span></span>
+<span id="cb260-23"><a href="code_3.html#cb260-23" tabindex="-1"></a>    <span class="at">df =</span> <span class="cn">NULL</span>,          <span class="co"># 基函数个数</span></span>
+<span id="cb260-24"><a href="code_3.html#cb260-24" tabindex="-1"></a>    <span class="at">degree =</span> <span class="cn">NULL</span>,      <span class="co"># 基函数的次数</span></span>
+<span id="cb260-25"><a href="code_3.html#cb260-25" tabindex="-1"></a>    <span class="at">tol =</span> <span class="cn">NULL</span>,         <span class="co"># 收敛精度，默认为0.001</span></span>
+<span id="cb260-26"><a href="code_3.html#cb260-26" tabindex="-1"></a>    <span class="at">max_iter =</span> <span class="cn">NULL</span>,    <span class="co"># 最大迭代次数，默认为10000</span></span>
+<span id="cb260-27"><a href="code_3.html#cb260-27" tabindex="-1"></a>    </span>
+<span id="cb260-28"><a href="code_3.html#cb260-28" tabindex="-1"></a>    <span class="co"># 初始化</span></span>
+<span id="cb260-29"><a href="code_3.html#cb260-29" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>(T, X, Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, lambda, <span class="at">a =</span> <span class="cn">NULL</span>, theta, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>, <span class="at">tol =</span> <span class="fl">0.001</span>, <span class="at">max_iter =</span> <span class="dv">10000</span>){</span>
+<span id="cb260-30"><a href="code_3.html#cb260-30" tabindex="-1"></a>      self<span class="sc">$</span>T <span class="ot">&lt;-</span> T</span>
+<span id="cb260-31"><a href="code_3.html#cb260-31" tabindex="-1"></a>      self<span class="sc">$</span>X <span class="ot">&lt;-</span> X</span>
+<span id="cb260-32"><a href="code_3.html#cb260-32" tabindex="-1"></a>      self<span class="sc">$</span>Z <span class="ot">&lt;-</span> Z</span>
+<span id="cb260-33"><a href="code_3.html#cb260-33" tabindex="-1"></a>      self<span class="sc">$</span>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(T)[<span class="dv">1</span>]   <span class="co"># 观测数</span></span>
+<span id="cb260-34"><a href="code_3.html#cb260-34" tabindex="-1"></a>      self<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="fu">dim</span>(X)[<span class="dv">2</span>]   <span class="co"># 维度p</span></span>
+<span id="cb260-35"><a href="code_3.html#cb260-35" tabindex="-1"></a>      self<span class="sc">$</span>q <span class="ot">&lt;-</span> <span class="fu">dim</span>(Z)[<span class="dv">2</span>]   <span class="co"># 维度q</span></span>
+<span id="cb260-36"><a href="code_3.html#cb260-36" tabindex="-1"></a>      self<span class="sc">$</span>penalty <span class="ot">&lt;-</span> penalty</span>
+<span id="cb260-37"><a href="code_3.html#cb260-37" tabindex="-1"></a>      self<span class="sc">$</span>K <span class="ot">&lt;-</span> K</span>
+<span id="cb260-38"><a href="code_3.html#cb260-38" tabindex="-1"></a>      self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> lambda</span>
+<span id="cb260-39"><a href="code_3.html#cb260-39" tabindex="-1"></a>      self<span class="sc">$</span>a <span class="ot">&lt;-</span> a</span>
+<span id="cb260-40"><a href="code_3.html#cb260-40" tabindex="-1"></a>      self<span class="sc">$</span>theta <span class="ot">&lt;-</span> theta</span>
+<span id="cb260-41"><a href="code_3.html#cb260-41" tabindex="-1"></a>      self<span class="sc">$</span>df <span class="ot">&lt;-</span> df</span>
+<span id="cb260-42"><a href="code_3.html#cb260-42" tabindex="-1"></a>      self<span class="sc">$</span>degree <span class="ot">&lt;-</span> degree</span>
+<span id="cb260-43"><a href="code_3.html#cb260-43" tabindex="-1"></a>      self<span class="sc">$</span>tol <span class="ot">&lt;-</span> tol</span>
+<span id="cb260-44"><a href="code_3.html#cb260-44" tabindex="-1"></a>      self<span class="sc">$</span>max_iter <span class="ot">&lt;-</span> max_iter</span>
+<span id="cb260-45"><a href="code_3.html#cb260-45" tabindex="-1"></a>    },</span>
+<span id="cb260-46"><a href="code_3.html#cb260-46" tabindex="-1"></a>    </span>
+<span id="cb260-47"><a href="code_3.html#cb260-47" tabindex="-1"></a>    <span class="co"># 主函数——运行</span></span>
+<span id="cb260-48"><a href="code_3.html#cb260-48" tabindex="-1"></a>    <span class="at">run =</span> <span class="cf">function</span>(<span class="at">trace =</span> <span class="cn">TRUE</span>){</span>
+<span id="cb260-49"><a href="code_3.html#cb260-49" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb260-50"><a href="code_3.html#cb260-50" tabindex="-1"></a>      </span>
+<span id="cb260-51"><a href="code_3.html#cb260-51" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
+<span id="cb260-52"><a href="code_3.html#cb260-52" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
+<span id="cb260-53"><a href="code_3.html#cb260-53" tabindex="-1"></a>      </span>
+<span id="cb260-54"><a href="code_3.html#cb260-54" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
+<span id="cb260-55"><a href="code_3.html#cb260-55" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
+<span id="cb260-56"><a href="code_3.html#cb260-56" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
+<span id="cb260-57"><a href="code_3.html#cb260-57" tabindex="-1"></a>      B <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
+<span id="cb260-58"><a href="code_3.html#cb260-58" tabindex="-1"></a>      private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
+<span id="cb260-59"><a href="code_3.html#cb260-59" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
+<span id="cb260-60"><a href="code_3.html#cb260-60" tabindex="-1"></a>      private<span class="sc">$</span>Y <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb260-61"><a href="code_3.html#cb260-61" tabindex="-1"></a>      private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb260-62"><a href="code_3.html#cb260-62" tabindex="-1"></a>      A <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_A</span>()</span>
+<span id="cb260-63"><a href="code_3.html#cb260-63" tabindex="-1"></a>      private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
+<span id="cb260-64"><a href="code_3.html#cb260-64" tabindex="-1"></a>      private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
+<span id="cb260-65"><a href="code_3.html#cb260-65" tabindex="-1"></a>      private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb260-66"><a href="code_3.html#cb260-66" tabindex="-1"></a>      </span>
+<span id="cb260-67"><a href="code_3.html#cb260-67" tabindex="-1"></a>      <span class="co"># 计算矩阵Q</span></span>
+<span id="cb260-68"><a href="code_3.html#cb260-68" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n)<span class="sc">-</span> B <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb260-69"><a href="code_3.html#cb260-69" tabindex="-1"></a>      </span>
+<span id="cb260-70"><a href="code_3.html#cb260-70" tabindex="-1"></a>      <span class="co"># 计算向量g</span></span>
+<span id="cb260-71"><a href="code_3.html#cb260-71" tabindex="-1"></a>      g <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_g</span>()</span>
+<span id="cb260-72"><a href="code_3.html#cb260-72" tabindex="-1"></a>      </span>
+<span id="cb260-73"><a href="code_3.html#cb260-73" tabindex="-1"></a>      <span class="co"># 计算(B&#39;B)^{-1}B&#39;，用于gamma更新</span></span>
+<span id="cb260-74"><a href="code_3.html#cb260-74" tabindex="-1"></a>      B_ols <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb260-75"><a href="code_3.html#cb260-75" tabindex="-1"></a>      </span>
+<span id="cb260-76"><a href="code_3.html#cb260-76" tabindex="-1"></a>      <span class="co"># 计算(X&#39;QX+A&#39;A)^{-1}与X&#39;Q，用于beta更新</span></span>
+<span id="cb260-77"><a href="code_3.html#cb260-77" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(X_ls, <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
+<span id="cb260-78"><a href="code_3.html#cb260-78" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()         <span class="co"># 转化为对角形式的X</span></span>
+<span id="cb260-79"><a href="code_3.html#cb260-79" tabindex="-1"></a>      XQX_AA <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q <span class="sc">%*%</span> X_diag <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> A)</span>
+<span id="cb260-80"><a href="code_3.html#cb260-80" tabindex="-1"></a>      XQ <span class="ot">&lt;-</span> <span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q</span>
+<span id="cb260-81"><a href="code_3.html#cb260-81" tabindex="-1"></a>      </span>
+<span id="cb260-82"><a href="code_3.html#cb260-82" tabindex="-1"></a>      <span class="co"># 参数迭代</span></span>
+<span id="cb260-83"><a href="code_3.html#cb260-83" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
+<span id="cb260-84"><a href="code_3.html#cb260-84" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;正在进行第[&#39;</span>, i, <span class="st">&#39;]次迭代&#39;</span>))</span>
+<span id="cb260-85"><a href="code_3.html#cb260-85" tabindex="-1"></a>        private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_gamma</span>(X_ls, B_ols, private<span class="sc">$</span>Y, private<span class="sc">$</span>beta, private<span class="sc">$</span>w)</span>
+<span id="cb260-86"><a href="code_3.html#cb260-86" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(XQX_AA, XQ, A, private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>u, private<span class="sc">$</span>nu)</span>
+<span id="cb260-87"><a href="code_3.html#cb260-87" tabindex="-1"></a>        private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y2</span>(X_ls, B, g, private<span class="sc">$</span>beta, private<span class="sc">$</span>gamma)</span>
+<span id="cb260-88"><a href="code_3.html#cb260-88" tabindex="-1"></a>        private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y</span>(g, private<span class="sc">$</span>Y2, private<span class="sc">$</span>w)</span>
+<span id="cb260-89"><a href="code_3.html#cb260-89" tabindex="-1"></a>        private<span class="sc">$</span>u <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_u</span>(self<span class="sc">$</span>penalty, private<span class="sc">$</span>beta, private<span class="sc">$</span>nu, A)</span>
+<span id="cb260-90"><a href="code_3.html#cb260-90" tabindex="-1"></a>        private<span class="sc">$</span>w <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_w</span>(private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>Y2)</span>
+<span id="cb260-91"><a href="code_3.html#cb260-91" tabindex="-1"></a>        private<span class="sc">$</span>nu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_nu</span>(private<span class="sc">$</span>nu, private<span class="sc">$</span>beta, private<span class="sc">$</span>u, A)</span>
+<span id="cb260-92"><a href="code_3.html#cb260-92" tabindex="-1"></a>        </span>
+<span id="cb260-93"><a href="code_3.html#cb260-93" tabindex="-1"></a>        <span class="co"># 终止条件</span></span>
+<span id="cb260-94"><a href="code_3.html#cb260-94" tabindex="-1"></a>        term_1 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> private<span class="sc">$</span>u</span>
+<span id="cb260-95"><a href="code_3.html#cb260-95" tabindex="-1"></a>        term_2 <span class="ot">&lt;-</span> private<span class="sc">$</span>Y <span class="sc">-</span> X_diag <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> B <span class="sc">%*%</span> private<span class="sc">$</span>gamma</span>
+<span id="cb260-96"><a href="code_3.html#cb260-96" tabindex="-1"></a>        <span class="cf">if</span>((<span class="fu">norm</span>(term_1, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>) <span class="sc">+</span> <span class="fu">norm</span>(term_2, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
+<span id="cb260-97"><a href="code_3.html#cb260-97" tabindex="-1"></a>          <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="st">&#39;达到精度要求&#39;</span>)</span>
+<span id="cb260-98"><a href="code_3.html#cb260-98" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb260-99"><a href="code_3.html#cb260-99" tabindex="-1"></a>        }</span>
+<span id="cb260-100"><a href="code_3.html#cb260-100" tabindex="-1"></a>      }</span>
+<span id="cb260-101"><a href="code_3.html#cb260-101" tabindex="-1"></a>      </span>
+<span id="cb260-102"><a href="code_3.html#cb260-102" tabindex="-1"></a>      <span class="co"># beta亚组</span></span>
+<span id="cb260-103"><a href="code_3.html#cb260-103" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> <span class="fu">lapply</span>(private<span class="sc">$</span>beta, round, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb260-104"><a href="code_3.html#cb260-104" tabindex="-1"></a>      str_beta <span class="ot">&lt;-</span> <span class="fu">sapply</span>(private<span class="sc">$</span>beta, paste, <span class="at">collapse =</span> <span class="st">&#39;,&#39;</span>)</span>
+<span id="cb260-105"><a href="code_3.html#cb260-105" tabindex="-1"></a>      label <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(str_beta, <span class="at">levels =</span> <span class="fu">unique</span>(str_beta)))</span>
+<span id="cb260-106"><a href="code_3.html#cb260-106" tabindex="-1"></a>      subgroup_beta <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">label =</span> label, <span class="at">beta =</span> private<span class="sc">$</span>beta) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-107"><a href="code_3.html#cb260-107" tabindex="-1"></a>        <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-108"><a href="code_3.html#cb260-108" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">size =</span> <span class="fu">n</span>(), <span class="at">beta =</span> <span class="fu">unique</span>(beta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-109"><a href="code_3.html#cb260-109" tabindex="-1"></a>        <span class="fu">arrange</span>(<span class="sc">-</span>size)</span>
+<span id="cb260-110"><a href="code_3.html#cb260-110" tabindex="-1"></a>      K_hat <span class="ot">&lt;-</span> <span class="fu">unique</span>(label) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span>
+<span id="cb260-111"><a href="code_3.html#cb260-111" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">gamma =</span> private<span class="sc">$</span>gamma, <span class="at">label =</span> label, <span class="at">K_hat =</span> K_hat, <span class="at">alpha =</span> subgroup_beta)</span>
+<span id="cb260-112"><a href="code_3.html#cb260-112" tabindex="-1"></a>      </span>
+<span id="cb260-113"><a href="code_3.html#cb260-113" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb260-114"><a href="code_3.html#cb260-114" tabindex="-1"></a>      cost_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span>
+<span id="cb260-115"><a href="code_3.html#cb260-115" tabindex="-1"></a>      <span class="fu">print</span>(cost_time)</span>
+<span id="cb260-116"><a href="code_3.html#cb260-116" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
+<span id="cb260-117"><a href="code_3.html#cb260-117" tabindex="-1"></a>    },</span>
+<span id="cb260-118"><a href="code_3.html#cb260-118" tabindex="-1"></a>    </span>
+<span id="cb260-119"><a href="code_3.html#cb260-119" tabindex="-1"></a>    <span class="co"># 主函数——调优</span></span>
+<span id="cb260-120"><a href="code_3.html#cb260-120" tabindex="-1"></a>    <span class="at">tune_lambda =</span> <span class="cf">function</span>(seq_lambda, <span class="at">trace =</span> <span class="cn">TRUE</span>){</span>
+<span id="cb260-121"><a href="code_3.html#cb260-121" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb260-122"><a href="code_3.html#cb260-122" tabindex="-1"></a>      </span>
+<span id="cb260-123"><a href="code_3.html#cb260-123" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
+<span id="cb260-124"><a href="code_3.html#cb260-124" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
+<span id="cb260-125"><a href="code_3.html#cb260-125" tabindex="-1"></a>      </span>
+<span id="cb260-126"><a href="code_3.html#cb260-126" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
+<span id="cb260-127"><a href="code_3.html#cb260-127" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
+<span id="cb260-128"><a href="code_3.html#cb260-128" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
+<span id="cb260-129"><a href="code_3.html#cb260-129" tabindex="-1"></a>      B <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
+<span id="cb260-130"><a href="code_3.html#cb260-130" tabindex="-1"></a>      private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
+<span id="cb260-131"><a href="code_3.html#cb260-131" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
+<span id="cb260-132"><a href="code_3.html#cb260-132" tabindex="-1"></a>      private<span class="sc">$</span>Y <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb260-133"><a href="code_3.html#cb260-133" tabindex="-1"></a>      private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb260-134"><a href="code_3.html#cb260-134" tabindex="-1"></a>      A <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_A</span>()</span>
+<span id="cb260-135"><a href="code_3.html#cb260-135" tabindex="-1"></a>      private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
+<span id="cb260-136"><a href="code_3.html#cb260-136" tabindex="-1"></a>      private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
+<span id="cb260-137"><a href="code_3.html#cb260-137" tabindex="-1"></a>      private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb260-138"><a href="code_3.html#cb260-138" tabindex="-1"></a>      </span>
+<span id="cb260-139"><a href="code_3.html#cb260-139" tabindex="-1"></a>      <span class="co"># 计算矩阵Q</span></span>
+<span id="cb260-140"><a href="code_3.html#cb260-140" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n)<span class="sc">-</span> B <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb260-141"><a href="code_3.html#cb260-141" tabindex="-1"></a>      </span>
+<span id="cb260-142"><a href="code_3.html#cb260-142" tabindex="-1"></a>      <span class="co"># 计算向量g</span></span>
+<span id="cb260-143"><a href="code_3.html#cb260-143" tabindex="-1"></a>      g <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_g</span>()</span>
+<span id="cb260-144"><a href="code_3.html#cb260-144" tabindex="-1"></a>      </span>
+<span id="cb260-145"><a href="code_3.html#cb260-145" tabindex="-1"></a>      <span class="co"># 计算(B&#39;B)^{-1}B&#39;，用于gamma更新</span></span>
+<span id="cb260-146"><a href="code_3.html#cb260-146" tabindex="-1"></a>      B_ols <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb260-147"><a href="code_3.html#cb260-147" tabindex="-1"></a>      </span>
+<span id="cb260-148"><a href="code_3.html#cb260-148" tabindex="-1"></a>      <span class="co"># 计算(X&#39;QX+A&#39;A)^{-1}与X&#39;Q，用于beta更新</span></span>
+<span id="cb260-149"><a href="code_3.html#cb260-149" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(X_ls, <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
+<span id="cb260-150"><a href="code_3.html#cb260-150" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()         <span class="co"># 转化为对角形式的X</span></span>
+<span id="cb260-151"><a href="code_3.html#cb260-151" tabindex="-1"></a>      XQX_AA <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q <span class="sc">%*%</span> X_diag <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> A)</span>
+<span id="cb260-152"><a href="code_3.html#cb260-152" tabindex="-1"></a>      XQ <span class="ot">&lt;-</span> <span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q</span>
+<span id="cb260-153"><a href="code_3.html#cb260-153" tabindex="-1"></a>      </span>
+<span id="cb260-154"><a href="code_3.html#cb260-154" tabindex="-1"></a>      bic_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(seq_lambda))</span>
+<span id="cb260-155"><a href="code_3.html#cb260-155" tabindex="-1"></a>      result_ls <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&#39;list&#39;</span>, <span class="at">length =</span> <span class="fu">length</span>(seq_lambda))</span>
+<span id="cb260-156"><a href="code_3.html#cb260-156" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(seq_lambda)) {</span>
+<span id="cb260-157"><a href="code_3.html#cb260-157" tabindex="-1"></a>        self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> seq_lambda[i]</span>
+<span id="cb260-158"><a href="code_3.html#cb260-158" tabindex="-1"></a>        </span>
+<span id="cb260-159"><a href="code_3.html#cb260-159" tabindex="-1"></a>        <span class="co"># Warm Start，仅保留上轮的beta和gamma，其余恢复为初始值设定</span></span>
+<span id="cb260-160"><a href="code_3.html#cb260-160" tabindex="-1"></a>        private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span>Y2    <span class="co"># Y2 = X_beta + B_gamma，因此保留，故Y的初始值与Y2相同</span></span>
+<span id="cb260-161"><a href="code_3.html#cb260-161" tabindex="-1"></a>        private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
+<span id="cb260-162"><a href="code_3.html#cb260-162" tabindex="-1"></a>        private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
+<span id="cb260-163"><a href="code_3.html#cb260-163" tabindex="-1"></a>        private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb260-164"><a href="code_3.html#cb260-164" tabindex="-1"></a>        </span>
+<span id="cb260-165"><a href="code_3.html#cb260-165" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
+<span id="cb260-166"><a href="code_3.html#cb260-166" tabindex="-1"></a>          <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;lambda = &#39;</span>, self<span class="sc">$</span>lambda, <span class="st">&#39;; 第[&#39;</span>, j, <span class="st">&#39;]次迭代&#39;</span>))</span>
+<span id="cb260-167"><a href="code_3.html#cb260-167" tabindex="-1"></a>          private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_gamma</span>(X_ls, B_ols, private<span class="sc">$</span>Y, private<span class="sc">$</span>beta, private<span class="sc">$</span>w)</span>
+<span id="cb260-168"><a href="code_3.html#cb260-168" tabindex="-1"></a>          private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(XQX_AA, XQ, A, private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>u, private<span class="sc">$</span>nu)</span>
+<span id="cb260-169"><a href="code_3.html#cb260-169" tabindex="-1"></a>          private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y2</span>(X_ls, B, g, private<span class="sc">$</span>beta, private<span class="sc">$</span>gamma)</span>
+<span id="cb260-170"><a href="code_3.html#cb260-170" tabindex="-1"></a>          private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y</span>(g, private<span class="sc">$</span>Y2, private<span class="sc">$</span>w)</span>
+<span id="cb260-171"><a href="code_3.html#cb260-171" tabindex="-1"></a>          private<span class="sc">$</span>u <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_u</span>(self<span class="sc">$</span>penalty, private<span class="sc">$</span>beta, private<span class="sc">$</span>nu, A)</span>
+<span id="cb260-172"><a href="code_3.html#cb260-172" tabindex="-1"></a>          private<span class="sc">$</span>w <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_w</span>(private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>Y2)</span>
+<span id="cb260-173"><a href="code_3.html#cb260-173" tabindex="-1"></a>          private<span class="sc">$</span>nu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_nu</span>(private<span class="sc">$</span>nu, private<span class="sc">$</span>beta, private<span class="sc">$</span>u, A)</span>
+<span id="cb260-174"><a href="code_3.html#cb260-174" tabindex="-1"></a>          </span>
+<span id="cb260-175"><a href="code_3.html#cb260-175" tabindex="-1"></a>          <span class="co"># 终止条件</span></span>
+<span id="cb260-176"><a href="code_3.html#cb260-176" tabindex="-1"></a>          term_1 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> private<span class="sc">$</span>u</span>
+<span id="cb260-177"><a href="code_3.html#cb260-177" tabindex="-1"></a>          term_2 <span class="ot">&lt;-</span> private<span class="sc">$</span>Y <span class="sc">-</span> X_diag <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> B <span class="sc">%*%</span> private<span class="sc">$</span>gamma</span>
+<span id="cb260-178"><a href="code_3.html#cb260-178" tabindex="-1"></a>          <span class="cf">if</span>((<span class="fu">norm</span>(term_1, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>) <span class="sc">+</span> <span class="fu">norm</span>(term_2, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
+<span id="cb260-179"><a href="code_3.html#cb260-179" tabindex="-1"></a>            <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">cat</span>(<span class="st">&#39;==========</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb260-180"><a href="code_3.html#cb260-180" tabindex="-1"></a>            <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;lambda = &#39;</span>, self<span class="sc">$</span>lambda, <span class="st">&#39; 达到精度要求&#39;</span>))</span>
+<span id="cb260-181"><a href="code_3.html#cb260-181" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb260-182"><a href="code_3.html#cb260-182" tabindex="-1"></a>          }</span>
+<span id="cb260-183"><a href="code_3.html#cb260-183" tabindex="-1"></a>        }</span>
+<span id="cb260-184"><a href="code_3.html#cb260-184" tabindex="-1"></a>        </span>
+<span id="cb260-185"><a href="code_3.html#cb260-185" tabindex="-1"></a>        <span class="co"># beta亚组</span></span>
+<span id="cb260-186"><a href="code_3.html#cb260-186" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> <span class="fu">lapply</span>(private<span class="sc">$</span>beta, round, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb260-187"><a href="code_3.html#cb260-187" tabindex="-1"></a>        str_beta <span class="ot">&lt;-</span> <span class="fu">sapply</span>(private<span class="sc">$</span>beta, paste, <span class="at">collapse =</span> <span class="st">&#39;,&#39;</span>)</span>
+<span id="cb260-188"><a href="code_3.html#cb260-188" tabindex="-1"></a>        label <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(str_beta, <span class="at">levels =</span> <span class="fu">unique</span>(str_beta)))</span>
+<span id="cb260-189"><a href="code_3.html#cb260-189" tabindex="-1"></a>        subgroup_beta <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">label =</span> label, <span class="at">beta =</span> private<span class="sc">$</span>beta) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-190"><a href="code_3.html#cb260-190" tabindex="-1"></a>          <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-191"><a href="code_3.html#cb260-191" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">size =</span> <span class="fu">n</span>(), <span class="at">beta =</span> <span class="fu">unique</span>(beta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-192"><a href="code_3.html#cb260-192" tabindex="-1"></a>          <span class="fu">arrange</span>(<span class="sc">-</span>size)</span>
+<span id="cb260-193"><a href="code_3.html#cb260-193" tabindex="-1"></a>        K_hat <span class="ot">&lt;-</span> <span class="fu">unique</span>(label) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span>
+<span id="cb260-194"><a href="code_3.html#cb260-194" tabindex="-1"></a>        </span>
+<span id="cb260-195"><a href="code_3.html#cb260-195" tabindex="-1"></a>        bic_vec[i] <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">Bic</span>(private<span class="sc">$</span>Y2, K_hat)</span>
+<span id="cb260-196"><a href="code_3.html#cb260-196" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;BIC: &#39;</span>, <span class="fu">round</span>(bic_vec[i],<span class="dv">3</span>)))</span>
+<span id="cb260-197"><a href="code_3.html#cb260-197" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">cat</span>(<span class="st">&#39;==========</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb260-198"><a href="code_3.html#cb260-198" tabindex="-1"></a>        result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">gamma =</span> private<span class="sc">$</span>gamma, <span class="at">label =</span> label, <span class="at">K_hat =</span> K_hat, <span class="at">alpha =</span> subgroup_beta, </span>
+<span id="cb260-199"><a href="code_3.html#cb260-199" tabindex="-1"></a>                       <span class="at">best_lambda =</span> self<span class="sc">$</span>lambda, <span class="at">BIC =</span> bic_vec[i])</span>
+<span id="cb260-200"><a href="code_3.html#cb260-200" tabindex="-1"></a>        result_ls[[i]] <span class="ot">&lt;-</span> result</span>
+<span id="cb260-201"><a href="code_3.html#cb260-201" tabindex="-1"></a>      }</span>
+<span id="cb260-202"><a href="code_3.html#cb260-202" tabindex="-1"></a>      </span>
+<span id="cb260-203"><a href="code_3.html#cb260-203" tabindex="-1"></a>      best_index <span class="ot">&lt;-</span> <span class="fu">which.min</span>(bic_vec)</span>
+<span id="cb260-204"><a href="code_3.html#cb260-204" tabindex="-1"></a>      best_result <span class="ot">&lt;-</span> result_ls[[best_index]]</span>
+<span id="cb260-205"><a href="code_3.html#cb260-205" tabindex="-1"></a>      </span>
+<span id="cb260-206"><a href="code_3.html#cb260-206" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb260-207"><a href="code_3.html#cb260-207" tabindex="-1"></a>      <span class="fu">print</span>(end_time <span class="sc">-</span> start_time)</span>
+<span id="cb260-208"><a href="code_3.html#cb260-208" tabindex="-1"></a>      </span>
+<span id="cb260-209"><a href="code_3.html#cb260-209" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">best_result =</span> best_result, <span class="at">BIC =</span> bic_vec))</span>
+<span id="cb260-210"><a href="code_3.html#cb260-210" tabindex="-1"></a>    }</span>
+<span id="cb260-211"><a href="code_3.html#cb260-211" tabindex="-1"></a>  ),</span>
+<span id="cb260-212"><a href="code_3.html#cb260-212" tabindex="-1"></a>  </span>
+<span id="cb260-213"><a href="code_3.html#cb260-213" tabindex="-1"></a>  private <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb260-214"><a href="code_3.html#cb260-214" tabindex="-1"></a>    <span class="co"># 迭代参数</span></span>
+<span id="cb260-215"><a href="code_3.html#cb260-215" tabindex="-1"></a>    <span class="at">gamma =</span> <span class="cn">NULL</span>,        <span class="co"># B样条的回归系数</span></span>
+<span id="cb260-216"><a href="code_3.html#cb260-216" tabindex="-1"></a>    <span class="at">beta =</span> <span class="cn">NULL</span>,         <span class="co"># X的回归系数</span></span>
+<span id="cb260-217"><a href="code_3.html#cb260-217" tabindex="-1"></a>    <span class="at">Y2 =</span> <span class="cn">NULL</span>,           <span class="co"># Y&#39;</span></span>
+<span id="cb260-218"><a href="code_3.html#cb260-218" tabindex="-1"></a>    <span class="at">Y =</span> <span class="cn">NULL</span>,            <span class="co"># Y</span></span>
+<span id="cb260-219"><a href="code_3.html#cb260-219" tabindex="-1"></a>    <span class="at">u =</span> <span class="cn">NULL</span>,            <span class="co"># 融合惩罚项</span></span>
+<span id="cb260-220"><a href="code_3.html#cb260-220" tabindex="-1"></a>    <span class="at">w =</span> <span class="cn">NULL</span>,            <span class="co"># 拉格朗日乘子</span></span>
+<span id="cb260-221"><a href="code_3.html#cb260-221" tabindex="-1"></a>    <span class="at">nu =</span> <span class="cn">NULL</span>,           <span class="co"># 拉格朗日乘子</span></span>
+<span id="cb260-222"><a href="code_3.html#cb260-222" tabindex="-1"></a>    <span class="at">c =</span> <span class="cn">NULL</span>,            <span class="co"># beta_i-beta_k+nu_ik/theta</span></span>
+<span id="cb260-223"><a href="code_3.html#cb260-223" tabindex="-1"></a>    <span class="at">bic =</span> <span class="cn">NULL</span>,          <span class="co"># BIC</span></span>
+<span id="cb260-224"><a href="code_3.html#cb260-224" tabindex="-1"></a>    </span>
+<span id="cb260-225"><a href="code_3.html#cb260-225" tabindex="-1"></a>    <span class="co"># 验证输入是否正确</span></span>
+<span id="cb260-226"><a href="code_3.html#cb260-226" tabindex="-1"></a>    <span class="at">validate =</span> <span class="cf">function</span>(){</span>
+<span id="cb260-227"><a href="code_3.html#cb260-227" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(<span class="fu">dim</span>(self<span class="sc">$</span>T)[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> <span class="fu">all</span>(<span class="fu">colnames</span>(self<span class="sc">$</span>T) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;time&#39;</span>, <span class="st">&#39;status&#39;</span>)))) <span class="fu">stop</span>(<span class="st">&#39;T要求为包含time和status的两列矩阵&#39;</span>)</span>
+<span id="cb260-228"><a href="code_3.html#cb260-228" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>X)) <span class="fu">stop</span>(<span class="st">&#39;X要求为矩阵&#39;</span>)</span>
+<span id="cb260-229"><a href="code_3.html#cb260-229" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>Z)) <span class="fu">stop</span>(<span class="st">&#39;Z要求为矩阵&#39;</span>)</span>
+<span id="cb260-230"><a href="code_3.html#cb260-230" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>self<span class="sc">$</span>penalty <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;MCP&#39;</span>,<span class="st">&#39;SCAD&#39;</span>)) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的惩罚函数，SCAD或MCP&#39;</span>)</span>
+<span id="cb260-231"><a href="code_3.html#cb260-231" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>K <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>K <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>K))) <span class="fu">stop</span>(<span class="st">&#39;确保K是正整数&#39;</span>)</span>
+<span id="cb260-232"><a href="code_3.html#cb260-232" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的lambda值&#39;</span>)</span>
+<span id="cb260-233"><a href="code_3.html#cb260-233" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>a <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
+<span id="cb260-234"><a href="code_3.html#cb260-234" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>theta <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
+<span id="cb260-235"><a href="code_3.html#cb260-235" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>df <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>df <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>df))) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的df值&#39;</span>)</span>
+<span id="cb260-236"><a href="code_3.html#cb260-236" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>degree <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>degree <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>degree))) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的degree值&#39;</span>)</span>
+<span id="cb260-237"><a href="code_3.html#cb260-237" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>tol <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的精度要求&#39;</span>)</span>
+<span id="cb260-238"><a href="code_3.html#cb260-238" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>max_iter <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的最大迭代次数&#39;</span>)</span>
+<span id="cb260-239"><a href="code_3.html#cb260-239" tabindex="-1"></a>    },</span>
+<span id="cb260-240"><a href="code_3.html#cb260-240" tabindex="-1"></a>    </span>
+<span id="cb260-241"><a href="code_3.html#cb260-241" tabindex="-1"></a>    <span class="co"># 获取初始值</span></span>
+<span id="cb260-242"><a href="code_3.html#cb260-242" tabindex="-1"></a>    <span class="at">initial_value =</span> <span class="cf">function</span>(){</span>
+<span id="cb260-243"><a href="code_3.html#cb260-243" tabindex="-1"></a>      <span class="co"># beta初始值</span></span>
+<span id="cb260-244"><a href="code_3.html#cb260-244" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(self<span class="sc">$</span>X, <span class="at">centers =</span> self<span class="sc">$</span>K)</span>
+<span id="cb260-245"><a href="code_3.html#cb260-245" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>T, self<span class="sc">$</span>X) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb260-246"><a href="code_3.html#cb260-246" tabindex="-1"></a>      df<span class="sc">$</span>label <span class="ot">&lt;-</span> result<span class="sc">$</span>cluster        <span class="co"># 添加类别标签</span></span>
+<span id="cb260-247"><a href="code_3.html#cb260-247" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb260-248"><a href="code_3.html#cb260-248" tabindex="-1"></a>        <span class="fu">group_nest</span>(label) <span class="sc">%&gt;%</span>           <span class="co"># 分组回归，批量建模</span></span>
+<span id="cb260-249"><a href="code_3.html#cb260-249" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span>., <span class="at">data=</span>.x)),</span>
+<span id="cb260-250"><a href="code_3.html#cb260-250" tabindex="-1"></a>               <span class="at">coef =</span> <span class="fu">map</span>(model, <span class="sc">~</span>.x[[<span class="st">&#39;coefficients&#39;</span>]]))</span>
+<span id="cb260-251"><a href="code_3.html#cb260-251" tabindex="-1"></a>      coef <span class="ot">&lt;-</span> df<span class="sc">$</span>coef <span class="sc">%&gt;%</span> <span class="fu">as.list</span>()     <span class="co"># 提取每个类别的回归系数向量</span></span>
+<span id="cb260-252"><a href="code_3.html#cb260-252" tabindex="-1"></a>      beta_0 <span class="ot">&lt;-</span> coef[result<span class="sc">$</span>cluster]    <span class="co"># 为了后续处理方便，beta暂时以列表形式存储</span></span>
+<span id="cb260-253"><a href="code_3.html#cb260-253" tabindex="-1"></a>      </span>
+<span id="cb260-254"><a href="code_3.html#cb260-254" tabindex="-1"></a>      <span class="co"># gamma初始值与B</span></span>
+<span id="cb260-255"><a href="code_3.html#cb260-255" tabindex="-1"></a>      B <span class="ot">&lt;-</span> <span class="fu">asplit</span>(self<span class="sc">$</span>Z, <span class="dv">2</span>)   <span class="co"># 按列分割Z矩阵，分别由bs拟合</span></span>
+<span id="cb260-256"><a href="code_3.html#cb260-256" tabindex="-1"></a>      B <span class="ot">&lt;-</span> B <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">bs</span>(., <span class="at">df =</span> self<span class="sc">$</span>df, <span class="at">degree =</span> self<span class="sc">$</span>degree))</span>
+<span id="cb260-257"><a href="code_3.html#cb260-257" tabindex="-1"></a>      B <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, B) <span class="sc">%&gt;%</span> <span class="fu">scale</span>(<span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)   <span class="co"># 列方向的中心化处理</span></span>
+<span id="cb260-258"><a href="code_3.html#cb260-258" tabindex="-1"></a>      <span class="fu">colnames</span>(B) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;b_&#39;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(B))</span>
+<span id="cb260-259"><a href="code_3.html#cb260-259" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>T, B) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb260-260"><a href="code_3.html#cb260-260" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span>., <span class="at">data =</span> df)</span>
+<span id="cb260-261"><a href="code_3.html#cb260-261" tabindex="-1"></a>      gamma_0 <span class="ot">&lt;-</span> model[[<span class="st">&#39;coefficients&#39;</span>]]</span>
+<span id="cb260-262"><a href="code_3.html#cb260-262" tabindex="-1"></a>      </span>
+<span id="cb260-263"><a href="code_3.html#cb260-263" tabindex="-1"></a>      <span class="co"># Y与Y&#39;的初始值</span></span>
+<span id="cb260-264"><a href="code_3.html#cb260-264" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> <span class="fu">asplit</span>(self<span class="sc">$</span>X, <span class="dv">1</span>)</span>
+<span id="cb260-265"><a href="code_3.html#cb260-265" tabindex="-1"></a>      Y_0 <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_0, <span class="sc">~</span>.x <span class="sc">%*%</span> .y) <span class="sc">+</span> B <span class="sc">%*%</span> gamma_0</span>
+<span id="cb260-266"><a href="code_3.html#cb260-266" tabindex="-1"></a>      </span>
+<span id="cb260-267"><a href="code_3.html#cb260-267" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">beta_0 =</span> beta_0, <span class="at">B =</span> B, <span class="at">gamma_0 =</span> gamma_0, <span class="at">X_ls =</span> X_ls, <span class="at">Y_0 =</span> Y_0))</span>
+<span id="cb260-268"><a href="code_3.html#cb260-268" tabindex="-1"></a>    },</span>
+<span id="cb260-269"><a href="code_3.html#cb260-269" tabindex="-1"></a>    </span>
+<span id="cb260-270"><a href="code_3.html#cb260-270" tabindex="-1"></a>    <span class="co"># 计算矩阵A</span></span>
+<span id="cb260-271"><a href="code_3.html#cb260-271" tabindex="-1"></a>    <span class="at">gen_A =</span> <span class="cf">function</span>(){</span>
+<span id="cb260-272"><a href="code_3.html#cb260-272" tabindex="-1"></a>      gen_mat <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
+<span id="cb260-273"><a href="code_3.html#cb260-273" tabindex="-1"></a>        mat_1 <span class="ot">&lt;-</span> <span class="cf">if</span>(n <span class="sc">==</span> self<span class="sc">$</span>n<span class="dv">-1</span>){</span>
+<span id="cb260-274"><a href="code_3.html#cb260-274" tabindex="-1"></a>          <span class="cn">NULL</span></span>
+<span id="cb260-275"><a href="code_3.html#cb260-275" tabindex="-1"></a>        }<span class="cf">else</span>{</span>
+<span id="cb260-276"><a href="code_3.html#cb260-276" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n<span class="dv">-1</span><span class="sc">-</span>n, <span class="at">ncol =</span> n)</span>
+<span id="cb260-277"><a href="code_3.html#cb260-277" tabindex="-1"></a>        }</span>
+<span id="cb260-278"><a href="code_3.html#cb260-278" tabindex="-1"></a>        mat_2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> n, <span class="at">byrow =</span> T)</span>
+<span id="cb260-279"><a href="code_3.html#cb260-279" tabindex="-1"></a>        mat_3 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="at">nrow=</span>n, <span class="at">ncol =</span> n)</span>
+<span id="cb260-280"><a href="code_3.html#cb260-280" tabindex="-1"></a>        mat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mat_1, mat_2, mat_3)</span>
+<span id="cb260-281"><a href="code_3.html#cb260-281" tabindex="-1"></a>        <span class="fu">return</span>(mat)</span>
+<span id="cb260-282"><a href="code_3.html#cb260-282" tabindex="-1"></a>      }</span>
+<span id="cb260-283"><a href="code_3.html#cb260-283" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">c</span>((self<span class="sc">$</span>n<span class="dv">-1</span>)<span class="sc">:</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">gen_mat</span>(.))</span>
+<span id="cb260-284"><a href="code_3.html#cb260-284" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, D) <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span>
+<span id="cb260-285"><a href="code_3.html#cb260-285" tabindex="-1"></a>      </span>
+<span id="cb260-286"><a href="code_3.html#cb260-286" tabindex="-1"></a>      A <span class="ot">&lt;-</span> D <span class="sc">%x%</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">nrow =</span> self<span class="sc">$</span>p)</span>
+<span id="cb260-287"><a href="code_3.html#cb260-287" tabindex="-1"></a>      </span>
+<span id="cb260-288"><a href="code_3.html#cb260-288" tabindex="-1"></a>      <span class="fu">return</span>(A)</span>
+<span id="cb260-289"><a href="code_3.html#cb260-289" tabindex="-1"></a>    },</span>
+<span id="cb260-290"><a href="code_3.html#cb260-290" tabindex="-1"></a>    </span>
+<span id="cb260-291"><a href="code_3.html#cb260-291" tabindex="-1"></a>    <span class="co"># 计算g</span></span>
+<span id="cb260-292"><a href="code_3.html#cb260-292" tabindex="-1"></a>    <span class="at">gen_g =</span> <span class="cf">function</span>(){</span>
+<span id="cb260-293"><a href="code_3.html#cb260-293" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb260-294"><a href="code_3.html#cb260-294" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb260-295"><a href="code_3.html#cb260-295" tabindex="-1"></a>      g <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-296"><a href="code_3.html#cb260-296" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">ifelse</span>(. <span class="sc">&gt;=</span> time, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-297"><a href="code_3.html#cb260-297" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span>status <span class="sc">%*%</span> .)</span>
+<span id="cb260-298"><a href="code_3.html#cb260-298" tabindex="-1"></a>      </span>
+<span id="cb260-299"><a href="code_3.html#cb260-299" tabindex="-1"></a>      <span class="fu">return</span>(g)</span>
+<span id="cb260-300"><a href="code_3.html#cb260-300" tabindex="-1"></a>    },</span>
+<span id="cb260-301"><a href="code_3.html#cb260-301" tabindex="-1"></a>    </span>
+<span id="cb260-302"><a href="code_3.html#cb260-302" tabindex="-1"></a>    <span class="co"># 计算nabla_g</span></span>
+<span id="cb260-303"><a href="code_3.html#cb260-303" tabindex="-1"></a>    <span class="at">gen_nabla_g =</span> <span class="cf">function</span>(Y2){</span>
+<span id="cb260-304"><a href="code_3.html#cb260-304" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb260-305"><a href="code_3.html#cb260-305" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb260-306"><a href="code_3.html#cb260-306" tabindex="-1"></a>      </span>
+<span id="cb260-307"><a href="code_3.html#cb260-307" tabindex="-1"></a>      exp_Y2 <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">exp</span>(Y2))</span>
+<span id="cb260-308"><a href="code_3.html#cb260-308" tabindex="-1"></a>      </span>
+<span id="cb260-309"><a href="code_3.html#cb260-309" tabindex="-1"></a>      <span class="co"># 向量sum_{l \in R_k} exp(Y2)</span></span>
+<span id="cb260-310"><a href="code_3.html#cb260-310" tabindex="-1"></a>      sum_l_Rk <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-311"><a href="code_3.html#cb260-311" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">which</span>(. <span class="sc">&lt;=</span> time)) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-312"><a href="code_3.html#cb260-312" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">sum</span>(<span class="fu">exp</span>(Y2[.])))</span>
+<span id="cb260-313"><a href="code_3.html#cb260-313" tabindex="-1"></a>      </span>
+<span id="cb260-314"><a href="code_3.html#cb260-314" tabindex="-1"></a>      <span class="co"># 计算nabla_g</span></span>
+<span id="cb260-315"><a href="code_3.html#cb260-315" tabindex="-1"></a>      nabla_g <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-316"><a href="code_3.html#cb260-316" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">ifelse</span>(. <span class="sc">&gt;=</span> time, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span>    <span class="co"># 计算I_{i \in R_k}</span></span>
+<span id="cb260-317"><a href="code_3.html#cb260-317" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span>. <span class="sc">%*%</span> <span class="fu">diag</span>(status) <span class="sc">%*%</span> sum_l_Rk<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span>     <span class="co"># 计算delta与I与{l \in R_k}的复合项</span></span>
+<span id="cb260-318"><a href="code_3.html#cb260-318" tabindex="-1"></a>        <span class="fu">map2_vec</span>(exp_Y2, <span class="sc">~</span>.x <span class="sc">*</span> .y) <span class="sc">-</span> status</span>
+<span id="cb260-319"><a href="code_3.html#cb260-319" tabindex="-1"></a>      </span>
+<span id="cb260-320"><a href="code_3.html#cb260-320" tabindex="-1"></a>      <span class="fu">return</span>(nabla_g)</span>
+<span id="cb260-321"><a href="code_3.html#cb260-321" tabindex="-1"></a>    },</span>
+<span id="cb260-322"><a href="code_3.html#cb260-322" tabindex="-1"></a>    </span>
+<span id="cb260-323"><a href="code_3.html#cb260-323" tabindex="-1"></a>    <span class="co"># 计算c，输出列表</span></span>
+<span id="cb260-324"><a href="code_3.html#cb260-324" tabindex="-1"></a>    <span class="at">gen_c =</span> <span class="cf">function</span>(beta, nu, A){</span>
+<span id="cb260-325"><a href="code_3.html#cb260-325" tabindex="-1"></a>      delta_beta <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(beta)</span>
+<span id="cb260-326"><a href="code_3.html#cb260-326" tabindex="-1"></a>      c <span class="ot">&lt;-</span> delta_beta <span class="sc">+</span> nu <span class="sc">/</span> self<span class="sc">$</span>theta</span>
+<span id="cb260-327"><a href="code_3.html#cb260-327" tabindex="-1"></a>      c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(c, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">byrow =</span> T) <span class="sc">%&gt;%</span> <span class="fu">asplit</span>(<span class="dv">1</span>)</span>
+<span id="cb260-328"><a href="code_3.html#cb260-328" tabindex="-1"></a>      </span>
+<span id="cb260-329"><a href="code_3.html#cb260-329" tabindex="-1"></a>      <span class="fu">return</span>(c)</span>
+<span id="cb260-330"><a href="code_3.html#cb260-330" tabindex="-1"></a>    },</span>
+<span id="cb260-331"><a href="code_3.html#cb260-331" tabindex="-1"></a>    </span>
+<span id="cb260-332"><a href="code_3.html#cb260-332" tabindex="-1"></a>    <span class="co"># gamma迭代式</span></span>
+<span id="cb260-333"><a href="code_3.html#cb260-333" tabindex="-1"></a>    <span class="at">iter_gamma =</span> <span class="cf">function</span>(X_ls, B_ols, Y_current, beta_current, w_current){</span>
+<span id="cb260-334"><a href="code_3.html#cb260-334" tabindex="-1"></a>      <span class="co"># 这里的beta是列表形式</span></span>
+<span id="cb260-335"><a href="code_3.html#cb260-335" tabindex="-1"></a>      X_beta <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_current, <span class="sc">~</span>.x <span class="sc">%*%</span> .y)</span>
+<span id="cb260-336"><a href="code_3.html#cb260-336" tabindex="-1"></a>      gamma_next <span class="ot">&lt;-</span> B_ols <span class="sc">%*%</span> (Y_current <span class="sc">-</span> X_beta <span class="sc">+</span> w_current <span class="sc">/</span> self<span class="sc">$</span>theta)</span>
+<span id="cb260-337"><a href="code_3.html#cb260-337" tabindex="-1"></a>      </span>
+<span id="cb260-338"><a href="code_3.html#cb260-338" tabindex="-1"></a>      <span class="fu">return</span>(gamma_next)</span>
+<span id="cb260-339"><a href="code_3.html#cb260-339" tabindex="-1"></a>    },</span>
+<span id="cb260-340"><a href="code_3.html#cb260-340" tabindex="-1"></a>    </span>
+<span id="cb260-341"><a href="code_3.html#cb260-341" tabindex="-1"></a>    <span class="co"># beta迭代式，输出列表</span></span>
+<span id="cb260-342"><a href="code_3.html#cb260-342" tabindex="-1"></a>    <span class="at">iter_beta =</span> <span class="cf">function</span>(XQX_AA, XQ, A, w_current, Y_current, u_current, nu_current){</span>
+<span id="cb260-343"><a href="code_3.html#cb260-343" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> XQX_AA <span class="sc">%*%</span> (XQ <span class="sc">%*%</span> (w_current <span class="sc">/</span> self<span class="sc">$</span>theta <span class="sc">+</span> Y_current) <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> (u_current <span class="sc">-</span> nu_current <span class="sc">/</span> self<span class="sc">$</span>theta))</span>
+<span id="cb260-344"><a href="code_3.html#cb260-344" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> <span class="fu">matrix</span>(beta_next, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">byrow =</span> T) <span class="sc">%&gt;%</span> <span class="fu">asplit</span>(<span class="dv">1</span>)   <span class="co"># 输出列表形式的beta</span></span>
+<span id="cb260-345"><a href="code_3.html#cb260-345" tabindex="-1"></a>      </span>
+<span id="cb260-346"><a href="code_3.html#cb260-346" tabindex="-1"></a>      <span class="fu">return</span>(beta_next)</span>
+<span id="cb260-347"><a href="code_3.html#cb260-347" tabindex="-1"></a>    },</span>
+<span id="cb260-348"><a href="code_3.html#cb260-348" tabindex="-1"></a>    </span>
+<span id="cb260-349"><a href="code_3.html#cb260-349" tabindex="-1"></a>    <span class="co"># Y2迭代式</span></span>
+<span id="cb260-350"><a href="code_3.html#cb260-350" tabindex="-1"></a>    <span class="at">iter_Y2 =</span> <span class="cf">function</span>(X_ls, B, g, beta_next, gamma_next){</span>
+<span id="cb260-351"><a href="code_3.html#cb260-351" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_next, <span class="sc">~</span>.x <span class="sc">%*%</span> .y)   <span class="co"># X与beta</span></span>
+<span id="cb260-352"><a href="code_3.html#cb260-352" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> <span class="fu">asplit</span>(B,<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">map_vec</span>(<span class="sc">~</span>. <span class="sc">%*%</span> gamma_next)  <span class="co"># B与gamma</span></span>
+<span id="cb260-353"><a href="code_3.html#cb260-353" tabindex="-1"></a>      Y2_next <span class="ot">&lt;-</span> term_1 <span class="sc">+</span> term_2</span>
+<span id="cb260-354"><a href="code_3.html#cb260-354" tabindex="-1"></a>      </span>
+<span id="cb260-355"><a href="code_3.html#cb260-355" tabindex="-1"></a>      <span class="fu">return</span>(Y2_next)</span>
+<span id="cb260-356"><a href="code_3.html#cb260-356" tabindex="-1"></a>    },</span>
+<span id="cb260-357"><a href="code_3.html#cb260-357" tabindex="-1"></a>    </span>
+<span id="cb260-358"><a href="code_3.html#cb260-358" tabindex="-1"></a>    <span class="co"># Y迭代式</span></span>
+<span id="cb260-359"><a href="code_3.html#cb260-359" tabindex="-1"></a>    <span class="at">iter_Y =</span> <span class="cf">function</span>(g, Y2_next, w_current){</span>
+<span id="cb260-360"><a href="code_3.html#cb260-360" tabindex="-1"></a>      nabla_g_next <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_nabla_g</span>(Y2_next)</span>
+<span id="cb260-361"><a href="code_3.html#cb260-361" tabindex="-1"></a>      Y_next <span class="ot">&lt;-</span> (g <span class="sc">+</span> self<span class="sc">$</span>theta)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>nabla_g_next<span class="sc">+</span> g <span class="sc">*</span> Y2_next <span class="sc">-</span> w_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> Y2_next)</span>
+<span id="cb260-362"><a href="code_3.html#cb260-362" tabindex="-1"></a>      </span>
+<span id="cb260-363"><a href="code_3.html#cb260-363" tabindex="-1"></a>      <span class="fu">return</span>(Y_next)</span>
+<span id="cb260-364"><a href="code_3.html#cb260-364" tabindex="-1"></a>    },</span>
+<span id="cb260-365"><a href="code_3.html#cb260-365" tabindex="-1"></a>    </span>
+<span id="cb260-366"><a href="code_3.html#cb260-366" tabindex="-1"></a>    <span class="co"># u迭代式</span></span>
+<span id="cb260-367"><a href="code_3.html#cb260-367" tabindex="-1"></a>    <span class="at">iter_u =</span> <span class="cf">function</span>(penalty, beta_next, nu_current, A){</span>
+<span id="cb260-368"><a href="code_3.html#cb260-368" tabindex="-1"></a>      S <span class="ot">&lt;-</span> <span class="cf">function</span>(c, lambda){</span>
+<span id="cb260-369"><a href="code_3.html#cb260-369" tabindex="-1"></a>       result <span class="ot">&lt;-</span> <span class="fu">max</span>((<span class="dv">1</span> <span class="sc">-</span> lambda <span class="sc">/</span> <span class="fu">norm</span>(c, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)), <span class="dv">0</span>) <span class="sc">*</span> c</span>
+<span id="cb260-370"><a href="code_3.html#cb260-370" tabindex="-1"></a>       </span>
+<span id="cb260-371"><a href="code_3.html#cb260-371" tabindex="-1"></a>        <span class="fu">return</span>(result)</span>
+<span id="cb260-372"><a href="code_3.html#cb260-372" tabindex="-1"></a>      }</span>
+<span id="cb260-373"><a href="code_3.html#cb260-373" tabindex="-1"></a>      </span>
+<span id="cb260-374"><a href="code_3.html#cb260-374" tabindex="-1"></a>      c <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_c</span>(beta_next, nu_current, A)</span>
+<span id="cb260-375"><a href="code_3.html#cb260-375" tabindex="-1"></a>      </span>
+<span id="cb260-376"><a href="code_3.html#cb260-376" tabindex="-1"></a>      <span class="cf">switch</span>(penalty,</span>
+<span id="cb260-377"><a href="code_3.html#cb260-377" tabindex="-1"></a>             <span class="st">&#39;SCAD&#39;</span> <span class="ot">=</span> {</span>
+<span id="cb260-378"><a href="code_3.html#cb260-378" tabindex="-1"></a>               <span class="cf">if</span>(<span class="fu">is.null</span>(self<span class="sc">$</span>a)) self<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="fl">3.7</span> </span>
+<span id="cb260-379"><a href="code_3.html#cb260-379" tabindex="-1"></a>               u_next <span class="ot">&lt;-</span> <span class="fu">map</span>(c, <span class="cf">function</span>(c_ik){</span>
+<span id="cb260-380"><a href="code_3.html#cb260-380" tabindex="-1"></a>                 norm_c_ik <span class="ot">&lt;-</span> <span class="fu">norm</span>(c_ik, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)</span>
+<span id="cb260-381"><a href="code_3.html#cb260-381" tabindex="-1"></a>                 <span class="cf">if</span>(norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>lambda <span class="sc">+</span> self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta){</span>
+<span id="cb260-382"><a href="code_3.html#cb260-382" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta)</span>
+<span id="cb260-383"><a href="code_3.html#cb260-383" tabindex="-1"></a>                 }<span class="cf">else</span> <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">+</span> self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta <span class="sc">&lt;</span> norm_c_ik <span class="sc">&amp;</span> norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda){</span>
+<span id="cb260-384"><a href="code_3.html#cb260-384" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda <span class="sc">/</span> ((self<span class="sc">$</span>a <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> self<span class="sc">$</span>theta)) <span class="sc">/</span> (<span class="dv">1-1</span><span class="sc">/</span>((self<span class="sc">$</span>a <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> self<span class="sc">$</span>theta))</span>
+<span id="cb260-385"><a href="code_3.html#cb260-385" tabindex="-1"></a>                 }<span class="cf">else</span> {</span>
+<span id="cb260-386"><a href="code_3.html#cb260-386" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> c_ik</span>
+<span id="cb260-387"><a href="code_3.html#cb260-387" tabindex="-1"></a>                 }</span>
+<span id="cb260-388"><a href="code_3.html#cb260-388" tabindex="-1"></a>                 </span>
+<span id="cb260-389"><a href="code_3.html#cb260-389" tabindex="-1"></a>                 <span class="fu">return</span>(u_ik)</span>
+<span id="cb260-390"><a href="code_3.html#cb260-390" tabindex="-1"></a>               }) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb260-391"><a href="code_3.html#cb260-391" tabindex="-1"></a>             },</span>
+<span id="cb260-392"><a href="code_3.html#cb260-392" tabindex="-1"></a>             <span class="st">&#39;MCP&#39;</span> <span class="ot">=</span> {</span>
+<span id="cb260-393"><a href="code_3.html#cb260-393" tabindex="-1"></a>               <span class="cf">if</span>(<span class="fu">is.null</span>(self<span class="sc">$</span>a)) self<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb260-394"><a href="code_3.html#cb260-394" tabindex="-1"></a>               u_next <span class="ot">&lt;-</span> <span class="fu">map</span>(c, <span class="cf">function</span>(c_ik){</span>
+<span id="cb260-395"><a href="code_3.html#cb260-395" tabindex="-1"></a>                 norm_c_ik <span class="ot">&lt;-</span> <span class="fu">norm</span>(c_ik, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)</span>
+<span id="cb260-396"><a href="code_3.html#cb260-396" tabindex="-1"></a>                 <span class="cf">if</span>(norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda){</span>
+<span id="cb260-397"><a href="code_3.html#cb260-397" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta) <span class="sc">/</span> (<span class="dv">1-1</span><span class="sc">/</span>(self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>theta))</span>
+<span id="cb260-398"><a href="code_3.html#cb260-398" tabindex="-1"></a>                 }<span class="cf">else</span> {</span>
+<span id="cb260-399"><a href="code_3.html#cb260-399" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> c_ik</span>
+<span id="cb260-400"><a href="code_3.html#cb260-400" tabindex="-1"></a>                 }</span>
+<span id="cb260-401"><a href="code_3.html#cb260-401" tabindex="-1"></a>                 </span>
+<span id="cb260-402"><a href="code_3.html#cb260-402" tabindex="-1"></a>                 <span class="fu">return</span>(u_ik)</span>
+<span id="cb260-403"><a href="code_3.html#cb260-403" tabindex="-1"></a>               }) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb260-404"><a href="code_3.html#cb260-404" tabindex="-1"></a>             }</span>
+<span id="cb260-405"><a href="code_3.html#cb260-405" tabindex="-1"></a>        </span>
+<span id="cb260-406"><a href="code_3.html#cb260-406" tabindex="-1"></a>      )</span>
+<span id="cb260-407"><a href="code_3.html#cb260-407" tabindex="-1"></a>      </span>
+<span id="cb260-408"><a href="code_3.html#cb260-408" tabindex="-1"></a>      <span class="fu">return</span>(u_next)</span>
+<span id="cb260-409"><a href="code_3.html#cb260-409" tabindex="-1"></a>    },</span>
+<span id="cb260-410"><a href="code_3.html#cb260-410" tabindex="-1"></a>    </span>
+<span id="cb260-411"><a href="code_3.html#cb260-411" tabindex="-1"></a>    <span class="co"># w迭代式</span></span>
+<span id="cb260-412"><a href="code_3.html#cb260-412" tabindex="-1"></a>    <span class="at">iter_w =</span> <span class="cf">function</span>(w_current, Y_next, Y2_next){</span>
+<span id="cb260-413"><a href="code_3.html#cb260-413" tabindex="-1"></a>      w_next <span class="ot">&lt;-</span> w_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (Y_next <span class="sc">-</span> Y2_next)</span>
+<span id="cb260-414"><a href="code_3.html#cb260-414" tabindex="-1"></a>      </span>
+<span id="cb260-415"><a href="code_3.html#cb260-415" tabindex="-1"></a>      <span class="fu">return</span>(w_next)</span>
+<span id="cb260-416"><a href="code_3.html#cb260-416" tabindex="-1"></a>    },</span>
+<span id="cb260-417"><a href="code_3.html#cb260-417" tabindex="-1"></a>    </span>
+<span id="cb260-418"><a href="code_3.html#cb260-418" tabindex="-1"></a>    <span class="co"># nu迭代式</span></span>
+<span id="cb260-419"><a href="code_3.html#cb260-419" tabindex="-1"></a>    <span class="at">iter_nu =</span> <span class="cf">function</span>(nu_current, beta_next, u_next, A){</span>
+<span id="cb260-420"><a href="code_3.html#cb260-420" tabindex="-1"></a>      delta_beta <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(beta_next)</span>
+<span id="cb260-421"><a href="code_3.html#cb260-421" tabindex="-1"></a>      nu_next <span class="ot">&lt;-</span> nu_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (delta_beta <span class="sc">-</span> u_next)</span>
+<span id="cb260-422"><a href="code_3.html#cb260-422" tabindex="-1"></a>      </span>
+<span id="cb260-423"><a href="code_3.html#cb260-423" tabindex="-1"></a>      <span class="fu">return</span>(nu_next)</span>
+<span id="cb260-424"><a href="code_3.html#cb260-424" tabindex="-1"></a>    },</span>
+<span id="cb260-425"><a href="code_3.html#cb260-425" tabindex="-1"></a>    </span>
+<span id="cb260-426"><a href="code_3.html#cb260-426" tabindex="-1"></a>    <span class="co"># BIC准则</span></span>
+<span id="cb260-427"><a href="code_3.html#cb260-427" tabindex="-1"></a>    <span class="at">Bic =</span> <span class="cf">function</span>(Y2, K){</span>
+<span id="cb260-428"><a href="code_3.html#cb260-428" tabindex="-1"></a>      <span class="co"># X_beta+B_gamma就是Y2</span></span>
+<span id="cb260-429"><a href="code_3.html#cb260-429" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb260-430"><a href="code_3.html#cb260-430" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb260-431"><a href="code_3.html#cb260-431" tabindex="-1"></a>      </span>
+<span id="cb260-432"><a href="code_3.html#cb260-432" tabindex="-1"></a>      log_sum_l_Ri <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-433"><a href="code_3.html#cb260-433" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">which</span>(. <span class="sc">&lt;=</span> time)) <span class="sc">%&gt;%</span> </span>
+<span id="cb260-434"><a href="code_3.html#cb260-434" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">log</span>(<span class="fu">sum</span>(<span class="fu">exp</span>(Y2[.]))))</span>
+<span id="cb260-435"><a href="code_3.html#cb260-435" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(Y2[status] <span class="sc">-</span> log_sum_l_Ri[status])</span>
+<span id="cb260-436"><a href="code_3.html#cb260-436" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> <span class="fu">log</span>(self<span class="sc">$</span>n <span class="sc">*</span> K <span class="sc">+</span> self<span class="sc">$</span>q) <span class="sc">*</span> <span class="fu">log</span>(self<span class="sc">$</span>n) <span class="sc">*</span> (K <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">+</span> self<span class="sc">$</span>q) <span class="sc">/</span> self<span class="sc">$</span>n</span>
+<span id="cb260-437"><a href="code_3.html#cb260-437" tabindex="-1"></a>      bic <span class="ot">&lt;-</span> term_1 <span class="sc">+</span> term_2</span>
+<span id="cb260-438"><a href="code_3.html#cb260-438" tabindex="-1"></a>      </span>
+<span id="cb260-439"><a href="code_3.html#cb260-439" tabindex="-1"></a>      <span class="fu">return</span>(bic)</span>
+<span id="cb260-440"><a href="code_3.html#cb260-440" tabindex="-1"></a>    }</span>
+<span id="cb260-441"><a href="code_3.html#cb260-441" tabindex="-1"></a>  )</span>
+<span id="cb260-442"><a href="code_3.html#cb260-442" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="code_3_2" class="section level3 hasAnchor" number="14.3.2">
 <h3><span class="header-section-number">14.3.2</span> 数据模拟<a href="code_3.html#code_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="code_3.html#cb231-1" tabindex="-1"></a><span class="co"># case1_1 beta = +-0.5</span></span>
-<span id="cb231-2"><a href="code_3.html#cb231-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb231-3"><a href="code_3.html#cb231-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb231-4"><a href="code_3.html#cb231-4" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
-<span id="cb231-5"><a href="code_3.html#cb231-5" tabindex="-1"></a>f_z <span class="ot">&lt;-</span> <span class="fu">sin</span>(pi<span class="sc">*</span>(Z<span class="fl">-0.5</span>))</span>
-<span id="cb231-6"><a href="code_3.html#cb231-6" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>), <span class="at">each=</span><span class="dv">50</span>)</span>
-<span id="cb231-7"><a href="code_3.html#cb231-7" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">diag</span>(X) <span class="sc">%*%</span> beta <span class="sc">-</span> f_z)) <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">100</span>))</span>
-<span id="cb231-8"><a href="code_3.html#cb231-8" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">max =</span> <span class="dv">12</span>)            <span class="co"># 删失时间</span></span>
-<span id="cb231-9"><a href="code_3.html#cb231-9" tabindex="-1"></a>Cr <span class="ot">&lt;-</span> <span class="fu">sum</span>(C <span class="sc">&lt;=</span> time) <span class="sc">/</span> <span class="fu">length</span>(C)     <span class="co"># 刚好是10%删失率</span></span>
-<span id="cb231-10"><a href="code_3.html#cb231-10" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;删失率为：&#39;</span>, Cr))</span></code></pre></div>
-<pre><code>## [1] &quot;删失率为：0.1&quot;</code></pre>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="code_3.html#cb233-1" tabindex="-1"></a>status <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(C <span class="sc">&lt;=</span> time)      <span class="co"># 是否删失</span></span>
-<span id="cb233-2"><a href="code_3.html#cb233-2" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">pmin</span>(time, C)                <span class="co"># 观测时间</span></span>
-<span id="cb233-3"><a href="code_3.html#cb233-3" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">cbind</span>(time, status)</span>
-<span id="cb233-4"><a href="code_3.html#cb233-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> X <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb233-5"><a href="code_3.html#cb233-5" tabindex="-1"></a>Z <span class="ot">&lt;-</span> Z <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb233-6"><a href="code_3.html#cb233-6" tabindex="-1"></a>case1_1 <span class="ot">&lt;-</span> SubgroupBeta<span class="sc">$</span><span class="fu">new</span>(<span class="at">T =</span> T, <span class="at">X =</span> X, <span class="at">Z =</span> Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="fl">0.06</span>, <span class="at">a =</span> <span class="fl">2.5</span>, <span class="at">theta =</span> <span class="dv">1</span>, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>)</span>
-<span id="cb233-7"><a href="code_3.html#cb233-7" tabindex="-1"></a>result1_1 <span class="ot">&lt;-</span> case1_1<span class="sc">$</span><span class="fu">run</span>(<span class="at">trace =</span> <span class="cn">FALSE</span>)  <span class="co"># 不显示迭代过程</span></span></code></pre></div>
-<pre><code>## Warning in coxph.fit(X, Y, istrat, offset, init, control, weights = weights, :
-## Ran out of iterations and did not converge</code></pre>
-<pre><code>## Warning in coxph.fit(X, Y, istrat, offset, init, control, weights = weights, :
-## one or more coefficients may be infinite</code></pre>
-<pre><code>##  用户  系统  流逝 
-## 34.11  0.22 34.36</code></pre>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="code_3.html#cb237-1" tabindex="-1"></a>result1_1[[<span class="st">&#39;alpha&#39;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="code_3.html#cb261-1" tabindex="-1"></a><span class="co"># case_3</span></span>
+<span id="cb261-2"><a href="code_3.html#cb261-2" tabindex="-1"></a><span class="co"># 有顺序调整</span></span>
+<span id="cb261-3"><a href="code_3.html#cb261-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb261-4"><a href="code_3.html#cb261-4" tabindex="-1"></a>x_1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb261-5"><a href="code_3.html#cb261-5" tabindex="-1"></a>x_2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb261-6"><a href="code_3.html#cb261-6" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x_1, x_2)</span>
+<span id="cb261-7"><a href="code_3.html#cb261-7" tabindex="-1"></a>X_cluster <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(X, <span class="at">centers =</span> <span class="dv">2</span>)</span>
+<span id="cb261-8"><a href="code_3.html#cb261-8" tabindex="-1"></a>X_1 <span class="ot">&lt;-</span> X[<span class="fu">which</span>(X_cluster<span class="sc">$</span>cluster <span class="sc">==</span> <span class="dv">1</span>),]</span>
+<span id="cb261-9"><a href="code_3.html#cb261-9" tabindex="-1"></a>X_2 <span class="ot">&lt;-</span> X[<span class="fu">which</span>(X_cluster<span class="sc">$</span>cluster <span class="sc">==</span> <span class="dv">2</span>),]</span>
+<span id="cb261-10"><a href="code_3.html#cb261-10" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rbind</span>(X_1,X_2)</span>
+<span id="cb261-11"><a href="code_3.html#cb261-11" tabindex="-1"></a>X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">asplit</span>(X,<span class="dv">1</span>), <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
+<span id="cb261-12"><a href="code_3.html#cb261-12" tabindex="-1"></a>X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb261-13"><a href="code_3.html#cb261-13" tabindex="-1"></a>z_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb261-14"><a href="code_3.html#cb261-14" tabindex="-1"></a>z_2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb261-15"><a href="code_3.html#cb261-15" tabindex="-1"></a>f_z1 <span class="ot">&lt;-</span> <span class="fu">sin</span>((z_1 <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> pi)</span>
+<span id="cb261-16"><a href="code_3.html#cb261-16" tabindex="-1"></a>f_z2 <span class="ot">&lt;-</span> <span class="fu">cos</span>((z_2 <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> pi) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">/</span> pi</span>
+<span id="cb261-17"><a href="code_3.html#cb261-17" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">times =</span> <span class="dv">50</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">3</span>), <span class="at">times =</span> <span class="dv">50</span>))</span>
+<span id="cb261-18"><a href="code_3.html#cb261-18" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>X_diag <span class="sc">%*%</span> beta <span class="sc">-</span> f_z1 <span class="sc">-</span> f_z2)) <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">100</span>))</span>
+<span id="cb261-19"><a href="code_3.html#cb261-19" tabindex="-1"></a>status <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.2</span>))</span>
+<span id="cb261-20"><a href="code_3.html#cb261-20" tabindex="-1"></a></span>
+<span id="cb261-21"><a href="code_3.html#cb261-21" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">cbind</span>(time, status)</span>
+<span id="cb261-22"><a href="code_3.html#cb261-22" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">cbind</span>(z_1, z_2)</span>
+<span id="cb261-23"><a href="code_3.html#cb261-23" tabindex="-1"></a></span>
+<span id="cb261-24"><a href="code_3.html#cb261-24" tabindex="-1"></a>case3 <span class="ot">&lt;-</span> SubgroupBeta<span class="sc">$</span><span class="fu">new</span>(<span class="at">T =</span> T, <span class="at">X =</span> X, <span class="at">Z =</span> Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="fl">0.1</span>, <span class="at">a =</span> <span class="fl">2.5</span>, <span class="at">theta =</span> <span class="dv">1</span>, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>)</span>
+<span id="cb261-25"><a href="code_3.html#cb261-25" tabindex="-1"></a>result3 <span class="ot">&lt;-</span> case3<span class="sc">$</span><span class="fu">run</span>(<span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>##   用户   系统   流逝 
+## 204.81   3.26 210.14</code></pre>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="code_3.html#cb263-1" tabindex="-1"></a>result3<span class="sc">$</span>alpha</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
-##   label  size alpha    
+##   label  size beta     
 ##   &lt;dbl&gt; &lt;int&gt; &lt;list&gt;   
-## 1     1    55 &lt;dbl [1]&gt;
-## 2     2    45 &lt;dbl [1]&gt;</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="code_3.html#cb239-1" tabindex="-1"></a>result1_1[[<span class="st">&#39;alpha&#39;</span>]]<span class="sc">$</span>alpha</span></code></pre></div>
+## 1     1    56 &lt;dbl [2]&gt;
+## 2     2    44 &lt;dbl [2]&gt;</code></pre>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="code_3.html#cb265-1" tabindex="-1"></a>result3<span class="sc">$</span>alpha<span class="sc">$</span>beta</span></code></pre></div>
 <pre><code>## [[1]]
-## [1] -0.108
+## [1] 2.26 2.19
 ## 
 ## [[2]]
-## [1] 1.848</code></pre>
-<hr />
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="code_3.html#cb241-1" tabindex="-1"></a><span class="co"># case1_2 beta = +-1.5</span></span>
-<span id="cb241-2"><a href="code_3.html#cb241-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb241-3"><a href="code_3.html#cb241-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb241-4"><a href="code_3.html#cb241-4" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
-<span id="cb241-5"><a href="code_3.html#cb241-5" tabindex="-1"></a>f_z <span class="ot">&lt;-</span> <span class="fu">sin</span>(pi<span class="sc">*</span>(Z<span class="fl">-0.5</span>))</span>
-<span id="cb241-6"><a href="code_3.html#cb241-6" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>,<span class="fl">1.5</span>), <span class="at">each=</span><span class="dv">50</span>)</span>
-<span id="cb241-7"><a href="code_3.html#cb241-7" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">diag</span>(X) <span class="sc">%*%</span> beta <span class="sc">-</span> f_z)) <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">100</span>))</span>
-<span id="cb241-8"><a href="code_3.html#cb241-8" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">max =</span> <span class="dv">12</span>)            <span class="co"># 删失时间</span></span>
-<span id="cb241-9"><a href="code_3.html#cb241-9" tabindex="-1"></a>Cr <span class="ot">&lt;-</span> <span class="fu">sum</span>(C <span class="sc">&lt;=</span> time) <span class="sc">/</span> <span class="fu">length</span>(C)     <span class="co"># 刚好是10%删失率</span></span>
-<span id="cb241-10"><a href="code_3.html#cb241-10" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;删失率为：&#39;</span>, Cr))</span></code></pre></div>
-<pre><code>## [1] &quot;删失率为：0.1&quot;</code></pre>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="code_3.html#cb243-1" tabindex="-1"></a>status <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(C <span class="sc">&lt;=</span> time)      <span class="co"># 是否删失</span></span>
-<span id="cb243-2"><a href="code_3.html#cb243-2" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">pmin</span>(time, C)                <span class="co"># 观测时间</span></span>
-<span id="cb243-3"><a href="code_3.html#cb243-3" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">cbind</span>(time, status)</span>
-<span id="cb243-4"><a href="code_3.html#cb243-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> X <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb243-5"><a href="code_3.html#cb243-5" tabindex="-1"></a>Z <span class="ot">&lt;-</span> Z <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb243-6"><a href="code_3.html#cb243-6" tabindex="-1"></a>case1_2 <span class="ot">&lt;-</span> SubgroupBeta<span class="sc">$</span><span class="fu">new</span>(<span class="at">T =</span> T, <span class="at">X =</span> X, <span class="at">Z =</span> Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="fl">0.06</span>, <span class="at">a =</span> <span class="fl">2.5</span>, <span class="at">theta =</span> <span class="dv">1</span>, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>)</span>
-<span id="cb243-7"><a href="code_3.html#cb243-7" tabindex="-1"></a>result1_2 <span class="ot">&lt;-</span> case1_2<span class="sc">$</span><span class="fu">run</span>(<span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>##  用户  系统  流逝 
-## 20.57  0.09 20.65</code></pre>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="code_3.html#cb245-1" tabindex="-1"></a>result1_2[[<span class="st">&#39;alpha&#39;</span>]]</span></code></pre></div>
-<pre><code>## # A tibble: 2 × 3
-##   label  size alpha    
-##   &lt;dbl&gt; &lt;int&gt; &lt;list&gt;   
-## 1     1    55 &lt;dbl [1]&gt;
-## 2     2    45 &lt;dbl [1]&gt;</code></pre>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="code_3.html#cb247-1" tabindex="-1"></a>result1_2[[<span class="st">&#39;alpha&#39;</span>]]<span class="sc">$</span>alpha</span></code></pre></div>
-<pre><code>## [[1]]
-## [1] -0.391
-## 
-## [[2]]
-## [1] 0.634</code></pre>
-<hr />
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="code_3.html#cb249-1" tabindex="-1"></a><span class="co"># case1_3 beta = +-3</span></span>
-<span id="cb249-2"><a href="code_3.html#cb249-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb249-3"><a href="code_3.html#cb249-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb249-4"><a href="code_3.html#cb249-4" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
-<span id="cb249-5"><a href="code_3.html#cb249-5" tabindex="-1"></a>f_z <span class="ot">&lt;-</span> <span class="fu">sin</span>(pi<span class="sc">*</span>(Z<span class="fl">-0.5</span>))</span>
-<span id="cb249-6"><a href="code_3.html#cb249-6" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>), <span class="at">each=</span><span class="dv">50</span>)</span>
-<span id="cb249-7"><a href="code_3.html#cb249-7" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">diag</span>(X) <span class="sc">%*%</span> beta <span class="sc">-</span> f_z)) <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">100</span>))</span>
-<span id="cb249-8"><a href="code_3.html#cb249-8" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">max =</span> <span class="dv">50</span>)            <span class="co"># 删失时间</span></span>
-<span id="cb249-9"><a href="code_3.html#cb249-9" tabindex="-1"></a>Cr <span class="ot">&lt;-</span> <span class="fu">sum</span>(C <span class="sc">&lt;=</span> time) <span class="sc">/</span> <span class="fu">length</span>(C)     <span class="co"># 刚好是10%删失率</span></span>
-<span id="cb249-10"><a href="code_3.html#cb249-10" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;删失率为：&#39;</span>, Cr))</span></code></pre></div>
-<pre><code>## [1] &quot;删失率为：0.1&quot;</code></pre>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="code_3.html#cb251-1" tabindex="-1"></a>status <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(C <span class="sc">&lt;=</span> time)      <span class="co"># 是否删失</span></span>
-<span id="cb251-2"><a href="code_3.html#cb251-2" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">pmin</span>(time, C)                <span class="co"># 观测时间</span></span>
-<span id="cb251-3"><a href="code_3.html#cb251-3" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">cbind</span>(time, status)</span>
-<span id="cb251-4"><a href="code_3.html#cb251-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> X <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb251-5"><a href="code_3.html#cb251-5" tabindex="-1"></a>Z <span class="ot">&lt;-</span> Z <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb251-6"><a href="code_3.html#cb251-6" tabindex="-1"></a>case1_3 <span class="ot">&lt;-</span> SubgroupBeta<span class="sc">$</span><span class="fu">new</span>(<span class="at">T =</span> T, <span class="at">X =</span> X, <span class="at">Z =</span> Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="fl">0.06</span>, <span class="at">a =</span> <span class="fl">2.5</span>, <span class="at">theta =</span> <span class="dv">1</span>, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>)</span>
-<span id="cb251-7"><a href="code_3.html#cb251-7" tabindex="-1"></a>result1_3 <span class="ot">&lt;-</span> case1_3<span class="sc">$</span><span class="fu">run</span>(<span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>##  用户  系统  流逝 
-## 42.08  0.20 42.31</code></pre>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="code_3.html#cb253-1" tabindex="-1"></a>result1_3[[<span class="st">&#39;alpha&#39;</span>]]</span></code></pre></div>
-<pre><code>## # A tibble: 2 × 3
-##   label  size alpha    
-##   &lt;dbl&gt; &lt;int&gt; &lt;list&gt;   
-## 1     1    55 &lt;dbl [1]&gt;
-## 2     2    45 &lt;dbl [1]&gt;</code></pre>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="code_3.html#cb255-1" tabindex="-1"></a>result1_3[[<span class="st">&#39;alpha&#39;</span>]]<span class="sc">$</span>alpha</span></code></pre></div>
-<pre><code>## [[1]]
-## [1] -1.197
-## 
-## [[2]]
-## [1] 0.72</code></pre>
+## [1] -2.56 -2.54</code></pre>
 
 </div>
 </div>

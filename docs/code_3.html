@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>14.3 （异质）线性+非线性的Cox比例风险模型 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="14.3 （异质）线性+非线性的Cox比例风险模型 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="14.3 （异质）线性+非线性的Cox比例风险模型 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="code_2.html"/>
+<link rel="next" href="ball.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="内容组成.html"><a href="内容组成.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="个人简介.html"><a href="个人简介.html"><i class="fa fa-check"></i>个人简介</a></li>
+</ul></li>
+<li class="part"><span><b>I 专项</b></span></li>
+<li class="chapter" data-level="1" data-path="rmd.html"><a href="rmd.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rmd_1.html"><a href="rmd_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="rmd_2.html"><a href="rmd_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="1.3" data-path="rmd_3.html"><a href="rmd_3.html"><i class="fa fa-check"></i><b>1.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 标题</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 换行</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_4"><i class="fa fa-check"></i><b>1.3.4</b> 链接</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_5"><i class="fa fa-check"></i><b>1.3.5</b> 引用</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_6"><i class="fa fa-check"></i><b>1.3.6</b> 列表</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_7"><i class="fa fa-check"></i><b>1.3.7</b> 代码</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_8"><i class="fa fa-check"></i><b>1.3.8</b> 表格</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_9"><i class="fa fa-check"></i><b>1.3.9</b> 图片</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_10"><i class="fa fa-check"></i><b>1.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rmd_4.html"><a href="rmd_4.html"><i class="fa fa-check"></i><b>1.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_2"><i class="fa fa-check"></i><b>1.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_4"><i class="fa fa-check"></i><b>1.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_5"><i class="fa fa-check"></i><b>1.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="1.4.6" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_6"><i class="fa fa-check"></i><b>1.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="1.4.7" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_7"><i class="fa fa-check"></i><b>1.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="1.4.8" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_8"><i class="fa fa-check"></i><b>1.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="1.4.9" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_9"><i class="fa fa-check"></i><b>1.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="1.4.10" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_10"><i class="fa fa-check"></i><b>1.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="1.4.11" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_11"><i class="fa fa-check"></i><b>1.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="1.4.12" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_12"><i class="fa fa-check"></i><b>1.4.12</b> 注释</a></li>
+<li class="chapter" data-level="1.4.13" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_13"><i class="fa fa-check"></i><b>1.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="1.4.14" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_14"><i class="fa fa-check"></i><b>1.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rmd_5.html"><a href="rmd_5.html"><i class="fa fa-check"></i><b>1.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_1"><i class="fa fa-check"></i><b>1.5.1</b> 标签</a></li>
+<li class="chapter" data-level="1.5.2" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_2"><i class="fa fa-check"></i><b>1.5.2</b> 目录</a></li>
+<li class="chapter" data-level="1.5.3" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_3"><i class="fa fa-check"></i><b>1.5.3</b> 外观</a></li>
+<li class="chapter" data-level="1.5.4" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_4"><i class="fa fa-check"></i><b>1.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="1.5.5" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_5"><i class="fa fa-check"></i><b>1.5.5</b> 表格</a></li>
+<li class="chapter" data-level="1.5.6" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_6"><i class="fa fa-check"></i><b>1.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="1.5.7" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_7"><i class="fa fa-check"></i><b>1.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="1.5.8" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_8"><i class="fa fa-check"></i><b>1.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="1.5.9" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_9"><i class="fa fa-check"></i><b>1.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="1.5.10" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_10"><i class="fa fa-check"></i><b>1.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rmd_6.html"><a href="rmd_6.html"><i class="fa fa-check"></i><b>1.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_1"><i class="fa fa-check"></i><b>1.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="1.6.2" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_2"><i class="fa fa-check"></i><b>1.6.2</b> 目录</a></li>
+<li class="chapter" data-level="1.6.3" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_3"><i class="fa fa-check"></i><b>1.6.3</b> 图与表</a></li>
+<li class="chapter" data-level="1.6.4" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_4"><i class="fa fa-check"></i><b>1.6.4</b> 语法高亮</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manim.html"><a href="manim.html"><i class="fa fa-check"></i><b>2</b> Manim</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manim_1.html"><a href="manim_1.html"><i class="fa fa-check"></i><b>2.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="2.2" data-path="manim_2.html"><a href="manim_2.html"><i class="fa fa-check"></i><b>2.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="2.3" data-path="manim_3.html"><a href="manim_3.html"><i class="fa fa-check"></i><b>2.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="manim_3.html"><a href="manim_3.html#manim_3_1"><i class="fa fa-check"></i><b>2.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="2.3.2" data-path="manim_3.html"><a href="manim_3.html#manim_3_2"><i class="fa fa-check"></i><b>2.3.2</b> 片段</a></li>
+<li class="chapter" data-level="2.3.3" data-path="manim_3.html"><a href="manim_3.html#manim_3_3"><i class="fa fa-check"></i><b>2.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="manim_4.html"><a href="manim_4.html"><i class="fa fa-check"></i><b>2.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="manim_4.html"><a href="manim_4.html#manim_4_1"><i class="fa fa-check"></i><b>2.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="manim_4.html"><a href="manim_4.html#manim_4_2"><i class="fa fa-check"></i><b>2.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="2.4.3" data-path="manim_4.html"><a href="manim_4.html#manim_4_3"><i class="fa fa-check"></i><b>2.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="manim_5.html"><a href="manim_5.html"><i class="fa fa-check"></i><b>2.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manim_5.html"><a href="manim_5.html#manim_5_1"><i class="fa fa-check"></i><b>2.5.1</b> Text</a></li>
+<li class="chapter" data-level="2.5.2" data-path="manim_5.html"><a href="manim_5.html#manim_5_2"><i class="fa fa-check"></i><b>2.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="2.5.3" data-path="manim_5.html"><a href="manim_5.html#manim_5_3"><i class="fa fa-check"></i><b>2.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="2.5.4" data-path="manim_5.html"><a href="manim_5.html#manim_5_4"><i class="fa fa-check"></i><b>2.5.4</b> Tex</a></li>
+<li class="chapter" data-level="2.5.5" data-path="manim_5.html"><a href="manim_5.html#manim_5_5"><i class="fa fa-check"></i><b>2.5.5</b> MathTex</a></li>
+<li class="chapter" data-level="2.5.6" data-path="manim_5.html"><a href="manim_5.html#manim_5_6"><i class="fa fa-check"></i><b>2.5.6</b> Title</a></li>
+<li class="chapter" data-level="2.5.7" data-path="manim_5.html"><a href="manim_5.html#manim_5_7"><i class="fa fa-check"></i><b>2.5.7</b> BulletedList</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manim_6.html"><a href="manim_6.html"><i class="fa fa-check"></i><b>2.6</b> 内置颜色</a></li>
+<li class="chapter" data-level="2.7" data-path="manim_7.html"><a href="manim_7.html"><i class="fa fa-check"></i><b>2.7</b> 物体的位置与移动</a></li>
+<li class="chapter" data-level="2.8" data-path="manim_8.html"><a href="manim_8.html"><i class="fa fa-check"></i><b>2.8</b> 动画</a></li>
+<li class="chapter" data-level="2.9" data-path="manim_9.html"><a href="manim_9.html"><i class="fa fa-check"></i><b>2.9</b> 镜头视角</a></li>
+<li class="chapter" data-level="2.10" data-path="manim_10.html"><a href="manim_10.html"><i class="fa fa-check"></i><b>2.10</b> 存储对象</a></li>
+<li class="chapter" data-level="2.11" data-path="manim_11.html"><a href="manim_11.html"><i class="fa fa-check"></i><b>2.11</b> 成品</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
+<li class="chapter" data-level="3.2.2" data-path="sql_2.html"><a href="sql_2.html#sql_2_2"><i class="fa fa-check"></i><b>3.2.2</b> 选择数据库与表</a></li>
+<li class="chapter" data-level="3.2.3" data-path="sql_2.html"><a href="sql_2.html#sql_2_3"><i class="fa fa-check"></i><b>3.2.3</b> 检索数据</a></li>
+<li class="chapter" data-level="3.2.4" data-path="sql_2.html"><a href="sql_2.html#sql_2_4"><i class="fa fa-check"></i><b>3.2.4</b> 排序检索数据</a></li>
+<li class="chapter" data-level="3.2.5" data-path="sql_2.html"><a href="sql_2.html#sql_2_5"><i class="fa fa-check"></i><b>3.2.5</b> 过滤数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="sql_2.html"><a href="sql_2.html#sql_2_6"><i class="fa fa-check"></i><b>3.2.6</b> 计算字段</a></li>
+<li class="chapter" data-level="3.2.7" data-path="sql_2.html"><a href="sql_2.html#sql_2_7"><i class="fa fa-check"></i><b>3.2.7</b> 函数</a></li>
+<li class="chapter" data-level="3.2.8" data-path="sql_2.html"><a href="sql_2.html#sql_2_8"><i class="fa fa-check"></i><b>3.2.8</b> 汇总数据</a></li>
+<li class="chapter" data-level="3.2.9" data-path="sql_2.html"><a href="sql_2.html#sql_2_9"><i class="fa fa-check"></i><b>3.2.9</b> 数据分组</a></li>
+<li class="chapter" data-level="3.2.10" data-path="sql_2.html"><a href="sql_2.html#sql_2_10"><i class="fa fa-check"></i><b>3.2.10</b> 子查询</a></li>
+<li class="chapter" data-level="3.2.11" data-path="sql_2.html"><a href="sql_2.html#sql_2_11"><i class="fa fa-check"></i><b>3.2.11</b> 表联结</a></li>
+<li class="chapter" data-level="3.2.12" data-path="sql_2.html"><a href="sql_2.html#sql_2_12"><i class="fa fa-check"></i><b>3.2.12</b> 组合查询</a></li>
+<li class="chapter" data-level="3.2.13" data-path="sql_2.html"><a href="sql_2.html#sql_2_13"><i class="fa fa-check"></i><b>3.2.13</b> 全文本搜索</a></li>
+<li class="chapter" data-level="3.2.14" data-path="sql_2.html"><a href="sql_2.html#sql_2_14"><i class="fa fa-check"></i><b>3.2.14</b> 插入数据</a></li>
+<li class="chapter" data-level="3.2.15" data-path="sql_2.html"><a href="sql_2.html#sql_2_15"><i class="fa fa-check"></i><b>3.2.15</b> 更新数据</a></li>
+<li class="chapter" data-level="3.2.16" data-path="sql_2.html"><a href="sql_2.html#sql_2_16"><i class="fa fa-check"></i><b>3.2.16</b> 表的操作</a></li>
+<li class="chapter" data-level="3.2.17" data-path="sql_2.html"><a href="sql_2.html#sql_2_17"><i class="fa fa-check"></i><b>3.2.17</b> 使用视图</a></li>
+<li class="chapter" data-level="3.2.18" data-path="sql_2.html"><a href="sql_2.html#sql_2_18"><i class="fa fa-check"></i><b>3.2.18</b> 使用存储过程</a></li>
+<li class="chapter" data-level="3.2.19" data-path="sql_2.html"><a href="sql_2.html#sql_2_19"><i class="fa fa-check"></i><b>3.2.19</b> 触发器</a></li>
+<li class="chapter" data-level="3.2.20" data-path="sql_2.html"><a href="sql_2.html#sql_2_20"><i class="fa fa-check"></i><b>3.2.20</b> 事务处理</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spider_1.html"><a href="spider_1.html"><i class="fa fa-check"></i><b>4.1</b> 提要</a></li>
+</ul></li>
+<li class="part"><span><b>II 模型与方法</b></span></li>
+<li class="chapter" data-level="5" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>5</b> 应用回归分析</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="reg_1.html"><a href="reg_1.html"><i class="fa fa-check"></i><b>5.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="reg_1.html"><a href="reg_1.html#reg_1_1"><i class="fa fa-check"></i><b>5.1.1</b> 变量间的相关关系</a></li>
+<li class="chapter" data-level="5.1.2" data-path="reg_1.html"><a href="reg_1.html#reg_1_2"><i class="fa fa-check"></i><b>5.1.2</b> 回归模型的一般形式</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="reg_2.html"><a href="reg_2.html"><i class="fa fa-check"></i><b>5.2</b> 假定</a></li>
+<li class="chapter" data-level="5.3" data-path="reg_3.html"><a href="reg_3.html"><i class="fa fa-check"></i><b>5.3</b> 线性回归模型</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="reg_3.html"><a href="reg_3.html#reg_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 一元线性回归模型</a></li>
+<li class="chapter" data-level="5.3.2" data-path="reg_3.html"><a href="reg_3.html#reg_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 多元线性回归模型</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="reg_4.html"><a href="reg_4.html"><i class="fa fa-check"></i><b>5.4</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>5.4.1</b> 最小二乘估计</a></li>
+<li class="chapter" data-level="5.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>5.4.2</b> 极大似然估计</a></li>
+<li class="chapter" data-level="5.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>5.4.3</b> 矩估计</a></li>
+<li class="chapter" data-level="5.4.4" data-path="reg_4.html"><a href="reg_4.html#reg_4_4"><i class="fa fa-check"></i><b>5.4.4</b> 几何视角</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="reg_5.html"><a href="reg_5.html"><i class="fa fa-check"></i><b>5.5</b> 最小二乘估计的性质</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="reg_5.html"><a href="reg_5.html#reg_5_1"><i class="fa fa-check"></i><b>5.5.1</b> 线性</a></li>
+<li class="chapter" data-level="5.5.2" data-path="reg_5.html"><a href="reg_5.html#reg_5_2"><i class="fa fa-check"></i><b>5.5.2</b> 无偏性</a></li>
+<li class="chapter" data-level="5.5.3" data-path="reg_5.html"><a href="reg_5.html#reg_5_3"><i class="fa fa-check"></i><b>5.5.3</b> 有效性</a></li>
+<li class="chapter" data-level="5.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>5.5.4</b> 方差</a></li>
+<li class="chapter" data-level="5.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>5.5.5</b> 正态性</a></li>
+<li class="chapter" data-level="5.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>5.5.6</b> 残差</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>5.6</b> 显著性检验</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>5.6.1</b> 区间估计</a></li>
+<li class="chapter" data-level="5.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>5.6.2</b> t检验</a></li>
+<li class="chapter" data-level="5.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>5.6.3</b> F检验</a></li>
+<li class="chapter" data-level="5.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>5.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="5.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>5.6.5</b> 样本决定系数</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>5.7</b> 预测</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>5.7.1</b> 预测因变量新值的均值</a></li>
+<li class="chapter" data-level="5.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>5.7.2</b> 预测因变量的新值</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>5.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="5.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>5.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>5.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="5.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>5.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>5.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="5.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="reg_11.html"><a href="reg_11.html"><i class="fa fa-check"></i><b>5.11</b> 重要的定义和等式</a></li>
+<li class="chapter" data-level="5.12" data-path="reg_12.html"><a href="reg_12.html"><i class="fa fa-check"></i><b>5.12</b> 回归诊断</a>
+<ul>
+<li class="chapter" data-level="5.12.1" data-path="reg_12.html"><a href="reg_12.html#reg_12_1"><i class="fa fa-check"></i><b>5.12.1</b> 残差分析</a></li>
+<li class="chapter" data-level="5.12.2" data-path="reg_12.html"><a href="reg_12.html#reg_12_2"><i class="fa fa-check"></i><b>5.12.2</b> 异常点和强影响点</a></li>
+<li class="chapter" data-level="5.12.3" data-path="reg_12.html"><a href="reg_12.html#reg_12_3"><i class="fa fa-check"></i><b>5.12.3</b> 异方差</a></li>
+<li class="chapter" data-level="5.12.4" data-path="reg_12.html"><a href="reg_12.html#reg_12_4"><i class="fa fa-check"></i><b>5.12.4</b> 自相关</a></li>
+<li class="chapter" data-level="5.12.5" data-path="reg_12.html"><a href="reg_12.html#reg_12_5"><i class="fa fa-check"></i><b>5.12.5</b> 多重共线性</a></li>
+</ul></li>
+<li class="chapter" data-level="5.13" data-path="reg_13.html"><a href="reg_13.html"><i class="fa fa-check"></i><b>5.13</b> 变量选择与正则化</a>
+<ul>
+<li class="chapter" data-level="5.13.1" data-path="reg_13.html"><a href="reg_13.html#reg_13_1"><i class="fa fa-check"></i><b>5.13.1</b> 冗余与遗漏</a></li>
+<li class="chapter" data-level="5.13.2" data-path="reg_13.html"><a href="reg_13.html#reg_13_2"><i class="fa fa-check"></i><b>5.13.2</b> 变量选择的传统方法</a></li>
+<li class="chapter" data-level="5.13.3" data-path="reg_13.html"><a href="reg_13.html#reg_13_3"><i class="fa fa-check"></i><b>5.13.3</b> 变量选择的正则化方法</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>6</b> 应用多元统计</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ms_1.html"><a href="ms_1.html"><i class="fa fa-check"></i><b>6.1</b> 矩阵运算</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ms_1.html"><a href="ms_1.html#ms_1_1"><i class="fa fa-check"></i><b>6.1.1</b> Kronecker积</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ms_1.html"><a href="ms_1.html#ms_1_2"><i class="fa fa-check"></i><b>6.1.2</b> 拉直</a></li>
+<li class="chapter" data-level="6.1.3" data-path="ms_1.html"><a href="ms_1.html#ms_1_3"><i class="fa fa-check"></i><b>6.1.3</b> 减号逆与加号逆</a></li>
+<li class="chapter" data-level="6.1.4" data-path="ms_1.html"><a href="ms_1.html#ms_1_4"><i class="fa fa-check"></i><b>6.1.4</b> 分块矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ms_2.html"><a href="ms_2.html"><i class="fa fa-check"></i><b>6.2</b> 多元正态分布</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ms_2.html"><a href="ms_2.html#ms_2_1"><i class="fa fa-check"></i><b>6.2.1</b> 多元分布的基本运算性质</a></li>
+<li class="chapter" data-level="6.2.2" data-path="ms_2.html"><a href="ms_2.html#ms_2_2"><i class="fa fa-check"></i><b>6.2.2</b> 多元正态分布的定义</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ms_2.html"><a href="ms_2.html#ms_2_3"><i class="fa fa-check"></i><b>6.2.3</b> 正态分布的条件分布和独立性</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ms_2.html"><a href="ms_2.html#ms_2_4"><i class="fa fa-check"></i><b>6.2.4</b> 偏相关系数与全相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ms_3.html"><a href="ms_3.html"><i class="fa fa-check"></i><b>6.3</b> 主成分分析</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ms_3.html"><a href="ms_3.html#ms_3_1"><i class="fa fa-check"></i><b>6.3.1</b> 总体主成分</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ms_3.html"><a href="ms_3.html#ms_3_2"><i class="fa fa-check"></i><b>6.3.2</b> 样本主成分</a></li>
+<li class="chapter" data-level="6.3.3" data-path="ms_3.html"><a href="ms_3.html#ms_3_3"><i class="fa fa-check"></i><b>6.3.3</b> 关于主成分</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ms_4.html"><a href="ms_4.html"><i class="fa fa-check"></i><b>6.4</b> 因子分析</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ms_4.html"><a href="ms_4.html#ms_4_1"><i class="fa fa-check"></i><b>6.4.1</b> 正交因子模型</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ms_4.html"><a href="ms_4.html#ms_4_3"><i class="fa fa-check"></i><b>6.4.2</b> 参数估计</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ms_4.html"><a href="ms_4.html#ms_4_4"><i class="fa fa-check"></i><b>6.4.3</b> 因子旋转</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ms_4.html"><a href="ms_4.html#ms_4_5"><i class="fa fa-check"></i><b>6.4.4</b> 因子得分</a></li>
+<li class="chapter" data-level="6.4.5" data-path="ms_4.html"><a href="ms_4.html#ms_4_6"><i class="fa fa-check"></i><b>6.4.5</b> 因子分析和主成分分析的区别与联系</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ms_5.html"><a href="ms_5.html"><i class="fa fa-check"></i><b>6.5</b> 判别分析</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="ms_5.html"><a href="ms_5.html#ms_5_1"><i class="fa fa-check"></i><b>6.5.1</b> 距离判别</a></li>
+<li class="chapter" data-level="6.5.2" data-path="ms_5.html"><a href="ms_5.html#ms_5_2"><i class="fa fa-check"></i><b>6.5.2</b> 贝叶斯判别</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="ms_6.html"><a href="ms_6.html"><i class="fa fa-check"></i><b>6.6</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="ms_6.html"><a href="ms_6.html#ms_6_1"><i class="fa fa-check"></i><b>6.6.1</b> 距离与相似性的度量</a></li>
+<li class="chapter" data-level="6.6.2" data-path="ms_6.html"><a href="ms_6.html#ms_6_2"><i class="fa fa-check"></i><b>6.6.2</b> 系统聚类</a></li>
+<li class="chapter" data-level="6.6.3" data-path="ms_6.html"><a href="ms_6.html#ms_6_3"><i class="fa fa-check"></i><b>6.6.3</b> Kmeans</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="ms_7.html"><a href="ms_7.html"><i class="fa fa-check"></i><b>6.7</b> 典型相关分析</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="model.html"><a href="model.html"><i class="fa fa-check"></i><b>7</b> 模型</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="model_basic.html"><a href="model_basic.html"><i class="fa fa-check"></i><b>7.1</b> 基础知识</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="model_basic.html"><a href="model_basic.html#model_basic_1"><i class="fa fa-check"></i><b>7.1.1</b> 偏差-方差权衡</a></li>
+<li class="chapter" data-level="7.1.2" data-path="model_basic.html"><a href="model_basic.html#model_basic_2"><i class="fa fa-check"></i><b>7.1.2</b> 评价指标</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="model_1.html"><a href="model_1.html"><i class="fa fa-check"></i><b>7.2</b> 决策树</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="model_1.html"><a href="model_1.html#model_1_1"><i class="fa fa-check"></i><b>7.2.1</b> 分类树</a></li>
+<li class="chapter" data-level="7.2.2" data-path="model_1.html"><a href="model_1.html#model_1_2"><i class="fa fa-check"></i><b>7.2.2</b> 回归树</a></li>
+<li class="chapter" data-level="7.2.3" data-path="model_1.html"><a href="model_1.html#model_1_3"><i class="fa fa-check"></i><b>7.2.3</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="model_2.html"><a href="model_2.html"><i class="fa fa-check"></i><b>7.3</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="model_2.html"><a href="model_2.html#model_2_1"><i class="fa fa-check"></i><b>7.3.1</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="model_3.html"><a href="model_3.html"><i class="fa fa-check"></i><b>7.4</b> XGBoost</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="model_3.html"><a href="model_3.html#model_3_1"><i class="fa fa-check"></i><b>7.4.1</b> 原理</a></li>
+<li class="chapter" data-level="7.4.2" data-path="model_3.html"><a href="model_3.html#model_3_2"><i class="fa fa-check"></i><b>7.4.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="model_4.html"><a href="model_4.html"><i class="fa fa-check"></i><b>7.5</b> 因果森林</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="model_4.html"><a href="model_4.html#model_4_1"><i class="fa fa-check"></i><b>7.5.1</b> 原理</a></li>
+<li class="chapter" data-level="7.5.2" data-path="model_4.html"><a href="model_4.html#model_4_2"><i class="fa fa-check"></i><b>7.5.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="model_5.html"><a href="model_5.html"><i class="fa fa-check"></i><b>7.6</b> ABtest</a></li>
+<li class="chapter" data-level="7.7" data-path="model_6.html"><a href="model_6.html"><i class="fa fa-check"></i><b>7.7</b> 贝叶斯方法</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="model_6.html"><a href="model_6.html#model_6_1"><i class="fa fa-check"></i><b>7.7.1</b> 贝叶斯判别法</a></li>
+<li class="chapter" data-level="7.7.2" data-path="model_6.html"><a href="model_6.html#model_6_2"><i class="fa fa-check"></i><b>7.7.2</b> 朴素贝叶斯分类器</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>8</b> 生存分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>8.1</b> 基本概念</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>8.1.1</b> 删失数据</a></li>
+<li class="chapter" data-level="8.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 截断数据</a></li>
+<li class="chapter" data-level="8.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 函数</a></li>
+<li class="chapter" data-level="8.1.4" data-path="survival_1.html"><a href="survival_1.html#survival_1_4"><i class="fa fa-check"></i><b>8.1.4</b> 似然函数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>8.2</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>8.2.1</b> KM估计</a></li>
+<li class="chapter" data-level="8.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>8.2.2</b> NA估计</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>8.3</b> 置信区间与置信带</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>8.3.1</b> 置信区间</a></li>
+<li class="chapter" data-level="8.3.2" data-path="survival_3.html"><a href="survival_3.html#survival_3_2"><i class="fa fa-check"></i><b>8.3.2</b> 置信带</a></li>
+<li class="chapter" data-level="8.3.3" data-path="survival_3.html"><a href="survival_3.html#survival_3_3"><i class="fa fa-check"></i><b>8.3.3</b> 平均生存时间的置信区间</a></li>
+<li class="chapter" data-level="8.3.4" data-path="survival_3.html"><a href="survival_3.html#survival_3_4"><i class="fa fa-check"></i><b>8.3.4</b> 分位数的置信区间</a></li>
+<li class="chapter" data-level="8.3.5" data-path="survival_3.html"><a href="survival_3.html#survival_3_5"><i class="fa fa-check"></i><b>8.3.5</b> 左截断数据的置信区间</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>8.4</b> 假设检验</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="survival_4.html"><a href="survival_4.html#survival_4_1"><i class="fa fa-check"></i><b>8.4.1</b> 单样本检验</a></li>
+<li class="chapter" data-level="8.4.2" data-path="survival_4.html"><a href="survival_4.html#survival_4_2"><i class="fa fa-check"></i><b>8.4.2</b> 多样本检验</a></li>
+<li class="chapter" data-level="8.4.3" data-path="survival_4.html"><a href="survival_4.html#survival_4_3"><i class="fa fa-check"></i><b>8.4.3</b> 趋势性检验</a></li>
+<li class="chapter" data-level="8.4.4" data-path="survival_4.html"><a href="survival_4.html#survival_4_4"><i class="fa fa-check"></i><b>8.4.4</b> 分层检验</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>8.5</b> Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_1"><i class="fa fa-check"></i><b>8.5.1</b> 偏对数似然函数</a></li>
+<li class="chapter" data-level="8.5.2" data-path="survival_5.html"><a href="survival_5.html#survival_5_x"><i class="fa fa-check"></i><b>8.5.2</b> Regularization Paths for Cox’s Proportional Hazards Model via Coordinate Descent</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III 多源数据分析</b></span></li>
+<li class="chapter" data-level="9" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>9</b> 网络型数据</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>9.1</b> 构造联系</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>9.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="9.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>9.1.2</b> 社会网络量表</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>9.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="9.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>9.3</b> 拓展分析</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>9.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="9.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>9.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="9.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>9.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="9.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>9.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="9.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>9.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="9.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>9.3.6</b> 综合评价</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>9.4</b> 其他启示</a></li>
+</ul></li>
+<li class="part"><span><b>IV 可视化</b></span></li>
+<li class="chapter" data-level="10" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>10</b> Manim动画</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>10.1</b> 最小二乘与投影矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="people.html"><a href="people.html"><i class="fa fa-check"></i><b>11</b> 七普数据可视化</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="people_1.html"><a href="people_1.html"><i class="fa fa-check"></i><b>11.1</b> 数据来源及说明</a></li>
+<li class="chapter" data-level="11.2" data-path="people_2.html"><a href="people_2.html"><i class="fa fa-check"></i><b>11.2</b> 全国人口状况</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="people_2.html"><a href="people_2.html#people_2_1"><i class="fa fa-check"></i><b>11.2.1</b> 人口自然增长率</a></li>
+<li class="chapter" data-level="11.2.2" data-path="people_2.html"><a href="people_2.html#people_2_2"><i class="fa fa-check"></i><b>11.2.2</b> 年龄结构</a></li>
+<li class="chapter" data-level="11.2.3" data-path="people_2.html"><a href="people_2.html#people_2_3"><i class="fa fa-check"></i><b>11.2.3</b> 人口流动</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V 组会论文</b></span></li>
+<li class="chapter" data-level="12" data-path="penalty.html"><a href="penalty.html"><i class="fa fa-check"></i><b>12</b> 变量选择与惩罚函数</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="penalty_1.html"><a href="penalty_1.html"><i class="fa fa-check"></i><b>12.1</b> 准备</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_1"><i class="fa fa-check"></i><b>12.1.1</b> 范数</a></li>
+<li class="chapter" data-level="12.1.2" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_2"><i class="fa fa-check"></i><b>12.1.2</b> 目标函数</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>12.2</b> 单变量选择</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>12.2.1</b> Lasso</a></li>
+<li class="chapter" data-level="12.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>12.2.2</b> Hard &amp; Soft Threshold</a></li>
+<li class="chapter" data-level="12.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>12.2.3</b> SCAD</a></li>
+<li class="chapter" data-level="12.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>12.2.4</b> Adaptive Lasso</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="penalty_3.html"><a href="penalty_3.html"><i class="fa fa-check"></i><b>12.3</b> 群组变量选择</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_1"><i class="fa fa-check"></i><b>12.3.1</b> 思维导图</a></li>
+<li class="chapter" data-level="12.3.2" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_2"><i class="fa fa-check"></i><b>12.3.2</b> 处理高度相关数据的组变量选择方法</a></li>
+<li class="chapter" data-level="12.3.3" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_3"><i class="fa fa-check"></i><b>12.3.3</b> 仅能选择组变量的方法</a></li>
+<li class="chapter" data-level="12.3.4" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_4"><i class="fa fa-check"></i><b>12.3.4</b> 双层变量选择方法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="penalty_4.html"><a href="penalty_4.html"><i class="fa fa-check"></i><b>12.4</b> 算法</a></li>
+<li class="chapter" data-level="12.5" data-path="penalty_5.html"><a href="penalty_5.html"><i class="fa fa-check"></i><b>12.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="integrative.html"><a href="integrative.html"><i class="fa fa-check"></i><b>13</b> 整合分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>13.1</b> 引言</a></li>
+<li class="chapter" data-level="13.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>13.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="13.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>13.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="13.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>13.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="13.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>13.5</b> 具有网络结构关系的整合分析</a></li>
+</ul></li>
+<li class="part"><span><b>VI 算法复现</b></span></li>
+<li class="chapter" data-level="14" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>14</b> 算法复现</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="code_1.html"><a href="code_1.html"><i class="fa fa-check"></i><b>14.1</b> 惩罚Cox比例风险模型</a></li>
+<li class="chapter" data-level="14.2" data-path="code_2.html"><a href="code_2.html"><i class="fa fa-check"></i><b>14.2</b> 异质截距项的线性模型</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="code_2.html"><a href="code_2.html#code_2_1"><i class="fa fa-check"></i><b>14.2.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="14.2.2" data-path="code_2.html"><a href="code_2.html#code_2_2"><i class="fa fa-check"></i><b>14.2.2</b> 数据模拟</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="code_3.html"><a href="code_3.html"><i class="fa fa-check"></i><b>14.3</b> （异质）线性+非线性的Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="code_3.html"><a href="code_3.html#code_3_1"><i class="fa fa-check"></i><b>14.3.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="14.3.2" data-path="code_3.html"><a href="code_3.html#code_3_2"><i class="fa fa-check"></i><b>14.3.2</b> 数据模拟</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII 生活</b></span></li>
+<li class="chapter" data-level="15" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>15</b> 羽毛球修炼手册</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>15.1</b> 发球</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>15.1.1</b> 正手发球</a></li>
+<li class="chapter" data-level="15.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>15.1.2</b> 反手发球</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="code_3" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> （异质）线性+非线性的Cox比例风险模型<a href="code_3.html#code_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>该节是对<em>Subgroup detection in the heterogeneous partially linear additive Cox model</em><span class="citation"><sup>[<a href="#ref-code_3">33</a>]</sup></span>论文的复现。</p>
+<p><span class="math display" id="eq:code-2">\[
+\lambda(t|X_i,Z_i)=\lambda_0(t)\exp\{X_i^T\beta_i+\sum_{j=1}^q f_j(Z_{ij})\} \tag{14.2}
+\]</span></p>
+<p>该论文在Cox比例风险模型的基础上，不单单引入回归系数的异质性，还引入了<span class="math inline">\(f(\cdot)\)</span>来捕捉非线性效应。其中<span class="math inline">\(f(\cdot)\)</span>利用B-spline去近似，同时也引入融合惩罚项<span class="math inline">\(u_{ik}=\beta_i-\beta_k\)</span>与<span class="math inline">\(Y&#39;\)</span>，通过majorized ADMM算法进行求解。</p>
+<div id="code_3_1" class="section level3 hasAnchor" number="14.3.1">
+<h3><span class="header-section-number">14.3.1</span> 自定义算法<a href="code_3.html#code_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>算法逻辑：</p>
+<ol style="list-style-type: decimal">
+<li><p>传入参数</p>
+<ul>
+<li>T：矩阵，必须包含列名“time”和“status”，分别表示观测时间和最终状态</li>
+<li>X：具有线性效应、异质性的协变量矩阵</li>
+<li>Z：具有非线性效应的协变量矩阵</li>
+<li>penalty：惩罚函数类型，SCAD或MCP</li>
+<li>K：K-means的聚类个数</li>
+<li><span class="math inline">\(\lambda\)</span>：惩罚函数中的惩罚系数</li>
+<li>a: 融合惩罚中的正则化因子，默认SCAD是3.7，MCP是2.5</li>
+<li><span class="math inline">\(\theta\)</span>：majorized ADMM算法的惩罚系数</li>
+<li>df：<code>splines::bs()</code>的参数，控制基函数个数，默认为6，详见<code>splines::bs()</code>，下同</li>
+<li>degree：<code>splines::bs()</code>的参数，设置基函数的次数，默认为3</li>
+<li>tol：收敛精度，默认为0.001</li>
+<li>max_iter：最大迭代次数，默认为10000</li>
+</ul></li>
+<li><p>其余符号说明</p>
+<p>除了传入参数外，在运算过程中还有其它符号，其含义如下所示。</p>
+<ul>
+<li><p><span class="math inline">\(\beta\)</span>：<span class="math inline">\((\beta_1^T,\cdots,\beta_n^T)^T\)</span>，长度为<span class="math inline">\(np\)</span>的向量</p></li>
+<li><p><span class="math inline">\(\gamma\)</span>：<span class="math inline">\((\gamma_1^T,\cdots,\gamma_q^T)^T\)</span>，长度为<span class="math inline">\(dq\)</span>的向量，其中<span class="math inline">\(\gamma_j=(\gamma_{j1},\cdots,\gamma_{jd})^T\)</span></p></li>
+<li><p><span class="math inline">\(u\)</span>：<span class="math inline">\((u_{ik}^T,i&lt;k)^T\)</span>，长度为<span class="math inline">\(\frac{n(n-1)}{2}p\)</span>的向量，其中<span class="math inline">\(u_{ik}=\beta_i-\beta_k\)</span></p></li>
+<li><p><span class="math inline">\(Y\)</span>：<span class="math inline">\((Y_1,\cdots,Y_n)^T\)</span>，长度为<span class="math inline">\(n\)</span>的向量，<span class="math inline">\(Y_i=X_i^T\beta_i+B_i(Z_i)^T\gamma\)</span></p></li>
+</ul>
+<blockquote>
+<p><span class="math inline">\(Y&#39;\)</span>的含义类似，只是与<span class="math inline">\(Y\)</span>的更新规则不同</p>
+</blockquote>
+<ul>
+<li><p><span class="math inline">\(w\)</span>：<span class="math inline">\((w_1,\cdots,w_n)^T\)</span>，长度为<span class="math inline">\(n\)</span>的拉格朗日乘子向量</p></li>
+<li><p><span class="math inline">\(\nu\)</span>：<span class="math inline">\((\nu_{ik}^T, i&lt;k)^T\)</span>，长度为<span class="math inline">\(\frac{n(n-1)}{2}p\)</span>的拉格朗日乘子向量</p></li>
+<li><p><span class="math inline">\(B\)</span>：<span class="math inline">\((B_1(Z_1),\cdots,B_n(Z_n))^T\)</span>，<span class="math inline">\(n\times (dq)\)</span>维矩阵，其中每个<span class="math inline">\(B_i(Z_i)\)</span>有<span class="math inline">\(q\)</span>个分量，每个分量又能由<span class="math inline">\(d\)</span>个基函数表示</p></li>
+</ul>
+<blockquote>
+<p>就是按列拼接而成的基函数矩阵，并且经过列方向上的中心化处理</p>
+</blockquote>
+<ul>
+<li><span class="math inline">\(X\)</span>：<span class="math inline">\(\textrm{diag}\{X_1^T,\cdots,X_n^T\}\)</span>，应该是<span class="math inline">\(n \times (pn)\)</span>维矩阵</li>
+</ul>
+<blockquote>
+<p>这里的<span class="math inline">\(\textrm{diag}\)</span>是针对<span class="math inline">\(X_i^T\)</span>而言的，若把<span class="math inline">\(X_i^T\)</span>展开就不是真正意义上的对角阵，而是类似阶梯状的矩阵</p>
+</blockquote>
+<ul>
+<li><p><span class="math inline">\(D\)</span>：<span class="math inline">\(\{(e_i-e_j), i&lt;j\}^T\)</span>，<span class="math inline">\(\frac{n(n-1)}{2} \times n\)</span>矩阵，<span class="math inline">\(e_i\)</span>是第<span class="math inline">\(i\)</span>个分量为1，其余分量为0并且长度为<span class="math inline">\(n\)</span>的向量</p></li>
+<li><p><span class="math inline">\(A\)</span>：<span class="math inline">\(D \otimes I_p\)</span>，<span class="math inline">\(\frac{n(n-1)}{2}p \times np\)</span>维矩阵</p></li>
+<li><p><span class="math inline">\(Q\)</span>：<span class="math inline">\(I_n-B(B^TB)^{-1}B^T\)</span></p></li>
+<li><p><span class="math inline">\(\tilde g_j\)</span>：<span class="math inline">\(\sum_{i=1}^n \delta_iI_{j \in R_i}\)</span>，即第<span class="math inline">\(j\)</span>个对象出现在所有风险集中的次数</p></li>
+<li><p><span class="math inline">\(\nabla_ig(Y&#39;^{(m+1)})\)</span>：<span class="math inline">\(-\delta_i+\sum_{k=1}^n \delta_k[\exp (Y_i&#39;^{(m+1)})\cdot I_{i \in R_k}]/[\sum_{l \in R_k} \exp (Y_l&#39;^{(m+1)})]\)</span></p></li>
+<li><p><span class="math inline">\(c_{ik}\)</span>：<span class="math inline">\(\beta_i-\beta_k+\nu_{ik}/\theta\)</span></p></li>
+</ul></li>
+<li><p>初始值</p>
+<p>对矩阵<span class="math inline">\(X\)</span>进行K-means聚类，一般聚成2-5类即可。对每一类分别拟合基础的Cox比例风险模型，将回归系数作为对应观测的初始值。其余参数的初始值分别设置为<span class="math inline">\(u^{(0)}=A\beta^{(0)}, w^{(0)}=0,\nu^{(0)}=0,Y^{(0)}=Y&#39;^{(0)}=X\beta^{(0)}+B\gamma^{(0)}\)</span>。</p></li>
+</ol>
+<blockquote>
+<p>原文仅提到根据<span class="math inline">\(X\)</span>先进行聚类，再拟合Cox模型，但由于假设<span class="math inline">\(Z\)</span>是同质的，如果也先聚类再拟合，得到的各组回归系数并不相同甚至维度也不满足<span class="math inline">\(\gamma\)</span>的长度，因此将协变量<span class="math inline">\(Z\)</span>转化成<span class="math inline">\(B\)</span>后单独拟合Cox模型，将该次回归系数作为<span class="math inline">\(\gamma\)</span>的初始值</p>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li><p>迭代</p>
+<p>迭代顺序为<span class="math inline">\(\gamma,\beta;Y&#39;,Y,u;w,\nu\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma^{(m+1)} &amp;= (B^TB)^{-1}B^T(Y^{(m)}-X\beta^{(m)}+\frac{w^{(m)}}{\theta}) \\
+\beta^{(m+1)} &amp;= (X^TQX+A^TA)^{-1}[X^TQ(\frac{w^{(m)}}{\theta}+Y^{(m)})+A^T(u^{(m)}-\frac{\nu ^{(m)}}{\theta})] \\
+Y_i&#39;^{(m+1)} &amp;= X_i^T\beta_i^{(m+1)}+B_i(Z_i)^T\gamma^{(m+1)} \\
+Y_i^{(m+1)} &amp;= (\tilde g_i + \theta)^{-1} [-\nabla_ig(Y&#39;^{(m+1)})+\tilde g_i Y_i&#39;^{(m+1)} - w_i^{(m)}+\theta (X_i^T\beta_i^{(m+1)}+B_i(Z_i)^T\gamma^{(m+1)})] \\
+u^{(m+1)} &amp;= \textrm{Penalty} \\
+w_i^{(m+1)} &amp;= w_i^{(m)}+\theta (Y_i^{(m+1)}-X_i^T\beta^{(m+1)}-B_i(Z_i)^T\gamma^{(m+1)}) \\
+\nu_{ik}^{(m+1)} &amp;= \nu_{ik}^{(m)}+\theta (\beta_i^{(m+1)}-\beta_k^{(m+1)}-u_{ik}^{(m+1)})
+\end{aligned}
+\]</span></p></li>
+<li><p>停止</p>
+<p>设置停止条件为达到最大迭代次数或者残差<span class="math inline">\(r\)</span>满足一定的精度要求即可。</p>
+<p><span class="math display">\[
+r^{(m+1)} = ||A\beta^{(m+1)}-u^{(m+1)}||+||Y^{(m+1)}-X\beta^{(m+1)}-B\gamma^{(m+1)}||
+\]</span></p></li>
+<li><p>输出</p>
+<ul>
+<li>beta：列表，X的异质性回归系数</li>
+<li>gamma：向量，基函数的回归系数</li>
+<li>label：向量，样本亚组标签</li>
+<li>alpha：数据框，beta亚组</li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="code_3.html#cb262-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb262-2"><a href="code_3.html#cb262-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb262-3"><a href="code_3.html#cb262-3" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb262-4"><a href="code_3.html#cb262-4" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb262-5"><a href="code_3.html#cb262-5" tabindex="-1"></a><span class="fu">library</span>(R6)</span>
+<span id="cb262-6"><a href="code_3.html#cb262-6" tabindex="-1"></a></span>
+<span id="cb262-7"><a href="code_3.html#cb262-7" tabindex="-1"></a>SubgroupBeta <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(</span>
+<span id="cb262-8"><a href="code_3.html#cb262-8" tabindex="-1"></a>  classname <span class="ot">&lt;-</span>  <span class="st">&#39;SubgroupBeta&#39;</span>,</span>
+<span id="cb262-9"><a href="code_3.html#cb262-9" tabindex="-1"></a>  </span>
+<span id="cb262-10"><a href="code_3.html#cb262-10" tabindex="-1"></a>  public <span class="ot">&lt;-</span>  <span class="fu">list</span>(</span>
+<span id="cb262-11"><a href="code_3.html#cb262-11" tabindex="-1"></a>    <span class="co"># 传入参数</span></span>
+<span id="cb262-12"><a href="code_3.html#cb262-12" tabindex="-1"></a>    <span class="at">T =</span> <span class="cn">NULL</span>,           <span class="co"># 观测时间与最终状态</span></span>
+<span id="cb262-13"><a href="code_3.html#cb262-13" tabindex="-1"></a>    <span class="at">X =</span> <span class="cn">NULL</span>,           <span class="co"># 具有线性效应、异质性的协变量矩阵</span></span>
+<span id="cb262-14"><a href="code_3.html#cb262-14" tabindex="-1"></a>    <span class="at">Z =</span> <span class="cn">NULL</span>,           <span class="co"># 具有非线性效应的协变量矩阵</span></span>
+<span id="cb262-15"><a href="code_3.html#cb262-15" tabindex="-1"></a>    <span class="at">n =</span> <span class="cn">NULL</span>,           <span class="co"># 样本容量</span></span>
+<span id="cb262-16"><a href="code_3.html#cb262-16" tabindex="-1"></a>    <span class="at">p =</span> <span class="cn">NULL</span>,           <span class="co"># X维度p</span></span>
+<span id="cb262-17"><a href="code_3.html#cb262-17" tabindex="-1"></a>    <span class="at">q =</span> <span class="cn">NULL</span>,           <span class="co"># Z维度q</span></span>
+<span id="cb262-18"><a href="code_3.html#cb262-18" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="cn">NULL</span>,     <span class="co"># 惩罚函数，SCAD或MCP，默认为MCP</span></span>
+<span id="cb262-19"><a href="code_3.html#cb262-19" tabindex="-1"></a>    <span class="at">K =</span> <span class="cn">NULL</span>,           <span class="co"># K-means聚类的个数，默认为2</span></span>
+<span id="cb262-20"><a href="code_3.html#cb262-20" tabindex="-1"></a>    <span class="at">lambda =</span> <span class="cn">NULL</span>,      <span class="co"># 惩罚函数的惩罚系数</span></span>
+<span id="cb262-21"><a href="code_3.html#cb262-21" tabindex="-1"></a>    <span class="at">a =</span> <span class="cn">NULL</span>,           <span class="co"># 融合惩罚中的正则化因子，默认SCAD是3.7，MCP是2.5</span></span>
+<span id="cb262-22"><a href="code_3.html#cb262-22" tabindex="-1"></a>    <span class="at">theta =</span> <span class="cn">NULL</span>,       <span class="co"># majorized ADMM算法的惩罚系数</span></span>
+<span id="cb262-23"><a href="code_3.html#cb262-23" tabindex="-1"></a>    <span class="at">df =</span> <span class="cn">NULL</span>,          <span class="co"># 基函数个数</span></span>
+<span id="cb262-24"><a href="code_3.html#cb262-24" tabindex="-1"></a>    <span class="at">degree =</span> <span class="cn">NULL</span>,      <span class="co"># 基函数的次数</span></span>
+<span id="cb262-25"><a href="code_3.html#cb262-25" tabindex="-1"></a>    <span class="at">tol =</span> <span class="cn">NULL</span>,         <span class="co"># 收敛精度，默认为0.001</span></span>
+<span id="cb262-26"><a href="code_3.html#cb262-26" tabindex="-1"></a>    <span class="at">max_iter =</span> <span class="cn">NULL</span>,    <span class="co"># 最大迭代次数，默认为10000</span></span>
+<span id="cb262-27"><a href="code_3.html#cb262-27" tabindex="-1"></a>    </span>
+<span id="cb262-28"><a href="code_3.html#cb262-28" tabindex="-1"></a>    <span class="co"># 初始化</span></span>
+<span id="cb262-29"><a href="code_3.html#cb262-29" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>(T, X, Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, lambda, <span class="at">a =</span> <span class="cn">NULL</span>, theta, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>, <span class="at">tol =</span> <span class="fl">0.001</span>, <span class="at">max_iter =</span> <span class="dv">10000</span>){</span>
+<span id="cb262-30"><a href="code_3.html#cb262-30" tabindex="-1"></a>      self<span class="sc">$</span>T <span class="ot">&lt;-</span> T</span>
+<span id="cb262-31"><a href="code_3.html#cb262-31" tabindex="-1"></a>      self<span class="sc">$</span>X <span class="ot">&lt;-</span> X</span>
+<span id="cb262-32"><a href="code_3.html#cb262-32" tabindex="-1"></a>      self<span class="sc">$</span>Z <span class="ot">&lt;-</span> Z</span>
+<span id="cb262-33"><a href="code_3.html#cb262-33" tabindex="-1"></a>      self<span class="sc">$</span>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(T)[<span class="dv">1</span>]   <span class="co"># 观测数</span></span>
+<span id="cb262-34"><a href="code_3.html#cb262-34" tabindex="-1"></a>      self<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="fu">dim</span>(X)[<span class="dv">2</span>]   <span class="co"># 维度p</span></span>
+<span id="cb262-35"><a href="code_3.html#cb262-35" tabindex="-1"></a>      self<span class="sc">$</span>q <span class="ot">&lt;-</span> <span class="fu">dim</span>(Z)[<span class="dv">2</span>]   <span class="co"># 维度q</span></span>
+<span id="cb262-36"><a href="code_3.html#cb262-36" tabindex="-1"></a>      self<span class="sc">$</span>penalty <span class="ot">&lt;-</span> penalty</span>
+<span id="cb262-37"><a href="code_3.html#cb262-37" tabindex="-1"></a>      self<span class="sc">$</span>K <span class="ot">&lt;-</span> K</span>
+<span id="cb262-38"><a href="code_3.html#cb262-38" tabindex="-1"></a>      self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> lambda</span>
+<span id="cb262-39"><a href="code_3.html#cb262-39" tabindex="-1"></a>      self<span class="sc">$</span>a <span class="ot">&lt;-</span> a</span>
+<span id="cb262-40"><a href="code_3.html#cb262-40" tabindex="-1"></a>      self<span class="sc">$</span>theta <span class="ot">&lt;-</span> theta</span>
+<span id="cb262-41"><a href="code_3.html#cb262-41" tabindex="-1"></a>      self<span class="sc">$</span>df <span class="ot">&lt;-</span> df</span>
+<span id="cb262-42"><a href="code_3.html#cb262-42" tabindex="-1"></a>      self<span class="sc">$</span>degree <span class="ot">&lt;-</span> degree</span>
+<span id="cb262-43"><a href="code_3.html#cb262-43" tabindex="-1"></a>      self<span class="sc">$</span>tol <span class="ot">&lt;-</span> tol</span>
+<span id="cb262-44"><a href="code_3.html#cb262-44" tabindex="-1"></a>      self<span class="sc">$</span>max_iter <span class="ot">&lt;-</span> max_iter</span>
+<span id="cb262-45"><a href="code_3.html#cb262-45" tabindex="-1"></a>    },</span>
+<span id="cb262-46"><a href="code_3.html#cb262-46" tabindex="-1"></a>    </span>
+<span id="cb262-47"><a href="code_3.html#cb262-47" tabindex="-1"></a>    <span class="co"># 主函数——运行</span></span>
+<span id="cb262-48"><a href="code_3.html#cb262-48" tabindex="-1"></a>    <span class="at">run =</span> <span class="cf">function</span>(<span class="at">trace =</span> <span class="cn">TRUE</span>){</span>
+<span id="cb262-49"><a href="code_3.html#cb262-49" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb262-50"><a href="code_3.html#cb262-50" tabindex="-1"></a>      </span>
+<span id="cb262-51"><a href="code_3.html#cb262-51" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
+<span id="cb262-52"><a href="code_3.html#cb262-52" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
+<span id="cb262-53"><a href="code_3.html#cb262-53" tabindex="-1"></a>      </span>
+<span id="cb262-54"><a href="code_3.html#cb262-54" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
+<span id="cb262-55"><a href="code_3.html#cb262-55" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
+<span id="cb262-56"><a href="code_3.html#cb262-56" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
+<span id="cb262-57"><a href="code_3.html#cb262-57" tabindex="-1"></a>      B <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
+<span id="cb262-58"><a href="code_3.html#cb262-58" tabindex="-1"></a>      private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
+<span id="cb262-59"><a href="code_3.html#cb262-59" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
+<span id="cb262-60"><a href="code_3.html#cb262-60" tabindex="-1"></a>      private<span class="sc">$</span>Y <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb262-61"><a href="code_3.html#cb262-61" tabindex="-1"></a>      private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb262-62"><a href="code_3.html#cb262-62" tabindex="-1"></a>      A <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_A</span>()</span>
+<span id="cb262-63"><a href="code_3.html#cb262-63" tabindex="-1"></a>      private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
+<span id="cb262-64"><a href="code_3.html#cb262-64" tabindex="-1"></a>      private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
+<span id="cb262-65"><a href="code_3.html#cb262-65" tabindex="-1"></a>      private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb262-66"><a href="code_3.html#cb262-66" tabindex="-1"></a>      </span>
+<span id="cb262-67"><a href="code_3.html#cb262-67" tabindex="-1"></a>      <span class="co"># 计算矩阵Q</span></span>
+<span id="cb262-68"><a href="code_3.html#cb262-68" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n)<span class="sc">-</span> B <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb262-69"><a href="code_3.html#cb262-69" tabindex="-1"></a>      </span>
+<span id="cb262-70"><a href="code_3.html#cb262-70" tabindex="-1"></a>      <span class="co"># 计算向量g</span></span>
+<span id="cb262-71"><a href="code_3.html#cb262-71" tabindex="-1"></a>      g <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_g</span>()</span>
+<span id="cb262-72"><a href="code_3.html#cb262-72" tabindex="-1"></a>      </span>
+<span id="cb262-73"><a href="code_3.html#cb262-73" tabindex="-1"></a>      <span class="co"># 计算(B&#39;B)^{-1}B&#39;，用于gamma更新</span></span>
+<span id="cb262-74"><a href="code_3.html#cb262-74" tabindex="-1"></a>      B_ols <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb262-75"><a href="code_3.html#cb262-75" tabindex="-1"></a>      </span>
+<span id="cb262-76"><a href="code_3.html#cb262-76" tabindex="-1"></a>      <span class="co"># 计算(X&#39;QX+A&#39;A)^{-1}与X&#39;Q，用于beta更新</span></span>
+<span id="cb262-77"><a href="code_3.html#cb262-77" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(X_ls, <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
+<span id="cb262-78"><a href="code_3.html#cb262-78" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()         <span class="co"># 转化为对角形式的X</span></span>
+<span id="cb262-79"><a href="code_3.html#cb262-79" tabindex="-1"></a>      XQX_AA <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q <span class="sc">%*%</span> X_diag <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> A)</span>
+<span id="cb262-80"><a href="code_3.html#cb262-80" tabindex="-1"></a>      XQ <span class="ot">&lt;-</span> <span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q</span>
+<span id="cb262-81"><a href="code_3.html#cb262-81" tabindex="-1"></a>      </span>
+<span id="cb262-82"><a href="code_3.html#cb262-82" tabindex="-1"></a>      <span class="co"># 参数迭代</span></span>
+<span id="cb262-83"><a href="code_3.html#cb262-83" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
+<span id="cb262-84"><a href="code_3.html#cb262-84" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;正在进行第[&#39;</span>, i, <span class="st">&#39;]次迭代&#39;</span>))</span>
+<span id="cb262-85"><a href="code_3.html#cb262-85" tabindex="-1"></a>        private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_gamma</span>(X_ls, B_ols, private<span class="sc">$</span>Y, private<span class="sc">$</span>beta, private<span class="sc">$</span>w)</span>
+<span id="cb262-86"><a href="code_3.html#cb262-86" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(XQX_AA, XQ, A, private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>u, private<span class="sc">$</span>nu)</span>
+<span id="cb262-87"><a href="code_3.html#cb262-87" tabindex="-1"></a>        private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y2</span>(X_ls, B, g, private<span class="sc">$</span>beta, private<span class="sc">$</span>gamma)</span>
+<span id="cb262-88"><a href="code_3.html#cb262-88" tabindex="-1"></a>        private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y</span>(g, private<span class="sc">$</span>Y2, private<span class="sc">$</span>w)</span>
+<span id="cb262-89"><a href="code_3.html#cb262-89" tabindex="-1"></a>        private<span class="sc">$</span>u <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_u</span>(self<span class="sc">$</span>penalty, private<span class="sc">$</span>beta, private<span class="sc">$</span>nu, A)</span>
+<span id="cb262-90"><a href="code_3.html#cb262-90" tabindex="-1"></a>        private<span class="sc">$</span>w <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_w</span>(private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>Y2)</span>
+<span id="cb262-91"><a href="code_3.html#cb262-91" tabindex="-1"></a>        private<span class="sc">$</span>nu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_nu</span>(private<span class="sc">$</span>nu, private<span class="sc">$</span>beta, private<span class="sc">$</span>u, A)</span>
+<span id="cb262-92"><a href="code_3.html#cb262-92" tabindex="-1"></a>        </span>
+<span id="cb262-93"><a href="code_3.html#cb262-93" tabindex="-1"></a>        <span class="co"># 终止条件</span></span>
+<span id="cb262-94"><a href="code_3.html#cb262-94" tabindex="-1"></a>        term_1 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> private<span class="sc">$</span>u</span>
+<span id="cb262-95"><a href="code_3.html#cb262-95" tabindex="-1"></a>        term_2 <span class="ot">&lt;-</span> private<span class="sc">$</span>Y <span class="sc">-</span> X_diag <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> B <span class="sc">%*%</span> private<span class="sc">$</span>gamma</span>
+<span id="cb262-96"><a href="code_3.html#cb262-96" tabindex="-1"></a>        <span class="cf">if</span>((<span class="fu">norm</span>(term_1, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>) <span class="sc">+</span> <span class="fu">norm</span>(term_2, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
+<span id="cb262-97"><a href="code_3.html#cb262-97" tabindex="-1"></a>          <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="st">&#39;达到精度要求&#39;</span>)</span>
+<span id="cb262-98"><a href="code_3.html#cb262-98" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb262-99"><a href="code_3.html#cb262-99" tabindex="-1"></a>        }</span>
+<span id="cb262-100"><a href="code_3.html#cb262-100" tabindex="-1"></a>      }</span>
+<span id="cb262-101"><a href="code_3.html#cb262-101" tabindex="-1"></a>      </span>
+<span id="cb262-102"><a href="code_3.html#cb262-102" tabindex="-1"></a>      <span class="co"># beta亚组</span></span>
+<span id="cb262-103"><a href="code_3.html#cb262-103" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> <span class="fu">lapply</span>(private<span class="sc">$</span>beta, round, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb262-104"><a href="code_3.html#cb262-104" tabindex="-1"></a>      str_beta <span class="ot">&lt;-</span> <span class="fu">sapply</span>(private<span class="sc">$</span>beta, paste, <span class="at">collapse =</span> <span class="st">&#39;,&#39;</span>)</span>
+<span id="cb262-105"><a href="code_3.html#cb262-105" tabindex="-1"></a>      label <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(str_beta, <span class="at">levels =</span> <span class="fu">unique</span>(str_beta)))</span>
+<span id="cb262-106"><a href="code_3.html#cb262-106" tabindex="-1"></a>      subgroup_beta <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">label =</span> label, <span class="at">beta =</span> private<span class="sc">$</span>beta) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-107"><a href="code_3.html#cb262-107" tabindex="-1"></a>        <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-108"><a href="code_3.html#cb262-108" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">size =</span> <span class="fu">n</span>(), <span class="at">beta =</span> <span class="fu">unique</span>(beta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-109"><a href="code_3.html#cb262-109" tabindex="-1"></a>        <span class="fu">arrange</span>(<span class="sc">-</span>size)</span>
+<span id="cb262-110"><a href="code_3.html#cb262-110" tabindex="-1"></a>      K_hat <span class="ot">&lt;-</span> <span class="fu">unique</span>(label) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span>
+<span id="cb262-111"><a href="code_3.html#cb262-111" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">gamma =</span> private<span class="sc">$</span>gamma, <span class="at">label =</span> label, <span class="at">K_hat =</span> K_hat, <span class="at">alpha =</span> subgroup_beta)</span>
+<span id="cb262-112"><a href="code_3.html#cb262-112" tabindex="-1"></a>      </span>
+<span id="cb262-113"><a href="code_3.html#cb262-113" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb262-114"><a href="code_3.html#cb262-114" tabindex="-1"></a>      cost_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span>
+<span id="cb262-115"><a href="code_3.html#cb262-115" tabindex="-1"></a>      <span class="fu">print</span>(cost_time)</span>
+<span id="cb262-116"><a href="code_3.html#cb262-116" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
+<span id="cb262-117"><a href="code_3.html#cb262-117" tabindex="-1"></a>    },</span>
+<span id="cb262-118"><a href="code_3.html#cb262-118" tabindex="-1"></a>    </span>
+<span id="cb262-119"><a href="code_3.html#cb262-119" tabindex="-1"></a>    <span class="co"># 主函数——调优</span></span>
+<span id="cb262-120"><a href="code_3.html#cb262-120" tabindex="-1"></a>    <span class="at">tune_lambda =</span> <span class="cf">function</span>(seq_lambda, <span class="at">trace =</span> <span class="cn">TRUE</span>){</span>
+<span id="cb262-121"><a href="code_3.html#cb262-121" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb262-122"><a href="code_3.html#cb262-122" tabindex="-1"></a>      </span>
+<span id="cb262-123"><a href="code_3.html#cb262-123" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
+<span id="cb262-124"><a href="code_3.html#cb262-124" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
+<span id="cb262-125"><a href="code_3.html#cb262-125" tabindex="-1"></a>      </span>
+<span id="cb262-126"><a href="code_3.html#cb262-126" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
+<span id="cb262-127"><a href="code_3.html#cb262-127" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
+<span id="cb262-128"><a href="code_3.html#cb262-128" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
+<span id="cb262-129"><a href="code_3.html#cb262-129" tabindex="-1"></a>      B <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
+<span id="cb262-130"><a href="code_3.html#cb262-130" tabindex="-1"></a>      private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
+<span id="cb262-131"><a href="code_3.html#cb262-131" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
+<span id="cb262-132"><a href="code_3.html#cb262-132" tabindex="-1"></a>      private<span class="sc">$</span>Y <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb262-133"><a href="code_3.html#cb262-133" tabindex="-1"></a>      private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> initial_value[[<span class="dv">5</span>]]</span>
+<span id="cb262-134"><a href="code_3.html#cb262-134" tabindex="-1"></a>      A <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_A</span>()</span>
+<span id="cb262-135"><a href="code_3.html#cb262-135" tabindex="-1"></a>      private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
+<span id="cb262-136"><a href="code_3.html#cb262-136" tabindex="-1"></a>      private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
+<span id="cb262-137"><a href="code_3.html#cb262-137" tabindex="-1"></a>      private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb262-138"><a href="code_3.html#cb262-138" tabindex="-1"></a>      </span>
+<span id="cb262-139"><a href="code_3.html#cb262-139" tabindex="-1"></a>      <span class="co"># 计算矩阵Q</span></span>
+<span id="cb262-140"><a href="code_3.html#cb262-140" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n)<span class="sc">-</span> B <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb262-141"><a href="code_3.html#cb262-141" tabindex="-1"></a>      </span>
+<span id="cb262-142"><a href="code_3.html#cb262-142" tabindex="-1"></a>      <span class="co"># 计算向量g</span></span>
+<span id="cb262-143"><a href="code_3.html#cb262-143" tabindex="-1"></a>      g <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_g</span>()</span>
+<span id="cb262-144"><a href="code_3.html#cb262-144" tabindex="-1"></a>      </span>
+<span id="cb262-145"><a href="code_3.html#cb262-145" tabindex="-1"></a>      <span class="co"># 计算(B&#39;B)^{-1}B&#39;，用于gamma更新</span></span>
+<span id="cb262-146"><a href="code_3.html#cb262-146" tabindex="-1"></a>      B_ols <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(B) <span class="sc">%*%</span> B) <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb262-147"><a href="code_3.html#cb262-147" tabindex="-1"></a>      </span>
+<span id="cb262-148"><a href="code_3.html#cb262-148" tabindex="-1"></a>      <span class="co"># 计算(X&#39;QX+A&#39;A)^{-1}与X&#39;Q，用于beta更新</span></span>
+<span id="cb262-149"><a href="code_3.html#cb262-149" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(X_ls, <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
+<span id="cb262-150"><a href="code_3.html#cb262-150" tabindex="-1"></a>      X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()         <span class="co"># 转化为对角形式的X</span></span>
+<span id="cb262-151"><a href="code_3.html#cb262-151" tabindex="-1"></a>      XQX_AA <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q <span class="sc">%*%</span> X_diag <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> A)</span>
+<span id="cb262-152"><a href="code_3.html#cb262-152" tabindex="-1"></a>      XQ <span class="ot">&lt;-</span> <span class="fu">t</span>(X_diag) <span class="sc">%*%</span> Q</span>
+<span id="cb262-153"><a href="code_3.html#cb262-153" tabindex="-1"></a>      </span>
+<span id="cb262-154"><a href="code_3.html#cb262-154" tabindex="-1"></a>      bic_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(seq_lambda))</span>
+<span id="cb262-155"><a href="code_3.html#cb262-155" tabindex="-1"></a>      result_ls <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&#39;list&#39;</span>, <span class="at">length =</span> <span class="fu">length</span>(seq_lambda))</span>
+<span id="cb262-156"><a href="code_3.html#cb262-156" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(seq_lambda)) {</span>
+<span id="cb262-157"><a href="code_3.html#cb262-157" tabindex="-1"></a>        self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> seq_lambda[i]</span>
+<span id="cb262-158"><a href="code_3.html#cb262-158" tabindex="-1"></a>        </span>
+<span id="cb262-159"><a href="code_3.html#cb262-159" tabindex="-1"></a>        <span class="co"># Warm Start，仅保留上轮的beta和gamma，其余恢复为初始值设定</span></span>
+<span id="cb262-160"><a href="code_3.html#cb262-160" tabindex="-1"></a>        private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span>Y2    <span class="co"># Y2 = X_beta + B_gamma，因此保留，故Y的初始值与Y2相同</span></span>
+<span id="cb262-161"><a href="code_3.html#cb262-161" tabindex="-1"></a>        private<span class="sc">$</span>u <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta)</span>
+<span id="cb262-162"><a href="code_3.html#cb262-162" tabindex="-1"></a>        private<span class="sc">$</span>w <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n)</span>
+<span id="cb262-163"><a href="code_3.html#cb262-163" tabindex="-1"></a>        private<span class="sc">$</span>nu <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n<span class="dv">-1</span>) <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb262-164"><a href="code_3.html#cb262-164" tabindex="-1"></a>        </span>
+<span id="cb262-165"><a href="code_3.html#cb262-165" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
+<span id="cb262-166"><a href="code_3.html#cb262-166" tabindex="-1"></a>          <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;lambda = &#39;</span>, self<span class="sc">$</span>lambda, <span class="st">&#39;; 第[&#39;</span>, j, <span class="st">&#39;]次迭代&#39;</span>))</span>
+<span id="cb262-167"><a href="code_3.html#cb262-167" tabindex="-1"></a>          private<span class="sc">$</span>gamma <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_gamma</span>(X_ls, B_ols, private<span class="sc">$</span>Y, private<span class="sc">$</span>beta, private<span class="sc">$</span>w)</span>
+<span id="cb262-168"><a href="code_3.html#cb262-168" tabindex="-1"></a>          private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(XQX_AA, XQ, A, private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>u, private<span class="sc">$</span>nu)</span>
+<span id="cb262-169"><a href="code_3.html#cb262-169" tabindex="-1"></a>          private<span class="sc">$</span>Y2 <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y2</span>(X_ls, B, g, private<span class="sc">$</span>beta, private<span class="sc">$</span>gamma)</span>
+<span id="cb262-170"><a href="code_3.html#cb262-170" tabindex="-1"></a>          private<span class="sc">$</span>Y <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_Y</span>(g, private<span class="sc">$</span>Y2, private<span class="sc">$</span>w)</span>
+<span id="cb262-171"><a href="code_3.html#cb262-171" tabindex="-1"></a>          private<span class="sc">$</span>u <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_u</span>(self<span class="sc">$</span>penalty, private<span class="sc">$</span>beta, private<span class="sc">$</span>nu, A)</span>
+<span id="cb262-172"><a href="code_3.html#cb262-172" tabindex="-1"></a>          private<span class="sc">$</span>w <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_w</span>(private<span class="sc">$</span>w, private<span class="sc">$</span>Y, private<span class="sc">$</span>Y2)</span>
+<span id="cb262-173"><a href="code_3.html#cb262-173" tabindex="-1"></a>          private<span class="sc">$</span>nu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_nu</span>(private<span class="sc">$</span>nu, private<span class="sc">$</span>beta, private<span class="sc">$</span>u, A)</span>
+<span id="cb262-174"><a href="code_3.html#cb262-174" tabindex="-1"></a>          </span>
+<span id="cb262-175"><a href="code_3.html#cb262-175" tabindex="-1"></a>          <span class="co"># 终止条件</span></span>
+<span id="cb262-176"><a href="code_3.html#cb262-176" tabindex="-1"></a>          term_1 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> private<span class="sc">$</span>u</span>
+<span id="cb262-177"><a href="code_3.html#cb262-177" tabindex="-1"></a>          term_2 <span class="ot">&lt;-</span> private<span class="sc">$</span>Y <span class="sc">-</span> X_diag <span class="sc">%*%</span> <span class="fu">unlist</span>(private<span class="sc">$</span>beta) <span class="sc">-</span> B <span class="sc">%*%</span> private<span class="sc">$</span>gamma</span>
+<span id="cb262-178"><a href="code_3.html#cb262-178" tabindex="-1"></a>          <span class="cf">if</span>((<span class="fu">norm</span>(term_1, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>) <span class="sc">+</span> <span class="fu">norm</span>(term_2, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
+<span id="cb262-179"><a href="code_3.html#cb262-179" tabindex="-1"></a>            <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">cat</span>(<span class="st">&#39;==========</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb262-180"><a href="code_3.html#cb262-180" tabindex="-1"></a>            <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;lambda = &#39;</span>, self<span class="sc">$</span>lambda, <span class="st">&#39; 达到精度要求&#39;</span>))</span>
+<span id="cb262-181"><a href="code_3.html#cb262-181" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb262-182"><a href="code_3.html#cb262-182" tabindex="-1"></a>          }</span>
+<span id="cb262-183"><a href="code_3.html#cb262-183" tabindex="-1"></a>        }</span>
+<span id="cb262-184"><a href="code_3.html#cb262-184" tabindex="-1"></a>        </span>
+<span id="cb262-185"><a href="code_3.html#cb262-185" tabindex="-1"></a>        <span class="co"># beta亚组</span></span>
+<span id="cb262-186"><a href="code_3.html#cb262-186" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> <span class="fu">lapply</span>(private<span class="sc">$</span>beta, round, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb262-187"><a href="code_3.html#cb262-187" tabindex="-1"></a>        str_beta <span class="ot">&lt;-</span> <span class="fu">sapply</span>(private<span class="sc">$</span>beta, paste, <span class="at">collapse =</span> <span class="st">&#39;,&#39;</span>)</span>
+<span id="cb262-188"><a href="code_3.html#cb262-188" tabindex="-1"></a>        label <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(str_beta, <span class="at">levels =</span> <span class="fu">unique</span>(str_beta)))</span>
+<span id="cb262-189"><a href="code_3.html#cb262-189" tabindex="-1"></a>        subgroup_beta <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">label =</span> label, <span class="at">beta =</span> private<span class="sc">$</span>beta) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-190"><a href="code_3.html#cb262-190" tabindex="-1"></a>          <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-191"><a href="code_3.html#cb262-191" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">size =</span> <span class="fu">n</span>(), <span class="at">beta =</span> <span class="fu">unique</span>(beta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-192"><a href="code_3.html#cb262-192" tabindex="-1"></a>          <span class="fu">arrange</span>(<span class="sc">-</span>size)</span>
+<span id="cb262-193"><a href="code_3.html#cb262-193" tabindex="-1"></a>        K_hat <span class="ot">&lt;-</span> <span class="fu">unique</span>(label) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span>
+<span id="cb262-194"><a href="code_3.html#cb262-194" tabindex="-1"></a>        </span>
+<span id="cb262-195"><a href="code_3.html#cb262-195" tabindex="-1"></a>        bic_vec[i] <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">Bic</span>(private<span class="sc">$</span>Y2, K_hat)</span>
+<span id="cb262-196"><a href="code_3.html#cb262-196" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;BIC: &#39;</span>, <span class="fu">round</span>(bic_vec[i],<span class="dv">3</span>)))</span>
+<span id="cb262-197"><a href="code_3.html#cb262-197" tabindex="-1"></a>        <span class="cf">if</span>(trace <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">cat</span>(<span class="st">&#39;==========</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb262-198"><a href="code_3.html#cb262-198" tabindex="-1"></a>        result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">gamma =</span> private<span class="sc">$</span>gamma, <span class="at">label =</span> label, <span class="at">K_hat =</span> K_hat, <span class="at">alpha =</span> subgroup_beta, </span>
+<span id="cb262-199"><a href="code_3.html#cb262-199" tabindex="-1"></a>                       <span class="at">best_lambda =</span> self<span class="sc">$</span>lambda, <span class="at">BIC =</span> bic_vec[i])</span>
+<span id="cb262-200"><a href="code_3.html#cb262-200" tabindex="-1"></a>        result_ls[[i]] <span class="ot">&lt;-</span> result</span>
+<span id="cb262-201"><a href="code_3.html#cb262-201" tabindex="-1"></a>      }</span>
+<span id="cb262-202"><a href="code_3.html#cb262-202" tabindex="-1"></a>      </span>
+<span id="cb262-203"><a href="code_3.html#cb262-203" tabindex="-1"></a>      best_index <span class="ot">&lt;-</span> <span class="fu">which.min</span>(bic_vec)</span>
+<span id="cb262-204"><a href="code_3.html#cb262-204" tabindex="-1"></a>      best_result <span class="ot">&lt;-</span> result_ls[[best_index]]</span>
+<span id="cb262-205"><a href="code_3.html#cb262-205" tabindex="-1"></a>      </span>
+<span id="cb262-206"><a href="code_3.html#cb262-206" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">proc.time</span>()</span>
+<span id="cb262-207"><a href="code_3.html#cb262-207" tabindex="-1"></a>      <span class="fu">print</span>(end_time <span class="sc">-</span> start_time)</span>
+<span id="cb262-208"><a href="code_3.html#cb262-208" tabindex="-1"></a>      </span>
+<span id="cb262-209"><a href="code_3.html#cb262-209" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">best_result =</span> best_result, <span class="at">BIC =</span> bic_vec))</span>
+<span id="cb262-210"><a href="code_3.html#cb262-210" tabindex="-1"></a>    }</span>
+<span id="cb262-211"><a href="code_3.html#cb262-211" tabindex="-1"></a>  ),</span>
+<span id="cb262-212"><a href="code_3.html#cb262-212" tabindex="-1"></a>  </span>
+<span id="cb262-213"><a href="code_3.html#cb262-213" tabindex="-1"></a>  private <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb262-214"><a href="code_3.html#cb262-214" tabindex="-1"></a>    <span class="co"># 迭代参数</span></span>
+<span id="cb262-215"><a href="code_3.html#cb262-215" tabindex="-1"></a>    <span class="at">gamma =</span> <span class="cn">NULL</span>,        <span class="co"># B样条的回归系数</span></span>
+<span id="cb262-216"><a href="code_3.html#cb262-216" tabindex="-1"></a>    <span class="at">beta =</span> <span class="cn">NULL</span>,         <span class="co"># X的回归系数</span></span>
+<span id="cb262-217"><a href="code_3.html#cb262-217" tabindex="-1"></a>    <span class="at">Y2 =</span> <span class="cn">NULL</span>,           <span class="co"># Y&#39;</span></span>
+<span id="cb262-218"><a href="code_3.html#cb262-218" tabindex="-1"></a>    <span class="at">Y =</span> <span class="cn">NULL</span>,            <span class="co"># Y</span></span>
+<span id="cb262-219"><a href="code_3.html#cb262-219" tabindex="-1"></a>    <span class="at">u =</span> <span class="cn">NULL</span>,            <span class="co"># 融合惩罚项</span></span>
+<span id="cb262-220"><a href="code_3.html#cb262-220" tabindex="-1"></a>    <span class="at">w =</span> <span class="cn">NULL</span>,            <span class="co"># 拉格朗日乘子</span></span>
+<span id="cb262-221"><a href="code_3.html#cb262-221" tabindex="-1"></a>    <span class="at">nu =</span> <span class="cn">NULL</span>,           <span class="co"># 拉格朗日乘子</span></span>
+<span id="cb262-222"><a href="code_3.html#cb262-222" tabindex="-1"></a>    <span class="at">c =</span> <span class="cn">NULL</span>,            <span class="co"># beta_i-beta_k+nu_ik/theta</span></span>
+<span id="cb262-223"><a href="code_3.html#cb262-223" tabindex="-1"></a>    <span class="at">bic =</span> <span class="cn">NULL</span>,          <span class="co"># BIC</span></span>
+<span id="cb262-224"><a href="code_3.html#cb262-224" tabindex="-1"></a>    </span>
+<span id="cb262-225"><a href="code_3.html#cb262-225" tabindex="-1"></a>    <span class="co"># 验证输入是否正确</span></span>
+<span id="cb262-226"><a href="code_3.html#cb262-226" tabindex="-1"></a>    <span class="at">validate =</span> <span class="cf">function</span>(){</span>
+<span id="cb262-227"><a href="code_3.html#cb262-227" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(<span class="fu">dim</span>(self<span class="sc">$</span>T)[<span class="dv">2</span>] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> <span class="fu">all</span>(<span class="fu">colnames</span>(self<span class="sc">$</span>T) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;time&#39;</span>, <span class="st">&#39;status&#39;</span>)))) <span class="fu">stop</span>(<span class="st">&#39;T要求为包含time和status的两列矩阵&#39;</span>)</span>
+<span id="cb262-228"><a href="code_3.html#cb262-228" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>X)) <span class="fu">stop</span>(<span class="st">&#39;X要求为矩阵&#39;</span>)</span>
+<span id="cb262-229"><a href="code_3.html#cb262-229" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>Z)) <span class="fu">stop</span>(<span class="st">&#39;Z要求为矩阵&#39;</span>)</span>
+<span id="cb262-230"><a href="code_3.html#cb262-230" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>self<span class="sc">$</span>penalty <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;MCP&#39;</span>,<span class="st">&#39;SCAD&#39;</span>)) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的惩罚函数，SCAD或MCP&#39;</span>)</span>
+<span id="cb262-231"><a href="code_3.html#cb262-231" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>K <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>K <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>K))) <span class="fu">stop</span>(<span class="st">&#39;确保K是正整数&#39;</span>)</span>
+<span id="cb262-232"><a href="code_3.html#cb262-232" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的lambda值&#39;</span>)</span>
+<span id="cb262-233"><a href="code_3.html#cb262-233" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>a <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
+<span id="cb262-234"><a href="code_3.html#cb262-234" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>theta <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
+<span id="cb262-235"><a href="code_3.html#cb262-235" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>df <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>df <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>df))) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的df值&#39;</span>)</span>
+<span id="cb262-236"><a href="code_3.html#cb262-236" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>(self<span class="sc">$</span>degree <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> self<span class="sc">$</span>degree <span class="sc">==</span> <span class="fu">as.integer</span>(self<span class="sc">$</span>degree))) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的degree值&#39;</span>)</span>
+<span id="cb262-237"><a href="code_3.html#cb262-237" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>tol <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的精度要求&#39;</span>)</span>
+<span id="cb262-238"><a href="code_3.html#cb262-238" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>max_iter <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的最大迭代次数&#39;</span>)</span>
+<span id="cb262-239"><a href="code_3.html#cb262-239" tabindex="-1"></a>    },</span>
+<span id="cb262-240"><a href="code_3.html#cb262-240" tabindex="-1"></a>    </span>
+<span id="cb262-241"><a href="code_3.html#cb262-241" tabindex="-1"></a>    <span class="co"># 获取初始值</span></span>
+<span id="cb262-242"><a href="code_3.html#cb262-242" tabindex="-1"></a>    <span class="at">initial_value =</span> <span class="cf">function</span>(){</span>
+<span id="cb262-243"><a href="code_3.html#cb262-243" tabindex="-1"></a>      <span class="co"># beta初始值</span></span>
+<span id="cb262-244"><a href="code_3.html#cb262-244" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(self<span class="sc">$</span>X, <span class="at">centers =</span> self<span class="sc">$</span>K)</span>
+<span id="cb262-245"><a href="code_3.html#cb262-245" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>T, self<span class="sc">$</span>X) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb262-246"><a href="code_3.html#cb262-246" tabindex="-1"></a>      df<span class="sc">$</span>label <span class="ot">&lt;-</span> result<span class="sc">$</span>cluster        <span class="co"># 添加类别标签</span></span>
+<span id="cb262-247"><a href="code_3.html#cb262-247" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb262-248"><a href="code_3.html#cb262-248" tabindex="-1"></a>        <span class="fu">group_nest</span>(label) <span class="sc">%&gt;%</span>           <span class="co"># 分组回归，批量建模</span></span>
+<span id="cb262-249"><a href="code_3.html#cb262-249" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span>., <span class="at">data=</span>.x)),</span>
+<span id="cb262-250"><a href="code_3.html#cb262-250" tabindex="-1"></a>               <span class="at">coef =</span> <span class="fu">map</span>(model, <span class="sc">~</span>.x[[<span class="st">&#39;coefficients&#39;</span>]]))</span>
+<span id="cb262-251"><a href="code_3.html#cb262-251" tabindex="-1"></a>      coef <span class="ot">&lt;-</span> df<span class="sc">$</span>coef <span class="sc">%&gt;%</span> <span class="fu">as.list</span>()     <span class="co"># 提取每个类别的回归系数向量</span></span>
+<span id="cb262-252"><a href="code_3.html#cb262-252" tabindex="-1"></a>      beta_0 <span class="ot">&lt;-</span> coef[result<span class="sc">$</span>cluster]    <span class="co"># 为了后续处理方便，beta暂时以列表形式存储</span></span>
+<span id="cb262-253"><a href="code_3.html#cb262-253" tabindex="-1"></a>      </span>
+<span id="cb262-254"><a href="code_3.html#cb262-254" tabindex="-1"></a>      <span class="co"># gamma初始值与B</span></span>
+<span id="cb262-255"><a href="code_3.html#cb262-255" tabindex="-1"></a>      B <span class="ot">&lt;-</span> <span class="fu">asplit</span>(self<span class="sc">$</span>Z, <span class="dv">2</span>)   <span class="co"># 按列分割Z矩阵，分别由bs拟合</span></span>
+<span id="cb262-256"><a href="code_3.html#cb262-256" tabindex="-1"></a>      B <span class="ot">&lt;-</span> B <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">bs</span>(., <span class="at">df =</span> self<span class="sc">$</span>df, <span class="at">degree =</span> self<span class="sc">$</span>degree))</span>
+<span id="cb262-257"><a href="code_3.html#cb262-257" tabindex="-1"></a>      B <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, B) <span class="sc">%&gt;%</span> <span class="fu">scale</span>(<span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)   <span class="co"># 列方向的中心化处理</span></span>
+<span id="cb262-258"><a href="code_3.html#cb262-258" tabindex="-1"></a>      <span class="fu">colnames</span>(B) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;b_&#39;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(B))</span>
+<span id="cb262-259"><a href="code_3.html#cb262-259" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>T, B) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb262-260"><a href="code_3.html#cb262-260" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span>., <span class="at">data =</span> df)</span>
+<span id="cb262-261"><a href="code_3.html#cb262-261" tabindex="-1"></a>      gamma_0 <span class="ot">&lt;-</span> model[[<span class="st">&#39;coefficients&#39;</span>]]</span>
+<span id="cb262-262"><a href="code_3.html#cb262-262" tabindex="-1"></a>      </span>
+<span id="cb262-263"><a href="code_3.html#cb262-263" tabindex="-1"></a>      <span class="co"># Y与Y&#39;的初始值</span></span>
+<span id="cb262-264"><a href="code_3.html#cb262-264" tabindex="-1"></a>      X_ls <span class="ot">&lt;-</span> <span class="fu">asplit</span>(self<span class="sc">$</span>X, <span class="dv">1</span>)</span>
+<span id="cb262-265"><a href="code_3.html#cb262-265" tabindex="-1"></a>      Y_0 <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_0, <span class="sc">~</span>.x <span class="sc">%*%</span> .y) <span class="sc">+</span> B <span class="sc">%*%</span> gamma_0</span>
+<span id="cb262-266"><a href="code_3.html#cb262-266" tabindex="-1"></a>      </span>
+<span id="cb262-267"><a href="code_3.html#cb262-267" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">beta_0 =</span> beta_0, <span class="at">B =</span> B, <span class="at">gamma_0 =</span> gamma_0, <span class="at">X_ls =</span> X_ls, <span class="at">Y_0 =</span> Y_0))</span>
+<span id="cb262-268"><a href="code_3.html#cb262-268" tabindex="-1"></a>    },</span>
+<span id="cb262-269"><a href="code_3.html#cb262-269" tabindex="-1"></a>    </span>
+<span id="cb262-270"><a href="code_3.html#cb262-270" tabindex="-1"></a>    <span class="co"># 计算矩阵A</span></span>
+<span id="cb262-271"><a href="code_3.html#cb262-271" tabindex="-1"></a>    <span class="at">gen_A =</span> <span class="cf">function</span>(){</span>
+<span id="cb262-272"><a href="code_3.html#cb262-272" tabindex="-1"></a>      gen_mat <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
+<span id="cb262-273"><a href="code_3.html#cb262-273" tabindex="-1"></a>        mat_1 <span class="ot">&lt;-</span> <span class="cf">if</span>(n <span class="sc">==</span> self<span class="sc">$</span>n<span class="dv">-1</span>){</span>
+<span id="cb262-274"><a href="code_3.html#cb262-274" tabindex="-1"></a>          <span class="cn">NULL</span></span>
+<span id="cb262-275"><a href="code_3.html#cb262-275" tabindex="-1"></a>        }<span class="cf">else</span>{</span>
+<span id="cb262-276"><a href="code_3.html#cb262-276" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n<span class="dv">-1</span><span class="sc">-</span>n, <span class="at">ncol =</span> n)</span>
+<span id="cb262-277"><a href="code_3.html#cb262-277" tabindex="-1"></a>        }</span>
+<span id="cb262-278"><a href="code_3.html#cb262-278" tabindex="-1"></a>        mat_2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> n, <span class="at">byrow =</span> T)</span>
+<span id="cb262-279"><a href="code_3.html#cb262-279" tabindex="-1"></a>        mat_3 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="at">nrow=</span>n, <span class="at">ncol =</span> n)</span>
+<span id="cb262-280"><a href="code_3.html#cb262-280" tabindex="-1"></a>        mat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mat_1, mat_2, mat_3)</span>
+<span id="cb262-281"><a href="code_3.html#cb262-281" tabindex="-1"></a>        <span class="fu">return</span>(mat)</span>
+<span id="cb262-282"><a href="code_3.html#cb262-282" tabindex="-1"></a>      }</span>
+<span id="cb262-283"><a href="code_3.html#cb262-283" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">c</span>((self<span class="sc">$</span>n<span class="dv">-1</span>)<span class="sc">:</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">gen_mat</span>(.))</span>
+<span id="cb262-284"><a href="code_3.html#cb262-284" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, D) <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span>
+<span id="cb262-285"><a href="code_3.html#cb262-285" tabindex="-1"></a>      </span>
+<span id="cb262-286"><a href="code_3.html#cb262-286" tabindex="-1"></a>      A <span class="ot">&lt;-</span> D <span class="sc">%x%</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">nrow =</span> self<span class="sc">$</span>p)</span>
+<span id="cb262-287"><a href="code_3.html#cb262-287" tabindex="-1"></a>      </span>
+<span id="cb262-288"><a href="code_3.html#cb262-288" tabindex="-1"></a>      <span class="fu">return</span>(A)</span>
+<span id="cb262-289"><a href="code_3.html#cb262-289" tabindex="-1"></a>    },</span>
+<span id="cb262-290"><a href="code_3.html#cb262-290" tabindex="-1"></a>    </span>
+<span id="cb262-291"><a href="code_3.html#cb262-291" tabindex="-1"></a>    <span class="co"># 计算g</span></span>
+<span id="cb262-292"><a href="code_3.html#cb262-292" tabindex="-1"></a>    <span class="at">gen_g =</span> <span class="cf">function</span>(){</span>
+<span id="cb262-293"><a href="code_3.html#cb262-293" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb262-294"><a href="code_3.html#cb262-294" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb262-295"><a href="code_3.html#cb262-295" tabindex="-1"></a>      g <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-296"><a href="code_3.html#cb262-296" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">ifelse</span>(. <span class="sc">&gt;=</span> time, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-297"><a href="code_3.html#cb262-297" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span>status <span class="sc">%*%</span> .)</span>
+<span id="cb262-298"><a href="code_3.html#cb262-298" tabindex="-1"></a>      </span>
+<span id="cb262-299"><a href="code_3.html#cb262-299" tabindex="-1"></a>      <span class="fu">return</span>(g)</span>
+<span id="cb262-300"><a href="code_3.html#cb262-300" tabindex="-1"></a>    },</span>
+<span id="cb262-301"><a href="code_3.html#cb262-301" tabindex="-1"></a>    </span>
+<span id="cb262-302"><a href="code_3.html#cb262-302" tabindex="-1"></a>    <span class="co"># 计算nabla_g</span></span>
+<span id="cb262-303"><a href="code_3.html#cb262-303" tabindex="-1"></a>    <span class="at">gen_nabla_g =</span> <span class="cf">function</span>(Y2){</span>
+<span id="cb262-304"><a href="code_3.html#cb262-304" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb262-305"><a href="code_3.html#cb262-305" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb262-306"><a href="code_3.html#cb262-306" tabindex="-1"></a>      </span>
+<span id="cb262-307"><a href="code_3.html#cb262-307" tabindex="-1"></a>      exp_Y2 <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">exp</span>(Y2))</span>
+<span id="cb262-308"><a href="code_3.html#cb262-308" tabindex="-1"></a>      </span>
+<span id="cb262-309"><a href="code_3.html#cb262-309" tabindex="-1"></a>      <span class="co"># 向量sum_{l \in R_k} exp(Y2)</span></span>
+<span id="cb262-310"><a href="code_3.html#cb262-310" tabindex="-1"></a>      sum_l_Rk <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-311"><a href="code_3.html#cb262-311" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">which</span>(. <span class="sc">&lt;=</span> time)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-312"><a href="code_3.html#cb262-312" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">sum</span>(<span class="fu">exp</span>(Y2[.])))</span>
+<span id="cb262-313"><a href="code_3.html#cb262-313" tabindex="-1"></a>      </span>
+<span id="cb262-314"><a href="code_3.html#cb262-314" tabindex="-1"></a>      <span class="co"># 计算nabla_g</span></span>
+<span id="cb262-315"><a href="code_3.html#cb262-315" tabindex="-1"></a>      nabla_g <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-316"><a href="code_3.html#cb262-316" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">ifelse</span>(. <span class="sc">&gt;=</span> time, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span>    <span class="co"># 计算I_{i \in R_k}</span></span>
+<span id="cb262-317"><a href="code_3.html#cb262-317" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span>. <span class="sc">%*%</span> <span class="fu">diag</span>(status) <span class="sc">%*%</span> sum_l_Rk<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span>     <span class="co"># 计算delta与I与{l \in R_k}的复合项</span></span>
+<span id="cb262-318"><a href="code_3.html#cb262-318" tabindex="-1"></a>        <span class="fu">map2_vec</span>(exp_Y2, <span class="sc">~</span>.x <span class="sc">*</span> .y) <span class="sc">-</span> status</span>
+<span id="cb262-319"><a href="code_3.html#cb262-319" tabindex="-1"></a>      </span>
+<span id="cb262-320"><a href="code_3.html#cb262-320" tabindex="-1"></a>      <span class="fu">return</span>(nabla_g)</span>
+<span id="cb262-321"><a href="code_3.html#cb262-321" tabindex="-1"></a>    },</span>
+<span id="cb262-322"><a href="code_3.html#cb262-322" tabindex="-1"></a>    </span>
+<span id="cb262-323"><a href="code_3.html#cb262-323" tabindex="-1"></a>    <span class="co"># 计算c，输出列表</span></span>
+<span id="cb262-324"><a href="code_3.html#cb262-324" tabindex="-1"></a>    <span class="at">gen_c =</span> <span class="cf">function</span>(beta, nu, A){</span>
+<span id="cb262-325"><a href="code_3.html#cb262-325" tabindex="-1"></a>      delta_beta <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(beta)</span>
+<span id="cb262-326"><a href="code_3.html#cb262-326" tabindex="-1"></a>      c <span class="ot">&lt;-</span> delta_beta <span class="sc">+</span> nu <span class="sc">/</span> self<span class="sc">$</span>theta</span>
+<span id="cb262-327"><a href="code_3.html#cb262-327" tabindex="-1"></a>      c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(c, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">byrow =</span> T) <span class="sc">%&gt;%</span> <span class="fu">asplit</span>(<span class="dv">1</span>)</span>
+<span id="cb262-328"><a href="code_3.html#cb262-328" tabindex="-1"></a>      </span>
+<span id="cb262-329"><a href="code_3.html#cb262-329" tabindex="-1"></a>      <span class="fu">return</span>(c)</span>
+<span id="cb262-330"><a href="code_3.html#cb262-330" tabindex="-1"></a>    },</span>
+<span id="cb262-331"><a href="code_3.html#cb262-331" tabindex="-1"></a>    </span>
+<span id="cb262-332"><a href="code_3.html#cb262-332" tabindex="-1"></a>    <span class="co"># gamma迭代式</span></span>
+<span id="cb262-333"><a href="code_3.html#cb262-333" tabindex="-1"></a>    <span class="at">iter_gamma =</span> <span class="cf">function</span>(X_ls, B_ols, Y_current, beta_current, w_current){</span>
+<span id="cb262-334"><a href="code_3.html#cb262-334" tabindex="-1"></a>      <span class="co"># 这里的beta是列表形式</span></span>
+<span id="cb262-335"><a href="code_3.html#cb262-335" tabindex="-1"></a>      X_beta <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_current, <span class="sc">~</span>.x <span class="sc">%*%</span> .y)</span>
+<span id="cb262-336"><a href="code_3.html#cb262-336" tabindex="-1"></a>      gamma_next <span class="ot">&lt;-</span> B_ols <span class="sc">%*%</span> (Y_current <span class="sc">-</span> X_beta <span class="sc">+</span> w_current <span class="sc">/</span> self<span class="sc">$</span>theta)</span>
+<span id="cb262-337"><a href="code_3.html#cb262-337" tabindex="-1"></a>      </span>
+<span id="cb262-338"><a href="code_3.html#cb262-338" tabindex="-1"></a>      <span class="fu">return</span>(gamma_next)</span>
+<span id="cb262-339"><a href="code_3.html#cb262-339" tabindex="-1"></a>    },</span>
+<span id="cb262-340"><a href="code_3.html#cb262-340" tabindex="-1"></a>    </span>
+<span id="cb262-341"><a href="code_3.html#cb262-341" tabindex="-1"></a>    <span class="co"># beta迭代式，输出列表</span></span>
+<span id="cb262-342"><a href="code_3.html#cb262-342" tabindex="-1"></a>    <span class="at">iter_beta =</span> <span class="cf">function</span>(XQX_AA, XQ, A, w_current, Y_current, u_current, nu_current){</span>
+<span id="cb262-343"><a href="code_3.html#cb262-343" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> XQX_AA <span class="sc">%*%</span> (XQ <span class="sc">%*%</span> (w_current <span class="sc">/</span> self<span class="sc">$</span>theta <span class="sc">+</span> Y_current) <span class="sc">+</span> <span class="fu">t</span>(A) <span class="sc">%*%</span> (u_current <span class="sc">-</span> nu_current <span class="sc">/</span> self<span class="sc">$</span>theta))</span>
+<span id="cb262-344"><a href="code_3.html#cb262-344" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> <span class="fu">matrix</span>(beta_next, <span class="at">ncol =</span> self<span class="sc">$</span>p, <span class="at">byrow =</span> T) <span class="sc">%&gt;%</span> <span class="fu">asplit</span>(<span class="dv">1</span>)   <span class="co"># 输出列表形式的beta</span></span>
+<span id="cb262-345"><a href="code_3.html#cb262-345" tabindex="-1"></a>      </span>
+<span id="cb262-346"><a href="code_3.html#cb262-346" tabindex="-1"></a>      <span class="fu">return</span>(beta_next)</span>
+<span id="cb262-347"><a href="code_3.html#cb262-347" tabindex="-1"></a>    },</span>
+<span id="cb262-348"><a href="code_3.html#cb262-348" tabindex="-1"></a>    </span>
+<span id="cb262-349"><a href="code_3.html#cb262-349" tabindex="-1"></a>    <span class="co"># Y2迭代式</span></span>
+<span id="cb262-350"><a href="code_3.html#cb262-350" tabindex="-1"></a>    <span class="at">iter_Y2 =</span> <span class="cf">function</span>(X_ls, B, g, beta_next, gamma_next){</span>
+<span id="cb262-351"><a href="code_3.html#cb262-351" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="fu">map2_vec</span>(X_ls, beta_next, <span class="sc">~</span>.x <span class="sc">%*%</span> .y)   <span class="co"># X与beta</span></span>
+<span id="cb262-352"><a href="code_3.html#cb262-352" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> <span class="fu">asplit</span>(B,<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">map_vec</span>(<span class="sc">~</span>. <span class="sc">%*%</span> gamma_next)  <span class="co"># B与gamma</span></span>
+<span id="cb262-353"><a href="code_3.html#cb262-353" tabindex="-1"></a>      Y2_next <span class="ot">&lt;-</span> term_1 <span class="sc">+</span> term_2</span>
+<span id="cb262-354"><a href="code_3.html#cb262-354" tabindex="-1"></a>      </span>
+<span id="cb262-355"><a href="code_3.html#cb262-355" tabindex="-1"></a>      <span class="fu">return</span>(Y2_next)</span>
+<span id="cb262-356"><a href="code_3.html#cb262-356" tabindex="-1"></a>    },</span>
+<span id="cb262-357"><a href="code_3.html#cb262-357" tabindex="-1"></a>    </span>
+<span id="cb262-358"><a href="code_3.html#cb262-358" tabindex="-1"></a>    <span class="co"># Y迭代式</span></span>
+<span id="cb262-359"><a href="code_3.html#cb262-359" tabindex="-1"></a>    <span class="at">iter_Y =</span> <span class="cf">function</span>(g, Y2_next, w_current){</span>
+<span id="cb262-360"><a href="code_3.html#cb262-360" tabindex="-1"></a>      nabla_g_next <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_nabla_g</span>(Y2_next)</span>
+<span id="cb262-361"><a href="code_3.html#cb262-361" tabindex="-1"></a>      Y_next <span class="ot">&lt;-</span> (g <span class="sc">+</span> self<span class="sc">$</span>theta)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>nabla_g_next<span class="sc">+</span> g <span class="sc">*</span> Y2_next <span class="sc">-</span> w_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> Y2_next)</span>
+<span id="cb262-362"><a href="code_3.html#cb262-362" tabindex="-1"></a>      </span>
+<span id="cb262-363"><a href="code_3.html#cb262-363" tabindex="-1"></a>      <span class="fu">return</span>(Y_next)</span>
+<span id="cb262-364"><a href="code_3.html#cb262-364" tabindex="-1"></a>    },</span>
+<span id="cb262-365"><a href="code_3.html#cb262-365" tabindex="-1"></a>    </span>
+<span id="cb262-366"><a href="code_3.html#cb262-366" tabindex="-1"></a>    <span class="co"># u迭代式</span></span>
+<span id="cb262-367"><a href="code_3.html#cb262-367" tabindex="-1"></a>    <span class="at">iter_u =</span> <span class="cf">function</span>(penalty, beta_next, nu_current, A){</span>
+<span id="cb262-368"><a href="code_3.html#cb262-368" tabindex="-1"></a>      S <span class="ot">&lt;-</span> <span class="cf">function</span>(c, lambda){</span>
+<span id="cb262-369"><a href="code_3.html#cb262-369" tabindex="-1"></a>       result <span class="ot">&lt;-</span> <span class="fu">max</span>((<span class="dv">1</span> <span class="sc">-</span> lambda <span class="sc">/</span> <span class="fu">norm</span>(c, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)), <span class="dv">0</span>) <span class="sc">*</span> c</span>
+<span id="cb262-370"><a href="code_3.html#cb262-370" tabindex="-1"></a>       </span>
+<span id="cb262-371"><a href="code_3.html#cb262-371" tabindex="-1"></a>        <span class="fu">return</span>(result)</span>
+<span id="cb262-372"><a href="code_3.html#cb262-372" tabindex="-1"></a>      }</span>
+<span id="cb262-373"><a href="code_3.html#cb262-373" tabindex="-1"></a>      </span>
+<span id="cb262-374"><a href="code_3.html#cb262-374" tabindex="-1"></a>      c <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_c</span>(beta_next, nu_current, A)</span>
+<span id="cb262-375"><a href="code_3.html#cb262-375" tabindex="-1"></a>      </span>
+<span id="cb262-376"><a href="code_3.html#cb262-376" tabindex="-1"></a>      <span class="cf">switch</span>(penalty,</span>
+<span id="cb262-377"><a href="code_3.html#cb262-377" tabindex="-1"></a>             <span class="st">&#39;SCAD&#39;</span> <span class="ot">=</span> {</span>
+<span id="cb262-378"><a href="code_3.html#cb262-378" tabindex="-1"></a>               <span class="cf">if</span>(<span class="fu">is.null</span>(self<span class="sc">$</span>a)) self<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="fl">3.7</span> </span>
+<span id="cb262-379"><a href="code_3.html#cb262-379" tabindex="-1"></a>               u_next <span class="ot">&lt;-</span> <span class="fu">map</span>(c, <span class="cf">function</span>(c_ik){</span>
+<span id="cb262-380"><a href="code_3.html#cb262-380" tabindex="-1"></a>                 norm_c_ik <span class="ot">&lt;-</span> <span class="fu">norm</span>(c_ik, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)</span>
+<span id="cb262-381"><a href="code_3.html#cb262-381" tabindex="-1"></a>                 <span class="cf">if</span>(norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>lambda <span class="sc">+</span> self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta){</span>
+<span id="cb262-382"><a href="code_3.html#cb262-382" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta)</span>
+<span id="cb262-383"><a href="code_3.html#cb262-383" tabindex="-1"></a>                 }<span class="cf">else</span> <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">+</span> self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta <span class="sc">&lt;</span> norm_c_ik <span class="sc">&amp;</span> norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda){</span>
+<span id="cb262-384"><a href="code_3.html#cb262-384" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda <span class="sc">/</span> ((self<span class="sc">$</span>a <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> self<span class="sc">$</span>theta)) <span class="sc">/</span> (<span class="dv">1-1</span><span class="sc">/</span>((self<span class="sc">$</span>a <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> self<span class="sc">$</span>theta))</span>
+<span id="cb262-385"><a href="code_3.html#cb262-385" tabindex="-1"></a>                 }<span class="cf">else</span> {</span>
+<span id="cb262-386"><a href="code_3.html#cb262-386" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> c_ik</span>
+<span id="cb262-387"><a href="code_3.html#cb262-387" tabindex="-1"></a>                 }</span>
+<span id="cb262-388"><a href="code_3.html#cb262-388" tabindex="-1"></a>                 </span>
+<span id="cb262-389"><a href="code_3.html#cb262-389" tabindex="-1"></a>                 <span class="fu">return</span>(u_ik)</span>
+<span id="cb262-390"><a href="code_3.html#cb262-390" tabindex="-1"></a>               }) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb262-391"><a href="code_3.html#cb262-391" tabindex="-1"></a>             },</span>
+<span id="cb262-392"><a href="code_3.html#cb262-392" tabindex="-1"></a>             <span class="st">&#39;MCP&#39;</span> <span class="ot">=</span> {</span>
+<span id="cb262-393"><a href="code_3.html#cb262-393" tabindex="-1"></a>               <span class="cf">if</span>(<span class="fu">is.null</span>(self<span class="sc">$</span>a)) self<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb262-394"><a href="code_3.html#cb262-394" tabindex="-1"></a>               u_next <span class="ot">&lt;-</span> <span class="fu">map</span>(c, <span class="cf">function</span>(c_ik){</span>
+<span id="cb262-395"><a href="code_3.html#cb262-395" tabindex="-1"></a>                 norm_c_ik <span class="ot">&lt;-</span> <span class="fu">norm</span>(c_ik, <span class="at">type =</span> <span class="st">&#39;2&#39;</span>)</span>
+<span id="cb262-396"><a href="code_3.html#cb262-396" tabindex="-1"></a>                 <span class="cf">if</span>(norm_c_ik <span class="sc">&lt;=</span> self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>lambda){</span>
+<span id="cb262-397"><a href="code_3.html#cb262-397" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> <span class="fu">S</span>(c_ik, self<span class="sc">$</span>lambda <span class="sc">/</span> self<span class="sc">$</span>theta) <span class="sc">/</span> (<span class="dv">1-1</span><span class="sc">/</span>(self<span class="sc">$</span>a <span class="sc">*</span> self<span class="sc">$</span>theta))</span>
+<span id="cb262-398"><a href="code_3.html#cb262-398" tabindex="-1"></a>                 }<span class="cf">else</span> {</span>
+<span id="cb262-399"><a href="code_3.html#cb262-399" tabindex="-1"></a>                   u_ik <span class="ot">&lt;-</span> c_ik</span>
+<span id="cb262-400"><a href="code_3.html#cb262-400" tabindex="-1"></a>                 }</span>
+<span id="cb262-401"><a href="code_3.html#cb262-401" tabindex="-1"></a>                 </span>
+<span id="cb262-402"><a href="code_3.html#cb262-402" tabindex="-1"></a>                 <span class="fu">return</span>(u_ik)</span>
+<span id="cb262-403"><a href="code_3.html#cb262-403" tabindex="-1"></a>               }) <span class="sc">%&gt;%</span> <span class="fu">unlist</span>()</span>
+<span id="cb262-404"><a href="code_3.html#cb262-404" tabindex="-1"></a>             }</span>
+<span id="cb262-405"><a href="code_3.html#cb262-405" tabindex="-1"></a>        </span>
+<span id="cb262-406"><a href="code_3.html#cb262-406" tabindex="-1"></a>      )</span>
+<span id="cb262-407"><a href="code_3.html#cb262-407" tabindex="-1"></a>      </span>
+<span id="cb262-408"><a href="code_3.html#cb262-408" tabindex="-1"></a>      <span class="fu">return</span>(u_next)</span>
+<span id="cb262-409"><a href="code_3.html#cb262-409" tabindex="-1"></a>    },</span>
+<span id="cb262-410"><a href="code_3.html#cb262-410" tabindex="-1"></a>    </span>
+<span id="cb262-411"><a href="code_3.html#cb262-411" tabindex="-1"></a>    <span class="co"># w迭代式</span></span>
+<span id="cb262-412"><a href="code_3.html#cb262-412" tabindex="-1"></a>    <span class="at">iter_w =</span> <span class="cf">function</span>(w_current, Y_next, Y2_next){</span>
+<span id="cb262-413"><a href="code_3.html#cb262-413" tabindex="-1"></a>      w_next <span class="ot">&lt;-</span> w_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (Y_next <span class="sc">-</span> Y2_next)</span>
+<span id="cb262-414"><a href="code_3.html#cb262-414" tabindex="-1"></a>      </span>
+<span id="cb262-415"><a href="code_3.html#cb262-415" tabindex="-1"></a>      <span class="fu">return</span>(w_next)</span>
+<span id="cb262-416"><a href="code_3.html#cb262-416" tabindex="-1"></a>    },</span>
+<span id="cb262-417"><a href="code_3.html#cb262-417" tabindex="-1"></a>    </span>
+<span id="cb262-418"><a href="code_3.html#cb262-418" tabindex="-1"></a>    <span class="co"># nu迭代式</span></span>
+<span id="cb262-419"><a href="code_3.html#cb262-419" tabindex="-1"></a>    <span class="at">iter_nu =</span> <span class="cf">function</span>(nu_current, beta_next, u_next, A){</span>
+<span id="cb262-420"><a href="code_3.html#cb262-420" tabindex="-1"></a>      delta_beta <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">unlist</span>(beta_next)</span>
+<span id="cb262-421"><a href="code_3.html#cb262-421" tabindex="-1"></a>      nu_next <span class="ot">&lt;-</span> nu_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (delta_beta <span class="sc">-</span> u_next)</span>
+<span id="cb262-422"><a href="code_3.html#cb262-422" tabindex="-1"></a>      </span>
+<span id="cb262-423"><a href="code_3.html#cb262-423" tabindex="-1"></a>      <span class="fu">return</span>(nu_next)</span>
+<span id="cb262-424"><a href="code_3.html#cb262-424" tabindex="-1"></a>    },</span>
+<span id="cb262-425"><a href="code_3.html#cb262-425" tabindex="-1"></a>    </span>
+<span id="cb262-426"><a href="code_3.html#cb262-426" tabindex="-1"></a>    <span class="co"># BIC准则</span></span>
+<span id="cb262-427"><a href="code_3.html#cb262-427" tabindex="-1"></a>    <span class="at">Bic =</span> <span class="cf">function</span>(Y2, K){</span>
+<span id="cb262-428"><a href="code_3.html#cb262-428" tabindex="-1"></a>      <span class="co"># X_beta+B_gamma就是Y2</span></span>
+<span id="cb262-429"><a href="code_3.html#cb262-429" tabindex="-1"></a>      status <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;status&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb262-430"><a href="code_3.html#cb262-430" tabindex="-1"></a>      time <span class="ot">&lt;-</span> self<span class="sc">$</span>T[,<span class="st">&#39;time&#39;</span>] <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb262-431"><a href="code_3.html#cb262-431" tabindex="-1"></a>      </span>
+<span id="cb262-432"><a href="code_3.html#cb262-432" tabindex="-1"></a>      log_sum_l_Ri <span class="ot">&lt;-</span> <span class="fu">as.list</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-433"><a href="code_3.html#cb262-433" tabindex="-1"></a>        <span class="fu">map</span>(<span class="sc">~</span><span class="fu">which</span>(. <span class="sc">&lt;=</span> time)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-434"><a href="code_3.html#cb262-434" tabindex="-1"></a>        <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">log</span>(<span class="fu">sum</span>(<span class="fu">exp</span>(Y2[.]))))</span>
+<span id="cb262-435"><a href="code_3.html#cb262-435" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(Y2[status] <span class="sc">-</span> log_sum_l_Ri[status])</span>
+<span id="cb262-436"><a href="code_3.html#cb262-436" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> <span class="fu">log</span>(self<span class="sc">$</span>n <span class="sc">*</span> K <span class="sc">+</span> self<span class="sc">$</span>q) <span class="sc">*</span> <span class="fu">log</span>(self<span class="sc">$</span>n) <span class="sc">*</span> (K <span class="sc">*</span> self<span class="sc">$</span>p <span class="sc">+</span> self<span class="sc">$</span>q) <span class="sc">/</span> self<span class="sc">$</span>n</span>
+<span id="cb262-437"><a href="code_3.html#cb262-437" tabindex="-1"></a>      bic <span class="ot">&lt;-</span> term_1 <span class="sc">+</span> term_2</span>
+<span id="cb262-438"><a href="code_3.html#cb262-438" tabindex="-1"></a>      </span>
+<span id="cb262-439"><a href="code_3.html#cb262-439" tabindex="-1"></a>      <span class="fu">return</span>(bic)</span>
+<span id="cb262-440"><a href="code_3.html#cb262-440" tabindex="-1"></a>    }</span>
+<span id="cb262-441"><a href="code_3.html#cb262-441" tabindex="-1"></a>  )</span>
+<span id="cb262-442"><a href="code_3.html#cb262-442" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="code_3_2" class="section level3 hasAnchor" number="14.3.2">
+<h3><span class="header-section-number">14.3.2</span> 数据模拟<a href="code_3.html#code_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="code_3.html#cb263-1" tabindex="-1"></a><span class="co"># case_3</span></span>
+<span id="cb263-2"><a href="code_3.html#cb263-2" tabindex="-1"></a><span class="co"># 有顺序调整</span></span>
+<span id="cb263-3"><a href="code_3.html#cb263-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb263-4"><a href="code_3.html#cb263-4" tabindex="-1"></a>x_1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb263-5"><a href="code_3.html#cb263-5" tabindex="-1"></a>x_2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb263-6"><a href="code_3.html#cb263-6" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x_1, x_2)</span>
+<span id="cb263-7"><a href="code_3.html#cb263-7" tabindex="-1"></a>X_cluster <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(X, <span class="at">centers =</span> <span class="dv">2</span>)</span>
+<span id="cb263-8"><a href="code_3.html#cb263-8" tabindex="-1"></a>X_1 <span class="ot">&lt;-</span> X[<span class="fu">which</span>(X_cluster<span class="sc">$</span>cluster <span class="sc">==</span> <span class="dv">1</span>),]</span>
+<span id="cb263-9"><a href="code_3.html#cb263-9" tabindex="-1"></a>X_2 <span class="ot">&lt;-</span> X[<span class="fu">which</span>(X_cluster<span class="sc">$</span>cluster <span class="sc">==</span> <span class="dv">2</span>),]</span>
+<span id="cb263-10"><a href="code_3.html#cb263-10" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rbind</span>(X_1,X_2)</span>
+<span id="cb263-11"><a href="code_3.html#cb263-11" tabindex="-1"></a>X_diag <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">asplit</span>(X,<span class="dv">1</span>), <span class="sc">~</span><span class="fu">matrix</span>(., <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> T))</span>
+<span id="cb263-12"><a href="code_3.html#cb263-12" tabindex="-1"></a>X_diag <span class="ot">&lt;-</span> <span class="fu">do.call</span>(bdiag, X_diag) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb263-13"><a href="code_3.html#cb263-13" tabindex="-1"></a>z_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb263-14"><a href="code_3.html#cb263-14" tabindex="-1"></a>z_2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb263-15"><a href="code_3.html#cb263-15" tabindex="-1"></a>f_z1 <span class="ot">&lt;-</span> <span class="fu">sin</span>((z_1 <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> pi)</span>
+<span id="cb263-16"><a href="code_3.html#cb263-16" tabindex="-1"></a>f_z2 <span class="ot">&lt;-</span> <span class="fu">cos</span>((z_2 <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> pi) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">/</span> pi</span>
+<span id="cb263-17"><a href="code_3.html#cb263-17" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">times =</span> <span class="dv">50</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">3</span>), <span class="at">times =</span> <span class="dv">50</span>))</span>
+<span id="cb263-18"><a href="code_3.html#cb263-18" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>X_diag <span class="sc">%*%</span> beta <span class="sc">-</span> f_z1 <span class="sc">-</span> f_z2)) <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">100</span>))</span>
+<span id="cb263-19"><a href="code_3.html#cb263-19" tabindex="-1"></a>status <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.2</span>))</span>
+<span id="cb263-20"><a href="code_3.html#cb263-20" tabindex="-1"></a></span>
+<span id="cb263-21"><a href="code_3.html#cb263-21" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">cbind</span>(time, status)</span>
+<span id="cb263-22"><a href="code_3.html#cb263-22" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">cbind</span>(z_1, z_2)</span>
+<span id="cb263-23"><a href="code_3.html#cb263-23" tabindex="-1"></a></span>
+<span id="cb263-24"><a href="code_3.html#cb263-24" tabindex="-1"></a>case3 <span class="ot">&lt;-</span> SubgroupBeta<span class="sc">$</span><span class="fu">new</span>(<span class="at">T =</span> T, <span class="at">X =</span> X, <span class="at">Z =</span> Z, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">K =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="fl">0.1</span>, <span class="at">a =</span> <span class="fl">2.5</span>, <span class="at">theta =</span> <span class="dv">1</span>, <span class="at">df =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>)</span>
+<span id="cb263-25"><a href="code_3.html#cb263-25" tabindex="-1"></a>result3 <span class="ot">&lt;-</span> case3<span class="sc">$</span><span class="fu">run</span>(<span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>##   用户   系统   流逝 
+## 204.81   3.26 210.14</code></pre>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="code_3.html#cb265-1" tabindex="-1"></a>result3<span class="sc">$</span>alpha</span></code></pre></div>
+<pre><code>##   label size         beta
+## 1     1   56   2.26, 2.19
+## 2     2   44 -2.56, -2.54</code></pre>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="code_3.html#cb267-1" tabindex="-1"></a>result3<span class="sc">$</span>alpha<span class="sc">$</span>beta</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 2.26 2.19
+## 
+## [[2]]
+## [1] -2.56 -2.54</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-code_3" class="csl-entry">
+<div class="csl-left-margin">[33] </div><div class="csl-right-inline">CAI T. HU T. Subgroup detection in the heterogeneous partially linear additive Cox model[J/OL]. Journal of Nonparametric Statistics, 2024, 0(0): 1-26. DOI:<a href="https://doi.org/10.1080/10485252.2024.2303103">10.1080/10485252.2024.2303103</a>.</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="code_2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ball.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"toc_depth": 3
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

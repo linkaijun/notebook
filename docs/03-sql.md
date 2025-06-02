@@ -20,7 +20,7 @@
 
 - 子句顺序
 
-   SELECT > FROM > WHERE > GROUP BY > HAVING > ORDER BY > LIMIT
+   WHERE → GROUP BY → HAVING → SELECT（包括别名定义）→ ORDER BY → LIMIT
 
 ### 选择数据库与表 {#sql_2_2}
 
@@ -61,6 +61,8 @@ FROM 表名;
 ```
 
 > 返回的数据顺序不一定与原始顺序一致
+
+> select语句包含的内容为空，则输出`NULL`；若空内容出现在from语句，则select语句输出空值
 
 2. 检索多个列
 
@@ -122,6 +124,16 @@ SELECT 表名.列名
 FROM 数据库名.表名;
 ```
 
+7. 多分类表达式
+
+```
+SELECT
+CASE
+    WHEN condition THEN result
+    ELSE
+END AS col
+```
+
 ### 排序检索数据 {#sql_2_4}
 
 `ORDER BY`子句控制排序。
@@ -142,11 +154,21 @@ FROM 表名
 ORDER BY 列1 DESC, 列2;
 ```
 
-有时需要分组设置行号。其中`PARTITION`表示分组标识，`ORDER BY`表示顺序标识。
+有时需要对数据进行排名，下面介绍常见的三个窗口函数`ROW_NUMBER()``RANK()``DENSE_RANK()`。其中`PARTITION`表示分组标识，`ORDER BY`表示顺序标识。
+
+`ROW_NUMBER()`直接给行编号，有多少行编多少号，如1、2、3、4。
+
+`RANK()`对于相同值则相同排名，同时跳过排名，如1、1、3、4。
+
+`DENSE_RANK()`对于相同值则相同排名，但不跳过排名，如1、1、2、3。
 
 ```
-ROW_NUMBER() OVER (PARTITION by employee_id ORDER BY primary_flag)
+ROW_NUMBER() OVER ([PARTITION by col] ORDER BY col [ASC|DESC]) AS col
+RANK() OVER ([PARTITION by col] ORDER BY col [ASC|DESC]) AS col
+DENSE_RANK() OVER ([PARTITION by col] ORDER BY col [ASC|DESC]) AS col
 ```
+
+> 返回的结果已经按ORDER BY进行排序
 
 ### 过滤数据 {#sql_2_5}
 
@@ -264,9 +286,61 @@ FROM 表名;
 
 2. 日期处理函数
 
+   - DATEDIFF(date1,date2)
+
+      返回date1-date2的天数
+
 3. 数值处理函数
 
+4. 窗口函数
+
+窗口函数先进行分组及排序操作后再在窗口内执行对应的函数。
+
+可以适当了解**窗口函数框架规范**。
+
+> 窗口函数并不合并行，保留原始数据的完整性，例如在窗口中使用`COUNT`函数，则窗口内的每行赋值同一个数值
+
+   - ROW_NUMBER()
+   
+      行编号
+   
+   - RANK()
+   
+      排名跳号
+   
+   - DENSE_RANK()
+
+      排名不跳号
+    
+   - LAG(expression, offset, default_value)
+   
+      offest表示返回**前多少行**，默认为1；default_value表示若超出范围时的默认值，默认为NULL
+      
+   - LEAD(expression, offset, default_value)
+   
+      offest表示返回**后多少行**，默认为1；default_value表示若超出范围时的默认值，默认为NULL
+      
+   - FIRST_VALUE(expression)
+   
+      输出按指定顺序排列后的第一个值
+
+> 注意，若想查询分组后的第一个值，必要时需在主键前添加DISTINCT
+      
+   - LAST_VALUE(expression)
+
+5. 其他函数
+
+   - IFNULL(expression, alt_value)
+   
+      NULL值替换，若为NULL值则替换为`alt_value`
+      
+   - IF(condition, value_if_true, value_if_false)
+
+> IF函数可以SUM函数结合起来用于计数
+
 ### 汇总数据 {#sql_2_8}
+
+下面提到的汇总函数也可作为窗口函数使用。
 
 1. `AVG()`
 
@@ -278,7 +352,6 @@ FROM 表名;
 
    对行数进行计数，若为`COUNT(*)`则无论是否有NULL都算进去，若为`COUNT(列)`则忽视NULL值。
    
-
 3. `MAX()`
 
 4. `MIN()`

@@ -1259,8 +1259,8 @@ DiagrammeR::grViz("digraph {
 ```
 
 ```{=html}
-<div id="htmlwidget-53918911fabe2d23f370" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-53918911fabe2d23f370">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-572743b0234b6d6f983f" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-572743b0234b6d6f983f">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ``` r
@@ -1273,8 +1273,8 @@ DiagrammeR::mermaid('
 ```
 
 ```{=html}
-<div id="htmlwidget-d638122fdfdd4407cc6a" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d638122fdfdd4407cc6a">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e1d5ccb1ba1734df8887" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e1d5ccb1ba1734df8887">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 ```
 
 相关语法介绍可详见`graphviz`[官网](https://www.graphviz.org/doc/info/lang.html)和`mermaid`[官网](https://mermaid.nodejs.cn/syntax/flowchart.html)（有中英文官网，这个是中文的）。

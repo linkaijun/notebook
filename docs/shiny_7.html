@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.10 相关系数与偏相关系数 | kj的学习笔记</title>
+  <title>5.7 用户反馈 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.10 相关系数与偏相关系数 | kj的学习笔记" />
+  <meta property="og:title" content="5.7 用户反馈 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.10 相关系数与偏相关系数 | kj的学习笔记" />
+  <meta name="twitter:title" content="5.7 用户反馈 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reg_9.html"/>
-<link rel="next" href="reg_11.html"/>
+<link rel="prev" href="shiny_6.html"/>
+<link rel="next" href="shiny_8.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -637,88 +637,416 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reg_10" class="section level2 hasAnchor" number="6.10">
-<h2><span class="header-section-number">6.10</span> 相关系数与偏相关系数<a href="reg_10.html#reg_10" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="reg_10_1" class="section level3 hasAnchor" number="6.10.1">
-<h3><span class="header-section-number">6.10.1</span> 样本相关系数<a href="reg_10.html#reg_10_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>定义两个变量间的相关系数</p>
-<p><span class="math display" id="eq:model97">\[
-r=\frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_{i=1}^n (x_i-\bar x)^2\sum_{i=1}^n (y_i-\bar y)^2}}=\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}  \tag{6.97}
-\]</span></p>
-<p>样本相关系数反映了两个变量间<span style="color:red"><strong>线性关系</strong></span>的密切程度。特别的，样本相关系数为0并不意味着两个变量之间没有任何关系，只是没有线性相关关系。样本相关系数的大小与样本量有关，当样本量较小时，<span class="math inline">\(|r|\)</span>容易接近1，当样本量较大时，<span class="math inline">\(|r|\)</span>容易偏小。</p>
-<div id="reg_10_1_1" class="section level4 hasAnchor" number="6.10.1.1">
-<h4><span class="header-section-number">6.10.1.1</span> 样本相关系数的显著性检验<a href="reg_10.html#reg_10_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>考虑两个变量间的一元线性回归模型。回顾式<a href="reg_6.html#eq:model69">(6.80)</a>与式<a href="reg_6.html#eq:model60">(6.70)</a>，可得</p>
-<p><span class="math display" id="eq:model98">\[
-\begin{aligned}
-F&amp;=\frac{SSR/1}{SSE/(n-2)} \\
-&amp;= (n-2)\frac{SSR/SST}{SSE/SST} \\
-&amp;= (n-2)\frac{r^2}{1-r^2} \\
-r^2&amp;=\frac{F}{F+n-2}
-\end{aligned} \tag{6.98}
-\]</span></p>
-<p>故样本相关系数的显著性检验可通过一元场合的F检验进行，其中<span class="math inline">\(F \sim F(1,n-2)\)</span>，原假设为<span class="math inline">\(\rho=0\)</span>。</p>
-<p>或者根据一元场合式<a href="reg_6.html#eq:model59">(6.67)</a>可得</p>
-<p><span class="math display" id="eq:model99">\[
-\begin{aligned}
-t&amp;=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \\
-&amp;= \frac{\hat \beta_1\sqrt{L_{xx}}}{\sqrt{SSE/(n-2)}} \\
-&amp;= \frac{\sqrt{n-2}\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}}{\sqrt{SSE/L_{yy}}} \\
-&amp;= \frac{\sqrt{(n-2)}r}{\sqrt{1-r^2}}
-\end{aligned}  \tag{6.99}
-\]</span></p>
+<div id="shiny_7" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> 用户反馈<a href="shiny_7.html#shiny_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>用户反馈旨在提高用户的使用体验。就像下载文件有个进度条，进入某个页面有个滚动圈，这些都是在提醒用户它们在工作，而非“静止”。</p>
+<div id="shiny_7_1" class="section level3 hasAnchor" number="5.7.1">
+<h3><span class="header-section-number">5.7.1</span> 验证<a href="shiny_7.html#shiny_7_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="shiny_7_1_1" class="section level4 hasAnchor" number="5.7.1.1">
+<h4><span class="header-section-number">5.7.1.1</span> 输入验证<a href="shiny_7.html#shiny_7_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>将<code>shinyFeedback</code>包的<code>useShinyFeedback()</code>函数插入到ui中，并在server里设置相应的反馈函数来提醒用户。</p>
 <blockquote>
-<p>一元场合中还有式<a href="reg_6.html#eq:model66">(6.71)</a>的关系:<span class="math inline">\(t^2=F\)</span></p>
+<p><code>useShinyFeedback()</code>必须置于UI的顶部</p>
 </blockquote>
-<p>此时可根据<span class="math inline">\(t \sim t(n-2)\)</span>的显著性检验，原假设为<span class="math inline">\(\rho=0\)</span>。</p>
+<p>仅限如下组件</p>
+<pre><code>shiny::dateInput()
+shiny::dateRangeInput()
+shiny::fileInput()
+shiny::numericInput()
+shiny::passwordInput()
+shiny::selectInput()
+shiny::sliderInput()
+shiny::textAreaInput()
+shiny::textInput()
+shinyWidgets::airDatepickerInput()
+shinyWidgets::pickerInput()</code></pre>
+<p>较常使用的反馈函数有<code>feedback()</code>、<code>feedbackWarning()</code>、<code>feedbackDanger()</code>、<code>feedbackSuccess()</code>。它们共有的参数如下所示：</p>
+<ol style="list-style-type: decimal">
+<li><p><code>inputID</code>：哪个输入要用到反馈，指定相应的ID</p></li>
+<li><p><code>show</code>：逻辑判断是否要发出提醒</p></li>
+<li><p><code>text</code>：提醒的信息</p></li>
+<li><p><code>color</code>：提醒的信息颜色</p></li>
+<li><p><code>icon</code>：提醒的图标</p></li>
+</ol>
+<blockquote>
+<p><code>icon</code>还不会设置啊</p>
+</blockquote>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="shiny_7.html#cb206-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb206-2"><a href="shiny_7.html#cb206-2" tabindex="-1"></a></span>
+<span id="cb206-3"><a href="shiny_7.html#cb206-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb206-4"><a href="shiny_7.html#cb206-4" tabindex="-1"></a>  shinyFeedback<span class="sc">::</span><span class="fu">useShinyFeedback</span>(),</span>
+<span id="cb206-5"><a href="shiny_7.html#cb206-5" tabindex="-1"></a>  <span class="fu">numericInput</span>(<span class="st">&quot;n&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">10</span>),</span>
+<span id="cb206-6"><a href="shiny_7.html#cb206-6" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;half&quot;</span>)</span>
+<span id="cb206-7"><a href="shiny_7.html#cb206-7" tabindex="-1"></a>)</span>
+<span id="cb206-8"><a href="shiny_7.html#cb206-8" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb206-9"><a href="shiny_7.html#cb206-9" tabindex="-1"></a>  half <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb206-10"><a href="shiny_7.html#cb206-10" tabindex="-1"></a>    even <span class="ot">&lt;-</span> input<span class="sc">$</span>n <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb206-11"><a href="shiny_7.html#cb206-11" tabindex="-1"></a>    shinyFeedback<span class="sc">::</span><span class="fu">feedbackWarning</span>(<span class="st">&quot;n&quot;</span>, <span class="sc">!</span>even, <span class="st">&quot;Please select an even number&quot;</span>)</span>
+<span id="cb206-12"><a href="shiny_7.html#cb206-12" tabindex="-1"></a>    <span class="co">#req(even)</span></span>
+<span id="cb206-13"><a href="shiny_7.html#cb206-13" tabindex="-1"></a>    input<span class="sc">$</span>n <span class="sc">/</span> <span class="dv">2</span>    </span>
+<span id="cb206-14"><a href="shiny_7.html#cb206-14" tabindex="-1"></a>  })</span>
+<span id="cb206-15"><a href="shiny_7.html#cb206-15" tabindex="-1"></a>  </span>
+<span id="cb206-16"><a href="shiny_7.html#cb206-16" tabindex="-1"></a>  output<span class="sc">$</span>half <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">half</span>())</span>
+<span id="cb206-17"><a href="shiny_7.html#cb206-17" tabindex="-1"></a>}</span>
+<span id="cb206-18"><a href="shiny_7.html#cb206-18" tabindex="-1"></a></span>
+<span id="cb206-19"><a href="shiny_7.html#cb206-19" tabindex="-1"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb206-20"><a href="shiny_7.html#cb206-20" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<p>即使输入的信息不是我们期望的，shiny也可能会正常运行。此时，我们需要<code>req()</code>（required）来判断输入的信息是否符合规范，当为<code>FALSE</code>时，反应表达式会在<code>req()</code>处停止，不会接着运行下面的内容。</p>
+<p>此外，如果你需要等用户输入所有信息后再更新内容，那么<code>req()</code>也可承接多个条件判断，只有当这些条件都满足时才会运行下面的代码。</p>
+<p>下面展示联合使用<code>req()</code>与<code>shinyFeedback</code>的例子。</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="shiny_7.html#cb207-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb207-2"><a href="shiny_7.html#cb207-2" tabindex="-1"></a></span>
+<span id="cb207-3"><a href="shiny_7.html#cb207-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb207-4"><a href="shiny_7.html#cb207-4" tabindex="-1"></a>  shinyFeedback<span class="sc">::</span><span class="fu">useShinyFeedback</span>(),</span>
+<span id="cb207-5"><a href="shiny_7.html#cb207-5" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">&quot;dataset&quot;</span>, <span class="st">&quot;Dataset name&quot;</span>), </span>
+<span id="cb207-6"><a href="shiny_7.html#cb207-6" tabindex="-1"></a>  <span class="fu">tableOutput</span>(<span class="st">&quot;data&quot;</span>)</span>
+<span id="cb207-7"><a href="shiny_7.html#cb207-7" tabindex="-1"></a>)</span>
+<span id="cb207-8"><a href="shiny_7.html#cb207-8" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb207-9"><a href="shiny_7.html#cb207-9" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb207-10"><a href="shiny_7.html#cb207-10" tabindex="-1"></a>    <span class="fu">req</span>(input<span class="sc">$</span>dataset)</span>
+<span id="cb207-11"><a href="shiny_7.html#cb207-11" tabindex="-1"></a>    </span>
+<span id="cb207-12"><a href="shiny_7.html#cb207-12" tabindex="-1"></a>    exists <span class="ot">&lt;-</span> <span class="fu">exists</span>(input<span class="sc">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb207-13"><a href="shiny_7.html#cb207-13" tabindex="-1"></a>    shinyFeedback<span class="sc">::</span><span class="fu">feedbackDanger</span>(<span class="st">&quot;dataset&quot;</span>, <span class="sc">!</span>exists, <span class="st">&quot;Unknown dataset&quot;</span>)</span>
+<span id="cb207-14"><a href="shiny_7.html#cb207-14" tabindex="-1"></a>    <span class="fu">req</span>(exists, <span class="at">cancelOutput =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb207-15"><a href="shiny_7.html#cb207-15" tabindex="-1"></a>    </span>
+<span id="cb207-16"><a href="shiny_7.html#cb207-16" tabindex="-1"></a>    <span class="fu">get</span>(input<span class="sc">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb207-17"><a href="shiny_7.html#cb207-17" tabindex="-1"></a>  })</span>
+<span id="cb207-18"><a href="shiny_7.html#cb207-18" tabindex="-1"></a>  </span>
+<span id="cb207-19"><a href="shiny_7.html#cb207-19" tabindex="-1"></a>  output<span class="sc">$</span>data <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
+<span id="cb207-20"><a href="shiny_7.html#cb207-20" tabindex="-1"></a>    <span class="fu">head</span>(<span class="fu">data</span>())</span>
+<span id="cb207-21"><a href="shiny_7.html#cb207-21" tabindex="-1"></a>  })</span>
+<span id="cb207-22"><a href="shiny_7.html#cb207-22" tabindex="-1"></a>}</span>
+<span id="cb207-23"><a href="shiny_7.html#cb207-23" tabindex="-1"></a></span>
+<span id="cb207-24"><a href="shiny_7.html#cb207-24" tabindex="-1"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb207-25"><a href="shiny_7.html#cb207-25" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<p>当且仅当输入了数据集的名称且该数据集存在时，才会完整的运行这个反应表达式。其中<code>req(exists, cancelOutput = TRUE)</code>表示当为<code>FALSE</code>时，取消之后的所有输出，将结果保留在上一次符合规范的结果。</p>
+</div>
+<div id="shiny_7_1_2" class="section level4 hasAnchor" number="5.7.1.2">
+<h4><span class="header-section-number">5.7.1.2</span> 输出验证<a href="shiny_7.html#shiny_7_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>有时将验证这一环节放在输出这更好。可用<code>validate()</code>来反馈信息。</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="shiny_7.html#cb208-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb208-2"><a href="shiny_7.html#cb208-2" tabindex="-1"></a></span>
+<span id="cb208-3"><a href="shiny_7.html#cb208-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb208-4"><a href="shiny_7.html#cb208-4" tabindex="-1"></a>  <span class="fu">numericInput</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb208-5"><a href="shiny_7.html#cb208-5" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="st">&quot;trans&quot;</span>, <span class="st">&quot;transformation&quot;</span>, </span>
+<span id="cb208-6"><a href="shiny_7.html#cb208-6" tabindex="-1"></a>    <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">&quot;square&quot;</span>, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;square-root&quot;</span>)</span>
+<span id="cb208-7"><a href="shiny_7.html#cb208-7" tabindex="-1"></a>  ),</span>
+<span id="cb208-8"><a href="shiny_7.html#cb208-8" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;out&quot;</span>)</span>
+<span id="cb208-9"><a href="shiny_7.html#cb208-9" tabindex="-1"></a>)</span>
+<span id="cb208-10"><a href="shiny_7.html#cb208-10" tabindex="-1"></a></span>
+<span id="cb208-11"><a href="shiny_7.html#cb208-11" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb208-12"><a href="shiny_7.html#cb208-12" tabindex="-1"></a>  output<span class="sc">$</span>out <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb208-13"><a href="shiny_7.html#cb208-13" tabindex="-1"></a>    <span class="cf">if</span> (input<span class="sc">$</span>x <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> input<span class="sc">$</span>trans <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;log&quot;</span>, <span class="st">&quot;square-root&quot;</span>)) {</span>
+<span id="cb208-14"><a href="shiny_7.html#cb208-14" tabindex="-1"></a>      <span class="fu">validate</span>(<span class="st">&quot;x can not be negative for this transformation&quot;</span>)</span>
+<span id="cb208-15"><a href="shiny_7.html#cb208-15" tabindex="-1"></a>    }</span>
+<span id="cb208-16"><a href="shiny_7.html#cb208-16" tabindex="-1"></a>    </span>
+<span id="cb208-17"><a href="shiny_7.html#cb208-17" tabindex="-1"></a>    <span class="cf">switch</span>(input<span class="sc">$</span>trans,</span>
+<span id="cb208-18"><a href="shiny_7.html#cb208-18" tabindex="-1"></a>      <span class="at">square =</span> input<span class="sc">$</span>x <span class="sc">^</span> <span class="dv">2</span>,</span>
+<span id="cb208-19"><a href="shiny_7.html#cb208-19" tabindex="-1"></a>      <span class="st">&quot;square-root&quot;</span> <span class="ot">=</span> <span class="fu">sqrt</span>(input<span class="sc">$</span>x),</span>
+<span id="cb208-20"><a href="shiny_7.html#cb208-20" tabindex="-1"></a>      <span class="at">log =</span> <span class="fu">log</span>(input<span class="sc">$</span>x)</span>
+<span id="cb208-21"><a href="shiny_7.html#cb208-21" tabindex="-1"></a>    )</span>
+<span id="cb208-22"><a href="shiny_7.html#cb208-22" tabindex="-1"></a>  })</span>
+<span id="cb208-23"><a href="shiny_7.html#cb208-23" tabindex="-1"></a>}</span>
+<span id="cb208-24"><a href="shiny_7.html#cb208-24" tabindex="-1"></a></span>
+<span id="cb208-25"><a href="shiny_7.html#cb208-25" tabindex="-1"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb208-26"><a href="shiny_7.html#cb208-26" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
 </div>
 </div>
-<div id="reg_10_2" class="section level3 hasAnchor" number="6.10.2">
-<h3><span class="header-section-number">6.10.2</span> 样本偏相关系数<a href="reg_10.html#reg_10_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>简单样本相关系数度量了两个变量间的相关性。但在多元相关分析中，由于受到其他变量的影响，简单样本相关系数并不能反映两个变量间纯粹的相关性，需要控制其他变量的影响，对此引入样本偏相关系数。</p>
-<ul>
-<li>自变量间的样本偏相关系数</li>
-</ul>
-<p>在样本相关阵r中，记<span class="math inline">\(\Delta_{ij}\)</span>为r的第i行第i列元素的代数余子式，以<span class="math inline">\(x_1\)</span>与<span class="math inline">\(x_2\)</span>为例，定义样本偏相关系数为</p>
-<p><span class="math display" id="eq:model100">\[
-r_{12;3,...p}=\frac{-\Delta_{12}}{\sqrt{\Delta_{11}\Delta_{22}}} \tag{6.100}
-\]</span></p>
-<ul>
-<li>因变量与自变量的样本偏相关系数</li>
-</ul>
-<p>记除<span class="math inline">\(x_1\)</span>之外的自变量为<span class="math inline">\(x_{(-1)}\)</span>，<span class="math inline">\(e_{x_1|x_{(-1)}}\)</span>和<span class="math inline">\(e_{y|x_{(-1)}}\)</span>分别表示<span class="math inline">\(x_1\)</span>和<span class="math inline">\(y\)</span>对<span class="math inline">\(x_{(-1)}\)</span>回归的残差，定义<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏相关系数为</p>
-<p><span class="math display" id="eq:model101">\[
-r_{y1;2,...p}=\frac{Cov(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})}{\sqrt{Var(e_{x_1|x_{(-1)}})Var(e_{y|x_{(-1)}})}}=Cor(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}}) \tag{6.101}
-\]</span></p>
+<div id="shiny_7_2" class="section level3 hasAnchor" number="5.7.2">
+<h3><span class="header-section-number">5.7.2</span> 通知<a href="shiny_7.html#shiny_7_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>有三种通知类型：1.在固定时间后自动消失的通知；2.在进程开始时显示，结束后消失的通知；3.更新式通知。</p>
+<div id="shiny_7_2_1" class="section level4 hasAnchor" number="5.7.2.1">
+<h4><span class="header-section-number">5.7.2.1</span> 在固定时间后自动消失的通知<a href="shiny_7.html#shiny_7_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>使用<code>observeEvent()</code>与<code>showNotification()</code>来监控行为并发出通知。</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="shiny_7.html#cb209-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb209-2"><a href="shiny_7.html#cb209-2" tabindex="-1"></a></span>
+<span id="cb209-3"><a href="shiny_7.html#cb209-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb209-4"><a href="shiny_7.html#cb209-4" tabindex="-1"></a>  <span class="fu">actionButton</span>(<span class="st">&quot;goodnight&quot;</span>, <span class="st">&quot;Good night&quot;</span>)</span>
+<span id="cb209-5"><a href="shiny_7.html#cb209-5" tabindex="-1"></a>)</span>
+<span id="cb209-6"><a href="shiny_7.html#cb209-6" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb209-7"><a href="shiny_7.html#cb209-7" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>goodnight, {</span>
+<span id="cb209-8"><a href="shiny_7.html#cb209-8" tabindex="-1"></a>    <span class="fu">showNotification</span>(<span class="st">&quot;So long&quot;</span>, <span class="at">duration =</span> <span class="dv">5</span>)</span>
+<span id="cb209-9"><a href="shiny_7.html#cb209-9" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb209-10"><a href="shiny_7.html#cb209-10" tabindex="-1"></a>    <span class="fu">showNotification</span>(<span class="st">&quot;Farewell&quot;</span>, <span class="at">type =</span> <span class="st">&quot;message&quot;</span>)</span>
+<span id="cb209-11"><a href="shiny_7.html#cb209-11" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb209-12"><a href="shiny_7.html#cb209-12" tabindex="-1"></a>    <span class="fu">showNotification</span>(<span class="st">&quot;Auf Wiedersehen&quot;</span>, <span class="at">type =</span> <span class="st">&quot;warning&quot;</span>)</span>
+<span id="cb209-13"><a href="shiny_7.html#cb209-13" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb209-14"><a href="shiny_7.html#cb209-14" tabindex="-1"></a>    <span class="fu">showNotification</span>(<span class="st">&quot;Adieu&quot;</span>, <span class="at">type =</span> <span class="st">&quot;error&quot;</span>)</span>
+<span id="cb209-15"><a href="shiny_7.html#cb209-15" tabindex="-1"></a>  })</span>
+<span id="cb209-16"><a href="shiny_7.html#cb209-16" tabindex="-1"></a>}</span>
+<span id="cb209-17"><a href="shiny_7.html#cb209-17" tabindex="-1"></a></span>
+<span id="cb209-18"><a href="shiny_7.html#cb209-18" tabindex="-1"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb209-19"><a href="shiny_7.html#cb209-19" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<p>其中<code>duration</code>表示通知的持续时间，<code>type</code>表示通知的类型，也就是颜色的不同。</p>
+</div>
+<div id="shiny_7_2_2" class="section level4 hasAnchor" number="5.7.2.2">
+<h4><span class="header-section-number">5.7.2.2</span> 进程通知<a href="shiny_7.html#shiny_7_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>对于进程通知，需要将通知的持续时间设置为<code>duration=NULL</code>，关闭通知右上角的关闭按钮<code>closeButton=FALSE</code>，并将其放在反应表达式里，这样才符合“在进程开始时出现，结束时自动消失”的样子。</p>
+<p>此外，需要用<code>removeNotification(id)</code>来移除对应ID的通知。<code>on.exit()</code>确保了通知不会因为代码错误而卡住不消失。</p>
 <blockquote>
-<p>控制其他变量的影响就是考虑这些变量回归后的残差</p>
+<p><code>on.exit()</code>就是在函数或代码块中预先设置了一个退出处理程序，无论函数或代码块是否正常运行，当我退出时都要执行这里的退出处理程序。而参数<code>add=TRUE</code>表示在现有处理程序列表中添加新的处理程序，而不是覆盖旧的处理程序。另外还有参数<code>after</code>，大家自行了解吧</p>
 </blockquote>
-<ul>
-<li>因变量与自变量的样本偏决定系数</li>
-</ul>
-<p>定义<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏决定系数为</p>
-<p><span class="math display" id="eq:model102">\[
-r_{y1;2,...p}^2 = \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}  \tag{6.102}
-\]</span></p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="shiny_7.html#cb210-1" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb210-2"><a href="shiny_7.html#cb210-2" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb210-3"><a href="shiny_7.html#cb210-3" tabindex="-1"></a>    id <span class="ot">&lt;-</span> <span class="fu">showNotification</span>(<span class="st">&quot;Reading data...&quot;</span>, <span class="at">duration =</span> <span class="cn">NULL</span>, <span class="at">closeButton =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb210-4"><a href="shiny_7.html#cb210-4" tabindex="-1"></a>    <span class="fu">on.exit</span>(<span class="fu">removeNotification</span>(id), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb210-5"><a href="shiny_7.html#cb210-5" tabindex="-1"></a>    </span>
+<span id="cb210-6"><a href="shiny_7.html#cb210-6" tabindex="-1"></a>    <span class="fu">read.csv</span>(input<span class="sc">$</span>file<span class="sc">$</span>datapath)</span>
+<span id="cb210-7"><a href="shiny_7.html#cb210-7" tabindex="-1"></a>  })</span>
+<span id="cb210-8"><a href="shiny_7.html#cb210-8" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="shiny_7_2_3" class="section level4 hasAnchor" number="5.7.2.3">
+<h4><span class="header-section-number">5.7.2.3</span> 更新式通知<a href="shiny_7.html#shiny_7_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>在第一个例子中，我们创建了多条通知，新的通知会把就通知往上顶。而创建一个通知并多次调用它，就会覆盖前一个通知，从而实现更新式通知。</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="shiny_7.html#cb211-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb211-2"><a href="shiny_7.html#cb211-2" tabindex="-1"></a></span>
+<span id="cb211-3"><a href="shiny_7.html#cb211-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb211-4"><a href="shiny_7.html#cb211-4" tabindex="-1"></a>  <span class="fu">tableOutput</span>(<span class="st">&quot;data&quot;</span>)</span>
+<span id="cb211-5"><a href="shiny_7.html#cb211-5" tabindex="-1"></a>)</span>
+<span id="cb211-6"><a href="shiny_7.html#cb211-6" tabindex="-1"></a></span>
+<span id="cb211-7"><a href="shiny_7.html#cb211-7" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb211-8"><a href="shiny_7.html#cb211-8" tabindex="-1"></a>  notify <span class="ot">&lt;-</span> <span class="cf">function</span>(msg, <span class="at">id =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb211-9"><a href="shiny_7.html#cb211-9" tabindex="-1"></a>    <span class="fu">showNotification</span>(msg, <span class="at">id =</span> id, <span class="at">duration =</span> <span class="cn">NULL</span>, <span class="at">closeButton =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb211-10"><a href="shiny_7.html#cb211-10" tabindex="-1"></a>  }</span>
+<span id="cb211-11"><a href="shiny_7.html#cb211-11" tabindex="-1"></a>  </span>
+<span id="cb211-12"><a href="shiny_7.html#cb211-12" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({ </span>
+<span id="cb211-13"><a href="shiny_7.html#cb211-13" tabindex="-1"></a>    id <span class="ot">&lt;-</span> <span class="fu">notify</span>(<span class="st">&quot;Reading data...&quot;</span>)</span>
+<span id="cb211-14"><a href="shiny_7.html#cb211-14" tabindex="-1"></a>    <span class="fu">on.exit</span>(<span class="fu">removeNotification</span>(id), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb211-15"><a href="shiny_7.html#cb211-15" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb211-16"><a href="shiny_7.html#cb211-16" tabindex="-1"></a>    </span>
+<span id="cb211-17"><a href="shiny_7.html#cb211-17" tabindex="-1"></a>    <span class="fu">notify</span>(<span class="st">&quot;Reticulating splines...&quot;</span>, <span class="at">id =</span> id)</span>
+<span id="cb211-18"><a href="shiny_7.html#cb211-18" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb211-19"><a href="shiny_7.html#cb211-19" tabindex="-1"></a>    </span>
+<span id="cb211-20"><a href="shiny_7.html#cb211-20" tabindex="-1"></a>    <span class="fu">notify</span>(<span class="st">&quot;Herding llamas...&quot;</span>, <span class="at">id =</span> id)</span>
+<span id="cb211-21"><a href="shiny_7.html#cb211-21" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb211-22"><a href="shiny_7.html#cb211-22" tabindex="-1"></a>    </span>
+<span id="cb211-23"><a href="shiny_7.html#cb211-23" tabindex="-1"></a>    <span class="fu">notify</span>(<span class="st">&quot;Orthogonalizing matrices...&quot;</span>, <span class="at">id =</span> id)</span>
+<span id="cb211-24"><a href="shiny_7.html#cb211-24" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb211-25"><a href="shiny_7.html#cb211-25" tabindex="-1"></a>    </span>
+<span id="cb211-26"><a href="shiny_7.html#cb211-26" tabindex="-1"></a>    mtcars</span>
+<span id="cb211-27"><a href="shiny_7.html#cb211-27" tabindex="-1"></a>  })</span>
+<span id="cb211-28"><a href="shiny_7.html#cb211-28" tabindex="-1"></a>  </span>
+<span id="cb211-29"><a href="shiny_7.html#cb211-29" tabindex="-1"></a>  output<span class="sc">$</span>data <span class="ot">&lt;-</span> <span class="fu">renderTable</span>(<span class="fu">head</span>(<span class="fu">data</span>()))</span>
+<span id="cb211-30"><a href="shiny_7.html#cb211-30" tabindex="-1"></a>}</span>
+<span id="cb211-31"><a href="shiny_7.html#cb211-31" tabindex="-1"></a></span>
+<span id="cb211-32"><a href="shiny_7.html#cb211-32" tabindex="-1"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb211-33"><a href="shiny_7.html#cb211-33" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<p>这段代码首先创建了ID为<code>id</code>的通知，并为其建立了退出处理机制，在后续的通知中重复调用了同一个ID的通知，从而实现更新式通知。</p>
+</div>
+</div>
+<div id="shiny_7_3" class="section level3 hasAnchor" number="5.7.3">
+<h3><span class="header-section-number">5.7.3</span> 进度条<a href="shiny_7.html#shiny_7_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>设置进度条的技术尚未成熟，已有的方法还存在缺点（你需要将完整任务分割成多个数量已知且运行时间大致相等的小任务）。下面分别介绍shiny内置的进度条与<code>waiter</code>包的进度条。</p>
 <blockquote>
-<p>若把<span class="math inline">\(SSE_{(-1)}\)</span>看成<span class="math inline">\(SST\)</span>，则形式同<span class="math inline">\(R^2\)</span></p>
+<p>显然，进度条非常适合在for循环中使用</p>
 </blockquote>
-<p>样本偏决定系数反映了引入该新自变量后，因变量剩余变差的相对减少了。</p>
-<p>则<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏相关系数也可为</p>
-<p><span class="math display" id="eq:model103">\[
-r_{y1;2,...p} = \sqrt{ \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}} \tag{6.103}
-\]</span></p>
-<p>正如样本相关系数与F统计量有关系，这里的样本偏相关系数（或者说样本偏决定系数）也与偏F统计量有关系。</p>
-<p>同式<a href="reg_10.html#eq:model98">(6.98)</a>，若把<span class="math inline">\(SSE_{(-1)}\)</span>看成<span class="math inline">\(SST\)</span>，则同理有</p>
-<blockquote>
-<p><span class="math inline">\(SST=\sum_{i=1}^n (y_i-\bar y)^2\)</span>又何尝不是均值模型的残差平方和呢？</p>
-</blockquote>
-<p><span class="math display" id="eq:model104">\[
-\begin{aligned}
-F_1&amp;=\frac{(n-p-1)r_{y1;2,...p}^2}{1-r_{y1;2,...p}^2} \\
-r_{y1;2,...p}^2 &amp;= \frac{F_1}{F_1+n-p-1}
-\end{aligned} \tag{6.104}
-\]</span></p>
+<div id="shiny_7_3_1" class="section level4 hasAnchor" number="5.7.3.1">
+<h4><span class="header-section-number">5.7.3.1</span> shiny<a href="shiny_7.html#shiny_7_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p><code>withProgress()</code>函数的<code>message</code>参数用来显示进度条的文本信息，该函数默认进度条跨度为0~1，需要用<code>{}</code>来包裹需要显示进度条的代码块。</p>
+<p><code>incProgress()</code>函数表示每次进度更新的增量，由于默认进度条范围为0~1，因此每次进度更新的增量就是<code>1/input$steps</code>。</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="shiny_7.html#cb212-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb212-2"><a href="shiny_7.html#cb212-2" tabindex="-1"></a></span>
+<span id="cb212-3"><a href="shiny_7.html#cb212-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb212-4"><a href="shiny_7.html#cb212-4" tabindex="-1"></a>  <span class="fu">numericInput</span>(<span class="st">&quot;steps&quot;</span>, <span class="st">&quot;How many steps?&quot;</span>, <span class="dv">10</span>),</span>
+<span id="cb212-5"><a href="shiny_7.html#cb212-5" tabindex="-1"></a>  <span class="fu">actionButton</span>(<span class="st">&quot;go&quot;</span>, <span class="st">&quot;go&quot;</span>),</span>
+<span id="cb212-6"><a href="shiny_7.html#cb212-6" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;result&quot;</span>)</span>
+<span id="cb212-7"><a href="shiny_7.html#cb212-7" tabindex="-1"></a>)</span>
+<span id="cb212-8"><a href="shiny_7.html#cb212-8" tabindex="-1"></a></span>
+<span id="cb212-9"><a href="shiny_7.html#cb212-9" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb212-10"><a href="shiny_7.html#cb212-10" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>go, {</span>
+<span id="cb212-11"><a href="shiny_7.html#cb212-11" tabindex="-1"></a>    <span class="fu">withProgress</span>(<span class="at">message =</span> <span class="st">&quot;Computing random number&quot;</span>, {</span>
+<span id="cb212-12"><a href="shiny_7.html#cb212-12" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(input<span class="sc">$</span>steps)) {</span>
+<span id="cb212-13"><a href="shiny_7.html#cb212-13" tabindex="-1"></a>        <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>)</span>
+<span id="cb212-14"><a href="shiny_7.html#cb212-14" tabindex="-1"></a>        <span class="fu">incProgress</span>(<span class="dv">1</span> <span class="sc">/</span> input<span class="sc">$</span>steps)</span>
+<span id="cb212-15"><a href="shiny_7.html#cb212-15" tabindex="-1"></a>      }</span>
+<span id="cb212-16"><a href="shiny_7.html#cb212-16" tabindex="-1"></a>      <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb212-17"><a href="shiny_7.html#cb212-17" tabindex="-1"></a>    })</span>
+<span id="cb212-18"><a href="shiny_7.html#cb212-18" tabindex="-1"></a>  })</span>
+<span id="cb212-19"><a href="shiny_7.html#cb212-19" tabindex="-1"></a>  </span>
+<span id="cb212-20"><a href="shiny_7.html#cb212-20" tabindex="-1"></a>  output<span class="sc">$</span>result <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">round</span>(<span class="fu">data</span>(), <span class="dv">2</span>))</span>
+<span id="cb212-21"><a href="shiny_7.html#cb212-21" tabindex="-1"></a>}</span>
+<span id="cb212-22"><a href="shiny_7.html#cb212-22" tabindex="-1"></a></span>
+<span id="cb212-23"><a href="shiny_7.html#cb212-23" tabindex="-1"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb212-24"><a href="shiny_7.html#cb212-24" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+</div>
+<div id="shiny_7_3_2" class="section level4 hasAnchor" number="5.7.3.2">
+<h4><span class="header-section-number">5.7.3.2</span> Waiter<a href="shiny_7.html#shiny_7_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>注意<code>Waiter</code>包需要创建一个R6对象，所有相关操作都要调用这个对象来设置。</p>
+<p>这里就给几个示例，其余自行探索<a href="https://waiter.john-coene.com/#/" target="_blank">官网</a>。</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="shiny_7.html#cb213-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb213-2"><a href="shiny_7.html#cb213-2" tabindex="-1"></a></span>
+<span id="cb213-3"><a href="shiny_7.html#cb213-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb213-4"><a href="shiny_7.html#cb213-4" tabindex="-1"></a>  waiter<span class="sc">::</span><span class="fu">use_waitress</span>(),</span>
+<span id="cb213-5"><a href="shiny_7.html#cb213-5" tabindex="-1"></a>  <span class="fu">numericInput</span>(<span class="st">&quot;steps&quot;</span>, <span class="st">&quot;How many steps?&quot;</span>, <span class="dv">10</span>),</span>
+<span id="cb213-6"><a href="shiny_7.html#cb213-6" tabindex="-1"></a>  <span class="fu">actionButton</span>(<span class="st">&quot;go&quot;</span>, <span class="st">&quot;go&quot;</span>),</span>
+<span id="cb213-7"><a href="shiny_7.html#cb213-7" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;result&quot;</span>)</span>
+<span id="cb213-8"><a href="shiny_7.html#cb213-8" tabindex="-1"></a>)</span>
+<span id="cb213-9"><a href="shiny_7.html#cb213-9" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb213-10"><a href="shiny_7.html#cb213-10" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>go, {</span>
+<span id="cb213-11"><a href="shiny_7.html#cb213-11" tabindex="-1"></a>    waitress <span class="ot">&lt;-</span> waiter<span class="sc">::</span>Waitress<span class="sc">$</span><span class="fu">new</span>(<span class="at">max =</span> input<span class="sc">$</span>steps)</span>
+<span id="cb213-12"><a href="shiny_7.html#cb213-12" tabindex="-1"></a>    <span class="fu">on.exit</span>(waitress<span class="sc">$</span><span class="fu">close</span>())</span>
+<span id="cb213-13"><a href="shiny_7.html#cb213-13" tabindex="-1"></a>    </span>
+<span id="cb213-14"><a href="shiny_7.html#cb213-14" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(input<span class="sc">$</span>steps)) {</span>
+<span id="cb213-15"><a href="shiny_7.html#cb213-15" tabindex="-1"></a>      <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>)</span>
+<span id="cb213-16"><a href="shiny_7.html#cb213-16" tabindex="-1"></a>      waitress<span class="sc">$</span><span class="fu">inc</span>(<span class="dv">1</span>)</span>
+<span id="cb213-17"><a href="shiny_7.html#cb213-17" tabindex="-1"></a>    }</span>
+<span id="cb213-18"><a href="shiny_7.html#cb213-18" tabindex="-1"></a>    </span>
+<span id="cb213-19"><a href="shiny_7.html#cb213-19" tabindex="-1"></a>    <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb213-20"><a href="shiny_7.html#cb213-20" tabindex="-1"></a>  })</span>
+<span id="cb213-21"><a href="shiny_7.html#cb213-21" tabindex="-1"></a>  </span>
+<span id="cb213-22"><a href="shiny_7.html#cb213-22" tabindex="-1"></a>  output<span class="sc">$</span>result <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">round</span>(<span class="fu">data</span>(), <span class="dv">2</span>))</span>
+<span id="cb213-23"><a href="shiny_7.html#cb213-23" tabindex="-1"></a>}</span>
+<span id="cb213-24"><a href="shiny_7.html#cb213-24" tabindex="-1"></a></span>
+<span id="cb213-25"><a href="shiny_7.html#cb213-25" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="shiny_7.html#cb214-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb214-2"><a href="shiny_7.html#cb214-2" tabindex="-1"></a><span class="fu">library</span>(waiter)</span>
+<span id="cb214-3"><a href="shiny_7.html#cb214-3" tabindex="-1"></a></span>
+<span id="cb214-4"><a href="shiny_7.html#cb214-4" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb214-5"><a href="shiny_7.html#cb214-5" tabindex="-1"></a>  <span class="fu">autoWaiter</span>(),</span>
+<span id="cb214-6"><a href="shiny_7.html#cb214-6" tabindex="-1"></a>  <span class="fu">actionButton</span>(</span>
+<span id="cb214-7"><a href="shiny_7.html#cb214-7" tabindex="-1"></a>    <span class="st">&quot;trigger&quot;</span>,</span>
+<span id="cb214-8"><a href="shiny_7.html#cb214-8" tabindex="-1"></a>    <span class="st">&quot;Render&quot;</span></span>
+<span id="cb214-9"><a href="shiny_7.html#cb214-9" tabindex="-1"></a>  ),</span>
+<span id="cb214-10"><a href="shiny_7.html#cb214-10" tabindex="-1"></a>  <span class="fu">plotOutput</span>(<span class="st">&quot;plot&quot;</span>),</span>
+<span id="cb214-11"><a href="shiny_7.html#cb214-11" tabindex="-1"></a>  <span class="fu">plotOutput</span>(<span class="st">&quot;plot2&quot;</span>)</span>
+<span id="cb214-12"><a href="shiny_7.html#cb214-12" tabindex="-1"></a>)</span>
+<span id="cb214-13"><a href="shiny_7.html#cb214-13" tabindex="-1"></a></span>
+<span id="cb214-14"><a href="shiny_7.html#cb214-14" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output){</span>
+<span id="cb214-15"><a href="shiny_7.html#cb214-15" tabindex="-1"></a>  output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb214-16"><a href="shiny_7.html#cb214-16" tabindex="-1"></a>    input<span class="sc">$</span>trigger</span>
+<span id="cb214-17"><a href="shiny_7.html#cb214-17" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">3</span>)</span>
+<span id="cb214-18"><a href="shiny_7.html#cb214-18" tabindex="-1"></a>    <span class="fu">plot</span>(cars)</span>
+<span id="cb214-19"><a href="shiny_7.html#cb214-19" tabindex="-1"></a>  })</span>
+<span id="cb214-20"><a href="shiny_7.html#cb214-20" tabindex="-1"></a>  </span>
+<span id="cb214-21"><a href="shiny_7.html#cb214-21" tabindex="-1"></a>  output<span class="sc">$</span>plot2 <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb214-22"><a href="shiny_7.html#cb214-22" tabindex="-1"></a>    input<span class="sc">$</span>trigger</span>
+<span id="cb214-23"><a href="shiny_7.html#cb214-23" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">5</span>)</span>
+<span id="cb214-24"><a href="shiny_7.html#cb214-24" tabindex="-1"></a>    <span class="fu">plot</span>(<span class="fu">runif</span>(<span class="dv">100</span>))</span>
+<span id="cb214-25"><a href="shiny_7.html#cb214-25" tabindex="-1"></a>  })</span>
+<span id="cb214-26"><a href="shiny_7.html#cb214-26" tabindex="-1"></a>}</span>
+<span id="cb214-27"><a href="shiny_7.html#cb214-27" tabindex="-1"></a></span>
+<span id="cb214-28"><a href="shiny_7.html#cb214-28" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="shiny_7.html#cb215-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb215-2"><a href="shiny_7.html#cb215-2" tabindex="-1"></a></span>
+<span id="cb215-3"><a href="shiny_7.html#cb215-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb215-4"><a href="shiny_7.html#cb215-4" tabindex="-1"></a>  waiter<span class="sc">::</span><span class="fu">use_waiter</span>(),</span>
+<span id="cb215-5"><a href="shiny_7.html#cb215-5" tabindex="-1"></a>  <span class="fu">actionButton</span>(<span class="st">&quot;go&quot;</span>, <span class="st">&quot;go&quot;</span>),</span>
+<span id="cb215-6"><a href="shiny_7.html#cb215-6" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;result&quot;</span>)</span>
+<span id="cb215-7"><a href="shiny_7.html#cb215-7" tabindex="-1"></a>)</span>
+<span id="cb215-8"><a href="shiny_7.html#cb215-8" tabindex="-1"></a></span>
+<span id="cb215-9"><a href="shiny_7.html#cb215-9" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb215-10"><a href="shiny_7.html#cb215-10" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>go, {</span>
+<span id="cb215-11"><a href="shiny_7.html#cb215-11" tabindex="-1"></a>    waiter <span class="ot">&lt;-</span> waiter<span class="sc">::</span>Waiter<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb215-12"><a href="shiny_7.html#cb215-12" tabindex="-1"></a>    waiter<span class="sc">$</span><span class="fu">show</span>()</span>
+<span id="cb215-13"><a href="shiny_7.html#cb215-13" tabindex="-1"></a>    <span class="fu">on.exit</span>(waiter<span class="sc">$</span><span class="fu">hide</span>())</span>
+<span id="cb215-14"><a href="shiny_7.html#cb215-14" tabindex="-1"></a>    </span>
+<span id="cb215-15"><a href="shiny_7.html#cb215-15" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="fu">sample</span>(<span class="dv">5</span>, <span class="dv">1</span>))</span>
+<span id="cb215-16"><a href="shiny_7.html#cb215-16" tabindex="-1"></a>    <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb215-17"><a href="shiny_7.html#cb215-17" tabindex="-1"></a>  })</span>
+<span id="cb215-18"><a href="shiny_7.html#cb215-18" tabindex="-1"></a>  output<span class="sc">$</span>result <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">round</span>(<span class="fu">data</span>(), <span class="dv">2</span>))</span>
+<span id="cb215-19"><a href="shiny_7.html#cb215-19" tabindex="-1"></a>}</span>
+<span id="cb215-20"><a href="shiny_7.html#cb215-20" tabindex="-1"></a></span>
+<span id="cb215-21"><a href="shiny_7.html#cb215-21" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+</div>
+</div>
+<div id="shiny_7_4" class="section level3 hasAnchor" number="5.7.4">
+<h3><span class="header-section-number">5.7.4</span> 确认<a href="shiny_7.html#shiny_7_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>为了防止用户意外做出错误的选择，需要再三确认用户的操作。</p>
+<div id="shiny_7_4_1" class="section level4 hasAnchor" number="5.7.4.1">
+<h4><span class="header-section-number">5.7.4.1</span> 确认对话框<a href="shiny_7.html#shiny_7_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>最简单的办法就是弹出对话框让用户再次确认自己的选择。</p>
+<p><code>modalDialog()</code>函数创建了一个对话框，根据<code>footer</code>参数来设置按钮选项。</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="shiny_7.html#cb216-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb216-2"><a href="shiny_7.html#cb216-2" tabindex="-1"></a></span>
+<span id="cb216-3"><a href="shiny_7.html#cb216-3" tabindex="-1"></a>modal_confirm <span class="ot">&lt;-</span> <span class="fu">modalDialog</span>(</span>
+<span id="cb216-4"><a href="shiny_7.html#cb216-4" tabindex="-1"></a>  <span class="st">&quot;Are you sure you want to continue?&quot;</span>,</span>
+<span id="cb216-5"><a href="shiny_7.html#cb216-5" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;Deleting files&quot;</span>,</span>
+<span id="cb216-6"><a href="shiny_7.html#cb216-6" tabindex="-1"></a>  <span class="at">footer =</span> <span class="fu">tagList</span>(</span>
+<span id="cb216-7"><a href="shiny_7.html#cb216-7" tabindex="-1"></a>    <span class="fu">actionButton</span>(<span class="st">&quot;cancel&quot;</span>, <span class="st">&quot;Cancel&quot;</span>),</span>
+<span id="cb216-8"><a href="shiny_7.html#cb216-8" tabindex="-1"></a>    <span class="fu">actionButton</span>(<span class="st">&quot;ok&quot;</span>, <span class="st">&quot;Delete&quot;</span>, <span class="at">class =</span> <span class="st">&quot;btn btn-danger&quot;</span>)</span>
+<span id="cb216-9"><a href="shiny_7.html#cb216-9" tabindex="-1"></a>  )</span>
+<span id="cb216-10"><a href="shiny_7.html#cb216-10" tabindex="-1"></a>)</span>
+<span id="cb216-11"><a href="shiny_7.html#cb216-11" tabindex="-1"></a></span>
+<span id="cb216-12"><a href="shiny_7.html#cb216-12" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb216-13"><a href="shiny_7.html#cb216-13" tabindex="-1"></a>  <span class="fu">actionButton</span>(<span class="st">&quot;delete&quot;</span>, <span class="st">&quot;Delete all files?&quot;</span>)</span>
+<span id="cb216-14"><a href="shiny_7.html#cb216-14" tabindex="-1"></a>)</span>
+<span id="cb216-15"><a href="shiny_7.html#cb216-15" tabindex="-1"></a></span>
+<span id="cb216-16"><a href="shiny_7.html#cb216-16" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb216-17"><a href="shiny_7.html#cb216-17" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>delete, {</span>
+<span id="cb216-18"><a href="shiny_7.html#cb216-18" tabindex="-1"></a>    <span class="fu">showModal</span>(modal_confirm)</span>
+<span id="cb216-19"><a href="shiny_7.html#cb216-19" tabindex="-1"></a>  })</span>
+<span id="cb216-20"><a href="shiny_7.html#cb216-20" tabindex="-1"></a>  </span>
+<span id="cb216-21"><a href="shiny_7.html#cb216-21" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>ok, {</span>
+<span id="cb216-22"><a href="shiny_7.html#cb216-22" tabindex="-1"></a>    <span class="fu">showNotification</span>(<span class="st">&quot;Files deleted&quot;</span>)</span>
+<span id="cb216-23"><a href="shiny_7.html#cb216-23" tabindex="-1"></a>    <span class="fu">removeModal</span>()</span>
+<span id="cb216-24"><a href="shiny_7.html#cb216-24" tabindex="-1"></a>  })</span>
+<span id="cb216-25"><a href="shiny_7.html#cb216-25" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>cancel, {</span>
+<span id="cb216-26"><a href="shiny_7.html#cb216-26" tabindex="-1"></a>    <span class="fu">removeModal</span>()</span>
+<span id="cb216-27"><a href="shiny_7.html#cb216-27" tabindex="-1"></a>  })</span>
+<span id="cb216-28"><a href="shiny_7.html#cb216-28" tabindex="-1"></a>}</span>
+<span id="cb216-29"><a href="shiny_7.html#cb216-29" tabindex="-1"></a></span>
+<span id="cb216-30"><a href="shiny_7.html#cb216-30" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<p>注意需要用<code>showModal()</code>来展现对话框，并用<code>remobeModal()</code>来及时移除对话框。</p>
+</div>
+<div id="shiny_7_4_2" class="section level4 hasAnchor" number="5.7.4.2">
+<h4><span class="header-section-number">5.7.4.2</span> 取消行为<a href="shiny_7.html#shiny_7_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>用户反悔自己的行为需要有一个过程。非常典型的例子就是在网购平台下单后，发货前都能取消订单一样。</p>
+<p>下面只展示，不细讲。</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="shiny_7.html#cb217-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb217-2"><a href="shiny_7.html#cb217-2" tabindex="-1"></a></span>
+<span id="cb217-3"><a href="shiny_7.html#cb217-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb217-4"><a href="shiny_7.html#cb217-4" tabindex="-1"></a>  <span class="fu">textAreaInput</span>(<span class="st">&quot;message&quot;</span>, </span>
+<span id="cb217-5"><a href="shiny_7.html#cb217-5" tabindex="-1"></a>                <span class="at">label =</span> <span class="cn">NULL</span>, </span>
+<span id="cb217-6"><a href="shiny_7.html#cb217-6" tabindex="-1"></a>                <span class="at">placeholder =</span> <span class="st">&quot;What&#39;s happening?&quot;</span>,</span>
+<span id="cb217-7"><a href="shiny_7.html#cb217-7" tabindex="-1"></a>                <span class="at">rows =</span> <span class="dv">3</span></span>
+<span id="cb217-8"><a href="shiny_7.html#cb217-8" tabindex="-1"></a>  ),</span>
+<span id="cb217-9"><a href="shiny_7.html#cb217-9" tabindex="-1"></a>  <span class="fu">actionButton</span>(<span class="st">&quot;tweet&quot;</span>, <span class="st">&quot;Tweet&quot;</span>)</span>
+<span id="cb217-10"><a href="shiny_7.html#cb217-10" tabindex="-1"></a>)</span>
+<span id="cb217-11"><a href="shiny_7.html#cb217-11" tabindex="-1"></a></span>
+<span id="cb217-12"><a href="shiny_7.html#cb217-12" tabindex="-1"></a>runLater <span class="ot">&lt;-</span> <span class="cf">function</span>(action, <span class="at">seconds =</span> <span class="dv">3</span>) {</span>
+<span id="cb217-13"><a href="shiny_7.html#cb217-13" tabindex="-1"></a>  <span class="fu">observeEvent</span>(</span>
+<span id="cb217-14"><a href="shiny_7.html#cb217-14" tabindex="-1"></a>    <span class="fu">invalidateLater</span>(seconds <span class="sc">*</span> <span class="dv">1000</span>), action, </span>
+<span id="cb217-15"><a href="shiny_7.html#cb217-15" tabindex="-1"></a>    <span class="at">ignoreInit =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb217-16"><a href="shiny_7.html#cb217-16" tabindex="-1"></a>    <span class="at">once =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb217-17"><a href="shiny_7.html#cb217-17" tabindex="-1"></a>    <span class="at">ignoreNULL =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb217-18"><a href="shiny_7.html#cb217-18" tabindex="-1"></a>    <span class="at">autoDestroy =</span> <span class="cn">FALSE</span></span>
+<span id="cb217-19"><a href="shiny_7.html#cb217-19" tabindex="-1"></a>  )</span>
+<span id="cb217-20"><a href="shiny_7.html#cb217-20" tabindex="-1"></a>}</span>
+<span id="cb217-21"><a href="shiny_7.html#cb217-21" tabindex="-1"></a></span>
+<span id="cb217-22"><a href="shiny_7.html#cb217-22" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb217-23"><a href="shiny_7.html#cb217-23" tabindex="-1"></a>  waiting <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb217-24"><a href="shiny_7.html#cb217-24" tabindex="-1"></a>  last_message <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb217-25"><a href="shiny_7.html#cb217-25" tabindex="-1"></a>  </span>
+<span id="cb217-26"><a href="shiny_7.html#cb217-26" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>tweet, {</span>
+<span id="cb217-27"><a href="shiny_7.html#cb217-27" tabindex="-1"></a>    notification <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;Tweeted &#39;{input$message}&#39;&quot;</span>)</span>
+<span id="cb217-28"><a href="shiny_7.html#cb217-28" tabindex="-1"></a>    last_message <span class="ot">&lt;&lt;-</span> input<span class="sc">$</span>message</span>
+<span id="cb217-29"><a href="shiny_7.html#cb217-29" tabindex="-1"></a>    <span class="fu">updateTextAreaInput</span>(session, <span class="st">&quot;message&quot;</span>, <span class="at">value =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb217-30"><a href="shiny_7.html#cb217-30" tabindex="-1"></a>    </span>
+<span id="cb217-31"><a href="shiny_7.html#cb217-31" tabindex="-1"></a>    <span class="fu">showNotification</span>(</span>
+<span id="cb217-32"><a href="shiny_7.html#cb217-32" tabindex="-1"></a>      notification,</span>
+<span id="cb217-33"><a href="shiny_7.html#cb217-33" tabindex="-1"></a>      <span class="at">action =</span> <span class="fu">actionButton</span>(<span class="st">&quot;undo&quot;</span>, <span class="st">&quot;Undo?&quot;</span>),</span>
+<span id="cb217-34"><a href="shiny_7.html#cb217-34" tabindex="-1"></a>      <span class="at">duration =</span> <span class="cn">NULL</span>,</span>
+<span id="cb217-35"><a href="shiny_7.html#cb217-35" tabindex="-1"></a>      <span class="at">closeButton =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb217-36"><a href="shiny_7.html#cb217-36" tabindex="-1"></a>      <span class="at">id =</span> <span class="st">&quot;tweeted&quot;</span>,</span>
+<span id="cb217-37"><a href="shiny_7.html#cb217-37" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">&quot;warning&quot;</span></span>
+<span id="cb217-38"><a href="shiny_7.html#cb217-38" tabindex="-1"></a>    )</span>
+<span id="cb217-39"><a href="shiny_7.html#cb217-39" tabindex="-1"></a>    </span>
+<span id="cb217-40"><a href="shiny_7.html#cb217-40" tabindex="-1"></a>    waiting <span class="ot">&lt;&lt;-</span> <span class="fu">runLater</span>({</span>
+<span id="cb217-41"><a href="shiny_7.html#cb217-41" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">&quot;Actually sending tweet...</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb217-42"><a href="shiny_7.html#cb217-42" tabindex="-1"></a>      <span class="fu">removeNotification</span>(<span class="st">&quot;tweeted&quot;</span>)</span>
+<span id="cb217-43"><a href="shiny_7.html#cb217-43" tabindex="-1"></a>    })</span>
+<span id="cb217-44"><a href="shiny_7.html#cb217-44" tabindex="-1"></a>  })</span>
+<span id="cb217-45"><a href="shiny_7.html#cb217-45" tabindex="-1"></a>  </span>
+<span id="cb217-46"><a href="shiny_7.html#cb217-46" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>undo, {</span>
+<span id="cb217-47"><a href="shiny_7.html#cb217-47" tabindex="-1"></a>    waiting<span class="sc">$</span><span class="fu">destroy</span>()</span>
+<span id="cb217-48"><a href="shiny_7.html#cb217-48" tabindex="-1"></a>    <span class="fu">showNotification</span>(<span class="st">&quot;Tweet retracted&quot;</span>, <span class="at">id =</span> <span class="st">&quot;tweeted&quot;</span>)</span>
+<span id="cb217-49"><a href="shiny_7.html#cb217-49" tabindex="-1"></a>    <span class="fu">updateTextAreaInput</span>(session, <span class="st">&quot;message&quot;</span>, <span class="at">value =</span> last_message)</span>
+<span id="cb217-50"><a href="shiny_7.html#cb217-50" tabindex="-1"></a>  })</span>
+<span id="cb217-51"><a href="shiny_7.html#cb217-51" tabindex="-1"></a>}</span>
+<span id="cb217-52"><a href="shiny_7.html#cb217-52" tabindex="-1"></a></span>
+<span id="cb217-53"><a href="shiny_7.html#cb217-53" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+</div>
 </div>
 </div>
             </section>
@@ -726,8 +1054,8 @@ r_{y1;2,...p}^2 &amp;= \frac{F_1}{F_1+n-p-1}
           </div>
         </div>
       </div>
-<a href="reg_9.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reg_11.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="shiny_6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="shiny_8.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

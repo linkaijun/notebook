@@ -317,8 +317,33 @@ div.csl-indent {
 <li class="chapter" data-level="5.3" data-path="shiny_3.html"><a href="shiny_3.html"><i class="fa fa-check"></i><b>5.3</b> 反应式编程</a>
 <ul>
 <li class="chapter" data-level="5.3.1" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 服务端</a></li>
-<li class="chapter" data-level="5.3.2" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 反应式编程语法</a></li>
+<li class="chapter" data-level="5.3.2" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 反应表达式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_3"><i class="fa fa-check"></i><b>5.3.3</b> 控制更新</a></li>
+<li class="chapter" data-level="5.3.4" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_4"><i class="fa fa-check"></i><b>5.3.4</b> 信息反馈</a></li>
 </ul></li>
+<li class="chapter" data-level="5.4" data-path="shiny_4.html"><a href="shiny_4.html"><i class="fa fa-check"></i><b>5.4</b> 页面布局</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_1"><i class="fa fa-check"></i><b>5.4.1</b> 页面函数</a></li>
+<li class="chapter" data-level="5.4.2" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2"><i class="fa fa-check"></i><b>5.4.2</b> 布局函数</a></li>
+<li class="chapter" data-level="5.4.3" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2_3"><i class="fa fa-check"></i><b>5.4.3</b> bslib风格布局</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="shiny_5.html"><a href="shiny_5.html"><i class="fa fa-check"></i><b>5.5</b> 主题</a></li>
+<li class="chapter" data-level="5.6" data-path="shiny_6.html"><a href="shiny_6.html"><i class="fa fa-check"></i><b>5.6</b> 交互式图像与插入图像</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_1"><i class="fa fa-check"></i><b>5.6.1</b> 交互式图像</a></li>
+<li class="chapter" data-level="5.6.2" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_2"><i class="fa fa-check"></i><b>5.6.2</b> 插入图像</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="shiny_7.html"><a href="shiny_7.html"><i class="fa fa-check"></i><b>5.7</b> 用户反馈</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_1"><i class="fa fa-check"></i><b>5.7.1</b> 验证</a></li>
+<li class="chapter" data-level="5.7.2" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_2"><i class="fa fa-check"></i><b>5.7.2</b> 通知</a></li>
+<li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
+<li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
+<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
 <li class="part"><span><b>II 模型与方法</b></span></li>
 <li class="chapter" data-level="6" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>6</b> 应用回归分析</a>
@@ -616,7 +641,7 @@ div.csl-indent {
 <h2><span class="header-section-number">15.1</span> 惩罚Cox比例风险模型<a href="code_1.html#code_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <p>该节是对<em>Regularization paths for Cox’s proportional hazards model via coordinate descent</em><span class="citation"><sup>[<a href="#ref-survival_1">1</a>]</sup></span>论文的复现。</p>
 <p>该论文在Cox比例风险模型的基础上添加了弹性网惩罚函数，并利用坐标下降法进行求解，可通过<code>glmnet</code>包实现。</p>
-<p>算法复现详见第<a href="survival_5.html#survival_5_x" target="_blank">6.5</a>节，<strong>注意复现结果与官方函数略有出入</strong>。</p>
+<p>算法复现详见第<a href="survival_5.html#survival_5_x" target="_blank">此处</a>，<strong>注意复现结果与官方函数略有出入</strong>。</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body" entry-spacing="0">

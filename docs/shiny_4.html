@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.10 相关系数与偏相关系数 | kj的学习笔记</title>
+  <title>5.4 页面布局 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.10 相关系数与偏相关系数 | kj的学习笔记" />
+  <meta property="og:title" content="5.4 页面布局 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.10 相关系数与偏相关系数 | kj的学习笔记" />
+  <meta name="twitter:title" content="5.4 页面布局 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reg_9.html"/>
-<link rel="next" href="reg_11.html"/>
+<link rel="prev" href="shiny_3.html"/>
+<link rel="next" href="shiny_5.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -637,88 +637,136 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reg_10" class="section level2 hasAnchor" number="6.10">
-<h2><span class="header-section-number">6.10</span> 相关系数与偏相关系数<a href="reg_10.html#reg_10" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="reg_10_1" class="section level3 hasAnchor" number="6.10.1">
-<h3><span class="header-section-number">6.10.1</span> 样本相关系数<a href="reg_10.html#reg_10_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>定义两个变量间的相关系数</p>
-<p><span class="math display" id="eq:model97">\[
-r=\frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_{i=1}^n (x_i-\bar x)^2\sum_{i=1}^n (y_i-\bar y)^2}}=\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}  \tag{6.97}
-\]</span></p>
-<p>样本相关系数反映了两个变量间<span style="color:red"><strong>线性关系</strong></span>的密切程度。特别的，样本相关系数为0并不意味着两个变量之间没有任何关系，只是没有线性相关关系。样本相关系数的大小与样本量有关，当样本量较小时，<span class="math inline">\(|r|\)</span>容易接近1，当样本量较大时，<span class="math inline">\(|r|\)</span>容易偏小。</p>
-<div id="reg_10_1_1" class="section level4 hasAnchor" number="6.10.1.1">
-<h4><span class="header-section-number">6.10.1.1</span> 样本相关系数的显著性检验<a href="reg_10.html#reg_10_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>考虑两个变量间的一元线性回归模型。回顾式<a href="reg_6.html#eq:model69">(6.80)</a>与式<a href="reg_6.html#eq:model60">(6.70)</a>，可得</p>
-<p><span class="math display" id="eq:model98">\[
-\begin{aligned}
-F&amp;=\frac{SSR/1}{SSE/(n-2)} \\
-&amp;= (n-2)\frac{SSR/SST}{SSE/SST} \\
-&amp;= (n-2)\frac{r^2}{1-r^2} \\
-r^2&amp;=\frac{F}{F+n-2}
-\end{aligned} \tag{6.98}
-\]</span></p>
-<p>故样本相关系数的显著性检验可通过一元场合的F检验进行，其中<span class="math inline">\(F \sim F(1,n-2)\)</span>，原假设为<span class="math inline">\(\rho=0\)</span>。</p>
-<p>或者根据一元场合式<a href="reg_6.html#eq:model59">(6.67)</a>可得</p>
-<p><span class="math display" id="eq:model99">\[
-\begin{aligned}
-t&amp;=\frac{\hat \beta_1}{\sqrt{\hat \sigma^2/L_{xx}}} \\
-&amp;= \frac{\hat \beta_1\sqrt{L_{xx}}}{\sqrt{SSE/(n-2)}} \\
-&amp;= \frac{\sqrt{n-2}\frac{L_{xy}}{\sqrt{L_{xx}L_{yy}}}}{\sqrt{SSE/L_{yy}}} \\
-&amp;= \frac{\sqrt{(n-2)}r}{\sqrt{1-r^2}}
-\end{aligned}  \tag{6.99}
-\]</span></p>
+<div id="shiny_4" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> 页面布局<a href="shiny_4.html#shiny_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div id="shiny_4_1" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> 页面函数<a href="shiny_4.html#shiny_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>fluidPage()</p>
+<p>用于创建流畅的页面布局。页面由行与列组成。行的存在是为了控制元素出现在同一行上，列的存在是为了定义元素在<strong>12单位宽</strong>的页面中占据多少宽度。</p></li>
+</ol>
 <blockquote>
-<p>一元场合中还有式<a href="reg_6.html#eq:model66">(6.71)</a>的关系:<span class="math inline">\(t^2=F\)</span></p>
+<p><code>fluidRow()</code>函数控制每一行的内容</p>
 </blockquote>
-<p>此时可根据<span class="math inline">\(t \sim t(n-2)\)</span>的显著性检验，原假设为<span class="math inline">\(\rho=0\)</span>。</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>fixedPage()</p>
+<p>固定页面在典型显示器上的宽度限制为940像素，在较小和较大的显示器上分别为724像素或1170像素。</p></li>
+</ol>
+<blockquote>
+<p><code>fixedRow()</code>函数控制每一行的内容</p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li><p>fillPage()</p>
+<p>尽可能地创建出填满浏览器窗口的页面</p></li>
+</ol>
+</div>
+<div id="shiny_4_2" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> 布局函数<a href="shiny_4.html#shiny_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>布局函数就是控制一个页面中各个元素的布局</p>
+<div id="shiny_4_2_1" class="section level4 hasAnchor" number="5.4.2.1">
+<h4><span class="header-section-number">5.4.2.1</span> 单页布局<a href="shiny_4.html#shiny_4_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>下面就简单介绍经典布局——侧边栏布局<code>sidebarLayout</code>，常与标题栏<code>titlePanel()</code>搭配</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="shiny_4.html#cb190-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb190-2"><a href="shiny_4.html#cb190-2" tabindex="-1"></a></span>
+<span id="cb190-3"><a href="shiny_4.html#cb190-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb190-4"><a href="shiny_4.html#cb190-4" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Central limit theorem&quot;</span>),</span>
+<span id="cb190-5"><a href="shiny_4.html#cb190-5" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb190-6"><a href="shiny_4.html#cb190-6" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb190-7"><a href="shiny_4.html#cb190-7" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;Number of samples:&quot;</span>, <span class="dv">2</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">100</span>)</span>
+<span id="cb190-8"><a href="shiny_4.html#cb190-8" tabindex="-1"></a>    ),</span>
+<span id="cb190-9"><a href="shiny_4.html#cb190-9" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb190-10"><a href="shiny_4.html#cb190-10" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)</span>
+<span id="cb190-11"><a href="shiny_4.html#cb190-11" tabindex="-1"></a>    )</span>
+<span id="cb190-12"><a href="shiny_4.html#cb190-12" tabindex="-1"></a>  )</span>
+<span id="cb190-13"><a href="shiny_4.html#cb190-13" tabindex="-1"></a>)</span>
+<span id="cb190-14"><a href="shiny_4.html#cb190-14" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb190-15"><a href="shiny_4.html#cb190-15" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb190-16"><a href="shiny_4.html#cb190-16" tabindex="-1"></a>    means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="fl">1e4</span>, <span class="fu">mean</span>(<span class="fu">runif</span>(input<span class="sc">$</span>m)))</span>
+<span id="cb190-17"><a href="shiny_4.html#cb190-17" tabindex="-1"></a>    <span class="fu">hist</span>(means, <span class="at">breaks =</span> <span class="dv">20</span>)</span>
+<span id="cb190-18"><a href="shiny_4.html#cb190-18" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb190-19"><a href="shiny_4.html#cb190-19" tabindex="-1"></a>}</span>
+<span id="cb190-20"><a href="shiny_4.html#cb190-20" tabindex="-1"></a></span>
+<span id="cb190-21"><a href="shiny_4.html#cb190-21" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
+<p>其基本布局为“标题栏+侧边栏+主面板”。</p>
+</div>
+<div id="shiny_4_2_2" class="section level4 hasAnchor" number="5.4.2.2">
+<h4><span class="header-section-number">5.4.2.2</span> 多页布局<a href="shiny_4.html#shiny_4_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<ol style="list-style-type: decimal">
+<li><p>标签卡式布局</p>
+<p><code>tabsetPanel()</code>创建标签卡这个整体，<code>tabPanel()</code>创建子标签卡的内容</p></li>
+</ol>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="shiny_4.html#cb191-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb191-2"><a href="shiny_4.html#cb191-2" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb191-3"><a href="shiny_4.html#cb191-3" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb191-4"><a href="shiny_4.html#cb191-4" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">&quot;panel&quot;</span>)</span>
+<span id="cb191-5"><a href="shiny_4.html#cb191-5" tabindex="-1"></a>    ),</span>
+<span id="cb191-6"><a href="shiny_4.html#cb191-6" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb191-7"><a href="shiny_4.html#cb191-7" tabindex="-1"></a>      <span class="fu">tabsetPanel</span>(</span>
+<span id="cb191-8"><a href="shiny_4.html#cb191-8" tabindex="-1"></a>        <span class="at">id =</span> <span class="st">&quot;tabset&quot;</span>,</span>
+<span id="cb191-9"><a href="shiny_4.html#cb191-9" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;one&quot;</span>),</span>
+<span id="cb191-10"><a href="shiny_4.html#cb191-10" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb191-11"><a href="shiny_4.html#cb191-11" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;three&quot;</span>)</span>
+<span id="cb191-12"><a href="shiny_4.html#cb191-12" tabindex="-1"></a>      )</span>
+<span id="cb191-13"><a href="shiny_4.html#cb191-13" tabindex="-1"></a>    )</span>
+<span id="cb191-14"><a href="shiny_4.html#cb191-14" tabindex="-1"></a>  )</span>
+<span id="cb191-15"><a href="shiny_4.html#cb191-15" tabindex="-1"></a>)</span>
+<span id="cb191-16"><a href="shiny_4.html#cb191-16" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb191-17"><a href="shiny_4.html#cb191-17" tabindex="-1"></a>  output<span class="sc">$</span>panel <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb191-18"><a href="shiny_4.html#cb191-18" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;Current panel: &quot;</span>, input<span class="sc">$</span>tabset)</span>
+<span id="cb191-19"><a href="shiny_4.html#cb191-19" tabindex="-1"></a>  })</span>
+<span id="cb191-20"><a href="shiny_4.html#cb191-20" tabindex="-1"></a>}</span></code></pre></div>
+<blockquote>
+<p><code>tabsetPanel()</code>的参数<code>id</code>用于返回当前选中的子标签卡的名称</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li><p>导航栏式布局</p>
+<p>第一个布局函数是<code>navlistPanel</code>，可以说是<code>tabsetPanel()</code>的侧边形式</p></li>
+</ol>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="shiny_4.html#cb192-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb192-2"><a href="shiny_4.html#cb192-2" tabindex="-1"></a>  <span class="fu">navlistPanel</span>(</span>
+<span id="cb192-3"><a href="shiny_4.html#cb192-3" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">&quot;tabset&quot;</span>,</span>
+<span id="cb192-4"><a href="shiny_4.html#cb192-4" tabindex="-1"></a>    <span class="st">&quot;Heading 1&quot;</span>,</span>
+<span id="cb192-5"><a href="shiny_4.html#cb192-5" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;Panel one contents&quot;</span>),</span>
+<span id="cb192-6"><a href="shiny_4.html#cb192-6" tabindex="-1"></a>    <span class="st">&quot;Heading 2&quot;</span>,</span>
+<span id="cb192-7"><a href="shiny_4.html#cb192-7" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;Panel two contents&quot;</span>),</span>
+<span id="cb192-8"><a href="shiny_4.html#cb192-8" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;Panel three contents&quot;</span>)</span>
+<span id="cb192-9"><a href="shiny_4.html#cb192-9" tabindex="-1"></a>  )</span>
+<span id="cb192-10"><a href="shiny_4.html#cb192-10" tabindex="-1"></a>)</span></code></pre></div>
+<blockquote>
+<p>注意<code>Heaning 1</code>与<code>Heading 2</code>类似侧边栏中的小标题</p>
+</blockquote>
+<p>第二个布局函数是<code>navbarPage()</code>与<code>navbarMenu()</code>。前者控制导航栏置于顶部，后者生成一个下拉式菜单，里面包含了多个子标签卡</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="shiny_4.html#cb193-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">navbarPage</span>(</span>
+<span id="cb193-2"><a href="shiny_4.html#cb193-2" tabindex="-1"></a>  <span class="st">&quot;Page title&quot;</span>,   </span>
+<span id="cb193-3"><a href="shiny_4.html#cb193-3" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;one&quot;</span>),</span>
+<span id="cb193-4"><a href="shiny_4.html#cb193-4" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb193-5"><a href="shiny_4.html#cb193-5" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;three&quot;</span>),</span>
+<span id="cb193-6"><a href="shiny_4.html#cb193-6" tabindex="-1"></a>  <span class="fu">navbarMenu</span>(<span class="st">&quot;subpanels&quot;</span>, </span>
+<span id="cb193-7"><a href="shiny_4.html#cb193-7" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4a&quot;</span>, <span class="st">&quot;four-a&quot;</span>),</span>
+<span id="cb193-8"><a href="shiny_4.html#cb193-8" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4b&quot;</span>, <span class="st">&quot;four-b&quot;</span>),</span>
+<span id="cb193-9"><a href="shiny_4.html#cb193-9" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4c&quot;</span>, <span class="st">&quot;four-c&quot;</span>)</span>
+<span id="cb193-10"><a href="shiny_4.html#cb193-10" tabindex="-1"></a>  )</span>
+<span id="cb193-11"><a href="shiny_4.html#cb193-11" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 </div>
-<div id="reg_10_2" class="section level3 hasAnchor" number="6.10.2">
-<h3><span class="header-section-number">6.10.2</span> 样本偏相关系数<a href="reg_10.html#reg_10_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>简单样本相关系数度量了两个变量间的相关性。但在多元相关分析中，由于受到其他变量的影响，简单样本相关系数并不能反映两个变量间纯粹的相关性，需要控制其他变量的影响，对此引入样本偏相关系数。</p>
-<ul>
-<li>自变量间的样本偏相关系数</li>
-</ul>
-<p>在样本相关阵r中，记<span class="math inline">\(\Delta_{ij}\)</span>为r的第i行第i列元素的代数余子式，以<span class="math inline">\(x_1\)</span>与<span class="math inline">\(x_2\)</span>为例，定义样本偏相关系数为</p>
-<p><span class="math display" id="eq:model100">\[
-r_{12;3,...p}=\frac{-\Delta_{12}}{\sqrt{\Delta_{11}\Delta_{22}}} \tag{6.100}
-\]</span></p>
-<ul>
-<li>因变量与自变量的样本偏相关系数</li>
-</ul>
-<p>记除<span class="math inline">\(x_1\)</span>之外的自变量为<span class="math inline">\(x_{(-1)}\)</span>，<span class="math inline">\(e_{x_1|x_{(-1)}}\)</span>和<span class="math inline">\(e_{y|x_{(-1)}}\)</span>分别表示<span class="math inline">\(x_1\)</span>和<span class="math inline">\(y\)</span>对<span class="math inline">\(x_{(-1)}\)</span>回归的残差，定义<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏相关系数为</p>
-<p><span class="math display" id="eq:model101">\[
-r_{y1;2,...p}=\frac{Cov(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}})}{\sqrt{Var(e_{x_1|x_{(-1)}})Var(e_{y|x_{(-1)}})}}=Cor(e_{x_1|x_{(-1)}},e_{y|x_{(-1)}}) \tag{6.101}
-\]</span></p>
+<div id="shiny_4_2_3" class="section level3 hasAnchor" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> bslib风格布局<a href="shiny_4.html#shiny_4_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>除此之外，官网<a href="https://shiny.posit.co/r/layouts/" target="_blank">Shiny Layouts</a>中还展示了基于<code>bslib</code>包的布局函数，个人认为更加美观与便捷。</p>
 <blockquote>
-<p>控制其他变量的影响就是考虑这些变量回归后的残差</p>
+<p>使用时记得导入<code>library(bslib)</code></p>
 </blockquote>
-<ul>
-<li>因变量与自变量的样本偏决定系数</li>
-</ul>
-<p>定义<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏决定系数为</p>
-<p><span class="math display" id="eq:model102">\[
-r_{y1;2,...p}^2 = \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}  \tag{6.102}
-\]</span></p>
-<blockquote>
-<p>若把<span class="math inline">\(SSE_{(-1)}\)</span>看成<span class="math inline">\(SST\)</span>，则形式同<span class="math inline">\(R^2\)</span></p>
-</blockquote>
-<p>样本偏决定系数反映了引入该新自变量后，因变量剩余变差的相对减少了。</p>
-<p>则<span class="math inline">\(y\)</span>与<span class="math inline">\(x_1\)</span>的样本偏相关系数也可为</p>
-<p><span class="math display" id="eq:model103">\[
-r_{y1;2,...p} = \sqrt{ \frac{SSE_{(-1)}-SSE}{SSE_{(-1)}}} \tag{6.103}
-\]</span></p>
-<p>正如样本相关系数与F统计量有关系，这里的样本偏相关系数（或者说样本偏决定系数）也与偏F统计量有关系。</p>
-<p>同式<a href="reg_10.html#eq:model98">(6.98)</a>，若把<span class="math inline">\(SSE_{(-1)}\)</span>看成<span class="math inline">\(SST\)</span>，则同理有</p>
-<blockquote>
-<p><span class="math inline">\(SST=\sum_{i=1}^n (y_i-\bar y)^2\)</span>又何尝不是均值模型的残差平方和呢？</p>
-</blockquote>
-<p><span class="math display" id="eq:model104">\[
-\begin{aligned}
-F_1&amp;=\frac{(n-p-1)r_{y1;2,...p}^2}{1-r_{y1;2,...p}^2} \\
-r_{y1;2,...p}^2 &amp;= \frac{F_1}{F_1+n-p-1}
-\end{aligned} \tag{6.104}
-\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Navbars</p>
+<p>导航栏式布局，导航栏被置于顶部或底部</p></li>
+<li><p>Sidebars</p>
+<p>经典侧边栏布局</p></li>
+<li><p>Tabs</p>
+<p>标签卡式布局</p></li>
+<li><p>Panels &amp; Cards</p>
+<p>Panels不知道算什么风格，Cards就是在页面上呈现卡片式窗口</p></li>
+<li><p>Arrange Elements</p>
+<p>自定义布局</p></li>
+</ol>
 </div>
 </div>
             </section>
@@ -726,8 +774,8 @@ r_{y1;2,...p}^2 &amp;= \frac{F_1}{F_1+n-p-1}
           </div>
         </div>
       </div>
-<a href="reg_9.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reg_11.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="shiny_3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="shiny_5.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.11 共享shiny | kj的学习笔记</title>
+  <title>5.11 分享shiny | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.11 共享shiny | kj的学习笔记" />
+  <meta property="og:title" content="5.11 分享shiny | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.11 共享shiny | kj的学习笔记" />
+  <meta name="twitter:title" content="5.11 分享shiny | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -346,8 +346,11 @@ div.csl-indent {
 <li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
 </ul></li>
 <li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
-<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
-<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
+<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
 </ul></li>
 <li class="part"><span><b>II 模型与方法</b></span></li>
 <li class="chapter" data-level="6" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>6</b> 应用回归分析</a>
@@ -642,7 +645,26 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="shiny_11" class="section level2 hasAnchor" number="5.11">
-<h2><span class="header-section-number">5.11</span> 共享shiny<a href="shiny_11.html#shiny_11" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<h2><span class="header-section-number">5.11</span> 分享shiny<a href="shiny_11.html#shiny_11" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>分享你的shiny应用有多种方式，你可以将其部署到<strong><a href="https://www.shinyapps.io/" target="_blank">shiny.io</a></strong>、<strong><a href="https://posit.co/" target="_blank">Posit Connect</a></strong>等平台。</p>
+<p>下面介绍如何将你的shiny应用部署到shiny.io中。</p>
+<ol style="list-style-type: decimal">
+<li><p>进入<a href="https://www.shinyapps.io/" target="_blank">shiny.io官网</a></p></li>
+<li><p>点击<code>Sign Up</code>，创建账户</p></li>
+<li><p>根据页面提示安装<code>rsconnect</code>包，注册账号信息</p></li>
+</ol>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="shiny_11.html#cb216-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;rsconnect&#39;</span>)</span></code></pre></div>
+<blockquote>
+<p>需要点击<code>Show Secret</code>得到完整的信息，之后在运行代码</p>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>部署你的shiny应用</li>
+</ol>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="shiny_11.html#cb217-1" tabindex="-1"></a>rsconnect<span class="sc">::</span><span class="fu">deployApp</span>(<span class="st">&#39;path/to/your/app&#39;</span>)</span></code></pre></div>
+<blockquote>
+<p>该路径指向文件夹，这个文件夹中要包含你的shiny应用及相关文件。如果你的shiny应用需要调用这些文件，那么请使用<strong>相对路径</strong></p>
+</blockquote>
+<p>你可以在<code>Account/Settings</code>中修改你的账户名</p>
 
 </div>
 <!-- </div> -->

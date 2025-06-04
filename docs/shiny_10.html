@@ -346,8 +346,11 @@ div.csl-indent {
 <li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
 </ul></li>
 <li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
-<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
-<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
+<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
 </ul></li>
 <li class="part"><span><b>II 模型与方法</b></span></li>
 <li class="chapter" data-level="6" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>6</b> 应用回归分析</a>
@@ -643,6 +646,42 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="shiny_10" class="section level2 hasAnchor" number="5.10">
 <h2><span class="header-section-number">5.10</span> 数据仪表盘<a href="shiny_10.html#shiny_10" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>shiny中制作仪表盘的有两个包：<a href="https://pkgs.rstudio.com/flexdashboard/" target="_blank"><code>flexdashboard</code></a>包和<a href="https://rstudio.github.io/shinydashboard/index.html" target="_blank"><code>shinydashboard</code></a>包。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">flexdashboard</th>
+<th align="center">shinydashboard</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">R Markdown</td>
+<td align="center">Shiny</td>
+</tr>
+<tr class="even">
+<td align="center">Super easy</td>
+<td align="center">Not quite as easy</td>
+</tr>
+<tr class="odd">
+<td align="center">Static or dynamic</td>
+<td align="center">Dynamic</td>
+</tr>
+<tr class="even">
+<td align="center">CSS flexbox layout</td>
+<td align="center">Bootstrap grid layout</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>flexdashboard</code>在rmarkdown中创建仪表盘，并且官网介绍非常清晰明了，上手简单，完全可以现学现用</p>
+<p><code>shinydashboard</code>依旧需要编写一个shiny应用程序</p>
+</blockquote>
+<p>下面的内容着重介绍<code>shinydashboard</code>。</p>
+<div id="shiny_10_1" class="section level3 hasAnchor" number="5.10.1">
+<h3><span class="header-section-number">5.10.1</span> 整体框架<a href="shiny_10.html#shiny_10_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>xxx</p>
+</div>
 </div>
             </section>
 

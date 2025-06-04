@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -656,28 +660,28 @@ div.csl-indent {
 <p>布尔值，是否跳过该片段内的所有动画内容（包括<code>self.wait()</code>），默认为False。若为True，则在成片中并没有该段切片，但sections文件夹中依然会保留该段切片。</p></li>
 </ul>
 <p>注意当你使用<code>self.next_section()</code>时，需要使用<code>manim -pql --save_sections example.py Example</code>才能将片段保存在sections文件夹中。</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="manim_3.html#cb94-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb94-2"><a href="manim_3.html#cb94-2" tabindex="-1"></a></span>
-<span id="cb94-3"><a href="manim_3.html#cb94-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb94-4"><a href="manim_3.html#cb94-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb94-5"><a href="manim_3.html#cb94-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;你好！Manim&#39;</span>)</span>
-<span id="cb94-6"><a href="manim_3.html#cb94-6" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span>
-<span id="cb94-7"><a href="manim_3.html#cb94-7" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
-<span id="cb94-8"><a href="manim_3.html#cb94-8" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">t1.animate.shift</span>(UP <span class="sc">*</span> <span class="dv">3</span>))</span>
-<span id="cb94-9"><a href="manim_3.html#cb94-9" tabindex="-1"></a></span>
-<span id="cb94-10"><a href="manim_3.html#cb94-10" tabindex="-1"></a>        <span class="fu">self.next_section</span>(<span class="st">&#39;part_1&#39;</span>)</span>
-<span id="cb94-11"><a href="manim_3.html#cb94-11" tabindex="-1"></a></span>
-<span id="cb94-12"><a href="manim_3.html#cb94-12" tabindex="-1"></a>        circle <span class="ot">=</span> <span class="fu">Circle</span>()<span class="fu">.set_color</span>(BLUE)</span>
-<span id="cb94-13"><a href="manim_3.html#cb94-13" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">FadeIn</span>(circle))</span>
-<span id="cb94-14"><a href="manim_3.html#cb94-14" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">circle.animate.set_fill</span>(BLUE, <span class="at">opacity=</span><span class="fl">0.5</span>), <span class="at">run_time=</span><span class="dv">1</span>)</span>
-<span id="cb94-15"><a href="manim_3.html#cb94-15" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
-<span id="cb94-16"><a href="manim_3.html#cb94-16" tabindex="-1"></a></span>
-<span id="cb94-17"><a href="manim_3.html#cb94-17" tabindex="-1"></a>        <span class="fu">self.next_section</span>(<span class="st">&#39;part_2&#39;</span>, <span class="at">skip_animations=</span>True)</span>
-<span id="cb94-18"><a href="manim_3.html#cb94-18" tabindex="-1"></a></span>
-<span id="cb94-19"><a href="manim_3.html#cb94-19" tabindex="-1"></a>        square <span class="ot">=</span> <span class="fu">Square</span>()<span class="fu">.set_color</span>(RED)<span class="fu">.set_fill</span>(RED, <span class="at">opacity=</span><span class="fl">0.5</span>)</span>
-<span id="cb94-20"><a href="manim_3.html#cb94-20" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">ReplacementTransform</span>(circle, square, <span class="at">run_time=</span><span class="dv">1</span>))</span>
-<span id="cb94-21"><a href="manim_3.html#cb94-21" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">square.animate.set_fill</span>(RED, <span class="at">opacity=</span><span class="dv">0</span>))</span>
-<span id="cb94-22"><a href="manim_3.html#cb94-22" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="manim_3.html#cb95-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb95-2"><a href="manim_3.html#cb95-2" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="manim_3.html#cb95-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb95-4"><a href="manim_3.html#cb95-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb95-5"><a href="manim_3.html#cb95-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;你好！Manim&#39;</span>)</span>
+<span id="cb95-6"><a href="manim_3.html#cb95-6" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span>
+<span id="cb95-7"><a href="manim_3.html#cb95-7" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
+<span id="cb95-8"><a href="manim_3.html#cb95-8" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">t1.animate.shift</span>(UP <span class="sc">*</span> <span class="dv">3</span>))</span>
+<span id="cb95-9"><a href="manim_3.html#cb95-9" tabindex="-1"></a></span>
+<span id="cb95-10"><a href="manim_3.html#cb95-10" tabindex="-1"></a>        <span class="fu">self.next_section</span>(<span class="st">&#39;part_1&#39;</span>)</span>
+<span id="cb95-11"><a href="manim_3.html#cb95-11" tabindex="-1"></a></span>
+<span id="cb95-12"><a href="manim_3.html#cb95-12" tabindex="-1"></a>        circle <span class="ot">=</span> <span class="fu">Circle</span>()<span class="fu">.set_color</span>(BLUE)</span>
+<span id="cb95-13"><a href="manim_3.html#cb95-13" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">FadeIn</span>(circle))</span>
+<span id="cb95-14"><a href="manim_3.html#cb95-14" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">circle.animate.set_fill</span>(BLUE, <span class="at">opacity=</span><span class="fl">0.5</span>), <span class="at">run_time=</span><span class="dv">1</span>)</span>
+<span id="cb95-15"><a href="manim_3.html#cb95-15" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
+<span id="cb95-16"><a href="manim_3.html#cb95-16" tabindex="-1"></a></span>
+<span id="cb95-17"><a href="manim_3.html#cb95-17" tabindex="-1"></a>        <span class="fu">self.next_section</span>(<span class="st">&#39;part_2&#39;</span>, <span class="at">skip_animations=</span>True)</span>
+<span id="cb95-18"><a href="manim_3.html#cb95-18" tabindex="-1"></a></span>
+<span id="cb95-19"><a href="manim_3.html#cb95-19" tabindex="-1"></a>        square <span class="ot">=</span> <span class="fu">Square</span>()<span class="fu">.set_color</span>(RED)<span class="fu">.set_fill</span>(RED, <span class="at">opacity=</span><span class="fl">0.5</span>)</span>
+<span id="cb95-20"><a href="manim_3.html#cb95-20" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">ReplacementTransform</span>(circle, square, <span class="at">run_time=</span><span class="dv">1</span>))</span>
+<span id="cb95-21"><a href="manim_3.html#cb95-21" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">square.animate.set_fill</span>(RED, <span class="at">opacity=</span><span class="dv">0</span>))</span>
+<span id="cb95-22"><a href="manim_3.html#cb95-22" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
 </div>
 <div id="manim_3_3" class="section level3 hasAnchor" number="2.3.3">
 <h3><span class="header-section-number">2.3.3</span> 命令行标志<a href="manim_3.html#manim_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>

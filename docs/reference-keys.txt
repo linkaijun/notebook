@@ -8,7 +8,7 @@ fig:rmd-p7
 fig:rmd-p8
 fig:rmd-p9
 fig:rmd-p10
-tab:unnamed-chunk-22
+tab:unnamed-chunk-29
 fig:rmd-p11
 fig:rmd-p12
 fig:rmd-p13
@@ -431,6 +431,8 @@ rmd_5_3
 rmd_5_4
 rmd_5_5
 rmd_5_6
+rmd_5_6_1
+rmd_5_6_2
 rmd_5_7
 rmd_5_8
 rmd_5_9
@@ -540,6 +542,8 @@ shiny_7_4
 shiny_7_4_1
 shiny_7_4_2
 shiny_8
+shiny_8_1
+shiny_8_2
 shiny_9
 shiny_10
 shiny_11

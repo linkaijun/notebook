@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.9 shiny中的整洁式编程 | kj的学习笔记</title>
+  <title>5.9 交互式Rmarkdown | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.9 shiny中的整洁式编程 | kj的学习笔记" />
+  <meta property="og:title" content="5.9 交互式Rmarkdown | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.9 shiny中的整洁式编程 | kj的学习笔记" />
+  <meta name="twitter:title" content="5.9 交互式Rmarkdown | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -638,7 +642,33 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="shiny_9" class="section level2 hasAnchor" number="5.9">
-<h2><span class="header-section-number">5.9</span> shiny中的整洁式编程<a href="shiny_9.html#shiny_9" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<h2><span class="header-section-number">5.9</span> 交互式Rmarkdown<a href="shiny_9.html#shiny_9" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>在rmarkdown中植入shiny需要以下两步：</p>
+<ol style="list-style-type: decimal">
+<li><p>在YAML头部添加<code>runtime: shiny</code></p></li>
+<li><p>将shiny的组件与渲染函数添加到代码块</p></li>
+</ol>
+<p>例子如下</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb215-1"><a href="shiny_9.html#cb215-1" tabindex="-1"></a>---</span>
+<span id="cb215-2"><a href="shiny_9.html#cb215-2" tabindex="-1"></a>title: &quot;demo&quot;</span>
+<span id="cb215-3"><a href="shiny_9.html#cb215-3" tabindex="-1"></a>runtime: shiny</span>
+<span id="cb215-4"><a href="shiny_9.html#cb215-4" tabindex="-1"></a>output: html_document</span>
+<span id="cb215-5"><a href="shiny_9.html#cb215-5" tabindex="-1"></a>---</span>
+<span id="cb215-6"><a href="shiny_9.html#cb215-6" tabindex="-1"></a></span>
+<span id="cb215-7"><a href="shiny_9.html#cb215-7" tabindex="-1"></a>## 示例</span>
+<span id="cb215-8"><a href="shiny_9.html#cb215-8" tabindex="-1"></a></span>
+<span id="cb215-9"><a href="shiny_9.html#cb215-9" tabindex="-1"></a>内容</span>
+<span id="cb215-10"><a href="shiny_9.html#cb215-10" tabindex="-1"></a></span>
+<span id="cb215-11"><a href="shiny_9.html#cb215-11" tabindex="-1"></a>```{r, echo=FALSE}</span>
+<span id="cb215-12"><a href="shiny_9.html#cb215-12" tabindex="-1"></a>numericInput(&quot;m&quot;, &quot;Number of samples:&quot;, 2, min = 1, max = 100)</span>
+<span id="cb215-13"><a href="shiny_9.html#cb215-13" tabindex="-1"></a>```</span>
+<span id="cb215-14"><a href="shiny_9.html#cb215-14" tabindex="-1"></a></span>
+<span id="cb215-15"><a href="shiny_9.html#cb215-15" tabindex="-1"></a>```{r, echo=FALSE}</span>
+<span id="cb215-16"><a href="shiny_9.html#cb215-16" tabindex="-1"></a>renderPlot({</span>
+<span id="cb215-17"><a href="shiny_9.html#cb215-17" tabindex="-1"></a>    means &lt;- replicate(1e4, mean(runif(input$m)))</span>
+<span id="cb215-18"><a href="shiny_9.html#cb215-18" tabindex="-1"></a>    hist(means, breaks = 20)</span>
+<span id="cb215-19"><a href="shiny_9.html#cb215-19" tabindex="-1"></a>  }, res = 96)</span>
+<span id="cb215-20"><a href="shiny_9.html#cb215-20" tabindex="-1"></a>```</span></code></pre></div>
 </div>
             </section>
 

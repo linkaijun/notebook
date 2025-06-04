@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -652,22 +656,22 @@ div.csl-indent {
 <p>在设置好元数据后，你就可以利用markdown语法来进行创作了。这一部分将在<a href="rmd_3.html#rmd_3" target="_blank">1.3节</a>介绍。</p>
 <p>代码可以分为两个部分。一个是内联（inline）代码，首尾用反引号（键盘左上角）来将代码括起来，即 <code>`code`</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> ，如果你想用R来运行内联代码的话，可以用<code>`r code`</code>。另一个是代码块（code chunk），首尾用三个反引号隔开（注意换行）或缩进四个空格来表示纯代码，如果你想用R来运行代码块的话，可以改为<code>```{r} code ```</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>，注意<code>{r}</code>后面得换行。关于代码块的设置将会在<a href="rmd_3.html#rmd_3_7" target="_blank">1.3.7节</a>详细介绍。</p>
 <p>以上就是RMD的基本组成。接下来可以尝试着自己创建一个RMD文档并输出为HTML。</p>
-<pre><code>--- 
-title: &quot;demo&quot; 
-author: &quot;lkj&quot; 
-date: &quot;`r format(Sys.time(), &quot;%Y/%m/%d&quot;)`&quot; 
-output: html_document 
----
-
-利用`ggplot2`包绘制iris数据集
-
-```{r} 
-library(ggplot2) 
-ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,color=Species))+ 
-  geom_point() 
-``` 
- 
-iris数据集共有`r nrow(iris)`个观测值</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="rmd_2.html#cb3-1" tabindex="-1"></a>--- </span>
+<span id="cb3-2"><a href="rmd_2.html#cb3-2" tabindex="-1"></a>title: &quot;demo&quot; </span>
+<span id="cb3-3"><a href="rmd_2.html#cb3-3" tabindex="-1"></a>author: &quot;lkj&quot; </span>
+<span id="cb3-4"><a href="rmd_2.html#cb3-4" tabindex="-1"></a>date: &quot;`r format(Sys.time(), &quot;%Y/%m/%d&quot;)`&quot; </span>
+<span id="cb3-5"><a href="rmd_2.html#cb3-5" tabindex="-1"></a>output: html_document </span>
+<span id="cb3-6"><a href="rmd_2.html#cb3-6" tabindex="-1"></a>---</span>
+<span id="cb3-7"><a href="rmd_2.html#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="rmd_2.html#cb3-8" tabindex="-1"></a>利用`ggplot2`包绘制iris数据集</span>
+<span id="cb3-9"><a href="rmd_2.html#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="rmd_2.html#cb3-10" tabindex="-1"></a>```{r} </span>
+<span id="cb3-11"><a href="rmd_2.html#cb3-11" tabindex="-1"></a>library(ggplot2) </span>
+<span id="cb3-12"><a href="rmd_2.html#cb3-12" tabindex="-1"></a>ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,color=Species))+ </span>
+<span id="cb3-13"><a href="rmd_2.html#cb3-13" tabindex="-1"></a>  geom_point() </span>
+<span id="cb3-14"><a href="rmd_2.html#cb3-14" tabindex="-1"></a>``` </span>
+<span id="cb3-15"><a href="rmd_2.html#cb3-15" tabindex="-1"></a> </span>
+<span id="cb3-16"><a href="rmd_2.html#cb3-16" tabindex="-1"></a>iris数据集共有`r nrow(iris)`个观测值</span></code></pre></div>
 <p>你输出的结果应该如下所示。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p3"></span>
 <img src="pic/rmarkdown/p3.png" alt="用ggplot2绘制图片" width="75%" />
@@ -687,7 +691,7 @@ iris数据集共有`r nrow(iris)`个观测值</code></pre>
 <hr />
 <ol start="1">
 <li id="fn1"><p>当你想在反引号内使用n个反引号时，需要在外部用n+1个反引号括起来，即n+1原则。这里code左右各有一个反引号，那么在外部左右应该各有两个反引号。<a href="rmd_2.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>事实上，这里涉及到如何展示r内联代码本身或者r代码块本身的问题，可以参考<a href="https://bookdown.org/yihui/rmarkdown-cookbook/verbatim-code-chunks.html" target="_blank">这里</a>。但是，如果用<code>verbatim</code>方式展示代码块，由于是四个反引号隔开，我的Rstudio中的<code>Outline</code>就会被打乱，多了原本属于正文但又不属于<code>Outline</code>的内容，同时语法不再高亮（貌似是四个反引号和三个反引号搞串了，原本是头尾相连，现在变成这个的尾和那个的头连在一起）。<a href="rmd_2.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>事实上，这里涉及到如何展示r内联代码本身或者r代码块本身的问题，可以参考<a href="https://bookdown.org/yihui/rmarkdown-cookbook/verbatim-code-chunks.html" target="_blank">这里</a>。<a href="rmd_2.html#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

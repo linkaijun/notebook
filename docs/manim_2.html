@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -643,37 +647,37 @@ div.csl-indent {
 <p>还是以上一节的代码为例。</p>
 <p>我们创建了文本<code>Text</code>、圆形<code>Circle</code>、正方形<code>Square</code>，他们都是Mobjects。同时，我们用<code>.animate</code>方法将Mobjects的其他方法动画化（如平移<code>.shift()</code>、填充<code>.set_fill()</code>），用<code>FadeIn()</code>类完成渐入的动画效果，用<code>ReplacementTransform()</code>类完成将圆变换为正方形的动画效果。而所有这些都得在Scenes上进行，也就是将Mobjects添加<code>.add()</code>到画布上，或者在画布上完成动画效果<code>.play()</code>，并且所有的代码都得定义在<code>construct()</code>方法之中，而这个方法又属于一个继承了<code>Scene</code>类的类（这里是Example类）中。</p>
 <p>其余细节可以查看代码中的注释。</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="manim_2.html#cb93-1" tabindex="-1"></a><span class="co"># example.py</span></span>
-<span id="cb93-2"><a href="manim_2.html#cb93-2" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
-<span id="cb93-3"><a href="manim_2.html#cb93-3" tabindex="-1"></a></span>
-<span id="cb93-4"><a href="manim_2.html#cb93-4" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
-<span id="cb93-5"><a href="manim_2.html#cb93-5" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
-<span id="cb93-6"><a href="manim_2.html#cb93-6" tabindex="-1"></a>        <span class="co"># 创建文本对象</span></span>
-<span id="cb93-7"><a href="manim_2.html#cb93-7" tabindex="-1"></a>        t1<span class="ot">=</span><span class="fu">Text</span>(<span class="st">&#39;你好！Manim&#39;</span>)</span>
-<span id="cb93-8"><a href="manim_2.html#cb93-8" tabindex="-1"></a>        <span class="co"># 将文本对象添加到画布中，默认在画面中心</span></span>
-<span id="cb93-9"><a href="manim_2.html#cb93-9" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span>
-<span id="cb93-10"><a href="manim_2.html#cb93-10" tabindex="-1"></a>        <span class="co"># 视频等待1s</span></span>
-<span id="cb93-11"><a href="manim_2.html#cb93-11" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
-<span id="cb93-12"><a href="manim_2.html#cb93-12" tabindex="-1"></a>        <span class="co"># 将文本上移三个单位这一行为动画化</span></span>
-<span id="cb93-13"><a href="manim_2.html#cb93-13" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">t1.animate.shift</span>(UP<span class="sc">*</span><span class="dv">3</span>))   <span class="co"># UP为常量，表示向上平移一个单位，同理有DOWN、LEFT、RIGHT等</span></span>
-<span id="cb93-14"><a href="manim_2.html#cb93-14" tabindex="-1"></a></span>
-<span id="cb93-15"><a href="manim_2.html#cb93-15" tabindex="-1"></a>        <span class="co"># 创建圆形对象并设置边框颜色</span></span>
-<span id="cb93-16"><a href="manim_2.html#cb93-16" tabindex="-1"></a>        circle<span class="ot">=</span><span class="fu">Circle</span>()<span class="fu">.set_color</span>(BLUE)     <span class="co"># BLUE为常量，表示蓝色，同理有RED、GREEN等</span></span>
-<span id="cb93-17"><a href="manim_2.html#cb93-17" tabindex="-1"></a>        <span class="co"># 为圆形对象播放渐入动画</span></span>
-<span id="cb93-18"><a href="manim_2.html#cb93-18" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">FadeIn</span>(circle))</span>
-<span id="cb93-19"><a href="manim_2.html#cb93-19" tabindex="-1"></a>        <span class="co"># 将圆形对象设置填充色这一行为动画化，不透明度为0.5，持续时间为1s</span></span>
-<span id="cb93-20"><a href="manim_2.html#cb93-20" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">circle.animate.set_fill</span>(BLUE, <span class="at">opacity=</span><span class="fl">0.5</span>), <span class="at">run_time=</span><span class="dv">1</span>)</span>
-<span id="cb93-21"><a href="manim_2.html#cb93-21" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
-<span id="cb93-22"><a href="manim_2.html#cb93-22" tabindex="-1"></a></span>
-<span id="cb93-23"><a href="manim_2.html#cb93-23" tabindex="-1"></a>        <span class="co"># 创建正方形对象，并设置边框颜色和填充色</span></span>
-<span id="cb93-24"><a href="manim_2.html#cb93-24" tabindex="-1"></a>        square<span class="ot">=</span><span class="fu">Square</span>()<span class="fu">.set_color</span>(RED)<span class="fu">.set_fill</span>(RED, <span class="at">opacity=</span><span class="fl">0.5</span>)</span>
-<span id="cb93-25"><a href="manim_2.html#cb93-25" tabindex="-1"></a>        <span class="co"># 实现从圆形变换为正方形的动画</span></span>
-<span id="cb93-26"><a href="manim_2.html#cb93-26" tabindex="-1"></a>        <span class="co"># ReplacementTransform表示变换前后对象主体变为后者，即样子变了，名字也变了</span></span>
-<span id="cb93-27"><a href="manim_2.html#cb93-27" tabindex="-1"></a>        <span class="co"># 如果是Transform(circle, square)则表示不更改对象主体，变换后依旧是前者，即样子变了但名字不变</span></span>
-<span id="cb93-28"><a href="manim_2.html#cb93-28" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">ReplacementTransform</span>(circle, square, <span class="at">run_time=</span><span class="dv">1</span>))</span>
-<span id="cb93-29"><a href="manim_2.html#cb93-29" tabindex="-1"></a>        <span class="co"># 由于是ReplacementTransform，则主体变为正方形，故对正方形填充颜色这一行为进行动画化</span></span>
-<span id="cb93-30"><a href="manim_2.html#cb93-30" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">square.animate.set_fill</span>(RED, <span class="at">opacity=</span><span class="dv">0</span>))</span>
-<span id="cb93-31"><a href="manim_2.html#cb93-31" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="manim_2.html#cb94-1" tabindex="-1"></a><span class="co"># example.py</span></span>
+<span id="cb94-2"><a href="manim_2.html#cb94-2" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb94-3"><a href="manim_2.html#cb94-3" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="manim_2.html#cb94-4" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb94-5"><a href="manim_2.html#cb94-5" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb94-6"><a href="manim_2.html#cb94-6" tabindex="-1"></a>        <span class="co"># 创建文本对象</span></span>
+<span id="cb94-7"><a href="manim_2.html#cb94-7" tabindex="-1"></a>        t1<span class="ot">=</span><span class="fu">Text</span>(<span class="st">&#39;你好！Manim&#39;</span>)</span>
+<span id="cb94-8"><a href="manim_2.html#cb94-8" tabindex="-1"></a>        <span class="co"># 将文本对象添加到画布中，默认在画面中心</span></span>
+<span id="cb94-9"><a href="manim_2.html#cb94-9" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span>
+<span id="cb94-10"><a href="manim_2.html#cb94-10" tabindex="-1"></a>        <span class="co"># 视频等待1s</span></span>
+<span id="cb94-11"><a href="manim_2.html#cb94-11" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
+<span id="cb94-12"><a href="manim_2.html#cb94-12" tabindex="-1"></a>        <span class="co"># 将文本上移三个单位这一行为动画化</span></span>
+<span id="cb94-13"><a href="manim_2.html#cb94-13" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">t1.animate.shift</span>(UP<span class="sc">*</span><span class="dv">3</span>))   <span class="co"># UP为常量，表示向上平移一个单位，同理有DOWN、LEFT、RIGHT等</span></span>
+<span id="cb94-14"><a href="manim_2.html#cb94-14" tabindex="-1"></a></span>
+<span id="cb94-15"><a href="manim_2.html#cb94-15" tabindex="-1"></a>        <span class="co"># 创建圆形对象并设置边框颜色</span></span>
+<span id="cb94-16"><a href="manim_2.html#cb94-16" tabindex="-1"></a>        circle<span class="ot">=</span><span class="fu">Circle</span>()<span class="fu">.set_color</span>(BLUE)     <span class="co"># BLUE为常量，表示蓝色，同理有RED、GREEN等</span></span>
+<span id="cb94-17"><a href="manim_2.html#cb94-17" tabindex="-1"></a>        <span class="co"># 为圆形对象播放渐入动画</span></span>
+<span id="cb94-18"><a href="manim_2.html#cb94-18" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">FadeIn</span>(circle))</span>
+<span id="cb94-19"><a href="manim_2.html#cb94-19" tabindex="-1"></a>        <span class="co"># 将圆形对象设置填充色这一行为动画化，不透明度为0.5，持续时间为1s</span></span>
+<span id="cb94-20"><a href="manim_2.html#cb94-20" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">circle.animate.set_fill</span>(BLUE, <span class="at">opacity=</span><span class="fl">0.5</span>), <span class="at">run_time=</span><span class="dv">1</span>)</span>
+<span id="cb94-21"><a href="manim_2.html#cb94-21" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span>
+<span id="cb94-22"><a href="manim_2.html#cb94-22" tabindex="-1"></a></span>
+<span id="cb94-23"><a href="manim_2.html#cb94-23" tabindex="-1"></a>        <span class="co"># 创建正方形对象，并设置边框颜色和填充色</span></span>
+<span id="cb94-24"><a href="manim_2.html#cb94-24" tabindex="-1"></a>        square<span class="ot">=</span><span class="fu">Square</span>()<span class="fu">.set_color</span>(RED)<span class="fu">.set_fill</span>(RED, <span class="at">opacity=</span><span class="fl">0.5</span>)</span>
+<span id="cb94-25"><a href="manim_2.html#cb94-25" tabindex="-1"></a>        <span class="co"># 实现从圆形变换为正方形的动画</span></span>
+<span id="cb94-26"><a href="manim_2.html#cb94-26" tabindex="-1"></a>        <span class="co"># ReplacementTransform表示变换前后对象主体变为后者，即样子变了，名字也变了</span></span>
+<span id="cb94-27"><a href="manim_2.html#cb94-27" tabindex="-1"></a>        <span class="co"># 如果是Transform(circle, square)则表示不更改对象主体，变换后依旧是前者，即样子变了但名字不变</span></span>
+<span id="cb94-28"><a href="manim_2.html#cb94-28" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">ReplacementTransform</span>(circle, square, <span class="at">run_time=</span><span class="dv">1</span>))</span>
+<span id="cb94-29"><a href="manim_2.html#cb94-29" tabindex="-1"></a>        <span class="co"># 由于是ReplacementTransform，则主体变为正方形，故对正方形填充颜色这一行为进行动画化</span></span>
+<span id="cb94-30"><a href="manim_2.html#cb94-30" tabindex="-1"></a>        <span class="fu">self.play</span>(<span class="fu">square.animate.set_fill</span>(RED, <span class="at">opacity=</span><span class="dv">0</span>))</span>
+<span id="cb94-31"><a href="manim_2.html#cb94-31" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
 <p>再来说说输出命令<code>manim -pql example.py Example</code>。<code>manim</code>是必带的，<code>-pql</code>表示以低画质<code>-ql</code>制作视频，并在代码运行后预览<code>-p</code>动画，也就是会直接跳出视频来，不用去生成的文件夹里面找。之后再跟上python文件名<code>example.py</code>和你创建的类名<code>Example</code>即可。</p>
 </div>
             </section>

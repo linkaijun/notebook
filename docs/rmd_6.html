@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -676,13 +680,13 @@ div.csl-indent {
 <p>即使设置了<code>dev: png</code>，在正文中导入<code>.jpg</code>图片也能正常显示。</p>
 </blockquote></li>
 </ul>
-<pre><code>output:
-  rticles::ctex:
-    fig_width: 7
-    fig_height: 6
-    fig_caption: true
-    dev: pdf
-    fig_crop: true</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb92-1"><a href="rmd_6.html#cb92-1" tabindex="-1"></a>output:</span>
+<span id="cb92-2"><a href="rmd_6.html#cb92-2" tabindex="-1"></a>  rticles::ctex:</span>
+<span id="cb92-3"><a href="rmd_6.html#cb92-3" tabindex="-1"></a>    fig_width: 7</span>
+<span id="cb92-4"><a href="rmd_6.html#cb92-4" tabindex="-1"></a>    fig_height: 6</span>
+<span id="cb92-5"><a href="rmd_6.html#cb92-5" tabindex="-1"></a>    fig_caption: true</span>
+<span id="cb92-6"><a href="rmd_6.html#cb92-6" tabindex="-1"></a>    dev: pdf</span>
+<span id="cb92-7"><a href="rmd_6.html#cb92-7" tabindex="-1"></a>    fig_crop: true</span></code></pre></div>
 <p>除了在元数据处设置一些参数，还可以再代码块中进行设置，这在<a href="rmd_3.html#rmd_3_9" target="_blank">第1.3.9节</a>已经介绍过了。这里重新提及仅针对latex的相关设置。</p>
 <ul>
 <li><p>out.width/out.height</p>

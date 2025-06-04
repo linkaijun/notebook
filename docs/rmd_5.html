@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -758,33 +762,33 @@ div.csl-indent {
 <ol start="4" style="list-style-type: decimal">
 <li>嵌入代码块，即将代码块的引擎更换为<code>css</code>，并在内部定义css样式。</li>
 </ol>
-<pre><code>```{css, echo=FALSE}
- p.caption {
-   color: #777;
-   margin-top: 10px;
- }
- ```</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb75-1"><a href="rmd_5.html#cb75-1" tabindex="-1"></a>```{css, echo=FALSE}</span>
+<span id="cb75-2"><a href="rmd_5.html#cb75-2" tabindex="-1"></a>p.caption {</span>
+<span id="cb75-3"><a href="rmd_5.html#cb75-3" tabindex="-1"></a>  color: #777;</span>
+<span id="cb75-4"><a href="rmd_5.html#cb75-4" tabindex="-1"></a>  margin-top: 10px;</span>
+<span id="cb75-5"><a href="rmd_5.html#cb75-5" tabindex="-1"></a>}</span>
+<span id="cb75-6"><a href="rmd_5.html#cb75-6" tabindex="-1"></a>```</span></code></pre></div>
 <p>你可以在网页源码中找到文本、图片、表格等元素所处的标签，然后通过css样式来对其进行自定义。网上关于css样式的文章还是挺多的，例如你可以在<a href="https://www.csdn.net/" target="_blank">CSDN</a>里查询相关资料，这里就不再赘述了。</p></li>
 </ul>
 </div>
 <div id="rmd_5_4" class="section level3 hasAnchor" number="1.5.4">
 <h3><span class="header-section-number">1.5.4</span> 选项卡<a href="rmd_5.html#rmd_5_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p><code># 标题{.tabset}</code>会将其所有的子章节转变为选项卡，你可以在不同选项卡之间切换。在<code>.tabset</code>后面，你可以接着添加属性<code>.tabset-pills</code>和属性<code>.tabset-fade</code>。前者会让选项卡的背景变为深蓝色，后者会让选项卡的内容渐入（<strong>注意属性之间得用空格隔开</strong>）。一般情况下，会默认显示第一个选项卡。如果你想优先显示某一个选项卡，那么你可以在对应的子章节标题后面添加’{.active}’。当你结束编辑选项卡时，需要输入与上级标题同样多的<code>#</code>与<code>{-}</code></p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="rmd_5.html#cb76-1" tabindex="-1"></a><span class="do">### 上级标题 {.tabset .tabset-pills .tabset-fade}</span></span>
+<div class="sourceCode" id="cb76"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb76-1"><a href="rmd_5.html#cb76-1" tabindex="-1"></a>### 上级标题 {.tabset .tabset-pills .tabset-fade}</span>
 <span id="cb76-2"><a href="rmd_5.html#cb76-2" tabindex="-1"></a></span>
-<span id="cb76-3"><a href="rmd_5.html#cb76-3" tabindex="-1"></a><span class="do">#### 选项卡1</span></span>
+<span id="cb76-3"><a href="rmd_5.html#cb76-3" tabindex="-1"></a>#### 选项卡1</span>
 <span id="cb76-4"><a href="rmd_5.html#cb76-4" tabindex="-1"></a></span>
 <span id="cb76-5"><a href="rmd_5.html#cb76-5" tabindex="-1"></a>正文</span>
 <span id="cb76-6"><a href="rmd_5.html#cb76-6" tabindex="-1"></a></span>
-<span id="cb76-7"><a href="rmd_5.html#cb76-7" tabindex="-1"></a><span class="do">#### 选项卡2</span></span>
+<span id="cb76-7"><a href="rmd_5.html#cb76-7" tabindex="-1"></a>#### 选项卡2</span>
 <span id="cb76-8"><a href="rmd_5.html#cb76-8" tabindex="-1"></a></span>
 <span id="cb76-9"><a href="rmd_5.html#cb76-9" tabindex="-1"></a>表格</span>
 <span id="cb76-10"><a href="rmd_5.html#cb76-10" tabindex="-1"></a></span>
-<span id="cb76-11"><a href="rmd_5.html#cb76-11" tabindex="-1"></a><span class="do">#### 选项卡3 {.active}</span></span>
+<span id="cb76-11"><a href="rmd_5.html#cb76-11" tabindex="-1"></a>#### 选项卡3 {.active}</span>
 <span id="cb76-12"><a href="rmd_5.html#cb76-12" tabindex="-1"></a></span>
 <span id="cb76-13"><a href="rmd_5.html#cb76-13" tabindex="-1"></a>图片</span>
 <span id="cb76-14"><a href="rmd_5.html#cb76-14" tabindex="-1"></a></span>
-<span id="cb76-15"><a href="rmd_5.html#cb76-15" tabindex="-1"></a><span class="do">### {-}</span></span></code></pre></div>
+<span id="cb76-15"><a href="rmd_5.html#cb76-15" tabindex="-1"></a>### {-}</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p15"></span>
 <img src="pic/rmarkdown/p15.jpg" alt="选项卡" width="198" />
 <p class="caption">
@@ -948,6 +952,17 @@ div.csl-indent {
 </div>
 <div id="rmd_5_6" class="section level3 hasAnchor" number="1.5.6">
 <h3><span class="header-section-number">1.5.6</span> 代码块及其输出<a href="rmd_5.html#rmd_5_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="rmd_5_6_1" class="section level4 hasAnchor" number="1.5.6.1">
+<h4><span class="header-section-number">1.5.6.1</span> 代码块输出代码块<a href="rmd_5.html#rmd_5_6_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>有时会遇到输出<code>```{r} code ```</code>的需求，这就需要用如下的代码块进行包裹。注意最外层的反引号数量总是比内部的反引号数量多。</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb84-1"><a href="rmd_5.html#cb84-1" tabindex="-1"></a>````{verbatim}</span>
+<span id="cb84-2"><a href="rmd_5.html#cb84-2" tabindex="-1"></a>```{r}</span>
+<span id="cb84-3"><a href="rmd_5.html#cb84-3" tabindex="-1"></a>code</span>
+<span id="cb84-4"><a href="rmd_5.html#cb84-4" tabindex="-1"></a>```</span>
+<span id="cb84-5"><a href="rmd_5.html#cb84-5" tabindex="-1"></a>````</span></code></pre></div>
+</div>
+<div id="rmd_5_6_2" class="section level4 hasAnchor" number="1.5.6.2">
+<h4><span class="header-section-number">1.5.6.2</span> 样式<a href="rmd_5.html#rmd_5_6_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>代码块及其输出的样式可以在<code>{r}</code>中进行设置。其中，<code>class.source</code>用于控制代码块的样式，<code>class.output</code>用于控制文本输出的样式。部分可选样式如下：<code>"bg-primary"</code>、<code>"bg-success"</code>、<code>"bg-info"</code>、<code>"bg-warning"</code>、<code>"bg-danger"</code>。</p>
 <p>或者，你也可以自定义CSS样式（如何引入css样式<a href="rmd_5.html#rmd_5_3" target="_blank">详见1.5.3节</a>），为代码块或输出分配新的类名。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p16"></span>
@@ -957,31 +972,32 @@ div.csl-indent {
 </p>
 </div>
 <p>在代码块的设置中，<code>echo</code>允许在文档中是否呈现源码。但有些时候，你可能一开始需要隐藏代码，而在有需要的时候再显现出来。这就得依靠在元数据处的<code>code_folding</code>选项。当<code>code_folding: show</code>时，会显示所有的代码；当<code>code_folding: hide</code>时，会隐藏所有的代码。无论是显示还是隐藏，在文档开头处以及各个代码块旁边都会提供选项，来让你手动选择是’显示’还是’隐藏’代码。</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="rmd_5.html#cb84-1" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb84-2"><a href="rmd_5.html#cb84-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&#39;code_folding&#39;</span></span>
-<span id="cb84-3"><a href="rmd_5.html#cb84-3" tabindex="-1"></a>output<span class="sc">:</span> </span>
-<span id="cb84-4"><a href="rmd_5.html#cb84-4" tabindex="-1"></a>  html_document<span class="sc">:</span> </span>
-<span id="cb84-5"><a href="rmd_5.html#cb84-5" tabindex="-1"></a>    code_folding<span class="sc">:</span> hide</span>
-<span id="cb84-6"><a href="rmd_5.html#cb84-6" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="rmd_5.html#cb85-1" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb85-2"><a href="rmd_5.html#cb85-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&#39;code_folding&#39;</span></span>
+<span id="cb85-3"><a href="rmd_5.html#cb85-3" tabindex="-1"></a>output<span class="sc">:</span> </span>
+<span id="cb85-4"><a href="rmd_5.html#cb85-4" tabindex="-1"></a>  html_document<span class="sc">:</span> </span>
+<span id="cb85-5"><a href="rmd_5.html#cb85-5" tabindex="-1"></a>    code_folding<span class="sc">:</span> hide</span>
+<span id="cb85-6"><a href="rmd_5.html#cb85-6" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 <p>当然，<code>code_folding</code>选项是对所有代码块而言的，你可以针对性地让某些代码块隐藏或展示。在<code>{r}</code>中，当<code>code_folding: hide</code>时，你可以通过<code>class.source='fold-show'</code>来让该代码块展示出来；当<code>code_folding: show</code>时，你可以通过<code>class.source='fold-hide'</code>来让该代码块隐藏起来。遗憾的是，<code>code_folding</code>只能够控制部分引擎的代码块（例如<code>{r}</code>、<code>{python}</code>、<code>{stan}</code>…），并不能控制<code>{css}</code>，此时，只需要在<code>{css}</code>中传入<code>class.source='foldable'</code>即可，即<code>{css, class.source='foldable'}</code>。</p>
 <p>你也可以为代码块及其输出添加滚动条来限制它的高度。在HTML输出中，你可以在<code>{css}</code>代码块中添加<code>max-height</code>和<code>overflow-y</code>来限制代码块的高度及添加竖向滚动条。</p>
-<pre><code>```{css, echo=FALSE}
- pre {
-   max-height: 300px;
-   overflow-y: auto;
- }
- 
- pre[class] {
-   max-height: 100px;
- }
- ```</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb86-1"><a href="rmd_5.html#cb86-1" tabindex="-1"></a>```{css, echo=FALSE}</span>
+<span id="cb86-2"><a href="rmd_5.html#cb86-2" tabindex="-1"></a>pre {</span>
+<span id="cb86-3"><a href="rmd_5.html#cb86-3" tabindex="-1"></a>  max-height: 300px;</span>
+<span id="cb86-4"><a href="rmd_5.html#cb86-4" tabindex="-1"></a>  overflow-y: auto;</span>
+<span id="cb86-5"><a href="rmd_5.html#cb86-5" tabindex="-1"></a>}</span>
+<span id="cb86-6"><a href="rmd_5.html#cb86-6" tabindex="-1"></a></span>
+<span id="cb86-7"><a href="rmd_5.html#cb86-7" tabindex="-1"></a>pre[class] {</span>
+<span id="cb86-8"><a href="rmd_5.html#cb86-8" tabindex="-1"></a>  max-height: 100px;</span>
+<span id="cb86-9"><a href="rmd_5.html#cb86-9" tabindex="-1"></a>}</span>
+<span id="cb86-10"><a href="rmd_5.html#cb86-10" tabindex="-1"></a>```</span></code></pre></div>
 <p>由于代码块的内容一般是被包含在<code>&lt;pre class='r'&gt;&lt;/pre&gt;</code>，其输出则是被包含在<code>&lt;pre&gt;&lt;/pre&gt;</code>里。因此上面的<code>{css}</code>样式表达的意思是对于所有的<code>&lt;pre&gt;</code>标签，限定最大高度为300px，同时添加竖向滚动条，而对于拥有类属性的<code>&lt;pre&gt;</code>标签，则限定最大高度为100px，也就是将前面的300px限定高度给覆盖掉了。最终呈现的效果就是代码块及其输出如果超过它们的限定高度，则都会添加竖向滚动条，其中代码块的限定高度为100px，输出的限定高度为300px。当然，你也可以自定义新的类，对特定的代码块（<code>class.source</code>）或输出（<code>class.output</code>）添加竖向滚动条。</p>
-<pre><code>```{css, echo=FALSE}
- .scroll-style {
-   max-height: 300px;
-   overflow-y: auto;
- }
- ```</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb87-1"><a href="rmd_5.html#cb87-1" tabindex="-1"></a>```{css, echo=FALSE}</span>
+<span id="cb87-2"><a href="rmd_5.html#cb87-2" tabindex="-1"></a>.scroll-style {</span>
+<span id="cb87-3"><a href="rmd_5.html#cb87-3" tabindex="-1"></a>  max-height: 300px;</span>
+<span id="cb87-4"><a href="rmd_5.html#cb87-4" tabindex="-1"></a>  overflow-y: auto;</span>
+<span id="cb87-5"><a href="rmd_5.html#cb87-5" tabindex="-1"></a>}</span>
+<span id="cb87-6"><a href="rmd_5.html#cb87-6" tabindex="-1"></a>```</span></code></pre></div>
+</div>
 </div>
 <div id="rmd_5_7" class="section level3 hasAnchor" number="1.5.7">
 <h3><span class="header-section-number">1.5.7</span> 添加HTML文件<a href="rmd_5.html#rmd_5_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -995,15 +1011,15 @@ div.csl-indent {
 <p>在HTML文件的<code>&lt;body&gt;</code>标签之后包含的内容。这同样可以用于添加自定义的HTML、JavaScript或其他内容。</p></li>
 </ul>
 <p><strong>注意HTML文件应当与<code>.Rmd</code>文件处于同一个目录中</strong></p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="rmd_5.html#cb87-1" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb87-2"><a href="rmd_5.html#cb87-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&#39;includes&#39;</span></span>
-<span id="cb87-3"><a href="rmd_5.html#cb87-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb87-4"><a href="rmd_5.html#cb87-4" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
-<span id="cb87-5"><a href="rmd_5.html#cb87-5" tabindex="-1"></a>    includes<span class="sc">:</span></span>
-<span id="cb87-6"><a href="rmd_5.html#cb87-6" tabindex="-1"></a>      in_header<span class="sc">:</span> header.html</span>
-<span id="cb87-7"><a href="rmd_5.html#cb87-7" tabindex="-1"></a>      before_body<span class="sc">:</span> doc_prefix.html</span>
-<span id="cb87-8"><a href="rmd_5.html#cb87-8" tabindex="-1"></a>      after_body<span class="sc">:</span> doc_suffix.html</span>
-<span id="cb87-9"><a href="rmd_5.html#cb87-9" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="rmd_5.html#cb88-1" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb88-2"><a href="rmd_5.html#cb88-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&#39;includes&#39;</span></span>
+<span id="cb88-3"><a href="rmd_5.html#cb88-3" tabindex="-1"></a>output<span class="sc">:</span></span>
+<span id="cb88-4"><a href="rmd_5.html#cb88-4" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb88-5"><a href="rmd_5.html#cb88-5" tabindex="-1"></a>    includes<span class="sc">:</span></span>
+<span id="cb88-6"><a href="rmd_5.html#cb88-6" tabindex="-1"></a>      in_header<span class="sc">:</span> header.html</span>
+<span id="cb88-7"><a href="rmd_5.html#cb88-7" tabindex="-1"></a>      before_body<span class="sc">:</span> doc_prefix.html</span>
+<span id="cb88-8"><a href="rmd_5.html#cb88-8" tabindex="-1"></a>      after_body<span class="sc">:</span> doc_suffix.html</span>
+<span id="cb88-9"><a href="rmd_5.html#cb88-9" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 </div>
 <div id="rmd_5_8" class="section level3 hasAnchor" number="1.5.8">
 <h3><span class="header-section-number">1.5.8</span> Pandoc参数<a href="rmd_5.html#rmd_5_8" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -1012,21 +1028,21 @@ div.csl-indent {
 <div id="rmd_5_9" class="section level3 hasAnchor" number="1.5.9">
 <h3><span class="header-section-number">1.5.9</span> 共享选项<a href="rmd_5.html#rmd_5_9" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>可能你的多个rmarkdown文件都会有相同的<code>output</code>设置，此时，你可以在同一个目录下新建<code>_output.yml</code>文件。在该文件中，和平时的rmarkdown文件不同，你不需要有<code>---</code>和<code>output</code>，直接写相应的选项即可。示例如下：</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="rmd_5.html#cb88-1" tabindex="-1"></a>html_document<span class="sc">:</span></span>
-<span id="cb88-2"><a href="rmd_5.html#cb88-2" tabindex="-1"></a>  toc<span class="sc">:</span> true</span>
-<span id="cb88-3"><a href="rmd_5.html#cb88-3" tabindex="-1"></a>  toc_float<span class="sc">:</span> true</span>
-<span id="cb88-4"><a href="rmd_5.html#cb88-4" tabindex="-1"></a>  toc_depth<span class="sc">:</span> <span class="dv">3</span></span>
-<span id="cb88-5"><a href="rmd_5.html#cb88-5" tabindex="-1"></a>  highlight<span class="sc">:</span> textmate</span>
-<span id="cb88-6"><a href="rmd_5.html#cb88-6" tabindex="-1"></a>  pandoc_args<span class="sc">:</span> [<span class="st">&quot;--lua-filter=lua_filter.lua&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="rmd_5.html#cb89-1" tabindex="-1"></a>html_document<span class="sc">:</span></span>
+<span id="cb89-2"><a href="rmd_5.html#cb89-2" tabindex="-1"></a>  toc<span class="sc">:</span> true</span>
+<span id="cb89-3"><a href="rmd_5.html#cb89-3" tabindex="-1"></a>  toc_float<span class="sc">:</span> true</span>
+<span id="cb89-4"><a href="rmd_5.html#cb89-4" tabindex="-1"></a>  toc_depth<span class="sc">:</span> <span class="dv">3</span></span>
+<span id="cb89-5"><a href="rmd_5.html#cb89-5" tabindex="-1"></a>  highlight<span class="sc">:</span> textmate</span>
+<span id="cb89-6"><a href="rmd_5.html#cb89-6" tabindex="-1"></a>  pandoc_args<span class="sc">:</span> [<span class="st">&quot;--lua-filter=lua_filter.lua&quot;</span>]</span></code></pre></div>
 </div>
 <div id="rmd_5_10" class="section level3 hasAnchor" number="1.5.10">
 <h3><span class="header-section-number">1.5.10</span> 下载文件<a href="rmd_5.html#rmd_5_10" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>你可以在元数据处声明<code>code_download: true</code>，来为读者提供一个下载按钮，从而下载HTML文件的源代码，即<code>.Rmd</code>文件。</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="rmd_5.html#cb89-1" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb89-2"><a href="rmd_5.html#cb89-2" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
-<span id="cb89-3"><a href="rmd_5.html#cb89-3" tabindex="-1"></a>    code_download<span class="sc">:</span> true</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="rmd_5.html#cb90-1" tabindex="-1"></a>output<span class="sc">:</span></span>
+<span id="cb90-2"><a href="rmd_5.html#cb90-2" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb90-3"><a href="rmd_5.html#cb90-3" tabindex="-1"></a>    code_download<span class="sc">:</span> true</span></code></pre></div>
 <p>除了下载源代码外，还可以下载任意文件。在第<a href="rmd_5.html#rmd_5_1" target="_blank">1.5.1节</a>已经提及到利用超链接来提供下载链接，这里将介绍如何利用<code>xfun</code>包中的函数提供下载链接。在使用前需要有这些包提供支持。</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="rmd_5.html#cb90-1" tabindex="-1"></a>xfun<span class="sc">::</span><span class="fu">pkg_load2</span>(<span class="fu">c</span>(<span class="st">&quot;htmltools&quot;</span>, <span class="st">&quot;mime&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="rmd_5.html#cb91-1" tabindex="-1"></a>xfun<span class="sc">::</span><span class="fu">pkg_load2</span>(<span class="fu">c</span>(<span class="st">&quot;htmltools&quot;</span>, <span class="st">&quot;mime&quot;</span>))</span></code></pre></div>
 <p><code>xfun::embed_file()</code>、<code>xfun::embed_files()</code>、<code>xfun::embed_dir()</code>分别用于在html文档中嵌入单个文件、多个文件、文件夹。使用时直接放在r代码块中运行即可。一般而言，对于这三个函数，你只需要用到<code>path</code>、<code>name</code>、<code>text</code>这三个参数。</p>
 <ul>
 <li><p>path</p>

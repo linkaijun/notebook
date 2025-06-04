@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -836,48 +840,48 @@ Cov(\hat Z_i, \hat Z_j)&amp;=\frac{1}{n-1}\sum_{k=1}^n(Z_{ik}-\bar Z_i)(Z_{jk}-\
 <div id="ms_3_3_3" class="section level4 hasAnchor" number="7.3.3.3">
 <h4><span class="header-section-number">7.3.3.3</span> R语言实现<a href="ms_3.html#ms_3_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>PCA相对较为简单，可以自定义函数，如下所示</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="ms_3.html#cb218-1" tabindex="-1"></a>my_pca <span class="ot">&lt;-</span> <span class="cf">function</span>(sigma){</span>
-<span id="cb218-2"><a href="ms_3.html#cb218-2" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">dim</span>(sigma)[<span class="dv">1</span>]</span>
-<span id="cb218-3"><a href="ms_3.html#cb218-3" tabindex="-1"></a>  var_name <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&#39;var_&#39;</span>, <span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb218-4"><a href="ms_3.html#cb218-4" tabindex="-1"></a>  component_name <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&#39;comp_&#39;</span>, <span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb218-5"><a href="ms_3.html#cb218-5" tabindex="-1"></a>  lambda_name <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&#39;lambda_&#39;</span>, <span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb218-6"><a href="ms_3.html#cb218-6" tabindex="-1"></a>  </span>
-<span id="cb218-7"><a href="ms_3.html#cb218-7" tabindex="-1"></a>  eigen <span class="ot">=</span> <span class="fu">eigen</span>(sigma)</span>
-<span id="cb218-8"><a href="ms_3.html#cb218-8" tabindex="-1"></a>  eigen_value <span class="ot">=</span> eigen<span class="sc">$</span>values</span>
-<span id="cb218-9"><a href="ms_3.html#cb218-9" tabindex="-1"></a>  <span class="fu">names</span>(eigen_value) <span class="ot">=</span> lambda_name</span>
-<span id="cb218-10"><a href="ms_3.html#cb218-10" tabindex="-1"></a>  eigen_vec <span class="ot">=</span> eigen<span class="sc">$</span>vectors   <span class="co">#特征向量矩阵&amp;主成分矩阵</span></span>
-<span id="cb218-11"><a href="ms_3.html#cb218-11" tabindex="-1"></a>  <span class="fu">colnames</span>(eigen_vec) <span class="ot">=</span> component_name</span>
-<span id="cb218-12"><a href="ms_3.html#cb218-12" tabindex="-1"></a>  </span>
-<span id="cb218-13"><a href="ms_3.html#cb218-13" tabindex="-1"></a>  <span class="co"># 贡献率</span></span>
-<span id="cb218-14"><a href="ms_3.html#cb218-14" tabindex="-1"></a>  contribution_rate <span class="ot">=</span> eigen_value<span class="sc">/</span><span class="fu">sum</span>(eigen_value)</span>
-<span id="cb218-15"><a href="ms_3.html#cb218-15" tabindex="-1"></a>  <span class="fu">names</span>(contribution_rate) <span class="ot">=</span> component_name</span>
-<span id="cb218-16"><a href="ms_3.html#cb218-16" tabindex="-1"></a>  <span class="co"># 累积贡献率</span></span>
-<span id="cb218-17"><a href="ms_3.html#cb218-17" tabindex="-1"></a>  cum_contribution_rate <span class="ot">=</span> <span class="fu">cumsum</span>(eigen_value)<span class="sc">/</span><span class="fu">sum</span>(eigen_value)</span>
-<span id="cb218-18"><a href="ms_3.html#cb218-18" tabindex="-1"></a>  <span class="fu">names</span>(cum_contribution_rate) <span class="ot">=</span> component_name</span>
-<span id="cb218-19"><a href="ms_3.html#cb218-19" tabindex="-1"></a>  <span class="co"># 各个主成分对变量的贡献率 lambda*a^2/sigma</span></span>
-<span id="cb218-20"><a href="ms_3.html#cb218-20" tabindex="-1"></a>  contribution_to_var <span class="ot">=</span> <span class="fu">diag</span>(<span class="fu">diag</span>(sigma)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">%*%</span> eigen_vec<span class="sc">^</span><span class="dv">2</span> <span class="sc">%*%</span> <span class="fu">diag</span>(eigen_value)</span>
-<span id="cb218-21"><a href="ms_3.html#cb218-21" tabindex="-1"></a>  <span class="fu">dimnames</span>(contribution_to_var) <span class="ot">=</span> <span class="fu">list</span>(var_name, component_name)</span>
-<span id="cb218-22"><a href="ms_3.html#cb218-22" tabindex="-1"></a>  </span>
-<span id="cb218-23"><a href="ms_3.html#cb218-23" tabindex="-1"></a>  <span class="co"># 碎石图</span></span>
-<span id="cb218-24"><a href="ms_3.html#cb218-24" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
-<span id="cb218-25"><a href="ms_3.html#cb218-25" tabindex="-1"></a>  scree_plot <span class="ot">=</span> <span class="fu">ggplot</span>()<span class="sc">+</span></span>
-<span id="cb218-26"><a href="ms_3.html#cb218-26" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>component_name, <span class="at">y=</span>eigen_value, <span class="at">group=</span><span class="dv">1</span>), <span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>)<span class="sc">+</span></span>
-<span id="cb218-27"><a href="ms_3.html#cb218-27" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>component_name, <span class="at">y=</span>eigen_value), <span class="at">size=</span><span class="fl">2.5</span>)<span class="sc">+</span></span>
-<span id="cb218-28"><a href="ms_3.html#cb218-28" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb218-29"><a href="ms_3.html#cb218-29" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;&#39;</span>, <span class="at">y=</span><span class="st">&#39;variance&#39;</span>)<span class="sc">+</span></span>
-<span id="cb218-30"><a href="ms_3.html#cb218-30" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>)),</span>
-<span id="cb218-31"><a href="ms_3.html#cb218-31" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.3</span>)))</span>
-<span id="cb218-32"><a href="ms_3.html#cb218-32" tabindex="-1"></a>  </span>
-<span id="cb218-33"><a href="ms_3.html#cb218-33" tabindex="-1"></a>  result<span class="ot">=</span><span class="fu">list</span>(</span>
-<span id="cb218-34"><a href="ms_3.html#cb218-34" tabindex="-1"></a>    <span class="at">lambda =</span> eigen_value,</span>
-<span id="cb218-35"><a href="ms_3.html#cb218-35" tabindex="-1"></a>    <span class="at">vector =</span> eigen_vec,</span>
-<span id="cb218-36"><a href="ms_3.html#cb218-36" tabindex="-1"></a>    <span class="at">contribution_rate =</span> contribution_rate,</span>
-<span id="cb218-37"><a href="ms_3.html#cb218-37" tabindex="-1"></a>    <span class="at">cum_contribution_rate =</span> cum_contribution_rate,</span>
-<span id="cb218-38"><a href="ms_3.html#cb218-38" tabindex="-1"></a>    <span class="at">contribution_to_var =</span> contribution_to_var,</span>
-<span id="cb218-39"><a href="ms_3.html#cb218-39" tabindex="-1"></a>    <span class="at">scree_plot =</span> scree_plot</span>
-<span id="cb218-40"><a href="ms_3.html#cb218-40" tabindex="-1"></a>  )</span>
-<span id="cb218-41"><a href="ms_3.html#cb218-41" tabindex="-1"></a>  result</span>
-<span id="cb218-42"><a href="ms_3.html#cb218-42" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="ms_3.html#cb216-1" tabindex="-1"></a>my_pca <span class="ot">&lt;-</span> <span class="cf">function</span>(sigma){</span>
+<span id="cb216-2"><a href="ms_3.html#cb216-2" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">dim</span>(sigma)[<span class="dv">1</span>]</span>
+<span id="cb216-3"><a href="ms_3.html#cb216-3" tabindex="-1"></a>  var_name <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&#39;var_&#39;</span>, <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb216-4"><a href="ms_3.html#cb216-4" tabindex="-1"></a>  component_name <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&#39;comp_&#39;</span>, <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb216-5"><a href="ms_3.html#cb216-5" tabindex="-1"></a>  lambda_name <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&#39;lambda_&#39;</span>, <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb216-6"><a href="ms_3.html#cb216-6" tabindex="-1"></a>  </span>
+<span id="cb216-7"><a href="ms_3.html#cb216-7" tabindex="-1"></a>  eigen <span class="ot">=</span> <span class="fu">eigen</span>(sigma)</span>
+<span id="cb216-8"><a href="ms_3.html#cb216-8" tabindex="-1"></a>  eigen_value <span class="ot">=</span> eigen<span class="sc">$</span>values</span>
+<span id="cb216-9"><a href="ms_3.html#cb216-9" tabindex="-1"></a>  <span class="fu">names</span>(eigen_value) <span class="ot">=</span> lambda_name</span>
+<span id="cb216-10"><a href="ms_3.html#cb216-10" tabindex="-1"></a>  eigen_vec <span class="ot">=</span> eigen<span class="sc">$</span>vectors   <span class="co">#特征向量矩阵&amp;主成分矩阵</span></span>
+<span id="cb216-11"><a href="ms_3.html#cb216-11" tabindex="-1"></a>  <span class="fu">colnames</span>(eigen_vec) <span class="ot">=</span> component_name</span>
+<span id="cb216-12"><a href="ms_3.html#cb216-12" tabindex="-1"></a>  </span>
+<span id="cb216-13"><a href="ms_3.html#cb216-13" tabindex="-1"></a>  <span class="co"># 贡献率</span></span>
+<span id="cb216-14"><a href="ms_3.html#cb216-14" tabindex="-1"></a>  contribution_rate <span class="ot">=</span> eigen_value<span class="sc">/</span><span class="fu">sum</span>(eigen_value)</span>
+<span id="cb216-15"><a href="ms_3.html#cb216-15" tabindex="-1"></a>  <span class="fu">names</span>(contribution_rate) <span class="ot">=</span> component_name</span>
+<span id="cb216-16"><a href="ms_3.html#cb216-16" tabindex="-1"></a>  <span class="co"># 累积贡献率</span></span>
+<span id="cb216-17"><a href="ms_3.html#cb216-17" tabindex="-1"></a>  cum_contribution_rate <span class="ot">=</span> <span class="fu">cumsum</span>(eigen_value)<span class="sc">/</span><span class="fu">sum</span>(eigen_value)</span>
+<span id="cb216-18"><a href="ms_3.html#cb216-18" tabindex="-1"></a>  <span class="fu">names</span>(cum_contribution_rate) <span class="ot">=</span> component_name</span>
+<span id="cb216-19"><a href="ms_3.html#cb216-19" tabindex="-1"></a>  <span class="co"># 各个主成分对变量的贡献率 lambda*a^2/sigma</span></span>
+<span id="cb216-20"><a href="ms_3.html#cb216-20" tabindex="-1"></a>  contribution_to_var <span class="ot">=</span> <span class="fu">diag</span>(<span class="fu">diag</span>(sigma)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">%*%</span> eigen_vec<span class="sc">^</span><span class="dv">2</span> <span class="sc">%*%</span> <span class="fu">diag</span>(eigen_value)</span>
+<span id="cb216-21"><a href="ms_3.html#cb216-21" tabindex="-1"></a>  <span class="fu">dimnames</span>(contribution_to_var) <span class="ot">=</span> <span class="fu">list</span>(var_name, component_name)</span>
+<span id="cb216-22"><a href="ms_3.html#cb216-22" tabindex="-1"></a>  </span>
+<span id="cb216-23"><a href="ms_3.html#cb216-23" tabindex="-1"></a>  <span class="co"># 碎石图</span></span>
+<span id="cb216-24"><a href="ms_3.html#cb216-24" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
+<span id="cb216-25"><a href="ms_3.html#cb216-25" tabindex="-1"></a>  scree_plot <span class="ot">=</span> <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb216-26"><a href="ms_3.html#cb216-26" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>component_name, <span class="at">y=</span>eigen_value, <span class="at">group=</span><span class="dv">1</span>), <span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>)<span class="sc">+</span></span>
+<span id="cb216-27"><a href="ms_3.html#cb216-27" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>component_name, <span class="at">y=</span>eigen_value), <span class="at">size=</span><span class="fl">2.5</span>)<span class="sc">+</span></span>
+<span id="cb216-28"><a href="ms_3.html#cb216-28" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb216-29"><a href="ms_3.html#cb216-29" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;&#39;</span>, <span class="at">y=</span><span class="st">&#39;variance&#39;</span>)<span class="sc">+</span></span>
+<span id="cb216-30"><a href="ms_3.html#cb216-30" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.5</span>)),</span>
+<span id="cb216-31"><a href="ms_3.html#cb216-31" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.3</span>)))</span>
+<span id="cb216-32"><a href="ms_3.html#cb216-32" tabindex="-1"></a>  </span>
+<span id="cb216-33"><a href="ms_3.html#cb216-33" tabindex="-1"></a>  result<span class="ot">=</span><span class="fu">list</span>(</span>
+<span id="cb216-34"><a href="ms_3.html#cb216-34" tabindex="-1"></a>    <span class="at">lambda =</span> eigen_value,</span>
+<span id="cb216-35"><a href="ms_3.html#cb216-35" tabindex="-1"></a>    <span class="at">vector =</span> eigen_vec,</span>
+<span id="cb216-36"><a href="ms_3.html#cb216-36" tabindex="-1"></a>    <span class="at">contribution_rate =</span> contribution_rate,</span>
+<span id="cb216-37"><a href="ms_3.html#cb216-37" tabindex="-1"></a>    <span class="at">cum_contribution_rate =</span> cum_contribution_rate,</span>
+<span id="cb216-38"><a href="ms_3.html#cb216-38" tabindex="-1"></a>    <span class="at">contribution_to_var =</span> contribution_to_var,</span>
+<span id="cb216-39"><a href="ms_3.html#cb216-39" tabindex="-1"></a>    <span class="at">scree_plot =</span> scree_plot</span>
+<span id="cb216-40"><a href="ms_3.html#cb216-40" tabindex="-1"></a>  )</span>
+<span id="cb216-41"><a href="ms_3.html#cb216-41" tabindex="-1"></a>  result</span>
+<span id="cb216-42"><a href="ms_3.html#cb216-42" tabindex="-1"></a>}</span></code></pre></div>
 <p>或者调用R中的函数<code>princomp()</code>、<code>psych::principal()</code>。</p>
 </div>
 </div>

@@ -73,12 +73,12 @@ RMD文档由三部分组成：元数据（metadata）、文本与代码。
 
 [^1]: 当你想在反引号内使用n个反引号时，需要在外部用n+1个反引号括起来，即n+1原则。这里code左右各有一个反引号，那么在外部左右应该各有两个反引号。
 
-[^2]: 事实上，这里涉及到如何展示r内联代码本身或者r代码块本身的问题，可以参考[这里](https://bookdown.org/yihui/rmarkdown-cookbook/verbatim-code-chunks.html)。但是，如果用`verbatim`方式展示代码块，由于是四个反引号隔开，我的Rstudio中的`Outline`就会被打乱，多了原本属于正文但又不属于`Outline`的内容，同时语法不再高亮（貌似是四个反引号和三个反引号搞串了，原本是头尾相连，现在变成这个的尾和那个的头连在一起）。
+[^2]: 事实上，这里涉及到如何展示r内联代码本身或者r代码块本身的问题，可以参考[这里](https://bookdown.org/yihui/rmarkdown-cookbook/verbatim-code-chunks.html)。
 
 以上就是RMD的基本组成。接下来可以尝试着自己创建一个RMD文档并输出为HTML。
 
 
-````
+```` default
 --- 
 title: "demo" 
 author: "lkj" 
@@ -119,7 +119,8 @@ iris数据集共有`r nrow(iris)`个观测值
 
 n个'\#'代表第n级标题，注意'\#'后面跟空格。
 
-```         
+
+``` default
 # 一级标题
 这是一级标题
 
@@ -139,7 +140,8 @@ n个'\#'代表第n级标题，注意'\#'后面跟空格。
 
 特别地，你可以使用`{-}`或`{.unnumbered}`来表示不给该标题编号。这些未编号的标题主要为那些非主体部分的章节，例如前言、参考文献等等。如果你既不想为标题编号，又不想其出现在目录中，你可以设置`{.unlisted .unnumbered}`。
 
-```         
+
+``` default
 ### 鸢尾花 {#iris}
 
 详见[鸢尾花](#iris)
@@ -152,7 +154,8 @@ n个'\#'代表第n级标题，注意'\#'后面跟空格。
 
 ### 字体样式 {#rmd_3_2}
 
-```         
+
+``` default
 斜体：_text_ 或 *text*
 
 粗体：**text**
@@ -177,7 +180,8 @@ n个'\#'代表第n级标题，注意'\#'后面跟空格。
 
 平时的换行习惯（直接按回车键）是不起作用的。你可以在第一段后面加两个及以上空格后再按回车键。或者按两下回车键，即RMD中段落与段落之间存在一个空行。**注意若没有换行在有些时候将会影响显示的结果**。
 
-```         
+
+``` default
 # 法一
 第一行。空格空格
 第二行
@@ -198,7 +202,8 @@ n个'\#'代表第n级标题，注意'\#'后面跟空格。
 
 如果你直接在文本中写入URL，那么他会自动转为超链接。
 
-```         
+
+``` default
 超链接：[谢益辉](https://yihui.org/)
 
 超链接+悬浮文本：[谢益辉](https://yihui.org/ '博客')
@@ -229,7 +234,8 @@ URL：https://yihui.org/
 
 脚注，第一种写法是`text^[footnote]`，第二种写法是`text[^1]`并隔开一行`[^1]:footnote`。实际上，第二种写法的脚注`[^1]:footnote`可以放在除块内（列表、块引用等）以外的任何地方，并且可以使用除数字外的其他唯一标识来区分，最终脚注会按先后顺序自动排序。
 
-```         
+
+``` default
 文本
 
 > 这是块引用
@@ -264,7 +270,8 @@ URL：https://yihui.org/
 
 **列表需与周围内容用空行隔开**。
 
-```         
+
+``` default
 无序列表：
 
 - 项目1
@@ -313,12 +320,12 @@ URL：https://yihui.org/
 代码块的设置可以写在`{r}`中（**必须写在同一行**），形如`{r label, tag=value}`。也可以写在代码块内的`#|`后面，如下所示。
 
 
-````
-```{r} 
-#| label 
+```` default
+```{r}
+#| label
 #| tag=value
- 
-code 
+
+code
 ```
 ````
 
@@ -657,12 +664,12 @@ kables(
 
 
 <table class="kable_wrapper">
-<caption>(\#tab:unnamed-chunk-22)两个表格并排</caption>
+<caption>(\#tab:unnamed-chunk-29)两个表格并排</caption>
 <tbody>
   <tr>
    <td> 
 
-Table: (\#tab:unnamed-chunk-22)鸢尾花
+Table: (\#tab:unnamed-chunk-29)鸢尾花
 
 | Sepal.Length| Sepal.Width|
 |------------:|-----------:|
@@ -672,7 +679,7 @@ Table: (\#tab:unnamed-chunk-22)鸢尾花
  </td>
    <td> 
 
-Table: (\#tab:unnamed-chunk-22)车车
+Table: (\#tab:unnamed-chunk-29)车车
 
 |              |  mpg| cyl| disp|
 |:-------------|----:|---:|----:|
@@ -813,7 +820,7 @@ for (i in 1:2) {
         abline(1,-1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 
     -   none
 
@@ -840,20 +847,20 @@ for (i in 1:2) {
         plot(1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-34-1.png" width="672" />
         
         ``` r
         # 低级绘图命令，如abline()
         abline(0, 1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-2.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-34-2.png" width="672" />
         
         ``` r
         abline(1,-1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-3.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-34-3.png" width="672" />
 
     -   first
 
@@ -866,7 +873,7 @@ for (i in 1:2) {
         plot(1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-35-1.png" width="672" />
         
         ``` r
         # 低级绘图命令，如abline()
@@ -888,7 +895,7 @@ for (i in 1:2) {
         abline(1,-1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 
     -   数值向量
 
@@ -903,7 +910,7 @@ for (i in 1:2) {
         abline(0, 1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-37-1.png" width="672" />
         
         ``` r
         abline(1,-1)
@@ -924,14 +931,14 @@ for (i in 1:2) {
         abline(0,1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-31-1.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-38-1.png" width="672" />
         
         ``` r
         plot(1)
         abline(1,-1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-31-2.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-38-2.png" width="672" />
 
     -   hold
 
@@ -946,7 +953,7 @@ for (i in 1:2) {
         abline(1,-1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-1.png" width="672" /><img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-2.png" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-39-1.png" width="672" /><img src="01-rmarkdown_files/figure-html/unnamed-chunk-39-2.png" width="672" />
 
     -   animate
 
@@ -965,7 +972,7 @@ for (i in 1:2) {
         abline(1,-1)
         ```
         
-        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-33-.gif" width="672" />
+        <img src="01-rmarkdown_files/figure-html/unnamed-chunk-40-.gif" width="672" />
 
     -   hide
 
@@ -1049,32 +1056,31 @@ text
 在元数据的`title`中，你可以添加内联代码来实现动态输入信息的效果。
 
 
-```
---- 
-title: "基于`r nrow(iris)`条鸢尾花数据的分析" 
+``` default
+---
+title: "基于`r nrow(iris)`条鸢尾花数据的分析"
 ---
 ```
 
 当标题所需的动态元素在正文中产生时，你可以不用一开始就在元数据处设置`title`，直到你所需的元素出现即可。
 
 
-````
---- 
-author: lkj 
-date: 2024/7/17 
-output: bookdown::html_document2 
---- 
- 
-这里是正文 
- 
-```{r} 
-x <- runif(1, min=1, max=100) 
-``` 
- 
---- 
-title: "震惊！`r round(x, 2)`%的人竟干过这种事！" 
---- 
- 
+```` default
+---
+author: lkj
+date: 2024/7/17
+output: bookdown::html_document2
+---
+
+这里是正文
+
+```{r}
+x <- runif(1, min=1, max=100)
+```
+---
+title: "震惊！`r round(x, 2)`%的人竟干过这种事！"
+---
+
 这里是正文
 ````
 
@@ -1083,7 +1089,7 @@ title: "震惊！`r round(x, 2)`%的人竟干过这种事！"
 和上一节的设置一样，只需在元数据的`date`处设置相应的内联代码即可。
 
 
-``` r
+``` default
 ---
 date: "`r format(Sys.time(),'%Y-%m-%d')`",
 ---
@@ -1259,8 +1265,8 @@ DiagrammeR::grViz("digraph {
 ```
 
 ```{=html}
-<div id="htmlwidget-8fcc900a20092c70096d" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8fcc900a20092c70096d">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e94de66259872964ddc3" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e94de66259872964ddc3">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ``` r
@@ -1273,8 +1279,8 @@ DiagrammeR::mermaid('
 ```
 
 ```{=html}
-<div id="htmlwidget-5acaf7f3dc4ed7259f11" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5acaf7f3dc4ed7259f11">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1c5665a89837d896a587" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1c5665a89837d896a587">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 ```
 
 相关语法介绍可详见`graphviz`[官网](https://www.graphviz.org/doc/info/lang.html)和`mermaid`[官网](https://mermaid.nodejs.cn/syntax/flowchart.html)（有中英文官网，这个是中文的）。
@@ -1481,13 +1487,13 @@ output:
        4. 嵌入代码块，即将代码块的引擎更换为`css`，并在内部定义css样式。
        
        
-       ````
+       ```` default
        ```{css, echo=FALSE}
-        p.caption {
-          color: #777;
-          margin-top: 10px;
-        }
-        ```
+       p.caption {
+         color: #777;
+         margin-top: 10px;
+       }
+       ```
        ````
 
     你可以在网页源码中找到文本、图片、表格等元素所处的标签，然后通过css样式来对其进行自定义。网上关于css样式的文章还是挺多的，例如你可以在[CSDN](https://www.csdn.net/)里查询相关资料，这里就不再赘述了。
@@ -1497,7 +1503,7 @@ output:
 `# 标题{.tabset}`会将其所有的子章节转变为选项卡，你可以在不同选项卡之间切换。在`.tabset`后面，你可以接着添加属性`.tabset-pills`和属性`.tabset-fade`。前者会让选项卡的背景变为深蓝色，后者会让选项卡的内容渐入（**注意属性之间得用空格隔开**）。一般情况下，会默认显示第一个选项卡。如果你想优先显示某一个选项卡，那么你可以在对应的子章节标题后面添加'{.active}'。当你结束编辑选项卡时，需要输入与上级标题同样多的`#`与`{-}`
 
 
-``` r
+``` default
 ### 上级标题 {.tabset .tabset-pills .tabset-fade}
 
 #### 选项卡1
@@ -1630,6 +1636,22 @@ output:
 
 ### 代码块及其输出 {#rmd_5_6}
 
+#### 代码块输出代码块 {#rmd_5_6_1}
+
+有时会遇到输出```` ```{r} code ``` ````的需求，这就需要用如下的代码块进行包裹。注意最外层的反引号数量总是比内部的反引号数量多。
+
+
+````` default
+````{verbatim}
+```{r}
+code
+```
+````
+`````
+
+
+#### 样式 {#rmd_5_6_2}
+
 代码块及其输出的样式可以在`{r}`中进行设置。其中，`class.source`用于控制代码块的样式，`class.output`用于控制文本输出的样式。部分可选样式如下：`"bg-primary"`、`"bg-success"`、`"bg-info"`、`"bg-warning"`、`"bg-danger"`。
 
 或者，你也可以自定义CSS样式（如何引入css样式[详见1.5.3节](#rmd_5_3)），为代码块或输出分配新的类名。
@@ -1656,29 +1678,29 @@ output:
 你也可以为代码块及其输出添加滚动条来限制它的高度。在HTML输出中，你可以在`{css}`代码块中添加`max-height`和`overflow-y`来限制代码块的高度及添加竖向滚动条。
 
 
-````
+```` default
 ```{css, echo=FALSE}
- pre {
-   max-height: 300px;
-   overflow-y: auto;
- }
- 
- pre[class] {
-   max-height: 100px;
- }
- ```
+pre {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 100px;
+}
+```
 ````
 
 由于代码块的内容一般是被包含在`<pre class='r'></pre>`，其输出则是被包含在`<pre></pre>`里。因此上面的`{css}`样式表达的意思是对于所有的`<pre>`标签，限定最大高度为300px，同时添加竖向滚动条，而对于拥有类属性的`<pre>`标签，则限定最大高度为100px，也就是将前面的300px限定高度给覆盖掉了。最终呈现的效果就是代码块及其输出如果超过它们的限定高度，则都会添加竖向滚动条，其中代码块的限定高度为100px，输出的限定高度为300px。当然，你也可以自定义新的类，对特定的代码块（`class.source`）或输出（`class.output`）添加竖向滚动条。
 
 
-````
+```` default
 ```{css, echo=FALSE}
- .scroll-style {
-   max-height: 300px;
-   overflow-y: auto;
- }
- ```
+.scroll-style {
+  max-height: 300px;
+  overflow-y: auto;
+}
+```
 ````
 
 ### 添加HTML文件 {#rmd_5_7}
@@ -1810,7 +1832,8 @@ xfun::pkg_load2(c("htmltools", "mime"))
    > 即使设置了`dev: png`，在正文中导入`.jpg`图片也能正常显示。
 
 
-```
+
+``` default
 output:
   rticles::ctex:
     fig_width: 7

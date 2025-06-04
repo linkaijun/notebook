@@ -340,8 +340,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
 <li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> 书签</a></li>
-<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> shiny中的整洁式编程</a></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 共享shiny</a></li>
 </ul></li>
@@ -643,14 +647,14 @@ div.csl-indent {
 <div id="rmd_3_1" class="section level3 hasAnchor" number="1.3.1">
 <h3><span class="header-section-number">1.3.1</span> 标题<a href="rmd_3.html#rmd_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>n个’#‘代表第n级标题，注意’#’后面跟空格。</p>
-<pre><code># 一级标题
-这是一级标题
-
-## 二级标题
-这是二级标题
-
-### 三级标题
-这是三级标题</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb4-1"><a href="rmd_3.html#cb4-1" tabindex="-1"></a># 一级标题</span>
+<span id="cb4-2"><a href="rmd_3.html#cb4-2" tabindex="-1"></a>这是一级标题</span>
+<span id="cb4-3"><a href="rmd_3.html#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="rmd_3.html#cb4-4" tabindex="-1"></a>## 二级标题</span>
+<span id="cb4-5"><a href="rmd_3.html#cb4-5" tabindex="-1"></a>这是二级标题</span>
+<span id="cb4-6"><a href="rmd_3.html#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="rmd_3.html#cb4-7" tabindex="-1"></a>### 三级标题</span>
+<span id="cb4-8"><a href="rmd_3.html#cb4-8" tabindex="-1"></a>这是三级标题</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p5"></span>
 <img src="pic/rmarkdown/p5.jpg" alt="不同等级的标题" width="106" height="270px" />
 <p class="caption">
@@ -659,9 +663,9 @@ div.csl-indent {
 </div>
 <p>除了标题等级外，还可以为标题添加标识符，即<code># 标题{#标识符}</code>。通过分配标识符，你就可以在文中进行<a href="rmd_4.html#rmd_4_8" target="_blank">交叉引用</a>来跳转到对应的章节，只需在特定的地方使用<code>[关键词](#标识符)</code>即可。</p>
 <p>特别地，你可以使用<code>{-}</code>或<code>{.unnumbered}</code>来表示不给该标题编号。这些未编号的标题主要为那些非主体部分的章节，例如前言、参考文献等等。如果你既不想为标题编号，又不想其出现在目录中，你可以设置<code>{.unlisted .unnumbered}</code>。</p>
-<pre><code>### 鸢尾花 {#iris}
-
-详见[鸢尾花](#iris)</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="rmd_3.html#cb5-1" tabindex="-1"></a>### 鸢尾花 {#iris}</span>
+<span id="cb5-2"><a href="rmd_3.html#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="rmd_3.html#cb5-3" tabindex="-1"></a>详见[鸢尾花](#iris)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p6"></span>
 <img src="pic/rmarkdown/p6.jpg" alt="标题标识符" width="68" />
 <p class="caption">
@@ -671,19 +675,19 @@ div.csl-indent {
 </div>
 <div id="rmd_3_2" class="section level3 hasAnchor" number="1.3.2">
 <h3><span class="header-section-number">1.3.2</span> 字体样式<a href="rmd_3.html#rmd_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<pre><code>斜体：_text_ 或 *text*
-
-粗体：**text**
-
-斜体+粗体：***text***或___text___
-
-斜体+粗体（强调内部）：t***ex***t
-
-下标：~text~
-
-上标：^text^
-
-删除线：~~text~~</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb6-1"><a href="rmd_3.html#cb6-1" tabindex="-1"></a>斜体：_text_ 或 *text*</span>
+<span id="cb6-2"><a href="rmd_3.html#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="rmd_3.html#cb6-3" tabindex="-1"></a>粗体：**text**</span>
+<span id="cb6-4"><a href="rmd_3.html#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="rmd_3.html#cb6-5" tabindex="-1"></a>斜体+粗体：***text***或___text___</span>
+<span id="cb6-6"><a href="rmd_3.html#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="rmd_3.html#cb6-7" tabindex="-1"></a>斜体+粗体（强调内部）：t***ex***t</span>
+<span id="cb6-8"><a href="rmd_3.html#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="rmd_3.html#cb6-9" tabindex="-1"></a>下标：~text~</span>
+<span id="cb6-10"><a href="rmd_3.html#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="rmd_3.html#cb6-11" tabindex="-1"></a>上标：^text^</span>
+<span id="cb6-12"><a href="rmd_3.html#cb6-12" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="rmd_3.html#cb6-13" tabindex="-1"></a>删除线：~~text~~</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p7"></span>
 <img src="pic/rmarkdown/p7.jpg" alt="字体样式" width="142" />
 <p class="caption">
@@ -694,14 +698,14 @@ div.csl-indent {
 <div id="rmd_3_3" class="section level3 hasAnchor" number="1.3.3">
 <h3><span class="header-section-number">1.3.3</span> 换行<a href="rmd_3.html#rmd_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>平时的换行习惯（直接按回车键）是不起作用的。你可以在第一段后面加两个及以上空格后再按回车键。或者按两下回车键，即RMD中段落与段落之间存在一个空行。<strong>注意若没有换行在有些时候将会影响显示的结果</strong>。</p>
-<pre><code># 法一
-第一行。空格空格
-第二行
-
-# 法二
-第一行
-
-第二行</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb7-1"><a href="rmd_3.html#cb7-1" tabindex="-1"></a># 法一</span>
+<span id="cb7-2"><a href="rmd_3.html#cb7-2" tabindex="-1"></a>第一行。空格空格</span>
+<span id="cb7-3"><a href="rmd_3.html#cb7-3" tabindex="-1"></a>第二行</span>
+<span id="cb7-4"><a href="rmd_3.html#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="rmd_3.html#cb7-5" tabindex="-1"></a># 法二</span>
+<span id="cb7-6"><a href="rmd_3.html#cb7-6" tabindex="-1"></a>第一行</span>
+<span id="cb7-7"><a href="rmd_3.html#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="rmd_3.html#cb7-8" tabindex="-1"></a>第二行</span></code></pre></div>
 </div>
 <div id="rmd_3_4" class="section level3 hasAnchor" number="1.3.4">
 <h3><span class="header-section-number">1.3.4</span> 链接<a href="rmd_3.html#rmd_3_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
@@ -709,23 +713,23 @@ div.csl-indent {
 <p>无论是超链接还是图片链接，都可以设置悬浮文本（就是鼠标放上去会有文本显示），悬浮文本<code>'text'</code>放在<code>link</code>或者<code>path</code>后面，中间<strong>空格</strong>相隔即可。</p>
 <p>此外，你还可以设置图片超链接（即点击图片进行跳转），只要把图片链接的形式放到超链接中的<code>text</code>处即可。</p>
 <p>如果你直接在文本中写入URL，那么他会自动转为超链接。</p>
-<pre><code>超链接：[谢益辉](https://yihui.org/)
-
-超链接+悬浮文本：[谢益辉](https://yihui.org/ &#39;博客&#39;)
-
-超链接+斜体：*[谢益辉](https://yihui.org/)*
-
-超链接+粗体：**[谢益辉](https://yihui.org/)**
-
-图片链接（插入图片）+悬浮文本：
-
-![《图片》](./pic/p7_1.png &#39;p7&#39;)
-
-图片超链接：
-
-[![《图片》](./pic/p7_1.png &#39;p7&#39;)](https://yihui.org/)
-
-URL：https://yihui.org/</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="rmd_3.html#cb8-1" tabindex="-1"></a>超链接：[谢益辉](https://yihui.org/)</span>
+<span id="cb8-2"><a href="rmd_3.html#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="rmd_3.html#cb8-3" tabindex="-1"></a>超链接+悬浮文本：[谢益辉](https://yihui.org/ &#39;博客&#39;)</span>
+<span id="cb8-4"><a href="rmd_3.html#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="rmd_3.html#cb8-5" tabindex="-1"></a>超链接+斜体：*[谢益辉](https://yihui.org/)*</span>
+<span id="cb8-6"><a href="rmd_3.html#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="rmd_3.html#cb8-7" tabindex="-1"></a>超链接+粗体：**[谢益辉](https://yihui.org/)**</span>
+<span id="cb8-8"><a href="rmd_3.html#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="rmd_3.html#cb8-9" tabindex="-1"></a>图片链接（插入图片）+悬浮文本：</span>
+<span id="cb8-10"><a href="rmd_3.html#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="rmd_3.html#cb8-11" tabindex="-1"></a>![《图片》](./pic/p7_1.png &#39;p7&#39;)</span>
+<span id="cb8-12"><a href="rmd_3.html#cb8-12" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="rmd_3.html#cb8-13" tabindex="-1"></a>图片超链接：</span>
+<span id="cb8-14"><a href="rmd_3.html#cb8-14" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="rmd_3.html#cb8-15" tabindex="-1"></a>[![《图片》](./pic/p7_1.png &#39;p7&#39;)](https://yihui.org/)</span>
+<span id="cb8-16"><a href="rmd_3.html#cb8-16" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="rmd_3.html#cb8-17" tabindex="-1"></a>URL：https://yihui.org/</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p8"></span>
 <img src="pic/rmarkdown/p8.jpg" alt="链接" width="400px" height="600px" />
 <p class="caption">
@@ -737,19 +741,19 @@ URL：https://yihui.org/</code></pre>
 <h3><span class="header-section-number">1.3.5</span> 引用<a href="rmd_3.html#rmd_3_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>块引用，跟在’&gt;‘后面的文本即为块引用，注意换行时也需要有’&gt;‘。嵌套块引用则跟在两个’&gt;’后面。</p>
 <p>脚注，第一种写法是<code>text^[footnote]</code>，第二种写法是<code>text[^1]</code>并隔开一行<code>[^1]:footnote</code>。实际上，第二种写法的脚注<code>[^1]:footnote</code>可以放在除块内（列表、块引用等）以外的任何地方，并且可以使用除数字外的其他唯一标识来区分，最终脚注会按先后顺序自动排序。</p>
-<pre><code>文本
-
-&gt; 这是块引用
-&gt;
-&gt; 这也是块引用
-&gt;
-&gt;&gt; 这是嵌套块引用
-
-文本^[这是脚注]
-
-文本[^1]
-
-[^1]: 这也是脚注</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb9-1"><a href="rmd_3.html#cb9-1" tabindex="-1"></a>文本</span>
+<span id="cb9-2"><a href="rmd_3.html#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="rmd_3.html#cb9-3" tabindex="-1"></a>&gt; 这是块引用</span>
+<span id="cb9-4"><a href="rmd_3.html#cb9-4" tabindex="-1"></a>&gt;</span>
+<span id="cb9-5"><a href="rmd_3.html#cb9-5" tabindex="-1"></a>&gt; 这也是块引用</span>
+<span id="cb9-6"><a href="rmd_3.html#cb9-6" tabindex="-1"></a>&gt;</span>
+<span id="cb9-7"><a href="rmd_3.html#cb9-7" tabindex="-1"></a>&gt;&gt; 这是嵌套块引用</span>
+<span id="cb9-8"><a href="rmd_3.html#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="rmd_3.html#cb9-9" tabindex="-1"></a>文本^[这是脚注]</span>
+<span id="cb9-10"><a href="rmd_3.html#cb9-10" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="rmd_3.html#cb9-11" tabindex="-1"></a>文本[^1]</span>
+<span id="cb9-12"><a href="rmd_3.html#cb9-12" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="rmd_3.html#cb9-13" tabindex="-1"></a>[^1]: 这也是脚注</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p9"></span>
 <img src="pic/rmarkdown/p9.jpg" alt="块引用与脚注" width="400px" height="500px" />
 <p class="caption">
@@ -765,38 +769,38 @@ URL：https://yihui.org/</code></pre>
 <p>任务列表：<code>- [x] text</code>。其中x表示是否打钩，注意空格。任务列表具有交互性。</p>
 <p>定义列表：首行定义术语，另起一行冒号+一个空格+定义。</p>
 <p><strong>列表需与周围内容用空行隔开</strong>。</p>
-<pre><code>无序列表：
-
-- 项目1
-  - 子项目1
-- 项目2
-
-有序列表：
-
-1. 项目1
-2. 项目2
-   1. 项目2_1
-
-列表嵌套段落（其他同）:
-
-- 项目1
-
-   段落
-
-- 项目2
-
-任务列表：
-
-- [x] 任务1
-- [ ] 任务2
-
-定义列表：
-
-项目一
-: 定义1
-
-项目二
-: 定义2</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb10-1"><a href="rmd_3.html#cb10-1" tabindex="-1"></a>无序列表：</span>
+<span id="cb10-2"><a href="rmd_3.html#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="rmd_3.html#cb10-3" tabindex="-1"></a>- 项目1</span>
+<span id="cb10-4"><a href="rmd_3.html#cb10-4" tabindex="-1"></a>  - 子项目1</span>
+<span id="cb10-5"><a href="rmd_3.html#cb10-5" tabindex="-1"></a>- 项目2</span>
+<span id="cb10-6"><a href="rmd_3.html#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="rmd_3.html#cb10-7" tabindex="-1"></a>有序列表：</span>
+<span id="cb10-8"><a href="rmd_3.html#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="rmd_3.html#cb10-9" tabindex="-1"></a>1. 项目1</span>
+<span id="cb10-10"><a href="rmd_3.html#cb10-10" tabindex="-1"></a>2. 项目2</span>
+<span id="cb10-11"><a href="rmd_3.html#cb10-11" tabindex="-1"></a>   1. 项目2_1</span>
+<span id="cb10-12"><a href="rmd_3.html#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="rmd_3.html#cb10-13" tabindex="-1"></a>列表嵌套段落（其他同）:</span>
+<span id="cb10-14"><a href="rmd_3.html#cb10-14" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="rmd_3.html#cb10-15" tabindex="-1"></a>- 项目1</span>
+<span id="cb10-16"><a href="rmd_3.html#cb10-16" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="rmd_3.html#cb10-17" tabindex="-1"></a>   段落</span>
+<span id="cb10-18"><a href="rmd_3.html#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="rmd_3.html#cb10-19" tabindex="-1"></a>- 项目2</span>
+<span id="cb10-20"><a href="rmd_3.html#cb10-20" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="rmd_3.html#cb10-21" tabindex="-1"></a>任务列表：</span>
+<span id="cb10-22"><a href="rmd_3.html#cb10-22" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="rmd_3.html#cb10-23" tabindex="-1"></a>- [x] 任务1</span>
+<span id="cb10-24"><a href="rmd_3.html#cb10-24" tabindex="-1"></a>- [ ] 任务2</span>
+<span id="cb10-25"><a href="rmd_3.html#cb10-25" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="rmd_3.html#cb10-26" tabindex="-1"></a>定义列表：</span>
+<span id="cb10-27"><a href="rmd_3.html#cb10-27" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="rmd_3.html#cb10-28" tabindex="-1"></a>项目一</span>
+<span id="cb10-29"><a href="rmd_3.html#cb10-29" tabindex="-1"></a>: 定义1</span>
+<span id="cb10-30"><a href="rmd_3.html#cb10-30" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="rmd_3.html#cb10-31" tabindex="-1"></a>项目二</span>
+<span id="cb10-32"><a href="rmd_3.html#cb10-32" tabindex="-1"></a>: 定义2</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rmd-p10"></span>
 <img src="pic/rmarkdown/p10.jpg" alt="列表" width="400px" height="800px" />
 <p class="caption">
@@ -809,12 +813,12 @@ URL：https://yihui.org/</code></pre>
 <p>内联代码和代码块的基本介绍已经在<a href="rmd_2.html#rmd_2" target="_blank">1.2节</a>有所提及。接下来介绍r代码块的具体设置。</p>
 <p><strong>knitr</strong>包使得R能够和Markdown有机结合在一起。在<strong>knitr</strong>包中提供了丰富的参数选项，这里仅介绍较为常见的一些设置，完整内容请参考<a href="https://yihui.org/knitr/options/" target="_blank">官网</a>。</p>
 <p>代码块的设置可以写在<code>{r}</code>中（<strong>必须写在同一行</strong>），形如<code>{r label, tag=value}</code>。也可以写在代码块内的<code>#|</code>后面，如下所示。</p>
-<pre><code>```{r} 
-#| label 
-#| tag=value
- 
-code 
-```</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="rmd_3.html#cb11-1" tabindex="-1"></a>```{r}</span>
+<span id="cb11-2"><a href="rmd_3.html#cb11-2" tabindex="-1"></a>#| label</span>
+<span id="cb11-3"><a href="rmd_3.html#cb11-3" tabindex="-1"></a>#| tag=value</span>
+<span id="cb11-4"><a href="rmd_3.html#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="rmd_3.html#cb11-5" tabindex="-1"></a>code</span>
+<span id="cb11-6"><a href="rmd_3.html#cb11-6" tabindex="-1"></a>```</span></code></pre></div>
 <hr />
 <ul>
 <li><p>label</p>
@@ -1067,13 +1071,13 @@ code
 <span id="cb36-7"><a href="rmd_3.html#cb36-7" tabindex="-1"></a>  )</span></code></pre></div>
 <table class="kable_wrapper">
 <caption>
-<span id="tab:unnamed-chunk-22">表 1.1: </span>两个表格并排
+<span id="tab:unnamed-chunk-29">表 1.1: </span>两个表格并排
 </caption>
 <tbody>
 <tr>
 <td>
 <table>
-<caption><span id="tab:unnamed-chunk-22">表 1.1: </span>鸢尾花</caption>
+<caption><span id="tab:unnamed-chunk-29">表 1.1: </span>鸢尾花</caption>
 <thead>
 <tr class="header">
 <th align="right">Sepal.Length</th>
@@ -1094,7 +1098,7 @@ code
 </td>
 <td>
 <table>
-<caption><span id="tab:unnamed-chunk-22">表 1.1: </span>车车</caption>
+<caption><span id="tab:unnamed-chunk-29">表 1.1: </span>车车</caption>
 <thead>
 <tr class="header">
 <th align="left"></th>
@@ -1245,7 +1249,7 @@ code
 <span id="cb39-4"><a href="rmd_3.html#cb39-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
 <span id="cb39-5"><a href="rmd_3.html#cb39-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb39-6"><a href="rmd_3.html#cb39-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p></li>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p></li>
 <li><p>none</p>
 <p>不展示任何图片。</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="rmd_3.html#cb40-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;none&#39;</span></span>
@@ -1259,18 +1263,18 @@ code
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="rmd_3.html#cb41-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;all&#39;</span></span>
 <span id="cb41-2"><a href="rmd_3.html#cb41-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
 <span id="cb41-3"><a href="rmd_3.html#cb41-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="rmd_3.html#cb42-1" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
 <span id="cb42-2"><a href="rmd_3.html#cb42-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="rmd_3.html#cb43-1" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p></li>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-34-3.png" width="672" /></p></li>
 <li><p>first</p>
 <p>只展示第一幅图。</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="rmd_3.html#cb44-1" tabindex="-1"></a><span class="co"># fig.keep = &#39;first&#39;</span></span>
 <span id="cb44-2"><a href="rmd_3.html#cb44-2" tabindex="-1"></a><span class="co"># 高级绘图命令，如plot()</span></span>
 <span id="cb44-3"><a href="rmd_3.html#cb44-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="rmd_3.html#cb45-1" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
 <span id="cb45-2"><a href="rmd_3.html#cb45-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb45-3"><a href="rmd_3.html#cb45-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
@@ -1282,7 +1286,7 @@ code
 <span id="cb46-4"><a href="rmd_3.html#cb46-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
 <span id="cb46-5"><a href="rmd_3.html#cb46-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb46-6"><a href="rmd_3.html#cb46-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p></li>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p></li>
 <li><p>数值向量</p>
 <p>以数值向量为索引展示对应的图片。</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="rmd_3.html#cb47-1" tabindex="-1"></a><span class="co"># fig.keep = c(2)</span></span>
@@ -1290,7 +1294,7 @@ code
 <span id="cb47-3"><a href="rmd_3.html#cb47-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
 <span id="cb47-4"><a href="rmd_3.html#cb47-4" tabindex="-1"></a><span class="co"># 低级绘图命令，如abline()</span></span>
 <span id="cb47-5"><a href="rmd_3.html#cb47-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="rmd_3.html#cb48-1" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div></li>
 </ul></li>
 <li><p>fig.show</p>
@@ -1301,10 +1305,10 @@ code
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="rmd_3.html#cb49-1" tabindex="-1"></a><span class="co"># fig.show = &#39;asis&#39;</span></span>
 <span id="cb49-2"><a href="rmd_3.html#cb49-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
 <span id="cb49-3"><a href="rmd_3.html#cb49-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="rmd_3.html#cb50-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
 <span id="cb50-2"><a href="rmd_3.html#cb50-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p></li>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p></li>
 <li><p>hold</p>
 <p>所有图片等代码块运行完后再出现。</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="rmd_3.html#cb51-1" tabindex="-1"></a><span class="co"># fig.show = &#39;hold&#39;</span></span>
@@ -1312,7 +1316,7 @@ code
 <span id="cb51-3"><a href="rmd_3.html#cb51-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span>
 <span id="cb51-4"><a href="rmd_3.html#cb51-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
 <span id="cb51-5"><a href="rmd_3.html#cb51-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-1.png" width="672" /><img src="01-rmarkdown_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p></li>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-39-1.png" width="672" /><img src="01-rmarkdown_files/figure-html/unnamed-chunk-39-2.png" width="672" /></p></li>
 <li><p>animate</p>
 <p>以动画的形式展示图片，详见<code>animation.hook</code>。</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="rmd_3.html#cb52-1" tabindex="-1"></a><span class="co"># fig.show = &#39;animate&#39;</span></span>
@@ -1321,7 +1325,7 @@ code
 <span id="cb52-4"><a href="rmd_3.html#cb52-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="rmd_3.html#cb53-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span>)</span>
 <span id="cb53-2"><a href="rmd_3.html#cb53-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-33-.gif" width="672" /></p></li>
+<p><img src="01-rmarkdown_files/figure-html/unnamed-chunk-40-.gif" width="672" /></p></li>
 <li><p>hide</p>
 <p>并不展示图片。</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="rmd_3.html#cb54-1" tabindex="-1"></a><span class="co"># fig.show = &#39;hide&#39;</span></span>

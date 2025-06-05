@@ -349,6 +349,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a>
 <ul>
 <li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
+<li class="chapter" data-level="5.10.2" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 外观</a></li>
 </ul></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
 </ul></li>
@@ -651,6 +652,9 @@ div.csl-indent {
 <h3><span class="header-section-number">5.2.1</span> 输入<a href="shiny_2.html#shiny_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <div class="sourceCode" id="cb179"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb179-1"><a href="shiny_2.html#cb179-1" tabindex="-1"></a>sliderInput(&quot;min&quot;, &quot;Limit (minimum)&quot;, value = 50, min = 0, max = 100)</span></code></pre></div>
 <p>对于形如<code>selectInput()</code>的函数，都是将你的信息传递给server的组件。这类组件的基本参数为ID、标签及其余参数。其中ID是组件的唯一标识符，用于后续调用（这里的ID是<code>min</code>，后续在server函数中通过<code>input$min</code>来调用该组件的输入值）。标签是该组件呈现给用户时所用的标签（这里的标签为<code>Limit (minimum)</code>，也就是页面中滑条的标签）。其余参数往往是与组件类型相关的参数（这里<code>value=50</code>表示默认值，<code>min</code>与<code>max</code>则是滑条的上下限）。</p>
+<blockquote>
+<p>ID是一个非常重要的概念，大多数的对象都可以设置ID，这样在server处就能够通过<code>input$id</code>来获取对应的输入</p>
+</blockquote>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="shiny_2.html#cb180-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
 <span id="cb180-2"><a href="shiny_2.html#cb180-2" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;What&#39;s your name?&quot;</span>),</span>
 <span id="cb180-3"><a href="shiny_2.html#cb180-3" tabindex="-1"></a>  <span class="fu">passwordInput</span>(<span class="st">&quot;password&quot;</span>, <span class="st">&quot;What&#39;s your password?&quot;</span>),</span>

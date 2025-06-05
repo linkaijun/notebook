@@ -181,9 +181,9 @@ div.csl-indent {
 <ul class="summary">
 <pre>  kj的学习笔记  </pre>
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path=""><a href="#%E5%89%8D%E8%A8%80"><i class="fa fa-check"></i>前言</a></li>
-<li class="chapter" data-level="" data-path=""><a href="#%E5%86%85%E5%AE%B9%E7%BB%84%E6%88%90"><i class="fa fa-check"></i>内容组成</a></li>
-<li class="chapter" data-level="" data-path=""><a href="#%E4%B8%AA%E4%BA%BA%E7%AE%80%E4%BB%8B"><i class="fa fa-check"></i>个人简介</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="content.html"><a href="content.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>个人简介</a></li>
 <li class="part"><span><b>I 专项</b></span></li>
 <li class="chapter" data-level="1" data-path="rmd.html"><a href="rmd.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
 <ul>
@@ -843,16 +843,16 @@ div.csl-indent {
 <span id="cb65-9"><a href="rmd_4.html#cb65-9" tabindex="-1"></a><span class="st">  rec1 -&gt; rec2 -&gt; rec3</span></span>
 <span id="cb65-10"><a href="rmd_4.html#cb65-10" tabindex="-1"></a><span class="st">  }&quot;</span>,</span>
 <span id="cb65-11"><a href="rmd_4.html#cb65-11" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-7735cf9ccdb7bc889e5e" style="width:400px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7735cf9ccdb7bc889e5e">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bb838efcf7aa6c8b0c0b" style="width:400px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bb838efcf7aa6c8b0c0b">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = box]        \n  rec1 [label = \"Step 1 打开冰箱\"]\n  rec2 [label = \"Step 2 塞入大象\"]\n  rec3 [label = \"Step 3 关上冰箱\"]\n  \n  rec1 -> rec2 -> rec3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rmd_4.html#cb66-1" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">mermaid</span>(<span class="st">&#39;</span></span>
 <span id="cb66-2"><a href="rmd_4.html#cb66-2" tabindex="-1"></a><span class="st">  graph LR</span></span>
 <span id="cb66-3"><a href="rmd_4.html#cb66-3" tabindex="-1"></a><span class="st">  node_1[Step 1 打开冰箱] --&gt; node_2[Step 2 塞入大象]</span></span>
 <span id="cb66-4"><a href="rmd_4.html#cb66-4" tabindex="-1"></a><span class="st">  node_2[Step 2 塞入大象] --&gt; node_3[Step 3 关上冰箱]</span></span>
 <span id="cb66-5"><a href="rmd_4.html#cb66-5" tabindex="-1"></a><span class="st">  &#39;</span>,</span>
 <span id="cb66-6"><a href="rmd_4.html#cb66-6" tabindex="-1"></a>  <span class="at">width=</span><span class="dv">400</span>, <span class="at">height=</span><span class="dv">100</span>)</span></code></pre></div>
-<div id="htmlwidget-7a1e085c26c4de43105b" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7a1e085c26c4de43105b">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8c11cbfcb85821c26676" style="width:400px;height:100px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8c11cbfcb85821c26676">{"x":{"diagram":"\n  graph LR\n  node_1[Step 1 打开冰箱] --> node_2[Step 2 塞入大象]\n  node_2[Step 2 塞入大象] --> node_3[Step 3 关上冰箱]\n  "},"evals":[],"jsHooks":[]}</script>
 <p>相关语法介绍可详见<code>graphviz</code><a href="https://www.graphviz.org/doc/info/lang.html" target="_blank">官网</a>和<code>mermaid</code><a href="https://mermaid.nodejs.cn/syntax/flowchart.html" target="_blank">官网</a>（有中英文官网，这个是中文的）。</p>
 <blockquote>
 <p><code>mermaid</code>官网还介绍了其他类型的图形，例如甘特图、桑基图。</p>

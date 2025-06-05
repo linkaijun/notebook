@@ -1,4 +1,4 @@
-# 个人简介 {-}
+# 个人简介 {#introduction .unnumbered}
 
 <img src="pic/me.jpg" width="60%" style="display: block; margin: auto;" />
 

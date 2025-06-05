@@ -558,7 +558,7 @@ shiny_10_2_2
 shiny_10_2_3
 shiny_10_2_4
 shiny_10_2_5
-配色-shiny_10_2_6
+shiny_10_2_6
 shiny_11
 reg
 reg_1

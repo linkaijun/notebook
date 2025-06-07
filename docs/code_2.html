@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -699,255 +702,255 @@ y_i = \mu_i+\mathbf{x}_i^T\beta+\varepsilon_i \tag{15.1}
 <p><strong><em>由于设备限制，为节省运行时间，并未实现原文中的“<span class="math inline">\(\lambda\)</span>路径图”及“对<span class="math inline">\(\lambda\)</span>调参”的功能</em></strong></p>
 <hr />
 <p><strong>自定义算法如下所示</strong></p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="code_2.html#cb320-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb320-2"><a href="code_2.html#cb320-2" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb320-3"><a href="code_2.html#cb320-3" tabindex="-1"></a><span class="fu">library</span>(R6)</span>
-<span id="cb320-4"><a href="code_2.html#cb320-4" tabindex="-1"></a></span>
-<span id="cb320-5"><a href="code_2.html#cb320-5" tabindex="-1"></a>SubgroupIntercept <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(</span>
-<span id="cb320-6"><a href="code_2.html#cb320-6" tabindex="-1"></a>  classname <span class="ot">&lt;-</span> <span class="st">&#39;SubgroupIntercept&#39;</span>,</span>
-<span id="cb320-7"><a href="code_2.html#cb320-7" tabindex="-1"></a>  </span>
-<span id="cb320-8"><a href="code_2.html#cb320-8" tabindex="-1"></a>  public <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb320-9"><a href="code_2.html#cb320-9" tabindex="-1"></a>    <span class="co"># 传入参数</span></span>
-<span id="cb320-10"><a href="code_2.html#cb320-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,         <span class="co"># 响应变量</span></span>
-<span id="cb320-11"><a href="code_2.html#cb320-11" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,         <span class="co"># 预测变量</span></span>
-<span id="cb320-12"><a href="code_2.html#cb320-12" tabindex="-1"></a>    <span class="at">n =</span> <span class="cn">NULL</span>,         <span class="co"># 样本容量</span></span>
-<span id="cb320-13"><a href="code_2.html#cb320-13" tabindex="-1"></a>    <span class="at">scale =</span> <span class="cn">NULL</span>,     <span class="co"># 是否标准化</span></span>
-<span id="cb320-14"><a href="code_2.html#cb320-14" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="cn">NULL</span>,   <span class="co"># 惩罚函数类型：L1、MCP、SCAD</span></span>
-<span id="cb320-15"><a href="code_2.html#cb320-15" tabindex="-1"></a>    <span class="at">theta =</span> <span class="cn">NULL</span>,     <span class="co"># 式(4)二次项的惩罚系数</span></span>
-<span id="cb320-16"><a href="code_2.html#cb320-16" tabindex="-1"></a>    <span class="at">lambda =</span> <span class="cn">NULL</span>,    <span class="co"># 惩罚函数中的惩罚系数</span></span>
-<span id="cb320-17"><a href="code_2.html#cb320-17" tabindex="-1"></a>    <span class="at">gamma =</span> <span class="cn">NULL</span>,     <span class="co"># 惩罚函数中的正则化因子</span></span>
-<span id="cb320-18"><a href="code_2.html#cb320-18" tabindex="-1"></a>    <span class="at">tol =</span> <span class="cn">NULL</span>,       <span class="co"># 收敛精度</span></span>
-<span id="cb320-19"><a href="code_2.html#cb320-19" tabindex="-1"></a>    <span class="at">max_iter =</span> <span class="cn">NULL</span>,  <span class="co"># 最大迭代次数</span></span>
-<span id="cb320-20"><a href="code_2.html#cb320-20" tabindex="-1"></a>    </span>
-<span id="cb320-21"><a href="code_2.html#cb320-21" tabindex="-1"></a>    <span class="co"># 初始化</span></span>
-<span id="cb320-22"><a href="code_2.html#cb320-22" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>(y, x, <span class="at">scale =</span> T, penalty, theta, lambda, gamma, <span class="at">tol =</span> <span class="fl">0.00001</span>, <span class="at">max_iter =</span> <span class="dv">1000</span>){</span>
-<span id="cb320-23"><a href="code_2.html#cb320-23" tabindex="-1"></a>      self<span class="sc">$</span>y <span class="ot">&lt;-</span> y</span>
-<span id="cb320-24"><a href="code_2.html#cb320-24" tabindex="-1"></a>      self<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
-<span id="cb320-25"><a href="code_2.html#cb320-25" tabindex="-1"></a>      self<span class="sc">$</span>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
-<span id="cb320-26"><a href="code_2.html#cb320-26" tabindex="-1"></a>      self<span class="sc">$</span>scale <span class="ot">&lt;-</span> scale</span>
-<span id="cb320-27"><a href="code_2.html#cb320-27" tabindex="-1"></a>      self<span class="sc">$</span>penalty <span class="ot">&lt;-</span> penalty</span>
-<span id="cb320-28"><a href="code_2.html#cb320-28" tabindex="-1"></a>      self<span class="sc">$</span>theta <span class="ot">&lt;-</span> theta</span>
-<span id="cb320-29"><a href="code_2.html#cb320-29" tabindex="-1"></a>      self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> lambda</span>
-<span id="cb320-30"><a href="code_2.html#cb320-30" tabindex="-1"></a>      self<span class="sc">$</span>gamma <span class="ot">&lt;-</span> gamma</span>
-<span id="cb320-31"><a href="code_2.html#cb320-31" tabindex="-1"></a>      self<span class="sc">$</span>tol <span class="ot">&lt;-</span> tol</span>
-<span id="cb320-32"><a href="code_2.html#cb320-32" tabindex="-1"></a>      self<span class="sc">$</span>max_iter <span class="ot">&lt;-</span> max_iter</span>
-<span id="cb320-33"><a href="code_2.html#cb320-33" tabindex="-1"></a>    },</span>
-<span id="cb320-34"><a href="code_2.html#cb320-34" tabindex="-1"></a>    </span>
-<span id="cb320-35"><a href="code_2.html#cb320-35" tabindex="-1"></a>    <span class="co"># 主函数——运行</span></span>
-<span id="cb320-36"><a href="code_2.html#cb320-36" tabindex="-1"></a>    <span class="at">run =</span> <span class="cf">function</span>(){</span>
-<span id="cb320-37"><a href="code_2.html#cb320-37" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb320-38"><a href="code_2.html#cb320-38" tabindex="-1"></a>      </span>
-<span id="cb320-39"><a href="code_2.html#cb320-39" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
-<span id="cb320-40"><a href="code_2.html#cb320-40" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
-<span id="cb320-41"><a href="code_2.html#cb320-41" tabindex="-1"></a>      </span>
-<span id="cb320-42"><a href="code_2.html#cb320-42" tabindex="-1"></a>      <span class="co"># 标准化协变量</span></span>
-<span id="cb320-43"><a href="code_2.html#cb320-43" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>scale <span class="sc">==</span> T) self<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">apply</span>(self<span class="sc">$</span>x, <span class="dv">2</span>, scale)</span>
-<span id="cb320-44"><a href="code_2.html#cb320-44" tabindex="-1"></a>      </span>
-<span id="cb320-45"><a href="code_2.html#cb320-45" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
-<span id="cb320-46"><a href="code_2.html#cb320-46" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
-<span id="cb320-47"><a href="code_2.html#cb320-47" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
-<span id="cb320-48"><a href="code_2.html#cb320-48" tabindex="-1"></a>      private<span class="sc">$</span>mu <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
-<span id="cb320-49"><a href="code_2.html#cb320-49" tabindex="-1"></a>      private<span class="sc">$</span>eta <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
-<span id="cb320-50"><a href="code_2.html#cb320-50" tabindex="-1"></a>      private<span class="sc">$</span>upsilon <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
-<span id="cb320-51"><a href="code_2.html#cb320-51" tabindex="-1"></a>      </span>
-<span id="cb320-52"><a href="code_2.html#cb320-52" tabindex="-1"></a>      <span class="co"># 计算Q矩阵</span></span>
-<span id="cb320-53"><a href="code_2.html#cb320-53" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_Q</span>()</span>
-<span id="cb320-54"><a href="code_2.html#cb320-54" tabindex="-1"></a>      </span>
-<span id="cb320-55"><a href="code_2.html#cb320-55" tabindex="-1"></a>      <span class="co"># 计算Delta</span></span>
-<span id="cb320-56"><a href="code_2.html#cb320-56" tabindex="-1"></a>      Delta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_Delta</span>()</span>
-<span id="cb320-57"><a href="code_2.html#cb320-57" tabindex="-1"></a>      </span>
-<span id="cb320-58"><a href="code_2.html#cb320-58" tabindex="-1"></a>      <span class="co"># 开始迭代</span></span>
-<span id="cb320-59"><a href="code_2.html#cb320-59" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
-<span id="cb320-60"><a href="code_2.html#cb320-60" tabindex="-1"></a>        <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;正在进行第[&#39;</span>, i, <span class="st">&#39;]次迭代&#39;</span>))</span>
-<span id="cb320-61"><a href="code_2.html#cb320-61" tabindex="-1"></a>        private<span class="sc">$</span>mu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_mu</span>(Q, Delta, private<span class="sc">$</span>eta, private<span class="sc">$</span>upsilon)</span>
-<span id="cb320-62"><a href="code_2.html#cb320-62" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(private<span class="sc">$</span>mu)</span>
-<span id="cb320-63"><a href="code_2.html#cb320-63" tabindex="-1"></a>        private<span class="sc">$</span>delta_mu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_delta_mu</span>(private<span class="sc">$</span>mu)</span>
-<span id="cb320-64"><a href="code_2.html#cb320-64" tabindex="-1"></a>        private<span class="sc">$</span>delta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_delta</span>(private<span class="sc">$</span>delta_mu, private<span class="sc">$</span>upsilon)</span>
-<span id="cb320-65"><a href="code_2.html#cb320-65" tabindex="-1"></a>        private<span class="sc">$</span>eta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_eta</span>(private<span class="sc">$</span>delta, self<span class="sc">$</span>lambda)</span>
-<span id="cb320-66"><a href="code_2.html#cb320-66" tabindex="-1"></a>        private<span class="sc">$</span>upsilon <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_upsilon</span>(private<span class="sc">$</span>upsilon, private<span class="sc">$</span>delta_mu, private<span class="sc">$</span>eta)</span>
-<span id="cb320-67"><a href="code_2.html#cb320-67" tabindex="-1"></a>        </span>
-<span id="cb320-68"><a href="code_2.html#cb320-68" tabindex="-1"></a>        <span class="co"># 终止条件</span></span>
-<span id="cb320-69"><a href="code_2.html#cb320-69" tabindex="-1"></a>        r <span class="ot">&lt;-</span> Delta[[<span class="dv">1</span>]] <span class="sc">%*%</span> private<span class="sc">$</span>mu <span class="sc">-</span> private<span class="sc">$</span>eta</span>
-<span id="cb320-70"><a href="code_2.html#cb320-70" tabindex="-1"></a>        <span class="cf">if</span>(<span class="fu">sqrt</span>(<span class="fu">sum</span>(r<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
-<span id="cb320-71"><a href="code_2.html#cb320-71" tabindex="-1"></a>          <span class="fu">print</span>(<span class="st">&#39;达到精度要求&#39;</span>)</span>
-<span id="cb320-72"><a href="code_2.html#cb320-72" tabindex="-1"></a>          <span class="cf">break</span></span>
-<span id="cb320-73"><a href="code_2.html#cb320-73" tabindex="-1"></a>        }</span>
-<span id="cb320-74"><a href="code_2.html#cb320-74" tabindex="-1"></a>      }</span>
-<span id="cb320-75"><a href="code_2.html#cb320-75" tabindex="-1"></a>      </span>
-<span id="cb320-76"><a href="code_2.html#cb320-76" tabindex="-1"></a>      <span class="co"># 获取亚组分类结果</span></span>
-<span id="cb320-77"><a href="code_2.html#cb320-77" tabindex="-1"></a>      label <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">cluster_eta</span>(private<span class="sc">$</span>eta)</span>
-<span id="cb320-78"><a href="code_2.html#cb320-78" tabindex="-1"></a>      </span>
-<span id="cb320-79"><a href="code_2.html#cb320-79" tabindex="-1"></a>      <span class="co"># 根据亚组计算对应的alpha</span></span>
-<span id="cb320-80"><a href="code_2.html#cb320-80" tabindex="-1"></a>      subgroup_alpha <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mu =</span> private<span class="sc">$</span>mu, <span class="at">label =</span> label)</span>
-<span id="cb320-81"><a href="code_2.html#cb320-81" tabindex="-1"></a>      subgroup_alpha <span class="ot">&lt;-</span> subgroup_alpha <span class="sc">%&gt;%</span> </span>
-<span id="cb320-82"><a href="code_2.html#cb320-82" tabindex="-1"></a>        <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
-<span id="cb320-83"><a href="code_2.html#cb320-83" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">alpha =</span> <span class="fu">mean</span>(mu), <span class="at">size =</span> <span class="fu">n</span>())</span>
-<span id="cb320-84"><a href="code_2.html#cb320-84" tabindex="-1"></a>      </span>
-<span id="cb320-85"><a href="code_2.html#cb320-85" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> private<span class="sc">$</span>mu, <span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">label =</span> label, <span class="at">alpha =</span> subgroup_alpha)</span>
-<span id="cb320-86"><a href="code_2.html#cb320-86" tabindex="-1"></a>      </span>
-<span id="cb320-87"><a href="code_2.html#cb320-87" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb320-88"><a href="code_2.html#cb320-88" tabindex="-1"></a>      cost_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span>
-<span id="cb320-89"><a href="code_2.html#cb320-89" tabindex="-1"></a>      <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&#39;花费时间：&#39;</span>, <span class="fu">round</span>(cost_time, <span class="dv">3</span>), <span class="st">&quot;秒&quot;</span>))</span>
-<span id="cb320-90"><a href="code_2.html#cb320-90" tabindex="-1"></a>      </span>
-<span id="cb320-91"><a href="code_2.html#cb320-91" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
-<span id="cb320-92"><a href="code_2.html#cb320-92" tabindex="-1"></a>    }</span>
-<span id="cb320-93"><a href="code_2.html#cb320-93" tabindex="-1"></a>  ),</span>
-<span id="cb320-94"><a href="code_2.html#cb320-94" tabindex="-1"></a>  </span>
-<span id="cb320-95"><a href="code_2.html#cb320-95" tabindex="-1"></a>  private <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb320-96"><a href="code_2.html#cb320-96" tabindex="-1"></a>    <span class="co"># 迭代参数</span></span>
-<span id="cb320-97"><a href="code_2.html#cb320-97" tabindex="-1"></a>    <span class="at">mu =</span> <span class="cn">NULL</span>,        <span class="co"># 截距项</span></span>
-<span id="cb320-98"><a href="code_2.html#cb320-98" tabindex="-1"></a>    <span class="at">beta =</span> <span class="cn">NULL</span>,      <span class="co"># 回归系数</span></span>
-<span id="cb320-99"><a href="code_2.html#cb320-99" tabindex="-1"></a>    <span class="at">delta_mu =</span> <span class="cn">NULL</span>,  <span class="co"># mu_i-mu_j</span></span>
-<span id="cb320-100"><a href="code_2.html#cb320-100" tabindex="-1"></a>    <span class="at">delta =</span> <span class="cn">NULL</span>,     <span class="co"># delta_ij=mu_i-mu_j+1/theta*upsilon</span></span>
-<span id="cb320-101"><a href="code_2.html#cb320-101" tabindex="-1"></a>    <span class="at">eta =</span> <span class="cn">NULL</span>,       <span class="co"># 由惩罚函数计算</span></span>
-<span id="cb320-102"><a href="code_2.html#cb320-102" tabindex="-1"></a>    <span class="at">upsilon =</span><span class="cn">NULL</span>,    <span class="co"># 拉格朗日乘子</span></span>
-<span id="cb320-103"><a href="code_2.html#cb320-103" tabindex="-1"></a>    </span>
-<span id="cb320-104"><a href="code_2.html#cb320-104" tabindex="-1"></a>    <span class="co"># 验证输入是否正确</span></span>
-<span id="cb320-105"><a href="code_2.html#cb320-105" tabindex="-1"></a>    <span class="at">validate =</span> <span class="cf">function</span>(){</span>
-<span id="cb320-106"><a href="code_2.html#cb320-106" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.vector</span>(self<span class="sc">$</span>y)) <span class="fu">stop</span>(<span class="st">&#39;Y要求为向量&#39;</span>)</span>
-<span id="cb320-107"><a href="code_2.html#cb320-107" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>x)) <span class="fu">stop</span>(<span class="st">&#39;X要求为矩阵&#39;</span>)</span>
-<span id="cb320-108"><a href="code_2.html#cb320-108" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.logical</span>(self<span class="sc">$</span>scale)) <span class="fu">stop</span>(<span class="st">&#39;scale要求为布尔值&#39;</span>)</span>
-<span id="cb320-109"><a href="code_2.html#cb320-109" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>self<span class="sc">$</span>penalty <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;L1&#39;</span>, <span class="st">&#39;MCP&#39;</span>,<span class="st">&#39;SCAD&#39;</span>)) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的惩罚函数&#39;</span>)</span>
-<span id="cb320-110"><a href="code_2.html#cb320-110" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>theta <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
-<span id="cb320-111"><a href="code_2.html#cb320-111" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的lambda值&#39;</span>)</span>
-<span id="cb320-112"><a href="code_2.html#cb320-112" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>gamma <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的gamma值&#39;</span>)</span>
-<span id="cb320-113"><a href="code_2.html#cb320-113" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>tol <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的精度要求&#39;</span>)</span>
-<span id="cb320-114"><a href="code_2.html#cb320-114" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>max_iter <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的最大迭代次数&#39;</span>)</span>
-<span id="cb320-115"><a href="code_2.html#cb320-115" tabindex="-1"></a>    },</span>
-<span id="cb320-116"><a href="code_2.html#cb320-116" tabindex="-1"></a>    </span>
-<span id="cb320-117"><a href="code_2.html#cb320-117" tabindex="-1"></a>    <span class="co"># 获取初始值</span></span>
-<span id="cb320-118"><a href="code_2.html#cb320-118" tabindex="-1"></a>    <span class="at">initial_value =</span> <span class="cf">function</span>(){</span>
-<span id="cb320-119"><a href="code_2.html#cb320-119" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>y, self<span class="sc">$</span>x) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
-<span id="cb320-120"><a href="code_2.html#cb320-120" tabindex="-1"></a>      <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;y&#39;</span>, <span class="fu">paste0</span>(<span class="st">&#39;x_&#39;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(x)[<span class="dv">2</span>]))</span>
-<span id="cb320-121"><a href="code_2.html#cb320-121" tabindex="-1"></a>      ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>., <span class="at">data =</span> df)</span>
-<span id="cb320-122"><a href="code_2.html#cb320-122" tabindex="-1"></a>      beta_0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(ols)[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb320-123"><a href="code_2.html#cb320-123" tabindex="-1"></a>      mu_0 <span class="ot">&lt;-</span> (self<span class="sc">$</span>y <span class="sc">-</span> self<span class="sc">$</span>x <span class="sc">%*%</span> beta_0) <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb320-124"><a href="code_2.html#cb320-124" tabindex="-1"></a>      eta_0 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">outer</span>(mu_0, mu_0, <span class="st">&#39;-&#39;</span>)   <span class="co"># lower.tri按列提取下三角，故添加负号</span></span>
-<span id="cb320-125"><a href="code_2.html#cb320-125" tabindex="-1"></a>      eta_0 <span class="ot">&lt;-</span> eta_0[<span class="fu">lower.tri</span>(eta_0)]</span>
-<span id="cb320-126"><a href="code_2.html#cb320-126" tabindex="-1"></a>      upsilon_0 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="at">times =</span> self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb320-127"><a href="code_2.html#cb320-127" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta_0 =</span> beta_0, <span class="at">mu_0 =</span> mu_0, <span class="at">eta_0 =</span> eta_0, <span class="at">upsilon_0 =</span> upsilon_0)</span>
-<span id="cb320-128"><a href="code_2.html#cb320-128" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
-<span id="cb320-129"><a href="code_2.html#cb320-129" tabindex="-1"></a>    },</span>
-<span id="cb320-130"><a href="code_2.html#cb320-130" tabindex="-1"></a>    </span>
-<span id="cb320-131"><a href="code_2.html#cb320-131" tabindex="-1"></a>    <span class="co"># 计算Q矩阵</span></span>
-<span id="cb320-132"><a href="code_2.html#cb320-132" tabindex="-1"></a>    <span class="at">gen_Q =</span> <span class="cf">function</span>(){</span>
-<span id="cb320-133"><a href="code_2.html#cb320-133" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> self<span class="sc">$</span>x <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(self<span class="sc">$</span>x) <span class="sc">%*%</span> self<span class="sc">$</span>x) <span class="sc">%*%</span> <span class="fu">t</span>(self<span class="sc">$</span>x)</span>
-<span id="cb320-134"><a href="code_2.html#cb320-134" tabindex="-1"></a>      <span class="fu">return</span>(Q)</span>
-<span id="cb320-135"><a href="code_2.html#cb320-135" tabindex="-1"></a>    },</span>
-<span id="cb320-136"><a href="code_2.html#cb320-136" tabindex="-1"></a>    </span>
-<span id="cb320-137"><a href="code_2.html#cb320-137" tabindex="-1"></a>    <span class="co"># 计算Delta矩阵</span></span>
-<span id="cb320-138"><a href="code_2.html#cb320-138" tabindex="-1"></a>    <span class="at">gen_Delta =</span> <span class="cf">function</span>(){</span>
-<span id="cb320-139"><a href="code_2.html#cb320-139" tabindex="-1"></a>      gen_mat <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
-<span id="cb320-140"><a href="code_2.html#cb320-140" tabindex="-1"></a>        mat_1 <span class="ot">&lt;-</span> <span class="cf">if</span>(n <span class="sc">==</span> self<span class="sc">$</span>n<span class="dv">-1</span>){</span>
-<span id="cb320-141"><a href="code_2.html#cb320-141" tabindex="-1"></a>          <span class="cn">NULL</span></span>
-<span id="cb320-142"><a href="code_2.html#cb320-142" tabindex="-1"></a>        }<span class="cf">else</span>{</span>
-<span id="cb320-143"><a href="code_2.html#cb320-143" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n<span class="dv">-1</span><span class="sc">-</span>n, <span class="at">ncol =</span> n)</span>
-<span id="cb320-144"><a href="code_2.html#cb320-144" tabindex="-1"></a>        }</span>
-<span id="cb320-145"><a href="code_2.html#cb320-145" tabindex="-1"></a>        mat_2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> n, <span class="at">byrow =</span> T)</span>
-<span id="cb320-146"><a href="code_2.html#cb320-146" tabindex="-1"></a>        mat_3 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="at">nrow=</span>n)</span>
-<span id="cb320-147"><a href="code_2.html#cb320-147" tabindex="-1"></a>        mat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mat_1, mat_2, mat_3)</span>
-<span id="cb320-148"><a href="code_2.html#cb320-148" tabindex="-1"></a>        <span class="fu">return</span>(mat)</span>
-<span id="cb320-149"><a href="code_2.html#cb320-149" tabindex="-1"></a>      }</span>
-<span id="cb320-150"><a href="code_2.html#cb320-150" tabindex="-1"></a>      Delta <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">c</span>((self<span class="sc">$</span>n<span class="dv">-1</span>)<span class="sc">:</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">gen_mat</span>(.))</span>
-<span id="cb320-151"><a href="code_2.html#cb320-151" tabindex="-1"></a>      Delta <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, Delta) <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span>
-<span id="cb320-152"><a href="code_2.html#cb320-152" tabindex="-1"></a>      Delta_Delta <span class="ot">&lt;-</span> <span class="fu">diag</span>(self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n) <span class="sc">-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n, <span class="at">ncol =</span> self<span class="sc">$</span>n)</span>
-<span id="cb320-153"><a href="code_2.html#cb320-153" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Delta =</span> Delta, <span class="at">Delta_Delta =</span> Delta_Delta)</span>
-<span id="cb320-154"><a href="code_2.html#cb320-154" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
-<span id="cb320-155"><a href="code_2.html#cb320-155" tabindex="-1"></a>    },</span>
-<span id="cb320-156"><a href="code_2.html#cb320-156" tabindex="-1"></a>    </span>
-<span id="cb320-157"><a href="code_2.html#cb320-157" tabindex="-1"></a>    <span class="co"># mu迭代式</span></span>
-<span id="cb320-158"><a href="code_2.html#cb320-158" tabindex="-1"></a>    <span class="at">iter_mu =</span> <span class="cf">function</span>(Q, Delta, eta_current, upsilon_current){</span>
-<span id="cb320-159"><a href="code_2.html#cb320-159" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="fu">solve</span>(self<span class="sc">$</span>theta <span class="sc">*</span> Delta[[<span class="dv">2</span>]] <span class="sc">+</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n) <span class="sc">-</span> Q)</span>
-<span id="cb320-160"><a href="code_2.html#cb320-160" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> (<span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n) <span class="sc">-</span> Q) <span class="sc">%*%</span> self<span class="sc">$</span>y <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> <span class="fu">t</span>(Delta[[<span class="dv">1</span>]]) <span class="sc">%*%</span> (eta_current <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>self<span class="sc">$</span>theta <span class="sc">*</span> upsilon_current)</span>
-<span id="cb320-161"><a href="code_2.html#cb320-161" tabindex="-1"></a>      mu_next <span class="ot">&lt;-</span> (term_1 <span class="sc">%*%</span> term_2) <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
-<span id="cb320-162"><a href="code_2.html#cb320-162" tabindex="-1"></a>      <span class="fu">return</span>(mu_next)</span>
-<span id="cb320-163"><a href="code_2.html#cb320-163" tabindex="-1"></a>    },</span>
-<span id="cb320-164"><a href="code_2.html#cb320-164" tabindex="-1"></a>    </span>
-<span id="cb320-165"><a href="code_2.html#cb320-165" tabindex="-1"></a>    <span class="co"># beta迭代式</span></span>
-<span id="cb320-166"><a href="code_2.html#cb320-166" tabindex="-1"></a>    <span class="at">iter_beta =</span> <span class="cf">function</span>(mu_next){</span>
-<span id="cb320-167"><a href="code_2.html#cb320-167" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(self<span class="sc">$</span>x) <span class="sc">%*%</span> self<span class="sc">$</span>x) <span class="sc">%*%</span> <span class="fu">t</span>(self<span class="sc">$</span>x) <span class="sc">%*%</span> (self<span class="sc">$</span>y <span class="sc">-</span> mu_next)</span>
-<span id="cb320-168"><a href="code_2.html#cb320-168" tabindex="-1"></a>      <span class="fu">return</span>(beta_next)</span>
-<span id="cb320-169"><a href="code_2.html#cb320-169" tabindex="-1"></a>    },</span>
-<span id="cb320-170"><a href="code_2.html#cb320-170" tabindex="-1"></a>    </span>
-<span id="cb320-171"><a href="code_2.html#cb320-171" tabindex="-1"></a>    <span class="co"># eta迭代式</span></span>
-<span id="cb320-172"><a href="code_2.html#cb320-172" tabindex="-1"></a>    <span class="at">iter_eta =</span> <span class="cf">function</span>(delta_current, lambda){</span>
-<span id="cb320-173"><a href="code_2.html#cb320-173" tabindex="-1"></a>      ST <span class="ot">&lt;-</span> <span class="cf">function</span>(t, lambda) <span class="fu">sign</span>(t) <span class="sc">*</span> <span class="fu">max</span>(<span class="fu">abs</span>(t)<span class="sc">-</span>lambda,<span class="dv">0</span>)</span>
-<span id="cb320-174"><a href="code_2.html#cb320-174" tabindex="-1"></a>      delta_list <span class="ot">&lt;-</span> <span class="fu">as.list</span>(delta_current)</span>
-<span id="cb320-175"><a href="code_2.html#cb320-175" tabindex="-1"></a>      delta_to_eta <span class="ot">&lt;-</span> <span class="cf">function</span>(delta_ij){</span>
-<span id="cb320-176"><a href="code_2.html#cb320-176" tabindex="-1"></a>        <span class="cf">switch</span>(self<span class="sc">$</span>penalty,</span>
-<span id="cb320-177"><a href="code_2.html#cb320-177" tabindex="-1"></a>               <span class="st">&#39;L1&#39;</span> <span class="ot">=</span> {</span>
-<span id="cb320-178"><a href="code_2.html#cb320-178" tabindex="-1"></a>                 eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)</span>
-<span id="cb320-179"><a href="code_2.html#cb320-179" tabindex="-1"></a>               },</span>
-<span id="cb320-180"><a href="code_2.html#cb320-180" tabindex="-1"></a>               <span class="st">&#39;MCP&#39;</span> <span class="ot">=</span> {</span>
-<span id="cb320-181"><a href="code_2.html#cb320-181" tabindex="-1"></a>                 <span class="cf">if</span>(<span class="fu">abs</span>(delta_ij) <span class="sc">&lt;=</span> (self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>lambda)){</span>
-<span id="cb320-182"><a href="code_2.html#cb320-182" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)<span class="sc">/</span>(<span class="dv">1-1</span><span class="sc">/</span>(self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>theta))</span>
-<span id="cb320-183"><a href="code_2.html#cb320-183" tabindex="-1"></a>                 }<span class="cf">else</span>{</span>
-<span id="cb320-184"><a href="code_2.html#cb320-184" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> delta_ij</span>
-<span id="cb320-185"><a href="code_2.html#cb320-185" tabindex="-1"></a>                 }</span>
-<span id="cb320-186"><a href="code_2.html#cb320-186" tabindex="-1"></a>               },</span>
-<span id="cb320-187"><a href="code_2.html#cb320-187" tabindex="-1"></a>               <span class="st">&#39;SCAD&#39;</span> <span class="ot">=</span> {</span>
-<span id="cb320-188"><a href="code_2.html#cb320-188" tabindex="-1"></a>                 <span class="cf">if</span>(<span class="fu">abs</span>(delta_ij) <span class="sc">&lt;=</span> (self<span class="sc">$</span>lambda<span class="sc">+</span>self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)){</span>
-<span id="cb320-189"><a href="code_2.html#cb320-189" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)</span>
-<span id="cb320-190"><a href="code_2.html#cb320-190" tabindex="-1"></a>                 }<span class="cf">else</span> <span class="cf">if</span>(<span class="fu">abs</span>(delta_ij) <span class="sc">&gt;</span> (self<span class="sc">$</span>lambda<span class="sc">+</span>self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta) <span class="sc">&amp;</span> <span class="fu">abs</span>(delta_ij) <span class="sc">&lt;=</span> (self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>lambda)){</span>
-<span id="cb320-191"><a href="code_2.html#cb320-191" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>lambda<span class="sc">/</span>((self<span class="sc">$</span>gamma<span class="dv">-1</span>)<span class="sc">*</span>self<span class="sc">$</span>theta))<span class="sc">/</span>(<span class="dv">1-1</span><span class="sc">/</span>((self<span class="sc">$</span>gamma<span class="dv">-1</span>)<span class="sc">*</span>self<span class="sc">$</span>theta))</span>
-<span id="cb320-192"><a href="code_2.html#cb320-192" tabindex="-1"></a>                 }<span class="cf">else</span>{</span>
-<span id="cb320-193"><a href="code_2.html#cb320-193" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> delta_ij</span>
-<span id="cb320-194"><a href="code_2.html#cb320-194" tabindex="-1"></a>                 }</span>
-<span id="cb320-195"><a href="code_2.html#cb320-195" tabindex="-1"></a>               }</span>
-<span id="cb320-196"><a href="code_2.html#cb320-196" tabindex="-1"></a>        )</span>
-<span id="cb320-197"><a href="code_2.html#cb320-197" tabindex="-1"></a>        <span class="fu">return</span>(eta_ij)</span>
-<span id="cb320-198"><a href="code_2.html#cb320-198" tabindex="-1"></a>      }</span>
-<span id="cb320-199"><a href="code_2.html#cb320-199" tabindex="-1"></a>      eta_next <span class="ot">&lt;-</span> delta_list <span class="sc">%&gt;%</span> <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">delta_to_eta</span>(.))</span>
-<span id="cb320-200"><a href="code_2.html#cb320-200" tabindex="-1"></a>      <span class="fu">return</span>(eta_next)</span>
-<span id="cb320-201"><a href="code_2.html#cb320-201" tabindex="-1"></a>    },</span>
-<span id="cb320-202"><a href="code_2.html#cb320-202" tabindex="-1"></a>    </span>
-<span id="cb320-203"><a href="code_2.html#cb320-203" tabindex="-1"></a>    <span class="co"># mu_i-mu_j迭代式</span></span>
-<span id="cb320-204"><a href="code_2.html#cb320-204" tabindex="-1"></a>    <span class="at">iter_delta_mu =</span> <span class="cf">function</span>(mu_next){</span>
-<span id="cb320-205"><a href="code_2.html#cb320-205" tabindex="-1"></a>      delta_mu <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">outer</span>(mu_next, mu_next, <span class="st">&#39;-&#39;</span>)</span>
-<span id="cb320-206"><a href="code_2.html#cb320-206" tabindex="-1"></a>      delta_mu <span class="ot">&lt;-</span> delta_mu[<span class="fu">lower.tri</span>(delta_mu)]</span>
-<span id="cb320-207"><a href="code_2.html#cb320-207" tabindex="-1"></a>      <span class="fu">return</span>(delta_mu)</span>
-<span id="cb320-208"><a href="code_2.html#cb320-208" tabindex="-1"></a>    },</span>
-<span id="cb320-209"><a href="code_2.html#cb320-209" tabindex="-1"></a>    </span>
-<span id="cb320-210"><a href="code_2.html#cb320-210" tabindex="-1"></a>    <span class="co"># delta迭代式</span></span>
-<span id="cb320-211"><a href="code_2.html#cb320-211" tabindex="-1"></a>    <span class="at">iter_delta =</span> <span class="cf">function</span>(delta_mu, upsilon_current){</span>
-<span id="cb320-212"><a href="code_2.html#cb320-212" tabindex="-1"></a>      delta_next <span class="ot">&lt;-</span> delta_mu <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>self<span class="sc">$</span>theta <span class="sc">*</span> upsilon_current</span>
-<span id="cb320-213"><a href="code_2.html#cb320-213" tabindex="-1"></a>      <span class="fu">return</span>(delta_next)</span>
-<span id="cb320-214"><a href="code_2.html#cb320-214" tabindex="-1"></a>    },</span>
-<span id="cb320-215"><a href="code_2.html#cb320-215" tabindex="-1"></a>    </span>
-<span id="cb320-216"><a href="code_2.html#cb320-216" tabindex="-1"></a>    <span class="co"># upsilon迭代式</span></span>
-<span id="cb320-217"><a href="code_2.html#cb320-217" tabindex="-1"></a>    <span class="at">iter_upsilon =</span> <span class="cf">function</span>(upsilon_current, delta_mu, eta_next){</span>
-<span id="cb320-218"><a href="code_2.html#cb320-218" tabindex="-1"></a>      upsilon_next <span class="ot">&lt;-</span> upsilon_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (delta_mu <span class="sc">-</span> eta_next)</span>
-<span id="cb320-219"><a href="code_2.html#cb320-219" tabindex="-1"></a>      <span class="fu">return</span>(upsilon_next)</span>
-<span id="cb320-220"><a href="code_2.html#cb320-220" tabindex="-1"></a>    },</span>
-<span id="cb320-221"><a href="code_2.html#cb320-221" tabindex="-1"></a>    </span>
-<span id="cb320-222"><a href="code_2.html#cb320-222" tabindex="-1"></a>    <span class="co"># eta归类</span></span>
-<span id="cb320-223"><a href="code_2.html#cb320-223" tabindex="-1"></a>    <span class="co"># 注意到根据eta为0来分组刚好符合图论中“连通分量”的概念</span></span>
-<span id="cb320-224"><a href="code_2.html#cb320-224" tabindex="-1"></a>    <span class="at">cluster_eta =</span> <span class="cf">function</span>(eta){</span>
-<span id="cb320-225"><a href="code_2.html#cb320-225" tabindex="-1"></a>      mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n, <span class="at">ncol =</span> self<span class="sc">$</span>n)</span>
-<span id="cb320-226"><a href="code_2.html#cb320-226" tabindex="-1"></a>      mat[<span class="fu">lower.tri</span>(mat)] <span class="ot">&lt;-</span> eta             <span class="co"># 转化为矩阵方便提取索引</span></span>
-<span id="cb320-227"><a href="code_2.html#cb320-227" tabindex="-1"></a>      link <span class="ot">&lt;-</span> <span class="fu">which</span>(mat <span class="sc">==</span> <span class="dv">0</span>, <span class="at">arr.ind =</span> T)</span>
-<span id="cb320-228"><a href="code_2.html#cb320-228" tabindex="-1"></a>      node <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>n)</span>
-<span id="cb320-229"><a href="code_2.html#cb320-229" tabindex="-1"></a>      graph <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(link, <span class="at">directed =</span> F, <span class="at">vertices =</span> node)</span>
-<span id="cb320-230"><a href="code_2.html#cb320-230" tabindex="-1"></a>      label <span class="ot">&lt;-</span> <span class="fu">components</span>(graph)<span class="sc">$</span>membership</span>
-<span id="cb320-231"><a href="code_2.html#cb320-231" tabindex="-1"></a>      <span class="fu">return</span>(label)</span>
-<span id="cb320-232"><a href="code_2.html#cb320-232" tabindex="-1"></a>    }</span>
-<span id="cb320-233"><a href="code_2.html#cb320-233" tabindex="-1"></a>  )</span>
-<span id="cb320-234"><a href="code_2.html#cb320-234" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="code_2.html#cb323-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb323-2"><a href="code_2.html#cb323-2" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb323-3"><a href="code_2.html#cb323-3" tabindex="-1"></a><span class="fu">library</span>(R6)</span>
+<span id="cb323-4"><a href="code_2.html#cb323-4" tabindex="-1"></a></span>
+<span id="cb323-5"><a href="code_2.html#cb323-5" tabindex="-1"></a>SubgroupIntercept <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(</span>
+<span id="cb323-6"><a href="code_2.html#cb323-6" tabindex="-1"></a>  classname <span class="ot">&lt;-</span> <span class="st">&#39;SubgroupIntercept&#39;</span>,</span>
+<span id="cb323-7"><a href="code_2.html#cb323-7" tabindex="-1"></a>  </span>
+<span id="cb323-8"><a href="code_2.html#cb323-8" tabindex="-1"></a>  public <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb323-9"><a href="code_2.html#cb323-9" tabindex="-1"></a>    <span class="co"># 传入参数</span></span>
+<span id="cb323-10"><a href="code_2.html#cb323-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,         <span class="co"># 响应变量</span></span>
+<span id="cb323-11"><a href="code_2.html#cb323-11" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,         <span class="co"># 预测变量</span></span>
+<span id="cb323-12"><a href="code_2.html#cb323-12" tabindex="-1"></a>    <span class="at">n =</span> <span class="cn">NULL</span>,         <span class="co"># 样本容量</span></span>
+<span id="cb323-13"><a href="code_2.html#cb323-13" tabindex="-1"></a>    <span class="at">scale =</span> <span class="cn">NULL</span>,     <span class="co"># 是否标准化</span></span>
+<span id="cb323-14"><a href="code_2.html#cb323-14" tabindex="-1"></a>    <span class="at">penalty =</span> <span class="cn">NULL</span>,   <span class="co"># 惩罚函数类型：L1、MCP、SCAD</span></span>
+<span id="cb323-15"><a href="code_2.html#cb323-15" tabindex="-1"></a>    <span class="at">theta =</span> <span class="cn">NULL</span>,     <span class="co"># 式(4)二次项的惩罚系数</span></span>
+<span id="cb323-16"><a href="code_2.html#cb323-16" tabindex="-1"></a>    <span class="at">lambda =</span> <span class="cn">NULL</span>,    <span class="co"># 惩罚函数中的惩罚系数</span></span>
+<span id="cb323-17"><a href="code_2.html#cb323-17" tabindex="-1"></a>    <span class="at">gamma =</span> <span class="cn">NULL</span>,     <span class="co"># 惩罚函数中的正则化因子</span></span>
+<span id="cb323-18"><a href="code_2.html#cb323-18" tabindex="-1"></a>    <span class="at">tol =</span> <span class="cn">NULL</span>,       <span class="co"># 收敛精度</span></span>
+<span id="cb323-19"><a href="code_2.html#cb323-19" tabindex="-1"></a>    <span class="at">max_iter =</span> <span class="cn">NULL</span>,  <span class="co"># 最大迭代次数</span></span>
+<span id="cb323-20"><a href="code_2.html#cb323-20" tabindex="-1"></a>    </span>
+<span id="cb323-21"><a href="code_2.html#cb323-21" tabindex="-1"></a>    <span class="co"># 初始化</span></span>
+<span id="cb323-22"><a href="code_2.html#cb323-22" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>(y, x, <span class="at">scale =</span> T, penalty, theta, lambda, gamma, <span class="at">tol =</span> <span class="fl">0.00001</span>, <span class="at">max_iter =</span> <span class="dv">1000</span>){</span>
+<span id="cb323-23"><a href="code_2.html#cb323-23" tabindex="-1"></a>      self<span class="sc">$</span>y <span class="ot">&lt;-</span> y</span>
+<span id="cb323-24"><a href="code_2.html#cb323-24" tabindex="-1"></a>      self<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
+<span id="cb323-25"><a href="code_2.html#cb323-25" tabindex="-1"></a>      self<span class="sc">$</span>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
+<span id="cb323-26"><a href="code_2.html#cb323-26" tabindex="-1"></a>      self<span class="sc">$</span>scale <span class="ot">&lt;-</span> scale</span>
+<span id="cb323-27"><a href="code_2.html#cb323-27" tabindex="-1"></a>      self<span class="sc">$</span>penalty <span class="ot">&lt;-</span> penalty</span>
+<span id="cb323-28"><a href="code_2.html#cb323-28" tabindex="-1"></a>      self<span class="sc">$</span>theta <span class="ot">&lt;-</span> theta</span>
+<span id="cb323-29"><a href="code_2.html#cb323-29" tabindex="-1"></a>      self<span class="sc">$</span>lambda <span class="ot">&lt;-</span> lambda</span>
+<span id="cb323-30"><a href="code_2.html#cb323-30" tabindex="-1"></a>      self<span class="sc">$</span>gamma <span class="ot">&lt;-</span> gamma</span>
+<span id="cb323-31"><a href="code_2.html#cb323-31" tabindex="-1"></a>      self<span class="sc">$</span>tol <span class="ot">&lt;-</span> tol</span>
+<span id="cb323-32"><a href="code_2.html#cb323-32" tabindex="-1"></a>      self<span class="sc">$</span>max_iter <span class="ot">&lt;-</span> max_iter</span>
+<span id="cb323-33"><a href="code_2.html#cb323-33" tabindex="-1"></a>    },</span>
+<span id="cb323-34"><a href="code_2.html#cb323-34" tabindex="-1"></a>    </span>
+<span id="cb323-35"><a href="code_2.html#cb323-35" tabindex="-1"></a>    <span class="co"># 主函数——运行</span></span>
+<span id="cb323-36"><a href="code_2.html#cb323-36" tabindex="-1"></a>    <span class="at">run =</span> <span class="cf">function</span>(){</span>
+<span id="cb323-37"><a href="code_2.html#cb323-37" tabindex="-1"></a>      start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb323-38"><a href="code_2.html#cb323-38" tabindex="-1"></a>      </span>
+<span id="cb323-39"><a href="code_2.html#cb323-39" tabindex="-1"></a>      <span class="co"># 检验输入是否合理</span></span>
+<span id="cb323-40"><a href="code_2.html#cb323-40" tabindex="-1"></a>      private<span class="sc">$</span><span class="fu">validate</span>()</span>
+<span id="cb323-41"><a href="code_2.html#cb323-41" tabindex="-1"></a>      </span>
+<span id="cb323-42"><a href="code_2.html#cb323-42" tabindex="-1"></a>      <span class="co"># 标准化协变量</span></span>
+<span id="cb323-43"><a href="code_2.html#cb323-43" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>scale <span class="sc">==</span> T) self<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">apply</span>(self<span class="sc">$</span>x, <span class="dv">2</span>, scale)</span>
+<span id="cb323-44"><a href="code_2.html#cb323-44" tabindex="-1"></a>      </span>
+<span id="cb323-45"><a href="code_2.html#cb323-45" tabindex="-1"></a>      <span class="co"># 获取初始值</span></span>
+<span id="cb323-46"><a href="code_2.html#cb323-46" tabindex="-1"></a>      initial_value <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">initial_value</span>()</span>
+<span id="cb323-47"><a href="code_2.html#cb323-47" tabindex="-1"></a>      private<span class="sc">$</span>beta <span class="ot">&lt;-</span> initial_value[[<span class="dv">1</span>]]</span>
+<span id="cb323-48"><a href="code_2.html#cb323-48" tabindex="-1"></a>      private<span class="sc">$</span>mu <span class="ot">&lt;-</span> initial_value[[<span class="dv">2</span>]]</span>
+<span id="cb323-49"><a href="code_2.html#cb323-49" tabindex="-1"></a>      private<span class="sc">$</span>eta <span class="ot">&lt;-</span> initial_value[[<span class="dv">3</span>]]</span>
+<span id="cb323-50"><a href="code_2.html#cb323-50" tabindex="-1"></a>      private<span class="sc">$</span>upsilon <span class="ot">&lt;-</span> initial_value[[<span class="dv">4</span>]]</span>
+<span id="cb323-51"><a href="code_2.html#cb323-51" tabindex="-1"></a>      </span>
+<span id="cb323-52"><a href="code_2.html#cb323-52" tabindex="-1"></a>      <span class="co"># 计算Q矩阵</span></span>
+<span id="cb323-53"><a href="code_2.html#cb323-53" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_Q</span>()</span>
+<span id="cb323-54"><a href="code_2.html#cb323-54" tabindex="-1"></a>      </span>
+<span id="cb323-55"><a href="code_2.html#cb323-55" tabindex="-1"></a>      <span class="co"># 计算Delta</span></span>
+<span id="cb323-56"><a href="code_2.html#cb323-56" tabindex="-1"></a>      Delta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">gen_Delta</span>()</span>
+<span id="cb323-57"><a href="code_2.html#cb323-57" tabindex="-1"></a>      </span>
+<span id="cb323-58"><a href="code_2.html#cb323-58" tabindex="-1"></a>      <span class="co"># 开始迭代</span></span>
+<span id="cb323-59"><a href="code_2.html#cb323-59" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>max_iter) {</span>
+<span id="cb323-60"><a href="code_2.html#cb323-60" tabindex="-1"></a>        <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;正在进行第[&#39;</span>, i, <span class="st">&#39;]次迭代&#39;</span>))</span>
+<span id="cb323-61"><a href="code_2.html#cb323-61" tabindex="-1"></a>        private<span class="sc">$</span>mu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_mu</span>(Q, Delta, private<span class="sc">$</span>eta, private<span class="sc">$</span>upsilon)</span>
+<span id="cb323-62"><a href="code_2.html#cb323-62" tabindex="-1"></a>        private<span class="sc">$</span>beta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_beta</span>(private<span class="sc">$</span>mu)</span>
+<span id="cb323-63"><a href="code_2.html#cb323-63" tabindex="-1"></a>        private<span class="sc">$</span>delta_mu <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_delta_mu</span>(private<span class="sc">$</span>mu)</span>
+<span id="cb323-64"><a href="code_2.html#cb323-64" tabindex="-1"></a>        private<span class="sc">$</span>delta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_delta</span>(private<span class="sc">$</span>delta_mu, private<span class="sc">$</span>upsilon)</span>
+<span id="cb323-65"><a href="code_2.html#cb323-65" tabindex="-1"></a>        private<span class="sc">$</span>eta <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_eta</span>(private<span class="sc">$</span>delta, self<span class="sc">$</span>lambda)</span>
+<span id="cb323-66"><a href="code_2.html#cb323-66" tabindex="-1"></a>        private<span class="sc">$</span>upsilon <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">iter_upsilon</span>(private<span class="sc">$</span>upsilon, private<span class="sc">$</span>delta_mu, private<span class="sc">$</span>eta)</span>
+<span id="cb323-67"><a href="code_2.html#cb323-67" tabindex="-1"></a>        </span>
+<span id="cb323-68"><a href="code_2.html#cb323-68" tabindex="-1"></a>        <span class="co"># 终止条件</span></span>
+<span id="cb323-69"><a href="code_2.html#cb323-69" tabindex="-1"></a>        r <span class="ot">&lt;-</span> Delta[[<span class="dv">1</span>]] <span class="sc">%*%</span> private<span class="sc">$</span>mu <span class="sc">-</span> private<span class="sc">$</span>eta</span>
+<span id="cb323-70"><a href="code_2.html#cb323-70" tabindex="-1"></a>        <span class="cf">if</span>(<span class="fu">sqrt</span>(<span class="fu">sum</span>(r<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">&lt;=</span> self<span class="sc">$</span>tol){</span>
+<span id="cb323-71"><a href="code_2.html#cb323-71" tabindex="-1"></a>          <span class="fu">print</span>(<span class="st">&#39;达到精度要求&#39;</span>)</span>
+<span id="cb323-72"><a href="code_2.html#cb323-72" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb323-73"><a href="code_2.html#cb323-73" tabindex="-1"></a>        }</span>
+<span id="cb323-74"><a href="code_2.html#cb323-74" tabindex="-1"></a>      }</span>
+<span id="cb323-75"><a href="code_2.html#cb323-75" tabindex="-1"></a>      </span>
+<span id="cb323-76"><a href="code_2.html#cb323-76" tabindex="-1"></a>      <span class="co"># 获取亚组分类结果</span></span>
+<span id="cb323-77"><a href="code_2.html#cb323-77" tabindex="-1"></a>      label <span class="ot">&lt;-</span> private<span class="sc">$</span><span class="fu">cluster_eta</span>(private<span class="sc">$</span>eta)</span>
+<span id="cb323-78"><a href="code_2.html#cb323-78" tabindex="-1"></a>      </span>
+<span id="cb323-79"><a href="code_2.html#cb323-79" tabindex="-1"></a>      <span class="co"># 根据亚组计算对应的alpha</span></span>
+<span id="cb323-80"><a href="code_2.html#cb323-80" tabindex="-1"></a>      subgroup_alpha <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mu =</span> private<span class="sc">$</span>mu, <span class="at">label =</span> label)</span>
+<span id="cb323-81"><a href="code_2.html#cb323-81" tabindex="-1"></a>      subgroup_alpha <span class="ot">&lt;-</span> subgroup_alpha <span class="sc">%&gt;%</span> </span>
+<span id="cb323-82"><a href="code_2.html#cb323-82" tabindex="-1"></a>        <span class="fu">group_by</span>(label) <span class="sc">%&gt;%</span> </span>
+<span id="cb323-83"><a href="code_2.html#cb323-83" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">alpha =</span> <span class="fu">mean</span>(mu), <span class="at">size =</span> <span class="fu">n</span>())</span>
+<span id="cb323-84"><a href="code_2.html#cb323-84" tabindex="-1"></a>      </span>
+<span id="cb323-85"><a href="code_2.html#cb323-85" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> private<span class="sc">$</span>mu, <span class="at">beta =</span> private<span class="sc">$</span>beta, <span class="at">label =</span> label, <span class="at">alpha =</span> subgroup_alpha)</span>
+<span id="cb323-86"><a href="code_2.html#cb323-86" tabindex="-1"></a>      </span>
+<span id="cb323-87"><a href="code_2.html#cb323-87" tabindex="-1"></a>      end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb323-88"><a href="code_2.html#cb323-88" tabindex="-1"></a>      cost_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span>
+<span id="cb323-89"><a href="code_2.html#cb323-89" tabindex="-1"></a>      <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&#39;花费时间：&#39;</span>, <span class="fu">round</span>(cost_time, <span class="dv">3</span>), <span class="st">&quot;秒&quot;</span>))</span>
+<span id="cb323-90"><a href="code_2.html#cb323-90" tabindex="-1"></a>      </span>
+<span id="cb323-91"><a href="code_2.html#cb323-91" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
+<span id="cb323-92"><a href="code_2.html#cb323-92" tabindex="-1"></a>    }</span>
+<span id="cb323-93"><a href="code_2.html#cb323-93" tabindex="-1"></a>  ),</span>
+<span id="cb323-94"><a href="code_2.html#cb323-94" tabindex="-1"></a>  </span>
+<span id="cb323-95"><a href="code_2.html#cb323-95" tabindex="-1"></a>  private <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb323-96"><a href="code_2.html#cb323-96" tabindex="-1"></a>    <span class="co"># 迭代参数</span></span>
+<span id="cb323-97"><a href="code_2.html#cb323-97" tabindex="-1"></a>    <span class="at">mu =</span> <span class="cn">NULL</span>,        <span class="co"># 截距项</span></span>
+<span id="cb323-98"><a href="code_2.html#cb323-98" tabindex="-1"></a>    <span class="at">beta =</span> <span class="cn">NULL</span>,      <span class="co"># 回归系数</span></span>
+<span id="cb323-99"><a href="code_2.html#cb323-99" tabindex="-1"></a>    <span class="at">delta_mu =</span> <span class="cn">NULL</span>,  <span class="co"># mu_i-mu_j</span></span>
+<span id="cb323-100"><a href="code_2.html#cb323-100" tabindex="-1"></a>    <span class="at">delta =</span> <span class="cn">NULL</span>,     <span class="co"># delta_ij=mu_i-mu_j+1/theta*upsilon</span></span>
+<span id="cb323-101"><a href="code_2.html#cb323-101" tabindex="-1"></a>    <span class="at">eta =</span> <span class="cn">NULL</span>,       <span class="co"># 由惩罚函数计算</span></span>
+<span id="cb323-102"><a href="code_2.html#cb323-102" tabindex="-1"></a>    <span class="at">upsilon =</span><span class="cn">NULL</span>,    <span class="co"># 拉格朗日乘子</span></span>
+<span id="cb323-103"><a href="code_2.html#cb323-103" tabindex="-1"></a>    </span>
+<span id="cb323-104"><a href="code_2.html#cb323-104" tabindex="-1"></a>    <span class="co"># 验证输入是否正确</span></span>
+<span id="cb323-105"><a href="code_2.html#cb323-105" tabindex="-1"></a>    <span class="at">validate =</span> <span class="cf">function</span>(){</span>
+<span id="cb323-106"><a href="code_2.html#cb323-106" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.vector</span>(self<span class="sc">$</span>y)) <span class="fu">stop</span>(<span class="st">&#39;Y要求为向量&#39;</span>)</span>
+<span id="cb323-107"><a href="code_2.html#cb323-107" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">$</span>x)) <span class="fu">stop</span>(<span class="st">&#39;X要求为矩阵&#39;</span>)</span>
+<span id="cb323-108"><a href="code_2.html#cb323-108" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.logical</span>(self<span class="sc">$</span>scale)) <span class="fu">stop</span>(<span class="st">&#39;scale要求为布尔值&#39;</span>)</span>
+<span id="cb323-109"><a href="code_2.html#cb323-109" tabindex="-1"></a>      <span class="cf">if</span>(<span class="sc">!</span>self<span class="sc">$</span>penalty <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;L1&#39;</span>, <span class="st">&#39;MCP&#39;</span>,<span class="st">&#39;SCAD&#39;</span>)) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的惩罚函数&#39;</span>)</span>
+<span id="cb323-110"><a href="code_2.html#cb323-110" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>theta <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的theta值&#39;</span>)</span>
+<span id="cb323-111"><a href="code_2.html#cb323-111" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>lambda <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的lambda值&#39;</span>)</span>
+<span id="cb323-112"><a href="code_2.html#cb323-112" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>gamma <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的gamma值&#39;</span>)</span>
+<span id="cb323-113"><a href="code_2.html#cb323-113" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>tol <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的精度要求&#39;</span>)</span>
+<span id="cb323-114"><a href="code_2.html#cb323-114" tabindex="-1"></a>      <span class="cf">if</span>(self<span class="sc">$</span>max_iter <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&#39;请选择合适的最大迭代次数&#39;</span>)</span>
+<span id="cb323-115"><a href="code_2.html#cb323-115" tabindex="-1"></a>    },</span>
+<span id="cb323-116"><a href="code_2.html#cb323-116" tabindex="-1"></a>    </span>
+<span id="cb323-117"><a href="code_2.html#cb323-117" tabindex="-1"></a>    <span class="co"># 获取初始值</span></span>
+<span id="cb323-118"><a href="code_2.html#cb323-118" tabindex="-1"></a>    <span class="at">initial_value =</span> <span class="cf">function</span>(){</span>
+<span id="cb323-119"><a href="code_2.html#cb323-119" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(self<span class="sc">$</span>y, self<span class="sc">$</span>x) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb323-120"><a href="code_2.html#cb323-120" tabindex="-1"></a>      <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;y&#39;</span>, <span class="fu">paste0</span>(<span class="st">&#39;x_&#39;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(x)[<span class="dv">2</span>]))</span>
+<span id="cb323-121"><a href="code_2.html#cb323-121" tabindex="-1"></a>      ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>., <span class="at">data =</span> df)</span>
+<span id="cb323-122"><a href="code_2.html#cb323-122" tabindex="-1"></a>      beta_0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(ols)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb323-123"><a href="code_2.html#cb323-123" tabindex="-1"></a>      mu_0 <span class="ot">&lt;-</span> (self<span class="sc">$</span>y <span class="sc">-</span> self<span class="sc">$</span>x <span class="sc">%*%</span> beta_0) <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb323-124"><a href="code_2.html#cb323-124" tabindex="-1"></a>      eta_0 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">outer</span>(mu_0, mu_0, <span class="st">&#39;-&#39;</span>)   <span class="co"># lower.tri按列提取下三角，故添加负号</span></span>
+<span id="cb323-125"><a href="code_2.html#cb323-125" tabindex="-1"></a>      eta_0 <span class="ot">&lt;-</span> eta_0[<span class="fu">lower.tri</span>(eta_0)]</span>
+<span id="cb323-126"><a href="code_2.html#cb323-126" tabindex="-1"></a>      upsilon_0 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="at">times =</span> self<span class="sc">$</span>n <span class="sc">*</span> (self<span class="sc">$</span>n <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb323-127"><a href="code_2.html#cb323-127" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta_0 =</span> beta_0, <span class="at">mu_0 =</span> mu_0, <span class="at">eta_0 =</span> eta_0, <span class="at">upsilon_0 =</span> upsilon_0)</span>
+<span id="cb323-128"><a href="code_2.html#cb323-128" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
+<span id="cb323-129"><a href="code_2.html#cb323-129" tabindex="-1"></a>    },</span>
+<span id="cb323-130"><a href="code_2.html#cb323-130" tabindex="-1"></a>    </span>
+<span id="cb323-131"><a href="code_2.html#cb323-131" tabindex="-1"></a>    <span class="co"># 计算Q矩阵</span></span>
+<span id="cb323-132"><a href="code_2.html#cb323-132" tabindex="-1"></a>    <span class="at">gen_Q =</span> <span class="cf">function</span>(){</span>
+<span id="cb323-133"><a href="code_2.html#cb323-133" tabindex="-1"></a>      Q <span class="ot">&lt;-</span> self<span class="sc">$</span>x <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(self<span class="sc">$</span>x) <span class="sc">%*%</span> self<span class="sc">$</span>x) <span class="sc">%*%</span> <span class="fu">t</span>(self<span class="sc">$</span>x)</span>
+<span id="cb323-134"><a href="code_2.html#cb323-134" tabindex="-1"></a>      <span class="fu">return</span>(Q)</span>
+<span id="cb323-135"><a href="code_2.html#cb323-135" tabindex="-1"></a>    },</span>
+<span id="cb323-136"><a href="code_2.html#cb323-136" tabindex="-1"></a>    </span>
+<span id="cb323-137"><a href="code_2.html#cb323-137" tabindex="-1"></a>    <span class="co"># 计算Delta矩阵</span></span>
+<span id="cb323-138"><a href="code_2.html#cb323-138" tabindex="-1"></a>    <span class="at">gen_Delta =</span> <span class="cf">function</span>(){</span>
+<span id="cb323-139"><a href="code_2.html#cb323-139" tabindex="-1"></a>      gen_mat <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
+<span id="cb323-140"><a href="code_2.html#cb323-140" tabindex="-1"></a>        mat_1 <span class="ot">&lt;-</span> <span class="cf">if</span>(n <span class="sc">==</span> self<span class="sc">$</span>n<span class="dv">-1</span>){</span>
+<span id="cb323-141"><a href="code_2.html#cb323-141" tabindex="-1"></a>          <span class="cn">NULL</span></span>
+<span id="cb323-142"><a href="code_2.html#cb323-142" tabindex="-1"></a>        }<span class="cf">else</span>{</span>
+<span id="cb323-143"><a href="code_2.html#cb323-143" tabindex="-1"></a>          <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n<span class="dv">-1</span><span class="sc">-</span>n, <span class="at">ncol =</span> n)</span>
+<span id="cb323-144"><a href="code_2.html#cb323-144" tabindex="-1"></a>        }</span>
+<span id="cb323-145"><a href="code_2.html#cb323-145" tabindex="-1"></a>        mat_2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> n, <span class="at">byrow =</span> T)</span>
+<span id="cb323-146"><a href="code_2.html#cb323-146" tabindex="-1"></a>        mat_3 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="at">nrow=</span>n)</span>
+<span id="cb323-147"><a href="code_2.html#cb323-147" tabindex="-1"></a>        mat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mat_1, mat_2, mat_3)</span>
+<span id="cb323-148"><a href="code_2.html#cb323-148" tabindex="-1"></a>        <span class="fu">return</span>(mat)</span>
+<span id="cb323-149"><a href="code_2.html#cb323-149" tabindex="-1"></a>      }</span>
+<span id="cb323-150"><a href="code_2.html#cb323-150" tabindex="-1"></a>      Delta <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">c</span>((self<span class="sc">$</span>n<span class="dv">-1</span>)<span class="sc">:</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span><span class="fu">gen_mat</span>(.))</span>
+<span id="cb323-151"><a href="code_2.html#cb323-151" tabindex="-1"></a>      Delta <span class="ot">&lt;-</span> <span class="fu">do.call</span>(cbind, Delta) <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span>
+<span id="cb323-152"><a href="code_2.html#cb323-152" tabindex="-1"></a>      Delta_Delta <span class="ot">&lt;-</span> <span class="fu">diag</span>(self<span class="sc">$</span>n, <span class="at">nrow =</span> self<span class="sc">$</span>n) <span class="sc">-</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n, <span class="at">ncol =</span> self<span class="sc">$</span>n)</span>
+<span id="cb323-153"><a href="code_2.html#cb323-153" tabindex="-1"></a>      result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Delta =</span> Delta, <span class="at">Delta_Delta =</span> Delta_Delta)</span>
+<span id="cb323-154"><a href="code_2.html#cb323-154" tabindex="-1"></a>      <span class="fu">return</span>(result)</span>
+<span id="cb323-155"><a href="code_2.html#cb323-155" tabindex="-1"></a>    },</span>
+<span id="cb323-156"><a href="code_2.html#cb323-156" tabindex="-1"></a>    </span>
+<span id="cb323-157"><a href="code_2.html#cb323-157" tabindex="-1"></a>    <span class="co"># mu迭代式</span></span>
+<span id="cb323-158"><a href="code_2.html#cb323-158" tabindex="-1"></a>    <span class="at">iter_mu =</span> <span class="cf">function</span>(Q, Delta, eta_current, upsilon_current){</span>
+<span id="cb323-159"><a href="code_2.html#cb323-159" tabindex="-1"></a>      term_1 <span class="ot">&lt;-</span> <span class="fu">solve</span>(self<span class="sc">$</span>theta <span class="sc">*</span> Delta[[<span class="dv">2</span>]] <span class="sc">+</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n) <span class="sc">-</span> Q)</span>
+<span id="cb323-160"><a href="code_2.html#cb323-160" tabindex="-1"></a>      term_2 <span class="ot">&lt;-</span> (<span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n) <span class="sc">-</span> Q) <span class="sc">%*%</span> self<span class="sc">$</span>y <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> <span class="fu">t</span>(Delta[[<span class="dv">1</span>]]) <span class="sc">%*%</span> (eta_current <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>self<span class="sc">$</span>theta <span class="sc">*</span> upsilon_current)</span>
+<span id="cb323-161"><a href="code_2.html#cb323-161" tabindex="-1"></a>      mu_next <span class="ot">&lt;-</span> (term_1 <span class="sc">%*%</span> term_2) <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span>
+<span id="cb323-162"><a href="code_2.html#cb323-162" tabindex="-1"></a>      <span class="fu">return</span>(mu_next)</span>
+<span id="cb323-163"><a href="code_2.html#cb323-163" tabindex="-1"></a>    },</span>
+<span id="cb323-164"><a href="code_2.html#cb323-164" tabindex="-1"></a>    </span>
+<span id="cb323-165"><a href="code_2.html#cb323-165" tabindex="-1"></a>    <span class="co"># beta迭代式</span></span>
+<span id="cb323-166"><a href="code_2.html#cb323-166" tabindex="-1"></a>    <span class="at">iter_beta =</span> <span class="cf">function</span>(mu_next){</span>
+<span id="cb323-167"><a href="code_2.html#cb323-167" tabindex="-1"></a>      beta_next <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(self<span class="sc">$</span>x) <span class="sc">%*%</span> self<span class="sc">$</span>x) <span class="sc">%*%</span> <span class="fu">t</span>(self<span class="sc">$</span>x) <span class="sc">%*%</span> (self<span class="sc">$</span>y <span class="sc">-</span> mu_next)</span>
+<span id="cb323-168"><a href="code_2.html#cb323-168" tabindex="-1"></a>      <span class="fu">return</span>(beta_next)</span>
+<span id="cb323-169"><a href="code_2.html#cb323-169" tabindex="-1"></a>    },</span>
+<span id="cb323-170"><a href="code_2.html#cb323-170" tabindex="-1"></a>    </span>
+<span id="cb323-171"><a href="code_2.html#cb323-171" tabindex="-1"></a>    <span class="co"># eta迭代式</span></span>
+<span id="cb323-172"><a href="code_2.html#cb323-172" tabindex="-1"></a>    <span class="at">iter_eta =</span> <span class="cf">function</span>(delta_current, lambda){</span>
+<span id="cb323-173"><a href="code_2.html#cb323-173" tabindex="-1"></a>      ST <span class="ot">&lt;-</span> <span class="cf">function</span>(t, lambda) <span class="fu">sign</span>(t) <span class="sc">*</span> <span class="fu">max</span>(<span class="fu">abs</span>(t)<span class="sc">-</span>lambda,<span class="dv">0</span>)</span>
+<span id="cb323-174"><a href="code_2.html#cb323-174" tabindex="-1"></a>      delta_list <span class="ot">&lt;-</span> <span class="fu">as.list</span>(delta_current)</span>
+<span id="cb323-175"><a href="code_2.html#cb323-175" tabindex="-1"></a>      delta_to_eta <span class="ot">&lt;-</span> <span class="cf">function</span>(delta_ij){</span>
+<span id="cb323-176"><a href="code_2.html#cb323-176" tabindex="-1"></a>        <span class="cf">switch</span>(self<span class="sc">$</span>penalty,</span>
+<span id="cb323-177"><a href="code_2.html#cb323-177" tabindex="-1"></a>               <span class="st">&#39;L1&#39;</span> <span class="ot">=</span> {</span>
+<span id="cb323-178"><a href="code_2.html#cb323-178" tabindex="-1"></a>                 eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)</span>
+<span id="cb323-179"><a href="code_2.html#cb323-179" tabindex="-1"></a>               },</span>
+<span id="cb323-180"><a href="code_2.html#cb323-180" tabindex="-1"></a>               <span class="st">&#39;MCP&#39;</span> <span class="ot">=</span> {</span>
+<span id="cb323-181"><a href="code_2.html#cb323-181" tabindex="-1"></a>                 <span class="cf">if</span>(<span class="fu">abs</span>(delta_ij) <span class="sc">&lt;=</span> (self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>lambda)){</span>
+<span id="cb323-182"><a href="code_2.html#cb323-182" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)<span class="sc">/</span>(<span class="dv">1-1</span><span class="sc">/</span>(self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>theta))</span>
+<span id="cb323-183"><a href="code_2.html#cb323-183" tabindex="-1"></a>                 }<span class="cf">else</span>{</span>
+<span id="cb323-184"><a href="code_2.html#cb323-184" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> delta_ij</span>
+<span id="cb323-185"><a href="code_2.html#cb323-185" tabindex="-1"></a>                 }</span>
+<span id="cb323-186"><a href="code_2.html#cb323-186" tabindex="-1"></a>               },</span>
+<span id="cb323-187"><a href="code_2.html#cb323-187" tabindex="-1"></a>               <span class="st">&#39;SCAD&#39;</span> <span class="ot">=</span> {</span>
+<span id="cb323-188"><a href="code_2.html#cb323-188" tabindex="-1"></a>                 <span class="cf">if</span>(<span class="fu">abs</span>(delta_ij) <span class="sc">&lt;=</span> (self<span class="sc">$</span>lambda<span class="sc">+</span>self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)){</span>
+<span id="cb323-189"><a href="code_2.html#cb323-189" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta)</span>
+<span id="cb323-190"><a href="code_2.html#cb323-190" tabindex="-1"></a>                 }<span class="cf">else</span> <span class="cf">if</span>(<span class="fu">abs</span>(delta_ij) <span class="sc">&gt;</span> (self<span class="sc">$</span>lambda<span class="sc">+</span>self<span class="sc">$</span>lambda<span class="sc">/</span>self<span class="sc">$</span>theta) <span class="sc">&amp;</span> <span class="fu">abs</span>(delta_ij) <span class="sc">&lt;=</span> (self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>lambda)){</span>
+<span id="cb323-191"><a href="code_2.html#cb323-191" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> <span class="fu">ST</span>(delta_ij, self<span class="sc">$</span>gamma<span class="sc">*</span>self<span class="sc">$</span>lambda<span class="sc">/</span>((self<span class="sc">$</span>gamma<span class="dv">-1</span>)<span class="sc">*</span>self<span class="sc">$</span>theta))<span class="sc">/</span>(<span class="dv">1-1</span><span class="sc">/</span>((self<span class="sc">$</span>gamma<span class="dv">-1</span>)<span class="sc">*</span>self<span class="sc">$</span>theta))</span>
+<span id="cb323-192"><a href="code_2.html#cb323-192" tabindex="-1"></a>                 }<span class="cf">else</span>{</span>
+<span id="cb323-193"><a href="code_2.html#cb323-193" tabindex="-1"></a>                   eta_ij <span class="ot">&lt;-</span> delta_ij</span>
+<span id="cb323-194"><a href="code_2.html#cb323-194" tabindex="-1"></a>                 }</span>
+<span id="cb323-195"><a href="code_2.html#cb323-195" tabindex="-1"></a>               }</span>
+<span id="cb323-196"><a href="code_2.html#cb323-196" tabindex="-1"></a>        )</span>
+<span id="cb323-197"><a href="code_2.html#cb323-197" tabindex="-1"></a>        <span class="fu">return</span>(eta_ij)</span>
+<span id="cb323-198"><a href="code_2.html#cb323-198" tabindex="-1"></a>      }</span>
+<span id="cb323-199"><a href="code_2.html#cb323-199" tabindex="-1"></a>      eta_next <span class="ot">&lt;-</span> delta_list <span class="sc">%&gt;%</span> <span class="fu">map_vec</span>(<span class="sc">~</span><span class="fu">delta_to_eta</span>(.))</span>
+<span id="cb323-200"><a href="code_2.html#cb323-200" tabindex="-1"></a>      <span class="fu">return</span>(eta_next)</span>
+<span id="cb323-201"><a href="code_2.html#cb323-201" tabindex="-1"></a>    },</span>
+<span id="cb323-202"><a href="code_2.html#cb323-202" tabindex="-1"></a>    </span>
+<span id="cb323-203"><a href="code_2.html#cb323-203" tabindex="-1"></a>    <span class="co"># mu_i-mu_j迭代式</span></span>
+<span id="cb323-204"><a href="code_2.html#cb323-204" tabindex="-1"></a>    <span class="at">iter_delta_mu =</span> <span class="cf">function</span>(mu_next){</span>
+<span id="cb323-205"><a href="code_2.html#cb323-205" tabindex="-1"></a>      delta_mu <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">outer</span>(mu_next, mu_next, <span class="st">&#39;-&#39;</span>)</span>
+<span id="cb323-206"><a href="code_2.html#cb323-206" tabindex="-1"></a>      delta_mu <span class="ot">&lt;-</span> delta_mu[<span class="fu">lower.tri</span>(delta_mu)]</span>
+<span id="cb323-207"><a href="code_2.html#cb323-207" tabindex="-1"></a>      <span class="fu">return</span>(delta_mu)</span>
+<span id="cb323-208"><a href="code_2.html#cb323-208" tabindex="-1"></a>    },</span>
+<span id="cb323-209"><a href="code_2.html#cb323-209" tabindex="-1"></a>    </span>
+<span id="cb323-210"><a href="code_2.html#cb323-210" tabindex="-1"></a>    <span class="co"># delta迭代式</span></span>
+<span id="cb323-211"><a href="code_2.html#cb323-211" tabindex="-1"></a>    <span class="at">iter_delta =</span> <span class="cf">function</span>(delta_mu, upsilon_current){</span>
+<span id="cb323-212"><a href="code_2.html#cb323-212" tabindex="-1"></a>      delta_next <span class="ot">&lt;-</span> delta_mu <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>self<span class="sc">$</span>theta <span class="sc">*</span> upsilon_current</span>
+<span id="cb323-213"><a href="code_2.html#cb323-213" tabindex="-1"></a>      <span class="fu">return</span>(delta_next)</span>
+<span id="cb323-214"><a href="code_2.html#cb323-214" tabindex="-1"></a>    },</span>
+<span id="cb323-215"><a href="code_2.html#cb323-215" tabindex="-1"></a>    </span>
+<span id="cb323-216"><a href="code_2.html#cb323-216" tabindex="-1"></a>    <span class="co"># upsilon迭代式</span></span>
+<span id="cb323-217"><a href="code_2.html#cb323-217" tabindex="-1"></a>    <span class="at">iter_upsilon =</span> <span class="cf">function</span>(upsilon_current, delta_mu, eta_next){</span>
+<span id="cb323-218"><a href="code_2.html#cb323-218" tabindex="-1"></a>      upsilon_next <span class="ot">&lt;-</span> upsilon_current <span class="sc">+</span> self<span class="sc">$</span>theta <span class="sc">*</span> (delta_mu <span class="sc">-</span> eta_next)</span>
+<span id="cb323-219"><a href="code_2.html#cb323-219" tabindex="-1"></a>      <span class="fu">return</span>(upsilon_next)</span>
+<span id="cb323-220"><a href="code_2.html#cb323-220" tabindex="-1"></a>    },</span>
+<span id="cb323-221"><a href="code_2.html#cb323-221" tabindex="-1"></a>    </span>
+<span id="cb323-222"><a href="code_2.html#cb323-222" tabindex="-1"></a>    <span class="co"># eta归类</span></span>
+<span id="cb323-223"><a href="code_2.html#cb323-223" tabindex="-1"></a>    <span class="co"># 注意到根据eta为0来分组刚好符合图论中“连通分量”的概念</span></span>
+<span id="cb323-224"><a href="code_2.html#cb323-224" tabindex="-1"></a>    <span class="at">cluster_eta =</span> <span class="cf">function</span>(eta){</span>
+<span id="cb323-225"><a href="code_2.html#cb323-225" tabindex="-1"></a>      mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> self<span class="sc">$</span>n, <span class="at">ncol =</span> self<span class="sc">$</span>n)</span>
+<span id="cb323-226"><a href="code_2.html#cb323-226" tabindex="-1"></a>      mat[<span class="fu">lower.tri</span>(mat)] <span class="ot">&lt;-</span> eta             <span class="co"># 转化为矩阵方便提取索引</span></span>
+<span id="cb323-227"><a href="code_2.html#cb323-227" tabindex="-1"></a>      link <span class="ot">&lt;-</span> <span class="fu">which</span>(mat <span class="sc">==</span> <span class="dv">0</span>, <span class="at">arr.ind =</span> T)</span>
+<span id="cb323-228"><a href="code_2.html#cb323-228" tabindex="-1"></a>      node <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="dv">1</span><span class="sc">:</span>self<span class="sc">$</span>n)</span>
+<span id="cb323-229"><a href="code_2.html#cb323-229" tabindex="-1"></a>      graph <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(link, <span class="at">directed =</span> F, <span class="at">vertices =</span> node)</span>
+<span id="cb323-230"><a href="code_2.html#cb323-230" tabindex="-1"></a>      label <span class="ot">&lt;-</span> <span class="fu">components</span>(graph)<span class="sc">$</span>membership</span>
+<span id="cb323-231"><a href="code_2.html#cb323-231" tabindex="-1"></a>      <span class="fu">return</span>(label)</span>
+<span id="cb323-232"><a href="code_2.html#cb323-232" tabindex="-1"></a>    }</span>
+<span id="cb323-233"><a href="code_2.html#cb323-233" tabindex="-1"></a>  )</span>
+<span id="cb323-234"><a href="code_2.html#cb323-234" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="code_2_2" class="section level3 hasAnchor" number="15.2.2">
 <h3><span class="header-section-number">15.2.2</span> 数据模拟<a href="code_2.html#code_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>下面随机生成100条观测，设置3个预测变量，均服从标准正态分布，且两两之间的相关系数为0.3，然后随机生成<span class="math inline">\(\beta\)</span>值与<span class="math inline">\(\varepsilon\)</span>，设置截距项以相等的概率随机分为1或-1，根据上述变量生成响应变量。</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="code_2.html#cb321-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb321-2"><a href="code_2.html#cb321-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb321-3"><a href="code_2.html#cb321-3" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fl">0.3</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">diag</span>(<span class="fl">0.7</span>, <span class="at">nrow =</span> <span class="dv">3</span>)</span>
-<span id="cb321-4"><a href="code_2.html#cb321-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mu=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">3</span>), <span class="at">Sigma =</span> sigma)</span>
-<span id="cb321-5"><a href="code_2.html#cb321-5" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb321-6"><a href="code_2.html#cb321-6" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>), <span class="dv">100</span>, <span class="at">replace =</span> T, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span>
-<span id="cb321-7"><a href="code_2.html#cb321-7" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">3</span>)</span>
-<span id="cb321-8"><a href="code_2.html#cb321-8" tabindex="-1"></a>y <span class="ot">&lt;-</span> (mu <span class="sc">+</span> x <span class="sc">%*%</span> beta <span class="sc">+</span> epsilon) <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="code_2.html#cb324-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb324-2"><a href="code_2.html#cb324-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb324-3"><a href="code_2.html#cb324-3" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fl">0.3</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">diag</span>(<span class="fl">0.7</span>, <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb324-4"><a href="code_2.html#cb324-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mu=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">3</span>), <span class="at">Sigma =</span> sigma)</span>
+<span id="cb324-5"><a href="code_2.html#cb324-5" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb324-6"><a href="code_2.html#cb324-6" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>), <span class="dv">100</span>, <span class="at">replace =</span> T, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span>
+<span id="cb324-7"><a href="code_2.html#cb324-7" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">3</span>)</span>
+<span id="cb324-8"><a href="code_2.html#cb324-8" tabindex="-1"></a>y <span class="ot">&lt;-</span> (mu <span class="sc">+</span> x <span class="sc">%*%</span> beta <span class="sc">+</span> epsilon) <span class="sc">%&gt;%</span> <span class="fu">as.vector</span>()</span></code></pre></div>
 <p>构建模型，并运行。</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="code_2.html#cb322-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> SubgroupIntercept<span class="sc">$</span><span class="fu">new</span>(y, x, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">theta =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="fl">0.5</span>, <span class="at">gamma =</span> <span class="dv">3</span>, <span class="at">max_iter =</span> <span class="dv">10000</span>)</span>
-<span id="cb322-2"><a href="code_2.html#cb322-2" tabindex="-1"></a>result <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">run</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="code_2.html#cb325-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> SubgroupIntercept<span class="sc">$</span><span class="fu">new</span>(y, x, <span class="at">penalty =</span> <span class="st">&#39;MCP&#39;</span>, <span class="at">theta =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="fl">0.5</span>, <span class="at">gamma =</span> <span class="dv">3</span>, <span class="at">max_iter =</span> <span class="dv">10000</span>)</span>
+<span id="cb325-2"><a href="code_2.html#cb325-2" tabindex="-1"></a>result <span class="ot">&lt;-</span> model<span class="sc">$</span><span class="fu">run</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;正在进行第[1]次迭代&quot;
 ## [1] &quot;正在进行第[2]次迭代&quot;
 ## [1] &quot;正在进行第[3]次迭代&quot;
@@ -1420,7 +1423,7 @@ y_i = \mu_i+\mathbf{x}_i^T\beta+\varepsilon_i \tag{15.1}
 ## [1] &quot;达到精度要求&quot;
 ## [1] &quot;花费时间： 11.939 秒&quot;</code></pre>
 <p>截距项的分组结果如下所示</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="code_2.html#cb324-1" tabindex="-1"></a>result<span class="sc">$</span>alpha</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="code_2.html#cb327-1" tabindex="-1"></a>result<span class="sc">$</span>alpha</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##   label  alpha  size
 ##   &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;

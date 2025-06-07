@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -648,16 +651,16 @@ div.csl-indent {
 <p>更多的输入与输出组件参见<a href="https://shiny.posit.co/r/components/" target="_blank">shiny官网</a>。</p>
 <div id="shiny_2_1" class="section level3 hasAnchor" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> 输入<a href="shiny_2.html#shiny_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div class="sourceCode" id="cb179"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb179-1"><a href="shiny_2.html#cb179-1" tabindex="-1"></a>sliderInput(&quot;min&quot;, &quot;Limit (minimum)&quot;, value = 50, min = 0, max = 100)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb182-1"><a href="shiny_2.html#cb182-1" tabindex="-1"></a>sliderInput(&quot;min&quot;, &quot;Limit (minimum)&quot;, value = 50, min = 0, max = 100)</span></code></pre></div>
 <p>对于形如<code>selectInput()</code>的函数，都是将你的信息传递给server的组件。这类组件的基本参数为ID、标签及其余参数。其中ID是组件的唯一标识符，用于后续调用（这里的ID是<code>min</code>，后续在server函数中通过<code>input$min</code>来调用该组件的输入值）。标签是该组件呈现给用户时所用的标签（这里的标签为<code>Limit (minimum)</code>，也就是页面中滑条的标签）。其余参数往往是与组件类型相关的参数（这里<code>value=50</code>表示默认值，<code>min</code>与<code>max</code>则是滑条的上下限）。</p>
 <blockquote>
 <p>ID是一个非常重要的概念，大多数的对象都可以设置ID，这样在server处就能够通过<code>input$id</code>来获取对应的输入</p>
 </blockquote>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="shiny_2.html#cb180-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb180-2"><a href="shiny_2.html#cb180-2" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;What&#39;s your name?&quot;</span>),</span>
-<span id="cb180-3"><a href="shiny_2.html#cb180-3" tabindex="-1"></a>  <span class="fu">passwordInput</span>(<span class="st">&quot;password&quot;</span>, <span class="st">&quot;What&#39;s your password?&quot;</span>),</span>
-<span id="cb180-4"><a href="shiny_2.html#cb180-4" tabindex="-1"></a>  <span class="fu">textAreaInput</span>(<span class="st">&quot;story&quot;</span>, <span class="st">&quot;Tell me about yourself&quot;</span>, <span class="at">rows =</span> <span class="dv">3</span>)</span>
-<span id="cb180-5"><a href="shiny_2.html#cb180-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="shiny_2.html#cb183-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb183-2"><a href="shiny_2.html#cb183-2" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;What&#39;s your name?&quot;</span>),</span>
+<span id="cb183-3"><a href="shiny_2.html#cb183-3" tabindex="-1"></a>  <span class="fu">passwordInput</span>(<span class="st">&quot;password&quot;</span>, <span class="st">&quot;What&#39;s your password?&quot;</span>),</span>
+<span id="cb183-4"><a href="shiny_2.html#cb183-4" tabindex="-1"></a>  <span class="fu">textAreaInput</span>(<span class="st">&quot;story&quot;</span>, <span class="st">&quot;Tell me about yourself&quot;</span>, <span class="at">rows =</span> <span class="dv">3</span>)</span>
+<span id="cb183-5"><a href="shiny_2.html#cb183-5" tabindex="-1"></a>)</span></code></pre></div>
 <div id="shiny_2_1_1" class="section level4 hasAnchor" number="5.2.1.1">
 <h4><span class="header-section-number">5.2.1.1</span> 文本类组件<a href="shiny_2.html#shiny_2_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <ol style="list-style-type: decimal">
@@ -724,18 +727,18 @@ div.csl-indent {
 <h3><span class="header-section-number">5.2.2</span> 输出<a href="shiny_2.html#shiny_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <pre><code>textOutput(&quot;text&quot;)</code></pre>
 <p>对于形如<code>textOutput()</code>的函数，用于接收服务器输出的结果。同理，输出的内容需要由唯一标识符ID来进行匹配。当输出的结果在服务器端中用<code>output$ID</code>完成赋值，在ui中的输出函数中即可输入相应的ID来调用结果。</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="shiny_2.html#cb182-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb182-2"><a href="shiny_2.html#cb182-2" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;text&quot;</span>),</span>
-<span id="cb182-3"><a href="shiny_2.html#cb182-3" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;code&quot;</span>)</span>
-<span id="cb182-4"><a href="shiny_2.html#cb182-4" tabindex="-1"></a>)</span>
-<span id="cb182-5"><a href="shiny_2.html#cb182-5" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb182-6"><a href="shiny_2.html#cb182-6" tabindex="-1"></a>  output<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">renderText</span>({ </span>
-<span id="cb182-7"><a href="shiny_2.html#cb182-7" tabindex="-1"></a>    <span class="st">&quot;Hello friend!&quot;</span> </span>
-<span id="cb182-8"><a href="shiny_2.html#cb182-8" tabindex="-1"></a>  })</span>
-<span id="cb182-9"><a href="shiny_2.html#cb182-9" tabindex="-1"></a>  output<span class="sc">$</span>code <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({ </span>
-<span id="cb182-10"><a href="shiny_2.html#cb182-10" tabindex="-1"></a>    <span class="fu">summary</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) </span>
-<span id="cb182-11"><a href="shiny_2.html#cb182-11" tabindex="-1"></a>  })</span>
-<span id="cb182-12"><a href="shiny_2.html#cb182-12" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="shiny_2.html#cb185-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb185-2"><a href="shiny_2.html#cb185-2" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;text&quot;</span>),</span>
+<span id="cb185-3"><a href="shiny_2.html#cb185-3" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;code&quot;</span>)</span>
+<span id="cb185-4"><a href="shiny_2.html#cb185-4" tabindex="-1"></a>)</span>
+<span id="cb185-5"><a href="shiny_2.html#cb185-5" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb185-6"><a href="shiny_2.html#cb185-6" tabindex="-1"></a>  output<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">renderText</span>({ </span>
+<span id="cb185-7"><a href="shiny_2.html#cb185-7" tabindex="-1"></a>    <span class="st">&quot;Hello friend!&quot;</span> </span>
+<span id="cb185-8"><a href="shiny_2.html#cb185-8" tabindex="-1"></a>  })</span>
+<span id="cb185-9"><a href="shiny_2.html#cb185-9" tabindex="-1"></a>  output<span class="sc">$</span>code <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({ </span>
+<span id="cb185-10"><a href="shiny_2.html#cb185-10" tabindex="-1"></a>    <span class="fu">summary</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) </span>
+<span id="cb185-11"><a href="shiny_2.html#cb185-11" tabindex="-1"></a>  })</span>
+<span id="cb185-12"><a href="shiny_2.html#cb185-12" tabindex="-1"></a>}</span></code></pre></div>
 <div id="shiny_2_2_1" class="section level4 hasAnchor" number="5.2.2.1">
 <h4><span class="header-section-number">5.2.2.1</span> 文本类输出<a href="shiny_2.html#shiny_2_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <ol style="list-style-type: decimal">

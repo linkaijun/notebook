@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -646,34 +649,34 @@ div.csl-indent {
 <div id="shiny_5" class="section level2 hasAnchor" number="5.5">
 <h2><span class="header-section-number">5.5</span> 主题<a href="shiny_5.html#shiny_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <p>在页面函数中都会有参数<code>theme</code>，你可根据<code>bslib::bs_theme()</code>函数传入<a href="https://bootswatch.com/" target="_blank">预制的主题</a>。</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="shiny_5.html#cb194-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb194-2"><a href="shiny_5.html#cb194-2" tabindex="-1"></a>  <span class="at">theme =</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">bootswatch =</span> <span class="st">&quot;darkly&quot;</span>),</span>
-<span id="cb194-3"><a href="shiny_5.html#cb194-3" tabindex="-1"></a>  ...</span>
-<span id="cb194-4"><a href="shiny_5.html#cb194-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="shiny_5.html#cb197-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb197-2"><a href="shiny_5.html#cb197-2" tabindex="-1"></a>  <span class="at">theme =</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">bootswatch =</span> <span class="st">&quot;darkly&quot;</span>),</span>
+<span id="cb197-3"><a href="shiny_5.html#cb197-3" tabindex="-1"></a>  ...</span>
+<span id="cb197-4"><a href="shiny_5.html#cb197-4" tabindex="-1"></a>)</span></code></pre></div>
 <p>或者可自定义主题</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="shiny_5.html#cb195-1" tabindex="-1"></a>theme <span class="ot">&lt;-</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(</span>
-<span id="cb195-2"><a href="shiny_5.html#cb195-2" tabindex="-1"></a>  <span class="at">bg =</span> <span class="st">&quot;#0b3d91&quot;</span>, </span>
-<span id="cb195-3"><a href="shiny_5.html#cb195-3" tabindex="-1"></a>  <span class="at">fg =</span> <span class="st">&quot;white&quot;</span>, </span>
-<span id="cb195-4"><a href="shiny_5.html#cb195-4" tabindex="-1"></a>  <span class="at">base_font =</span> <span class="st">&quot;Source Sans Pro&quot;</span></span>
-<span id="cb195-5"><a href="shiny_5.html#cb195-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="shiny_5.html#cb198-1" tabindex="-1"></a>theme <span class="ot">&lt;-</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(</span>
+<span id="cb198-2"><a href="shiny_5.html#cb198-2" tabindex="-1"></a>  <span class="at">bg =</span> <span class="st">&quot;#0b3d91&quot;</span>, </span>
+<span id="cb198-3"><a href="shiny_5.html#cb198-3" tabindex="-1"></a>  <span class="at">fg =</span> <span class="st">&quot;white&quot;</span>, </span>
+<span id="cb198-4"><a href="shiny_5.html#cb198-4" tabindex="-1"></a>  <span class="at">base_font =</span> <span class="st">&quot;Source Sans Pro&quot;</span></span>
+<span id="cb198-5"><a href="shiny_5.html#cb198-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>除了页面主题，输出的图像也能凭借<code>thematic::thematic_shiny()</code>设置自适应主题，</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="shiny_5.html#cb196-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb196-2"><a href="shiny_5.html#cb196-2" tabindex="-1"></a></span>
-<span id="cb196-3"><a href="shiny_5.html#cb196-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb196-4"><a href="shiny_5.html#cb196-4" tabindex="-1"></a>  <span class="at">theme =</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">bootswatch =</span> <span class="st">&quot;darkly&quot;</span>),</span>
-<span id="cb196-5"><a href="shiny_5.html#cb196-5" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;A themed plot&quot;</span>),</span>
-<span id="cb196-6"><a href="shiny_5.html#cb196-6" tabindex="-1"></a>  <span class="fu">plotOutput</span>(<span class="st">&quot;plot&quot;</span>),</span>
-<span id="cb196-7"><a href="shiny_5.html#cb196-7" tabindex="-1"></a>)</span>
-<span id="cb196-8"><a href="shiny_5.html#cb196-8" tabindex="-1"></a></span>
-<span id="cb196-9"><a href="shiny_5.html#cb196-9" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb196-10"><a href="shiny_5.html#cb196-10" tabindex="-1"></a>  thematic<span class="sc">::</span><span class="fu">thematic_shiny</span>()</span>
-<span id="cb196-11"><a href="shiny_5.html#cb196-11" tabindex="-1"></a>  </span>
-<span id="cb196-12"><a href="shiny_5.html#cb196-12" tabindex="-1"></a>  output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb196-13"><a href="shiny_5.html#cb196-13" tabindex="-1"></a>    <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
-<span id="cb196-14"><a href="shiny_5.html#cb196-14" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb196-15"><a href="shiny_5.html#cb196-15" tabindex="-1"></a>      <span class="fu">geom_smooth</span>()</span>
-<span id="cb196-16"><a href="shiny_5.html#cb196-16" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
-<span id="cb196-17"><a href="shiny_5.html#cb196-17" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="shiny_5.html#cb199-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb199-2"><a href="shiny_5.html#cb199-2" tabindex="-1"></a></span>
+<span id="cb199-3"><a href="shiny_5.html#cb199-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb199-4"><a href="shiny_5.html#cb199-4" tabindex="-1"></a>  <span class="at">theme =</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">bootswatch =</span> <span class="st">&quot;darkly&quot;</span>),</span>
+<span id="cb199-5"><a href="shiny_5.html#cb199-5" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;A themed plot&quot;</span>),</span>
+<span id="cb199-6"><a href="shiny_5.html#cb199-6" tabindex="-1"></a>  <span class="fu">plotOutput</span>(<span class="st">&quot;plot&quot;</span>),</span>
+<span id="cb199-7"><a href="shiny_5.html#cb199-7" tabindex="-1"></a>)</span>
+<span id="cb199-8"><a href="shiny_5.html#cb199-8" tabindex="-1"></a></span>
+<span id="cb199-9"><a href="shiny_5.html#cb199-9" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb199-10"><a href="shiny_5.html#cb199-10" tabindex="-1"></a>  thematic<span class="sc">::</span><span class="fu">thematic_shiny</span>()</span>
+<span id="cb199-11"><a href="shiny_5.html#cb199-11" tabindex="-1"></a>  </span>
+<span id="cb199-12"><a href="shiny_5.html#cb199-12" tabindex="-1"></a>  output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb199-13"><a href="shiny_5.html#cb199-13" tabindex="-1"></a>    <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb199-14"><a href="shiny_5.html#cb199-14" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb199-15"><a href="shiny_5.html#cb199-15" tabindex="-1"></a>      <span class="fu">geom_smooth</span>()</span>
+<span id="cb199-16"><a href="shiny_5.html#cb199-16" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb199-17"><a href="shiny_5.html#cb199-17" tabindex="-1"></a>}</span></code></pre></div>
 <p>更进一步，如果你了解HTML和CSS，那么你完全可以自定义主题，详见<a href="https://mastering-shiny.org/action-layout.html#under-the-hood" target="_blank">此处</a>。</p>
 </div>
             </section>

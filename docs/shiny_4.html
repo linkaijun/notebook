@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -672,27 +675,27 @@ div.csl-indent {
 <div id="shiny_4_2_1" class="section level4 hasAnchor" number="5.4.2.1">
 <h4><span class="header-section-number">5.4.2.1</span> 单页布局<a href="shiny_4.html#shiny_4_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <p>下面就简单介绍经典布局——侧边栏布局<code>sidebarLayout</code>，常与标题栏<code>titlePanel()</code>搭配</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="shiny_4.html#cb190-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb190-2"><a href="shiny_4.html#cb190-2" tabindex="-1"></a></span>
-<span id="cb190-3"><a href="shiny_4.html#cb190-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb190-4"><a href="shiny_4.html#cb190-4" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Central limit theorem&quot;</span>),</span>
-<span id="cb190-5"><a href="shiny_4.html#cb190-5" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb190-6"><a href="shiny_4.html#cb190-6" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb190-7"><a href="shiny_4.html#cb190-7" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;Number of samples:&quot;</span>, <span class="dv">2</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">100</span>)</span>
-<span id="cb190-8"><a href="shiny_4.html#cb190-8" tabindex="-1"></a>    ),</span>
-<span id="cb190-9"><a href="shiny_4.html#cb190-9" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb190-10"><a href="shiny_4.html#cb190-10" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)</span>
-<span id="cb190-11"><a href="shiny_4.html#cb190-11" tabindex="-1"></a>    )</span>
-<span id="cb190-12"><a href="shiny_4.html#cb190-12" tabindex="-1"></a>  )</span>
-<span id="cb190-13"><a href="shiny_4.html#cb190-13" tabindex="-1"></a>)</span>
-<span id="cb190-14"><a href="shiny_4.html#cb190-14" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb190-15"><a href="shiny_4.html#cb190-15" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb190-16"><a href="shiny_4.html#cb190-16" tabindex="-1"></a>    means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="fl">1e4</span>, <span class="fu">mean</span>(<span class="fu">runif</span>(input<span class="sc">$</span>m)))</span>
-<span id="cb190-17"><a href="shiny_4.html#cb190-17" tabindex="-1"></a>    <span class="fu">hist</span>(means, <span class="at">breaks =</span> <span class="dv">20</span>)</span>
-<span id="cb190-18"><a href="shiny_4.html#cb190-18" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
-<span id="cb190-19"><a href="shiny_4.html#cb190-19" tabindex="-1"></a>}</span>
-<span id="cb190-20"><a href="shiny_4.html#cb190-20" tabindex="-1"></a></span>
-<span id="cb190-21"><a href="shiny_4.html#cb190-21" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="shiny_4.html#cb193-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb193-2"><a href="shiny_4.html#cb193-2" tabindex="-1"></a></span>
+<span id="cb193-3"><a href="shiny_4.html#cb193-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb193-4"><a href="shiny_4.html#cb193-4" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Central limit theorem&quot;</span>),</span>
+<span id="cb193-5"><a href="shiny_4.html#cb193-5" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb193-6"><a href="shiny_4.html#cb193-6" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb193-7"><a href="shiny_4.html#cb193-7" tabindex="-1"></a>      <span class="fu">numericInput</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;Number of samples:&quot;</span>, <span class="dv">2</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">100</span>)</span>
+<span id="cb193-8"><a href="shiny_4.html#cb193-8" tabindex="-1"></a>    ),</span>
+<span id="cb193-9"><a href="shiny_4.html#cb193-9" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb193-10"><a href="shiny_4.html#cb193-10" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)</span>
+<span id="cb193-11"><a href="shiny_4.html#cb193-11" tabindex="-1"></a>    )</span>
+<span id="cb193-12"><a href="shiny_4.html#cb193-12" tabindex="-1"></a>  )</span>
+<span id="cb193-13"><a href="shiny_4.html#cb193-13" tabindex="-1"></a>)</span>
+<span id="cb193-14"><a href="shiny_4.html#cb193-14" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb193-15"><a href="shiny_4.html#cb193-15" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb193-16"><a href="shiny_4.html#cb193-16" tabindex="-1"></a>    means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="fl">1e4</span>, <span class="fu">mean</span>(<span class="fu">runif</span>(input<span class="sc">$</span>m)))</span>
+<span id="cb193-17"><a href="shiny_4.html#cb193-17" tabindex="-1"></a>    <span class="fu">hist</span>(means, <span class="at">breaks =</span> <span class="dv">20</span>)</span>
+<span id="cb193-18"><a href="shiny_4.html#cb193-18" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb193-19"><a href="shiny_4.html#cb193-19" tabindex="-1"></a>}</span>
+<span id="cb193-20"><a href="shiny_4.html#cb193-20" tabindex="-1"></a></span>
+<span id="cb193-21"><a href="shiny_4.html#cb193-21" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
 <p>其基本布局为“标题栏+侧边栏+主面板”。</p>
 </div>
 <div id="shiny_4_2_2" class="section level4 hasAnchor" number="5.4.2.2">
@@ -701,26 +704,26 @@ div.csl-indent {
 <li><p>标签卡式布局</p>
 <p><code>tabsetPanel()</code>创建标签卡这个整体，<code>tabPanel()</code>创建子标签卡的内容</p></li>
 </ol>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="shiny_4.html#cb191-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb191-2"><a href="shiny_4.html#cb191-2" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb191-3"><a href="shiny_4.html#cb191-3" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb191-4"><a href="shiny_4.html#cb191-4" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">&quot;panel&quot;</span>)</span>
-<span id="cb191-5"><a href="shiny_4.html#cb191-5" tabindex="-1"></a>    ),</span>
-<span id="cb191-6"><a href="shiny_4.html#cb191-6" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb191-7"><a href="shiny_4.html#cb191-7" tabindex="-1"></a>      <span class="fu">tabsetPanel</span>(</span>
-<span id="cb191-8"><a href="shiny_4.html#cb191-8" tabindex="-1"></a>        <span class="at">id =</span> <span class="st">&quot;tabset&quot;</span>,</span>
-<span id="cb191-9"><a href="shiny_4.html#cb191-9" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;one&quot;</span>),</span>
-<span id="cb191-10"><a href="shiny_4.html#cb191-10" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
-<span id="cb191-11"><a href="shiny_4.html#cb191-11" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;three&quot;</span>)</span>
-<span id="cb191-12"><a href="shiny_4.html#cb191-12" tabindex="-1"></a>      )</span>
-<span id="cb191-13"><a href="shiny_4.html#cb191-13" tabindex="-1"></a>    )</span>
-<span id="cb191-14"><a href="shiny_4.html#cb191-14" tabindex="-1"></a>  )</span>
-<span id="cb191-15"><a href="shiny_4.html#cb191-15" tabindex="-1"></a>)</span>
-<span id="cb191-16"><a href="shiny_4.html#cb191-16" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb191-17"><a href="shiny_4.html#cb191-17" tabindex="-1"></a>  output<span class="sc">$</span>panel <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
-<span id="cb191-18"><a href="shiny_4.html#cb191-18" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;Current panel: &quot;</span>, input<span class="sc">$</span>tabset)</span>
-<span id="cb191-19"><a href="shiny_4.html#cb191-19" tabindex="-1"></a>  })</span>
-<span id="cb191-20"><a href="shiny_4.html#cb191-20" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="shiny_4.html#cb194-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb194-2"><a href="shiny_4.html#cb194-2" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb194-3"><a href="shiny_4.html#cb194-3" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb194-4"><a href="shiny_4.html#cb194-4" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">&quot;panel&quot;</span>)</span>
+<span id="cb194-5"><a href="shiny_4.html#cb194-5" tabindex="-1"></a>    ),</span>
+<span id="cb194-6"><a href="shiny_4.html#cb194-6" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb194-7"><a href="shiny_4.html#cb194-7" tabindex="-1"></a>      <span class="fu">tabsetPanel</span>(</span>
+<span id="cb194-8"><a href="shiny_4.html#cb194-8" tabindex="-1"></a>        <span class="at">id =</span> <span class="st">&quot;tabset&quot;</span>,</span>
+<span id="cb194-9"><a href="shiny_4.html#cb194-9" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;one&quot;</span>),</span>
+<span id="cb194-10"><a href="shiny_4.html#cb194-10" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb194-11"><a href="shiny_4.html#cb194-11" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;three&quot;</span>)</span>
+<span id="cb194-12"><a href="shiny_4.html#cb194-12" tabindex="-1"></a>      )</span>
+<span id="cb194-13"><a href="shiny_4.html#cb194-13" tabindex="-1"></a>    )</span>
+<span id="cb194-14"><a href="shiny_4.html#cb194-14" tabindex="-1"></a>  )</span>
+<span id="cb194-15"><a href="shiny_4.html#cb194-15" tabindex="-1"></a>)</span>
+<span id="cb194-16"><a href="shiny_4.html#cb194-16" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb194-17"><a href="shiny_4.html#cb194-17" tabindex="-1"></a>  output<span class="sc">$</span>panel <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb194-18"><a href="shiny_4.html#cb194-18" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;Current panel: &quot;</span>, input<span class="sc">$</span>tabset)</span>
+<span id="cb194-19"><a href="shiny_4.html#cb194-19" tabindex="-1"></a>  })</span>
+<span id="cb194-20"><a href="shiny_4.html#cb194-20" tabindex="-1"></a>}</span></code></pre></div>
 <blockquote>
 <p><code>tabsetPanel()</code>的参数<code>id</code>用于返回当前选中的子标签卡的名称</p>
 </blockquote>
@@ -728,31 +731,31 @@ div.csl-indent {
 <li><p>导航栏式布局</p>
 <p>第一个布局函数是<code>navlistPanel</code>，可以说是<code>tabsetPanel()</code>的侧边形式</p></li>
 </ol>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="shiny_4.html#cb192-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb192-2"><a href="shiny_4.html#cb192-2" tabindex="-1"></a>  <span class="fu">navlistPanel</span>(</span>
-<span id="cb192-3"><a href="shiny_4.html#cb192-3" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">&quot;tabset&quot;</span>,</span>
-<span id="cb192-4"><a href="shiny_4.html#cb192-4" tabindex="-1"></a>    <span class="st">&quot;Heading 1&quot;</span>,</span>
-<span id="cb192-5"><a href="shiny_4.html#cb192-5" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;Panel one contents&quot;</span>),</span>
-<span id="cb192-6"><a href="shiny_4.html#cb192-6" tabindex="-1"></a>    <span class="st">&quot;Heading 2&quot;</span>,</span>
-<span id="cb192-7"><a href="shiny_4.html#cb192-7" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;Panel two contents&quot;</span>),</span>
-<span id="cb192-8"><a href="shiny_4.html#cb192-8" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;Panel three contents&quot;</span>)</span>
-<span id="cb192-9"><a href="shiny_4.html#cb192-9" tabindex="-1"></a>  )</span>
-<span id="cb192-10"><a href="shiny_4.html#cb192-10" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="shiny_4.html#cb195-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb195-2"><a href="shiny_4.html#cb195-2" tabindex="-1"></a>  <span class="fu">navlistPanel</span>(</span>
+<span id="cb195-3"><a href="shiny_4.html#cb195-3" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">&quot;tabset&quot;</span>,</span>
+<span id="cb195-4"><a href="shiny_4.html#cb195-4" tabindex="-1"></a>    <span class="st">&quot;Heading 1&quot;</span>,</span>
+<span id="cb195-5"><a href="shiny_4.html#cb195-5" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;Panel one contents&quot;</span>),</span>
+<span id="cb195-6"><a href="shiny_4.html#cb195-6" tabindex="-1"></a>    <span class="st">&quot;Heading 2&quot;</span>,</span>
+<span id="cb195-7"><a href="shiny_4.html#cb195-7" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;Panel two contents&quot;</span>),</span>
+<span id="cb195-8"><a href="shiny_4.html#cb195-8" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;Panel three contents&quot;</span>)</span>
+<span id="cb195-9"><a href="shiny_4.html#cb195-9" tabindex="-1"></a>  )</span>
+<span id="cb195-10"><a href="shiny_4.html#cb195-10" tabindex="-1"></a>)</span></code></pre></div>
 <blockquote>
 <p>注意<code>Heaning 1</code>与<code>Heading 2</code>类似侧边栏中的小标题</p>
 </blockquote>
 <p>第二个布局函数是<code>navbarPage()</code>与<code>navbarMenu()</code>。前者控制导航栏置于顶部，后者生成一个下拉式菜单，里面包含了多个子标签卡</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="shiny_4.html#cb193-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">navbarPage</span>(</span>
-<span id="cb193-2"><a href="shiny_4.html#cb193-2" tabindex="-1"></a>  <span class="st">&quot;Page title&quot;</span>,   </span>
-<span id="cb193-3"><a href="shiny_4.html#cb193-3" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;one&quot;</span>),</span>
-<span id="cb193-4"><a href="shiny_4.html#cb193-4" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
-<span id="cb193-5"><a href="shiny_4.html#cb193-5" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;three&quot;</span>),</span>
-<span id="cb193-6"><a href="shiny_4.html#cb193-6" tabindex="-1"></a>  <span class="fu">navbarMenu</span>(<span class="st">&quot;subpanels&quot;</span>, </span>
-<span id="cb193-7"><a href="shiny_4.html#cb193-7" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4a&quot;</span>, <span class="st">&quot;four-a&quot;</span>),</span>
-<span id="cb193-8"><a href="shiny_4.html#cb193-8" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4b&quot;</span>, <span class="st">&quot;four-b&quot;</span>),</span>
-<span id="cb193-9"><a href="shiny_4.html#cb193-9" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4c&quot;</span>, <span class="st">&quot;four-c&quot;</span>)</span>
-<span id="cb193-10"><a href="shiny_4.html#cb193-10" tabindex="-1"></a>  )</span>
-<span id="cb193-11"><a href="shiny_4.html#cb193-11" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="shiny_4.html#cb196-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">navbarPage</span>(</span>
+<span id="cb196-2"><a href="shiny_4.html#cb196-2" tabindex="-1"></a>  <span class="st">&quot;Page title&quot;</span>,   </span>
+<span id="cb196-3"><a href="shiny_4.html#cb196-3" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 1&quot;</span>, <span class="st">&quot;one&quot;</span>),</span>
+<span id="cb196-4"><a href="shiny_4.html#cb196-4" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 2&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb196-5"><a href="shiny_4.html#cb196-5" tabindex="-1"></a>  <span class="fu">tabPanel</span>(<span class="st">&quot;panel 3&quot;</span>, <span class="st">&quot;three&quot;</span>),</span>
+<span id="cb196-6"><a href="shiny_4.html#cb196-6" tabindex="-1"></a>  <span class="fu">navbarMenu</span>(<span class="st">&quot;subpanels&quot;</span>, </span>
+<span id="cb196-7"><a href="shiny_4.html#cb196-7" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4a&quot;</span>, <span class="st">&quot;four-a&quot;</span>),</span>
+<span id="cb196-8"><a href="shiny_4.html#cb196-8" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4b&quot;</span>, <span class="st">&quot;four-b&quot;</span>),</span>
+<span id="cb196-9"><a href="shiny_4.html#cb196-9" tabindex="-1"></a>    <span class="fu">tabPanel</span>(<span class="st">&quot;panel 4c&quot;</span>, <span class="st">&quot;four-c&quot;</span>)</span>
+<span id="cb196-10"><a href="shiny_4.html#cb196-10" tabindex="-1"></a>  )</span>
+<span id="cb196-11"><a href="shiny_4.html#cb196-11" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 </div>
 <div id="shiny_4_2_3" class="section level3 hasAnchor" number="5.4.3">

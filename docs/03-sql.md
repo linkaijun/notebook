@@ -2,9 +2,53 @@
 
 该章节为《MySQL必知必会》的学习笔记。
 
-## R连接MySQL {#sql_1}
+## 连接MySQL {#sql_1}
 
-挖坑
+### R {#sql_1_1}
+
+
+``` r
+library(DBI)
+library(RMySQL)
+
+con <- dbConnect(
+  RMySQL::MySQL(),
+  dbname = "data_1",   # 数据库名称（Navicat中的数据库名）
+  host = "localhost",         # 服务器地址（本地为localhost，远程为IP）
+  port = 3306,                # 端口号（默认3306）
+  user = "root",     # 用户名（Navicat连接使用的）
+  password = "password"  # 密码
+)
+
+dbListTables(con)    # 查看所有表
+
+df <- dbReadTable(con, "table1")
+```
+
+用`dbReadTable()`读取整个表，并存储为`data frame`格式的数据框，后续可用`dplyr`进行数据清洗。
+
+当然，可以直接使用`dbGetQuery()`进行SQL查询，第一个参数是连接名称，第二个参数就是SQL语句。
+
+
+``` r
+df <- dbGetQuery(con, "
+  SELECT *
+  FROM table1
+  WHERE price > 100
+")
+```
+
+亦或者，用`dplyr`语法代替SQL语句进行查询。
+
+
+``` r
+df <- tbl(con, 'table1')    # 懒加载，构建连接，数据还未导入R中
+result_df <- df %>% 
+  filter(price > 100) %>%   # dplyr语法筛选数据
+  collect()                 # 将数据库中的数据导入到R中
+```
+
+> 这样导出的数据就是`tibble`格式的数据框，注意别忘了`collect()`
 
 ## MySQL必知必会 {#sql_2}
 

@@ -471,6 +471,7 @@ manim_10
 manim_11
 sql
 sql_1
+sql_1_1
 sql_2
 sql_2_1
 sql_2_2

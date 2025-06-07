@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -652,17 +655,17 @@ div.csl-indent {
 <div id="shiny_3_1" class="section level3 hasAnchor" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> 服务端<a href="shiny_3.html#shiny_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>回忆shiny应用程序的一般形式</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb183-1"><a href="shiny_3.html#cb183-1" tabindex="-1"></a>library(shiny)</span>
-<span id="cb183-2"><a href="shiny_3.html#cb183-2" tabindex="-1"></a></span>
-<span id="cb183-3"><a href="shiny_3.html#cb183-3" tabindex="-1"></a>ui &lt;- fluidPage(</span>
-<span id="cb183-4"><a href="shiny_3.html#cb183-4" tabindex="-1"></a>  # front end interface</span>
-<span id="cb183-5"><a href="shiny_3.html#cb183-5" tabindex="-1"></a>)</span>
-<span id="cb183-6"><a href="shiny_3.html#cb183-6" tabindex="-1"></a></span>
-<span id="cb183-7"><a href="shiny_3.html#cb183-7" tabindex="-1"></a>server &lt;- function(input, output, session) {</span>
-<span id="cb183-8"><a href="shiny_3.html#cb183-8" tabindex="-1"></a>  # back end logic</span>
-<span id="cb183-9"><a href="shiny_3.html#cb183-9" tabindex="-1"></a>}</span>
-<span id="cb183-10"><a href="shiny_3.html#cb183-10" tabindex="-1"></a></span>
-<span id="cb183-11"><a href="shiny_3.html#cb183-11" tabindex="-1"></a>shinyApp(ui, server)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb186-1"><a href="shiny_3.html#cb186-1" tabindex="-1"></a>library(shiny)</span>
+<span id="cb186-2"><a href="shiny_3.html#cb186-2" tabindex="-1"></a></span>
+<span id="cb186-3"><a href="shiny_3.html#cb186-3" tabindex="-1"></a>ui &lt;- fluidPage(</span>
+<span id="cb186-4"><a href="shiny_3.html#cb186-4" tabindex="-1"></a>  # front end interface</span>
+<span id="cb186-5"><a href="shiny_3.html#cb186-5" tabindex="-1"></a>)</span>
+<span id="cb186-6"><a href="shiny_3.html#cb186-6" tabindex="-1"></a></span>
+<span id="cb186-7"><a href="shiny_3.html#cb186-7" tabindex="-1"></a>server &lt;- function(input, output, session) {</span>
+<span id="cb186-8"><a href="shiny_3.html#cb186-8" tabindex="-1"></a>  # back end logic</span>
+<span id="cb186-9"><a href="shiny_3.html#cb186-9" tabindex="-1"></a>}</span>
+<span id="cb186-10"><a href="shiny_3.html#cb186-10" tabindex="-1"></a></span>
+<span id="cb186-11"><a href="shiny_3.html#cb186-11" tabindex="-1"></a>shinyApp(ui, server)</span></code></pre></div>
 <p><code>ui</code>表示交互界面，呈现给每个用户的内容是相同的。<code>server</code>表示服务器端，由于每个用户输入的信息不尽相同，因此shiny程序在每次创建新会话(session)时都会独立地激活<code>server()</code>。</p>
 <div id="shiny_3_1_1" class="section level4 hasAnchor" number="5.3.1.1">
 <h4><span class="header-section-number">5.3.1.1</span> 输入<a href="shiny_3.html#shiny_3_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
@@ -686,172 +689,6 @@ div.csl-indent {
 <p>如果大于1次使用，都应考虑使用反应表达式</p>
 </blockquote>
 <p>下面对两个正态分布数据进行模拟，比较这两段代码（仅在server部分有差异）：</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="shiny_3.html#cb184-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb184-2"><a href="shiny_3.html#cb184-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb184-3"><a href="shiny_3.html#cb184-3" tabindex="-1"></a></span>
-<span id="cb184-4"><a href="shiny_3.html#cb184-4" tabindex="-1"></a>freqpoly <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, <span class="at">binwidth =</span> <span class="fl">0.1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) {</span>
-<span id="cb184-5"><a href="shiny_3.html#cb184-5" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb184-6"><a href="shiny_3.html#cb184-6" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(x1, x2),</span>
-<span id="cb184-7"><a href="shiny_3.html#cb184-7" tabindex="-1"></a>    <span class="at">g =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;x1&quot;</span>, <span class="fu">length</span>(x1)), <span class="fu">rep</span>(<span class="st">&quot;x2&quot;</span>, <span class="fu">length</span>(x2)))</span>
-<span id="cb184-8"><a href="shiny_3.html#cb184-8" tabindex="-1"></a>  )</span>
-<span id="cb184-9"><a href="shiny_3.html#cb184-9" tabindex="-1"></a>  </span>
-<span id="cb184-10"><a href="shiny_3.html#cb184-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, <span class="at">colour =</span> g)) <span class="sc">+</span></span>
-<span id="cb184-11"><a href="shiny_3.html#cb184-11" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> binwidth, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb184-12"><a href="shiny_3.html#cb184-12" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> xlim)</span>
-<span id="cb184-13"><a href="shiny_3.html#cb184-13" tabindex="-1"></a>}</span>
-<span id="cb184-14"><a href="shiny_3.html#cb184-14" tabindex="-1"></a></span>
-<span id="cb184-15"><a href="shiny_3.html#cb184-15" tabindex="-1"></a>t_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2) {</span>
-<span id="cb184-16"><a href="shiny_3.html#cb184-16" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x1, x2)</span>
-<span id="cb184-17"><a href="shiny_3.html#cb184-17" tabindex="-1"></a>  </span>
-<span id="cb184-18"><a href="shiny_3.html#cb184-18" tabindex="-1"></a>  <span class="co"># use sprintf() to format t.test() results compactly</span></span>
-<span id="cb184-19"><a href="shiny_3.html#cb184-19" tabindex="-1"></a>  <span class="fu">sprintf</span>(</span>
-<span id="cb184-20"><a href="shiny_3.html#cb184-20" tabindex="-1"></a>    <span class="st">&quot;p value: %0.3f</span><span class="sc">\n</span><span class="st">[%0.2f, %0.2f]&quot;</span>,</span>
-<span id="cb184-21"><a href="shiny_3.html#cb184-21" tabindex="-1"></a>    test<span class="sc">$</span>p.value, test<span class="sc">$</span>conf.int[<span class="dv">1</span>], test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
-<span id="cb184-22"><a href="shiny_3.html#cb184-22" tabindex="-1"></a>  )</span>
-<span id="cb184-23"><a href="shiny_3.html#cb184-23" tabindex="-1"></a>}</span>
-<span id="cb184-24"><a href="shiny_3.html#cb184-24" tabindex="-1"></a></span>
-<span id="cb184-25"><a href="shiny_3.html#cb184-25" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb184-26"><a href="shiny_3.html#cb184-26" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
-<span id="cb184-27"><a href="shiny_3.html#cb184-27" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
-<span id="cb184-28"><a href="shiny_3.html#cb184-28" tabindex="-1"></a>           <span class="st">&quot;Distribution 1&quot;</span>,</span>
-<span id="cb184-29"><a href="shiny_3.html#cb184-29" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
-<span id="cb184-30"><a href="shiny_3.html#cb184-30" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
-<span id="cb184-31"><a href="shiny_3.html#cb184-31" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
-<span id="cb184-32"><a href="shiny_3.html#cb184-32" tabindex="-1"></a>    ),</span>
-<span id="cb184-33"><a href="shiny_3.html#cb184-33" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
-<span id="cb184-34"><a href="shiny_3.html#cb184-34" tabindex="-1"></a>           <span class="st">&quot;Distribution 2&quot;</span>,</span>
-<span id="cb184-35"><a href="shiny_3.html#cb184-35" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
-<span id="cb184-36"><a href="shiny_3.html#cb184-36" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
-<span id="cb184-37"><a href="shiny_3.html#cb184-37" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
-<span id="cb184-38"><a href="shiny_3.html#cb184-38" tabindex="-1"></a>    ),</span>
-<span id="cb184-39"><a href="shiny_3.html#cb184-39" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
-<span id="cb184-40"><a href="shiny_3.html#cb184-40" tabindex="-1"></a>           <span class="st">&quot;Frequency polygon&quot;</span>,</span>
-<span id="cb184-41"><a href="shiny_3.html#cb184-41" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;binwidth&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Bin width&quot;</span>, <span class="at">value =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
-<span id="cb184-42"><a href="shiny_3.html#cb184-42" tabindex="-1"></a>           <span class="fu">sliderInput</span>(<span class="st">&quot;range&quot;</span>, <span class="at">label =</span> <span class="st">&quot;range&quot;</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">min =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
-<span id="cb184-43"><a href="shiny_3.html#cb184-43" tabindex="-1"></a>    )</span>
-<span id="cb184-44"><a href="shiny_3.html#cb184-44" tabindex="-1"></a>  ),</span>
-<span id="cb184-45"><a href="shiny_3.html#cb184-45" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
-<span id="cb184-46"><a href="shiny_3.html#cb184-46" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>, <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)),</span>
-<span id="cb184-47"><a href="shiny_3.html#cb184-47" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">3</span>, <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;ttest&quot;</span>))</span>
-<span id="cb184-48"><a href="shiny_3.html#cb184-48" tabindex="-1"></a>  )</span>
-<span id="cb184-49"><a href="shiny_3.html#cb184-49" tabindex="-1"></a>)</span>
-<span id="cb184-50"><a href="shiny_3.html#cb184-50" tabindex="-1"></a></span>
-<span id="cb184-51"><a href="shiny_3.html#cb184-51" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb184-52"><a href="shiny_3.html#cb184-52" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb184-53"><a href="shiny_3.html#cb184-53" tabindex="-1"></a>    x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, input<span class="sc">$</span>sd1)</span>
-<span id="cb184-54"><a href="shiny_3.html#cb184-54" tabindex="-1"></a>    x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, input<span class="sc">$</span>sd2)</span>
-<span id="cb184-55"><a href="shiny_3.html#cb184-55" tabindex="-1"></a>    </span>
-<span id="cb184-56"><a href="shiny_3.html#cb184-56" tabindex="-1"></a>    <span class="fu">freqpoly</span>(x1, x2, <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
-<span id="cb184-57"><a href="shiny_3.html#cb184-57" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
-<span id="cb184-58"><a href="shiny_3.html#cb184-58" tabindex="-1"></a>  </span>
-<span id="cb184-59"><a href="shiny_3.html#cb184-59" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
-<span id="cb184-60"><a href="shiny_3.html#cb184-60" tabindex="-1"></a>    x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, input<span class="sc">$</span>sd1)</span>
-<span id="cb184-61"><a href="shiny_3.html#cb184-61" tabindex="-1"></a>    x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, input<span class="sc">$</span>sd2)</span>
-<span id="cb184-62"><a href="shiny_3.html#cb184-62" tabindex="-1"></a>    </span>
-<span id="cb184-63"><a href="shiny_3.html#cb184-63" tabindex="-1"></a>    <span class="fu">t_test</span>(x1, x2)</span>
-<span id="cb184-64"><a href="shiny_3.html#cb184-64" tabindex="-1"></a>  })</span>
-<span id="cb184-65"><a href="shiny_3.html#cb184-65" tabindex="-1"></a>}</span>
-<span id="cb184-66"><a href="shiny_3.html#cb184-66" tabindex="-1"></a></span>
-<span id="cb184-67"><a href="shiny_3.html#cb184-67" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="shiny_3.html#cb185-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb185-2"><a href="shiny_3.html#cb185-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb185-3"><a href="shiny_3.html#cb185-3" tabindex="-1"></a></span>
-<span id="cb185-4"><a href="shiny_3.html#cb185-4" tabindex="-1"></a>freqpoly <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, <span class="at">binwidth =</span> <span class="fl">0.1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) {</span>
-<span id="cb185-5"><a href="shiny_3.html#cb185-5" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb185-6"><a href="shiny_3.html#cb185-6" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(x1, x2),</span>
-<span id="cb185-7"><a href="shiny_3.html#cb185-7" tabindex="-1"></a>    <span class="at">g =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;x1&quot;</span>, <span class="fu">length</span>(x1)), <span class="fu">rep</span>(<span class="st">&quot;x2&quot;</span>, <span class="fu">length</span>(x2)))</span>
-<span id="cb185-8"><a href="shiny_3.html#cb185-8" tabindex="-1"></a>  )</span>
-<span id="cb185-9"><a href="shiny_3.html#cb185-9" tabindex="-1"></a>  </span>
-<span id="cb185-10"><a href="shiny_3.html#cb185-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, <span class="at">colour =</span> g)) <span class="sc">+</span></span>
-<span id="cb185-11"><a href="shiny_3.html#cb185-11" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> binwidth, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb185-12"><a href="shiny_3.html#cb185-12" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> xlim)</span>
-<span id="cb185-13"><a href="shiny_3.html#cb185-13" tabindex="-1"></a>}</span>
-<span id="cb185-14"><a href="shiny_3.html#cb185-14" tabindex="-1"></a></span>
-<span id="cb185-15"><a href="shiny_3.html#cb185-15" tabindex="-1"></a>t_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2) {</span>
-<span id="cb185-16"><a href="shiny_3.html#cb185-16" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x1, x2)</span>
-<span id="cb185-17"><a href="shiny_3.html#cb185-17" tabindex="-1"></a>  </span>
-<span id="cb185-18"><a href="shiny_3.html#cb185-18" tabindex="-1"></a>  <span class="co"># use sprintf() to format t.test() results compactly</span></span>
-<span id="cb185-19"><a href="shiny_3.html#cb185-19" tabindex="-1"></a>  <span class="fu">sprintf</span>(</span>
-<span id="cb185-20"><a href="shiny_3.html#cb185-20" tabindex="-1"></a>    <span class="st">&quot;p value: %0.3f</span><span class="sc">\n</span><span class="st">[%0.2f, %0.2f]&quot;</span>,</span>
-<span id="cb185-21"><a href="shiny_3.html#cb185-21" tabindex="-1"></a>    test<span class="sc">$</span>p.value, test<span class="sc">$</span>conf.int[<span class="dv">1</span>], test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
-<span id="cb185-22"><a href="shiny_3.html#cb185-22" tabindex="-1"></a>  )</span>
-<span id="cb185-23"><a href="shiny_3.html#cb185-23" tabindex="-1"></a>}</span>
-<span id="cb185-24"><a href="shiny_3.html#cb185-24" tabindex="-1"></a></span>
-<span id="cb185-25"><a href="shiny_3.html#cb185-25" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb185-26"><a href="shiny_3.html#cb185-26" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
-<span id="cb185-27"><a href="shiny_3.html#cb185-27" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
-<span id="cb185-28"><a href="shiny_3.html#cb185-28" tabindex="-1"></a>           <span class="st">&quot;Distribution 1&quot;</span>,</span>
-<span id="cb185-29"><a href="shiny_3.html#cb185-29" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
-<span id="cb185-30"><a href="shiny_3.html#cb185-30" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
-<span id="cb185-31"><a href="shiny_3.html#cb185-31" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
-<span id="cb185-32"><a href="shiny_3.html#cb185-32" tabindex="-1"></a>    ),</span>
-<span id="cb185-33"><a href="shiny_3.html#cb185-33" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
-<span id="cb185-34"><a href="shiny_3.html#cb185-34" tabindex="-1"></a>           <span class="st">&quot;Distribution 2&quot;</span>,</span>
-<span id="cb185-35"><a href="shiny_3.html#cb185-35" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
-<span id="cb185-36"><a href="shiny_3.html#cb185-36" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
-<span id="cb185-37"><a href="shiny_3.html#cb185-37" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
-<span id="cb185-38"><a href="shiny_3.html#cb185-38" tabindex="-1"></a>    ),</span>
-<span id="cb185-39"><a href="shiny_3.html#cb185-39" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
-<span id="cb185-40"><a href="shiny_3.html#cb185-40" tabindex="-1"></a>           <span class="st">&quot;Frequency polygon&quot;</span>,</span>
-<span id="cb185-41"><a href="shiny_3.html#cb185-41" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;binwidth&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Bin width&quot;</span>, <span class="at">value =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
-<span id="cb185-42"><a href="shiny_3.html#cb185-42" tabindex="-1"></a>           <span class="fu">sliderInput</span>(<span class="st">&quot;range&quot;</span>, <span class="at">label =</span> <span class="st">&quot;range&quot;</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">min =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
-<span id="cb185-43"><a href="shiny_3.html#cb185-43" tabindex="-1"></a>    )</span>
-<span id="cb185-44"><a href="shiny_3.html#cb185-44" tabindex="-1"></a>  ),</span>
-<span id="cb185-45"><a href="shiny_3.html#cb185-45" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
-<span id="cb185-46"><a href="shiny_3.html#cb185-46" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>, <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)),</span>
-<span id="cb185-47"><a href="shiny_3.html#cb185-47" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">3</span>, <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;ttest&quot;</span>))</span>
-<span id="cb185-48"><a href="shiny_3.html#cb185-48" tabindex="-1"></a>  )</span>
-<span id="cb185-49"><a href="shiny_3.html#cb185-49" tabindex="-1"></a>)</span>
-<span id="cb185-50"><a href="shiny_3.html#cb185-50" tabindex="-1"></a></span>
-<span id="cb185-51"><a href="shiny_3.html#cb185-51" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb185-52"><a href="shiny_3.html#cb185-52" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, input<span class="sc">$</span>sd1))</span>
-<span id="cb185-53"><a href="shiny_3.html#cb185-53" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, input<span class="sc">$</span>sd2))</span>
-<span id="cb185-54"><a href="shiny_3.html#cb185-54" tabindex="-1"></a></span>
-<span id="cb185-55"><a href="shiny_3.html#cb185-55" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb185-56"><a href="shiny_3.html#cb185-56" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
-<span id="cb185-57"><a href="shiny_3.html#cb185-57" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
-<span id="cb185-58"><a href="shiny_3.html#cb185-58" tabindex="-1"></a></span>
-<span id="cb185-59"><a href="shiny_3.html#cb185-59" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
-<span id="cb185-60"><a href="shiny_3.html#cb185-60" tabindex="-1"></a>    <span class="fu">t_test</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>())</span>
-<span id="cb185-61"><a href="shiny_3.html#cb185-61" tabindex="-1"></a>  })</span>
-<span id="cb185-62"><a href="shiny_3.html#cb185-62" tabindex="-1"></a>}</span>
-<span id="cb185-63"><a href="shiny_3.html#cb185-63" tabindex="-1"></a></span>
-<span id="cb185-64"><a href="shiny_3.html#cb185-64" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
-<p>在第一段代码中，<strong>shiny会把输出看成一个整体</strong>，即使你只改变第一个分布的参数，那么在运行时shiny也会重新对这两个分布进行抽样。而我们的本意是对第一个分布重新抽样，保持第二个分布的数据不变。</p>
-<p>在第二段代码中，抽样过程都被包含在反应表达式<code>reactive()</code>中，这样shiny仅会在对应输入更新时运行此处的代码，否则保持原始数据。也就是说，反应表达式是一个模块化单元，就像平时使用的函数一样。</p>
-<blockquote>
-<p>在使用反应表达式时，除了要有<code>reactive()</code>，在其他地方调用对象时还得有<code>()</code>，正如这里的<code>x1()</code>、<code>x2()</code></p>
-</blockquote>
-</div>
-<div id="shiny_3_3" class="section level3 hasAnchor" number="5.3.3">
-<h3><span class="header-section-number">5.3.3</span> 控制更新<a href="shiny_3.html#shiny_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div id="shiny_3_3_1" class="section level4 hasAnchor" number="5.3.3.1">
-<h4><span class="header-section-number">5.3.3.1</span> 自动更新<a href="shiny_3.html#shiny_3_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>我们除了在更改输入时想更新数据外，有时还想在同一输入下进行多次更新（如果可以的话）。例如在同一分布下（意味着输入不变），我们想看看多次抽样的结果（重复抽样操作）。这时，可以利用<code>reactiveTimer(interval)</code>，根据时间间隔interval来周期性地触发响应式更新的计时器函数，依赖于它的响应式表达式/输出按固定时间间隔自动重新计算，非常适合实现实时数据刷新、动态仪表盘等功能。</p>
-<blockquote>
-<p>interval以毫秒为单位， 1s=1000ms</p>
-</blockquote>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="shiny_3.html#cb186-1" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb186-2"><a href="shiny_3.html#cb186-2" tabindex="-1"></a>  timer <span class="ot">&lt;-</span> <span class="fu">reactiveTimer</span>(<span class="dv">500</span>)</span>
-<span id="cb186-3"><a href="shiny_3.html#cb186-3" tabindex="-1"></a></span>
-<span id="cb186-4"><a href="shiny_3.html#cb186-4" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb186-5"><a href="shiny_3.html#cb186-5" tabindex="-1"></a>    <span class="fu">timer</span>()</span>
-<span id="cb186-6"><a href="shiny_3.html#cb186-6" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda1)</span>
-<span id="cb186-7"><a href="shiny_3.html#cb186-7" tabindex="-1"></a>  })</span>
-<span id="cb186-8"><a href="shiny_3.html#cb186-8" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb186-9"><a href="shiny_3.html#cb186-9" tabindex="-1"></a>    <span class="fu">timer</span>()</span>
-<span id="cb186-10"><a href="shiny_3.html#cb186-10" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda2)</span>
-<span id="cb186-11"><a href="shiny_3.html#cb186-11" tabindex="-1"></a>  })</span>
-<span id="cb186-12"><a href="shiny_3.html#cb186-12" tabindex="-1"></a></span>
-<span id="cb186-13"><a href="shiny_3.html#cb186-13" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb186-14"><a href="shiny_3.html#cb186-14" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>))</span>
-<span id="cb186-15"><a href="shiny_3.html#cb186-15" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
-<span id="cb186-16"><a href="shiny_3.html#cb186-16" tabindex="-1"></a>}</span></code></pre></div>
-<p>这里创建了500ms的计时器，并在<code>x1</code>和<code>x2</code>中添加了计时器，这使得在1s中就会更新两次<code>x1</code>和<code>x2</code>，并重新绘图。</p>
-</div>
-<div id="shiny_3_3_2" class="section level4 hasAnchor" number="5.3.3.2">
-<h4><span class="header-section-number">5.3.3.2</span> 手动更新<a href="shiny_3.html#shiny_3_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>或许我们也想在同一输入下，手动点击按钮来进行一次更新，这时引入<code>actionButton()</code>。</p>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="shiny_3.html#cb187-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb187-2"><a href="shiny_3.html#cb187-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb187-3"><a href="shiny_3.html#cb187-3" tabindex="-1"></a></span>
@@ -866,49 +703,215 @@ div.csl-indent {
 <span id="cb187-12"><a href="shiny_3.html#cb187-12" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> xlim)</span>
 <span id="cb187-13"><a href="shiny_3.html#cb187-13" tabindex="-1"></a>}</span>
 <span id="cb187-14"><a href="shiny_3.html#cb187-14" tabindex="-1"></a></span>
-<span id="cb187-15"><a href="shiny_3.html#cb187-15" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb187-16"><a href="shiny_3.html#cb187-16" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
-<span id="cb187-17"><a href="shiny_3.html#cb187-17" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">3</span>,</span>
-<span id="cb187-18"><a href="shiny_3.html#cb187-18" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;lambda1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;lambda1&quot;</span>, <span class="at">value =</span> <span class="dv">3</span>),</span>
-<span id="cb187-19"><a href="shiny_3.html#cb187-19" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;lambda2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;lambda2&quot;</span>, <span class="at">value =</span> <span class="dv">5</span>),</span>
-<span id="cb187-20"><a href="shiny_3.html#cb187-20" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="fl">1e4</span>, <span class="at">min =</span> <span class="dv">0</span>),</span>
-<span id="cb187-21"><a href="shiny_3.html#cb187-21" tabindex="-1"></a>           <span class="fu">actionButton</span>(<span class="st">&quot;simulate&quot;</span>, <span class="st">&quot;Simulate!&quot;</span>)</span>
-<span id="cb187-22"><a href="shiny_3.html#cb187-22" tabindex="-1"></a>    ),</span>
-<span id="cb187-23"><a href="shiny_3.html#cb187-23" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>, <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>))</span>
-<span id="cb187-24"><a href="shiny_3.html#cb187-24" tabindex="-1"></a>  )</span>
-<span id="cb187-25"><a href="shiny_3.html#cb187-25" tabindex="-1"></a>)</span>
-<span id="cb187-26"><a href="shiny_3.html#cb187-26" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb187-27"><a href="shiny_3.html#cb187-27" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb187-28"><a href="shiny_3.html#cb187-28" tabindex="-1"></a>    input<span class="sc">$</span>simulate</span>
-<span id="cb187-29"><a href="shiny_3.html#cb187-29" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda1)</span>
-<span id="cb187-30"><a href="shiny_3.html#cb187-30" tabindex="-1"></a>  })</span>
-<span id="cb187-31"><a href="shiny_3.html#cb187-31" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb187-32"><a href="shiny_3.html#cb187-32" tabindex="-1"></a>    input<span class="sc">$</span>simulate</span>
-<span id="cb187-33"><a href="shiny_3.html#cb187-33" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda2)</span>
-<span id="cb187-34"><a href="shiny_3.html#cb187-34" tabindex="-1"></a>  })</span>
-<span id="cb187-35"><a href="shiny_3.html#cb187-35" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb187-36"><a href="shiny_3.html#cb187-36" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>))</span>
-<span id="cb187-37"><a href="shiny_3.html#cb187-37" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
-<span id="cb187-38"><a href="shiny_3.html#cb187-38" tabindex="-1"></a>}</span>
-<span id="cb187-39"><a href="shiny_3.html#cb187-39" tabindex="-1"></a></span>
-<span id="cb187-40"><a href="shiny_3.html#cb187-40" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
+<span id="cb187-15"><a href="shiny_3.html#cb187-15" tabindex="-1"></a>t_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2) {</span>
+<span id="cb187-16"><a href="shiny_3.html#cb187-16" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x1, x2)</span>
+<span id="cb187-17"><a href="shiny_3.html#cb187-17" tabindex="-1"></a>  </span>
+<span id="cb187-18"><a href="shiny_3.html#cb187-18" tabindex="-1"></a>  <span class="co"># use sprintf() to format t.test() results compactly</span></span>
+<span id="cb187-19"><a href="shiny_3.html#cb187-19" tabindex="-1"></a>  <span class="fu">sprintf</span>(</span>
+<span id="cb187-20"><a href="shiny_3.html#cb187-20" tabindex="-1"></a>    <span class="st">&quot;p value: %0.3f</span><span class="sc">\n</span><span class="st">[%0.2f, %0.2f]&quot;</span>,</span>
+<span id="cb187-21"><a href="shiny_3.html#cb187-21" tabindex="-1"></a>    test<span class="sc">$</span>p.value, test<span class="sc">$</span>conf.int[<span class="dv">1</span>], test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
+<span id="cb187-22"><a href="shiny_3.html#cb187-22" tabindex="-1"></a>  )</span>
+<span id="cb187-23"><a href="shiny_3.html#cb187-23" tabindex="-1"></a>}</span>
+<span id="cb187-24"><a href="shiny_3.html#cb187-24" tabindex="-1"></a></span>
+<span id="cb187-25"><a href="shiny_3.html#cb187-25" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb187-26"><a href="shiny_3.html#cb187-26" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb187-27"><a href="shiny_3.html#cb187-27" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
+<span id="cb187-28"><a href="shiny_3.html#cb187-28" tabindex="-1"></a>           <span class="st">&quot;Distribution 1&quot;</span>,</span>
+<span id="cb187-29"><a href="shiny_3.html#cb187-29" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb187-30"><a href="shiny_3.html#cb187-30" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
+<span id="cb187-31"><a href="shiny_3.html#cb187-31" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
+<span id="cb187-32"><a href="shiny_3.html#cb187-32" tabindex="-1"></a>    ),</span>
+<span id="cb187-33"><a href="shiny_3.html#cb187-33" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
+<span id="cb187-34"><a href="shiny_3.html#cb187-34" tabindex="-1"></a>           <span class="st">&quot;Distribution 2&quot;</span>,</span>
+<span id="cb187-35"><a href="shiny_3.html#cb187-35" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb187-36"><a href="shiny_3.html#cb187-36" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
+<span id="cb187-37"><a href="shiny_3.html#cb187-37" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
+<span id="cb187-38"><a href="shiny_3.html#cb187-38" tabindex="-1"></a>    ),</span>
+<span id="cb187-39"><a href="shiny_3.html#cb187-39" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
+<span id="cb187-40"><a href="shiny_3.html#cb187-40" tabindex="-1"></a>           <span class="st">&quot;Frequency polygon&quot;</span>,</span>
+<span id="cb187-41"><a href="shiny_3.html#cb187-41" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;binwidth&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Bin width&quot;</span>, <span class="at">value =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
+<span id="cb187-42"><a href="shiny_3.html#cb187-42" tabindex="-1"></a>           <span class="fu">sliderInput</span>(<span class="st">&quot;range&quot;</span>, <span class="at">label =</span> <span class="st">&quot;range&quot;</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">min =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
+<span id="cb187-43"><a href="shiny_3.html#cb187-43" tabindex="-1"></a>    )</span>
+<span id="cb187-44"><a href="shiny_3.html#cb187-44" tabindex="-1"></a>  ),</span>
+<span id="cb187-45"><a href="shiny_3.html#cb187-45" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb187-46"><a href="shiny_3.html#cb187-46" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>, <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)),</span>
+<span id="cb187-47"><a href="shiny_3.html#cb187-47" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">3</span>, <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;ttest&quot;</span>))</span>
+<span id="cb187-48"><a href="shiny_3.html#cb187-48" tabindex="-1"></a>  )</span>
+<span id="cb187-49"><a href="shiny_3.html#cb187-49" tabindex="-1"></a>)</span>
+<span id="cb187-50"><a href="shiny_3.html#cb187-50" tabindex="-1"></a></span>
+<span id="cb187-51"><a href="shiny_3.html#cb187-51" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb187-52"><a href="shiny_3.html#cb187-52" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb187-53"><a href="shiny_3.html#cb187-53" tabindex="-1"></a>    x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, input<span class="sc">$</span>sd1)</span>
+<span id="cb187-54"><a href="shiny_3.html#cb187-54" tabindex="-1"></a>    x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, input<span class="sc">$</span>sd2)</span>
+<span id="cb187-55"><a href="shiny_3.html#cb187-55" tabindex="-1"></a>    </span>
+<span id="cb187-56"><a href="shiny_3.html#cb187-56" tabindex="-1"></a>    <span class="fu">freqpoly</span>(x1, x2, <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
+<span id="cb187-57"><a href="shiny_3.html#cb187-57" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb187-58"><a href="shiny_3.html#cb187-58" tabindex="-1"></a>  </span>
+<span id="cb187-59"><a href="shiny_3.html#cb187-59" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb187-60"><a href="shiny_3.html#cb187-60" tabindex="-1"></a>    x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, input<span class="sc">$</span>sd1)</span>
+<span id="cb187-61"><a href="shiny_3.html#cb187-61" tabindex="-1"></a>    x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, input<span class="sc">$</span>sd2)</span>
+<span id="cb187-62"><a href="shiny_3.html#cb187-62" tabindex="-1"></a>    </span>
+<span id="cb187-63"><a href="shiny_3.html#cb187-63" tabindex="-1"></a>    <span class="fu">t_test</span>(x1, x2)</span>
+<span id="cb187-64"><a href="shiny_3.html#cb187-64" tabindex="-1"></a>  })</span>
+<span id="cb187-65"><a href="shiny_3.html#cb187-65" tabindex="-1"></a>}</span>
+<span id="cb187-66"><a href="shiny_3.html#cb187-66" tabindex="-1"></a></span>
+<span id="cb187-67"><a href="shiny_3.html#cb187-67" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="shiny_3.html#cb188-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb188-2"><a href="shiny_3.html#cb188-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb188-3"><a href="shiny_3.html#cb188-3" tabindex="-1"></a></span>
+<span id="cb188-4"><a href="shiny_3.html#cb188-4" tabindex="-1"></a>freqpoly <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, <span class="at">binwidth =</span> <span class="fl">0.1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) {</span>
+<span id="cb188-5"><a href="shiny_3.html#cb188-5" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb188-6"><a href="shiny_3.html#cb188-6" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(x1, x2),</span>
+<span id="cb188-7"><a href="shiny_3.html#cb188-7" tabindex="-1"></a>    <span class="at">g =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;x1&quot;</span>, <span class="fu">length</span>(x1)), <span class="fu">rep</span>(<span class="st">&quot;x2&quot;</span>, <span class="fu">length</span>(x2)))</span>
+<span id="cb188-8"><a href="shiny_3.html#cb188-8" tabindex="-1"></a>  )</span>
+<span id="cb188-9"><a href="shiny_3.html#cb188-9" tabindex="-1"></a>  </span>
+<span id="cb188-10"><a href="shiny_3.html#cb188-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, <span class="at">colour =</span> g)) <span class="sc">+</span></span>
+<span id="cb188-11"><a href="shiny_3.html#cb188-11" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> binwidth, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb188-12"><a href="shiny_3.html#cb188-12" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> xlim)</span>
+<span id="cb188-13"><a href="shiny_3.html#cb188-13" tabindex="-1"></a>}</span>
+<span id="cb188-14"><a href="shiny_3.html#cb188-14" tabindex="-1"></a></span>
+<span id="cb188-15"><a href="shiny_3.html#cb188-15" tabindex="-1"></a>t_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2) {</span>
+<span id="cb188-16"><a href="shiny_3.html#cb188-16" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x1, x2)</span>
+<span id="cb188-17"><a href="shiny_3.html#cb188-17" tabindex="-1"></a>  </span>
+<span id="cb188-18"><a href="shiny_3.html#cb188-18" tabindex="-1"></a>  <span class="co"># use sprintf() to format t.test() results compactly</span></span>
+<span id="cb188-19"><a href="shiny_3.html#cb188-19" tabindex="-1"></a>  <span class="fu">sprintf</span>(</span>
+<span id="cb188-20"><a href="shiny_3.html#cb188-20" tabindex="-1"></a>    <span class="st">&quot;p value: %0.3f</span><span class="sc">\n</span><span class="st">[%0.2f, %0.2f]&quot;</span>,</span>
+<span id="cb188-21"><a href="shiny_3.html#cb188-21" tabindex="-1"></a>    test<span class="sc">$</span>p.value, test<span class="sc">$</span>conf.int[<span class="dv">1</span>], test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
+<span id="cb188-22"><a href="shiny_3.html#cb188-22" tabindex="-1"></a>  )</span>
+<span id="cb188-23"><a href="shiny_3.html#cb188-23" tabindex="-1"></a>}</span>
+<span id="cb188-24"><a href="shiny_3.html#cb188-24" tabindex="-1"></a></span>
+<span id="cb188-25"><a href="shiny_3.html#cb188-25" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb188-26"><a href="shiny_3.html#cb188-26" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb188-27"><a href="shiny_3.html#cb188-27" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
+<span id="cb188-28"><a href="shiny_3.html#cb188-28" tabindex="-1"></a>           <span class="st">&quot;Distribution 1&quot;</span>,</span>
+<span id="cb188-29"><a href="shiny_3.html#cb188-29" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb188-30"><a href="shiny_3.html#cb188-30" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
+<span id="cb188-31"><a href="shiny_3.html#cb188-31" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
+<span id="cb188-32"><a href="shiny_3.html#cb188-32" tabindex="-1"></a>    ),</span>
+<span id="cb188-33"><a href="shiny_3.html#cb188-33" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
+<span id="cb188-34"><a href="shiny_3.html#cb188-34" tabindex="-1"></a>           <span class="st">&quot;Distribution 2&quot;</span>,</span>
+<span id="cb188-35"><a href="shiny_3.html#cb188-35" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb188-36"><a href="shiny_3.html#cb188-36" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;mean2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;µ&quot;</span>, <span class="at">value =</span> <span class="dv">0</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
+<span id="cb188-37"><a href="shiny_3.html#cb188-37" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;sd2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;σ&quot;</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>)</span>
+<span id="cb188-38"><a href="shiny_3.html#cb188-38" tabindex="-1"></a>    ),</span>
+<span id="cb188-39"><a href="shiny_3.html#cb188-39" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">4</span>,</span>
+<span id="cb188-40"><a href="shiny_3.html#cb188-40" tabindex="-1"></a>           <span class="st">&quot;Frequency polygon&quot;</span>,</span>
+<span id="cb188-41"><a href="shiny_3.html#cb188-41" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;binwidth&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Bin width&quot;</span>, <span class="at">value =</span> <span class="fl">0.1</span>, <span class="at">step =</span> <span class="fl">0.1</span>),</span>
+<span id="cb188-42"><a href="shiny_3.html#cb188-42" tabindex="-1"></a>           <span class="fu">sliderInput</span>(<span class="st">&quot;range&quot;</span>, <span class="at">label =</span> <span class="st">&quot;range&quot;</span>, <span class="at">value =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">min =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
+<span id="cb188-43"><a href="shiny_3.html#cb188-43" tabindex="-1"></a>    )</span>
+<span id="cb188-44"><a href="shiny_3.html#cb188-44" tabindex="-1"></a>  ),</span>
+<span id="cb188-45"><a href="shiny_3.html#cb188-45" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb188-46"><a href="shiny_3.html#cb188-46" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>, <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)),</span>
+<span id="cb188-47"><a href="shiny_3.html#cb188-47" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">3</span>, <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;ttest&quot;</span>))</span>
+<span id="cb188-48"><a href="shiny_3.html#cb188-48" tabindex="-1"></a>  )</span>
+<span id="cb188-49"><a href="shiny_3.html#cb188-49" tabindex="-1"></a>)</span>
+<span id="cb188-50"><a href="shiny_3.html#cb188-50" tabindex="-1"></a></span>
+<span id="cb188-51"><a href="shiny_3.html#cb188-51" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb188-52"><a href="shiny_3.html#cb188-52" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">rnorm</span>(input<span class="sc">$</span>n1, input<span class="sc">$</span>mean1, input<span class="sc">$</span>sd1))</span>
+<span id="cb188-53"><a href="shiny_3.html#cb188-53" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">rnorm</span>(input<span class="sc">$</span>n2, input<span class="sc">$</span>mean2, input<span class="sc">$</span>sd2))</span>
+<span id="cb188-54"><a href="shiny_3.html#cb188-54" tabindex="-1"></a></span>
+<span id="cb188-55"><a href="shiny_3.html#cb188-55" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb188-56"><a href="shiny_3.html#cb188-56" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> input<span class="sc">$</span>binwidth, <span class="at">xlim =</span> input<span class="sc">$</span>range)</span>
+<span id="cb188-57"><a href="shiny_3.html#cb188-57" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb188-58"><a href="shiny_3.html#cb188-58" tabindex="-1"></a></span>
+<span id="cb188-59"><a href="shiny_3.html#cb188-59" tabindex="-1"></a>  output<span class="sc">$</span>ttest <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb188-60"><a href="shiny_3.html#cb188-60" tabindex="-1"></a>    <span class="fu">t_test</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>())</span>
+<span id="cb188-61"><a href="shiny_3.html#cb188-61" tabindex="-1"></a>  })</span>
+<span id="cb188-62"><a href="shiny_3.html#cb188-62" tabindex="-1"></a>}</span>
+<span id="cb188-63"><a href="shiny_3.html#cb188-63" tabindex="-1"></a></span>
+<span id="cb188-64"><a href="shiny_3.html#cb188-64" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
+<p>在第一段代码中，<strong>shiny会把输出看成一个整体</strong>，即使你只改变第一个分布的参数，那么在运行时shiny也会重新对这两个分布进行抽样。而我们的本意是对第一个分布重新抽样，保持第二个分布的数据不变。</p>
+<p>在第二段代码中，抽样过程都被包含在反应表达式<code>reactive()</code>中，这样shiny仅会在对应输入更新时运行此处的代码，否则保持原始数据。也就是说，反应表达式是一个模块化单元，就像平时使用的函数一样。</p>
+<blockquote>
+<p>在使用反应表达式时，除了要有<code>reactive()</code>，在其他地方调用对象时还得有<code>()</code>，正如这里的<code>x1()</code>、<code>x2()</code></p>
+</blockquote>
+</div>
+<div id="shiny_3_3" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> 控制更新<a href="shiny_3.html#shiny_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="shiny_3_3_1" class="section level4 hasAnchor" number="5.3.3.1">
+<h4><span class="header-section-number">5.3.3.1</span> 自动更新<a href="shiny_3.html#shiny_3_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>我们除了在更改输入时想更新数据外，有时还想在同一输入下进行多次更新（如果可以的话）。例如在同一分布下（意味着输入不变），我们想看看多次抽样的结果（重复抽样操作）。这时，可以利用<code>reactiveTimer(interval)</code>，根据时间间隔interval来周期性地触发响应式更新的计时器函数，依赖于它的响应式表达式/输出按固定时间间隔自动重新计算，非常适合实现实时数据刷新、动态仪表盘等功能。</p>
+<blockquote>
+<p>interval以毫秒为单位， 1s=1000ms</p>
+</blockquote>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="shiny_3.html#cb189-1" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb189-2"><a href="shiny_3.html#cb189-2" tabindex="-1"></a>  timer <span class="ot">&lt;-</span> <span class="fu">reactiveTimer</span>(<span class="dv">500</span>)</span>
+<span id="cb189-3"><a href="shiny_3.html#cb189-3" tabindex="-1"></a></span>
+<span id="cb189-4"><a href="shiny_3.html#cb189-4" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb189-5"><a href="shiny_3.html#cb189-5" tabindex="-1"></a>    <span class="fu">timer</span>()</span>
+<span id="cb189-6"><a href="shiny_3.html#cb189-6" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda1)</span>
+<span id="cb189-7"><a href="shiny_3.html#cb189-7" tabindex="-1"></a>  })</span>
+<span id="cb189-8"><a href="shiny_3.html#cb189-8" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb189-9"><a href="shiny_3.html#cb189-9" tabindex="-1"></a>    <span class="fu">timer</span>()</span>
+<span id="cb189-10"><a href="shiny_3.html#cb189-10" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda2)</span>
+<span id="cb189-11"><a href="shiny_3.html#cb189-11" tabindex="-1"></a>  })</span>
+<span id="cb189-12"><a href="shiny_3.html#cb189-12" tabindex="-1"></a></span>
+<span id="cb189-13"><a href="shiny_3.html#cb189-13" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb189-14"><a href="shiny_3.html#cb189-14" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>))</span>
+<span id="cb189-15"><a href="shiny_3.html#cb189-15" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb189-16"><a href="shiny_3.html#cb189-16" tabindex="-1"></a>}</span></code></pre></div>
+<p>这里创建了500ms的计时器，并在<code>x1</code>和<code>x2</code>中添加了计时器，这使得在1s中就会更新两次<code>x1</code>和<code>x2</code>，并重新绘图。</p>
+</div>
+<div id="shiny_3_3_2" class="section level4 hasAnchor" number="5.3.3.2">
+<h4><span class="header-section-number">5.3.3.2</span> 手动更新<a href="shiny_3.html#shiny_3_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>或许我们也想在同一输入下，手动点击按钮来进行一次更新，这时引入<code>actionButton()</code>。</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="shiny_3.html#cb190-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb190-2"><a href="shiny_3.html#cb190-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb190-3"><a href="shiny_3.html#cb190-3" tabindex="-1"></a></span>
+<span id="cb190-4"><a href="shiny_3.html#cb190-4" tabindex="-1"></a>freqpoly <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, <span class="at">binwidth =</span> <span class="fl">0.1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) {</span>
+<span id="cb190-5"><a href="shiny_3.html#cb190-5" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb190-6"><a href="shiny_3.html#cb190-6" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(x1, x2),</span>
+<span id="cb190-7"><a href="shiny_3.html#cb190-7" tabindex="-1"></a>    <span class="at">g =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;x1&quot;</span>, <span class="fu">length</span>(x1)), <span class="fu">rep</span>(<span class="st">&quot;x2&quot;</span>, <span class="fu">length</span>(x2)))</span>
+<span id="cb190-8"><a href="shiny_3.html#cb190-8" tabindex="-1"></a>  )</span>
+<span id="cb190-9"><a href="shiny_3.html#cb190-9" tabindex="-1"></a>  </span>
+<span id="cb190-10"><a href="shiny_3.html#cb190-10" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, <span class="at">colour =</span> g)) <span class="sc">+</span></span>
+<span id="cb190-11"><a href="shiny_3.html#cb190-11" tabindex="-1"></a>    <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> binwidth, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb190-12"><a href="shiny_3.html#cb190-12" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> xlim)</span>
+<span id="cb190-13"><a href="shiny_3.html#cb190-13" tabindex="-1"></a>}</span>
+<span id="cb190-14"><a href="shiny_3.html#cb190-14" tabindex="-1"></a></span>
+<span id="cb190-15"><a href="shiny_3.html#cb190-15" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb190-16"><a href="shiny_3.html#cb190-16" tabindex="-1"></a>  <span class="fu">fluidRow</span>(</span>
+<span id="cb190-17"><a href="shiny_3.html#cb190-17" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">3</span>,</span>
+<span id="cb190-18"><a href="shiny_3.html#cb190-18" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;lambda1&quot;</span>, <span class="at">label =</span> <span class="st">&quot;lambda1&quot;</span>, <span class="at">value =</span> <span class="dv">3</span>),</span>
+<span id="cb190-19"><a href="shiny_3.html#cb190-19" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;lambda2&quot;</span>, <span class="at">label =</span> <span class="st">&quot;lambda2&quot;</span>, <span class="at">value =</span> <span class="dv">5</span>),</span>
+<span id="cb190-20"><a href="shiny_3.html#cb190-20" tabindex="-1"></a>           <span class="fu">numericInput</span>(<span class="st">&quot;n&quot;</span>, <span class="at">label =</span> <span class="st">&quot;n&quot;</span>, <span class="at">value =</span> <span class="fl">1e4</span>, <span class="at">min =</span> <span class="dv">0</span>),</span>
+<span id="cb190-21"><a href="shiny_3.html#cb190-21" tabindex="-1"></a>           <span class="fu">actionButton</span>(<span class="st">&quot;simulate&quot;</span>, <span class="st">&quot;Simulate!&quot;</span>)</span>
+<span id="cb190-22"><a href="shiny_3.html#cb190-22" tabindex="-1"></a>    ),</span>
+<span id="cb190-23"><a href="shiny_3.html#cb190-23" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>, <span class="fu">plotOutput</span>(<span class="st">&quot;hist&quot;</span>))</span>
+<span id="cb190-24"><a href="shiny_3.html#cb190-24" tabindex="-1"></a>  )</span>
+<span id="cb190-25"><a href="shiny_3.html#cb190-25" tabindex="-1"></a>)</span>
+<span id="cb190-26"><a href="shiny_3.html#cb190-26" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb190-27"><a href="shiny_3.html#cb190-27" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb190-28"><a href="shiny_3.html#cb190-28" tabindex="-1"></a>    input<span class="sc">$</span>simulate</span>
+<span id="cb190-29"><a href="shiny_3.html#cb190-29" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda1)</span>
+<span id="cb190-30"><a href="shiny_3.html#cb190-30" tabindex="-1"></a>  })</span>
+<span id="cb190-31"><a href="shiny_3.html#cb190-31" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb190-32"><a href="shiny_3.html#cb190-32" tabindex="-1"></a>    input<span class="sc">$</span>simulate</span>
+<span id="cb190-33"><a href="shiny_3.html#cb190-33" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda2)</span>
+<span id="cb190-34"><a href="shiny_3.html#cb190-34" tabindex="-1"></a>  })</span>
+<span id="cb190-35"><a href="shiny_3.html#cb190-35" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb190-36"><a href="shiny_3.html#cb190-36" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>))</span>
+<span id="cb190-37"><a href="shiny_3.html#cb190-37" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb190-38"><a href="shiny_3.html#cb190-38" tabindex="-1"></a>}</span>
+<span id="cb190-39"><a href="shiny_3.html#cb190-39" tabindex="-1"></a></span>
+<span id="cb190-40"><a href="shiny_3.html#cb190-40" tabindex="-1"></a><span class="fu">shinyApp</span>(ui,server)</span></code></pre></div>
 <p>此处利用<code>actionButton()</code>创建了一个ID为”simulate”，标签为”Simulate!“的按钮，并在<code>x1</code>和<code>x2</code>处的响应表达式中添加了<code>input$simulate</code>，这使得在每次点击时都能重新更新数据。</p>
 <p>但这样的编程结果会创造两种依赖关系：<code>x1</code>和<code>x2</code>既依赖输入参数，又依赖按钮。当上述两种源头变化时，数据都会更新。倘若我们只想在点击按钮时更新数据（即使参数已经发生了变化），这里引入<code>eventReactive()</code>。<code>eventReactive()</code>有两个参数，第一个参数指定与谁创建依赖关系，第二个参数表示需要计算的内容。</p>
 <blockquote>
 <p>需要计算的内容用<code>{}</code>包裹</p>
 </blockquote>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="shiny_3.html#cb188-1" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb188-2"><a href="shiny_3.html#cb188-2" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>simulate, {</span>
-<span id="cb188-3"><a href="shiny_3.html#cb188-3" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda1)</span>
-<span id="cb188-4"><a href="shiny_3.html#cb188-4" tabindex="-1"></a>  })</span>
-<span id="cb188-5"><a href="shiny_3.html#cb188-5" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>simulate, {</span>
-<span id="cb188-6"><a href="shiny_3.html#cb188-6" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda2)</span>
-<span id="cb188-7"><a href="shiny_3.html#cb188-7" tabindex="-1"></a>  })</span>
-<span id="cb188-8"><a href="shiny_3.html#cb188-8" tabindex="-1"></a>  </span>
-<span id="cb188-9"><a href="shiny_3.html#cb188-9" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb188-10"><a href="shiny_3.html#cb188-10" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>))</span>
-<span id="cb188-11"><a href="shiny_3.html#cb188-11" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
-<span id="cb188-12"><a href="shiny_3.html#cb188-12" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="shiny_3.html#cb191-1" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb191-2"><a href="shiny_3.html#cb191-2" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>simulate, {</span>
+<span id="cb191-3"><a href="shiny_3.html#cb191-3" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda1)</span>
+<span id="cb191-4"><a href="shiny_3.html#cb191-4" tabindex="-1"></a>  })</span>
+<span id="cb191-5"><a href="shiny_3.html#cb191-5" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>simulate, {</span>
+<span id="cb191-6"><a href="shiny_3.html#cb191-6" tabindex="-1"></a>    <span class="fu">rpois</span>(input<span class="sc">$</span>n, input<span class="sc">$</span>lambda2)</span>
+<span id="cb191-7"><a href="shiny_3.html#cb191-7" tabindex="-1"></a>  })</span>
+<span id="cb191-8"><a href="shiny_3.html#cb191-8" tabindex="-1"></a>  </span>
+<span id="cb191-9"><a href="shiny_3.html#cb191-9" tabindex="-1"></a>  output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb191-10"><a href="shiny_3.html#cb191-10" tabindex="-1"></a>    <span class="fu">freqpoly</span>(<span class="fu">x1</span>(), <span class="fu">x2</span>(), <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>))</span>
+<span id="cb191-11"><a href="shiny_3.html#cb191-11" tabindex="-1"></a>  }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb191-12"><a href="shiny_3.html#cb191-12" tabindex="-1"></a>}</span></code></pre></div>
 <p>这里的<code>x1</code>和<code>x2</code>仅会在点击按钮时更新一次数据。</p>
 </div>
 </div>
@@ -916,19 +919,19 @@ div.csl-indent {
 <h3><span class="header-section-number">5.3.4</span> 信息反馈<a href="shiny_3.html#shiny_3_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>现在介绍新的反应表达式——<code>observeEvent()</code>——用于监控特定事件并执行响应操作。</p>
 <p><code>observeEvent()</code>的第一个参数为依赖对象，第二个参数为要执行的代码块。与<code>eventReactive()</code>不同，<code>observeEvent()</code>并没有返回值。</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="shiny_3.html#cb189-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb189-2"><a href="shiny_3.html#cb189-2" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;What&#39;s your name?&quot;</span>),</span>
-<span id="cb189-3"><a href="shiny_3.html#cb189-3" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;greeting&quot;</span>)</span>
-<span id="cb189-4"><a href="shiny_3.html#cb189-4" tabindex="-1"></a>)</span>
-<span id="cb189-5"><a href="shiny_3.html#cb189-5" tabindex="-1"></a></span>
-<span id="cb189-6"><a href="shiny_3.html#cb189-6" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb189-7"><a href="shiny_3.html#cb189-7" tabindex="-1"></a>  string <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="sc">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
-<span id="cb189-8"><a href="shiny_3.html#cb189-8" tabindex="-1"></a></span>
-<span id="cb189-9"><a href="shiny_3.html#cb189-9" tabindex="-1"></a>  output<span class="sc">$</span>greeting <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">string</span>())</span>
-<span id="cb189-10"><a href="shiny_3.html#cb189-10" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>name, {</span>
-<span id="cb189-11"><a href="shiny_3.html#cb189-11" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">&quot;Greeting performed: &quot;</span>, input<span class="sc">$</span>name))</span>
-<span id="cb189-12"><a href="shiny_3.html#cb189-12" tabindex="-1"></a>  })</span>
-<span id="cb189-13"><a href="shiny_3.html#cb189-13" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="shiny_3.html#cb192-1" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb192-2"><a href="shiny_3.html#cb192-2" tabindex="-1"></a>  <span class="fu">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;What&#39;s your name?&quot;</span>),</span>
+<span id="cb192-3"><a href="shiny_3.html#cb192-3" tabindex="-1"></a>  <span class="fu">textOutput</span>(<span class="st">&quot;greeting&quot;</span>)</span>
+<span id="cb192-4"><a href="shiny_3.html#cb192-4" tabindex="-1"></a>)</span>
+<span id="cb192-5"><a href="shiny_3.html#cb192-5" tabindex="-1"></a></span>
+<span id="cb192-6"><a href="shiny_3.html#cb192-6" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb192-7"><a href="shiny_3.html#cb192-7" tabindex="-1"></a>  string <span class="ot">&lt;-</span> <span class="fu">reactive</span>(<span class="fu">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="sc">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
+<span id="cb192-8"><a href="shiny_3.html#cb192-8" tabindex="-1"></a></span>
+<span id="cb192-9"><a href="shiny_3.html#cb192-9" tabindex="-1"></a>  output<span class="sc">$</span>greeting <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">string</span>())</span>
+<span id="cb192-10"><a href="shiny_3.html#cb192-10" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>name, {</span>
+<span id="cb192-11"><a href="shiny_3.html#cb192-11" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">&quot;Greeting performed: &quot;</span>, input<span class="sc">$</span>name))</span>
+<span id="cb192-12"><a href="shiny_3.html#cb192-12" tabindex="-1"></a>  })</span>
+<span id="cb192-13"><a href="shiny_3.html#cb192-13" tabindex="-1"></a>}</span></code></pre></div>
 <p>这里的<code>observeEvent()</code>监控<code>input$name</code>的变化。</p>
 </div>
 </div>

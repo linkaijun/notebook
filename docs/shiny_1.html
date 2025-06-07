@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -646,28 +649,28 @@ div.csl-indent {
 <div id="shiny_1" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> 初始Shiny<a href="shiny_1.html#shiny_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <p>下面是一段demo。</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="shiny_1.html#cb178-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb178-2"><a href="shiny_1.html#cb178-2" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb178-3"><a href="shiny_1.html#cb178-3" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="st">&quot;dataset&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Dataset&quot;</span>, <span class="at">choices =</span> <span class="fu">ls</span>(<span class="st">&quot;package:datasets&quot;</span>)),</span>
-<span id="cb178-4"><a href="shiny_1.html#cb178-4" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;summary&quot;</span>),</span>
-<span id="cb178-5"><a href="shiny_1.html#cb178-5" tabindex="-1"></a>  <span class="fu">tableOutput</span>(<span class="st">&quot;table&quot;</span>)</span>
-<span id="cb178-6"><a href="shiny_1.html#cb178-6" tabindex="-1"></a>)</span>
-<span id="cb178-7"><a href="shiny_1.html#cb178-7" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb178-8"><a href="shiny_1.html#cb178-8" tabindex="-1"></a>  <span class="co"># Create a reactive expression</span></span>
-<span id="cb178-9"><a href="shiny_1.html#cb178-9" tabindex="-1"></a>  dataset <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb178-10"><a href="shiny_1.html#cb178-10" tabindex="-1"></a>    <span class="fu">get</span>(input<span class="sc">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
-<span id="cb178-11"><a href="shiny_1.html#cb178-11" tabindex="-1"></a>  })</span>
-<span id="cb178-12"><a href="shiny_1.html#cb178-12" tabindex="-1"></a></span>
-<span id="cb178-13"><a href="shiny_1.html#cb178-13" tabindex="-1"></a>  output<span class="sc">$</span>summary <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
-<span id="cb178-14"><a href="shiny_1.html#cb178-14" tabindex="-1"></a>    <span class="co"># Use a reactive expression by calling it like a function</span></span>
-<span id="cb178-15"><a href="shiny_1.html#cb178-15" tabindex="-1"></a>    <span class="fu">summary</span>(<span class="fu">dataset</span>())</span>
-<span id="cb178-16"><a href="shiny_1.html#cb178-16" tabindex="-1"></a>  })</span>
-<span id="cb178-17"><a href="shiny_1.html#cb178-17" tabindex="-1"></a>  </span>
-<span id="cb178-18"><a href="shiny_1.html#cb178-18" tabindex="-1"></a>  output<span class="sc">$</span>table <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
-<span id="cb178-19"><a href="shiny_1.html#cb178-19" tabindex="-1"></a>    <span class="fu">dataset</span>()</span>
-<span id="cb178-20"><a href="shiny_1.html#cb178-20" tabindex="-1"></a>  })</span>
-<span id="cb178-21"><a href="shiny_1.html#cb178-21" tabindex="-1"></a>}</span>
-<span id="cb178-22"><a href="shiny_1.html#cb178-22" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="shiny_1.html#cb181-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb181-2"><a href="shiny_1.html#cb181-2" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb181-3"><a href="shiny_1.html#cb181-3" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="st">&quot;dataset&quot;</span>, <span class="at">label =</span> <span class="st">&quot;Dataset&quot;</span>, <span class="at">choices =</span> <span class="fu">ls</span>(<span class="st">&quot;package:datasets&quot;</span>)),</span>
+<span id="cb181-4"><a href="shiny_1.html#cb181-4" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;summary&quot;</span>),</span>
+<span id="cb181-5"><a href="shiny_1.html#cb181-5" tabindex="-1"></a>  <span class="fu">tableOutput</span>(<span class="st">&quot;table&quot;</span>)</span>
+<span id="cb181-6"><a href="shiny_1.html#cb181-6" tabindex="-1"></a>)</span>
+<span id="cb181-7"><a href="shiny_1.html#cb181-7" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb181-8"><a href="shiny_1.html#cb181-8" tabindex="-1"></a>  <span class="co"># Create a reactive expression</span></span>
+<span id="cb181-9"><a href="shiny_1.html#cb181-9" tabindex="-1"></a>  dataset <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb181-10"><a href="shiny_1.html#cb181-10" tabindex="-1"></a>    <span class="fu">get</span>(input<span class="sc">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb181-11"><a href="shiny_1.html#cb181-11" tabindex="-1"></a>  })</span>
+<span id="cb181-12"><a href="shiny_1.html#cb181-12" tabindex="-1"></a></span>
+<span id="cb181-13"><a href="shiny_1.html#cb181-13" tabindex="-1"></a>  output<span class="sc">$</span>summary <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<span id="cb181-14"><a href="shiny_1.html#cb181-14" tabindex="-1"></a>    <span class="co"># Use a reactive expression by calling it like a function</span></span>
+<span id="cb181-15"><a href="shiny_1.html#cb181-15" tabindex="-1"></a>    <span class="fu">summary</span>(<span class="fu">dataset</span>())</span>
+<span id="cb181-16"><a href="shiny_1.html#cb181-16" tabindex="-1"></a>  })</span>
+<span id="cb181-17"><a href="shiny_1.html#cb181-17" tabindex="-1"></a>  </span>
+<span id="cb181-18"><a href="shiny_1.html#cb181-18" tabindex="-1"></a>  output<span class="sc">$</span>table <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
+<span id="cb181-19"><a href="shiny_1.html#cb181-19" tabindex="-1"></a>    <span class="fu">dataset</span>()</span>
+<span id="cb181-20"><a href="shiny_1.html#cb181-20" tabindex="-1"></a>  })</span>
+<span id="cb181-21"><a href="shiny_1.html#cb181-21" tabindex="-1"></a>}</span>
+<span id="cb181-22"><a href="shiny_1.html#cb181-22" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
 <p>由四部分组成：导包、<code>ui</code>、<code>server</code>、以及<code>shinyApp</code>。</p>
 <p>其中<code>ui</code>用于网页的ui设计，<code>server</code>用于背后的数据分析，<code>shinyApp</code>用于搭建shiny应用。</p>
 <p>那么该如何创建shiny文件呢？</p>

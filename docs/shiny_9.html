@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -651,26 +654,26 @@ div.csl-indent {
 <li><p>将shiny的组件与渲染函数添加到代码块</p></li>
 </ol>
 <p>例子如下</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb215-1"><a href="shiny_9.html#cb215-1" tabindex="-1"></a>---</span>
-<span id="cb215-2"><a href="shiny_9.html#cb215-2" tabindex="-1"></a>title: &quot;demo&quot;</span>
-<span id="cb215-3"><a href="shiny_9.html#cb215-3" tabindex="-1"></a>runtime: shiny</span>
-<span id="cb215-4"><a href="shiny_9.html#cb215-4" tabindex="-1"></a>output: html_document</span>
-<span id="cb215-5"><a href="shiny_9.html#cb215-5" tabindex="-1"></a>---</span>
-<span id="cb215-6"><a href="shiny_9.html#cb215-6" tabindex="-1"></a></span>
-<span id="cb215-7"><a href="shiny_9.html#cb215-7" tabindex="-1"></a>## 示例</span>
-<span id="cb215-8"><a href="shiny_9.html#cb215-8" tabindex="-1"></a></span>
-<span id="cb215-9"><a href="shiny_9.html#cb215-9" tabindex="-1"></a>内容</span>
-<span id="cb215-10"><a href="shiny_9.html#cb215-10" tabindex="-1"></a></span>
-<span id="cb215-11"><a href="shiny_9.html#cb215-11" tabindex="-1"></a>```{r, echo=FALSE}</span>
-<span id="cb215-12"><a href="shiny_9.html#cb215-12" tabindex="-1"></a>numericInput(&quot;m&quot;, &quot;Number of samples:&quot;, 2, min = 1, max = 100)</span>
-<span id="cb215-13"><a href="shiny_9.html#cb215-13" tabindex="-1"></a>```</span>
-<span id="cb215-14"><a href="shiny_9.html#cb215-14" tabindex="-1"></a></span>
-<span id="cb215-15"><a href="shiny_9.html#cb215-15" tabindex="-1"></a>```{r, echo=FALSE}</span>
-<span id="cb215-16"><a href="shiny_9.html#cb215-16" tabindex="-1"></a>renderPlot({</span>
-<span id="cb215-17"><a href="shiny_9.html#cb215-17" tabindex="-1"></a>    means &lt;- replicate(1e4, mean(runif(input$m)))</span>
-<span id="cb215-18"><a href="shiny_9.html#cb215-18" tabindex="-1"></a>    hist(means, breaks = 20)</span>
-<span id="cb215-19"><a href="shiny_9.html#cb215-19" tabindex="-1"></a>  }, res = 96)</span>
-<span id="cb215-20"><a href="shiny_9.html#cb215-20" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb218-1"><a href="shiny_9.html#cb218-1" tabindex="-1"></a>---</span>
+<span id="cb218-2"><a href="shiny_9.html#cb218-2" tabindex="-1"></a>title: &quot;demo&quot;</span>
+<span id="cb218-3"><a href="shiny_9.html#cb218-3" tabindex="-1"></a>runtime: shiny</span>
+<span id="cb218-4"><a href="shiny_9.html#cb218-4" tabindex="-1"></a>output: html_document</span>
+<span id="cb218-5"><a href="shiny_9.html#cb218-5" tabindex="-1"></a>---</span>
+<span id="cb218-6"><a href="shiny_9.html#cb218-6" tabindex="-1"></a></span>
+<span id="cb218-7"><a href="shiny_9.html#cb218-7" tabindex="-1"></a>## 示例</span>
+<span id="cb218-8"><a href="shiny_9.html#cb218-8" tabindex="-1"></a></span>
+<span id="cb218-9"><a href="shiny_9.html#cb218-9" tabindex="-1"></a>内容</span>
+<span id="cb218-10"><a href="shiny_9.html#cb218-10" tabindex="-1"></a></span>
+<span id="cb218-11"><a href="shiny_9.html#cb218-11" tabindex="-1"></a>```{r, echo=FALSE}</span>
+<span id="cb218-12"><a href="shiny_9.html#cb218-12" tabindex="-1"></a>numericInput(&quot;m&quot;, &quot;Number of samples:&quot;, 2, min = 1, max = 100)</span>
+<span id="cb218-13"><a href="shiny_9.html#cb218-13" tabindex="-1"></a>```</span>
+<span id="cb218-14"><a href="shiny_9.html#cb218-14" tabindex="-1"></a></span>
+<span id="cb218-15"><a href="shiny_9.html#cb218-15" tabindex="-1"></a>```{r, echo=FALSE}</span>
+<span id="cb218-16"><a href="shiny_9.html#cb218-16" tabindex="-1"></a>renderPlot({</span>
+<span id="cb218-17"><a href="shiny_9.html#cb218-17" tabindex="-1"></a>    means &lt;- replicate(1e4, mean(runif(input$m)))</span>
+<span id="cb218-18"><a href="shiny_9.html#cb218-18" tabindex="-1"></a>    hist(means, breaks = 20)</span>
+<span id="cb218-19"><a href="shiny_9.html#cb218-19" tabindex="-1"></a>  }, res = 96)</span>
+<span id="cb218-20"><a href="shiny_9.html#cb218-20" tabindex="-1"></a>```</span></code></pre></div>
 </div>
             </section>
 

@@ -275,7 +275,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> R连接MySQL</a></li>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
@@ -649,11 +652,11 @@ div.csl-indent {
 <h3><span class="header-section-number">5.8.1</span> Data-masking<a href="shiny_8.html#shiny_8_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>由于shiny通过<code>input</code>来获取输入信息，其中不乏在数据框中需要用到的变量名。但由于不是直接输入对应的变量名，而是依靠<code>input$variable</code>的形式调用，所以会出现意料之外的结果。对此，需要区分<strong>环境中的变量</strong>与<strong>数据框中的变量</strong>这两种变量。前者需要用<code>.env$var</code>来声明，后者用<code>.data$var</code>声明。</p>
 <p>我们想根据输入的变量名及最小值来筛选数据。第一种写法就会出现意料之外的结果，第二种写法才符合预期。</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb213-1"><a href="shiny_8.html#cb213-1" tabindex="-1"></a># 第一种</span>
-<span id="cb213-2"><a href="shiny_8.html#cb213-2" tabindex="-1"></a>data &lt;- reactive(diamonds %&gt;% filter(input$var &gt; input$min))</span>
-<span id="cb213-3"><a href="shiny_8.html#cb213-3" tabindex="-1"></a></span>
-<span id="cb213-4"><a href="shiny_8.html#cb213-4" tabindex="-1"></a># 第二种</span>
-<span id="cb213-5"><a href="shiny_8.html#cb213-5" tabindex="-1"></a>data &lt;- reactive(diamonds %&gt;% filter(.data[[input$var]] &gt; .env$input$min))</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb216-1"><a href="shiny_8.html#cb216-1" tabindex="-1"></a># 第一种</span>
+<span id="cb216-2"><a href="shiny_8.html#cb216-2" tabindex="-1"></a>data &lt;- reactive(diamonds %&gt;% filter(input$var &gt; input$min))</span>
+<span id="cb216-3"><a href="shiny_8.html#cb216-3" tabindex="-1"></a></span>
+<span id="cb216-4"><a href="shiny_8.html#cb216-4" tabindex="-1"></a># 第二种</span>
+<span id="cb216-5"><a href="shiny_8.html#cb216-5" tabindex="-1"></a>data &lt;- reactive(diamonds %&gt;% filter(.data[[input$var]] &gt; .env$input$min))</span></code></pre></div>
 <blockquote>
 <p>环境中有<code>input</code>，<code>input</code>中有<code>min</code>，故可写作<code>.env$input$min</code>；数据框中没有<code>input</code>，故<code>.data$input$var</code>的写法错误</p>
 </blockquote>
@@ -666,16 +669,16 @@ div.csl-indent {
 <blockquote>
 <p>指的是字符串向量中的变量名是否在数据框中</p>
 </blockquote>
-<div class="sourceCode" id="cb214"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb214-1"><a href="shiny_8.html#cb214-1" tabindex="-1"></a>output$data &lt;- renderTable({</span>
-<span id="cb214-2"><a href="shiny_8.html#cb214-2" tabindex="-1"></a>    req(input$vars)</span>
-<span id="cb214-3"><a href="shiny_8.html#cb214-3" tabindex="-1"></a>    mtcars %&gt;% select(all_of(input$vars))</span>
-<span id="cb214-4"><a href="shiny_8.html#cb214-4" tabindex="-1"></a>  })</span>
-<span id="cb214-5"><a href="shiny_8.html#cb214-5" tabindex="-1"></a>output$count &lt;- renderTable({</span>
-<span id="cb214-6"><a href="shiny_8.html#cb214-6" tabindex="-1"></a>    req(input$vars)</span>
-<span id="cb214-7"><a href="shiny_8.html#cb214-7" tabindex="-1"></a>    mtcars %&gt;% </span>
-<span id="cb214-8"><a href="shiny_8.html#cb214-8" tabindex="-1"></a>      group_by(across(all_of(input$vars))) %&gt;% </span>
-<span id="cb214-9"><a href="shiny_8.html#cb214-9" tabindex="-1"></a>      summarise(n = n(), .groups = &quot;drop&quot;)</span>
-<span id="cb214-10"><a href="shiny_8.html#cb214-10" tabindex="-1"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb217-1"><a href="shiny_8.html#cb217-1" tabindex="-1"></a>output$data &lt;- renderTable({</span>
+<span id="cb217-2"><a href="shiny_8.html#cb217-2" tabindex="-1"></a>    req(input$vars)</span>
+<span id="cb217-3"><a href="shiny_8.html#cb217-3" tabindex="-1"></a>    mtcars %&gt;% select(all_of(input$vars))</span>
+<span id="cb217-4"><a href="shiny_8.html#cb217-4" tabindex="-1"></a>  })</span>
+<span id="cb217-5"><a href="shiny_8.html#cb217-5" tabindex="-1"></a>output$count &lt;- renderTable({</span>
+<span id="cb217-6"><a href="shiny_8.html#cb217-6" tabindex="-1"></a>    req(input$vars)</span>
+<span id="cb217-7"><a href="shiny_8.html#cb217-7" tabindex="-1"></a>    mtcars %&gt;% </span>
+<span id="cb217-8"><a href="shiny_8.html#cb217-8" tabindex="-1"></a>      group_by(across(all_of(input$vars))) %&gt;% </span>
+<span id="cb217-9"><a href="shiny_8.html#cb217-9" tabindex="-1"></a>      summarise(n = n(), .groups = &quot;drop&quot;)</span>
+<span id="cb217-10"><a href="shiny_8.html#cb217-10" tabindex="-1"></a>  })</span></code></pre></div>
 </div>
 </div>
             </section>

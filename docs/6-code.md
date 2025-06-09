@@ -818,7 +818,7 @@ result <- model$run()
 ## [1] "正在进行第[468]次迭代"
 ## [1] "正在进行第[469]次迭代"
 ## [1] "达到精度要求"
-## [1] "花费时间： 11.594 秒"
+## [1] "花费时间： 12.076 秒"
 ```
 
 截距项的分组结果如下所示
@@ -1388,6 +1388,497 @@ SubgroupBeta <- R6Class(
 )
 ```
 
+----------------
+
+下面给出python版本的代码。
+
+
+``` default
+import numpy as np
+import pandas as pd
+import time
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import scale
+from scipy import sparse
+from scipy.linalg import block_diag
+from lifelines import CoxPHFitter
+from patsy import bs
+
+
+class SubgroupBeta:
+    
+    def __init__(self, time_status, X, Z,  lambda_value, a = None, penalty = 'MCP', K = 2, theta = 1, df = 6, degree = 3, tol = 1e-4, max_iter = 10000):
+        self.time_status = time_status
+        self.X = X
+        self.Z = Z
+        self.n = X.shape[0]
+        self.p = X.shape[1]
+        self.q = Z.shape[1]
+        self.lambda_value = lambda_value
+        self.a = a
+        self.penalty = penalty
+        self.K = K
+        self.theta = theta
+        self.df = df
+        self.degree = degree
+        self.tol = tol
+        self.max_iter = max_iter
+        
+        self.gamma = None
+        self.beta = None
+        self.Y2 = None
+        self.Y = None
+        self.u = None
+        self.w = None
+        self.nu = None
+        self.c = None
+        self.bic = None
+    
+    # 拟合cox模型
+    def fit_cox_model(self, data):
+        cph = CoxPHFitter()
+        cph.fit(data, duration_col = 'time', event_col = 'status')
+        coef = np.array(cph.params_).reshape(-1,1)
+        return coef
+    
+    # 生成B样条的基函数矩阵
+    def gen_B(self, z, df = 6, degree = 3, intercept = False):
+        B = bs(z, df = df, degree = degree, include_intercept = intercept)
+        
+        return B
+    
+    def initial_value(self):
+        # kmeans
+        kmeans = KMeans(self.K, random_state = 1)
+        kmeans.fit(self.X)
+        labels = kmeans.labels_
+        
+        # beta初始值
+        col_names = ['time', 'status'] + [f'X_{i+1}' for i in range(self.p)]
+        df = pd.DataFrame(np.hstack((self.time_status, self.X)), columns = col_names)
+        df['label'] = labels
+        beta_cox = df.groupby('label', group_keys=False).apply(self.fit_cox_model, include_groups=False)
+        beta_0 = np.hstack(beta_cox.tolist())
+        # 每列都是beta的系数
+        beta_0 = beta_0[:, labels]
+        
+        # gamma初始值
+        B = []
+        for col_Z in range(self.q):
+            z = self.Z[:, col_Z]
+            B_col_Z = self.gen_B(z)
+            B.append(B_col_Z)
+        B = np.hstack(B)
+        B = scale(B, axis = 0, with_mean = True, with_std = False)
+        col_names = ['time', 'status'] + [f'b_{i+1}' for i in range(B.shape[1])]
+        df = pd.DataFrame(np.hstack((self.time_status, B)), columns = col_names)
+        gamma_0 = self.fit_cox_model(df)
+        
+        # Y与Y2的初始值
+        Y_0 = np.einsum('ij,ji->i', self.X, beta_0).reshape(-1,1) + B @ gamma_0
+
+        return beta_0, B, gamma_0, Y_0
+        
+    # 生成矩阵A
+    def gen_A(self):
+        # 生成稀疏Delta矩阵
+        rows = []
+        for i in range(self.n-1):
+            row = sparse.lil_matrix((self.n-1-i, self.n))
+            for j in range(i+1, self.n):
+                row[j-i-1, i] = 1
+                row[j-i-1, j] = -1
+            rows.append(row)
+        Delta = sparse.vstack(rows)
+        A = sparse.kron(Delta, np.eye(self.p))
+        return A
+    
+    # 计算g
+    def gen_g(self):
+        time_obs = self.time_status[:, 0]
+        # R是风险集，每行都是第i个元素的风险集
+        R = (time_obs[:, np.newaxis] >= time_obs).astype(int)
+        g = R @ self.time_status[:, 1].reshape(-1,1)
+        return g
+    
+    # 计算nabla_g
+    def gen_nabla_g(self, Y2):
+        time_obs = self.time_status[:, 0].flatten()
+        status = self.time_status[:, 1].reshape(-1,1)
+        
+        
+        exp_Y2 = np.exp(Y2)
+        R = (time_obs[:, np.newaxis] <= time_obs).astype(int)
+        sum_l_Rk = 1 / (R @ exp_Y2)
+        R_rev = (time_obs[:, np.newaxis] >= time_obs).astype(int)
+        nabla_g = -status + exp_Y2 * (R_rev @ (status * sum_l_Rk))
+        return nabla_g
+    
+    # 计算c
+    def gen_c(self, beta, nu, A):
+        delta_beta = A @ beta.flatten(order = 'F').reshape(-1,1)
+        c = delta_beta + nu / self.theta
+        # 每行都是beta_i - beta_k
+        c = c.reshape(-1, self.p)
+        return c, delta_beta
+    
+    # gamma迭代式
+    def iter_gamma(self, B_ols, Y_current, beta_current, w_current):
+        X_beta = np.einsum('ij,ji->i', self.X, beta_current).reshape(-1, 1)
+        gamma_next = B_ols @ (Y_current - X_beta + w_current / self.theta)
+        return gamma_next
+    
+    # beta迭代式
+    def iter_beta(self, XQX_AA, XQ, A, w_current, Y_current, u_current, nu_current):
+        beta_next = XQX_AA @ (XQ @ (w_current / self.theta + Y_current) + A.T @ (u_current - nu_current / self.theta))
+        beta_next = beta_next.reshape(self.p, -1, order = 'F')
+        return beta_next
+    
+    # Y2迭代式
+    def iter_Y2(self, B, g, beta_next, gamma_next):
+        term_1 = np.einsum('ij,ji->i', self.X, beta_next).reshape(-1, 1)
+        term_2 = B @ gamma_next
+        Y2_next = term_1 + term_2
+        return Y2_next
+    
+    # Y迭代式
+    def iter_Y(self, g, Y2_next, w_current):
+        nabla_g_next = self.gen_nabla_g(Y2_next)
+        Y_next = 1/(g + self.theta) * (-nabla_g_next + g * Y2_next - w_current + self.theta * Y2_next)
+        return Y_next
+    
+    # u迭代式
+    def penalty_fun(self):
+        def S(c_ik, lambda_val):
+            result = np.max([(1 - lambda_val / np.linalg.norm(c_ik, ord = 2)), 0]) * c_ik
+            return result
+        
+        def SCAD(c):
+            if self.a is None:
+                self.a = 3.7
+            lamba_lambda_theta = self.lambda_value + self.lambda_value / self.theta
+            a_lambda = self.a * self.lambda_value
+            
+            norm_c_vec = np.linalg.norm(c, ord = 2, axis = 1)
+            
+            cond_1 = norm_c_vec <= lamba_lambda_theta
+            cond_2 = (lamba_lambda_theta < norm_c_vec) & (norm_c_vec <= a_lambda)
+            cond_3 = norm_c_vec > a_lambda
+            
+            u_next = np.copy(c)
+            if np.any(cond_1):
+                u_next[cond_1, :] = np.apply_along_axis(S, axis = 1, arr = c[cond_1, :], lambda_val = self.lambda_value/self.theta)
+            if np.any(cond_2):
+                u_next[cond_2, :] = np.apply_along_axis(S, axis = 1, arr = c[cond_2, :], lambda_val = self.a * self.lambda_value/((self.a - 1) * self.theta)) / (1 - 1 / ((self.a-1) * self.theta))
+            if np.any(cond_3):
+                u_next[cond_3, :] = c[cond_3, :]
+            return u_next
+        
+        def MCP(c):
+            if self.a is None:
+                self.a = 2.5
+            a_lambda = self.a * self.lambda_value
+            
+            norm_c_vec = np.linalg.norm(c, ord = 2, axis = 1)
+            
+            cond_1 = norm_c_vec <= a_lambda
+            cond_2 = norm_c_vec > a_lambda
+            
+            u_next = np.copy(c)
+            if np.any(cond_1):
+                u_next[cond_1, :] = np.apply_along_axis(S, axis = 1, arr = c[cond_1, :], lambda_val = self.lambda_value / self.theta) / (1 - 1 / (self.a * self.theta))
+            if np.any(cond_2):
+                u_next[cond_2, :] = c[cond_2, :]
+            return u_next
+        
+        if self.penalty == 'SCAD':
+            return SCAD
+        elif self.penalty == 'MCP':
+            return MCP
+        else:
+            raise ValueError("Invalid penalty function type")
+    
+    def iter_u(self, beta_next, nu_current, A, penalty_fun):
+        c, delta_beta = self.gen_c(beta_next, nu_current, A)
+        u_next = penalty_fun(c).flatten().reshape(-1,1)
+        return u_next, delta_beta
+    
+    # w迭代式
+    def iter_w(self, w_current, Y_next, Y2_next):
+        w_next = w_current + self.theta * (Y_next - Y2_next)
+        return w_next
+    
+    # nu迭代式
+    def iter_nu(self, nu_current, delta_beta, u_next):
+        u_next = u_next.flatten().reshape(-1,1)
+        nu_next = nu_current + self.theta * (delta_beta - u_next)
+        return nu_next
+        
+    # 主函数——运行
+    def run(self, trace = True):
+        start_time = time.time()
+        
+        # 获取初始值
+        self.beta, B, self.gamma, self.Y = self.initial_value()
+        self.Y2 = self.Y
+        A = self.gen_A()
+        self.u = A @ self.beta.flatten(order = 'F').reshape(-1,1)
+        self.w = np.zeros((self.n, 1))
+        self.nu = np.zeros((int(self.n * (self.n - 1) * self.p / 2), 1))
+        
+        # 计算Q矩阵
+        Q = np.eye(self.n) - B @ np.linalg.inv(B.T @ B) @ B.T
+        
+        # 计算g
+        g = self.gen_g()
+        
+        # 计算(B'B)^(-1)B'
+        B_ols = np.linalg.inv(B.T @ B) @ B.T
+        
+        # 计算(X'QX+A'A)^{-1}与X'Q
+        X_diag = np.split(self.X, self.n, axis = 0)
+        X_diag = block_diag(*X_diag)
+        XQX_AA = np.linalg.inv(X_diag.T @ Q @ X_diag + A.T @ A)
+        XQ = X_diag.T @ Q
+        
+        # 生成惩罚函数
+        penalty_fun = self.penalty_fun()
+        
+        for i in range(self.max_iter):
+            if trace:
+                print(f'第[{i+1}]次迭代')
+            self.gamma = self.iter_gamma(B_ols, self.Y, self.beta, self.w)
+            self.beta = self.iter_beta(XQX_AA, XQ, A, self.w, self.Y, self.u, self.nu)
+            self.Y2 = self.iter_Y2(B, g, self.beta, self.gamma)
+            self.Y = self.iter_Y(g, self.Y2, self.w)
+            self.u, delta_beta = self.iter_u(self.beta, self.nu, A, penalty_fun)
+            self.w = self.iter_w(self.w, self.Y, self.Y2)
+            self.nu = self.iter_nu(self.nu, delta_beta, self.u)
+            
+            # 终止条件
+            term_1 = delta_beta - self.u
+            term_2 = self.Y - self.Y2
+            norm_r = np.linalg.norm(term_1, ord=2) + np.linalg.norm(term_2, ord = 2)
+            if norm_r <= self.tol:
+                if trace == True:
+                    print('达到精度要求')
+                break
+        
+        # beta亚组
+        self.beta = np.round(self.beta, 3)
+        subgroup_beta = np.unique(self.beta, axis = 1, return_counts = True)
+        size = subgroup_beta[1]
+        subgroup_beta = subgroup_beta[0].T
+        self.K = subgroup_beta.shape[0]
+        df = pd.DataFrame([{'beta': tuple(row.tolist())} for row in subgroup_beta])
+        df['size'] = size
+        df = df.sort_values(by = 'size', ascending = False).reset_index(drop = True)
+        df['label'] = range(self.K)
+        
+        df_label = pd.DataFrame([{'beta': tuple(row.tolist())} for row in self.beta.T])
+        df_label = df_label.merge(df, on = 'beta', how = 'left')
+        label = df_label['label'].tolist()
+        
+        result = {
+            'beta' : self.beta.T,
+            'gamma' : self.gamma,
+            'alpha' : df,
+            'K' : self.K,
+            'label' : label
+        }
+        
+        print(f'耗时：{time.time() - start_time:.2f}s')
+        return result
+    
+    # 主函数——调优
+    def tune_lambda(self, seq_lambda, seed = None, trace = True):
+        start_time = time.time()
+        
+        # 获取初始值
+        beta_0, B, gamma_0, Y_0 = self.initial_value()
+        A = self.gen_A()
+        u_0 = A @ beta_0.flatten(order = 'F').reshape(-1,1)
+        w_0 = np.zeros((self.n, 1))
+        nu_0 = np.zeros((int(self.n * (self.n - 1) * self.p / 2), 1))
+        
+        # 计算Q矩阵
+        Q = np.eye(self.n) - B @ np.linalg.inv(B.T @ B) @ B.T
+        
+        # 计算g
+        g = self.gen_g()
+        
+        # 计算(B'B)^(-1)B'
+        B_ols = np.linalg.inv(B.T @ B) @ B.T
+        
+        # 计算(X'QX+A'A)^{-1}与X'Q
+        X_diag = np.split(self.X, self.n, axis = 0)
+        X_diag = block_diag(*X_diag)
+        XQX_AA = np.linalg.inv(X_diag.T @ Q @ X_diag + A.T @ A)
+        XQ = X_diag.T @ Q
+        
+        # 生成惩罚函数
+        penalty_fun = self.penalty_fun()
+        
+        # 存储结果
+        bic_ls = []
+        bic_log_ls = []
+        bic_c_ls = []
+        bic_logk_ls = []
+        result_ls = []
+        K_ls = []
+        
+        for i in range(len(seq_lambda)):
+            self.lambda_value = seq_lambda[i]
+            
+            # 初始化
+            self.beta = beta_0
+            self.gamma = gamma_0
+            self.Y = Y_0
+            self.Y2 = Y_0
+            self.u = u_0
+            self.w = w_0
+            self.nu = nu_0
+            
+            for j in range(self.max_iter):
+                if trace:
+                    print(f'seed_[{seed+1}]: lambda={seq_lambda[i]}--[{j+1}]')
+                self.gamma = self.iter_gamma(B_ols, self.Y, self.beta, self.w)
+                self.beta = self.iter_beta(XQX_AA, XQ, A, self.w, self.Y, self.u, self.nu)
+                self.Y2 = self.iter_Y2(B, g, self.beta, self.gamma)
+                self.Y = self.iter_Y(g, self.Y2, self.w)
+                self.u, delta_beta = self.iter_u(self.beta, self.nu, A, penalty_fun)
+                self.w = self.iter_w(self.w, self.Y, self.Y2)
+                self.nu = self.iter_nu(self.nu, delta_beta, self.u)
+                
+                # 终止条件
+                term_1 = delta_beta - self.u
+                term_2 = self.Y - self.Y2
+                norm_r = np.linalg.norm(term_1, ord=2) + np.linalg.norm(term_2, ord = 2)
+                if norm_r <= self.tol:
+                    if trace == True:
+                        print('达到精度要求')
+                    break
+            
+            # beta亚组
+            self.beta = np.round(self.beta, 3)
+            subgroup_beta = np.unique(self.beta, axis = 1, return_counts = True)
+            size = subgroup_beta[1]
+            subgroup_beta = subgroup_beta[0].T
+            self.K = subgroup_beta.shape[0]
+            df = pd.DataFrame([{'beta': tuple(row.tolist())} for row in subgroup_beta])
+            df['size'] = size
+            df = df.sort_values(by = 'size', ascending = False).reset_index(drop = True)
+            df['label'] = range(self.K)
+            
+            df_label = pd.DataFrame([{'beta': tuple(row.tolist())} for row in self.beta.T])
+            df_label = df_label.merge(df, on = 'beta', how = 'left')
+            label = df_label['label'].tolist()
+            
+            # 计算bic
+            time_obs = self.time_status[:, 0]
+            status = self.time_status[:, 1].reshape(1,-1)
+            R = (time_obs[:, np.newaxis] <= time_obs).astype(int)
+            term_1 = - status @ (self.Y2 - np.log(R @ np.exp(self.Y2)))
+            term_2 = np.log(self.n * self.K + self.q) * np.log(self.n) * (self.K * self.p + self.q) / self.n
+            bic_value = term_1 + term_2
+            bic_value = round(bic_value.item(), 3)
+            bic_ls.append(bic_value)
+            
+            
+            term_2 = np.log(np.log(self.n * self.K + self.q)) * np.log(self.n) * (self.K * self.p + self.q) / self.n
+            bic_log_value = term_1 + term_2
+            bic_log_value = round(bic_log_value.item(), 3)
+            bic_log_ls.append(bic_log_value)
+            
+            
+            term_2 = 0.5 * np.log(self.n * self.K + self.q) * np.log(self.n) * (self.K * self.p + self.q) / self.n
+            bic_c_value = term_1 + term_2
+            bic_c_value = round(bic_c_value.item(), 3)
+            bic_c_ls.append(bic_c_value)
+            
+            term_2 = np.log(self.K) * np.log(self.n * self.K + self.q) * np.log(self.n) * (self.K * self.p + self.q) / self.n
+            bic_logk_value = term_1 + term_2
+            bic_logk_value = round(bic_logk_value.item(), 3)
+            bic_logk_ls.append(bic_logk_value)
+            
+            K_ls.append(self.K)
+            
+            result = {
+                'beta' : self.beta.T,
+                'gamma' : self.gamma,
+                'alpha' : df,
+                'K' : self.K,
+                'label' : label,
+                'bic' : bic_value
+            }
+            result_ls.append(result)
+        
+        best_index = bic_ls.index(min(bic_ls))
+        best_result = result_ls[best_index]
+        print(f'总耗时{time.time() - start_time:.2f}s')
+        tune_result = {'bic' : bic_ls, 'result' : result_ls, 'best_result' : best_result, 'bic_log' : bic_log_ls, 'bic_c' : bic_c_ls, 'K_ls' : K_ls, 'bic_logk' : bic_logk_ls}
+        
+        return tune_result
+        
+if __name__ == "__main__":
+    
+    total_start_time = time.time()
+    
+    def gen_data(seed, n=100):
+        np.random.seed(seed)
+        X = np.random.normal(loc = 0, scale = 1, size = (n, 2))
+        Z_1 = np.random.uniform(low = 0, high = 1, size = (n, 1))
+        f_Z1 = np.sin(np.pi * (Z_1-0.5))
+        Z_2 = np.random.uniform(low = 0, high = 1, size = (n, 1))
+        f_Z2 = np.cos(np.pi * (Z_2 - 0.5)) - 2/np.pi
+        Z = np.hstack((Z_1, Z_2))
+        
+        kmeans = KMeans(2, random_state = 1)
+        kmeans.fit(X)
+        labels = kmeans.labels_
+        X_1 = X[labels == 0, :]
+        X_2 = X[labels == 1, :]
+        X = np.vstack((X_1, X_2))
+        
+        beta = 3 * np.ones((int(n/2),2))
+        beta = np.vstack((-beta, beta))
+        
+        log_U = np.log(np.random.uniform(0, 1, size = (n,1)))
+        X_beta = np.einsum('ij,ji->i', X, beta.T).reshape(-1,1)
+        time_obs = -np.exp(-X_beta - f_Z1 - f_Z2) * log_U
+        status = np.random.choice([0,1], size = (n,1), p = [0.2, 0.8])
+        time_status = np.hstack((time_obs, status))
+       
+        return time_status, X, Z
+
+    np.random.seed(564)
+    seed_ls = np.random.randint(low = 1, high = 1000, size= 10).tolist()
+    seq_lambda = np.arange(0.04, 0.075, 0.005)
+    bic_mat = np.zeros((len(seed_ls), len(seq_lambda)))
+    K_mat = np.zeros((len(seed_ls), len(seq_lambda)))
+    result_ls = []
+    
+    for i in range(len(seed_ls)):
+        seed = seed_ls[i]
+        time_status, X, Z = gen_data(n=100,seed = seed)
+        model = SubgroupBeta(time_status, X, Z, lambda_value = 0.06, tol = 1e-3)
+        result_tune = model.tune_lambda(seq_lambda, seed = i)
+        
+        bic_mat[i] = result_tune['bic']
+        K_mat[i] = result_tune['K_ls']
+        result_ls.append(result_tune['result'])
+    
+    seed_ls = list(map(str, seed_ls))
+    seq_lambda = list(map(str, seq_lambda.tolist()))
+    bic_mat = pd.DataFrame(bic_mat, index = seed_ls, columns = seq_lambda)
+    K_mat = pd.DataFrame(K_mat, index = seed_ls, columns = seq_lambda)
+    
+    total_end_time = time.time()
+    
+    print(f'所有种子总计耗时：{total_end_time - total_start_time}')
+```
+
+
 ### 数据模拟 {#code_3_2}
 
 
@@ -1421,7 +1912,7 @@ result3 <- case3$run(trace = FALSE)
 
 ```
 ##   用户   系统   流逝 
-## 118.34   4.47 124.41
+## 119.50   5.81 127.66
 ```
 
 

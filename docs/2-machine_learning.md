@@ -926,8 +926,9 @@ $$
 
 python的`xgboost`库，示例如下。
 
-```
-param_dist_xgb = {
+
+``` default
+param_xgb = {
     'max_depth': stats.randint(3, 10),
     'min_child_weight': stats.randint(1, 6),
     'gamma': stats.uniform(0, 0.5),
@@ -942,7 +943,7 @@ param_dist_xgb = {
 model_xgb = xgb.XGBRegressor(objective='reg:squarederror', random_state=527)
 random_search_xgb = RandomizedSearchCV(
     model_xgb, 
-    param_dist_xgb, 
+    param_xgb, 
     n_iter=100,
     cv=5, 
     scoring='neg_mean_squared_error',
@@ -1035,4 +1036,39 @@ R语言`grf`包。
 
 ### 朴素贝叶斯分类器 {#ml_6_2}
 
+## SVM {#ml_7}
+
+关于支持向量机SVM的介绍参见[视频](https://www.bilibili.com/video/BV16T4y1y7qj/)。
+
+`e1071`包的`tune()`函数能够对超参数进行网格搜索，并保留最优模型。
+
+
+``` r
+library(e1071)
+
+# 设置参数范围，进行网格搜索
+tune_grid <- list(
+  cost = c(0.1, 0.5, 1, 5),
+  gamma = c(0.01, 0.1, 1, 10),
+  kernel = c('radial', 'linear')
+)
+set.seed(123)
+# tune()函数能够自行调优
+model_tune_svm <- tune(
+  METHOD = svm,
+  train.x = label ~ score + departure,
+  data = train_set,
+  ranges = tune_grid,
+  tunecontrol = tune.control(
+    sampling = "cross",             # 交叉验证
+    cross = 5,                      # 5折交叉验证
+    best.model = TRUE               # 保留最佳模型
+  )
+  )
+
+summary(model_tune_svm)
+model_tune_svm$best.parameters            # 最优参数组合
+model_svm <- model_tune_svm$best.model    # 提取最优模型
+fit_svm <- predict(model_svm, train_set)  # 测试集预测
+```
 

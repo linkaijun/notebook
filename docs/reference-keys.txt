@@ -737,6 +737,9 @@ ml_6
 ml_6_1
 ml_6_2
 ml_7
+ml_7_1
+ml_7_2
+ml_8
 survival
 survival_1
 survival_1_1
@@ -772,6 +775,13 @@ survival_5_x_2
 survival_5_x_3
 abtest
 dl
+dl_1
+dl_1_1
+dl_1_2
+dl_1_3
+dl_2
+dl_2_1
+dl_2_2
 network
 network_1
 network_1_1

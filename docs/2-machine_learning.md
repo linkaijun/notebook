@@ -836,6 +836,8 @@ plot(1:9, mse, type = "b", lwd = 2, xlab = "mtry", ylab = "test MSE")
 
 文献：[XGBoost: A Scalable Tree Boosting System](https://arxiv.org/pdf/1603.02754v1)
 
+[官方文档](https://xgboost.readthedocs.io/en/release_3.0.0/index.html)
+
 ### 原理 {#ml_4_1}
 
 1. 基础思想
@@ -924,6 +926,8 @@ $$
 
 ### 实现 {#ml_4_2}
 
+超参数详见[官方手册](https://xgboost.readthedocs.io/en/release_3.0.0/parameter.html)
+
 python的`xgboost`库，示例如下。
 
 
@@ -958,11 +962,45 @@ print(best_param_xgb)
 best_model_xgb = random_search_xgb.best_estimator_
 ```
 
-超参数详见[官方手册](https://xgboost.readthedocs.io/en/release_3.0.0/parameter.html)
+## LightGBM {#ml_5}
 
-## 因果森林 {#ml_5}
+文献：[LightGBM: A Highly Efficient Gradient Boosting Decision Tree](https://dl.acm.org/doi/pdf/10.5555/3294996.3295074)
+
+[官方文档](https://lightgbm.readthedocs.io/en/latest/index.html)
+
+LightGBM的核心目标是通过**减少数据量和特征维度**来加速训练，同时保持模型精度。其创新点主要体现在GOSS（梯度单边采样）和EFB（互斥特征捆绑）两项技术上。
+
+**LightGBM相较于XGBoost，更适合在大数据或高维特征场合使用**。
 
 ### 原理 {#ml_5_1}
+
+1. Gradient-based One-Side Sampling
+
+传统GBDT需扫描所有数据计算信息增益，计算成本高。而GOSS保留了梯度大的样本，并随机采样梯度小的样本，通过权重补偿修正数据分布偏差。如此，大梯度样本就能够主导信息增益计算，同时这种加权修正也能够近似原始分布。
+
+2. Exclusive Feature Bundling
+
+在高维特征场合，存在“特征互斥”的现象，即**某些特征永远不会同时非零**（如独热编码）。鉴于此，将这些互斥的特征捆绑为单一特征，减少特征数量。
+
+3. 生长策略
+
+LightGBM采用Leaf-wise的树生长策略，每次选择**损失下降最大**的叶子节点分裂，深度优先。因此，LightGBM能够更快降低损失，生成更复杂的不对称树。
+
+> XGBoost采取Level-wise的树生长策略，逐层分裂树，每层分裂所有叶子节点，广度优先。
+
+4. 直方图算法
+
+LightGBM对连续特征离散化为直方图，降低计算复杂度。
+
+> XGBoost既支持预排序特征值，又支持直方图算法
+
+### 实现 {#ml_5_2}
+
+
+
+## 因果森林 {#ml_6}
+
+### 原理 {#ml_6_1}
 
 1. 无混杂条件
 
@@ -1016,7 +1054,7 @@ $$
 
 倾向树，将指示变量W视为分类目标的响应变量，构建分类树，即用X去预测W（某种程度上就是在做倾向得分的事），然后再在生成的叶节点内基于Y估计处理效应。
 
-### 实现 {#ml_5_2}
+### 实现 {#ml_6_2}
 
 R语言`grf`包。
 
@@ -1028,15 +1066,15 @@ R语言`grf`包。
 
 - $predictions：输出每个观测的预测处理效应值
 
-## 贝叶斯方法 {#ml_6}
+## 贝叶斯方法 {#ml_7}
 
-### 贝叶斯判别法 {#ml_6_1}
+### 贝叶斯判别法 {#ml_7_1}
 
 详见[应用多元统计](#ms_5_2)
 
-### 朴素贝叶斯分类器 {#ml_6_2}
+### 朴素贝叶斯分类器 {#ml_7_2}
 
-## SVM {#ml_7}
+## SVM {#ml_8}
 
 关于支持向量机SVM的介绍参见[视频](https://www.bilibili.com/video/BV16T4y1y7qj/)。
 

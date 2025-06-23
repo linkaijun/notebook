@@ -351,6 +351,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
 <li class="chapter" data-level="5.10.2" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 外观</a></li>
+<li class="chapter" data-level="5.10.3" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_3"><i class="fa fa-check"></i><b>5.10.3</b> 案例</a></li>
 </ul></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
 </ul></li>
@@ -674,10 +675,10 @@ div.csl-indent {
 <div id="people_2_1" class="section level3 hasAnchor" number="14.2.1">
 <h3><span class="header-section-number">14.2.1</span> 人口自然增长率<a href="people_2.html#people_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>需要额外导入的包：</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="people_2.html#cb318-1" tabindex="-1"></a><span class="fu">library</span>(gghighlight)  <span class="co"># 元素高亮 gghighlight()函数</span></span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="people_2.html#cb320-1" tabindex="-1"></a><span class="fu">library</span>(gghighlight)  <span class="co"># 元素高亮 gghighlight()函数</span></span></code></pre></div>
 <p>绘制全国及各省市的自然增长率轮廓图。</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="people_2.html#cb319-1" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;自然增长率&#39;</span>)</span>
-<span id="cb319-2"><a href="people_2.html#cb319-2" tabindex="-1"></a><span class="fu">head</span>(growth_df)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="people_2.html#cb321-1" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;自然增长率&#39;</span>)</span>
+<span id="cb321-2"><a href="people_2.html#cb321-2" tabindex="-1"></a><span class="fu">head</span>(growth_df)</span></code></pre></div>
 <pre><code>##   province ngr_15 ngr_16 ngr_17 ngr_18 ngr_19    ngr_20
 ## 1     全国   4.96   5.86   5.32   3.81   3.34  1.445681
 ## 2   北  京   3.01   4.12   3.76   2.66   2.63  1.800000
@@ -685,20 +686,20 @@ div.csl-indent {
 ## 4   河  北   5.56   6.06   6.60   4.88   4.71  0.940000
 ## 5   山  西   4.42   4.77   5.61   4.31   3.27  1.240000
 ## 6   内蒙古   2.40   3.34   3.73   2.40   2.57 -0.100000</code></pre>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="people_2.html#cb321-1" tabindex="-1"></a><span class="co"># 数据预处理，为“全国”添加高亮标签</span></span>
-<span id="cb321-2"><a href="people_2.html#cb321-2" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">highlight=</span><span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="fu">rep</span>(<span class="st">&#39;0&#39;</span>,<span class="at">times=</span><span class="dv">31</span>)))</span>
-<span id="cb321-3"><a href="people_2.html#cb321-3" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb321-4"><a href="people_2.html#cb321-4" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>),<span class="at">names_to =</span> <span class="st">&#39;year&#39;</span>,<span class="at">values_to =</span> <span class="st">&#39;value&#39;</span></span>
-<span id="cb321-5"><a href="people_2.html#cb321-5" tabindex="-1"></a>)</span>
-<span id="cb321-6"><a href="people_2.html#cb321-6" tabindex="-1"></a></span>
-<span id="cb321-7"><a href="people_2.html#cb321-7" tabindex="-1"></a><span class="fu">ggplot</span>(growth_df)<span class="sc">+</span></span>
-<span id="cb321-8"><a href="people_2.html#cb321-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>value,<span class="at">group=</span>province),</span>
-<span id="cb321-9"><a href="people_2.html#cb321-9" tabindex="-1"></a>            <span class="at">linewidth=</span><span class="fl">1.2</span>,<span class="at">alpha=</span><span class="fl">0.8</span>)<span class="sc">+</span></span>
-<span id="cb321-10"><a href="people_2.html#cb321-10" tabindex="-1"></a>  <span class="fu">gghighlight</span>(highlight<span class="sc">==</span><span class="st">&#39;1&#39;</span>,<span class="at">use_direct_label =</span> T,</span>
-<span id="cb321-11"><a href="people_2.html#cb321-11" tabindex="-1"></a>              <span class="at">label_key =</span> province,<span class="at">use_group_by =</span> F)<span class="sc">+</span></span>
-<span id="cb321-12"><a href="people_2.html#cb321-12" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb321-13"><a href="people_2.html#cb321-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&#39;人口自然增长率‰&#39;</span>,<span class="at">x=</span><span class="st">&#39;年份&#39;</span>)<span class="sc">+</span></span>
-<span id="cb321-14"><a href="people_2.html#cb321-14" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;2015&#39;</span>,<span class="st">&#39;2016&#39;</span>,<span class="st">&#39;2017&#39;</span>,<span class="st">&#39;2018&#39;</span>,<span class="st">&#39;2019&#39;</span>,<span class="st">&#39;2020&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="people_2.html#cb323-1" tabindex="-1"></a><span class="co"># 数据预处理，为“全国”添加高亮标签</span></span>
+<span id="cb323-2"><a href="people_2.html#cb323-2" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">highlight=</span><span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="fu">rep</span>(<span class="st">&#39;0&#39;</span>,<span class="at">times=</span><span class="dv">31</span>)))</span>
+<span id="cb323-3"><a href="people_2.html#cb323-3" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb323-4"><a href="people_2.html#cb323-4" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>),<span class="at">names_to =</span> <span class="st">&#39;year&#39;</span>,<span class="at">values_to =</span> <span class="st">&#39;value&#39;</span></span>
+<span id="cb323-5"><a href="people_2.html#cb323-5" tabindex="-1"></a>)</span>
+<span id="cb323-6"><a href="people_2.html#cb323-6" tabindex="-1"></a></span>
+<span id="cb323-7"><a href="people_2.html#cb323-7" tabindex="-1"></a><span class="fu">ggplot</span>(growth_df)<span class="sc">+</span></span>
+<span id="cb323-8"><a href="people_2.html#cb323-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>value,<span class="at">group=</span>province),</span>
+<span id="cb323-9"><a href="people_2.html#cb323-9" tabindex="-1"></a>            <span class="at">linewidth=</span><span class="fl">1.2</span>,<span class="at">alpha=</span><span class="fl">0.8</span>)<span class="sc">+</span></span>
+<span id="cb323-10"><a href="people_2.html#cb323-10" tabindex="-1"></a>  <span class="fu">gghighlight</span>(highlight<span class="sc">==</span><span class="st">&#39;1&#39;</span>,<span class="at">use_direct_label =</span> T,</span>
+<span id="cb323-11"><a href="people_2.html#cb323-11" tabindex="-1"></a>              <span class="at">label_key =</span> province,<span class="at">use_group_by =</span> F)<span class="sc">+</span></span>
+<span id="cb323-12"><a href="people_2.html#cb323-12" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb323-13"><a href="people_2.html#cb323-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&#39;人口自然增长率‰&#39;</span>,<span class="at">x=</span><span class="st">&#39;年份&#39;</span>)<span class="sc">+</span></span>
+<span id="cb323-14"><a href="people_2.html#cb323-14" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;2015&#39;</span>,<span class="st">&#39;2016&#39;</span>,<span class="st">&#39;2017&#39;</span>,<span class="st">&#39;2018&#39;</span>,<span class="st">&#39;2019&#39;</span>,<span class="st">&#39;2020&#39;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:pop-p1"></span>
 <img src="4-population_files/figure-html/pop-p1-1.png" alt="全国及各省市的自然增长率轮廓图" width="672" />
 <p class="caption">
@@ -708,8 +709,8 @@ div.csl-indent {
 </div>
 <div id="people_2_2" class="section level3 hasAnchor" number="14.2.2">
 <h3><span class="header-section-number">14.2.2</span> 年龄结构<a href="people_2.html#people_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="people_2.html#cb322-1" tabindex="-1"></a>age_df <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;年龄结构&#39;</span>)</span>
-<span id="cb322-2"><a href="people_2.html#cb322-2" tabindex="-1"></a><span class="fu">head</span>(age_df)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="people_2.html#cb324-1" tabindex="-1"></a>age_df <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;年龄结构&#39;</span>)</span>
+<span id="cb324-2"><a href="people_2.html#cb324-2" tabindex="-1"></a><span class="fu">head</span>(age_df)</span></code></pre></div>
 <pre><code>##   province young middle   old
 ## 1     全国 17.97  68.50 13.52
 ## 2   北  京 11.84  74.86 13.30
@@ -717,28 +718,28 @@ div.csl-indent {
 ## 4   河  北 20.22  65.85 13.92
 ## 5   山  西 16.35  70.74 12.90
 ## 6   内蒙古 14.04  72.90 13.05</code></pre>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="people_2.html#cb324-1" tabindex="-1"></a>age_demo <span class="ot">&lt;-</span> age_df <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb324-2"><a href="people_2.html#cb324-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">names_to =</span> <span class="st">&#39;age&#39;</span>,<span class="at">values_to =</span> <span class="st">&#39;value&#39;</span></span>
-<span id="cb324-3"><a href="people_2.html#cb324-3" tabindex="-1"></a>)</span>
-<span id="cb324-4"><a href="people_2.html#cb324-4" tabindex="-1"></a>age_demo<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">factor</span>(age_demo<span class="sc">$</span>age,<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;old&#39;</span>,<span class="st">&#39;middle&#39;</span>,<span class="st">&#39;young&#39;</span>))</span>
-<span id="cb324-5"><a href="people_2.html#cb324-5" tabindex="-1"></a>age_demo<span class="sc">$</span>province <span class="ot">&lt;-</span> <span class="fu">factor</span>(age_demo<span class="sc">$</span>province,<span class="at">levels =</span> <span class="fu">unique</span>(<span class="fu">as.vector</span>(age_df<span class="sc">$</span>province)))</span>
-<span id="cb324-6"><a href="people_2.html#cb324-6" tabindex="-1"></a></span>
-<span id="cb324-7"><a href="people_2.html#cb324-7" tabindex="-1"></a>age_demo <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">fct_rev</span>(province),<span class="at">y=</span>value,<span class="at">fill=</span>age))<span class="sc">+</span></span>
-<span id="cb324-8"><a href="people_2.html#cb324-8" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>)<span class="sc">+</span></span>
-<span id="cb324-9"><a href="people_2.html#cb324-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&#39;比重%&#39;</span>,<span class="at">x=</span><span class="st">&#39;&#39;</span>,<span class="at">fill=</span><span class="st">&#39;&#39;</span>)<span class="sc">+</span></span>
-<span id="cb324-10"><a href="people_2.html#cb324-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&#39;bold&#39;</span>))<span class="sc">+</span></span>
-<span id="cb324-11"><a href="people_2.html#cb324-11" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">93</span>,<span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>,<span class="at">color=</span><span class="st">&#39;blue&#39;</span>)<span class="sc">+</span></span>
-<span id="cb324-12"><a href="people_2.html#cb324-12" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>,<span class="dv">80</span>,<span class="dv">90</span>,<span class="dv">93</span>,<span class="dv">100</span>))<span class="sc">+</span></span>
-<span id="cb324-13"><a href="people_2.html#cb324-13" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">labels=</span><span class="fu">c</span>(<span class="st">&#39;65岁及以上&#39;</span>,<span class="st">&#39;15-64岁&#39;</span>,<span class="st">&#39;0-14岁&#39;</span>))<span class="sc">+</span></span>
-<span id="cb324-14"><a href="people_2.html#cb324-14" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="people_2.html#cb326-1" tabindex="-1"></a>age_demo <span class="ot">&lt;-</span> age_df <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb326-2"><a href="people_2.html#cb326-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">names_to =</span> <span class="st">&#39;age&#39;</span>,<span class="at">values_to =</span> <span class="st">&#39;value&#39;</span></span>
+<span id="cb326-3"><a href="people_2.html#cb326-3" tabindex="-1"></a>)</span>
+<span id="cb326-4"><a href="people_2.html#cb326-4" tabindex="-1"></a>age_demo<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">factor</span>(age_demo<span class="sc">$</span>age,<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;old&#39;</span>,<span class="st">&#39;middle&#39;</span>,<span class="st">&#39;young&#39;</span>))</span>
+<span id="cb326-5"><a href="people_2.html#cb326-5" tabindex="-1"></a>age_demo<span class="sc">$</span>province <span class="ot">&lt;-</span> <span class="fu">factor</span>(age_demo<span class="sc">$</span>province,<span class="at">levels =</span> <span class="fu">unique</span>(<span class="fu">as.vector</span>(age_df<span class="sc">$</span>province)))</span>
+<span id="cb326-6"><a href="people_2.html#cb326-6" tabindex="-1"></a></span>
+<span id="cb326-7"><a href="people_2.html#cb326-7" tabindex="-1"></a>age_demo <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">fct_rev</span>(province),<span class="at">y=</span>value,<span class="at">fill=</span>age))<span class="sc">+</span></span>
+<span id="cb326-8"><a href="people_2.html#cb326-8" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>)<span class="sc">+</span></span>
+<span id="cb326-9"><a href="people_2.html#cb326-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&#39;比重%&#39;</span>,<span class="at">x=</span><span class="st">&#39;&#39;</span>,<span class="at">fill=</span><span class="st">&#39;&#39;</span>)<span class="sc">+</span></span>
+<span id="cb326-10"><a href="people_2.html#cb326-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&#39;bold&#39;</span>))<span class="sc">+</span></span>
+<span id="cb326-11"><a href="people_2.html#cb326-11" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">93</span>,<span class="at">linetype=</span><span class="st">&#39;dashed&#39;</span>,<span class="at">color=</span><span class="st">&#39;blue&#39;</span>)<span class="sc">+</span></span>
+<span id="cb326-12"><a href="people_2.html#cb326-12" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>,<span class="dv">80</span>,<span class="dv">90</span>,<span class="dv">93</span>,<span class="dv">100</span>))<span class="sc">+</span></span>
+<span id="cb326-13"><a href="people_2.html#cb326-13" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">labels=</span><span class="fu">c</span>(<span class="st">&#39;65岁及以上&#39;</span>,<span class="st">&#39;15-64岁&#39;</span>,<span class="st">&#39;0-14岁&#39;</span>))<span class="sc">+</span></span>
+<span id="cb326-14"><a href="people_2.html#cb326-14" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:pop-p2"></span>
 <img src="4-population_files/figure-html/pop-p2-1.png" alt="全国及各省市年龄结构" width="672" />
 <p class="caption">
 图 14.2: 全国及各省市年龄结构
 </p>
 </div>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="people_2.html#cb325-1" tabindex="-1"></a>age_series <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;一般年龄结构&#39;</span>)</span>
-<span id="cb325-2"><a href="people_2.html#cb325-2" tabindex="-1"></a><span class="fu">head</span>(age_series)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="people_2.html#cb327-1" tabindex="-1"></a>age_series <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;一般年龄结构&#39;</span>)</span>
+<span id="cb327-2"><a href="people_2.html#cb327-2" tabindex="-1"></a><span class="fu">head</span>(age_series)</span></code></pre></div>
 <pre><code>##   year young middle  old gross_dep young_dep  old_dep
 ## 1 2015  16.5   73.0 10.5  36.96755  22.63329 14.33425
 ## 2 2016  16.7   72.5 10.8  37.90000  22.90000 15.00000
@@ -746,17 +747,17 @@ div.csl-indent {
 ## 4 2018  16.9   71.2 11.9  40.44104  23.67523 16.76580
 ## 5 2019  16.8   70.6 12.6  41.50000  23.80000 17.80000
 ## 6 2020  17.9   68.6 13.5  45.90000  26.20000 19.70000</code></pre>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="people_2.html#cb327-1" tabindex="-1"></a>age_series <span class="ot">&lt;-</span> age_series <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb327-2"><a href="people_2.html#cb327-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>),<span class="at">names_to =</span> <span class="st">&#39;age&#39;</span>,<span class="at">values_to =</span> <span class="st">&#39;value&#39;</span></span>
-<span id="cb327-3"><a href="people_2.html#cb327-3" tabindex="-1"></a>)</span>
-<span id="cb327-4"><a href="people_2.html#cb327-4" tabindex="-1"></a>age_series <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>()<span class="sc">+</span></span>
-<span id="cb327-5"><a href="people_2.html#cb327-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>value,<span class="at">group=</span>age,<span class="at">color=</span>age))<span class="sc">+</span></span>
-<span id="cb327-6"><a href="people_2.html#cb327-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>value,<span class="at">group=</span>age,<span class="at">color=</span>age))<span class="sc">+</span></span>
-<span id="cb327-7"><a href="people_2.html#cb327-7" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">10</span>,<span class="dv">18</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
-<span id="cb327-8"><a href="people_2.html#cb327-8" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;red&#39;</span>),</span>
-<span id="cb327-9"><a href="people_2.html#cb327-9" tabindex="-1"></a>                     <span class="at">limits=</span><span class="fu">c</span>(<span class="st">&#39;young&#39;</span>,<span class="st">&#39;old&#39;</span>),</span>
-<span id="cb327-10"><a href="people_2.html#cb327-10" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&#39;0-14岁&#39;</span>,<span class="st">&#39;65岁及以上&#39;</span>))<span class="sc">+</span></span>
-<span id="cb327-11"><a href="people_2.html#cb327-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;年份&#39;</span>,<span class="at">y=</span><span class="st">&#39;比重%&#39;</span>,<span class="at">color=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="people_2.html#cb329-1" tabindex="-1"></a>age_series <span class="ot">&lt;-</span> age_series <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb329-2"><a href="people_2.html#cb329-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>),<span class="at">names_to =</span> <span class="st">&#39;age&#39;</span>,<span class="at">values_to =</span> <span class="st">&#39;value&#39;</span></span>
+<span id="cb329-3"><a href="people_2.html#cb329-3" tabindex="-1"></a>)</span>
+<span id="cb329-4"><a href="people_2.html#cb329-4" tabindex="-1"></a>age_series <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb329-5"><a href="people_2.html#cb329-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>value,<span class="at">group=</span>age,<span class="at">color=</span>age))<span class="sc">+</span></span>
+<span id="cb329-6"><a href="people_2.html#cb329-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>value,<span class="at">group=</span>age,<span class="at">color=</span>age))<span class="sc">+</span></span>
+<span id="cb329-7"><a href="people_2.html#cb329-7" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">10</span>,<span class="dv">18</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb329-8"><a href="people_2.html#cb329-8" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;red&#39;</span>),</span>
+<span id="cb329-9"><a href="people_2.html#cb329-9" tabindex="-1"></a>                     <span class="at">limits=</span><span class="fu">c</span>(<span class="st">&#39;young&#39;</span>,<span class="st">&#39;old&#39;</span>),</span>
+<span id="cb329-10"><a href="people_2.html#cb329-10" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&#39;0-14岁&#39;</span>,<span class="st">&#39;65岁及以上&#39;</span>))<span class="sc">+</span></span>
+<span id="cb329-11"><a href="people_2.html#cb329-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;年份&#39;</span>,<span class="at">y=</span><span class="st">&#39;比重%&#39;</span>,<span class="at">color=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:pop-p3"></span>
 <img src="4-population_files/figure-html/pop-p3-1.png" alt="一般年龄结构" width="672" />
 <p class="caption">
@@ -767,9 +768,9 @@ div.csl-indent {
 <div id="people_2_3" class="section level3 hasAnchor" number="14.2.3">
 <h3><span class="header-section-number">14.2.3</span> 人口流动<a href="people_2.html#people_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>需要导入额外的包：</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="people_2.html#cb328-1" tabindex="-1"></a><span class="fu">library</span>(pheatmap)  <span class="co"># 热力图</span></span></code></pre></div>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="people_2.html#cb329-1" tabindex="-1"></a>flow_df <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;人口流动&#39;</span>)</span>
-<span id="cb329-2"><a href="people_2.html#cb329-2" tabindex="-1"></a><span class="fu">head</span>(flow_df)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="people_2.html#cb330-1" tabindex="-1"></a><span class="fu">library</span>(pheatmap)  <span class="co"># 热力图</span></span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="people_2.html#cb331-1" tabindex="-1"></a>flow_df <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&#39;./dataset/df_all.xlsx&#39;</span>, <span class="at">sheet=</span><span class="st">&#39;人口流动&#39;</span>)</span>
+<span id="cb331-2"><a href="people_2.html#cb331-2" tabindex="-1"></a><span class="fu">head</span>(flow_df)</span></code></pre></div>
 <pre><code>##   province  北京 天津  河北  山西 内蒙古  辽宁  吉林 黑龙江 上海 江苏 浙江 安徽
 ## 1     北京     0 6809 60188 17719   8200 13080  8214  16134 2241 6327 3181 8262
 ## 2     天津  7417    0 21018  5354   3278  3792  3129   7121  383 1907 1000 3003
@@ -791,27 +792,27 @@ div.csl-indent {
 ## 4 1132  350  315  424  51646 112519   60873
 ## 5 4825  388 1991  399  61522  63224    1702
 ## 6 1241  283  243 1319  86963  94028    7065</code></pre>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="people_2.html#cb331-1" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&#39;东部地区&#39;</span>,</span>
-<span id="cb331-2"><a href="people_2.html#cb331-2" tabindex="-1"></a>            <span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;东北地区&#39;</span>,</span>
-<span id="cb331-3"><a href="people_2.html#cb331-3" tabindex="-1"></a>            <span class="st">&#39;东北地区&#39;</span>,<span class="st">&#39;东北地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,</span>
-<span id="cb331-4"><a href="people_2.html#cb331-4" tabindex="-1"></a>            <span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,</span>
-<span id="cb331-5"><a href="people_2.html#cb331-5" tabindex="-1"></a>            <span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,</span>
-<span id="cb331-6"><a href="people_2.html#cb331-6" tabindex="-1"></a>            <span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,</span>
-<span id="cb331-7"><a href="people_2.html#cb331-7" tabindex="-1"></a>            <span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span></span>
-<span id="cb331-8"><a href="people_2.html#cb331-8" tabindex="-1"></a>)</span>
-<span id="cb331-9"><a href="people_2.html#cb331-9" tabindex="-1"></a>flow_demo <span class="ot">&lt;-</span> flow_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">region=</span>group) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(region,<span class="at">.before =</span> province)</span>
-<span id="cb331-10"><a href="people_2.html#cb331-10" tabindex="-1"></a>flow_demo<span class="sc">$</span>region <span class="ot">&lt;-</span> <span class="fu">factor</span>(flow_demo<span class="sc">$</span>region,<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东北地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>))</span>
-<span id="cb331-11"><a href="people_2.html#cb331-11" tabindex="-1"></a>flow_demo <span class="ot">&lt;-</span> flow_demo <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(region)</span>
-<span id="cb331-12"><a href="people_2.html#cb331-12" tabindex="-1"></a>flow_demo <span class="ot">&lt;-</span> flow_demo[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fu">match</span>(flow_demo<span class="sc">$</span>province,<span class="fu">colnames</span>(flow_demo)[<span class="dv">3</span><span class="sc">:</span><span class="dv">33</span>])<span class="sc">+</span><span class="dv">2</span>)]</span>
-<span id="cb331-13"><a href="people_2.html#cb331-13" tabindex="-1"></a></span>
-<span id="cb331-14"><a href="people_2.html#cb331-14" tabindex="-1"></a>flow_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(flow_demo[,<span class="dv">3</span><span class="sc">:</span><span class="dv">33</span>] <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>,<span class="sc">~</span>(.<span class="sc">-</span><span class="fu">min</span>(.))<span class="sc">/</span>(<span class="fu">max</span>(.)<span class="sc">-</span><span class="fu">min</span>(.)))))</span>
-<span id="cb331-15"><a href="people_2.html#cb331-15" tabindex="-1"></a><span class="fu">rownames</span>(flow_mat) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(flow_mat)</span>
-<span id="cb331-16"><a href="people_2.html#cb331-16" tabindex="-1"></a><span class="fu">diag</span>(flow_mat) <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb331-17"><a href="people_2.html#cb331-17" tabindex="-1"></a></span>
-<span id="cb331-18"><a href="people_2.html#cb331-18" tabindex="-1"></a><span class="co">#会有一堆警告，没找到原因，猜测是编码问题，不影响正常使用</span></span>
-<span id="cb331-19"><a href="people_2.html#cb331-19" tabindex="-1"></a><span class="fu">pheatmap</span>(flow_mat,<span class="at">cluster_rows =</span> F,<span class="at">cluster_cols =</span> F,</span>
-<span id="cb331-20"><a href="people_2.html#cb331-20" tabindex="-1"></a>         <span class="at">angle_col =</span> <span class="dv">0</span>,<span class="at">legend =</span> F,<span class="at">fontsize_row =</span> <span class="dv">8</span> ,<span class="at">fontsize_col =</span> <span class="dv">8</span>,</span>
-<span id="cb331-21"><a href="people_2.html#cb331-21" tabindex="-1"></a>         <span class="at">gaps_row =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">19</span>),<span class="at">gaps_col =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">19</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="people_2.html#cb333-1" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&#39;东部地区&#39;</span>,</span>
+<span id="cb333-2"><a href="people_2.html#cb333-2" tabindex="-1"></a>            <span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;东北地区&#39;</span>,</span>
+<span id="cb333-3"><a href="people_2.html#cb333-3" tabindex="-1"></a>            <span class="st">&#39;东北地区&#39;</span>,<span class="st">&#39;东北地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,</span>
+<span id="cb333-4"><a href="people_2.html#cb333-4" tabindex="-1"></a>            <span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,</span>
+<span id="cb333-5"><a href="people_2.html#cb333-5" tabindex="-1"></a>            <span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;东部地区&#39;</span>,</span>
+<span id="cb333-6"><a href="people_2.html#cb333-6" tabindex="-1"></a>            <span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,</span>
+<span id="cb333-7"><a href="people_2.html#cb333-7" tabindex="-1"></a>            <span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span></span>
+<span id="cb333-8"><a href="people_2.html#cb333-8" tabindex="-1"></a>)</span>
+<span id="cb333-9"><a href="people_2.html#cb333-9" tabindex="-1"></a>flow_demo <span class="ot">&lt;-</span> flow_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">region=</span>group) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(region,<span class="at">.before =</span> province)</span>
+<span id="cb333-10"><a href="people_2.html#cb333-10" tabindex="-1"></a>flow_demo<span class="sc">$</span>region <span class="ot">&lt;-</span> <span class="fu">factor</span>(flow_demo<span class="sc">$</span>region,<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;东部地区&#39;</span>,<span class="st">&#39;东北地区&#39;</span>,<span class="st">&#39;中部地区&#39;</span>,<span class="st">&#39;西部地区&#39;</span>))</span>
+<span id="cb333-11"><a href="people_2.html#cb333-11" tabindex="-1"></a>flow_demo <span class="ot">&lt;-</span> flow_demo <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(region)</span>
+<span id="cb333-12"><a href="people_2.html#cb333-12" tabindex="-1"></a>flow_demo <span class="ot">&lt;-</span> flow_demo[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fu">match</span>(flow_demo<span class="sc">$</span>province,<span class="fu">colnames</span>(flow_demo)[<span class="dv">3</span><span class="sc">:</span><span class="dv">33</span>])<span class="sc">+</span><span class="dv">2</span>)]</span>
+<span id="cb333-13"><a href="people_2.html#cb333-13" tabindex="-1"></a></span>
+<span id="cb333-14"><a href="people_2.html#cb333-14" tabindex="-1"></a>flow_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(flow_demo[,<span class="dv">3</span><span class="sc">:</span><span class="dv">33</span>] <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>,<span class="sc">~</span>(.<span class="sc">-</span><span class="fu">min</span>(.))<span class="sc">/</span>(<span class="fu">max</span>(.)<span class="sc">-</span><span class="fu">min</span>(.)))))</span>
+<span id="cb333-15"><a href="people_2.html#cb333-15" tabindex="-1"></a><span class="fu">rownames</span>(flow_mat) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(flow_mat)</span>
+<span id="cb333-16"><a href="people_2.html#cb333-16" tabindex="-1"></a><span class="fu">diag</span>(flow_mat) <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb333-17"><a href="people_2.html#cb333-17" tabindex="-1"></a></span>
+<span id="cb333-18"><a href="people_2.html#cb333-18" tabindex="-1"></a><span class="co">#会有一堆警告，没找到原因，猜测是编码问题，不影响正常使用</span></span>
+<span id="cb333-19"><a href="people_2.html#cb333-19" tabindex="-1"></a><span class="fu">pheatmap</span>(flow_mat,<span class="at">cluster_rows =</span> F,<span class="at">cluster_cols =</span> F,</span>
+<span id="cb333-20"><a href="people_2.html#cb333-20" tabindex="-1"></a>         <span class="at">angle_col =</span> <span class="dv">0</span>,<span class="at">legend =</span> F,<span class="at">fontsize_row =</span> <span class="dv">8</span> ,<span class="at">fontsize_col =</span> <span class="dv">8</span>,</span>
+<span id="cb333-21"><a href="people_2.html#cb333-21" tabindex="-1"></a>         <span class="at">gaps_row =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">19</span>),<span class="at">gaps_col =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">19</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:pop-p4"></span>
 <img src="4-population_files/figure-html/pop-p4-1.png" alt="全国人口流动" width="672" />
 <p class="caption">
@@ -845,43 +846,43 @@ div.csl-indent {
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section",
-"toc_depth": 3
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "toc_depth": 3
+  }
 });
 });
 </script>

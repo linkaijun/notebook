@@ -351,6 +351,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
 <li class="chapter" data-level="5.10.2" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 外观</a></li>
+<li class="chapter" data-level="5.10.3" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_3"><i class="fa fa-check"></i><b>5.10.3</b> 案例</a></li>
 </ul></li>
 <li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
 </ul></li>
@@ -1266,6 +1267,638 @@ status设置参加<a href="https://rstudio.github.io/shinydashboard/appearance.h
 </div>
 </div>
 </div>
+<div id="shiny_10_3" class="section level3 hasAnchor" number="5.10.3">
+<h3><span class="header-section-number">5.10.3</span> 案例<a href="shiny_10.html#shiny_10_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>数据生成部分：</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="shiny_10.html#cb241-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb241-2"><a href="shiny_10.html#cb241-2" tabindex="-1"></a><span class="fu">library</span>(hms)</span>
+<span id="cb241-3"><a href="shiny_10.html#cb241-3" tabindex="-1"></a></span>
+<span id="cb241-4"><a href="shiny_10.html#cb241-4" tabindex="-1"></a><span class="co"># 用户信息</span></span>
+<span id="cb241-5"><a href="shiny_10.html#cb241-5" tabindex="-1"></a>gen_customers <span class="ot">&lt;-</span> <span class="cf">function</span>(user_id_start, num, date){</span>
+<span id="cb241-6"><a href="shiny_10.html#cb241-6" tabindex="-1"></a>  <span class="co"># id_start表示从哪个id开始计数</span></span>
+<span id="cb241-7"><a href="shiny_10.html#cb241-7" tabindex="-1"></a>  <span class="co"># num表示要生成的用户数</span></span>
+<span id="cb241-8"><a href="shiny_10.html#cb241-8" tabindex="-1"></a>  <span class="co"># date表示今日日期</span></span>
+<span id="cb241-9"><a href="shiny_10.html#cb241-9" tabindex="-1"></a>  </span>
+<span id="cb241-10"><a href="shiny_10.html#cb241-10" tabindex="-1"></a>  province <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;北京&quot;</span>, <span class="st">&quot;天津&quot;</span>, <span class="st">&quot;河北&quot;</span>, <span class="st">&quot;山西&quot;</span>, <span class="st">&quot;内蒙古&quot;</span>,</span>
+<span id="cb241-11"><a href="shiny_10.html#cb241-11" tabindex="-1"></a>                <span class="st">&quot;辽宁&quot;</span>, <span class="st">&quot;吉林&quot;</span>, <span class="st">&quot;黑龙江&quot;</span>,</span>
+<span id="cb241-12"><a href="shiny_10.html#cb241-12" tabindex="-1"></a>                <span class="st">&quot;上海&quot;</span>, <span class="st">&quot;江苏&quot;</span>, <span class="st">&quot;浙江&quot;</span>, <span class="st">&quot;安徽&quot;</span>, <span class="st">&quot;福建&quot;</span>, <span class="st">&quot;江西&quot;</span>, <span class="st">&quot;山东&quot;</span>,</span>
+<span id="cb241-13"><a href="shiny_10.html#cb241-13" tabindex="-1"></a>                <span class="st">&quot;河南&quot;</span>, <span class="st">&quot;湖北&quot;</span>, <span class="st">&quot;湖南&quot;</span>, <span class="st">&quot;广东&quot;</span>, <span class="st">&quot;广西&quot;</span>, <span class="st">&quot;海南&quot;</span>,</span>
+<span id="cb241-14"><a href="shiny_10.html#cb241-14" tabindex="-1"></a>                <span class="st">&quot;重庆&quot;</span>, <span class="st">&quot;四川&quot;</span>, <span class="st">&quot;贵州&quot;</span>, <span class="st">&quot;云南&quot;</span>, <span class="st">&quot;西藏&quot;</span>,</span>
+<span id="cb241-15"><a href="shiny_10.html#cb241-15" tabindex="-1"></a>                <span class="st">&quot;陕西&quot;</span>, <span class="st">&quot;甘肃&quot;</span>, <span class="st">&quot;青海&quot;</span>, <span class="st">&quot;宁夏&quot;</span>, <span class="st">&quot;新疆&quot;</span>)</span>
+<span id="cb241-16"><a href="shiny_10.html#cb241-16" tabindex="-1"></a>  </span>
+<span id="cb241-17"><a href="shiny_10.html#cb241-17" tabindex="-1"></a>  reg_times <span class="ot">&lt;-</span> hms<span class="sc">::</span><span class="fu">hms</span>(</span>
+<span id="cb241-18"><a href="shiny_10.html#cb241-18" tabindex="-1"></a>    <span class="at">seconds =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">59</span>, num, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb241-19"><a href="shiny_10.html#cb241-19" tabindex="-1"></a>    <span class="at">minutes =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">59</span>, num, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb241-20"><a href="shiny_10.html#cb241-20" tabindex="-1"></a>    <span class="at">hours =</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(num, <span class="at">mean =</span> <span class="dv">14</span>, <span class="at">sd =</span> <span class="dv">5</span>)), <span class="dv">0</span>), <span class="dv">23</span>)</span>
+<span id="cb241-21"><a href="shiny_10.html#cb241-21" tabindex="-1"></a>  )</span>
+<span id="cb241-22"><a href="shiny_10.html#cb241-22" tabindex="-1"></a>  </span>
+<span id="cb241-23"><a href="shiny_10.html#cb241-23" tabindex="-1"></a>  age_prob <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fu">length</span>(<span class="dv">18</span><span class="sc">:</span><span class="dv">55</span>))</span>
+<span id="cb241-24"><a href="shiny_10.html#cb241-24" tabindex="-1"></a>  age_prob <span class="ot">&lt;-</span> age_prob<span class="sc">/</span><span class="fu">sum</span>(age_prob)</span>
+<span id="cb241-25"><a href="shiny_10.html#cb241-25" tabindex="-1"></a>  </span>
+<span id="cb241-26"><a href="shiny_10.html#cb241-26" tabindex="-1"></a>  gender_prob <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">2</span>)</span>
+<span id="cb241-27"><a href="shiny_10.html#cb241-27" tabindex="-1"></a>  gender_prob <span class="ot">&lt;-</span> gender_prob<span class="sc">/</span><span class="fu">sum</span>(gender_prob)</span>
+<span id="cb241-28"><a href="shiny_10.html#cb241-28" tabindex="-1"></a>  </span>
+<span id="cb241-29"><a href="shiny_10.html#cb241-29" tabindex="-1"></a>  province_prob <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">31</span>)</span>
+<span id="cb241-30"><a href="shiny_10.html#cb241-30" tabindex="-1"></a>  province_prob <span class="ot">&lt;-</span> province_prob<span class="sc">/</span><span class="fu">sum</span>(province_prob)</span>
+<span id="cb241-31"><a href="shiny_10.html#cb241-31" tabindex="-1"></a>  </span>
+<span id="cb241-32"><a href="shiny_10.html#cb241-32" tabindex="-1"></a>  customers <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb241-33"><a href="shiny_10.html#cb241-33" tabindex="-1"></a>    <span class="at">reg_date =</span> <span class="fu">rep</span>(date, num),</span>
+<span id="cb241-34"><a href="shiny_10.html#cb241-34" tabindex="-1"></a>    <span class="at">reg_time =</span> reg_times,</span>
+<span id="cb241-35"><a href="shiny_10.html#cb241-35" tabindex="-1"></a>    <span class="at">age =</span> <span class="fu">sample</span>(<span class="dv">18</span><span class="sc">:</span><span class="dv">55</span>, num, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> age_prob),</span>
+<span id="cb241-36"><a href="shiny_10.html#cb241-36" tabindex="-1"></a>    <span class="at">gender =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;男&quot;</span>,<span class="st">&quot;女&quot;</span>), num, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> gender_prob),</span>
+<span id="cb241-37"><a href="shiny_10.html#cb241-37" tabindex="-1"></a>    <span class="at">province =</span> <span class="fu">sample</span>(province, num, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> province_prob)</span>
+<span id="cb241-38"><a href="shiny_10.html#cb241-38" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb241-39"><a href="shiny_10.html#cb241-39" tabindex="-1"></a>    <span class="fu">arrange</span>(reg_time) <span class="sc">%&gt;%</span> </span>
+<span id="cb241-40"><a href="shiny_10.html#cb241-40" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> (user_id_start)<span class="sc">:</span>(user_id_start<span class="sc">+</span>num<span class="dv">-1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb241-41"><a href="shiny_10.html#cb241-41" tabindex="-1"></a>    <span class="fu">relocate</span>(id, <span class="at">.before =</span> reg_date)</span>
+<span id="cb241-42"><a href="shiny_10.html#cb241-42" tabindex="-1"></a>  </span>
+<span id="cb241-43"><a href="shiny_10.html#cb241-43" tabindex="-1"></a>  <span class="fu">return</span>(customers)</span>
+<span id="cb241-44"><a href="shiny_10.html#cb241-44" tabindex="-1"></a>}</span>
+<span id="cb241-45"><a href="shiny_10.html#cb241-45" tabindex="-1"></a></span>
+<span id="cb241-46"><a href="shiny_10.html#cb241-46" tabindex="-1"></a><span class="co"># 商品信息</span></span>
+<span id="cb241-47"><a href="shiny_10.html#cb241-47" tabindex="-1"></a>df_products <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb241-48"><a href="shiny_10.html#cb241-48" tabindex="-1"></a>  <span class="at">product_id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb241-49"><a href="shiny_10.html#cb241-49" tabindex="-1"></a>  <span class="at">category =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;E&quot;</span>),</span>
+<span id="cb241-50"><a href="shiny_10.html#cb241-50" tabindex="-1"></a>                 <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>)),</span>
+<span id="cb241-51"><a href="shiny_10.html#cb241-51" tabindex="-1"></a>  <span class="at">item =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>),</span>
+<span id="cb241-52"><a href="shiny_10.html#cb241-52" tabindex="-1"></a>  <span class="at">price =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">500</span>)),</span>
+<span id="cb241-53"><a href="shiny_10.html#cb241-53" tabindex="-1"></a>  <span class="at">cost =</span> <span class="fu">round</span>(price <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">20</span>, <span class="fl">0.4</span>, <span class="fl">0.7</span>)),</span>
+<span id="cb241-54"><a href="shiny_10.html#cb241-54" tabindex="-1"></a>  <span class="at">original_stock =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">500</span>, <span class="dv">5</span>)),</span>
+<span id="cb241-55"><a href="shiny_10.html#cb241-55" tabindex="-1"></a>  <span class="at">new_stock =</span> original_stock</span>
+<span id="cb241-56"><a href="shiny_10.html#cb241-56" tabindex="-1"></a>)</span>
+<span id="cb241-57"><a href="shiny_10.html#cb241-57" tabindex="-1"></a></span>
+<span id="cb241-58"><a href="shiny_10.html#cb241-58" tabindex="-1"></a><span class="co"># 订单信息</span></span>
+<span id="cb241-59"><a href="shiny_10.html#cb241-59" tabindex="-1"></a>gen_order <span class="ot">&lt;-</span> <span class="cf">function</span>(order_id_start, user_id, date, df_customers){</span>
+<span id="cb241-60"><a href="shiny_10.html#cb241-60" tabindex="-1"></a>  <span class="co"># 生成每笔订单的购物信息</span></span>
+<span id="cb241-61"><a href="shiny_10.html#cb241-61" tabindex="-1"></a>  </span>
+<span id="cb241-62"><a href="shiny_10.html#cb241-62" tabindex="-1"></a>  reg_date <span class="ot">&lt;-</span> df_customers[df_customers<span class="sc">$</span>id <span class="sc">==</span> user_id,][[<span class="st">&quot;reg_date&quot;</span>]]</span>
+<span id="cb241-63"><a href="shiny_10.html#cb241-63" tabindex="-1"></a>  <span class="cf">if</span>(reg_date <span class="sc">!=</span> date){</span>
+<span id="cb241-64"><a href="shiny_10.html#cb241-64" tabindex="-1"></a>    order_time <span class="ot">&lt;-</span> hms<span class="sc">::</span><span class="fu">hms</span>(</span>
+<span id="cb241-65"><a href="shiny_10.html#cb241-65" tabindex="-1"></a>      <span class="at">seconds =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">59</span>, <span class="dv">1</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb241-66"><a href="shiny_10.html#cb241-66" tabindex="-1"></a>      <span class="at">minutes =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">59</span>, <span class="dv">1</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb241-67"><a href="shiny_10.html#cb241-67" tabindex="-1"></a>      <span class="at">hours =</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">14</span>, <span class="at">sd =</span> <span class="dv">5</span>)), <span class="dv">0</span>), <span class="dv">23</span>)</span>
+<span id="cb241-68"><a href="shiny_10.html#cb241-68" tabindex="-1"></a>    )</span>
+<span id="cb241-69"><a href="shiny_10.html#cb241-69" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
+<span id="cb241-70"><a href="shiny_10.html#cb241-70" tabindex="-1"></a>    reg_time <span class="ot">&lt;-</span> df_customers[df_customers<span class="sc">$</span>id <span class="sc">==</span> user_id,][[<span class="st">&quot;reg_time&quot;</span>]]</span>
+<span id="cb241-71"><a href="shiny_10.html#cb241-71" tabindex="-1"></a>    sec <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">60</span><span class="sc">*</span><span class="dv">60</span>), <span class="dv">1</span>)   <span class="co"># 2小时内下单</span></span>
+<span id="cb241-72"><a href="shiny_10.html#cb241-72" tabindex="-1"></a>    order_time <span class="ot">&lt;-</span> <span class="fu">as_hms</span>(reg_time <span class="sc">+</span> <span class="fu">hms</span>(<span class="at">seconds =</span> <span class="fu">min</span>(sec, <span class="dv">86399</span>)))</span>
+<span id="cb241-73"><a href="shiny_10.html#cb241-73" tabindex="-1"></a>  }</span>
+<span id="cb241-74"><a href="shiny_10.html#cb241-74" tabindex="-1"></a></span>
+<span id="cb241-75"><a href="shiny_10.html#cb241-75" tabindex="-1"></a>  purchase_product <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.8</span>,<span class="fl">0.15</span>,<span class="fl">0.05</span>)))</span>
+<span id="cb241-76"><a href="shiny_10.html#cb241-76" tabindex="-1"></a>  purchase_num <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="fu">length</span>(purchase_product), <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.7</span>,<span class="fl">0.15</span>,<span class="fl">0.1</span>,<span class="fl">0.05</span>))</span>
+<span id="cb241-77"><a href="shiny_10.html#cb241-77" tabindex="-1"></a>  </span>
+<span id="cb241-78"><a href="shiny_10.html#cb241-78" tabindex="-1"></a>  df_order <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb241-79"><a href="shiny_10.html#cb241-79" tabindex="-1"></a>    <span class="at">order_id =</span> order_id_start,</span>
+<span id="cb241-80"><a href="shiny_10.html#cb241-80" tabindex="-1"></a>    <span class="at">user_id =</span> user_id,</span>
+<span id="cb241-81"><a href="shiny_10.html#cb241-81" tabindex="-1"></a>    <span class="at">date =</span> date,</span>
+<span id="cb241-82"><a href="shiny_10.html#cb241-82" tabindex="-1"></a>    <span class="at">time =</span> order_time,</span>
+<span id="cb241-83"><a href="shiny_10.html#cb241-83" tabindex="-1"></a>    <span class="at">product =</span> purchase_product,</span>
+<span id="cb241-84"><a href="shiny_10.html#cb241-84" tabindex="-1"></a>    <span class="at">num =</span> purchase_num</span>
+<span id="cb241-85"><a href="shiny_10.html#cb241-85" tabindex="-1"></a>  )</span>
+<span id="cb241-86"><a href="shiny_10.html#cb241-86" tabindex="-1"></a>  </span>
+<span id="cb241-87"><a href="shiny_10.html#cb241-87" tabindex="-1"></a>  <span class="fu">return</span>(df_order)</span>
+<span id="cb241-88"><a href="shiny_10.html#cb241-88" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>shiny部分</strong>：</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="shiny_10.html#cb242-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb242-2"><a href="shiny_10.html#cb242-2" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb242-3"><a href="shiny_10.html#cb242-3" tabindex="-1"></a><span class="fu">library</span>(shinydashboard)</span>
+<span id="cb242-4"><a href="shiny_10.html#cb242-4" tabindex="-1"></a><span class="fu">library</span>(shinyWidgets)</span>
+<span id="cb242-5"><a href="shiny_10.html#cb242-5" tabindex="-1"></a><span class="fu">library</span>(bubbles)</span>
+<span id="cb242-6"><a href="shiny_10.html#cb242-6" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb242-7"><a href="shiny_10.html#cb242-7" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&#39;E:/R/shiny/demo/gen_data.R&#39;</span>)</span>
+<span id="cb242-8"><a href="shiny_10.html#cb242-8" tabindex="-1"></a></span>
+<span id="cb242-9"><a href="shiny_10.html#cb242-9" tabindex="-1"></a>header <span class="ot">&lt;-</span> <span class="fu">dashboardHeader</span>(</span>
+<span id="cb242-10"><a href="shiny_10.html#cb242-10" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&#39;Demo&#39;</span>,</span>
+<span id="cb242-11"><a href="shiny_10.html#cb242-11" tabindex="-1"></a>  <span class="fu">dropdownMenuOutput</span>(<span class="st">&#39;update_notification&#39;</span>),</span>
+<span id="cb242-12"><a href="shiny_10.html#cb242-12" tabindex="-1"></a>  tags<span class="sc">$</span><span class="fu">li</span>(</span>
+<span id="cb242-13"><a href="shiny_10.html#cb242-13" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">&quot;dropdown date-center&quot;</span>,</span>
+<span id="cb242-14"><a href="shiny_10.html#cb242-14" tabindex="-1"></a>    <span class="fu">textOutput</span>(<span class="st">&quot;current_date&quot;</span>)</span>
+<span id="cb242-15"><a href="shiny_10.html#cb242-15" tabindex="-1"></a>  )</span>
+<span id="cb242-16"><a href="shiny_10.html#cb242-16" tabindex="-1"></a>)</span>
+<span id="cb242-17"><a href="shiny_10.html#cb242-17" tabindex="-1"></a></span>
+<span id="cb242-18"><a href="shiny_10.html#cb242-18" tabindex="-1"></a>sidebar <span class="ot">&lt;-</span> <span class="fu">dashboardSidebar</span>(</span>
+<span id="cb242-19"><a href="shiny_10.html#cb242-19" tabindex="-1"></a>  <span class="fu">sidebarMenu</span>(</span>
+<span id="cb242-20"><a href="shiny_10.html#cb242-20" tabindex="-1"></a>    <span class="fu">menuItem</span>(<span class="st">&quot;核 心 指 标&quot;</span>, <span class="at">tabName =</span> <span class="st">&quot;kpi&quot;</span>, <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&quot;table&quot;</span>)),</span>
+<span id="cb242-21"><a href="shiny_10.html#cb242-21" tabindex="-1"></a>    <span class="fu">menuItem</span>(<span class="st">&quot;用 户 分 析&quot;</span>, <span class="at">tabName =</span> <span class="st">&quot;users&quot;</span>, <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&quot;user&quot;</span>)),</span>
+<span id="cb242-22"><a href="shiny_10.html#cb242-22" tabindex="-1"></a>    <span class="fu">menuItem</span>(<span class="st">&#39;商 品 分 析&#39;</span>, <span class="at">tabName =</span> <span class="st">&#39;products&#39;</span>, <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&quot;cart-shopping&quot;</span>)),</span>
+<span id="cb242-23"><a href="shiny_10.html#cb242-23" tabindex="-1"></a>    <span class="fu">menuItem</span>(<span class="st">&quot;设 置&quot;</span>, <span class="at">tabName =</span> <span class="st">&quot;setting&quot;</span>, <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&quot;gear&quot;</span>),</span>
+<span id="cb242-24"><a href="shiny_10.html#cb242-24" tabindex="-1"></a>             <span class="fu">menuSubItem</span>(<span class="fu">actionButton</span>(<span class="st">&quot;manual_update&quot;</span>, <span class="st">&quot;手动更新&quot;</span>, <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&quot;sync&quot;</span>))),</span>
+<span id="cb242-25"><a href="shiny_10.html#cb242-25" tabindex="-1"></a>             <span class="fu">menuSubItem</span>(</span>
+<span id="cb242-26"><a href="shiny_10.html#cb242-26" tabindex="-1"></a>               <span class="fu">materialSwitch</span>(</span>
+<span id="cb242-27"><a href="shiny_10.html#cb242-27" tabindex="-1"></a>                 <span class="at">inputId =</span> <span class="st">&quot;auto_update&quot;</span>,</span>
+<span id="cb242-28"><a href="shiny_10.html#cb242-28" tabindex="-1"></a>                 <span class="at">label =</span> <span class="st">&#39;自动更新&#39;</span>,</span>
+<span id="cb242-29"><a href="shiny_10.html#cb242-29" tabindex="-1"></a>                 <span class="at">value =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb242-30"><a href="shiny_10.html#cb242-30" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">&#39;success&#39;</span>,</span>
+<span id="cb242-31"><a href="shiny_10.html#cb242-31" tabindex="-1"></a>                 <span class="at">inline =</span> <span class="cn">TRUE</span></span>
+<span id="cb242-32"><a href="shiny_10.html#cb242-32" tabindex="-1"></a>               )</span>
+<span id="cb242-33"><a href="shiny_10.html#cb242-33" tabindex="-1"></a>             ))</span>
+<span id="cb242-34"><a href="shiny_10.html#cb242-34" tabindex="-1"></a>    )</span>
+<span id="cb242-35"><a href="shiny_10.html#cb242-35" tabindex="-1"></a>  )</span>
+<span id="cb242-36"><a href="shiny_10.html#cb242-36" tabindex="-1"></a></span>
+<span id="cb242-37"><a href="shiny_10.html#cb242-37" tabindex="-1"></a>body <span class="ot">&lt;-</span> <span class="fu">dashboardBody</span>(</span>
+<span id="cb242-38"><a href="shiny_10.html#cb242-38" tabindex="-1"></a>  tags<span class="sc">$</span><span class="fu">head</span>(</span>
+<span id="cb242-39"><a href="shiny_10.html#cb242-39" tabindex="-1"></a>    tags<span class="sc">$</span><span class="fu">style</span>(<span class="fu">HTML</span>(<span class="st">&quot;</span></span>
+<span id="cb242-40"><a href="shiny_10.html#cb242-40" tabindex="-1"></a><span class="st">        /* 日期居中样式 */</span></span>
+<span id="cb242-41"><a href="shiny_10.html#cb242-41" tabindex="-1"></a><span class="st">        .date-center {</span></span>
+<span id="cb242-42"><a href="shiny_10.html#cb242-42" tabindex="-1"></a><span class="st">          position: absolute !important;</span></span>
+<span id="cb242-43"><a href="shiny_10.html#cb242-43" tabindex="-1"></a><span class="st">          left: 0 !important;</span></span>
+<span id="cb242-44"><a href="shiny_10.html#cb242-44" tabindex="-1"></a><span class="st">          right: 0 !important;</span></span>
+<span id="cb242-45"><a href="shiny_10.html#cb242-45" tabindex="-1"></a><span class="st">          top: 0 !important;</span></span>
+<span id="cb242-46"><a href="shiny_10.html#cb242-46" tabindex="-1"></a><span class="st">          text-align: center !important;</span></span>
+<span id="cb242-47"><a href="shiny_10.html#cb242-47" tabindex="-1"></a><span class="st">          padding-top: 10px !important;</span></span>
+<span id="cb242-48"><a href="shiny_10.html#cb242-48" tabindex="-1"></a><span class="st">          pointer-events: none;  /* 防止遮挡其他元素 */</span></span>
+<span id="cb242-49"><a href="shiny_10.html#cb242-49" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb242-50"><a href="shiny_10.html#cb242-50" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb242-51"><a href="shiny_10.html#cb242-51" tabindex="-1"></a><span class="st">        /* 隐藏默认标题 */</span></span>
+<span id="cb242-52"><a href="shiny_10.html#cb242-52" tabindex="-1"></a><span class="st">        .main-header .navbar-custom-menu,</span></span>
+<span id="cb242-53"><a href="shiny_10.html#cb242-53" tabindex="-1"></a><span class="st">        .main-header .sidebar-toggle {</span></span>
+<span id="cb242-54"><a href="shiny_10.html#cb242-54" tabindex="-1"></a><span class="st">          z-index: 1;  /* 确保其他元素在前 */</span></span>
+<span id="cb242-55"><a href="shiny_10.html#cb242-55" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb242-56"><a href="shiny_10.html#cb242-56" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb242-57"><a href="shiny_10.html#cb242-57" tabindex="-1"></a><span class="st">        /* 文本样式 */</span></span>
+<span id="cb242-58"><a href="shiny_10.html#cb242-58" tabindex="-1"></a><span class="st">        #current_date {</span></span>
+<span id="cb242-59"><a href="shiny_10.html#cb242-59" tabindex="-1"></a><span class="st">          color: white;</span></span>
+<span id="cb242-60"><a href="shiny_10.html#cb242-60" tabindex="-1"></a><span class="st">          font-weight: bold;</span></span>
+<span id="cb242-61"><a href="shiny_10.html#cb242-61" tabindex="-1"></a><span class="st">          font-size: 24px;</span></span>
+<span id="cb242-62"><a href="shiny_10.html#cb242-62" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb242-63"><a href="shiny_10.html#cb242-63" tabindex="-1"></a><span class="st">      &quot;</span>))</span>
+<span id="cb242-64"><a href="shiny_10.html#cb242-64" tabindex="-1"></a>  ),</span>
+<span id="cb242-65"><a href="shiny_10.html#cb242-65" tabindex="-1"></a>  <span class="fu">tabItems</span>(</span>
+<span id="cb242-66"><a href="shiny_10.html#cb242-66" tabindex="-1"></a>    <span class="co"># 核心指标</span></span>
+<span id="cb242-67"><a href="shiny_10.html#cb242-67" tabindex="-1"></a>    <span class="fu">tabItem</span>(</span>
+<span id="cb242-68"><a href="shiny_10.html#cb242-68" tabindex="-1"></a>      <span class="at">tabName =</span> <span class="st">&#39;kpi&#39;</span>,</span>
+<span id="cb242-69"><a href="shiny_10.html#cb242-69" tabindex="-1"></a>      <span class="fu">fluidRow</span>(</span>
+<span id="cb242-70"><a href="shiny_10.html#cb242-70" tabindex="-1"></a>        <span class="fu">valueBoxOutput</span>(<span class="st">&#39;gmv&#39;</span>, <span class="at">width =</span> <span class="dv">3</span>),</span>
+<span id="cb242-71"><a href="shiny_10.html#cb242-71" tabindex="-1"></a>        <span class="fu">valueBoxOutput</span>(<span class="st">&#39;volume&#39;</span>, <span class="at">width =</span> <span class="dv">3</span>),</span>
+<span id="cb242-72"><a href="shiny_10.html#cb242-72" tabindex="-1"></a>        <span class="fu">valueBoxOutput</span>(<span class="st">&#39;users&#39;</span>, <span class="at">width =</span> <span class="dv">3</span>),</span>
+<span id="cb242-73"><a href="shiny_10.html#cb242-73" tabindex="-1"></a>        <span class="fu">valueBoxOutput</span>(<span class="st">&#39;reg_users&#39;</span>, <span class="at">width =</span> <span class="dv">3</span>)</span>
+<span id="cb242-74"><a href="shiny_10.html#cb242-74" tabindex="-1"></a>      ),</span>
+<span id="cb242-75"><a href="shiny_10.html#cb242-75" tabindex="-1"></a>      <span class="fu">fluidRow</span>(</span>
+<span id="cb242-76"><a href="shiny_10.html#cb242-76" tabindex="-1"></a>        <span class="fu">column</span>(<span class="at">width =</span> <span class="dv">4</span>, <span class="at">offset =</span> <span class="dv">2</span>,</span>
+<span id="cb242-77"><a href="shiny_10.html#cb242-77" tabindex="-1"></a>               <span class="fu">sliderInput</span>(<span class="st">&quot;date_range&quot;</span>, <span class="st">&quot;日期范围:&quot;</span>,</span>
+<span id="cb242-78"><a href="shiny_10.html#cb242-78" tabindex="-1"></a>                             <span class="at">min =</span> <span class="fu">Sys.Date</span>(),</span>
+<span id="cb242-79"><a href="shiny_10.html#cb242-79" tabindex="-1"></a>                             <span class="at">max =</span> <span class="fu">Sys.Date</span>(),</span>
+<span id="cb242-80"><a href="shiny_10.html#cb242-80" tabindex="-1"></a>                             <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">Sys.Date</span>(), <span class="fu">Sys.Date</span>()),</span>
+<span id="cb242-81"><a href="shiny_10.html#cb242-81" tabindex="-1"></a>                             <span class="at">timeFormat =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)),</span>
+<span id="cb242-82"><a href="shiny_10.html#cb242-82" tabindex="-1"></a>        <span class="fu">column</span>(<span class="at">width =</span> <span class="dv">4</span>,</span>
+<span id="cb242-83"><a href="shiny_10.html#cb242-83" tabindex="-1"></a>               <span class="fu">selectInput</span>(<span class="st">&#39;selected_idx&#39;</span>, </span>
+<span id="cb242-84"><a href="shiny_10.html#cb242-84" tabindex="-1"></a>                             <span class="at">label =</span> <span class="st">&#39;指标&#39;</span>,</span>
+<span id="cb242-85"><a href="shiny_10.html#cb242-85" tabindex="-1"></a>                             <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">&#39;历史销售额&#39;</span>,<span class="st">&#39;历史销量&#39;</span>,<span class="st">&#39;历史新增用户&#39;</span>),</span>
+<span id="cb242-86"><a href="shiny_10.html#cb242-86" tabindex="-1"></a>                             <span class="at">selected =</span> <span class="st">&#39;历史销售额&#39;</span>))</span>
+<span id="cb242-87"><a href="shiny_10.html#cb242-87" tabindex="-1"></a>      ),</span>
+<span id="cb242-88"><a href="shiny_10.html#cb242-88" tabindex="-1"></a>      <span class="fu">fluidRow</span>(</span>
+<span id="cb242-89"><a href="shiny_10.html#cb242-89" tabindex="-1"></a>        <span class="fu">box</span>(<span class="at">status =</span> <span class="st">&quot;primary&quot;</span>, <span class="fu">plotlyOutput</span>(<span class="st">&#39;kpi_plot&#39;</span>), <span class="at">width =</span> <span class="dv">12</span>)</span>
+<span id="cb242-90"><a href="shiny_10.html#cb242-90" tabindex="-1"></a>      )</span>
+<span id="cb242-91"><a href="shiny_10.html#cb242-91" tabindex="-1"></a>    ),</span>
+<span id="cb242-92"><a href="shiny_10.html#cb242-92" tabindex="-1"></a>    </span>
+<span id="cb242-93"><a href="shiny_10.html#cb242-93" tabindex="-1"></a>    <span class="fu">tabItem</span>(</span>
+<span id="cb242-94"><a href="shiny_10.html#cb242-94" tabindex="-1"></a>      <span class="at">tabName =</span> <span class="st">&#39;users&#39;</span>,</span>
+<span id="cb242-95"><a href="shiny_10.html#cb242-95" tabindex="-1"></a>      <span class="fu">fluidRow</span>(</span>
+<span id="cb242-96"><a href="shiny_10.html#cb242-96" tabindex="-1"></a>        <span class="co"># column里的元素（这里是box）的宽度12是相对该column而言的，而非整个屏幕</span></span>
+<span id="cb242-97"><a href="shiny_10.html#cb242-97" tabindex="-1"></a>        <span class="fu">column</span>(<span class="at">width =</span> <span class="dv">4</span>,</span>
+<span id="cb242-98"><a href="shiny_10.html#cb242-98" tabindex="-1"></a>               <span class="fu">box</span>(</span>
+<span id="cb242-99"><a href="shiny_10.html#cb242-99" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">&#39;primary&#39;</span>, <span class="at">width =</span> <span class="dv">12</span>,</span>
+<span id="cb242-100"><a href="shiny_10.html#cb242-100" tabindex="-1"></a>                 <span class="fu">plotlyOutput</span>(<span class="st">&#39;user_frequency_plot&#39;</span>)</span>
+<span id="cb242-101"><a href="shiny_10.html#cb242-101" tabindex="-1"></a>               )</span>
+<span id="cb242-102"><a href="shiny_10.html#cb242-102" tabindex="-1"></a>               ),</span>
+<span id="cb242-103"><a href="shiny_10.html#cb242-103" tabindex="-1"></a>        <span class="fu">column</span>(<span class="at">width =</span> <span class="dv">4</span>,</span>
+<span id="cb242-104"><a href="shiny_10.html#cb242-104" tabindex="-1"></a>               <span class="fu">box</span>(</span>
+<span id="cb242-105"><a href="shiny_10.html#cb242-105" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">&#39;primary&#39;</span>, <span class="at">width =</span> <span class="dv">12</span>,</span>
+<span id="cb242-106"><a href="shiny_10.html#cb242-106" tabindex="-1"></a>                 <span class="fu">div</span>(</span>
+<span id="cb242-107"><a href="shiny_10.html#cb242-107" tabindex="-1"></a>                   <span class="fu">textOutput</span>(<span class="st">&#39;bin_width&#39;</span>),</span>
+<span id="cb242-108"><a href="shiny_10.html#cb242-108" tabindex="-1"></a>                   <span class="at">style =</span> <span class="st">&quot;font-size: 15px;&quot;</span>),</span>
+<span id="cb242-109"><a href="shiny_10.html#cb242-109" tabindex="-1"></a>                 <span class="fu">plotlyOutput</span>(<span class="st">&#39;user_mean_amount_plot&#39;</span>)</span>
+<span id="cb242-110"><a href="shiny_10.html#cb242-110" tabindex="-1"></a>               )</span>
+<span id="cb242-111"><a href="shiny_10.html#cb242-111" tabindex="-1"></a>               ),</span>
+<span id="cb242-112"><a href="shiny_10.html#cb242-112" tabindex="-1"></a>        <span class="fu">column</span>(<span class="at">width =</span> <span class="dv">4</span>,</span>
+<span id="cb242-113"><a href="shiny_10.html#cb242-113" tabindex="-1"></a>               <span class="fu">box</span>(</span>
+<span id="cb242-114"><a href="shiny_10.html#cb242-114" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">&#39;primary&#39;</span>, <span class="at">width =</span> <span class="dv">12</span>,</span>
+<span id="cb242-115"><a href="shiny_10.html#cb242-115" tabindex="-1"></a>                 <span class="fu">plotlyOutput</span>(<span class="st">&#39;user_total_amount_plot&#39;</span>)</span>
+<span id="cb242-116"><a href="shiny_10.html#cb242-116" tabindex="-1"></a>               ))</span>
+<span id="cb242-117"><a href="shiny_10.html#cb242-117" tabindex="-1"></a>      ),</span>
+<span id="cb242-118"><a href="shiny_10.html#cb242-118" tabindex="-1"></a>      <span class="fu">fluidRow</span>()</span>
+<span id="cb242-119"><a href="shiny_10.html#cb242-119" tabindex="-1"></a>    ),</span>
+<span id="cb242-120"><a href="shiny_10.html#cb242-120" tabindex="-1"></a>    </span>
+<span id="cb242-121"><a href="shiny_10.html#cb242-121" tabindex="-1"></a>    <span class="fu">tabItem</span>(</span>
+<span id="cb242-122"><a href="shiny_10.html#cb242-122" tabindex="-1"></a>      <span class="at">tabName =</span> <span class="st">&#39;products&#39;</span>,</span>
+<span id="cb242-123"><a href="shiny_10.html#cb242-123" tabindex="-1"></a>      <span class="fu">fluidRow</span>(</span>
+<span id="cb242-124"><a href="shiny_10.html#cb242-124" tabindex="-1"></a>        <span class="fu">column</span>(<span class="at">width=</span><span class="dv">6</span>,</span>
+<span id="cb242-125"><a href="shiny_10.html#cb242-125" tabindex="-1"></a>               <span class="fu">box</span>(</span>
+<span id="cb242-126"><a href="shiny_10.html#cb242-126" tabindex="-1"></a>                 <span class="at">title =</span> <span class="st">&#39;今日销售商品构成&#39;</span>,</span>
+<span id="cb242-127"><a href="shiny_10.html#cb242-127" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">&#39;primary&#39;</span>, <span class="at">width =</span> <span class="dv">12</span>,</span>
+<span id="cb242-128"><a href="shiny_10.html#cb242-128" tabindex="-1"></a>                 <span class="fu">plotlyOutput</span>(<span class="st">&#39;product_num_plot&#39;</span>)</span>
+<span id="cb242-129"><a href="shiny_10.html#cb242-129" tabindex="-1"></a>               ),</span>
+<span id="cb242-130"><a href="shiny_10.html#cb242-130" tabindex="-1"></a>               <span class="fu">box</span>(</span>
+<span id="cb242-131"><a href="shiny_10.html#cb242-131" tabindex="-1"></a>                 <span class="at">title =</span> <span class="st">&#39;商品库存&#39;</span>,</span>
+<span id="cb242-132"><a href="shiny_10.html#cb242-132" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">&#39;primary&#39;</span>, <span class="at">width =</span> <span class="dv">12</span>,</span>
+<span id="cb242-133"><a href="shiny_10.html#cb242-133" tabindex="-1"></a>                 <span class="fu">plotlyOutput</span>(<span class="st">&#39;product_stock_plot&#39;</span>)</span>
+<span id="cb242-134"><a href="shiny_10.html#cb242-134" tabindex="-1"></a>               )</span>
+<span id="cb242-135"><a href="shiny_10.html#cb242-135" tabindex="-1"></a>        ),</span>
+<span id="cb242-136"><a href="shiny_10.html#cb242-136" tabindex="-1"></a>        <span class="fu">column</span>(<span class="at">width=</span><span class="dv">6</span>,</span>
+<span id="cb242-137"><a href="shiny_10.html#cb242-137" tabindex="-1"></a>               <span class="fu">box</span>(</span>
+<span id="cb242-138"><a href="shiny_10.html#cb242-138" tabindex="-1"></a>                 <span class="at">title =</span> <span class="st">&#39;今日商品销售金额&#39;</span>,</span>
+<span id="cb242-139"><a href="shiny_10.html#cb242-139" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">&#39;primary&#39;</span>, <span class="at">width =</span> <span class="dv">12</span>,</span>
+<span id="cb242-140"><a href="shiny_10.html#cb242-140" tabindex="-1"></a>                 <span class="fu">bubblesOutput</span>(<span class="st">&#39;product_amount_plot&#39;</span>, <span class="at">height =</span> <span class="st">&#39;800px&#39;</span>)</span>
+<span id="cb242-141"><a href="shiny_10.html#cb242-141" tabindex="-1"></a>               )</span>
+<span id="cb242-142"><a href="shiny_10.html#cb242-142" tabindex="-1"></a>        )</span>
+<span id="cb242-143"><a href="shiny_10.html#cb242-143" tabindex="-1"></a>      )</span>
+<span id="cb242-144"><a href="shiny_10.html#cb242-144" tabindex="-1"></a>    )</span>
+<span id="cb242-145"><a href="shiny_10.html#cb242-145" tabindex="-1"></a>  )</span>
+<span id="cb242-146"><a href="shiny_10.html#cb242-146" tabindex="-1"></a>)</span>
+<span id="cb242-147"><a href="shiny_10.html#cb242-147" tabindex="-1"></a></span>
+<span id="cb242-148"><a href="shiny_10.html#cb242-148" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">dashboardPage</span>(header, sidebar, body)</span>
+<span id="cb242-149"><a href="shiny_10.html#cb242-149" tabindex="-1"></a></span>
+<span id="cb242-150"><a href="shiny_10.html#cb242-150" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb242-151"><a href="shiny_10.html#cb242-151" tabindex="-1"></a>  <span class="co"># 存储所有用户数据</span></span>
+<span id="cb242-152"><a href="shiny_10.html#cb242-152" tabindex="-1"></a>  df_customers <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="fu">tibble</span>())</span>
+<span id="cb242-153"><a href="shiny_10.html#cb242-153" tabindex="-1"></a>  </span>
+<span id="cb242-154"><a href="shiny_10.html#cb242-154" tabindex="-1"></a>  <span class="co"># 存储订单数据</span></span>
+<span id="cb242-155"><a href="shiny_10.html#cb242-155" tabindex="-1"></a>  df_orders <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="fu">tibble</span>())</span>
+<span id="cb242-156"><a href="shiny_10.html#cb242-156" tabindex="-1"></a>  </span>
+<span id="cb242-157"><a href="shiny_10.html#cb242-157" tabindex="-1"></a>  <span class="co"># 商品信息</span></span>
+<span id="cb242-158"><a href="shiny_10.html#cb242-158" tabindex="-1"></a>  df_products <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(df_products)</span>
+<span id="cb242-159"><a href="shiny_10.html#cb242-159" tabindex="-1"></a>  </span>
+<span id="cb242-160"><a href="shiny_10.html#cb242-160" tabindex="-1"></a>  <span class="co"># 库存检测</span></span>
+<span id="cb242-161"><a href="shiny_10.html#cb242-161" tabindex="-1"></a>  stock_observe <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb242-162"><a href="shiny_10.html#cb242-162" tabindex="-1"></a>  </span>
+<span id="cb242-163"><a href="shiny_10.html#cb242-163" tabindex="-1"></a>  <span class="co"># kpi指标</span></span>
+<span id="cb242-164"><a href="shiny_10.html#cb242-164" tabindex="-1"></a>  idx_gmv <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="dv">0</span>)</span>
+<span id="cb242-165"><a href="shiny_10.html#cb242-165" tabindex="-1"></a>  idx_volume <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="dv">0</span>)</span>
+<span id="cb242-166"><a href="shiny_10.html#cb242-166" tabindex="-1"></a>  idx_users <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="dv">0</span>)</span>
+<span id="cb242-167"><a href="shiny_10.html#cb242-167" tabindex="-1"></a>  idx_reg_users <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="dv">0</span>)</span>
+<span id="cb242-168"><a href="shiny_10.html#cb242-168" tabindex="-1"></a>  df_kpi <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="fu">tibble</span>())</span>
+<span id="cb242-169"><a href="shiny_10.html#cb242-169" tabindex="-1"></a>  </span>
+<span id="cb242-170"><a href="shiny_10.html#cb242-170" tabindex="-1"></a>  <span class="co"># 存储更新时间</span></span>
+<span id="cb242-171"><a href="shiny_10.html#cb242-171" tabindex="-1"></a>  update_time <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="fu">character</span>(<span class="dv">0</span>))</span>
+<span id="cb242-172"><a href="shiny_10.html#cb242-172" tabindex="-1"></a>  </span>
+<span id="cb242-173"><a href="shiny_10.html#cb242-173" tabindex="-1"></a>  <span class="co"># 当前日期（随时间动态更新）</span></span>
+<span id="cb242-174"><a href="shiny_10.html#cb242-174" tabindex="-1"></a>  current_date <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="fu">Sys.Date</span>())</span>
+<span id="cb242-175"><a href="shiny_10.html#cb242-175" tabindex="-1"></a>  </span>
+<span id="cb242-176"><a href="shiny_10.html#cb242-176" tabindex="-1"></a>  <span class="co"># 响应式获取用户ID与订单ID</span></span>
+<span id="cb242-177"><a href="shiny_10.html#cb242-177" tabindex="-1"></a>  next_user_id <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb242-178"><a href="shiny_10.html#cb242-178" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_customers</span>()) <span class="sc">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb242-179"><a href="shiny_10.html#cb242-179" tabindex="-1"></a>      <span class="fu">max</span>(<span class="fu">df_customers</span>()<span class="sc">$</span>id) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb242-180"><a href="shiny_10.html#cb242-180" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb242-181"><a href="shiny_10.html#cb242-181" tabindex="-1"></a>      <span class="dv">1</span></span>
+<span id="cb242-182"><a href="shiny_10.html#cb242-182" tabindex="-1"></a>    }</span>
+<span id="cb242-183"><a href="shiny_10.html#cb242-183" tabindex="-1"></a>  })</span>
+<span id="cb242-184"><a href="shiny_10.html#cb242-184" tabindex="-1"></a>  </span>
+<span id="cb242-185"><a href="shiny_10.html#cb242-185" tabindex="-1"></a>  next_order_id <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb242-186"><a href="shiny_10.html#cb242-186" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_orders</span>()) <span class="sc">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb242-187"><a href="shiny_10.html#cb242-187" tabindex="-1"></a>      <span class="fu">max</span>(<span class="fu">df_orders</span>()<span class="sc">$</span>order_id) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb242-188"><a href="shiny_10.html#cb242-188" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb242-189"><a href="shiny_10.html#cb242-189" tabindex="-1"></a>      <span class="dv">1</span></span>
+<span id="cb242-190"><a href="shiny_10.html#cb242-190" tabindex="-1"></a>    }</span>
+<span id="cb242-191"><a href="shiny_10.html#cb242-191" tabindex="-1"></a>  })</span>
+<span id="cb242-192"><a href="shiny_10.html#cb242-192" tabindex="-1"></a>  </span>
+<span id="cb242-193"><a href="shiny_10.html#cb242-193" tabindex="-1"></a>  <span class="co"># 更新数据</span></span>
+<span id="cb242-194"><a href="shiny_10.html#cb242-194" tabindex="-1"></a>  update_data <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb242-195"><a href="shiny_10.html#cb242-195" tabindex="-1"></a>    <span class="fu">isolate</span>({</span>
+<span id="cb242-196"><a href="shiny_10.html#cb242-196" tabindex="-1"></a>      <span class="co"># 获取当前用户数据</span></span>
+<span id="cb242-197"><a href="shiny_10.html#cb242-197" tabindex="-1"></a>      current_users <span class="ot">&lt;-</span> <span class="fu">df_customers</span>()</span>
+<span id="cb242-198"><a href="shiny_10.html#cb242-198" tabindex="-1"></a>      <span class="co"># 获取下一个可用用户ID</span></span>
+<span id="cb242-199"><a href="shiny_10.html#cb242-199" tabindex="-1"></a>      next_user_id_val <span class="ot">&lt;-</span> <span class="fu">next_user_id</span>()</span>
+<span id="cb242-200"><a href="shiny_10.html#cb242-200" tabindex="-1"></a>      <span class="co"># 获取当前日期</span></span>
+<span id="cb242-201"><a href="shiny_10.html#cb242-201" tabindex="-1"></a>      current_date_val <span class="ot">&lt;-</span> <span class="fu">current_date</span>()</span>
+<span id="cb242-202"><a href="shiny_10.html#cb242-202" tabindex="-1"></a>      <span class="co"># 获取当前订单数据</span></span>
+<span id="cb242-203"><a href="shiny_10.html#cb242-203" tabindex="-1"></a>      current_orders <span class="ot">&lt;-</span> <span class="fu">df_orders</span>()</span>
+<span id="cb242-204"><a href="shiny_10.html#cb242-204" tabindex="-1"></a>      <span class="co"># 获取下一个订单ID</span></span>
+<span id="cb242-205"><a href="shiny_10.html#cb242-205" tabindex="-1"></a>      next_order_id_val <span class="ot">&lt;-</span> <span class="fu">next_order_id</span>()</span>
+<span id="cb242-206"><a href="shiny_10.html#cb242-206" tabindex="-1"></a>      <span class="co"># 获取产品数据</span></span>
+<span id="cb242-207"><a href="shiny_10.html#cb242-207" tabindex="-1"></a>      products_data <span class="ot">&lt;-</span> <span class="fu">df_products</span>()</span>
+<span id="cb242-208"><a href="shiny_10.html#cb242-208" tabindex="-1"></a>      <span class="co"># 获取kpi数据框</span></span>
+<span id="cb242-209"><a href="shiny_10.html#cb242-209" tabindex="-1"></a>      current_kpi <span class="ot">&lt;-</span> <span class="fu">df_kpi</span>()</span>
+<span id="cb242-210"><a href="shiny_10.html#cb242-210" tabindex="-1"></a>    })</span>
+<span id="cb242-211"><a href="shiny_10.html#cb242-211" tabindex="-1"></a>    <span class="co"># 随机生成用户数量</span></span>
+<span id="cb242-212"><a href="shiny_10.html#cb242-212" tabindex="-1"></a>    num <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">50</span>, <span class="dv">1</span>)</span>
+<span id="cb242-213"><a href="shiny_10.html#cb242-213" tabindex="-1"></a>    </span>
+<span id="cb242-214"><a href="shiny_10.html#cb242-214" tabindex="-1"></a>    <span class="co"># 生成新用户</span></span>
+<span id="cb242-215"><a href="shiny_10.html#cb242-215" tabindex="-1"></a>    new_customers <span class="ot">&lt;-</span> <span class="fu">gen_customers</span>(</span>
+<span id="cb242-216"><a href="shiny_10.html#cb242-216" tabindex="-1"></a>      <span class="at">user_id_start =</span> next_user_id_val,</span>
+<span id="cb242-217"><a href="shiny_10.html#cb242-217" tabindex="-1"></a>      <span class="at">num =</span> num,</span>
+<span id="cb242-218"><a href="shiny_10.html#cb242-218" tabindex="-1"></a>      <span class="at">date =</span> current_date_val</span>
+<span id="cb242-219"><a href="shiny_10.html#cb242-219" tabindex="-1"></a>    )</span>
+<span id="cb242-220"><a href="shiny_10.html#cb242-220" tabindex="-1"></a>    update_customers <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(current_users, new_customers)</span>
+<span id="cb242-221"><a href="shiny_10.html#cb242-221" tabindex="-1"></a>    </span>
+<span id="cb242-222"><a href="shiny_10.html#cb242-222" tabindex="-1"></a>    <span class="co"># 生成新订单</span></span>
+<span id="cb242-223"><a href="shiny_10.html#cb242-223" tabindex="-1"></a>    consumers_num <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean=</span><span class="fu">nrow</span>(update_customers)<span class="sc">*</span><span class="fl">0.3</span>, <span class="at">sd=</span><span class="fu">nrow</span>(update_customers)<span class="sc">/</span><span class="dv">20</span>))</span>
+<span id="cb242-224"><a href="shiny_10.html#cb242-224" tabindex="-1"></a>    consumers_id <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(update_customers), <span class="fu">pmax</span>(consumers_num, <span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">as.list</span>()</span>
+<span id="cb242-225"><a href="shiny_10.html#cb242-225" tabindex="-1"></a>    order_id <span class="ot">&lt;-</span> <span class="fu">as.list</span>(next_order_id_val<span class="sc">:</span>(next_order_id_val<span class="sc">+</span><span class="fu">length</span>(consumers_id)<span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb242-226"><a href="shiny_10.html#cb242-226" tabindex="-1"></a>    new_orders <span class="ot">&lt;-</span> <span class="fu">map2</span>(order_id, consumers_id, <span class="sc">~</span><span class="fu">gen_order</span>(.x, .y, current_date_val, update_customers)) <span class="sc">%&gt;%</span> <span class="fu">do.call</span>(rbind, .)</span>
+<span id="cb242-227"><a href="shiny_10.html#cb242-227" tabindex="-1"></a>    new_orders<span class="sc">$</span>amount <span class="ot">&lt;-</span> products_data<span class="sc">$</span>price[new_orders<span class="sc">$</span>product] <span class="sc">*</span> new_orders<span class="sc">$</span>num</span>
+<span id="cb242-228"><a href="shiny_10.html#cb242-228" tabindex="-1"></a>    update_orders <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(current_orders, new_orders)</span>
+<span id="cb242-229"><a href="shiny_10.html#cb242-229" tabindex="-1"></a>    </span>
+<span id="cb242-230"><a href="shiny_10.html#cb242-230" tabindex="-1"></a>    <span class="co"># 销售额</span></span>
+<span id="cb242-231"><a href="shiny_10.html#cb242-231" tabindex="-1"></a>    gmv <span class="ot">&lt;-</span> <span class="fu">sum</span>(new_orders<span class="sc">$</span>amount)</span>
+<span id="cb242-232"><a href="shiny_10.html#cb242-232" tabindex="-1"></a>    <span class="co"># 销量</span></span>
+<span id="cb242-233"><a href="shiny_10.html#cb242-233" tabindex="-1"></a>    volume <span class="ot">&lt;-</span> <span class="fu">sum</span>(new_orders<span class="sc">$</span>num)</span>
+<span id="cb242-234"><a href="shiny_10.html#cb242-234" tabindex="-1"></a>    <span class="co"># 总用户数</span></span>
+<span id="cb242-235"><a href="shiny_10.html#cb242-235" tabindex="-1"></a>    users <span class="ot">&lt;-</span> <span class="fu">nrow</span>(update_customers)</span>
+<span id="cb242-236"><a href="shiny_10.html#cb242-236" tabindex="-1"></a>    <span class="co"># 新增用户数</span></span>
+<span id="cb242-237"><a href="shiny_10.html#cb242-237" tabindex="-1"></a>    reg_users <span class="ot">&lt;-</span> <span class="fu">nrow</span>(new_customers)</span>
+<span id="cb242-238"><a href="shiny_10.html#cb242-238" tabindex="-1"></a>    update_kpi <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb242-239"><a href="shiny_10.html#cb242-239" tabindex="-1"></a>      <span class="at">idx =</span> <span class="fu">c</span>(<span class="st">&#39;销售额&#39;</span>,<span class="st">&#39;销量&#39;</span>,<span class="st">&#39;新增用户数&#39;</span>),</span>
+<span id="cb242-240"><a href="shiny_10.html#cb242-240" tabindex="-1"></a>      <span class="at">date =</span> current_date_val,</span>
+<span id="cb242-241"><a href="shiny_10.html#cb242-241" tabindex="-1"></a>      <span class="at">val =</span> <span class="fu">c</span>(gmv, volume, reg_users)</span>
+<span id="cb242-242"><a href="shiny_10.html#cb242-242" tabindex="-1"></a>    )</span>
+<span id="cb242-243"><a href="shiny_10.html#cb242-243" tabindex="-1"></a>    update_kpi <span class="ot">&lt;-</span> <span class="fu">rbind</span>(current_kpi, update_kpi)</span>
+<span id="cb242-244"><a href="shiny_10.html#cb242-244" tabindex="-1"></a>    </span>
+<span id="cb242-245"><a href="shiny_10.html#cb242-245" tabindex="-1"></a>    <span class="co"># 修改库存</span></span>
+<span id="cb242-246"><a href="shiny_10.html#cb242-246" tabindex="-1"></a>    change_num <span class="ot">&lt;-</span> new_orders <span class="sc">%&gt;%</span></span>
+<span id="cb242-247"><a href="shiny_10.html#cb242-247" tabindex="-1"></a>      <span class="fu">group_by</span>(product) <span class="sc">%&gt;%</span></span>
+<span id="cb242-248"><a href="shiny_10.html#cb242-248" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">sum</span>(num))</span>
+<span id="cb242-249"><a href="shiny_10.html#cb242-249" tabindex="-1"></a>    products_data<span class="sc">$</span>new_stock[change_num<span class="sc">$</span>product] <span class="ot">&lt;-</span> products_data<span class="sc">$</span>new_stock[change_num<span class="sc">$</span>product] <span class="sc">-</span> change_num<span class="sc">$</span>n</span>
+<span id="cb242-250"><a href="shiny_10.html#cb242-250" tabindex="-1"></a>    new_stock_observe <span class="ot">&lt;-</span> <span class="fu">any</span>(products_data<span class="sc">$</span>new_stock <span class="sc">&lt;=</span><span class="dv">100</span>)</span>
+<span id="cb242-251"><a href="shiny_10.html#cb242-251" tabindex="-1"></a>    </span>
+<span id="cb242-252"><a href="shiny_10.html#cb242-252" tabindex="-1"></a>    <span class="fu">isolate</span>({</span>
+<span id="cb242-253"><a href="shiny_10.html#cb242-253" tabindex="-1"></a>      <span class="co"># 更新用户数据集</span></span>
+<span id="cb242-254"><a href="shiny_10.html#cb242-254" tabindex="-1"></a>      <span class="fu">df_customers</span>(update_customers)</span>
+<span id="cb242-255"><a href="shiny_10.html#cb242-255" tabindex="-1"></a>      </span>
+<span id="cb242-256"><a href="shiny_10.html#cb242-256" tabindex="-1"></a>      <span class="co"># 更新订单数据集</span></span>
+<span id="cb242-257"><a href="shiny_10.html#cb242-257" tabindex="-1"></a>      <span class="fu">df_orders</span>(update_orders)</span>
+<span id="cb242-258"><a href="shiny_10.html#cb242-258" tabindex="-1"></a>      </span>
+<span id="cb242-259"><a href="shiny_10.html#cb242-259" tabindex="-1"></a>      <span class="co"># 更新库存</span></span>
+<span id="cb242-260"><a href="shiny_10.html#cb242-260" tabindex="-1"></a>      <span class="fu">df_products</span>(products_data)</span>
+<span id="cb242-261"><a href="shiny_10.html#cb242-261" tabindex="-1"></a>      <span class="fu">stock_observe</span>(<span class="sc">!</span>new_stock_observe)</span>
+<span id="cb242-262"><a href="shiny_10.html#cb242-262" tabindex="-1"></a>      </span>
+<span id="cb242-263"><a href="shiny_10.html#cb242-263" tabindex="-1"></a>      <span class="co"># 更新KPI</span></span>
+<span id="cb242-264"><a href="shiny_10.html#cb242-264" tabindex="-1"></a>      <span class="fu">idx_gmv</span>(gmv)</span>
+<span id="cb242-265"><a href="shiny_10.html#cb242-265" tabindex="-1"></a>      <span class="fu">idx_volume</span>(volume)</span>
+<span id="cb242-266"><a href="shiny_10.html#cb242-266" tabindex="-1"></a>      <span class="fu">idx_users</span>(users)</span>
+<span id="cb242-267"><a href="shiny_10.html#cb242-267" tabindex="-1"></a>      <span class="fu">idx_reg_users</span>(reg_users)</span>
+<span id="cb242-268"><a href="shiny_10.html#cb242-268" tabindex="-1"></a>      <span class="fu">df_kpi</span>(update_kpi)</span>
+<span id="cb242-269"><a href="shiny_10.html#cb242-269" tabindex="-1"></a>      </span>
+<span id="cb242-270"><a href="shiny_10.html#cb242-270" tabindex="-1"></a>      <span class="co"># 更新日期</span></span>
+<span id="cb242-271"><a href="shiny_10.html#cb242-271" tabindex="-1"></a>      <span class="fu">current_date</span>(<span class="fu">current_date</span>() <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb242-272"><a href="shiny_10.html#cb242-272" tabindex="-1"></a>      </span>
+<span id="cb242-273"><a href="shiny_10.html#cb242-273" tabindex="-1"></a>      <span class="co"># 记录更新时间</span></span>
+<span id="cb242-274"><a href="shiny_10.html#cb242-274" tabindex="-1"></a>      new_time <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">Sys.time</span>(), <span class="st">&quot;%H:%M:%S&quot;</span>)</span>
+<span id="cb242-275"><a href="shiny_10.html#cb242-275" tabindex="-1"></a>      <span class="fu">update_time</span>(new_time)</span>
+<span id="cb242-276"><a href="shiny_10.html#cb242-276" tabindex="-1"></a>      </span>
+<span id="cb242-277"><a href="shiny_10.html#cb242-277" tabindex="-1"></a>      output<span class="sc">$</span>update_notification <span class="ot">&lt;-</span> <span class="fu">renderMenu</span>({</span>
+<span id="cb242-278"><a href="shiny_10.html#cb242-278" tabindex="-1"></a>        <span class="fu">dropdownMenu</span>(</span>
+<span id="cb242-279"><a href="shiny_10.html#cb242-279" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;notifications&quot;</span>,</span>
+<span id="cb242-280"><a href="shiny_10.html#cb242-280" tabindex="-1"></a>          <span class="fu">notificationItem</span>(</span>
+<span id="cb242-281"><a href="shiny_10.html#cb242-281" tabindex="-1"></a>            <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&quot;rotate&quot;</span>),</span>
+<span id="cb242-282"><a href="shiny_10.html#cb242-282" tabindex="-1"></a>            <span class="at">text =</span> <span class="fu">paste</span>(<span class="st">&quot;最后更新:&quot;</span>, <span class="fu">update_time</span>()),</span>
+<span id="cb242-283"><a href="shiny_10.html#cb242-283" tabindex="-1"></a>            <span class="at">status =</span> <span class="st">&quot;success&quot;</span></span>
+<span id="cb242-284"><a href="shiny_10.html#cb242-284" tabindex="-1"></a>          )</span>
+<span id="cb242-285"><a href="shiny_10.html#cb242-285" tabindex="-1"></a>        )</span>
+<span id="cb242-286"><a href="shiny_10.html#cb242-286" tabindex="-1"></a>      })</span>
+<span id="cb242-287"><a href="shiny_10.html#cb242-287" tabindex="-1"></a>    })</span>
+<span id="cb242-288"><a href="shiny_10.html#cb242-288" tabindex="-1"></a></span>
+<span id="cb242-289"><a href="shiny_10.html#cb242-289" tabindex="-1"></a>  }</span>
+<span id="cb242-290"><a href="shiny_10.html#cb242-290" tabindex="-1"></a>  </span>
+<span id="cb242-291"><a href="shiny_10.html#cb242-291" tabindex="-1"></a>  <span class="co"># 自动更新</span></span>
+<span id="cb242-292"><a href="shiny_10.html#cb242-292" tabindex="-1"></a>  <span class="fu">observe</span>({</span>
+<span id="cb242-293"><a href="shiny_10.html#cb242-293" tabindex="-1"></a>    <span class="co"># 设置定时器</span></span>
+<span id="cb242-294"><a href="shiny_10.html#cb242-294" tabindex="-1"></a>    <span class="fu">on.exit</span>(<span class="fu">invalidateLater</span>(<span class="dv">2000</span>), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb242-295"><a href="shiny_10.html#cb242-295" tabindex="-1"></a>    <span class="cf">if</span>(input<span class="sc">$</span>auto_update){</span>
+<span id="cb242-296"><a href="shiny_10.html#cb242-296" tabindex="-1"></a>      <span class="cf">if</span>(<span class="fu">isolate</span>(<span class="fu">stock_observe</span>())){</span>
+<span id="cb242-297"><a href="shiny_10.html#cb242-297" tabindex="-1"></a>        <span class="fu">update_data</span>()</span>
+<span id="cb242-298"><a href="shiny_10.html#cb242-298" tabindex="-1"></a>        </span>
+<span id="cb242-299"><a href="shiny_10.html#cb242-299" tabindex="-1"></a>        <span class="co"># 更新滑块的最大值和结束日期</span></span>
+<span id="cb242-300"><a href="shiny_10.html#cb242-300" tabindex="-1"></a>        <span class="fu">isolate</span>({</span>
+<span id="cb242-301"><a href="shiny_10.html#cb242-301" tabindex="-1"></a>          <span class="fu">updateSliderInput</span>(</span>
+<span id="cb242-302"><a href="shiny_10.html#cb242-302" tabindex="-1"></a>            <span class="at">inputId =</span> <span class="st">&quot;date_range&quot;</span>,</span>
+<span id="cb242-303"><a href="shiny_10.html#cb242-303" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">current_date</span>(),</span>
+<span id="cb242-304"><a href="shiny_10.html#cb242-304" tabindex="-1"></a>            <span class="at">value =</span> <span class="fu">c</span>(input<span class="sc">$</span>date_range[<span class="dv">1</span>], <span class="fu">current_date</span>())</span>
+<span id="cb242-305"><a href="shiny_10.html#cb242-305" tabindex="-1"></a>          )</span>
+<span id="cb242-306"><a href="shiny_10.html#cb242-306" tabindex="-1"></a>        })</span>
+<span id="cb242-307"><a href="shiny_10.html#cb242-307" tabindex="-1"></a>      }<span class="cf">else</span>{</span>
+<span id="cb242-308"><a href="shiny_10.html#cb242-308" tabindex="-1"></a>        <span class="fu">showNotification</span>(<span class="st">&#39;库存不足，停止更新！&#39;</span>, <span class="at">duration =</span> <span class="cn">NULL</span>, <span class="at">closeButton =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb242-309"><a href="shiny_10.html#cb242-309" tabindex="-1"></a>      }</span>
+<span id="cb242-310"><a href="shiny_10.html#cb242-310" tabindex="-1"></a>    }</span>
+<span id="cb242-311"><a href="shiny_10.html#cb242-311" tabindex="-1"></a>  })</span>
+<span id="cb242-312"><a href="shiny_10.html#cb242-312" tabindex="-1"></a>  </span>
+<span id="cb242-313"><a href="shiny_10.html#cb242-313" tabindex="-1"></a>  <span class="co"># 手动更新</span></span>
+<span id="cb242-314"><a href="shiny_10.html#cb242-314" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>manual_update, {</span>
+<span id="cb242-315"><a href="shiny_10.html#cb242-315" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">isolate</span>(<span class="fu">stock_observe</span>())){</span>
+<span id="cb242-316"><a href="shiny_10.html#cb242-316" tabindex="-1"></a>      <span class="fu">update_data</span>()</span>
+<span id="cb242-317"><a href="shiny_10.html#cb242-317" tabindex="-1"></a>      <span class="co"># 更新滑块的最大值和结束日期</span></span>
+<span id="cb242-318"><a href="shiny_10.html#cb242-318" tabindex="-1"></a>      <span class="fu">updateSliderInput</span>(</span>
+<span id="cb242-319"><a href="shiny_10.html#cb242-319" tabindex="-1"></a>        <span class="at">inputId =</span> <span class="st">&quot;date_range&quot;</span>,</span>
+<span id="cb242-320"><a href="shiny_10.html#cb242-320" tabindex="-1"></a>        <span class="at">max =</span> <span class="fu">max</span>(input<span class="sc">$</span>date_range[<span class="dv">2</span>], <span class="fu">current_date</span>()),</span>
+<span id="cb242-321"><a href="shiny_10.html#cb242-321" tabindex="-1"></a>        <span class="at">value =</span> <span class="fu">c</span>(input<span class="sc">$</span>date_range[<span class="dv">1</span>], <span class="fu">current_date</span>())</span>
+<span id="cb242-322"><a href="shiny_10.html#cb242-322" tabindex="-1"></a>      )</span>
+<span id="cb242-323"><a href="shiny_10.html#cb242-323" tabindex="-1"></a>    }<span class="cf">else</span>{</span>
+<span id="cb242-324"><a href="shiny_10.html#cb242-324" tabindex="-1"></a>      <span class="fu">showNotification</span>(<span class="st">&#39;库存不足，停止更新！&#39;</span>, <span class="at">duration =</span> <span class="cn">NULL</span>, <span class="at">closeButton =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb242-325"><a href="shiny_10.html#cb242-325" tabindex="-1"></a>    }</span>
+<span id="cb242-326"><a href="shiny_10.html#cb242-326" tabindex="-1"></a>  })</span>
+<span id="cb242-327"><a href="shiny_10.html#cb242-327" tabindex="-1"></a>  </span>
+<span id="cb242-328"><a href="shiny_10.html#cb242-328" tabindex="-1"></a>  output<span class="sc">$</span>gmv <span class="ot">&lt;-</span> <span class="fu">renderValueBox</span>({</span>
+<span id="cb242-329"><a href="shiny_10.html#cb242-329" tabindex="-1"></a>    <span class="fu">valueBox</span>(</span>
+<span id="cb242-330"><a href="shiny_10.html#cb242-330" tabindex="-1"></a>      <span class="at">value =</span> <span class="fu">idx_gmv</span>(),</span>
+<span id="cb242-331"><a href="shiny_10.html#cb242-331" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">&#39;今日销售额&#39;</span>,</span>
+<span id="cb242-332"><a href="shiny_10.html#cb242-332" tabindex="-1"></a>      <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&#39;yen-sign&#39;</span>),</span>
+<span id="cb242-333"><a href="shiny_10.html#cb242-333" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&#39;fuchsia&#39;</span></span>
+<span id="cb242-334"><a href="shiny_10.html#cb242-334" tabindex="-1"></a>    )</span>
+<span id="cb242-335"><a href="shiny_10.html#cb242-335" tabindex="-1"></a>  })</span>
+<span id="cb242-336"><a href="shiny_10.html#cb242-336" tabindex="-1"></a>  </span>
+<span id="cb242-337"><a href="shiny_10.html#cb242-337" tabindex="-1"></a>  output<span class="sc">$</span>volume <span class="ot">&lt;-</span> <span class="fu">renderValueBox</span>({</span>
+<span id="cb242-338"><a href="shiny_10.html#cb242-338" tabindex="-1"></a>    <span class="fu">valueBox</span>(</span>
+<span id="cb242-339"><a href="shiny_10.html#cb242-339" tabindex="-1"></a>      <span class="at">value =</span> <span class="fu">idx_volume</span>(),</span>
+<span id="cb242-340"><a href="shiny_10.html#cb242-340" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">&#39;今日销量&#39;</span>,</span>
+<span id="cb242-341"><a href="shiny_10.html#cb242-341" tabindex="-1"></a>      <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&#39;coins&#39;</span>),</span>
+<span id="cb242-342"><a href="shiny_10.html#cb242-342" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&#39;orange&#39;</span></span>
+<span id="cb242-343"><a href="shiny_10.html#cb242-343" tabindex="-1"></a>    )</span>
+<span id="cb242-344"><a href="shiny_10.html#cb242-344" tabindex="-1"></a>  })</span>
+<span id="cb242-345"><a href="shiny_10.html#cb242-345" tabindex="-1"></a>  </span>
+<span id="cb242-346"><a href="shiny_10.html#cb242-346" tabindex="-1"></a>  output<span class="sc">$</span>users <span class="ot">&lt;-</span> <span class="fu">renderValueBox</span>({</span>
+<span id="cb242-347"><a href="shiny_10.html#cb242-347" tabindex="-1"></a>    <span class="fu">valueBox</span>(</span>
+<span id="cb242-348"><a href="shiny_10.html#cb242-348" tabindex="-1"></a>      <span class="at">value =</span> <span class="fu">idx_users</span>(),</span>
+<span id="cb242-349"><a href="shiny_10.html#cb242-349" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">&#39;总用户数&#39;</span>,</span>
+<span id="cb242-350"><a href="shiny_10.html#cb242-350" tabindex="-1"></a>      <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&#39;users&#39;</span>),</span>
+<span id="cb242-351"><a href="shiny_10.html#cb242-351" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&#39;aqua&#39;</span></span>
+<span id="cb242-352"><a href="shiny_10.html#cb242-352" tabindex="-1"></a>    )</span>
+<span id="cb242-353"><a href="shiny_10.html#cb242-353" tabindex="-1"></a>  })</span>
+<span id="cb242-354"><a href="shiny_10.html#cb242-354" tabindex="-1"></a>  </span>
+<span id="cb242-355"><a href="shiny_10.html#cb242-355" tabindex="-1"></a>  output<span class="sc">$</span>reg_users <span class="ot">&lt;-</span> <span class="fu">renderValueBox</span>({</span>
+<span id="cb242-356"><a href="shiny_10.html#cb242-356" tabindex="-1"></a>    <span class="fu">valueBox</span>(</span>
+<span id="cb242-357"><a href="shiny_10.html#cb242-357" tabindex="-1"></a>      <span class="at">value =</span> <span class="fu">idx_reg_users</span>(),</span>
+<span id="cb242-358"><a href="shiny_10.html#cb242-358" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">&#39;今日注册用户数&#39;</span>,</span>
+<span id="cb242-359"><a href="shiny_10.html#cb242-359" tabindex="-1"></a>      <span class="at">icon =</span> <span class="fu">icon</span>(<span class="st">&#39;registered&#39;</span>),</span>
+<span id="cb242-360"><a href="shiny_10.html#cb242-360" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&#39;purple&#39;</span></span>
+<span id="cb242-361"><a href="shiny_10.html#cb242-361" tabindex="-1"></a>    )</span>
+<span id="cb242-362"><a href="shiny_10.html#cb242-362" tabindex="-1"></a>  })</span>
+<span id="cb242-363"><a href="shiny_10.html#cb242-363" tabindex="-1"></a>  </span>
+<span id="cb242-364"><a href="shiny_10.html#cb242-364" tabindex="-1"></a>  output<span class="sc">$</span>current_date <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb242-365"><a href="shiny_10.html#cb242-365" tabindex="-1"></a>    <span class="fu">format</span>(<span class="fu">current_date</span>(), <span class="st">&quot;%Y年%m月%d日&quot;</span>)</span>
+<span id="cb242-366"><a href="shiny_10.html#cb242-366" tabindex="-1"></a>  })</span>
+<span id="cb242-367"><a href="shiny_10.html#cb242-367" tabindex="-1"></a>  </span>
+<span id="cb242-368"><a href="shiny_10.html#cb242-368" tabindex="-1"></a>  output<span class="sc">$</span>kpi_plot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb242-369"><a href="shiny_10.html#cb242-369" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_kpi</span>())<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb242-370"><a href="shiny_10.html#cb242-370" tabindex="-1"></a>      selected_idx <span class="ot">&lt;-</span> <span class="cf">switch</span>(input<span class="sc">$</span>selected_idx,</span>
+<span id="cb242-371"><a href="shiny_10.html#cb242-371" tabindex="-1"></a>                             <span class="st">&#39;历史销售额&#39;</span> <span class="ot">=</span> <span class="st">&#39;销售额&#39;</span>,</span>
+<span id="cb242-372"><a href="shiny_10.html#cb242-372" tabindex="-1"></a>                             <span class="st">&#39;历史销量&#39;</span> <span class="ot">=</span> <span class="st">&#39;销量&#39;</span>,</span>
+<span id="cb242-373"><a href="shiny_10.html#cb242-373" tabindex="-1"></a>                             <span class="st">&#39;历史新增用户&#39;</span> <span class="ot">=</span> <span class="st">&#39;新增用户数&#39;</span>)</span>
+<span id="cb242-374"><a href="shiny_10.html#cb242-374" tabindex="-1"></a>      </span>
+<span id="cb242-375"><a href="shiny_10.html#cb242-375" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">df_kpi</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb242-376"><a href="shiny_10.html#cb242-376" tabindex="-1"></a>        <span class="fu">filter</span>(idx <span class="sc">==</span> selected_idx, date<span class="sc">&gt;=</span>input<span class="sc">$</span>date_range[<span class="dv">1</span>] <span class="sc">&amp;</span> date <span class="sc">&lt;=</span> input<span class="sc">$</span>date_range[<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-377"><a href="shiny_10.html#cb242-377" tabindex="-1"></a>        <span class="fu">arrange</span>(date)</span>
+<span id="cb242-378"><a href="shiny_10.html#cb242-378" tabindex="-1"></a>      p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df)<span class="sc">+</span></span>
+<span id="cb242-379"><a href="shiny_10.html#cb242-379" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>date, <span class="at">y=</span>val, <span class="at">color =</span> idx, <span class="at">group =</span> idx))<span class="sc">+</span></span>
+<span id="cb242-380"><a href="shiny_10.html#cb242-380" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>date, <span class="at">y=</span>val), <span class="at">color =</span> <span class="st">&#39;black&#39;</span>)<span class="sc">+</span></span>
+<span id="cb242-381"><a href="shiny_10.html#cb242-381" tabindex="-1"></a>        <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb242-382"><a href="shiny_10.html#cb242-382" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;日期&#39;</span>, <span class="at">y=</span><span class="st">&#39;&#39;</span>)<span class="sc">+</span></span>
+<span id="cb242-383"><a href="shiny_10.html#cb242-383" tabindex="-1"></a>        <span class="fu">scale_x_date</span>(<span class="at">date_labels =</span> <span class="st">&#39;%Y-%m-%d&#39;</span>)<span class="sc">+</span></span>
+<span id="cb242-384"><a href="shiny_10.html#cb242-384" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>)</span>
+<span id="cb242-385"><a href="shiny_10.html#cb242-385" tabindex="-1"></a>      <span class="fu">ggplotly</span>(p) <span class="sc">%&gt;%</span></span>
+<span id="cb242-386"><a href="shiny_10.html#cb242-386" tabindex="-1"></a>        <span class="fu">layout</span>(</span>
+<span id="cb242-387"><a href="shiny_10.html#cb242-387" tabindex="-1"></a>          <span class="at">hoverlabel =</span> <span class="fu">list</span>(</span>
+<span id="cb242-388"><a href="shiny_10.html#cb242-388" tabindex="-1"></a>            <span class="at">bgcolor =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb242-389"><a href="shiny_10.html#cb242-389" tabindex="-1"></a>            <span class="at">font =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb242-390"><a href="shiny_10.html#cb242-390" tabindex="-1"></a>          )</span>
+<span id="cb242-391"><a href="shiny_10.html#cb242-391" tabindex="-1"></a>        )</span>
+<span id="cb242-392"><a href="shiny_10.html#cb242-392" tabindex="-1"></a>    }</span>
+<span id="cb242-393"><a href="shiny_10.html#cb242-393" tabindex="-1"></a>  })</span>
+<span id="cb242-394"><a href="shiny_10.html#cb242-394" tabindex="-1"></a>  </span>
+<span id="cb242-395"><a href="shiny_10.html#cb242-395" tabindex="-1"></a>  output<span class="sc">$</span>user_frequency_plot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb242-396"><a href="shiny_10.html#cb242-396" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_orders</span>())<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb242-397"><a href="shiny_10.html#cb242-397" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">df_orders</span>()</span>
+<span id="cb242-398"><a href="shiny_10.html#cb242-398" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb242-399"><a href="shiny_10.html#cb242-399" tabindex="-1"></a>        <span class="fu">group_by</span>(user_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-400"><a href="shiny_10.html#cb242-400" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">num=</span><span class="fu">length</span>(<span class="fu">unique</span>(order_id)), <span class="at">mean_amount =</span> <span class="fu">mean</span>(amount), <span class="at">total_amount =</span> <span class="fu">sum</span>(amount)) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-401"><a href="shiny_10.html#cb242-401" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb242-402"><a href="shiny_10.html#cb242-402" tabindex="-1"></a>      </span>
+<span id="cb242-403"><a href="shiny_10.html#cb242-403" tabindex="-1"></a>      p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df)<span class="sc">+</span></span>
+<span id="cb242-404"><a href="shiny_10.html#cb242-404" tabindex="-1"></a>        <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>num), <span class="at">fill =</span> <span class="st">&#39;#1E90FF&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>)<span class="sc">+</span></span>
+<span id="cb242-405"><a href="shiny_10.html#cb242-405" tabindex="-1"></a>        <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb242-406"><a href="shiny_10.html#cb242-406" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;消费次数&#39;</span>, <span class="at">y=</span><span class="st">&#39;&#39;</span>)<span class="sc">+</span></span>
+<span id="cb242-407"><a href="shiny_10.html#cb242-407" tabindex="-1"></a>        <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span>scales<span class="sc">::</span><span class="fu">breaks_width</span>(<span class="dv">1</span>))</span>
+<span id="cb242-408"><a href="shiny_10.html#cb242-408" tabindex="-1"></a>      </span>
+<span id="cb242-409"><a href="shiny_10.html#cb242-409" tabindex="-1"></a>      <span class="fu">ggplotly</span>(p) <span class="sc">%&gt;%</span></span>
+<span id="cb242-410"><a href="shiny_10.html#cb242-410" tabindex="-1"></a>        <span class="fu">layout</span>(</span>
+<span id="cb242-411"><a href="shiny_10.html#cb242-411" tabindex="-1"></a>          <span class="at">hoverlabel =</span> <span class="fu">list</span>(</span>
+<span id="cb242-412"><a href="shiny_10.html#cb242-412" tabindex="-1"></a>            <span class="at">bgcolor =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb242-413"><a href="shiny_10.html#cb242-413" tabindex="-1"></a>            <span class="at">font =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb242-414"><a href="shiny_10.html#cb242-414" tabindex="-1"></a>          )</span>
+<span id="cb242-415"><a href="shiny_10.html#cb242-415" tabindex="-1"></a>        )</span>
+<span id="cb242-416"><a href="shiny_10.html#cb242-416" tabindex="-1"></a>    }</span>
+<span id="cb242-417"><a href="shiny_10.html#cb242-417" tabindex="-1"></a>  })</span>
+<span id="cb242-418"><a href="shiny_10.html#cb242-418" tabindex="-1"></a>  </span>
+<span id="cb242-419"><a href="shiny_10.html#cb242-419" tabindex="-1"></a>  output<span class="sc">$</span>bin_width <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb242-420"><a href="shiny_10.html#cb242-420" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_orders</span>())<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb242-421"><a href="shiny_10.html#cb242-421" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">df_orders</span>()</span>
+<span id="cb242-422"><a href="shiny_10.html#cb242-422" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb242-423"><a href="shiny_10.html#cb242-423" tabindex="-1"></a>        <span class="fu">group_by</span>(user_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-424"><a href="shiny_10.html#cb242-424" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">num=</span><span class="fu">length</span>(<span class="fu">unique</span>(order_id)), <span class="at">mean_amount =</span> <span class="fu">mean</span>(amount), <span class="at">total_amount =</span> <span class="fu">sum</span>(amount)) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-425"><a href="shiny_10.html#cb242-425" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb242-426"><a href="shiny_10.html#cb242-426" tabindex="-1"></a>      </span>
+<span id="cb242-427"><a href="shiny_10.html#cb242-427" tabindex="-1"></a>      bin_width <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">3.49</span> <span class="sc">*</span> <span class="fu">sd</span>(df<span class="sc">$</span>mean_amount) <span class="sc">/</span> <span class="fu">nrow</span>(df)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb242-428"><a href="shiny_10.html#cb242-428" tabindex="-1"></a>      </span>
+<span id="cb242-429"><a href="shiny_10.html#cb242-429" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="st">&#39;bin宽度：&#39;</span>, bin_width)</span>
+<span id="cb242-430"><a href="shiny_10.html#cb242-430" tabindex="-1"></a>    }</span>
+<span id="cb242-431"><a href="shiny_10.html#cb242-431" tabindex="-1"></a>  })</span>
+<span id="cb242-432"><a href="shiny_10.html#cb242-432" tabindex="-1"></a>  output<span class="sc">$</span>user_mean_amount_plot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb242-433"><a href="shiny_10.html#cb242-433" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_orders</span>())<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb242-434"><a href="shiny_10.html#cb242-434" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">df_orders</span>()</span>
+<span id="cb242-435"><a href="shiny_10.html#cb242-435" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb242-436"><a href="shiny_10.html#cb242-436" tabindex="-1"></a>        <span class="fu">group_by</span>(user_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-437"><a href="shiny_10.html#cb242-437" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">num=</span><span class="fu">length</span>(<span class="fu">unique</span>(order_id)), <span class="at">mean_amount =</span> <span class="fu">mean</span>(amount), <span class="at">total_amount =</span> <span class="fu">sum</span>(amount)) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-438"><a href="shiny_10.html#cb242-438" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb242-439"><a href="shiny_10.html#cb242-439" tabindex="-1"></a>      </span>
+<span id="cb242-440"><a href="shiny_10.html#cb242-440" tabindex="-1"></a>      bin_width <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">3.49</span> <span class="sc">*</span> <span class="fu">sd</span>(df<span class="sc">$</span>mean_amount) <span class="sc">/</span> <span class="fu">nrow</span>(df)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb242-441"><a href="shiny_10.html#cb242-441" tabindex="-1"></a>      p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df)<span class="sc">+</span></span>
+<span id="cb242-442"><a href="shiny_10.html#cb242-442" tabindex="-1"></a>        <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>mean_amount), <span class="at">fill =</span> <span class="st">&#39;#1E90FF&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>,</span>
+<span id="cb242-443"><a href="shiny_10.html#cb242-443" tabindex="-1"></a>                       <span class="at">binwidth =</span> bin_width )<span class="sc">+</span></span>
+<span id="cb242-444"><a href="shiny_10.html#cb242-444" tabindex="-1"></a>        <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb242-445"><a href="shiny_10.html#cb242-445" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;平均消费金额&#39;</span>, <span class="at">y=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb242-446"><a href="shiny_10.html#cb242-446" tabindex="-1"></a>      </span>
+<span id="cb242-447"><a href="shiny_10.html#cb242-447" tabindex="-1"></a>      <span class="fu">ggplotly</span>(p) <span class="sc">%&gt;%</span></span>
+<span id="cb242-448"><a href="shiny_10.html#cb242-448" tabindex="-1"></a>        <span class="fu">layout</span>(</span>
+<span id="cb242-449"><a href="shiny_10.html#cb242-449" tabindex="-1"></a>          <span class="at">hoverlabel =</span> <span class="fu">list</span>(</span>
+<span id="cb242-450"><a href="shiny_10.html#cb242-450" tabindex="-1"></a>            <span class="at">bgcolor =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb242-451"><a href="shiny_10.html#cb242-451" tabindex="-1"></a>            <span class="at">font =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb242-452"><a href="shiny_10.html#cb242-452" tabindex="-1"></a>          )</span>
+<span id="cb242-453"><a href="shiny_10.html#cb242-453" tabindex="-1"></a>        )</span>
+<span id="cb242-454"><a href="shiny_10.html#cb242-454" tabindex="-1"></a>    }</span>
+<span id="cb242-455"><a href="shiny_10.html#cb242-455" tabindex="-1"></a>  })</span>
+<span id="cb242-456"><a href="shiny_10.html#cb242-456" tabindex="-1"></a>  </span>
+<span id="cb242-457"><a href="shiny_10.html#cb242-457" tabindex="-1"></a>  output<span class="sc">$</span>user_total_amount_plot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb242-458"><a href="shiny_10.html#cb242-458" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_orders</span>())<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb242-459"><a href="shiny_10.html#cb242-459" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">df_orders</span>()</span>
+<span id="cb242-460"><a href="shiny_10.html#cb242-460" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb242-461"><a href="shiny_10.html#cb242-461" tabindex="-1"></a>        <span class="fu">group_by</span>(user_id) <span class="sc">%&gt;%</span></span>
+<span id="cb242-462"><a href="shiny_10.html#cb242-462" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">num=</span><span class="fu">length</span>(<span class="fu">unique</span>(order_id)), <span class="at">mean_amount =</span> <span class="fu">mean</span>(amount), <span class="at">total_amount =</span> <span class="fu">sum</span>(amount)) <span class="sc">%&gt;%</span></span>
+<span id="cb242-463"><a href="shiny_10.html#cb242-463" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb242-464"><a href="shiny_10.html#cb242-464" tabindex="-1"></a>        <span class="fu">slice_max</span>(total_amount, <span class="at">n=</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb242-465"><a href="shiny_10.html#cb242-465" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">user_id =</span> <span class="fu">factor</span>(user_id)) <span class="sc">%&gt;%</span></span>
+<span id="cb242-466"><a href="shiny_10.html#cb242-466" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">user_id =</span> <span class="fu">fct_reorder</span>(user_id, total_amount))</span>
+<span id="cb242-467"><a href="shiny_10.html#cb242-467" tabindex="-1"></a></span>
+<span id="cb242-468"><a href="shiny_10.html#cb242-468" tabindex="-1"></a>      hover_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;ID:&quot;</span>, df<span class="sc">$</span>user_id, <span class="st">&quot;&lt;br&gt;&quot;</span>,</span>
+<span id="cb242-469"><a href="shiny_10.html#cb242-469" tabindex="-1"></a>                          <span class="st">&quot;total_amount:&quot;</span>, scales<span class="sc">::</span><span class="fu">comma</span>(df<span class="sc">$</span>total_amount), <span class="st">&quot;&lt;br&gt;&quot;</span>)</span>
+<span id="cb242-470"><a href="shiny_10.html#cb242-470" tabindex="-1"></a>      </span>
+<span id="cb242-471"><a href="shiny_10.html#cb242-471" tabindex="-1"></a>      <span class="co"># 创建基础ggplot对象</span></span>
+<span id="cb242-472"><a href="shiny_10.html#cb242-472" tabindex="-1"></a>      p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
+<span id="cb242-473"><a href="shiny_10.html#cb242-473" tabindex="-1"></a>        <span class="fu">geom_bar</span>(</span>
+<span id="cb242-474"><a href="shiny_10.html#cb242-474" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">x =</span> total_amount, <span class="at">y =</span> user_id),</span>
+<span id="cb242-475"><a href="shiny_10.html#cb242-475" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&#39;#1E90FF&#39;</span>, <span class="at">color =</span> <span class="st">&#39;black&#39;</span>, <span class="at">stat =</span> <span class="st">&#39;identity&#39;</span></span>
+<span id="cb242-476"><a href="shiny_10.html#cb242-476" tabindex="-1"></a>        ) <span class="sc">+</span></span>
+<span id="cb242-477"><a href="shiny_10.html#cb242-477" tabindex="-1"></a>        <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb242-478"><a href="shiny_10.html#cb242-478" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;总消费金额&#39;</span>, <span class="at">y =</span> <span class="st">&#39;用户id&#39;</span>)</span>
+<span id="cb242-479"><a href="shiny_10.html#cb242-479" tabindex="-1"></a>      </span>
+<span id="cb242-480"><a href="shiny_10.html#cb242-480" tabindex="-1"></a>      <span class="co"># 在ggplotly中使用自定义悬停文本</span></span>
+<span id="cb242-481"><a href="shiny_10.html#cb242-481" tabindex="-1"></a>      <span class="fu">ggplotly</span>(p, <span class="at">tooltip =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">%&gt;%</span>  <span class="co"># 禁用默认提示</span></span>
+<span id="cb242-482"><a href="shiny_10.html#cb242-482" tabindex="-1"></a>        <span class="fu">style</span>(</span>
+<span id="cb242-483"><a href="shiny_10.html#cb242-483" tabindex="-1"></a>          <span class="at">text =</span> hover_text,  <span class="co"># 设置自定义悬停文本</span></span>
+<span id="cb242-484"><a href="shiny_10.html#cb242-484" tabindex="-1"></a>          <span class="at">hoverinfo =</span> <span class="st">&quot;text&quot;</span>, <span class="co"># 仅显示文本</span></span>
+<span id="cb242-485"><a href="shiny_10.html#cb242-485" tabindex="-1"></a>          <span class="at">traces =</span> <span class="dv">1</span>          <span class="co"># 应用到第一个轨迹（条形图）</span></span>
+<span id="cb242-486"><a href="shiny_10.html#cb242-486" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb242-487"><a href="shiny_10.html#cb242-487" tabindex="-1"></a>        <span class="fu">layout</span>(</span>
+<span id="cb242-488"><a href="shiny_10.html#cb242-488" tabindex="-1"></a>          <span class="at">hoverlabel =</span> <span class="fu">list</span>(</span>
+<span id="cb242-489"><a href="shiny_10.html#cb242-489" tabindex="-1"></a>            <span class="at">bgcolor =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb242-490"><a href="shiny_10.html#cb242-490" tabindex="-1"></a>            <span class="at">font =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb242-491"><a href="shiny_10.html#cb242-491" tabindex="-1"></a>          )</span>
+<span id="cb242-492"><a href="shiny_10.html#cb242-492" tabindex="-1"></a>        )</span>
+<span id="cb242-493"><a href="shiny_10.html#cb242-493" tabindex="-1"></a>    }</span>
+<span id="cb242-494"><a href="shiny_10.html#cb242-494" tabindex="-1"></a>  })</span>
+<span id="cb242-495"><a href="shiny_10.html#cb242-495" tabindex="-1"></a>  </span>
+<span id="cb242-496"><a href="shiny_10.html#cb242-496" tabindex="-1"></a>  output<span class="sc">$</span>product_num_plot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb242-497"><a href="shiny_10.html#cb242-497" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_orders</span>())<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb242-498"><a href="shiny_10.html#cb242-498" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">df_orders</span>()</span>
+<span id="cb242-499"><a href="shiny_10.html#cb242-499" tabindex="-1"></a>      df<span class="sc">$</span>name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">df_products</span>()<span class="sc">$</span>category, <span class="fu">df_products</span>()<span class="sc">$</span>item)[df<span class="sc">$</span>product]</span>
+<span id="cb242-500"><a href="shiny_10.html#cb242-500" tabindex="-1"></a>      </span>
+<span id="cb242-501"><a href="shiny_10.html#cb242-501" tabindex="-1"></a>      <span class="fu">plot_ly</span>(df, <span class="at">labels=</span><span class="sc">~</span>name, <span class="at">values=</span><span class="sc">~</span>num, <span class="at">type=</span><span class="st">&#39;pie&#39;</span>)</span>
+<span id="cb242-502"><a href="shiny_10.html#cb242-502" tabindex="-1"></a>    }</span>
+<span id="cb242-503"><a href="shiny_10.html#cb242-503" tabindex="-1"></a>  })</span>
+<span id="cb242-504"><a href="shiny_10.html#cb242-504" tabindex="-1"></a>  </span>
+<span id="cb242-505"><a href="shiny_10.html#cb242-505" tabindex="-1"></a>  output<span class="sc">$</span>product_amount_plot <span class="ot">&lt;-</span> <span class="fu">renderBubbles</span>({</span>
+<span id="cb242-506"><a href="shiny_10.html#cb242-506" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nrow</span>(<span class="fu">df_orders</span>())<span class="sc">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb242-507"><a href="shiny_10.html#cb242-507" tabindex="-1"></a>      df <span class="ot">&lt;-</span> <span class="fu">df_orders</span>()</span>
+<span id="cb242-508"><a href="shiny_10.html#cb242-508" tabindex="-1"></a>      df<span class="sc">$</span>name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">df_products</span>()<span class="sc">$</span>category, <span class="fu">df_products</span>()<span class="sc">$</span>item)[df<span class="sc">$</span>product]</span>
+<span id="cb242-509"><a href="shiny_10.html#cb242-509" tabindex="-1"></a>      df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb242-510"><a href="shiny_10.html#cb242-510" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span></span>
+<span id="cb242-511"><a href="shiny_10.html#cb242-511" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">total_amount =</span> <span class="fu">sum</span>(amount)) <span class="sc">%&gt;%</span></span>
+<span id="cb242-512"><a href="shiny_10.html#cb242-512" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb242-513"><a href="shiny_10.html#cb242-513" tabindex="-1"></a></span>
+<span id="cb242-514"><a href="shiny_10.html#cb242-514" tabindex="-1"></a>      <span class="fu">bubbles</span>(df<span class="sc">$</span>total_amount, df<span class="sc">$</span>name, <span class="at">tooltip =</span> <span class="fu">paste0</span>(df<span class="sc">$</span>name, <span class="st">&#39;:&#39;</span>,df<span class="sc">$</span>total_amount), <span class="at">height =</span> <span class="st">&#39;100%&#39;</span>)</span>
+<span id="cb242-515"><a href="shiny_10.html#cb242-515" tabindex="-1"></a>    }</span>
+<span id="cb242-516"><a href="shiny_10.html#cb242-516" tabindex="-1"></a>  })</span>
+<span id="cb242-517"><a href="shiny_10.html#cb242-517" tabindex="-1"></a>  </span>
+<span id="cb242-518"><a href="shiny_10.html#cb242-518" tabindex="-1"></a>  output<span class="sc">$</span>product_stock_plot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb242-519"><a href="shiny_10.html#cb242-519" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">df_products</span>()</span>
+<span id="cb242-520"><a href="shiny_10.html#cb242-520" tabindex="-1"></a>    df<span class="sc">$</span>name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(df<span class="sc">$</span>category, df<span class="sc">$</span>item)</span>
+<span id="cb242-521"><a href="shiny_10.html#cb242-521" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df)<span class="sc">+</span></span>
+<span id="cb242-522"><a href="shiny_10.html#cb242-522" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span>new_stock, <span class="at">xend=</span>original_stock, <span class="at">y=</span>name, <span class="at">yend=</span>name))<span class="sc">+</span></span>
+<span id="cb242-523"><a href="shiny_10.html#cb242-523" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>new_stock, <span class="at">y=</span>name), <span class="at">color =</span> <span class="st">&#39;red&#39;</span>)<span class="sc">+</span></span>
+<span id="cb242-524"><a href="shiny_10.html#cb242-524" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>original_stock, <span class="at">y=</span>name), <span class="at">color =</span> <span class="st">&#39;blue&#39;</span>)<span class="sc">+</span></span>
+<span id="cb242-525"><a href="shiny_10.html#cb242-525" tabindex="-1"></a>      <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb242-526"><a href="shiny_10.html#cb242-526" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;库存&#39;</span>, <span class="at">y=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb242-527"><a href="shiny_10.html#cb242-527" tabindex="-1"></a>    <span class="fu">ggplotly</span>(p)</span>
+<span id="cb242-528"><a href="shiny_10.html#cb242-528" tabindex="-1"></a>  })</span>
+<span id="cb242-529"><a href="shiny_10.html#cb242-529" tabindex="-1"></a></span>
+<span id="cb242-530"><a href="shiny_10.html#cb242-530" tabindex="-1"></a>}</span>
+<span id="cb242-531"><a href="shiny_10.html#cb242-531" tabindex="-1"></a></span>
+<span id="cb242-532"><a href="shiny_10.html#cb242-532" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<p>Tips:</p>
+<ol style="list-style-type: decimal">
+<li><p>必要时可以用HTML来增添细节。</p></li>
+<li><p><code>fluidRow()</code>中的<code>column()</code>具有独立的空间，其内部的元素的宽度都是相对<code>column()</code>而言的（即对于内部元素而言column的宽度就是12），而非整个屏幕。</p></li>
+<li><p>建议将用到的反应式变量集中在一块，方便同一调度。</p></li>
+<li><p>在<code>observe()</code>内部，会监测任一反应式变量（包括动态ui组件）的变化，如果有更新，则会重新执行代码块。<strong>注意，如果存在重复调度的情况，则会陷入无限循环</strong>，典型表现就是生成shiny应用时屏幕泛白。为了避免此类情况，若在<code>observe()</code>内部需要重复调用反应式变量，<strong>建议用<code>isolate()</code>将其隔离</strong>，转化为本地变量后，再用<code>isolate()</code>更新反应式变量。</p></li>
+</ol>
+</div>
 </div>
             </section>
 
@@ -1287,43 +1920,43 @@ status设置参加<a href="https://rstudio.github.io/shinydashboard/appearance.h
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section",
-"toc_depth": 3
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "toc_depth": 3
+  }
 });
 });
 </script>

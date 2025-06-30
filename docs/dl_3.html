@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.12 回归诊断 | kj的学习笔记</title>
+  <title>11.3 LSTM | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.12 回归诊断 | kj的学习笔记" />
+  <meta property="og:title" content="11.3 LSTM | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.12 回归诊断 | kj的学习笔记" />
+  <meta name="twitter:title" content="11.3 LSTM | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reg_11.html"/>
-<link rel="next" href="reg_13.html"/>
+<link rel="prev" href="dl_2.html"/>
+<link rel="next" href="network.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -678,311 +678,206 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reg_12" class="section level2 hasAnchor" number="6.12">
-<h2><span class="header-section-number">6.12</span> 回归诊断<a href="reg_12.html#reg_12" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<p>线性回归模型的估计、检验等操作依赖于<a href="reg_2.html#reg_2" target="_blank">假定</a>。因此有必要去验证假定。</p>
-<p>除此之外，还需对数据进行检验，看看是否存在异常点或强影响点。</p>
-<div id="reg_12_1" class="section level3 hasAnchor" number="6.12.1">
-<h3><span class="header-section-number">6.12.1</span> 残差分析<a href="reg_12.html#reg_12_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>残差定义为<span class="math inline">\(e_i=y_i-\hat y_i\)</span>，反映了拟合效果的好坏，是随机扰动项的“观察值”，因此可根据残差的性状来判断随机扰动项假设的合理性。</p>
-<div id="reg_12_1_1" class="section level4 hasAnchor" number="6.12.1.1">
-<h4><span class="header-section-number">6.12.1.1</span> 不同形式的残差<a href="reg_12.html#reg_12_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>普通残差</p>
-<p>普通残差定义为<span class="math inline">\(e_i=y_i-\hat y_i\)</span>，具有<span class="math inline">\(E(e_i)=0, \; Var(e_i)=(1-h_{ii})\sigma^2, \; \rho(e_i,e_j)=\frac{-h_{ij}}{\sqrt{(1-h_{ii})(1-h_{jj})}}\)</span>的性质。</p>
-<p>注意<span class="math inline">\(Var(e_i)\)</span>中包含着<span class="math inline">\(h_{ii}\)</span>，<span class="math inline">\(h_{ii}\)</span>为杠杆值，是帽子矩阵<span class="math inline">\(H\)</span>的第i个对角线元素，反映了自变量空间中第i个数据偏离数据中心的程度。特别的，<span class="math inline">\(h_{ii}\)</span>越大，<span class="math inline">\(Var(e_i)\)</span>越小，这表明当某个数据点距离数据中心较远时，会有把拟合直线拖向自己的倾向，因而其残差也可能会较小，称这样的数据点为<span style="color:red"><strong>高杠杆点</strong></span>。</p>
-<p>已知<span class="math inline">\(tr(H)=\sum_{i=1}^n h_{ii}=p+1\)</span>，一个判断高杠杆点的准则是将杠杆值超过两倍杠杆值平均值的数据点认为是高杠杆点。</p></li>
-<li><p>学生化残差</p>
-<p>定义<strong>学生化残差</strong>为</p>
-<p><span class="math display" id="eq:model105">\[
-r_i=\frac{e_i}{\sqrt{\widehat{Var}(e_i)}}=\frac{e_i}{\sqrt{(1-h_{ii})\hat \sigma^2}} \tag{6.105}
-\]</span></p>
-<p><span class="math inline">\(r_i\)</span>的性质有<span class="math inline">\(E(r_i)=0, \; Var(r_i)=1, \; \rho(r_i,r_j)=\frac{-h_{ij}}{\sqrt{(1-h_{ii})(1-h_{jj})}}\)</span>。</p>
-<p>在实际应用中可<strong>近似</strong>认为<span class="math inline">\(r_i\)</span>相互独立且服从标准正态分布。</p>
-<p>学生化残差相较于普通残差解决了方差不等的问题，但仍会受到异常值的影响，会使<span class="math inline">\(\hat \sigma^2\)</span>偏大，继而让<span class="math inline">\(r_i\)</span>偏小，因此不太适合根据<span class="math inline">\(|r_i|&gt;3\)</span>的准则来判断异常值。</p></li>
-<li><p>删除残差</p>
-<p>在计算残差<span class="math inline">\(e_i\)</span>时，用不包含第i组观测点的数据<span class="math inline">\(Y_{(i)}\)</span>和<span class="math inline">\(X_{(i)}\)</span>进行回归得到回归方程，根据该回归方程对该组观测点进行预测得到<span class="math inline">\(\hat y_{(i)}\)</span>，则删除残差为<span class="math inline">\(e_{(i)}=y_i-\hat y_{(i)}\)</span>。由于删除残差没有用到第i组观测点，因此能够在一定程度上减轻异常点的影响。</p>
-<p>特别的，可证</p>
-<p><span class="math display" id="eq:model106">\[
-e_{(i)}=\frac{e_i}{1-h_{ii}} \tag{6.106}
-\]</span></p>
+<div id="dl_3" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> LSTM<a href="dl_3.html#dl_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div id="dl_3_1" class="section level3 hasAnchor" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> 原理<a href="dl_3.html#dl_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在学习LSTM之前，可以先了解一下RNN，再去看LSTM。</p>
+<p><a href="https://www.bilibili.com/video/BV1z5411f7Bm" target="_blank">【循环神经网络】5分钟搞懂RNN，3D动画深入浅出</a></p>
+<p><a href="https://www.bilibili.com/video/BV1Z34y1k7mc" target="_blank">【LSTM长短期记忆网络】3D模型一目了然，带你领略算法背后的逻辑</a></p>
+<p>此外，GRU算是LSTM的简化版本，感兴趣的可以自行了解。</p>
+<p>LSTM的原理简单表示为下面几个公式。</p>
+<p>记输入为<span class="math inline">\(X\)</span>，隐状态为<span class="math inline">\(H\)</span>，记忆元为<span class="math inline">\(C\)</span>，输入门为<span class="math inline">\(I\)</span>，遗忘门为<span class="math inline">\(F\)</span>，输出门为<span class="math inline">\(O\)</span>，则有</p>
 <blockquote>
-<p>参考https://zhuanlan.zhihu.com/p/49276967</p>
-</blockquote></li>
-<li><p>删除学生化残差</p>
-<p>删除学生化残差定义为</p>
-<p><span class="math display" id="eq:model107">\[
-r_{(i)}=\frac{e_i}{\sqrt{1-h_{ii}}\hat \sigma_{(i)}}=r_i(\frac{n-p-2}{n-p-1-r_i^2})^{\frac{1}{2}} \tag{6.107}
-\]</span></p>
-<p>一般根据<span class="math inline">\(|r_{(i)}|&gt;3\)</span>来判断异常值点。</p></li>
-</ol>
-</div>
-<div id="reg_12_1_2" class="section level4 hasAnchor" number="6.12.1.2">
-<h4><span class="header-section-number">6.12.1.2</span> 残差图<a href="reg_12.html#reg_12_1_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>可令残差（可取学生化残差）为纵坐标，以任何其他有关量为横坐标绘制散点图，常见的横坐标有因变量的拟合值、自变量、时间等。</p>
-<p>根据残差图能够看出残差的分布形态，进而可以粗略地判断其是否满足相关性质。</p>
-</div>
-<div id="reg_12_1_3" class="section level4 hasAnchor" number="6.12.1.3">
-<h4><span class="header-section-number">6.12.1.3</span> 正态性检验<a href="reg_12.html#reg_12_1_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>对残差（可取学生化残差）进行正态性检验。</p>
-<ol style="list-style-type: decimal">
-<li><p>图方法</p>
-<ul>
-<li><p>QQ图</p>
-<p>绘制(理论分位数, 实际分位数)的散点，看散点是否处于45°线上。</p></li>
-<li><p>PP图</p>
-<p>绘制(理论累积概率, 实际累积概率)的散点，看散点是否处于45°线上。</p></li>
-</ul></li>
-<li><p>假设检验</p>
-<ul>
-<li><p>Kolmogorov-Smirnov检验</p></li>
-<li><p>Shapiro-Wiks检验</p></li>
-</ul></li>
-</ol>
-<p>注意，无论随机扰动项是否服从正态分布，最小二乘估计都是具有BLUE性质。但若不服从正态分布，后续的t检验、F检验和预测等都不能进行了（毕竟都是基于正态分布展开讨论的）。</p>
-</div>
-</div>
-<div id="reg_12_2" class="section level3 hasAnchor" number="6.12.2">
-<h3><span class="header-section-number">6.12.2</span> 异常点和强影响点<a href="reg_12.html#reg_12_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div id="reg_12_2_1" class="section level4 hasAnchor" number="6.12.2.1">
-<h4><span class="header-section-number">6.12.2.1</span> 异常点<a href="reg_12.html#reg_12_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>异常点是从因变量的维度讨论的异常数据。</p>
-<ol style="list-style-type: decimal">
-<li><p>基于数据删除模型的异常点检验</p>
-<p>数据删除模型如下所示</p>
-<p><span class="math display" id="eq:model108">\[
-\left\{
-\begin{array}{c}
-Y_{(i)}=X_{(i)}\beta_{(i)}+\varepsilon_{(i)} \\
-E(\varepsilon_{(i)})=0\\
-Var(\varepsilon_{(i)})=\sigma^2 I_{n-1}  
-\end{array}
-\right. \tag{6.108}
-\]</span></p>
-<p>该方法即根据删除残差和删除学生化残差来判断是否为异常点。一般根据<span class="math inline">\(|r_{(i)}|&gt;3\)</span>所对应的数据点判定为异常点。</p>
-<blockquote>
-<p>数据删除模型又是新的模型形式呀</p>
-</blockquote></li>
-<li><p>基于均值漂移模型的异常点检验</p>
-<p>均值漂移模型如下所示</p>
-<p><span class="math display" id="eq:model109">\[
-\left\{
-\begin{array}{c}
-Y=X\beta+\gamma d_i+\varepsilon \\
-E(\varepsilon)=0\\
-Var(\varepsilon)=\sigma^2 I_{n}  
-\end{array}
-\right. \tag{6.109}
-\]</span></p>
-<p>其中<span class="math inline">\(d_i\)</span>表示第i个分量为1而其他分量均为0的n维列向量。该模型表示，如果第i个观测点明显偏高或者偏低，那么<span class="math inline">\(d_i\)</span>的系数<span class="math inline">\(\gamma\)</span>应该是显著异于0的，而<span class="math inline">\(\gamma d_i\)</span>会影响到第i个观测点的截距项，因此称“均值漂移模型”。</p></li>
-</ol>
-<p>在识别异常点的过程中，注意有<strong>掩盖效应</strong>和<strong>淹没效应</strong>。</p>
-<p>掩盖效应：假定的异常点个数小于实际个数，有可能一个都找不到。</p>
-<p>淹没效应：假定的异常点个数大于实际个数，有可能将正常点误判为异常点。</p>
-</div>
-<div id="reg_12_2_2" class="section level4 hasAnchor" number="6.12.2.2">
-<h4><span class="header-section-number">6.12.2.2</span> 强影响点<a href="reg_12.html#reg_12_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<p>异常点是从因变量的维度讨论的异常数据，高杠杆点是从自变量的角度讨论的异常数据。而综合二者后，称能够对统计推断造成较大影响的点为<strong>强影响点</strong>。</p>
-<blockquote>
-<p>杠杆值<span class="math inline">\(h_{ii}\)</span>大于两倍杠杆值均值<span class="math inline">\(2\frac{p+1}{n}\)</span>即可视为高杠杆点</p>
+<p>记忆元代表长期记忆，隐状态代表短期记忆</p>
 </blockquote>
-<p>识别方法：</p>
-<ol style="list-style-type: decimal">
-<li><p>Cook距离</p>
-<p>定义Cook距离</p>
-<p><span class="math display" id="eq:model110">\[
-D_i=\frac{(\hat \beta -\hat \beta_{(i)})&#39;X&#39;X(\hat \beta -\hat \beta_{(i)})}{(p+1)\hat \sigma^2} = \frac{1}{p+1}(\frac{h_{ii}}{1-h_{ii}})r_i^2 \tag{6.110}
+<p><span class="math display">\[
+\begin{aligned}
+I_t &amp;= \sigma (X_tW_{xi}+H_{t-1}W_{hi}+b_i) \\
+F_t &amp;= \sigma (X_tW_{xf}+H_{t-1}W_{hf}+b_f) \\
+O_t &amp;= \sigma (X_tW_{xo}+H_{t-1}W_{ho}+b_o) \\
+C_t &amp;= F_t \odot C_{t-1} + I_t \odot \tanh(X_tW_{xc}+H_{t-1}W_{hc}+b_c) \\
+H_t &amp;= O_t \odot \tanh (C_t)
+\end{aligned}
 \]</span></p>
-<p>Cook距离度量了删除第i个数据点前后对回归系数估计值的变化情况。</p>
-<p>一个粗略的判断准则为：当<span class="math inline">\(D_i &lt; 0.5\)</span>，则认为不是强影响点，当<span class="math inline">\(D_i&gt;1\)</span>，则认为是强影响点。</p></li>
-<li><p>Welsch-Kuh统计量(DFFITS准则)</p>
-<p>Welsch-Kuh统计量定义为</p>
-<p><span class="math display" id="eq:model111">\[
-WK_i=\frac{\hat y_i-\hat y_{(i)}}{\sqrt{\hat \sigma^2_{(i)}h_{ii}}}=\sqrt{(\frac{h_{ii}}{1-h_{ii}})r_{(i)}^2} \tag{6.111}
-\]</span></p>
-<p>DFFITS准则度量了删除第i个数据点前后该点处拟合值的变化情况。</p>
-<p>判断准则为若<span class="math inline">\(|WK_i|&gt;2\sqrt{\frac{p+1}{n-p-1}}\)</span>则视为强影响点。</p></li>
-<li><p>Hadi统计量</p>
-<p>Hadi统计量定义为</p>
-<p><span class="math display" id="eq:model112">\[
-H_i=\frac{h_{ii}}{1-h_{ii}}+\frac{p+1}{1-h_{ii}}\cdot \frac{d_i^2}{1-d_i^2} \tag{6.112}
-\]</span></p>
-<p>其中<span class="math inline">\(d_i=\frac{e_i}{SSE}\)</span>称为正规化残差。</p>
-<p>称以<span class="math inline">\(\frac{p+1}{1-h_{ii}}\cdot \frac{d_i^2}{1-d_i^2}\)</span>为横坐标，以<span class="math inline">\(\frac{h_{ii}}{1-h_{ii}}\)</span>为纵坐标的散点图为“位势-残差图”。</p></li>
-</ol>
+<p>其中<span class="math inline">\(W,b\)</span>分别代表权重与偏置，<span class="math inline">\(\sigma\)</span>表示sigmoid函数，值域为[0,1]，代表着信息剩余的比例，<span class="math inline">\(\tanh\)</span>表示双曲正切函数，值域为[-1,1]，代表着信息的大小及方向。</p>
+<p>简单来看，<span class="math inline">\(X\)</span>和<span class="math inline">\(H\)</span>是对短期内的信息进行加工，然后将其上传到长期记忆中，而长期记忆也会遗忘部分信息，因此更新后的长期记忆表现为剩余的长期记忆与短期信息的和。而短期记忆又是长期记忆部分的一部分，并且会受到长期记忆的影响，因此<span class="math inline">\(H\)</span>又可以由<span class="math inline">\(C\)</span>产生。在这个过程中，就由输入门、遗忘门和输出门来控制信息损耗的比例。</p>
 </div>
-</div>
-<div id="reg_12_3" class="section level3 hasAnchor" number="6.12.3">
-<h3><span class="header-section-number">6.12.3</span> 异方差<a href="reg_12.html#reg_12_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>若<span class="math inline">\(Var(\varepsilon_i)=\sigma^2_i\)</span>，即不同扰动项有不同的方差，则称之为“异方差”问题。</p>
-<div id="reg_12_3_1" class="section level4 hasAnchor" number="6.12.3.1">
-<h4><span class="header-section-number">6.12.3.1</span> 原因<a href="reg_12.html#reg_12_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<div id="dl_3_2" class="section level3 hasAnchor" number="11.3.2">
+<h3><span class="header-section-number">11.3.2</span> 示例<a href="dl_3.html#dl_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div class="sourceCode" id="cb320"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb320-1"><a href="dl_3.html#cb320-1" tabindex="-1"></a>import torch</span>
+<span id="cb320-2"><a href="dl_3.html#cb320-2" tabindex="-1"></a>import torch.nn as nn</span>
+<span id="cb320-3"><a href="dl_3.html#cb320-3" tabindex="-1"></a>import numpy as np</span>
+<span id="cb320-4"><a href="dl_3.html#cb320-4" tabindex="-1"></a>from torch.utils.data import Dataset, DataLoader</span>
+<span id="cb320-5"><a href="dl_3.html#cb320-5" tabindex="-1"></a></span>
+<span id="cb320-6"><a href="dl_3.html#cb320-6" tabindex="-1"></a># 设置随机种子以确保结果可复现</span>
+<span id="cb320-7"><a href="dl_3.html#cb320-7" tabindex="-1"></a>torch.manual_seed(42)</span>
+<span id="cb320-8"><a href="dl_3.html#cb320-8" tabindex="-1"></a>np.random.seed(42)</span>
+<span id="cb320-9"><a href="dl_3.html#cb320-9" tabindex="-1"></a></span>
+<span id="cb320-10"><a href="dl_3.html#cb320-10" tabindex="-1"></a># 1. 生成正弦波数据</span>
+<span id="cb320-11"><a href="dl_3.html#cb320-11" tabindex="-1"></a>total_length = 1000</span>
+<span id="cb320-12"><a href="dl_3.html#cb320-12" tabindex="-1"></a>time_steps = np.linspace(0, 20 * np.pi, total_length)</span>
+<span id="cb320-13"><a href="dl_3.html#cb320-13" tabindex="-1"></a>data_sequence = np.sin(time_steps) + np.random.normal(0, 0.1, total_length)</span>
+<span id="cb320-14"><a href="dl_3.html#cb320-14" tabindex="-1"></a></span>
+<span id="cb320-15"><a href="dl_3.html#cb320-15" tabindex="-1"></a># 2. 划分训练集和测试集</span>
+<span id="cb320-16"><a href="dl_3.html#cb320-16" tabindex="-1"></a>split_idx = int(total_length * 0.8)  # 80%训练集，20%测试集</span>
+<span id="cb320-17"><a href="dl_3.html#cb320-17" tabindex="-1"></a>train_data = data_sequence[:split_idx]</span>
+<span id="cb320-18"><a href="dl_3.html#cb320-18" tabindex="-1"></a>test_data = data_sequence[split_idx:]</span>
+<span id="cb320-19"><a href="dl_3.html#cb320-19" tabindex="-1"></a></span>
+<span id="cb320-20"><a href="dl_3.html#cb320-20" tabindex="-1"></a># 3. 创建序列数据集类</span>
+<span id="cb320-21"><a href="dl_3.html#cb320-21" tabindex="-1"></a>class SequenceDataset(Dataset):</span>
+<span id="cb320-22"><a href="dl_3.html#cb320-22" tabindex="-1"></a>    def __init__(self, data, seq_length=20):</span>
+<span id="cb320-23"><a href="dl_3.html#cb320-23" tabindex="-1"></a>        self.data = torch.FloatTensor(data)</span>
+<span id="cb320-24"><a href="dl_3.html#cb320-24" tabindex="-1"></a>        self.seq_length = seq_length</span>
+<span id="cb320-25"><a href="dl_3.html#cb320-25" tabindex="-1"></a>        </span>
+<span id="cb320-26"><a href="dl_3.html#cb320-26" tabindex="-1"></a>    def __len__(self):</span>
+<span id="cb320-27"><a href="dl_3.html#cb320-27" tabindex="-1"></a>        return len(self.data) - self.seq_length</span>
+<span id="cb320-28"><a href="dl_3.html#cb320-28" tabindex="-1"></a>    </span>
+<span id="cb320-29"><a href="dl_3.html#cb320-29" tabindex="-1"></a>    def __getitem__(self, idx):</span>
+<span id="cb320-30"><a href="dl_3.html#cb320-30" tabindex="-1"></a>        input_seq = self.data[idx:idx+self.seq_length]</span>
+<span id="cb320-31"><a href="dl_3.html#cb320-31" tabindex="-1"></a>        target = self.data[idx+self.seq_length]</span>
+<span id="cb320-32"><a href="dl_3.html#cb320-32" tabindex="-1"></a>        return input_seq.view(self.seq_length, 1), target.view(1)  # 添加特征维度</span>
+<span id="cb320-33"><a href="dl_3.html#cb320-33" tabindex="-1"></a></span>
+<span id="cb320-34"><a href="dl_3.html#cb320-34" tabindex="-1"></a># 创建数据集和数据加载器</span>
+<span id="cb320-35"><a href="dl_3.html#cb320-35" tabindex="-1"></a>seq_length = 20</span>
+<span id="cb320-36"><a href="dl_3.html#cb320-36" tabindex="-1"></a>batch_size = 32</span>
+<span id="cb320-37"><a href="dl_3.html#cb320-37" tabindex="-1"></a></span>
+<span id="cb320-38"><a href="dl_3.html#cb320-38" tabindex="-1"></a># 训练集</span>
+<span id="cb320-39"><a href="dl_3.html#cb320-39" tabindex="-1"></a>train_dataset = SequenceDataset(train_data, seq_length)</span>
+<span id="cb320-40"><a href="dl_3.html#cb320-40" tabindex="-1"></a>train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)</span>
+<span id="cb320-41"><a href="dl_3.html#cb320-41" tabindex="-1"></a></span>
+<span id="cb320-42"><a href="dl_3.html#cb320-42" tabindex="-1"></a># 测试集</span>
+<span id="cb320-43"><a href="dl_3.html#cb320-43" tabindex="-1"></a>test_dataset = SequenceDataset(test_data, seq_length)</span>
+<span id="cb320-44"><a href="dl_3.html#cb320-44" tabindex="-1"></a>test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, drop_last=True)</span>
+<span id="cb320-45"><a href="dl_3.html#cb320-45" tabindex="-1"></a></span>
+<span id="cb320-46"><a href="dl_3.html#cb320-46" tabindex="-1"></a># 4. 定义LSTM模型</span>
+<span id="cb320-47"><a href="dl_3.html#cb320-47" tabindex="-1"></a>class LSTMModel(nn.Module):</span>
+<span id="cb320-48"><a href="dl_3.html#cb320-48" tabindex="-1"></a>    def __init__(self, input_size=1, hidden_size=32, output_size=1, num_layers=1):</span>
+<span id="cb320-49"><a href="dl_3.html#cb320-49" tabindex="-1"></a>        super().__init__()</span>
+<span id="cb320-50"><a href="dl_3.html#cb320-50" tabindex="-1"></a>        self.num_layers = num_layers</span>
+<span id="cb320-51"><a href="dl_3.html#cb320-51" tabindex="-1"></a>        self.hidden_size = hidden_size</span>
+<span id="cb320-52"><a href="dl_3.html#cb320-52" tabindex="-1"></a>        </span>
+<span id="cb320-53"><a href="dl_3.html#cb320-53" tabindex="-1"></a>        # LSTM层</span>
+<span id="cb320-54"><a href="dl_3.html#cb320-54" tabindex="-1"></a>        self.lstm = nn.LSTM(</span>
+<span id="cb320-55"><a href="dl_3.html#cb320-55" tabindex="-1"></a>            input_size=input_size,       # 默认为1即时序的自回归结构</span>
+<span id="cb320-56"><a href="dl_3.html#cb320-56" tabindex="-1"></a>            hidden_size=hidden_size,</span>
+<span id="cb320-57"><a href="dl_3.html#cb320-57" tabindex="-1"></a>            num_layers=num_layers,</span>
+<span id="cb320-58"><a href="dl_3.html#cb320-58" tabindex="-1"></a>            batch_first=True</span>
+<span id="cb320-59"><a href="dl_3.html#cb320-59" tabindex="-1"></a>        )</span>
+<span id="cb320-60"><a href="dl_3.html#cb320-60" tabindex="-1"></a>        </span>
+<span id="cb320-61"><a href="dl_3.html#cb320-61" tabindex="-1"></a>        # 输出层</span>
+<span id="cb320-62"><a href="dl_3.html#cb320-62" tabindex="-1"></a>        self.linear = nn.Linear(hidden_size, output_size)</span>
+<span id="cb320-63"><a href="dl_3.html#cb320-63" tabindex="-1"></a>        </span>
+<span id="cb320-64"><a href="dl_3.html#cb320-64" tabindex="-1"></a>    def forward(self, x, hidden=None):</span>
+<span id="cb320-65"><a href="dl_3.html#cb320-65" tabindex="-1"></a>        # 初始化隐藏状态</span>
+<span id="cb320-66"><a href="dl_3.html#cb320-66" tabindex="-1"></a>        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(&#39;cuda&#39;)</span>
+<span id="cb320-67"><a href="dl_3.html#cb320-67" tabindex="-1"></a>        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(&#39;cuda&#39;)</span>
+<span id="cb320-68"><a href="dl_3.html#cb320-68" tabindex="-1"></a>        hidden = (h0, c0)</span>
+<span id="cb320-69"><a href="dl_3.html#cb320-69" tabindex="-1"></a>        </span>
+<span id="cb320-70"><a href="dl_3.html#cb320-70" tabindex="-1"></a>        # 前向传播LSTM</span>
+<span id="cb320-71"><a href="dl_3.html#cb320-71" tabindex="-1"></a>        # 需要将输入形状调整为 [batch, seq_len, features]</span>
+<span id="cb320-72"><a href="dl_3.html#cb320-72" tabindex="-1"></a>        x = x.reshape(x.size(0), -1, 1) if x.dim() == 2 else x</span>
+<span id="cb320-73"><a href="dl_3.html#cb320-73" tabindex="-1"></a>        # out表示LSTM最后一层所有时间步的输出</span>
+<span id="cb320-74"><a href="dl_3.html#cb320-74" tabindex="-1"></a>        # hidden表示LSTM所有层在最后一个时间步的最终状态</span>
+<span id="cb320-75"><a href="dl_3.html#cb320-75" tabindex="-1"></a>        out, hidden = self.lstm(x, hidden) </span>
+<span id="cb320-76"><a href="dl_3.html#cb320-76" tabindex="-1"></a>        </span>
+<span id="cb320-77"><a href="dl_3.html#cb320-77" tabindex="-1"></a>        # 只取最后一个时间步的输出(batch, seq, features)</span>
+<span id="cb320-78"><a href="dl_3.html#cb320-78" tabindex="-1"></a>        out = self.linear(out[:, -1, :])</span>
+<span id="cb320-79"><a href="dl_3.html#cb320-79" tabindex="-1"></a>        return out, hidden</span>
+<span id="cb320-80"><a href="dl_3.html#cb320-80" tabindex="-1"></a></span>
+<span id="cb320-81"><a href="dl_3.html#cb320-81" tabindex="-1"></a># 5. 实例化模型</span>
+<span id="cb320-82"><a href="dl_3.html#cb320-82" tabindex="-1"></a>input_size = 1</span>
+<span id="cb320-83"><a href="dl_3.html#cb320-83" tabindex="-1"></a>hidden_size = 64</span>
+<span id="cb320-84"><a href="dl_3.html#cb320-84" tabindex="-1"></a>output_size = 1</span>
+<span id="cb320-85"><a href="dl_3.html#cb320-85" tabindex="-1"></a>num_layers = 1</span>
+<span id="cb320-86"><a href="dl_3.html#cb320-86" tabindex="-1"></a></span>
+<span id="cb320-87"><a href="dl_3.html#cb320-87" tabindex="-1"></a>model = LSTMModel(input_size, hidden_size, output_size, num_layers)</span>
+<span id="cb320-88"><a href="dl_3.html#cb320-88" tabindex="-1"></a># 将模型移到GPU上</span>
+<span id="cb320-89"><a href="dl_3.html#cb320-89" tabindex="-1"></a>model.to(&#39;cuda&#39;)</span>
+<span id="cb320-90"><a href="dl_3.html#cb320-90" tabindex="-1"></a></span>
+<span id="cb320-91"><a href="dl_3.html#cb320-91" tabindex="-1"></a># 6. 定义损失函数和优化器</span>
+<span id="cb320-92"><a href="dl_3.html#cb320-92" tabindex="-1"></a>criterion = nn.MSELoss()</span>
+<span id="cb320-93"><a href="dl_3.html#cb320-93" tabindex="-1"></a>optimizer = torch.optim.Adam(model.parameters(), lr=0.001)</span>
+<span id="cb320-94"><a href="dl_3.html#cb320-94" tabindex="-1"></a></span>
+<span id="cb320-95"><a href="dl_3.html#cb320-95" tabindex="-1"></a># 7. 训练模型</span>
+<span id="cb320-96"><a href="dl_3.html#cb320-96" tabindex="-1"></a>num_epochs = 50</span>
+<span id="cb320-97"><a href="dl_3.html#cb320-97" tabindex="-1"></a>train_losses = []</span>
+<span id="cb320-98"><a href="dl_3.html#cb320-98" tabindex="-1"></a>test_losses = []</span>
+<span id="cb320-99"><a href="dl_3.html#cb320-99" tabindex="-1"></a></span>
+<span id="cb320-100"><a href="dl_3.html#cb320-100" tabindex="-1"></a>for epoch in range(num_epochs):</span>
+<span id="cb320-101"><a href="dl_3.html#cb320-101" tabindex="-1"></a>    # --- 训练阶段 ---</span>
+<span id="cb320-102"><a href="dl_3.html#cb320-102" tabindex="-1"></a>    model.train()</span>
+<span id="cb320-103"><a href="dl_3.html#cb320-103" tabindex="-1"></a>    epoch_train_loss = 0.0</span>
+<span id="cb320-104"><a href="dl_3.html#cb320-104" tabindex="-1"></a>    </span>
+<span id="cb320-105"><a href="dl_3.html#cb320-105" tabindex="-1"></a>    for inputs, targets in train_loader:</span>
+<span id="cb320-106"><a href="dl_3.html#cb320-106" tabindex="-1"></a>        # 输入形状: [batch_size, seq_length, 1]</span>
+<span id="cb320-107"><a href="dl_3.html#cb320-107" tabindex="-1"></a>        # 目标形状: [batch_size, 1]</span>
+<span id="cb320-108"><a href="dl_3.html#cb320-108" tabindex="-1"></a>        optimizer.zero_grad()</span>
+<span id="cb320-109"><a href="dl_3.html#cb320-109" tabindex="-1"></a></span>
+<span id="cb320-110"><a href="dl_3.html#cb320-110" tabindex="-1"></a>        inputs, targets = inputs.to(&#39;cuda&#39;), targets.to(&#39;cuda&#39;)</span>
+<span id="cb320-111"><a href="dl_3.html#cb320-111" tabindex="-1"></a>        </span>
+<span id="cb320-112"><a href="dl_3.html#cb320-112" tabindex="-1"></a>        # 前向传播</span>
+<span id="cb320-113"><a href="dl_3.html#cb320-113" tabindex="-1"></a>        outputs, _ = model(inputs)</span>
+<span id="cb320-114"><a href="dl_3.html#cb320-114" tabindex="-1"></a>        loss = criterion(outputs, targets)</span>
+<span id="cb320-115"><a href="dl_3.html#cb320-115" tabindex="-1"></a>        </span>
+<span id="cb320-116"><a href="dl_3.html#cb320-116" tabindex="-1"></a>        # 反向传播和优化</span>
+<span id="cb320-117"><a href="dl_3.html#cb320-117" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb320-118"><a href="dl_3.html#cb320-118" tabindex="-1"></a>        optimizer.step()</span>
+<span id="cb320-119"><a href="dl_3.html#cb320-119" tabindex="-1"></a>        </span>
+<span id="cb320-120"><a href="dl_3.html#cb320-120" tabindex="-1"></a>        epoch_train_loss += loss.item()</span>
+<span id="cb320-121"><a href="dl_3.html#cb320-121" tabindex="-1"></a>    </span>
+<span id="cb320-122"><a href="dl_3.html#cb320-122" tabindex="-1"></a>    # 计算平均训练损失</span>
+<span id="cb320-123"><a href="dl_3.html#cb320-123" tabindex="-1"></a>    avg_train_loss = epoch_train_loss / len(train_loader)</span>
+<span id="cb320-124"><a href="dl_3.html#cb320-124" tabindex="-1"></a>    train_losses.append(avg_train_loss)</span>
+<span id="cb320-125"><a href="dl_3.html#cb320-125" tabindex="-1"></a>    </span>
+<span id="cb320-126"><a href="dl_3.html#cb320-126" tabindex="-1"></a>    # --- 测试阶段 ---</span>
+<span id="cb320-127"><a href="dl_3.html#cb320-127" tabindex="-1"></a>    model.eval()</span>
+<span id="cb320-128"><a href="dl_3.html#cb320-128" tabindex="-1"></a>    epoch_test_loss = 0.0</span>
+<span id="cb320-129"><a href="dl_3.html#cb320-129" tabindex="-1"></a>    </span>
+<span id="cb320-130"><a href="dl_3.html#cb320-130" tabindex="-1"></a>    with torch.no_grad():</span>
+<span id="cb320-131"><a href="dl_3.html#cb320-131" tabindex="-1"></a>        for inputs, targets in test_loader:</span>
+<span id="cb320-132"><a href="dl_3.html#cb320-132" tabindex="-1"></a>            inputs, targets = inputs.to(&#39;cuda&#39;), targets.to(&#39;cuda&#39;)</span>
+<span id="cb320-133"><a href="dl_3.html#cb320-133" tabindex="-1"></a>            outputs, _ = model(inputs)</span>
+<span id="cb320-134"><a href="dl_3.html#cb320-134" tabindex="-1"></a>            loss = criterion(outputs, targets)</span>
+<span id="cb320-135"><a href="dl_3.html#cb320-135" tabindex="-1"></a>            epoch_test_loss += loss.item()</span>
+<span id="cb320-136"><a href="dl_3.html#cb320-136" tabindex="-1"></a>    </span>
+<span id="cb320-137"><a href="dl_3.html#cb320-137" tabindex="-1"></a>    # 计算平均测试损失</span>
+<span id="cb320-138"><a href="dl_3.html#cb320-138" tabindex="-1"></a>    avg_test_loss = epoch_test_loss / len(test_loader)</span>
+<span id="cb320-139"><a href="dl_3.html#cb320-139" tabindex="-1"></a>    test_losses.append(avg_test_loss)</span>
+<span id="cb320-140"><a href="dl_3.html#cb320-140" tabindex="-1"></a>    </span>
+<span id="cb320-141"><a href="dl_3.html#cb320-141" tabindex="-1"></a>    # 每5个epoch打印一次进度</span>
+<span id="cb320-142"><a href="dl_3.html#cb320-142" tabindex="-1"></a>    if (epoch+1) % 5 == 0 or epoch == 0:</span>
+<span id="cb320-143"><a href="dl_3.html#cb320-143" tabindex="-1"></a>        print(f&quot;Epoch [{epoch+1}/{num_epochs}], Train Loss: {avg_train_loss:.6f}, Test Loss: {avg_test_loss:.6f}&quot;)</span></code></pre></div>
+<p>说明：</p>
 <ol style="list-style-type: decimal">
-<li><p>遗漏重要变量</p>
-<p>重要变量对因变量的影响被归结到随机扰动项中，而这些影响具有差异性，从而导致异方差。</p></li>
-<li><p>模型设定误差</p>
-<p>包括模型形式和变量选择，例如本应包含自变量的二次项但未包含，也会导致异方差问题。</p></li>
-<li><p>数据的测量误差</p></li>
-<li><p>在截面数据中个体间的差异较大</p></li>
-<li><p>存在异常点</p></li>
+<li><p>对于时序数据，给定t个数据后，t+1时刻的值即为响应变量。除了目标变量的自回归结构，还可以添加其他预测变量，记得要修改<code>input_size</code>。</p></li>
+<li><p>关于h和c的初始状态，绝大部分场景下都需要进行重置，即不同序列之间的初始状态是独立的。同时，初始状态也不是需要学习的参数，除特殊任务外，一般都无需设置梯度。</p></li>
+<li><p>如果要进行预测，则需要根据特定步长的窗口序列来预测下一时刻的目标值。</p></li>
 </ol>
 </div>
-<div id="reg_12_3_2" class="section level4 hasAnchor" number="6.12.3.2">
-<h4><span class="header-section-number">6.12.3.2</span> 后果<a href="reg_12.html#reg_12_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<div id="dl_3_3" class="section level3 hasAnchor" number="11.3.3">
+<h3><span class="header-section-number">11.3.3</span> 拓展<a href="dl_3.html#dl_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <ol style="list-style-type: decimal">
-<li><p>最小二乘估计仍是无偏的，但不是最小方差线性无偏估计</p>
-<p>无偏性没用到随机扰动项的同方差假定，因此仍具有无偏性。但求估计量的方差时需要用到同方差假定，因而不具有有效性。</p></li>
-<li><p>最小二乘估计的方差估计量是有偏的</p>
-<p>既然方差估计量是有偏的，那么凡是用到<span class="math inline">\(\hat \sigma^2\)</span>的地方（显著性检验、预测）都会失效。</p>
-<p>例如负的偏差会低估参数估计量的真实方差，这会导致对应的t统计量偏大，从而错误地拒绝了原假设。正的偏差会高估参数估计量的真实方差，会产生相反的结果。</p></li>
+<li><p>多层LSTM</p>
+<p>多层LSTM将第一层LSTM的输出序列（通常是每个时间步的隐藏状态）作为输入，相较于单层LSTM能够提取更为复杂的特征。对于简单任务还是使用单层LSTM，一般层数也不宜超过4层。</p></li>
+<li><p>单向与双向</p>
+<p>常规的LSTM都是从历史数据出发，由老及新，根据历史去预测未来。而双向LSTM则包含了两个LSTM层，一个在时间上从前到后，另一个在时间上从后到前。这使得模型能够捕捉序列的“历史信息”与“未来信息”，在输出时融合这两个LSTM层的隐藏状态作为最终输出。</p>
+<p>对于时间序列的预测任务只能使用单向LSTM。</p></li>
 </ol>
-</div>
-<div id="reg_12_3_3" class="section level4 hasAnchor" number="6.12.3.3">
-<h4><span class="header-section-number">6.12.3.3</span> 识别<a href="reg_12.html#reg_12_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>残差图</p>
-<p>根据残差图观察残差的分布形态。</p></li>
-<li><p>Spearman等级相关系数法</p>
-<p>求得普通最小二乘下的残差，根据<span class="math inline">\(x_i\)</span>与<span class="math inline">\(|e_i|\)</span>的等级（秩）差来构造等级相关系数，对等级相关系数进行显著性检验，若拒绝原假设则说明自变量和<span class="math inline">\(|e_i|\)</span>之间存在系统关系，也就说明存在异方差。</p></li>
-<li><p>Goldfeld-Quandt检验</p>
-<p>检验是否存在递增或递减的异方差情形。</p></li>
-<li><p>Breusch-Pagan检验</p>
-<p><span class="math inline">\(e_i^2\)</span>对所有自变量进行回归，看看残差平方是否和某个自变量有关系。</p></li>
-<li><p>White检验</p>
-<p><span class="math inline">\(e_i^2\)</span>对所有自变量、自变量平方及变量间的交互项进行回归，看看残差平方是否和某一项有关系。</p></li>
-</ol>
-</div>
-<div id="reg_12_3_4" class="section level4 hasAnchor" number="6.12.3.4">
-<h4><span class="header-section-number">6.12.3.4</span> 补救<a href="reg_12.html#reg_12_3_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>加权最小二乘法</p>
-<p>加权最小二乘法通过为数据加权，来消除异方差性。对方差较大的观测赋予较小的权重，以牺牲大方差项的拟合效果为代价，改善小方差项的拟合效果。这个方法关键是要确定合适的权重，实际中可尝试采用残差平方的倒数最为权重。</p></li>
-<li><p>采用异方差稳健标准误</p>
-<p>既然异方差问题会影响<span class="math inline">\(\hat \sigma^2\)</span>的估计，那么就直接采用更为稳健的标准误替代<span class="math inline">\(\hat \sigma^2\)</span>。</p></li>
-<li><p>Box-Cox变换</p>
-<p>对因变量采取如下变换（因变量为正）</p>
-<p><span class="math display" id="eq:model113">\[
-y^{(\lambda)}=\begin{cases} \frac{y^\lambda-1}{\lambda}, &amp;\lambda \neq 0 \\ \ln y , &amp;\lambda=0 \end{cases} \tag{6.113}
-\]</span></p>
-<p>可根据极大似然估计法确定<span class="math inline">\(\lambda\)</span>。Box-Cox变换能够在一定程度上改善数据的非正态性、异方差性、自相关性。但除了对数变换（表示百分比变动）外其余变换都缺乏解释性。</p></li>
-</ol>
+
 </div>
 </div>
-<div id="reg_12_4" class="section level3 hasAnchor" number="6.12.4">
-<h3><span class="header-section-number">6.12.4</span> 自相关<a href="reg_12.html#reg_12_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>若<span class="math inline">\(Cov(\varepsilon_i, \varepsilon_j) \neq 0\)</span>，则称之为“自相关”问题。</p>
-<div id="reg_12_4_1" class="section level4 hasAnchor" number="6.12.4.1">
-<h4><span class="header-section-number">6.12.4.1</span> 原因<a href="reg_12.html#reg_12_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>遗漏重要变量</p>
-<p>重要变量对因变量的影响被归结到随机扰动项中，而这些影响是前后相关联的，从而导致自相关。</p></li>
-<li><p>模型设定误差</p></li>
-<li><p>经济变量的滞后性会给序列带来自相关性</p></li>
-<li><p>随机误差项本身的自相关</p>
-<p>如地震不仅影响当期，其造成的影响还会持续一段时间。</p></li>
-<li><p>因对数据加工整理而导致扰动项之间产生自相关性</p>
-<p>如把月度数据合并为季度数据、对缺失值进行插值。</p></li>
-</ol>
-</div>
-<div id="reg_12_4_2" class="section level4 hasAnchor" number="6.12.4.2">
-<h4><span class="header-section-number">6.12.4.2</span> 后果<a href="reg_12.html#reg_12_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>最小二乘估计仍是无偏的，但不是最小方差线性无偏估计</p>
-<p>无偏性没用到随机扰动项的无自相关假定，因此仍具有无偏性。但求估计量的方差时需要用到无自相关假定，因而不具有有效性。</p></li>
-<li><p>最小二乘估计的方差被低估</p>
-<p>同样会造成显著性检验、预测等操作失效。</p></li>
-</ol>
-</div>
-<div id="reg_12_4_3" class="section level4 hasAnchor" number="6.12.4.3">
-<h4><span class="header-section-number">6.12.4.3</span> 识别<a href="reg_12.html#reg_12_4_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>图示法</p>
-<p>绘制<span class="math inline">\(e_t\)</span>与<span class="math inline">\(e_{t-1}\)</span>、<span class="math inline">\(t\)</span>的散点图，看看前后是否有某种特定的趋势。</p></li>
-<li><p>游程检验</p>
-<p>对残差的符号变化情况进行游程检验，看看是否是随机变化的。</p></li>
-<li><p>Durbin-Watson检验</p>
-<p>DW检验只能检验一阶自相关情形，且有一些前提条件（如模型中必须包含截距项、解释变量中不包含Y的滞后项等）。</p></li>
-<li><p>Breusch-Godfrey检验</p>
-<p>让残差对所有自变量及残差的滞后项跑个回归，看看残差滞后项的回归系数是否显著。</p></li>
-<li><p>纯随机性检验</p>
-<p>利用时间序列中的Q统计量进行纯随机性检验。</p></li>
-</ol>
-</div>
-<div id="reg_12_4_4" class="section level4 hasAnchor" number="6.12.4.4">
-<h4><span class="header-section-number">6.12.4.4</span> 补救<a href="reg_12.html#reg_12_4_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>广义差分法</p></li>
-<li><p>采用异方差自相关一致标准误(HAC)</p>
-<p>直接用HAC替换<span class="math inline">\(\hat \sigma^2\)</span>。</p></li>
-<li><p>Box-Cox变换</p></li>
-</ol>
-</div>
-</div>
-<div id="reg_12_5" class="section level3 hasAnchor" number="6.12.5">
-<h3><span class="header-section-number">6.12.5</span> 多重共线性<a href="reg_12.html#reg_12_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>若设计矩阵<span class="math inline">\(X\)</span>的各个列向量之间是线性相关的，则称之为“完全多重共线性”。若是近似线性相关的，则称之为“多重共线性”。注意，多重共线性是一个程度轻重的问题。</p>
-<div id="reg_12_5_1" class="section level4 hasAnchor" number="6.12.5.1">
-<h4><span class="header-section-number">6.12.5.1</span> 原因<a href="reg_12.html#reg_12_5_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>经济变量之间的内在联系是产生多重共线性的根本原因</p></li>
-<li><p>经济变量之间存在共同的变化趋势</p></li>
-<li><p>模型中存在滞后项</p></li>
-</ol>
-</div>
-<div id="reg_12_5_2" class="section level4 hasAnchor" number="6.12.5.2">
-<h4><span class="header-section-number">6.12.5.2</span> 后果<a href="reg_12.html#reg_12_5_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>若是完全多重共线性，则<span class="math inline">\(X&#39;X\)</span>不可逆，无法得到最小二乘估计</p></li>
-<li><p>最小二乘估计仍是线性无偏的，但多重共线性会导致各估计量的方差较大</p>
-<p>同样会造成显著性检验、预测等操作失效。</p></li>
-<li><p>回归系数的估计量的符号跟实际不符，估计量的含义变得不明确</p></li>
-</ol>
-</div>
-<div id="reg_12_5_3" class="section level4 hasAnchor" number="6.12.5.3">
-<h4><span class="header-section-number">6.12.5.3</span> 识别<a href="reg_12.html#reg_12_5_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>经验判断</p>
-<ul>
-<li><p><span class="math inline">\(R^2\)</span>很高，F统计量值很大，但各个回归系数显著的较少</p></li>
-<li><p>回归系数的符号与预期相反</p></li>
-<li><p>解释变量之间两两高度相关</p></li>
-<li><p>若模型中增加或减少一个自变量，回归系数的估计值产生较大的变化</p></li>
-</ul></li>
-<li><p>条件数</p>
-<p>考虑标准化后的矩阵<span class="math inline">\(X&#39;X\)</span>，设其特征根为<span class="math inline">\(\lambda_1 \geq \lambda_2 \geq ... \geq \lambda_p \geq0\)</span>，则定义条件数为</p>
-<p><span class="math display" id="eq:model114">\[
-CI_i=\sqrt{\frac{\lambda_1}{\lambda_i}} \tag{6.114}
-\]</span></p>
-<p>当条件数大于等于10时就有相对较为严重的多重共线性。</p>
-<blockquote>
-<p>也可以不取根号，相对应的阈值也要改变</p>
-</blockquote></li>
-<li><p>方差膨胀因子</p>
-<p>定义方差膨胀因子为</p>
-<p><span class="math display" id="eq:model115">\[
-VIF_i = \frac{1}{1-R_i^2} \tag{6.115}
-\]</span></p>
-<p>其中<span class="math inline">\(R_i^2\)</span>为自变量<span class="math inline">\(x_i\)</span>对其余自变量回归得到的样本决定系数。若<span class="math inline">\(VIF_i \geq 10\)</span>，则认为<span class="math inline">\(x_i\)</span>与其他自变量之间存在较强的多重共线性问题。</p></li>
-</ol>
-</div>
-<div id="reg_12_5_4" class="section level4 hasAnchor" number="6.12.5.4">
-<h4><span class="header-section-number">6.12.5.4</span> 补救<a href="reg_12.html#reg_12_5_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
-<ol style="list-style-type: decimal">
-<li><p>变量筛选与处理</p>
-<p>可以剔除一些不重要的变量，或者对变量进行变形，如化总体指标为人均指标。</p></li>
-<li><p>采取适当的参数估计方法</p>
-<p>如岭回归、主成分回归、偏最小二乘回归。</p></li>
-</ol>
-</div>
-</div>
-</div>
+<!-- </div> -->
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="reg_11.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reg_13.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dl_2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="network.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

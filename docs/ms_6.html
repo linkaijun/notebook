@@ -463,8 +463,10 @@ div.csl-indent {
 <li class="chapter" data-level="7.6" data-path="ms_6.html"><a href="ms_6.html"><i class="fa fa-check"></i><b>7.6</b> 聚类分析</a>
 <ul>
 <li class="chapter" data-level="7.6.1" data-path="ms_6.html"><a href="ms_6.html#ms_6_1"><i class="fa fa-check"></i><b>7.6.1</b> 距离与相似性的度量</a></li>
-<li class="chapter" data-level="7.6.2" data-path="ms_6.html"><a href="ms_6.html#ms_6_2"><i class="fa fa-check"></i><b>7.6.2</b> 系统聚类</a></li>
-<li class="chapter" data-level="7.6.3" data-path="ms_6.html"><a href="ms_6.html#ms_6_3"><i class="fa fa-check"></i><b>7.6.3</b> Kmeans</a></li>
+<li class="chapter" data-level="7.6.2" data-path="ms_6.html"><a href="ms_6.html#ms_6_2"><i class="fa fa-check"></i><b>7.6.2</b> 聚类效果的评价指标</a></li>
+<li class="chapter" data-level="7.6.3" data-path="ms_6.html"><a href="ms_6.html#ms_6_3"><i class="fa fa-check"></i><b>7.6.3</b> 系统聚类</a></li>
+<li class="chapter" data-level="7.6.4" data-path="ms_6.html"><a href="ms_6.html#ms_6_4"><i class="fa fa-check"></i><b>7.6.4</b> Kmeans</a></li>
+<li class="chapter" data-level="7.6.5" data-path="ms_6.html"><a href="ms_6.html#ms_6_5"><i class="fa fa-check"></i><b>7.6.5</b> 其他聚类方法</a></li>
 </ul></li>
 <li class="chapter" data-level="7.7" data-path="ms_7.html"><a href="ms_7.html"><i class="fa fa-check"></i><b>7.7</b> 典型相关分析</a></li>
 </ul></li>
@@ -557,6 +559,12 @@ div.csl-indent {
 <li class="chapter" data-level="11.2.1" data-path="dl_2.html"><a href="dl_2.html#dl_2_1"><i class="fa fa-check"></i><b>11.2.1</b> 线性回归</a></li>
 <li class="chapter" data-level="11.2.2" data-path="dl_2.html"><a href="dl_2.html#dl_2_2"><i class="fa fa-check"></i><b>11.2.2</b> 二分类问题</a></li>
 <li class="chapter" data-level="11.2.3" data-path="dl_2.html"><a href="dl_2.html#dl_2_3"><i class="fa fa-check"></i><b>11.2.3</b> 多分类问题</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="dl_3.html"><a href="dl_3.html"><i class="fa fa-check"></i><b>11.3</b> LSTM</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="dl_3.html"><a href="dl_3.html#dl_3_1"><i class="fa fa-check"></i><b>11.3.1</b> 原理</a></li>
+<li class="chapter" data-level="11.3.2" data-path="dl_3.html"><a href="dl_3.html#dl_3_2"><i class="fa fa-check"></i><b>11.3.2</b> 示例</a></li>
+<li class="chapter" data-level="11.3.3" data-path="dl_3.html"><a href="dl_3.html#dl_3_3"><i class="fa fa-check"></i><b>11.3.3</b> 拓展</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
@@ -699,9 +707,55 @@ div.csl-indent {
 </div>
 </div>
 <div id="ms_6_2" class="section level3 hasAnchor" number="7.6.2">
-<h3><span class="header-section-number">7.6.2</span> 系统聚类<a href="ms_6.html#ms_6_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<h3><span class="header-section-number">7.6.2</span> 聚类效果的评价指标<a href="ms_6.html#ms_6_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <div id="ms_6_2_1" class="section level4 hasAnchor" number="7.6.2.1">
-<h4><span class="header-section-number">7.6.2.1</span> 类与类之间的距离<a href="ms_6.html#ms_6_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<h4><span class="header-section-number">7.6.2.1</span> 内部评价指标<a href="ms_6.html#ms_6_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<ol style="list-style-type: decimal">
+<li>轮廓系数</li>
+</ol>
+<p><span class="math display">\[
+s(i)=\frac{b(i)-a(i)}{\max\{a(i), b(i)\}}
+\]</span></p>
+<p><span class="math inline">\(a(i)\)</span>表示样本i到同簇其他点的平均距离，度量簇内紧密度；<span class="math inline">\(b(i)\)</span>表示样本i到最近邻簇所有点的平均距离，度量簇间分离度。</p>
+<p>平均轮廓系数越大，表明聚类效果越好。</p>
+<ol start="2" style="list-style-type: decimal">
+<li>DBI</li>
+</ol>
+<p><span class="math display">\[
+DBI = \frac{1}{k}\sum_{i=1}^k \max_{j \neq i }(\frac{\sigma_i + \sigma_j}{d(c_i, c_j)})
+\]</span></p>
+<p>其中<span class="math inline">\(\sigma_i\)</span>表示簇i内样本到质心的平均距离，<span class="math inline">\(d(c_i, d_j)\)</span>表示簇i与j质心间距离。</p>
+<p>DBI越小越好。</p>
+<ol start="3" style="list-style-type: decimal">
+<li>CH指数</li>
+</ol>
+<p><span class="math display">\[
+CH = \frac{SSB/(k-1)}{SSW/(n-k)}
+\]</span></p>
+<p>其中<span class="math inline">\(SSB\)</span>表示簇间平方和，<span class="math inline">\(SSW\)</span>表示簇内平方和。</p>
+<p>CH值越大越好。</p>
+</div>
+<div id="ms_6_2_2" class="section level4 hasAnchor" number="7.6.2.2">
+<h4><span class="header-section-number">7.6.2.2</span> 外部评价指标<a href="ms_6.html#ms_6_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<ol style="list-style-type: decimal">
+<li>调整兰德指数</li>
+</ol>
+<p>调整兰德指数是在兰德指数的基础上考虑了随机聚类的期望值，兰德指数定义为</p>
+<p><span class="math inline">\(RI=\frac{a+d}{a+b+c+d}\)</span></p>
+<p>其中a表示同属于一个簇且同属于一个真实类的样本对数，b表示同属于一个簇但不属于一个真实类的样本对数，c表示不属于一个簇但同属于一个真实类的样本对数，d表示不属于一个簇且不属于一个真实类的样本对数。</p>
+<p>而调整兰德指数定义为</p>
+<p><span class="math display">\[
+ARI = \frac{RI-E(RI)}{\max(RI)-E(RI)}
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>混淆矩阵</li>
+</ol>
+</div>
+</div>
+<div id="ms_6_3" class="section level3 hasAnchor" number="7.6.3">
+<h3><span class="header-section-number">7.6.3</span> 系统聚类<a href="ms_6.html#ms_6_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="ms_6_3_1" class="section level4 hasAnchor" number="7.6.3.1">
+<h4><span class="header-section-number">7.6.3.1</span> 类与类之间的距离<a href="ms_6.html#ms_6_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
 <ol style="list-style-type: decimal">
 <li>最短距离法：<span class="math inline">\(D_{KL} = \min\limits_{i\in G_K, j \in G_L} \{d_{ij}\}\)</span></li>
 </ol>
@@ -769,8 +823,8 @@ div.csl-indent {
 </ol>
 </div>
 </div>
-<div id="ms_6_3" class="section level3 hasAnchor" number="7.6.3">
-<h3><span class="header-section-number">7.6.3</span> Kmeans<a href="ms_6.html#ms_6_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="ms_6_4" class="section level3 hasAnchor" number="7.6.4">
+<h3><span class="header-section-number">7.6.4</span> Kmeans<a href="ms_6.html#ms_6_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>算法步骤：</p>
 <ol style="list-style-type: decimal">
 <li><p>输入观测样本数据和聚类数目K。</p></li>
@@ -790,6 +844,26 @@ div.csl-indent {
 <li><p>可能会陷入局部解。</p></li>
 <li><p>对异常值非常敏感。</p></li>
 </ol>
+</div>
+<div id="ms_6_5" class="section level3 hasAnchor" number="7.6.5">
+<h3><span class="header-section-number">7.6.5</span> 其他聚类方法<a href="ms_6.html#ms_6_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="ms_6_5_1" class="section level4 hasAnchor" number="7.6.5.1">
+<h4><span class="header-section-number">7.6.5.1</span> DBSCAN<a href="ms_6.html#ms_6_5_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>DBSCAN(Density-Based Spatial Clustering of Applications with Noise)基于数据点在空间分布上的密度来发现任意形状的簇。簇被定义为密度相连的点的最大集合。密度低于某个阈值的区域被视为噪声。</p>
+<blockquote>
+<p>并非所有观测点都属于簇，允许噪声的存在</p>
+</blockquote>
+<p>DBSCAN需要定义两个参数：半径<code>eps</code>与区域内最少点数<code>minPts</code>。对于任意一个点，在其半径内若存在多于区域内最少点数个点，那么就将该店标记为<strong>核心点</strong>，找到所有的核心点，并将所有密度可达的核心点归于一个簇中。非核心点若与核心点相邻则也属于该簇，反之则为离群点。</p>
+<p>在R中，可用<code>dbscan</code>包的<code>dbscan()</code>实现，并通过<code>kNNdistplot()</code>来辅助判断半径大小。</p>
+<blockquote>
+<p>当给定<code>minPts</code>时（一般minPts&gt;=维度数+1），<code>kNNdistplot()</code>的横轴表示按到k近邻的距离从小到大排序的点，纵轴表示距离，找到曲线的拐点对应的距离就是较为合适的半径</p>
+</blockquote>
+</div>
+<div id="ms_6_5_2" class="section level4 hasAnchor" number="7.6.5.2">
+<h4><span class="header-section-number">7.6.5.2</span> GMM<a href="ms_6.html#ms_6_5_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>假设整个数据集是K个多元高斯分布的混合体。每个点属于某个簇的概率由该高斯分布生成的概率决定。通常使用EM算法迭代优化。</p>
+<p>在R中，可用<code>mclust</code>包的<code>Mclust()</code>实现。</p>
+</div>
 </div>
 </div>
             </section>

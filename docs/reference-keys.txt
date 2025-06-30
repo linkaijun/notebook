@@ -710,7 +710,13 @@ ms_6_1_1
 ms_6_1_2
 ms_6_2
 ms_6_2_1
+ms_6_2_2
 ms_6_3
+ms_6_3_1
+ms_6_4
+ms_6_5
+ms_6_5_1
+ms_6_5_2
 ms_7
 ml
 ml_1
@@ -784,6 +790,10 @@ dl_2
 dl_2_1
 dl_2_2
 dl_2_3
+dl_3
+dl_3_1
+dl_3_2
+dl_3_3
 network
 network_1
 network_1_1

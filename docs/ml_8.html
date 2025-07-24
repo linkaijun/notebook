@@ -477,6 +477,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>8.1.1</b> 偏差-方差权衡</a></li>
 <li class="chapter" data-level="8.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 评价指标</a></li>
 <li class="chapter" data-level="8.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 特征工程</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ml_1.html"><a href="ml_1.html#ml_1_4"><i class="fa fa-check"></i><b>8.1.4</b> pandas与sklearn</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>8.2</b> 决策树</a>
 <ul>
@@ -704,32 +705,32 @@ div.csl-indent {
 <h2><span class="header-section-number">8.8</span> SVM<a href="ml_8.html#ml_8" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
 <p>关于支持向量机SVM的介绍参见<a href="https://www.bilibili.com/video/BV16T4y1y7qj/" target="_blank">视频</a>。</p>
 <p><code>e1071</code>包的<code>tune()</code>函数能够对超参数进行网格搜索，并保留最优模型。</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="ml_8.html#cb264-1" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
-<span id="cb264-2"><a href="ml_8.html#cb264-2" tabindex="-1"></a></span>
-<span id="cb264-3"><a href="ml_8.html#cb264-3" tabindex="-1"></a><span class="co"># 设置参数范围，进行网格搜索</span></span>
-<span id="cb264-4"><a href="ml_8.html#cb264-4" tabindex="-1"></a>tune_grid <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb264-5"><a href="ml_8.html#cb264-5" tabindex="-1"></a>  <span class="at">cost =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>),</span>
-<span id="cb264-6"><a href="ml_8.html#cb264-6" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>),</span>
-<span id="cb264-7"><a href="ml_8.html#cb264-7" tabindex="-1"></a>  <span class="at">kernel =</span> <span class="fu">c</span>(<span class="st">&#39;radial&#39;</span>, <span class="st">&#39;linear&#39;</span>)</span>
-<span id="cb264-8"><a href="ml_8.html#cb264-8" tabindex="-1"></a>)</span>
-<span id="cb264-9"><a href="ml_8.html#cb264-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb264-10"><a href="ml_8.html#cb264-10" tabindex="-1"></a><span class="co"># tune()函数能够自行调优</span></span>
-<span id="cb264-11"><a href="ml_8.html#cb264-11" tabindex="-1"></a>model_tune_svm <span class="ot">&lt;-</span> <span class="fu">tune</span>(</span>
-<span id="cb264-12"><a href="ml_8.html#cb264-12" tabindex="-1"></a>  <span class="at">METHOD =</span> svm,</span>
-<span id="cb264-13"><a href="ml_8.html#cb264-13" tabindex="-1"></a>  <span class="at">train.x =</span> label <span class="sc">~</span> score <span class="sc">+</span> departure,</span>
-<span id="cb264-14"><a href="ml_8.html#cb264-14" tabindex="-1"></a>  <span class="at">data =</span> train_set,</span>
-<span id="cb264-15"><a href="ml_8.html#cb264-15" tabindex="-1"></a>  <span class="at">ranges =</span> tune_grid,</span>
-<span id="cb264-16"><a href="ml_8.html#cb264-16" tabindex="-1"></a>  <span class="at">tunecontrol =</span> <span class="fu">tune.control</span>(</span>
-<span id="cb264-17"><a href="ml_8.html#cb264-17" tabindex="-1"></a>    <span class="at">sampling =</span> <span class="st">&quot;cross&quot;</span>,             <span class="co"># 交叉验证</span></span>
-<span id="cb264-18"><a href="ml_8.html#cb264-18" tabindex="-1"></a>    <span class="at">cross =</span> <span class="dv">5</span>,                      <span class="co"># 5折交叉验证</span></span>
-<span id="cb264-19"><a href="ml_8.html#cb264-19" tabindex="-1"></a>    <span class="at">best.model =</span> <span class="cn">TRUE</span>               <span class="co"># 保留最佳模型</span></span>
-<span id="cb264-20"><a href="ml_8.html#cb264-20" tabindex="-1"></a>  )</span>
-<span id="cb264-21"><a href="ml_8.html#cb264-21" tabindex="-1"></a>  )</span>
-<span id="cb264-22"><a href="ml_8.html#cb264-22" tabindex="-1"></a></span>
-<span id="cb264-23"><a href="ml_8.html#cb264-23" tabindex="-1"></a><span class="fu">summary</span>(model_tune_svm)</span>
-<span id="cb264-24"><a href="ml_8.html#cb264-24" tabindex="-1"></a>model_tune_svm<span class="sc">$</span>best.parameters            <span class="co"># 最优参数组合</span></span>
-<span id="cb264-25"><a href="ml_8.html#cb264-25" tabindex="-1"></a>model_svm <span class="ot">&lt;-</span> model_tune_svm<span class="sc">$</span>best.model    <span class="co"># 提取最优模型</span></span>
-<span id="cb264-26"><a href="ml_8.html#cb264-26" tabindex="-1"></a>fit_svm <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm, train_set)  <span class="co"># 测试集预测</span></span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="ml_8.html#cb270-1" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb270-2"><a href="ml_8.html#cb270-2" tabindex="-1"></a></span>
+<span id="cb270-3"><a href="ml_8.html#cb270-3" tabindex="-1"></a><span class="co"># 设置参数范围，进行网格搜索</span></span>
+<span id="cb270-4"><a href="ml_8.html#cb270-4" tabindex="-1"></a>tune_grid <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb270-5"><a href="ml_8.html#cb270-5" tabindex="-1"></a>  <span class="at">cost =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb270-6"><a href="ml_8.html#cb270-6" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>),</span>
+<span id="cb270-7"><a href="ml_8.html#cb270-7" tabindex="-1"></a>  <span class="at">kernel =</span> <span class="fu">c</span>(<span class="st">&#39;radial&#39;</span>, <span class="st">&#39;linear&#39;</span>)</span>
+<span id="cb270-8"><a href="ml_8.html#cb270-8" tabindex="-1"></a>)</span>
+<span id="cb270-9"><a href="ml_8.html#cb270-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb270-10"><a href="ml_8.html#cb270-10" tabindex="-1"></a><span class="co"># tune()函数能够自行调优</span></span>
+<span id="cb270-11"><a href="ml_8.html#cb270-11" tabindex="-1"></a>model_tune_svm <span class="ot">&lt;-</span> <span class="fu">tune</span>(</span>
+<span id="cb270-12"><a href="ml_8.html#cb270-12" tabindex="-1"></a>  <span class="at">METHOD =</span> svm,</span>
+<span id="cb270-13"><a href="ml_8.html#cb270-13" tabindex="-1"></a>  <span class="at">train.x =</span> label <span class="sc">~</span> score <span class="sc">+</span> departure,</span>
+<span id="cb270-14"><a href="ml_8.html#cb270-14" tabindex="-1"></a>  <span class="at">data =</span> train_set,</span>
+<span id="cb270-15"><a href="ml_8.html#cb270-15" tabindex="-1"></a>  <span class="at">ranges =</span> tune_grid,</span>
+<span id="cb270-16"><a href="ml_8.html#cb270-16" tabindex="-1"></a>  <span class="at">tunecontrol =</span> <span class="fu">tune.control</span>(</span>
+<span id="cb270-17"><a href="ml_8.html#cb270-17" tabindex="-1"></a>    <span class="at">sampling =</span> <span class="st">&quot;cross&quot;</span>,             <span class="co"># 交叉验证</span></span>
+<span id="cb270-18"><a href="ml_8.html#cb270-18" tabindex="-1"></a>    <span class="at">cross =</span> <span class="dv">5</span>,                      <span class="co"># 5折交叉验证</span></span>
+<span id="cb270-19"><a href="ml_8.html#cb270-19" tabindex="-1"></a>    <span class="at">best.model =</span> <span class="cn">TRUE</span>               <span class="co"># 保留最佳模型</span></span>
+<span id="cb270-20"><a href="ml_8.html#cb270-20" tabindex="-1"></a>  )</span>
+<span id="cb270-21"><a href="ml_8.html#cb270-21" tabindex="-1"></a>  )</span>
+<span id="cb270-22"><a href="ml_8.html#cb270-22" tabindex="-1"></a></span>
+<span id="cb270-23"><a href="ml_8.html#cb270-23" tabindex="-1"></a><span class="fu">summary</span>(model_tune_svm)</span>
+<span id="cb270-24"><a href="ml_8.html#cb270-24" tabindex="-1"></a>model_tune_svm<span class="sc">$</span>best.parameters            <span class="co"># 最优参数组合</span></span>
+<span id="cb270-25"><a href="ml_8.html#cb270-25" tabindex="-1"></a>model_svm <span class="ot">&lt;-</span> model_tune_svm<span class="sc">$</span>best.model    <span class="co"># 提取最优模型</span></span>
+<span id="cb270-26"><a href="ml_8.html#cb270-26" tabindex="-1"></a>fit_svm <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm, train_set)  <span class="co"># 测试集预测</span></span></code></pre></div>
 
 </div>
 <!-- </div> -->

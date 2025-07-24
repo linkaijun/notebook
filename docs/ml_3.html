@@ -477,6 +477,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>8.1.1</b> 偏差-方差权衡</a></li>
 <li class="chapter" data-level="8.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 评价指标</a></li>
 <li class="chapter" data-level="8.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 特征工程</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ml_1.html"><a href="ml_1.html#ml_1_4"><i class="fa fa-check"></i><b>8.1.4</b> pandas与sklearn</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>8.2</b> 决策树</a>
 <ul>
@@ -902,60 +903,60 @@ div.csl-indent {
 </table>
 <hr />
 <p>下面生成随机数据供随机森林进行模拟。</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="ml_3.html#cb246-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb246-2"><a href="ml_3.html#cb246-2" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb246-3"><a href="ml_3.html#cb246-3" tabindex="-1"></a><span class="fu">library</span>(MASS)  <span class="co"># 用到多元正态随机数</span></span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="ml_3.html#cb252-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb252-2"><a href="ml_3.html#cb252-2" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb252-3"><a href="ml_3.html#cb252-3" tabindex="-1"></a><span class="fu">library</span>(MASS)  <span class="co"># 用到多元正态随机数</span></span></code></pre></div>
 <p>首先自定义函数，用于生成模拟数据。</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="ml_3.html#cb247-1" tabindex="-1"></a><span class="co"># 自定义函数——生成多元正态数据</span></span>
-<span id="cb247-2"><a href="ml_3.html#cb247-2" tabindex="-1"></a>gen_data <span class="ot">&lt;-</span> <span class="cf">function</span>(level, size, mu, sigma) {</span>
-<span id="cb247-3"><a href="ml_3.html#cb247-3" tabindex="-1"></a>    <span class="co"># 初始化数据框</span></span>
-<span id="cb247-4"><a href="ml_3.html#cb247-4" tabindex="-1"></a>    df <span class="ot">=</span> <span class="fu">data.frame</span>()</span>
-<span id="cb247-5"><a href="ml_3.html#cb247-5" tabindex="-1"></a></span>
-<span id="cb247-6"><a href="ml_3.html#cb247-6" tabindex="-1"></a>    <span class="co"># 生成每个类别的数据</span></span>
-<span id="cb247-7"><a href="ml_3.html#cb247-7" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>level) {</span>
-<span id="cb247-8"><a href="ml_3.html#cb247-8" tabindex="-1"></a>        <span class="co"># 生成类别标签</span></span>
-<span id="cb247-9"><a href="ml_3.html#cb247-9" tabindex="-1"></a>        category_label <span class="ot">=</span> <span class="fu">rep</span>(LETTERS[i], size[i])</span>
-<span id="cb247-10"><a href="ml_3.html#cb247-10" tabindex="-1"></a></span>
-<span id="cb247-11"><a href="ml_3.html#cb247-11" tabindex="-1"></a>        <span class="co"># 生成数据</span></span>
-<span id="cb247-12"><a href="ml_3.html#cb247-12" tabindex="-1"></a>        category_data <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">mvrnorm</span>(<span class="at">n =</span> size[i], <span class="at">mu =</span> mu[[i]], <span class="at">Sigma =</span> sigma[[i]]))</span>
-<span id="cb247-13"><a href="ml_3.html#cb247-13" tabindex="-1"></a></span>
-<span id="cb247-14"><a href="ml_3.html#cb247-14" tabindex="-1"></a>        <span class="co"># 添加类别标签</span></span>
-<span id="cb247-15"><a href="ml_3.html#cb247-15" tabindex="-1"></a>        category_data<span class="sc">$</span>category <span class="ot">=</span> <span class="fu">factor</span>(category_label)</span>
-<span id="cb247-16"><a href="ml_3.html#cb247-16" tabindex="-1"></a></span>
-<span id="cb247-17"><a href="ml_3.html#cb247-17" tabindex="-1"></a>        <span class="co"># 将数据添加到数据框</span></span>
-<span id="cb247-18"><a href="ml_3.html#cb247-18" tabindex="-1"></a>        df <span class="ot">=</span> <span class="fu">rbind</span>(df, category_data)</span>
-<span id="cb247-19"><a href="ml_3.html#cb247-19" tabindex="-1"></a>    }</span>
-<span id="cb247-20"><a href="ml_3.html#cb247-20" tabindex="-1"></a></span>
-<span id="cb247-21"><a href="ml_3.html#cb247-21" tabindex="-1"></a>    <span class="co"># 返回数据框</span></span>
-<span id="cb247-22"><a href="ml_3.html#cb247-22" tabindex="-1"></a>    <span class="fu">return</span>(df)</span>
-<span id="cb247-23"><a href="ml_3.html#cb247-23" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="ml_3.html#cb248-1" tabindex="-1"></a><span class="co"># 自定义函数——生成协方差矩阵</span></span>
-<span id="cb248-2"><a href="ml_3.html#cb248-2" tabindex="-1"></a>gen_sigma <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb248-3"><a href="ml_3.html#cb248-3" tabindex="-1"></a>    <span class="co"># 生成一个n x n的随机矩阵</span></span>
-<span id="cb248-4"><a href="ml_3.html#cb248-4" tabindex="-1"></a>    L <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> n, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">2</span>), <span class="at">ncol =</span> n)</span>
-<span id="cb248-5"><a href="ml_3.html#cb248-5" tabindex="-1"></a>    <span class="fu">diag</span>(L) <span class="ot">=</span> <span class="fu">abs</span>(<span class="fu">diag</span>(L))  <span class="co"># 确保对角线上的元素为正</span></span>
-<span id="cb248-6"><a href="ml_3.html#cb248-6" tabindex="-1"></a></span>
-<span id="cb248-7"><a href="ml_3.html#cb248-7" tabindex="-1"></a>    <span class="co"># 填充上三角部分为0</span></span>
-<span id="cb248-8"><a href="ml_3.html#cb248-8" tabindex="-1"></a>    L[<span class="fu">upper.tri</span>(L)] <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb248-9"><a href="ml_3.html#cb248-9" tabindex="-1"></a></span>
-<span id="cb248-10"><a href="ml_3.html#cb248-10" tabindex="-1"></a>    <span class="co"># 计算Cholesky分解</span></span>
-<span id="cb248-11"><a href="ml_3.html#cb248-11" tabindex="-1"></a>    A <span class="ot">=</span> L <span class="sc">%*%</span> <span class="fu">t</span>(L)</span>
-<span id="cb248-12"><a href="ml_3.html#cb248-12" tabindex="-1"></a></span>
-<span id="cb248-13"><a href="ml_3.html#cb248-13" tabindex="-1"></a>    <span class="fu">return</span>(A)</span>
-<span id="cb248-14"><a href="ml_3.html#cb248-14" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="ml_3.html#cb253-1" tabindex="-1"></a><span class="co"># 自定义函数——生成多元正态数据</span></span>
+<span id="cb253-2"><a href="ml_3.html#cb253-2" tabindex="-1"></a>gen_data <span class="ot">&lt;-</span> <span class="cf">function</span>(level, size, mu, sigma) {</span>
+<span id="cb253-3"><a href="ml_3.html#cb253-3" tabindex="-1"></a>    <span class="co"># 初始化数据框</span></span>
+<span id="cb253-4"><a href="ml_3.html#cb253-4" tabindex="-1"></a>    df <span class="ot">=</span> <span class="fu">data.frame</span>()</span>
+<span id="cb253-5"><a href="ml_3.html#cb253-5" tabindex="-1"></a></span>
+<span id="cb253-6"><a href="ml_3.html#cb253-6" tabindex="-1"></a>    <span class="co"># 生成每个类别的数据</span></span>
+<span id="cb253-7"><a href="ml_3.html#cb253-7" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>level) {</span>
+<span id="cb253-8"><a href="ml_3.html#cb253-8" tabindex="-1"></a>        <span class="co"># 生成类别标签</span></span>
+<span id="cb253-9"><a href="ml_3.html#cb253-9" tabindex="-1"></a>        category_label <span class="ot">=</span> <span class="fu">rep</span>(LETTERS[i], size[i])</span>
+<span id="cb253-10"><a href="ml_3.html#cb253-10" tabindex="-1"></a></span>
+<span id="cb253-11"><a href="ml_3.html#cb253-11" tabindex="-1"></a>        <span class="co"># 生成数据</span></span>
+<span id="cb253-12"><a href="ml_3.html#cb253-12" tabindex="-1"></a>        category_data <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">mvrnorm</span>(<span class="at">n =</span> size[i], <span class="at">mu =</span> mu[[i]], <span class="at">Sigma =</span> sigma[[i]]))</span>
+<span id="cb253-13"><a href="ml_3.html#cb253-13" tabindex="-1"></a></span>
+<span id="cb253-14"><a href="ml_3.html#cb253-14" tabindex="-1"></a>        <span class="co"># 添加类别标签</span></span>
+<span id="cb253-15"><a href="ml_3.html#cb253-15" tabindex="-1"></a>        category_data<span class="sc">$</span>category <span class="ot">=</span> <span class="fu">factor</span>(category_label)</span>
+<span id="cb253-16"><a href="ml_3.html#cb253-16" tabindex="-1"></a></span>
+<span id="cb253-17"><a href="ml_3.html#cb253-17" tabindex="-1"></a>        <span class="co"># 将数据添加到数据框</span></span>
+<span id="cb253-18"><a href="ml_3.html#cb253-18" tabindex="-1"></a>        df <span class="ot">=</span> <span class="fu">rbind</span>(df, category_data)</span>
+<span id="cb253-19"><a href="ml_3.html#cb253-19" tabindex="-1"></a>    }</span>
+<span id="cb253-20"><a href="ml_3.html#cb253-20" tabindex="-1"></a></span>
+<span id="cb253-21"><a href="ml_3.html#cb253-21" tabindex="-1"></a>    <span class="co"># 返回数据框</span></span>
+<span id="cb253-22"><a href="ml_3.html#cb253-22" tabindex="-1"></a>    <span class="fu">return</span>(df)</span>
+<span id="cb253-23"><a href="ml_3.html#cb253-23" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="ml_3.html#cb254-1" tabindex="-1"></a><span class="co"># 自定义函数——生成协方差矩阵</span></span>
+<span id="cb254-2"><a href="ml_3.html#cb254-2" tabindex="-1"></a>gen_sigma <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb254-3"><a href="ml_3.html#cb254-3" tabindex="-1"></a>    <span class="co"># 生成一个n x n的随机矩阵</span></span>
+<span id="cb254-4"><a href="ml_3.html#cb254-4" tabindex="-1"></a>    L <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> n, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">2</span>), <span class="at">ncol =</span> n)</span>
+<span id="cb254-5"><a href="ml_3.html#cb254-5" tabindex="-1"></a>    <span class="fu">diag</span>(L) <span class="ot">=</span> <span class="fu">abs</span>(<span class="fu">diag</span>(L))  <span class="co"># 确保对角线上的元素为正</span></span>
+<span id="cb254-6"><a href="ml_3.html#cb254-6" tabindex="-1"></a></span>
+<span id="cb254-7"><a href="ml_3.html#cb254-7" tabindex="-1"></a>    <span class="co"># 填充上三角部分为0</span></span>
+<span id="cb254-8"><a href="ml_3.html#cb254-8" tabindex="-1"></a>    L[<span class="fu">upper.tri</span>(L)] <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb254-9"><a href="ml_3.html#cb254-9" tabindex="-1"></a></span>
+<span id="cb254-10"><a href="ml_3.html#cb254-10" tabindex="-1"></a>    <span class="co"># 计算Cholesky分解</span></span>
+<span id="cb254-11"><a href="ml_3.html#cb254-11" tabindex="-1"></a>    A <span class="ot">=</span> L <span class="sc">%*%</span> <span class="fu">t</span>(L)</span>
+<span id="cb254-12"><a href="ml_3.html#cb254-12" tabindex="-1"></a></span>
+<span id="cb254-13"><a href="ml_3.html#cb254-13" tabindex="-1"></a>    <span class="fu">return</span>(A)</span>
+<span id="cb254-14"><a href="ml_3.html#cb254-14" tabindex="-1"></a>}</span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>分类任务</li>
 </ol>
 <p>这里生成具有3个水平的响应变量和9个预测变量。注意到不同类别之间的样本量存在一定的差异。</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="ml_3.html#cb249-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb249-2"><a href="ml_3.html#cb249-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>), <span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>), <span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>,</span>
-<span id="cb249-3"><a href="ml_3.html#cb249-3" tabindex="-1"></a>    <span class="at">max =</span> <span class="dv">4</span>))</span>
-<span id="cb249-4"><a href="ml_3.html#cb249-4" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">gen_sigma</span>(<span class="dv">9</span>), <span class="fu">gen_sigma</span>(<span class="dv">9</span>), <span class="fu">gen_sigma</span>(<span class="dv">9</span>))</span>
-<span id="cb249-5"><a href="ml_3.html#cb249-5" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">300</span>, <span class="dv">600</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
-<span id="cb249-6"><a href="ml_3.html#cb249-6" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">180</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="ml_3.html#cb255-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb255-2"><a href="ml_3.html#cb255-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>), <span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>), <span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>,</span>
+<span id="cb255-3"><a href="ml_3.html#cb255-3" tabindex="-1"></a>    <span class="at">max =</span> <span class="dv">4</span>))</span>
+<span id="cb255-4"><a href="ml_3.html#cb255-4" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">gen_sigma</span>(<span class="dv">9</span>), <span class="fu">gen_sigma</span>(<span class="dv">9</span>), <span class="fu">gen_sigma</span>(<span class="dv">9</span>))</span>
+<span id="cb255-5"><a href="ml_3.html#cb255-5" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">300</span>, <span class="dv">600</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb255-6"><a href="ml_3.html#cb255-6" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">180</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span></code></pre></div>
 <p>接着运行模型。</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="ml_3.html#cb250-1" tabindex="-1"></a>tree_class <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">importance =</span> T)</span>
-<span id="cb250-2"><a href="ml_3.html#cb250-2" tabindex="-1"></a><span class="fu">print</span>(tree_class)</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="ml_3.html#cb256-1" tabindex="-1"></a>tree_class <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">importance =</span> T)</span>
+<span id="cb256-2"><a href="ml_3.html#cb256-2" tabindex="-1"></a><span class="fu">print</span>(tree_class)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ##  randomForest(x = df_train[, -10], y = df_train$category, importance = T) 
@@ -971,11 +972,11 @@ div.csl-indent {
 ## C  0  17 583  0.02833333</code></pre>
 <p>可以看到，袋外数据的分类错误率为16.2%。其中A类的分类错误率高达66%，这可能和训练集中的类别比例有关。</p>
 <p>进一步地，绘制出分类错误率随决策树增加的变化趋势，可以更清晰地看到分类错误率的收敛情况。</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="ml_3.html#cb252-1" tabindex="-1"></a><span class="fu">plot</span>(tree_class, <span class="at">col=</span><span class="fu">c</span>(<span class="st">&#39;black&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;brown&#39;</span>), </span>
-<span id="cb252-2"><a href="ml_3.html#cb252-2" tabindex="-1"></a>    <span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">&#39;OOB err.rate&#39;</span>)</span>
-<span id="cb252-3"><a href="ml_3.html#cb252-3" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="at">legend=</span><span class="fu">colnames</span>(tree_class<span class="sc">$</span>err.rate), </span>
-<span id="cb252-4"><a href="ml_3.html#cb252-4" tabindex="-1"></a>      <span class="at">col=</span><span class="fu">c</span>(<span class="st">&#39;black&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;brown&#39;</span>),</span>
-<span id="cb252-5"><a href="ml_3.html#cb252-5" tabindex="-1"></a>      <span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="ml_3.html#cb258-1" tabindex="-1"></a><span class="fu">plot</span>(tree_class, <span class="at">col=</span><span class="fu">c</span>(<span class="st">&#39;black&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;brown&#39;</span>), </span>
+<span id="cb258-2"><a href="ml_3.html#cb258-2" tabindex="-1"></a>    <span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">&#39;OOB err.rate&#39;</span>)</span>
+<span id="cb258-3"><a href="ml_3.html#cb258-3" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="at">legend=</span><span class="fu">colnames</span>(tree_class<span class="sc">$</span>err.rate), </span>
+<span id="cb258-4"><a href="ml_3.html#cb258-4" tabindex="-1"></a>      <span class="at">col=</span><span class="fu">c</span>(<span class="st">&#39;black&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;brown&#39;</span>),</span>
+<span id="cb258-5"><a href="ml_3.html#cb258-5" tabindex="-1"></a>      <span class="at">lty=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree-p1"></span>
 <img src="2-machine_learning_files/figure-html/tree-p1-1.png" alt="袋外数据的分类错误率" width="672" />
 <p class="caption">
@@ -983,7 +984,7 @@ div.csl-indent {
 </p>
 </div>
 <p>再来看看不同特征的重要程度。对于一棵树，在随机打乱某个特征的值的顺序之后，可以作差得到前后预测精度的下降情况，对于所有树取平均即可得到平均下降精度(MDA)。显然，如果MDA越大，说明该特征就越重要。同理，平均下降基尼系数(MDI)通过计算每个特征在所有树上节点分裂时导致的基尼系数平均下降量来评估特征的重要性。基尼系数反映了不纯度，下降得越多说明结点越容易从“不纯”走向了“纯”，意味着该特征在区分不同类别时能够较为显著地发挥作用。由图可知，两种评价准则得到的结果较为一致。</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="ml_3.html#cb253-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(tree_class)</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="ml_3.html#cb259-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(tree_class)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree-p2"></span>
 <img src="2-machine_learning_files/figure-html/tree-p2-1.png" alt="分类_重要性度量" width="672" />
 <p class="caption">
@@ -992,9 +993,9 @@ div.csl-indent {
 </div>
 <p>下面关注如何缓解类不平衡问题及如何选取最优参数<code>mtry</code>。</p>
 <p>注意到训练集中类别的比例为1:3:6，存在一定程度的类不平衡问题。对此，在运行随机森林模型时可以设置<code>classwt</code>参数来设定各个类别的先验概率。</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="ml_3.html#cb254-1" tabindex="-1"></a>tree_class_prior <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">importance =</span> T,</span>
-<span id="cb254-2"><a href="ml_3.html#cb254-2" tabindex="-1"></a>    <span class="at">proximity =</span> T, <span class="at">classwt =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span>))</span>
-<span id="cb254-3"><a href="ml_3.html#cb254-3" tabindex="-1"></a><span class="fu">print</span>(tree_class_prior)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="ml_3.html#cb260-1" tabindex="-1"></a>tree_class_prior <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">importance =</span> T,</span>
+<span id="cb260-2"><a href="ml_3.html#cb260-2" tabindex="-1"></a>    <span class="at">proximity =</span> T, <span class="at">classwt =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span>))</span>
+<span id="cb260-3"><a href="ml_3.html#cb260-3" tabindex="-1"></a><span class="fu">print</span>(tree_class_prior)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ##  randomForest(x = df_train[, -10], y = df_train$category, classwt = c(1,      3, 6), importance = T, proximity = T) 
@@ -1009,13 +1010,13 @@ div.csl-indent {
 ## B  5 228  67        0.24
 ## C  0  18 582        0.03</code></pre>
 <p>而对于参数<code>mtry</code>的选取，除了可以使用<code>randomForest</code>包自带的<code>tunetree()</code>函数进行调参，还可以自己写个循环，直接根据测试集来选取最优参数。</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="ml_3.html#cb256-1" tabindex="-1"></a>err.rate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb256-2"><a href="ml_3.html#cb256-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
-<span id="cb256-3"><a href="ml_3.html#cb256-3" tabindex="-1"></a>    tree <span class="ot">=</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">mtry =</span> i)</span>
-<span id="cb256-4"><a href="ml_3.html#cb256-4" tabindex="-1"></a>    fit_test <span class="ot">=</span> <span class="fu">predict</span>(tree, df_test[, <span class="sc">-</span><span class="dv">10</span>])</span>
-<span id="cb256-5"><a href="ml_3.html#cb256-5" tabindex="-1"></a>    err.rate[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(fit_test <span class="sc">!=</span> df_test<span class="sc">$</span>category)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
-<span id="cb256-6"><a href="ml_3.html#cb256-6" tabindex="-1"></a>}</span>
-<span id="cb256-7"><a href="ml_3.html#cb256-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, err.rate, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test err.rate&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="ml_3.html#cb262-1" tabindex="-1"></a>err.rate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb262-2"><a href="ml_3.html#cb262-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb262-3"><a href="ml_3.html#cb262-3" tabindex="-1"></a>    tree <span class="ot">=</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="sc">-</span><span class="dv">10</span>], <span class="at">y =</span> df_train<span class="sc">$</span>category, <span class="at">mtry =</span> i)</span>
+<span id="cb262-4"><a href="ml_3.html#cb262-4" tabindex="-1"></a>    fit_test <span class="ot">=</span> <span class="fu">predict</span>(tree, df_test[, <span class="sc">-</span><span class="dv">10</span>])</span>
+<span id="cb262-5"><a href="ml_3.html#cb262-5" tabindex="-1"></a>    err.rate[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(fit_test <span class="sc">!=</span> df_test<span class="sc">$</span>category)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
+<span id="cb262-6"><a href="ml_3.html#cb262-6" tabindex="-1"></a>}</span>
+<span id="cb262-7"><a href="ml_3.html#cb262-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, err.rate, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test err.rate&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree-p3"></span>
 <img src="2-machine_learning_files/figure-html/tree-p3-1.png" alt="分类_mtry调优" width="672" />
 <p class="caption">
@@ -1027,23 +1028,23 @@ div.csl-indent {
 <li>回归任务</li>
 </ol>
 <p>这里首先生成自变量数据，然后在自变量的线性组合的基础上添加噪声，得到因变量数据。</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="ml_3.html#cb257-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
-<span id="cb257-2"><a href="ml_3.html#cb257-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>))</span>
-<span id="cb257-3"><a href="ml_3.html#cb257-3" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">gen_sigma</span>(<span class="dv">9</span>))</span>
-<span id="cb257-4"><a href="ml_3.html#cb257-4" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">1000</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
-<span id="cb257-5"><a href="ml_3.html#cb257-5" tabindex="-1"></a>df_train<span class="sc">$</span>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb257-6"><a href="ml_3.html#cb257-6" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> df_train <span class="sc">%&gt;%</span></span>
-<span id="cb257-7"><a href="ml_3.html#cb257-7" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> V1 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> V4 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V5 <span class="sc">+</span> V6 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> V7 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V8 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span></span>
-<span id="cb257-8"><a href="ml_3.html#cb257-8" tabindex="-1"></a>        V9 <span class="sc">+</span> epsilon)</span>
-<span id="cb257-9"><a href="ml_3.html#cb257-9" tabindex="-1"></a></span>
-<span id="cb257-10"><a href="ml_3.html#cb257-10" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">100</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
-<span id="cb257-11"><a href="ml_3.html#cb257-11" tabindex="-1"></a>df_test<span class="sc">$</span>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb257-12"><a href="ml_3.html#cb257-12" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> df_test <span class="sc">%&gt;%</span></span>
-<span id="cb257-13"><a href="ml_3.html#cb257-13" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> V1 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> V4 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V5 <span class="sc">+</span> V6 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> V7 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V8 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span></span>
-<span id="cb257-14"><a href="ml_3.html#cb257-14" tabindex="-1"></a>        V9 <span class="sc">+</span> epsilon)</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="ml_3.html#cb263-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb263-2"><a href="ml_3.html#cb263-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">runif</span>(<span class="dv">9</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">4</span>))</span>
+<span id="cb263-3"><a href="ml_3.html#cb263-3" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">gen_sigma</span>(<span class="dv">9</span>))</span>
+<span id="cb263-4"><a href="ml_3.html#cb263-4" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">1000</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb263-5"><a href="ml_3.html#cb263-5" tabindex="-1"></a>df_train<span class="sc">$</span>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb263-6"><a href="ml_3.html#cb263-6" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> df_train <span class="sc">%&gt;%</span></span>
+<span id="cb263-7"><a href="ml_3.html#cb263-7" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> V1 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> V4 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V5 <span class="sc">+</span> V6 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> V7 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V8 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span></span>
+<span id="cb263-8"><a href="ml_3.html#cb263-8" tabindex="-1"></a>        V9 <span class="sc">+</span> epsilon)</span>
+<span id="cb263-9"><a href="ml_3.html#cb263-9" tabindex="-1"></a></span>
+<span id="cb263-10"><a href="ml_3.html#cb263-10" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">gen_data</span>(<span class="at">level =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fu">c</span>(<span class="dv">100</span>), <span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb263-11"><a href="ml_3.html#cb263-11" tabindex="-1"></a>df_test<span class="sc">$</span>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb263-12"><a href="ml_3.html#cb263-12" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> df_test <span class="sc">%&gt;%</span></span>
+<span id="cb263-13"><a href="ml_3.html#cb263-13" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> V1 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> V4 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V5 <span class="sc">+</span> V6 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> V7 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> V8 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span></span>
+<span id="cb263-14"><a href="ml_3.html#cb263-14" tabindex="-1"></a>        V9 <span class="sc">+</span> epsilon)</span></code></pre></div>
 <p>接着直接运行模型。</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="ml_3.html#cb258-1" tabindex="-1"></a>tree_reg <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">y =</span> df_train<span class="sc">$</span>y, <span class="at">importance =</span> T)</span>
-<span id="cb258-2"><a href="ml_3.html#cb258-2" tabindex="-1"></a><span class="fu">print</span>(tree_reg)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="ml_3.html#cb264-1" tabindex="-1"></a>tree_reg <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">y =</span> df_train<span class="sc">$</span>y, <span class="at">importance =</span> T)</span>
+<span id="cb264-2"><a href="ml_3.html#cb264-2" tabindex="-1"></a><span class="fu">print</span>(tree_reg)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ##  randomForest(x = df_train[, 1:9], y = df_train$y, importance = T) 
@@ -1055,7 +1056,7 @@ div.csl-indent {
 ##                     % Var explained: 98.91</code></pre>
 <p>从结果中可以看到，均方误差为46.7551872，自变量能解释的变异程度为98.91%。</p>
 <p>进一步地，下面给出了模型的袋外数据MSE。</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="ml_3.html#cb260-1" tabindex="-1"></a><span class="fu">plot</span>(tree_reg, <span class="at">main=</span><span class="st">&#39;OOB mse&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="ml_3.html#cb266-1" tabindex="-1"></a><span class="fu">plot</span>(tree_reg, <span class="at">main=</span><span class="st">&#39;OOB mse&#39;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree-p4"></span>
 <img src="2-machine_learning_files/figure-html/tree-p4-1.png" alt="袋外数据MSE" width="672" />
 <p class="caption">
@@ -1063,7 +1064,7 @@ div.csl-indent {
 </p>
 </div>
 <p>再来看看特征的重要性度量。其中<code>%IncMSE</code>表示重排某个特征前后袋外数据MSE的上升百分比，上升的幅度越大，说明该特征对模型更加重要。<code>IncNodePurity</code>则表示结点分列时残差平方和的下降情况。</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="ml_3.html#cb261-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(tree_reg)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="ml_3.html#cb267-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(tree_reg)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree-p5"></span>
 <img src="2-machine_learning_files/figure-html/tree-p5-1.png" alt="回归_重要性度量" width="672" />
 <p class="caption">
@@ -1071,13 +1072,13 @@ div.csl-indent {
 </p>
 </div>
 <p>最后，给模型参数<code>mtry</code>调调优。</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="ml_3.html#cb262-1" tabindex="-1"></a>mse <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb262-2"><a href="ml_3.html#cb262-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
-<span id="cb262-3"><a href="ml_3.html#cb262-3" tabindex="-1"></a>    tree <span class="ot">=</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">y =</span> df_train<span class="sc">$</span>y, <span class="at">mtry =</span> i)</span>
-<span id="cb262-4"><a href="ml_3.html#cb262-4" tabindex="-1"></a>    fit_test <span class="ot">=</span> <span class="fu">predict</span>(tree, df_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>])</span>
-<span id="cb262-5"><a href="ml_3.html#cb262-5" tabindex="-1"></a>    mse[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>((fit_test <span class="sc">-</span> df_test<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
-<span id="cb262-6"><a href="ml_3.html#cb262-6" tabindex="-1"></a>}</span>
-<span id="cb262-7"><a href="ml_3.html#cb262-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test MSE&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="ml_3.html#cb268-1" tabindex="-1"></a>mse <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb268-2"><a href="ml_3.html#cb268-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb268-3"><a href="ml_3.html#cb268-3" tabindex="-1"></a>    tree <span class="ot">=</span> <span class="fu">randomForest</span>(<span class="at">x =</span> df_train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">y =</span> df_train<span class="sc">$</span>y, <span class="at">mtry =</span> i)</span>
+<span id="cb268-4"><a href="ml_3.html#cb268-4" tabindex="-1"></a>    fit_test <span class="ot">=</span> <span class="fu">predict</span>(tree, df_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>])</span>
+<span id="cb268-5"><a href="ml_3.html#cb268-5" tabindex="-1"></a>    mse[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>((fit_test <span class="sc">-</span> df_test<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">nrow</span>(df_test)</span>
+<span id="cb268-6"><a href="ml_3.html#cb268-6" tabindex="-1"></a>}</span>
+<span id="cb268-7"><a href="ml_3.html#cb268-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;mtry&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;test MSE&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree-p6"></span>
 <img src="2-machine_learning_files/figure-html/tree-p6-1.png" alt="回归_mtry调优" width="672" />
 <p class="caption">

@@ -51,10 +51,12 @@
 在大样本条件下（大数定律与中心极限定理），有
 
 $$
-n = \frac{(Z_{1-\alpha /2} + Z_{1-\beta})^2*\sigma^2}{\delta^2}
+n = \frac{2(Z_{1-\alpha /2} + Z_{1-\beta})^2*\sigma^2}{\delta^2}
 $$
 
-> $\mu_1 + Z_{1-\alpha /2} = \mu_2-Z_{1-\beta}$
+> $H_0: \bar X_2 - \bar X_1 \sim N(0, \frac{2\sigma^2}{n})$
+> 
+> $H_1: \bar X_2 - \bar X_1 \sim N(\delta, \frac{2\sigma^2}{n})$
 > 
 > $\sigma^2$需考虑方差已知或未知，未知时又是否相等的情形，必要时可用方差齐性检验，如levene检验
 >

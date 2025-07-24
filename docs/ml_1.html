@@ -477,6 +477,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>8.1.1</b> 偏差-方差权衡</a></li>
 <li class="chapter" data-level="8.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 评价指标</a></li>
 <li class="chapter" data-level="8.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 特征工程</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ml_1.html"><a href="ml_1.html#ml_1_4"><i class="fa fa-check"></i><b>8.1.4</b> pandas与sklearn</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>8.2</b> 决策树</a>
 <ul>
@@ -862,6 +863,135 @@ BIC = -2L(\hat \theta)_{max}+ k\ln(n)
 <li><p>SHAP值</p></li>
 <li><p>降维方法：PCA、t-SNE、UMAP、自编码器</p></li>
 </ul>
+</div>
+</div>
+<div id="ml_1_4" class="section level3 hasAnchor" number="8.1.4">
+<h3><span class="header-section-number">8.1.4</span> pandas与sklearn<a href="ml_1.html#ml_1_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="ml_1_4_1" class="section level4 hasAnchor" number="8.1.4.1">
+<h4><span class="header-section-number">8.1.4.1</span> 导入数据集<a href="ml_1.html#ml_1_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<div class="sourceCode" id="cb246"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb246-1"><a href="ml_1.html#cb246-1" tabindex="-1"></a>import pandas as pd</span>
+<span id="cb246-2"><a href="ml_1.html#cb246-2" tabindex="-1"></a></span>
+<span id="cb246-3"><a href="ml_1.html#cb246-3" tabindex="-1"></a># 读取CSV文件</span>
+<span id="cb246-4"><a href="ml_1.html#cb246-4" tabindex="-1"></a>df = pd.read_csv(path)</span>
+<span id="cb246-5"><a href="ml_1.html#cb246-5" tabindex="-1"></a></span>
+<span id="cb246-6"><a href="ml_1.html#cb246-6" tabindex="-1"></a># 读取Excel文件</span>
+<span id="cb246-7"><a href="ml_1.html#cb246-7" tabindex="-1"></a>df = pd.read_excel(path)</span>
+<span id="cb246-8"><a href="ml_1.html#cb246-8" tabindex="-1"></a># 读取Excel文件中的多个sheet，存储为字典</span>
+<span id="cb246-9"><a href="ml_1.html#cb246-9" tabindex="-1"></a>df = pd.read_excel(path, sheet_name=[&#39;Sheet1&#39;, &#39;Sheet2&#39;])</span>
+<span id="cb246-10"><a href="ml_1.html#cb246-10" tabindex="-1"></a># 读取Excel文件中所有sheet，存储为字典</span>
+<span id="cb246-11"><a href="ml_1.html#cb246-11" tabindex="-1"></a>df = pd.read_excel(path, sheet_name=None)</span></code></pre></div>
+</div>
+<div id="ml_1_4_2" class="section level4 hasAnchor" number="8.1.4.2">
+<h4><span class="header-section-number">8.1.4.2</span> 数据预处理<a href="ml_1.html#ml_1_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<ol style="list-style-type: decimal">
+<li>缺失值处理</li>
+</ol>
+<div class="sourceCode" id="cb247"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb247-1"><a href="ml_1.html#cb247-1" tabindex="-1"></a># 各列缺失值数量</span>
+<span id="cb247-2"><a href="ml_1.html#cb247-2" tabindex="-1"></a>df.count()</span>
+<span id="cb247-3"><a href="ml_1.html#cb247-3" tabindex="-1"></a>df.isnull().sum()</span>
+<span id="cb247-4"><a href="ml_1.html#cb247-4" tabindex="-1"></a></span>
+<span id="cb247-5"><a href="ml_1.html#cb247-5" tabindex="-1"></a># 各列缺失值比例</span>
+<span id="cb247-6"><a href="ml_1.html#cb247-6" tabindex="-1"></a>df.isnull().mean() * 100</span>
+<span id="cb247-7"><a href="ml_1.html#cb247-7" tabindex="-1"></a></span>
+<span id="cb247-8"><a href="ml_1.html#cb247-8" tabindex="-1"></a># 缺失值可视化</span>
+<span id="cb247-9"><a href="ml_1.html#cb247-9" tabindex="-1"></a>import missingno as msno</span>
+<span id="cb247-10"><a href="ml_1.html#cb247-10" tabindex="-1"></a>import matplotlib.pyplot as plt</span>
+<span id="cb247-11"><a href="ml_1.html#cb247-11" tabindex="-1"></a>msno.matrix(df) # 矩阵图：直观展示缺失值在数据中的分布</span>
+<span id="cb247-12"><a href="ml_1.html#cb247-12" tabindex="-1"></a>plt.show()</span>
+<span id="cb247-13"><a href="ml_1.html#cb247-13" tabindex="-1"></a></span>
+<span id="cb247-14"><a href="ml_1.html#cb247-14" tabindex="-1"></a>msno.bar(df)    # 条形图：按列展示完整数据比例</span>
+<span id="cb247-15"><a href="ml_1.html#cb247-15" tabindex="-1"></a>plt.show()</span>
+<span id="cb247-16"><a href="ml_1.html#cb247-16" tabindex="-1"></a></span>
+<span id="cb247-17"><a href="ml_1.html#cb247-17" tabindex="-1"></a># 删除缺失值</span>
+<span id="cb247-18"><a href="ml_1.html#cb247-18" tabindex="-1"></a>df = df.dropna()                   # 删除包含任何缺失值的行</span>
+<span id="cb247-19"><a href="ml_1.html#cb247-19" tabindex="-1"></a>df = df.dropna(axis=1, how=&#39;all&#39;)  # 删除全是缺失值的列</span>
+<span id="cb247-20"><a href="ml_1.html#cb247-20" tabindex="-1"></a></span>
+<span id="cb247-21"><a href="ml_1.html#cb247-21" tabindex="-1"></a># 填充缺失值</span>
+<span id="cb247-22"><a href="ml_1.html#cb247-22" tabindex="-1"></a>df_filled = df.fillna(0)                    # 用固定值填充</span>
+<span id="cb247-23"><a href="ml_1.html#cb247-23" tabindex="-1"></a>df[&#39;A&#39;] = df[&#39;A&#39;].fillna(df[&#39;A&#39;].mean())    # 均值</span>
+<span id="cb247-24"><a href="ml_1.html#cb247-24" tabindex="-1"></a>df[&#39;B&#39;] = df[&#39;B&#39;].fillna(df[&#39;B&#39;].median())  # 中位数</span>
+<span id="cb247-25"><a href="ml_1.html#cb247-25" tabindex="-1"></a>df = df.ffill()                             # 前向填充</span>
+<span id="cb247-26"><a href="ml_1.html#cb247-26" tabindex="-1"></a>df = df.bfill()                             # 后向填充</span>
+<span id="cb247-27"><a href="ml_1.html#cb247-27" tabindex="-1"></a>df = df.interpolate()                       # 用插值法填充（更平滑的填充方式）</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>异常值处理</li>
+</ol>
+<div class="sourceCode" id="cb248"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb248-1"><a href="ml_1.html#cb248-1" tabindex="-1"></a># Z-score</span>
+<span id="cb248-2"><a href="ml_1.html#cb248-2" tabindex="-1"></a>from scipy import stats</span>
+<span id="cb248-3"><a href="ml_1.html#cb248-3" tabindex="-1"></a>z_scores = np.abs(stats.zscore(df[&#39;A&#39;]))</span>
+<span id="cb248-4"><a href="ml_1.html#cb248-4" tabindex="-1"></a>outliers = df[z_scores &gt;= 3]</span>
+<span id="cb248-5"><a href="ml_1.html#cb248-5" tabindex="-1"></a></span>
+<span id="cb248-6"><a href="ml_1.html#cb248-6" tabindex="-1"></a># 四分位距</span>
+<span id="cb248-7"><a href="ml_1.html#cb248-7" tabindex="-1"></a>Q1 = df[&#39;A&#39;].quantile(0.25)</span>
+<span id="cb248-8"><a href="ml_1.html#cb248-8" tabindex="-1"></a>Q3 = df[&#39;A&#39;].quantile(0.75)</span>
+<span id="cb248-9"><a href="ml_1.html#cb248-9" tabindex="-1"></a>IQR = Q3 - Q1</span>
+<span id="cb248-10"><a href="ml_1.html#cb248-10" tabindex="-1"></a>lower_bound = Q1 - 1.5 * IQR</span>
+<span id="cb248-11"><a href="ml_1.html#cb248-11" tabindex="-1"></a>upper_bound = Q3 + 1.5 * IQR</span>
+<span id="cb248-12"><a href="ml_1.html#cb248-12" tabindex="-1"></a>outliers = df[(df[&#39;A&#39;] &lt; lower_bound) | (df[&#39;A&#39;] &gt; upper_bound)]</span>
+<span id="cb248-13"><a href="ml_1.html#cb248-13" tabindex="-1"></a></span>
+<span id="cb248-14"><a href="ml_1.html#cb248-14" tabindex="-1"></a># 异常值处理</span>
+<span id="cb248-15"><a href="ml_1.html#cb248-15" tabindex="-1"></a>df = df[z_scores &lt; 3]   # 三倍标准差内</span>
+<span id="cb248-16"><a href="ml_1.html#cb248-16" tabindex="-1"></a>df[&#39;A&#39;] = df[&#39;A&#39;].clip(lower=lower_bound, upper=upper_bound)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>标准化</li>
+</ol>
+<div class="sourceCode" id="cb249"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb249-1"><a href="ml_1.html#cb249-1" tabindex="-1"></a>from sklearn.preprocessing import StandardScaler</span>
+<span id="cb249-2"><a href="ml_1.html#cb249-2" tabindex="-1"></a># from sklearn.preprocessing import MinMaxScaler</span>
+<span id="cb249-3"><a href="ml_1.html#cb249-3" tabindex="-1"></a></span>
+<span id="cb249-4"><a href="ml_1.html#cb249-4" tabindex="-1"></a># 选取数值列</span>
+<span id="cb249-5"><a href="ml_1.html#cb249-5" tabindex="-1"></a>numeric_cols = df.select_dtypes(include=[&#39;number&#39;]).columns</span>
+<span id="cb249-6"><a href="ml_1.html#cb249-6" tabindex="-1"></a># 标准化并替换</span>
+<span id="cb249-7"><a href="ml_1.html#cb249-7" tabindex="-1"></a>scaler = StandardScaler()    # scaler = MinMaxScaler()</span>
+<span id="cb249-8"><a href="ml_1.html#cb249-8" tabindex="-1"></a>df[numeric_cols] = scaler.fit_transform(df[numeric_cols])</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>编码</li>
+</ol>
+<div class="sourceCode" id="cb250"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb250-1"><a href="ml_1.html#cb250-1" tabindex="-1"></a># 独热编码</span>
+<span id="cb250-2"><a href="ml_1.html#cb250-2" tabindex="-1"></a>df = pd.get_dummies(df)</span>
+<span id="cb250-3"><a href="ml_1.html#cb250-3" tabindex="-1"></a># 也可考虑from sklearn.preprocessing import OneHotEncoder</span>
+<span id="cb250-4"><a href="ml_1.html#cb250-4" tabindex="-1"></a></span>
+<span id="cb250-5"><a href="ml_1.html#cb250-5" tabindex="-1"></a># 哑变量编码</span>
+<span id="cb250-6"><a href="ml_1.html#cb250-6" tabindex="-1"></a>df = pd.get_dummies(df, drop_first=True)</span>
+<span id="cb250-7"><a href="ml_1.html#cb250-7" tabindex="-1"></a></span>
+<span id="cb250-8"><a href="ml_1.html#cb250-8" tabindex="-1"></a># 频率编码</span>
+<span id="cb250-9"><a href="ml_1.html#cb250-9" tabindex="-1"></a>frequency = df[&#39;A&#39;].value_counts(normalize=True)</span>
+<span id="cb250-10"><a href="ml_1.html#cb250-10" tabindex="-1"></a>df[&#39;A&#39;] = df[&#39;A&#39;].map(frequency)</span>
+<span id="cb250-11"><a href="ml_1.html#cb250-11" tabindex="-1"></a></span>
+<span id="cb250-12"><a href="ml_1.html#cb250-12" tabindex="-1"></a># 有序变量编码</span>
+<span id="cb250-13"><a href="ml_1.html#cb250-13" tabindex="-1"></a>df[&#39;评分&#39;] = pd.Categorical(</span>
+<span id="cb250-14"><a href="ml_1.html#cb250-14" tabindex="-1"></a>    df[&#39;评分&#39;], </span>
+<span id="cb250-15"><a href="ml_1.html#cb250-15" tabindex="-1"></a>    categories=[&#39;低&#39;, &#39;中&#39;, &#39;高&#39;, &#39;极高&#39;], </span>
+<span id="cb250-16"><a href="ml_1.html#cb250-16" tabindex="-1"></a>    ordered=True</span>
+<span id="cb250-17"><a href="ml_1.html#cb250-17" tabindex="-1"></a>)</span>
+<span id="cb250-18"><a href="ml_1.html#cb250-18" tabindex="-1"></a>df[&#39;评分编码&#39;] = df[&#39;评分&#39;].cat.codes</span>
+<span id="cb250-19"><a href="ml_1.html#cb250-19" tabindex="-1"></a></span>
+<span id="cb250-20"><a href="ml_1.html#cb250-20" tabindex="-1"></a># 自定义编码</span>
+<span id="cb250-21"><a href="ml_1.html#cb250-21" tabindex="-1"></a>edu_map = {&#39;小学&#39;: 1, &#39;中学&#39;: 2, &#39;大学&#39;: 3, &#39;硕士&#39;: 4, &#39;博士&#39;: 5}</span>
+<span id="cb250-22"><a href="ml_1.html#cb250-22" tabindex="-1"></a>df[&#39;edu&#39;] = df[&#39;edu&#39;].map(edu_map)</span></code></pre></div>
+</div>
+<div id="ml_1_4_4" class="section level4 hasAnchor" number="8.1.4.3">
+<h4><span class="header-section-number">8.1.4.3</span> 分割数据集<a href="ml_1.html#ml_1_4_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<div class="sourceCode" id="cb251"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb251-1"><a href="ml_1.html#cb251-1" tabindex="-1"></a>from sklearn.model_selection import train_test_split</span>
+<span id="cb251-2"><a href="ml_1.html#cb251-2" tabindex="-1"></a></span>
+<span id="cb251-3"><a href="ml_1.html#cb251-3" tabindex="-1"></a># 训练集和测试集</span>
+<span id="cb251-4"><a href="ml_1.html#cb251-4" tabindex="-1"></a>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span>
+<span id="cb251-5"><a href="ml_1.html#cb251-5" tabindex="-1"></a># 训练集和验证集</span>
+<span id="cb251-6"><a href="ml_1.html#cb251-6" tabindex="-1"></a>X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.25, random_state=42)</span>
+<span id="cb251-7"><a href="ml_1.html#cb251-7" tabindex="-1"></a></span>
+<span id="cb251-8"><a href="ml_1.html#cb251-8" tabindex="-1"></a># 分层分割</span>
+<span id="cb251-9"><a href="ml_1.html#cb251-9" tabindex="-1"></a>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify= categorical_var)</span>
+<span id="cb251-10"><a href="ml_1.html#cb251-10" tabindex="-1"></a></span>
+<span id="cb251-11"><a href="ml_1.html#cb251-11" tabindex="-1"></a># 交叉验证</span>
+<span id="cb251-12"><a href="ml_1.html#cb251-12" tabindex="-1"></a>from sklearn.model_selection import KFold</span>
+<span id="cb251-13"><a href="ml_1.html#cb251-13" tabindex="-1"></a>kf = KFold(n_splits=10, shuffle=True, random_state=42)</span>
+<span id="cb251-14"><a href="ml_1.html#cb251-14" tabindex="-1"></a>for train_index, test_index in kf.split(X, y):</span>
+<span id="cb251-15"><a href="ml_1.html#cb251-15" tabindex="-1"></a>    # 获取分割后的训练集和测试集</span>
+<span id="cb251-16"><a href="ml_1.html#cb251-16" tabindex="-1"></a>    X_train, X_test = X[train_index], X[test_index]</span>
+<span id="cb251-17"><a href="ml_1.html#cb251-17" tabindex="-1"></a>    y_train, y_test = y[train_index], y[test_index]</span>
+<span id="cb251-18"><a href="ml_1.html#cb251-18" tabindex="-1"></a>    ...</span>
+<span id="cb251-19"><a href="ml_1.html#cb251-19" tabindex="-1"></a># 也可使用cross_val_score及cross_validate来简化交叉验证流程</span>
+<span id="cb251-20"><a href="ml_1.html#cb251-20" tabindex="-1"></a>cross_val_score(model, X, y, cv=5, scoring=&#39;accuracy&#39;)   # 单个评估指标</span>
+<span id="cb251-21"><a href="ml_1.html#cb251-21" tabindex="-1"></a>cross_validate(model, X, y, cv=5, scoring=[&#39;accuracy&#39;, &#39;f1_macro&#39;], return_train_score=True) # 多个评估指标</span></code></pre></div>
 </div>
 </div>
 </div>

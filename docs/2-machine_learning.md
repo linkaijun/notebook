@@ -174,6 +174,153 @@ $$
 
 - 降维方法：PCA、t-SNE、UMAP、自编码器
 
+### pandas与sklearn {#ml_1_4}
+
+#### 导入数据集 {#ml_1_4_1}
+
+
+``` default
+import pandas as pd
+
+# 读取CSV文件
+df = pd.read_csv(path)
+
+# 读取Excel文件
+df = pd.read_excel(path)
+# 读取Excel文件中的多个sheet，存储为字典
+df = pd.read_excel(path, sheet_name=['Sheet1', 'Sheet2'])
+# 读取Excel文件中所有sheet，存储为字典
+df = pd.read_excel(path, sheet_name=None)
+```
+
+#### 数据预处理 {#ml_1_4_2}
+
+1. 缺失值处理
+
+
+``` default
+# 各列缺失值数量
+df.count()
+df.isnull().sum()
+
+# 各列缺失值比例
+df.isnull().mean() * 100
+
+# 缺失值可视化
+import missingno as msno
+import matplotlib.pyplot as plt
+msno.matrix(df) # 矩阵图：直观展示缺失值在数据中的分布
+plt.show()
+
+msno.bar(df)    # 条形图：按列展示完整数据比例
+plt.show()
+
+# 删除缺失值
+df = df.dropna()                   # 删除包含任何缺失值的行
+df = df.dropna(axis=1, how='all')  # 删除全是缺失值的列
+
+# 填充缺失值
+df_filled = df.fillna(0)                    # 用固定值填充
+df['A'] = df['A'].fillna(df['A'].mean())    # 均值
+df['B'] = df['B'].fillna(df['B'].median())  # 中位数
+df = df.ffill()                             # 前向填充
+df = df.bfill()                             # 后向填充
+df = df.interpolate()                       # 用插值法填充（更平滑的填充方式）
+```
+
+2. 异常值处理
+
+
+``` default
+# Z-score
+from scipy import stats
+z_scores = np.abs(stats.zscore(df['A']))
+outliers = df[z_scores >= 3]
+
+# 四分位距
+Q1 = df['A'].quantile(0.25)
+Q3 = df['A'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+outliers = df[(df['A'] < lower_bound) | (df['A'] > upper_bound)]
+
+# 异常值处理
+df = df[z_scores < 3]   # 三倍标准差内
+df['A'] = df['A'].clip(lower=lower_bound, upper=upper_bound)
+```
+
+3. 标准化
+
+
+``` default
+from sklearn.preprocessing import StandardScaler
+# from sklearn.preprocessing import MinMaxScaler
+
+# 选取数值列
+numeric_cols = df.select_dtypes(include=['number']).columns
+# 标准化并替换
+scaler = StandardScaler()    # scaler = MinMaxScaler()
+df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
+```
+
+4. 编码
+
+
+``` default
+# 独热编码
+df = pd.get_dummies(df)
+# 也可考虑from sklearn.preprocessing import OneHotEncoder
+
+# 哑变量编码
+df = pd.get_dummies(df, drop_first=True)
+
+# 频率编码
+frequency = df['A'].value_counts(normalize=True)
+df['A'] = df['A'].map(frequency)
+
+# 有序变量编码
+df['评分'] = pd.Categorical(
+    df['评分'], 
+    categories=['低', '中', '高', '极高'], 
+    ordered=True
+)
+df['评分编码'] = df['评分'].cat.codes
+
+# 自定义编码
+edu_map = {'小学': 1, '中学': 2, '大学': 3, '硕士': 4, '博士': 5}
+df['edu'] = df['edu'].map(edu_map)
+```
+
+
+#### 分割数据集 {#ml_1_4_4}
+
+
+``` default
+from sklearn.model_selection import train_test_split
+
+# 训练集和测试集
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# 训练集和验证集
+X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.25, random_state=42)
+
+# 分层分割
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify= categorical_var)
+
+# 交叉验证
+from sklearn.model_selection import KFold
+kf = KFold(n_splits=10, shuffle=True, random_state=42)
+for train_index, test_index in kf.split(X, y):
+    # 获取分割后的训练集和测试集
+    X_train, X_test = X[train_index], X[test_index]
+    y_train, y_test = y[train_index], y[test_index]
+    ...
+# 也可使用cross_val_score及cross_validate来简化交叉验证流程
+cross_val_score(model, X, y, cv=5, scoring='accuracy')   # 单个评估指标
+cross_validate(model, X, y, cv=5, scoring=['accuracy', 'f1_macro'], return_train_score=True) # 多个评估指标
+```
+
+
 ## 决策树 {#ml_2}
 
 决策树(Decision Tree)可用于分类和回归任务。决策树从根结点出发，在一定的判断标准下，决策树在每个内部结点上寻找合适的特征来划分样本，使得划分后的结点之间具有最大的区分度。对内部结点重复上述操作，便可得到多层结点，直至达到各个叶结点（终止结点）。

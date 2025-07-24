@@ -477,6 +477,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>8.1.1</b> 偏差-方差权衡</a></li>
 <li class="chapter" data-level="8.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 评价指标</a></li>
 <li class="chapter" data-level="8.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 特征工程</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ml_1.html"><a href="ml_1.html#ml_1_4"><i class="fa fa-check"></i><b>8.1.4</b> pandas与sklearn</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>8.2</b> 决策树</a>
 <ul>
@@ -706,47 +707,47 @@ div.csl-indent {
 <h3><span class="header-section-number">11.2.1</span> 线性回归<a href="dl_2.html#dl_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p><code>nn.Linear</code>是线性层，对输入数据进行仿射变换<span class="math inline">\(y=XW^T+b\)</span>，其中<span class="math inline">\(W\)</span>是权重矩阵，<span class="math inline">\(b\)</span>是偏置。</p>
 <p>对于简单的线性回归模型，故只需一层线性层即可。</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb317-1"><a href="dl_2.html#cb317-1" tabindex="-1"></a>import torch</span>
-<span id="cb317-2"><a href="dl_2.html#cb317-2" tabindex="-1"></a>import torch.nn as nn</span>
-<span id="cb317-3"><a href="dl_2.html#cb317-3" tabindex="-1"></a>import torch.optim as optim</span>
-<span id="cb317-4"><a href="dl_2.html#cb317-4" tabindex="-1"></a>from torch.utils.data import TensorDataset, DataLoader</span>
-<span id="cb317-5"><a href="dl_2.html#cb317-5" tabindex="-1"></a></span>
-<span id="cb317-6"><a href="dl_2.html#cb317-6" tabindex="-1"></a>torch.manual_seed(123)   # 设置全局随机数种子</span>
-<span id="cb317-7"><a href="dl_2.html#cb317-7" tabindex="-1"></a></span>
-<span id="cb317-8"><a href="dl_2.html#cb317-8" tabindex="-1"></a>X = torch.randn(100,2)   # 标准正态抽样</span>
-<span id="cb317-9"><a href="dl_2.html#cb317-9" tabindex="-1"></a>beta = torch.rand(2)     # 均匀分布[0,1)抽样</span>
-<span id="cb317-10"><a href="dl_2.html#cb317-10" tabindex="-1"></a>intercept = torch.rand(1)</span>
-<span id="cb317-11"><a href="dl_2.html#cb317-11" tabindex="-1"></a>y = intercept + torch.matmul(X, beta) + torch.randn(100)*0.1</span>
-<span id="cb317-12"><a href="dl_2.html#cb317-12" tabindex="-1"></a>y = y.reshape(-1,1)</span>
-<span id="cb317-13"><a href="dl_2.html#cb317-13" tabindex="-1"></a></span>
-<span id="cb317-14"><a href="dl_2.html#cb317-14" tabindex="-1"></a>dataset = TensorDataset(X,y)</span>
-<span id="cb317-15"><a href="dl_2.html#cb317-15" tabindex="-1"></a>dataloader = DataLoader(dataset, batch_size=10, shuffle=True)</span>
-<span id="cb317-16"><a href="dl_2.html#cb317-16" tabindex="-1"></a></span>
-<span id="cb317-17"><a href="dl_2.html#cb317-17" tabindex="-1"></a># 搭建网络结构</span>
-<span id="cb317-18"><a href="dl_2.html#cb317-18" tabindex="-1"></a>linear_model = nn.Sequential(</span>
-<span id="cb317-19"><a href="dl_2.html#cb317-19" tabindex="-1"></a>    nn.Linear(2,1)</span>
-<span id="cb317-20"><a href="dl_2.html#cb317-20" tabindex="-1"></a>)</span>
-<span id="cb317-21"><a href="dl_2.html#cb317-21" tabindex="-1"></a></span>
-<span id="cb317-22"><a href="dl_2.html#cb317-22" tabindex="-1"></a>criterion = nn.MSELoss()</span>
-<span id="cb317-23"><a href="dl_2.html#cb317-23" tabindex="-1"></a>optimizer = optim.SGD(linear_model.parameters(), lr=0.05)   # lr为学习率</span>
-<span id="cb317-24"><a href="dl_2.html#cb317-24" tabindex="-1"></a></span>
-<span id="cb317-25"><a href="dl_2.html#cb317-25" tabindex="-1"></a>for epoch in range(100):       # 迭代50次</span>
-<span id="cb317-26"><a href="dl_2.html#cb317-26" tabindex="-1"></a>    linear_model.train()       # 训练模式</span>
-<span id="cb317-27"><a href="dl_2.html#cb317-27" tabindex="-1"></a>    for batch_X, batch_y in dataloader:</span>
-<span id="cb317-28"><a href="dl_2.html#cb317-28" tabindex="-1"></a>        y_pred = linear_model(batch_X)     # 前向传播，计算预测值</span>
-<span id="cb317-29"><a href="dl_2.html#cb317-29" tabindex="-1"></a>        loss = criterion(y_pred, batch_y)  # 计算损失</span>
-<span id="cb317-30"><a href="dl_2.html#cb317-30" tabindex="-1"></a>        optimizer.zero_grad()  # 清零梯度</span>
-<span id="cb317-31"><a href="dl_2.html#cb317-31" tabindex="-1"></a>        loss.backward()        # 反向传播，计算梯度</span>
-<span id="cb317-32"><a href="dl_2.html#cb317-32" tabindex="-1"></a>        optimizer.step()       # 更新模型参数</span>
-<span id="cb317-33"><a href="dl_2.html#cb317-33" tabindex="-1"></a>    linear_model.eval()        # 评估模式</span>
-<span id="cb317-34"><a href="dl_2.html#cb317-34" tabindex="-1"></a>    with torch.no_grad():</span>
-<span id="cb317-35"><a href="dl_2.html#cb317-35" tabindex="-1"></a>        epoch_loss = criterion(linear_model(X),y)</span>
-<span id="cb317-36"><a href="dl_2.html#cb317-36" tabindex="-1"></a>        if (epoch + 1) % 10 == 0:</span>
-<span id="cb317-37"><a href="dl_2.html#cb317-37" tabindex="-1"></a>            print(f&#39;Epoch_{epoch + 1}: {epoch_loss.item():.6f}&#39;)</span>
-<span id="cb317-38"><a href="dl_2.html#cb317-38" tabindex="-1"></a></span>
-<span id="cb317-39"><a href="dl_2.html#cb317-39" tabindex="-1"></a>print(linear_model)                  # 查看网络结构</span>
-<span id="cb317-40"><a href="dl_2.html#cb317-40" tabindex="-1"></a>print(linear_model[0].weight.data)   # 查看第0层的权重</span>
-<span id="cb317-41"><a href="dl_2.html#cb317-41" tabindex="-1"></a>print(linear_model[0].bias.data)     # 查看第0层的偏置</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb323-1"><a href="dl_2.html#cb323-1" tabindex="-1"></a>import torch</span>
+<span id="cb323-2"><a href="dl_2.html#cb323-2" tabindex="-1"></a>import torch.nn as nn</span>
+<span id="cb323-3"><a href="dl_2.html#cb323-3" tabindex="-1"></a>import torch.optim as optim</span>
+<span id="cb323-4"><a href="dl_2.html#cb323-4" tabindex="-1"></a>from torch.utils.data import TensorDataset, DataLoader</span>
+<span id="cb323-5"><a href="dl_2.html#cb323-5" tabindex="-1"></a></span>
+<span id="cb323-6"><a href="dl_2.html#cb323-6" tabindex="-1"></a>torch.manual_seed(123)   # 设置全局随机数种子</span>
+<span id="cb323-7"><a href="dl_2.html#cb323-7" tabindex="-1"></a></span>
+<span id="cb323-8"><a href="dl_2.html#cb323-8" tabindex="-1"></a>X = torch.randn(100,2)   # 标准正态抽样</span>
+<span id="cb323-9"><a href="dl_2.html#cb323-9" tabindex="-1"></a>beta = torch.rand(2)     # 均匀分布[0,1)抽样</span>
+<span id="cb323-10"><a href="dl_2.html#cb323-10" tabindex="-1"></a>intercept = torch.rand(1)</span>
+<span id="cb323-11"><a href="dl_2.html#cb323-11" tabindex="-1"></a>y = intercept + torch.matmul(X, beta) + torch.randn(100)*0.1</span>
+<span id="cb323-12"><a href="dl_2.html#cb323-12" tabindex="-1"></a>y = y.reshape(-1,1)</span>
+<span id="cb323-13"><a href="dl_2.html#cb323-13" tabindex="-1"></a></span>
+<span id="cb323-14"><a href="dl_2.html#cb323-14" tabindex="-1"></a>dataset = TensorDataset(X,y)</span>
+<span id="cb323-15"><a href="dl_2.html#cb323-15" tabindex="-1"></a>dataloader = DataLoader(dataset, batch_size=10, shuffle=True)</span>
+<span id="cb323-16"><a href="dl_2.html#cb323-16" tabindex="-1"></a></span>
+<span id="cb323-17"><a href="dl_2.html#cb323-17" tabindex="-1"></a># 搭建网络结构</span>
+<span id="cb323-18"><a href="dl_2.html#cb323-18" tabindex="-1"></a>linear_model = nn.Sequential(</span>
+<span id="cb323-19"><a href="dl_2.html#cb323-19" tabindex="-1"></a>    nn.Linear(2,1)</span>
+<span id="cb323-20"><a href="dl_2.html#cb323-20" tabindex="-1"></a>)</span>
+<span id="cb323-21"><a href="dl_2.html#cb323-21" tabindex="-1"></a></span>
+<span id="cb323-22"><a href="dl_2.html#cb323-22" tabindex="-1"></a>criterion = nn.MSELoss()</span>
+<span id="cb323-23"><a href="dl_2.html#cb323-23" tabindex="-1"></a>optimizer = optim.SGD(linear_model.parameters(), lr=0.05)   # lr为学习率</span>
+<span id="cb323-24"><a href="dl_2.html#cb323-24" tabindex="-1"></a></span>
+<span id="cb323-25"><a href="dl_2.html#cb323-25" tabindex="-1"></a>for epoch in range(100):       # 迭代50次</span>
+<span id="cb323-26"><a href="dl_2.html#cb323-26" tabindex="-1"></a>    linear_model.train()       # 训练模式</span>
+<span id="cb323-27"><a href="dl_2.html#cb323-27" tabindex="-1"></a>    for batch_X, batch_y in dataloader:</span>
+<span id="cb323-28"><a href="dl_2.html#cb323-28" tabindex="-1"></a>        y_pred = linear_model(batch_X)     # 前向传播，计算预测值</span>
+<span id="cb323-29"><a href="dl_2.html#cb323-29" tabindex="-1"></a>        loss = criterion(y_pred, batch_y)  # 计算损失</span>
+<span id="cb323-30"><a href="dl_2.html#cb323-30" tabindex="-1"></a>        optimizer.zero_grad()  # 清零梯度</span>
+<span id="cb323-31"><a href="dl_2.html#cb323-31" tabindex="-1"></a>        loss.backward()        # 反向传播，计算梯度</span>
+<span id="cb323-32"><a href="dl_2.html#cb323-32" tabindex="-1"></a>        optimizer.step()       # 更新模型参数</span>
+<span id="cb323-33"><a href="dl_2.html#cb323-33" tabindex="-1"></a>    linear_model.eval()        # 评估模式</span>
+<span id="cb323-34"><a href="dl_2.html#cb323-34" tabindex="-1"></a>    with torch.no_grad():</span>
+<span id="cb323-35"><a href="dl_2.html#cb323-35" tabindex="-1"></a>        epoch_loss = criterion(linear_model(X),y)</span>
+<span id="cb323-36"><a href="dl_2.html#cb323-36" tabindex="-1"></a>        if (epoch + 1) % 10 == 0:</span>
+<span id="cb323-37"><a href="dl_2.html#cb323-37" tabindex="-1"></a>            print(f&#39;Epoch_{epoch + 1}: {epoch_loss.item():.6f}&#39;)</span>
+<span id="cb323-38"><a href="dl_2.html#cb323-38" tabindex="-1"></a></span>
+<span id="cb323-39"><a href="dl_2.html#cb323-39" tabindex="-1"></a>print(linear_model)                  # 查看网络结构</span>
+<span id="cb323-40"><a href="dl_2.html#cb323-40" tabindex="-1"></a>print(linear_model[0].weight.data)   # 查看第0层的权重</span>
+<span id="cb323-41"><a href="dl_2.html#cb323-41" tabindex="-1"></a>print(linear_model[0].bias.data)     # 查看第0层的偏置</span></code></pre></div>
 <p>说明：</p>
 <ol style="list-style-type: decimal">
 <li><p><code>DataLoader()</code>将数据分批次，变为可迭代的对象，每次返回一个批次的数据。也可结合<code>enumerate()</code>适用。</p></li>
@@ -768,151 +769,151 @@ div.csl-indent {
 <blockquote>
 <p><code>nn.BCELoss()</code>即<span class="math inline">\(-y_i \log \hat y_i - (1-y_i)\log (1-\hat y_i)\)</span></p>
 </blockquote>
-<div class="sourceCode" id="cb318"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb318-1"><a href="dl_2.html#cb318-1" tabindex="-1"></a>import torch</span>
-<span id="cb318-2"><a href="dl_2.html#cb318-2" tabindex="-1"></a>import torch.nn as nn</span>
-<span id="cb318-3"><a href="dl_2.html#cb318-3" tabindex="-1"></a>import torch.optim as optim</span>
-<span id="cb318-4"><a href="dl_2.html#cb318-4" tabindex="-1"></a>from sklearn.datasets import make_classification</span>
-<span id="cb318-5"><a href="dl_2.html#cb318-5" tabindex="-1"></a>from sklearn.model_selection import train_test_split</span>
-<span id="cb318-6"><a href="dl_2.html#cb318-6" tabindex="-1"></a>from sklearn.preprocessing import StandardScaler</span>
-<span id="cb318-7"><a href="dl_2.html#cb318-7" tabindex="-1"></a>import numpy as np</span>
-<span id="cb318-8"><a href="dl_2.html#cb318-8" tabindex="-1"></a>from torch.utils.data import TensorDataset, DataLoader</span>
-<span id="cb318-9"><a href="dl_2.html#cb318-9" tabindex="-1"></a></span>
-<span id="cb318-10"><a href="dl_2.html#cb318-10" tabindex="-1"></a># 设置随机数种子</span>
-<span id="cb318-11"><a href="dl_2.html#cb318-11" tabindex="-1"></a>torch.manual_seed(123)</span>
-<span id="cb318-12"><a href="dl_2.html#cb318-12" tabindex="-1"></a>np.random.seed(321)</span>
-<span id="cb318-13"><a href="dl_2.html#cb318-13" tabindex="-1"></a></span>
-<span id="cb318-14"><a href="dl_2.html#cb318-14" tabindex="-1"></a>def gen_data(n_samples=2000, n_features=10, n_classes=2):</span>
-<span id="cb318-15"><a href="dl_2.html#cb318-15" tabindex="-1"></a></span>
-<span id="cb318-16"><a href="dl_2.html#cb318-16" tabindex="-1"></a>    # 生成复杂的分类型数据（有重叠）</span>
-<span id="cb318-17"><a href="dl_2.html#cb318-17" tabindex="-1"></a>    X, y = make_classification(</span>
-<span id="cb318-18"><a href="dl_2.html#cb318-18" tabindex="-1"></a>        n_samples=n_samples,    # 样本数</span>
-<span id="cb318-19"><a href="dl_2.html#cb318-19" tabindex="-1"></a>        n_features=n_features,  # 特征数</span>
-<span id="cb318-20"><a href="dl_2.html#cb318-20" tabindex="-1"></a>        n_informative=8,        # 有信息量的特征数量</span>
-<span id="cb318-21"><a href="dl_2.html#cb318-21" tabindex="-1"></a>        n_redundant=2,          # 冗余特征数量</span>
-<span id="cb318-22"><a href="dl_2.html#cb318-22" tabindex="-1"></a>        n_repeated=0,           # 重复特征数量</span>
-<span id="cb318-23"><a href="dl_2.html#cb318-23" tabindex="-1"></a>        n_classes=n_classes,    # 类别数</span>
-<span id="cb318-24"><a href="dl_2.html#cb318-24" tabindex="-1"></a>        flip_y=0.15,            # 15%的噪声</span>
-<span id="cb318-25"><a href="dl_2.html#cb318-25" tabindex="-1"></a>        class_sep=0.8           # 类间分离程度</span>
-<span id="cb318-26"><a href="dl_2.html#cb318-26" tabindex="-1"></a>    )</span>
-<span id="cb318-27"><a href="dl_2.html#cb318-27" tabindex="-1"></a>    </span>
-<span id="cb318-28"><a href="dl_2.html#cb318-28" tabindex="-1"></a>    # 划分训练集和测试集</span>
-<span id="cb318-29"><a href="dl_2.html#cb318-29" tabindex="-1"></a>    X_train, X_test, y_train, y_test = train_test_split(</span>
-<span id="cb318-30"><a href="dl_2.html#cb318-30" tabindex="-1"></a>        X, y, test_size=0.2, random_state=42</span>
-<span id="cb318-31"><a href="dl_2.html#cb318-31" tabindex="-1"></a>    )</span>
-<span id="cb318-32"><a href="dl_2.html#cb318-32" tabindex="-1"></a>    </span>
-<span id="cb318-33"><a href="dl_2.html#cb318-33" tabindex="-1"></a>    # 数据标准化</span>
-<span id="cb318-34"><a href="dl_2.html#cb318-34" tabindex="-1"></a>    scaler = StandardScaler()</span>
-<span id="cb318-35"><a href="dl_2.html#cb318-35" tabindex="-1"></a>    X_train = scaler.fit_transform(X_train)</span>
-<span id="cb318-36"><a href="dl_2.html#cb318-36" tabindex="-1"></a>    X_test = scaler.transform(X_test)</span>
-<span id="cb318-37"><a href="dl_2.html#cb318-37" tabindex="-1"></a></span>
-<span id="cb318-38"><a href="dl_2.html#cb318-38" tabindex="-1"></a>    # 转换为PyTorch张量</span>
-<span id="cb318-39"><a href="dl_2.html#cb318-39" tabindex="-1"></a>    X_train = torch.tensor(X_train, dtype=torch.float32)</span>
-<span id="cb318-40"><a href="dl_2.html#cb318-40" tabindex="-1"></a>    y_train = torch.tensor(y_train, dtype=torch.float32).view(-1, 1)  # 二分类需要二维标签</span>
-<span id="cb318-41"><a href="dl_2.html#cb318-41" tabindex="-1"></a>    X_test = torch.tensor(X_test, dtype=torch.float32)</span>
-<span id="cb318-42"><a href="dl_2.html#cb318-42" tabindex="-1"></a>    y_test = torch.tensor(y_test, dtype=torch.float32).view(-1, 1)</span>
-<span id="cb318-43"><a href="dl_2.html#cb318-43" tabindex="-1"></a>    </span>
-<span id="cb318-44"><a href="dl_2.html#cb318-44" tabindex="-1"></a>    return X_train, X_test, y_train, y_test</span>
-<span id="cb318-45"><a href="dl_2.html#cb318-45" tabindex="-1"></a></span>
-<span id="cb318-46"><a href="dl_2.html#cb318-46" tabindex="-1"></a># 生成数据</span>
-<span id="cb318-47"><a href="dl_2.html#cb318-47" tabindex="-1"></a>X_train, X_test, y_train, y_test = gen_data()</span>
-<span id="cb318-48"><a href="dl_2.html#cb318-48" tabindex="-1"></a></span>
-<span id="cb318-49"><a href="dl_2.html#cb318-49" tabindex="-1"></a># 创建数据加载器</span>
-<span id="cb318-50"><a href="dl_2.html#cb318-50" tabindex="-1"></a>train_dataset = TensorDataset(X_train, y_train)</span>
-<span id="cb318-51"><a href="dl_2.html#cb318-51" tabindex="-1"></a>test_dataset = TensorDataset(X_test, y_test)</span>
-<span id="cb318-52"><a href="dl_2.html#cb318-52" tabindex="-1"></a></span>
-<span id="cb318-53"><a href="dl_2.html#cb318-53" tabindex="-1"></a>train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)</span>
-<span id="cb318-54"><a href="dl_2.html#cb318-54" tabindex="-1"></a>test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)</span>
-<span id="cb318-55"><a href="dl_2.html#cb318-55" tabindex="-1"></a></span>
-<span id="cb318-56"><a href="dl_2.html#cb318-56" tabindex="-1"></a>model = nn.Sequential(</span>
-<span id="cb318-57"><a href="dl_2.html#cb318-57" tabindex="-1"></a>    nn.Linear(10,64),</span>
-<span id="cb318-58"><a href="dl_2.html#cb318-58" tabindex="-1"></a>    nn.ReLU(),</span>
-<span id="cb318-59"><a href="dl_2.html#cb318-59" tabindex="-1"></a>    nn.BatchNorm1d(64),  # 对该批次数据进行标准化操作，并进行缩放和平移，可在一定程度上缓解“内部协变量偏移”情况</span>
-<span id="cb318-60"><a href="dl_2.html#cb318-60" tabindex="-1"></a>    nn.Dropout(0.2),     # 以一定概率丢弃某些神经元，从而缓解过拟合现象</span>
-<span id="cb318-61"><a href="dl_2.html#cb318-61" tabindex="-1"></a>    </span>
-<span id="cb318-62"><a href="dl_2.html#cb318-62" tabindex="-1"></a>    nn.Linear(64,32),</span>
-<span id="cb318-63"><a href="dl_2.html#cb318-63" tabindex="-1"></a>    nn.ReLU(),</span>
-<span id="cb318-64"><a href="dl_2.html#cb318-64" tabindex="-1"></a>    nn.BatchNorm1d(32),</span>
-<span id="cb318-65"><a href="dl_2.html#cb318-65" tabindex="-1"></a>    nn.Dropout(0.2),</span>
-<span id="cb318-66"><a href="dl_2.html#cb318-66" tabindex="-1"></a>    </span>
-<span id="cb318-67"><a href="dl_2.html#cb318-67" tabindex="-1"></a>    nn.Linear(32,1),</span>
-<span id="cb318-68"><a href="dl_2.html#cb318-68" tabindex="-1"></a>    nn.Sigmoid()</span>
-<span id="cb318-69"><a href="dl_2.html#cb318-69" tabindex="-1"></a>)</span>
-<span id="cb318-70"><a href="dl_2.html#cb318-70" tabindex="-1"></a></span>
-<span id="cb318-71"><a href="dl_2.html#cb318-71" tabindex="-1"></a>criterion = nn.BCELoss()</span>
-<span id="cb318-72"><a href="dl_2.html#cb318-72" tabindex="-1"></a>optimizer = optim.SGD(model.parameters(), lr=0.05)</span>
-<span id="cb318-73"><a href="dl_2.html#cb318-73" tabindex="-1"></a></span>
-<span id="cb318-74"><a href="dl_2.html#cb318-74" tabindex="-1"></a># 将模型移到GPU上</span>
-<span id="cb318-75"><a href="dl_2.html#cb318-75" tabindex="-1"></a>device = torch.device(&#39;cuda&#39; if torch.cuda.is_available() else &#39;cpu&#39;)</span>
-<span id="cb318-76"><a href="dl_2.html#cb318-76" tabindex="-1"></a>model.to(device)</span>
-<span id="cb318-77"><a href="dl_2.html#cb318-77" tabindex="-1"></a></span>
-<span id="cb318-78"><a href="dl_2.html#cb318-78" tabindex="-1"></a># 存储训练指标</span>
-<span id="cb318-79"><a href="dl_2.html#cb318-79" tabindex="-1"></a>train_losses = []</span>
-<span id="cb318-80"><a href="dl_2.html#cb318-80" tabindex="-1"></a>train_accuracies = []</span>
-<span id="cb318-81"><a href="dl_2.html#cb318-81" tabindex="-1"></a>val_losses = []</span>
-<span id="cb318-82"><a href="dl_2.html#cb318-82" tabindex="-1"></a>val_accuracies = []</span>
-<span id="cb318-83"><a href="dl_2.html#cb318-83" tabindex="-1"></a></span>
-<span id="cb318-84"><a href="dl_2.html#cb318-84" tabindex="-1"></a>for epoch in range(100):</span>
-<span id="cb318-85"><a href="dl_2.html#cb318-85" tabindex="-1"></a>    # 训练模式</span>
-<span id="cb318-86"><a href="dl_2.html#cb318-86" tabindex="-1"></a>    model.train()</span>
-<span id="cb318-87"><a href="dl_2.html#cb318-87" tabindex="-1"></a>    running_loss = 0.0</span>
-<span id="cb318-88"><a href="dl_2.html#cb318-88" tabindex="-1"></a>    correct_train = 0</span>
-<span id="cb318-89"><a href="dl_2.html#cb318-89" tabindex="-1"></a>    total_train = 0</span>
-<span id="cb318-90"><a href="dl_2.html#cb318-90" tabindex="-1"></a>    </span>
-<span id="cb318-91"><a href="dl_2.html#cb318-91" tabindex="-1"></a>    for batch_x, batch_y in train_loader:</span>
-<span id="cb318-92"><a href="dl_2.html#cb318-92" tabindex="-1"></a>        # 移动数据到设备</span>
-<span id="cb318-93"><a href="dl_2.html#cb318-93" tabindex="-1"></a>        batch_x, batch_y = batch_x.to(device), batch_y.to(device)</span>
-<span id="cb318-94"><a href="dl_2.html#cb318-94" tabindex="-1"></a>        </span>
-<span id="cb318-95"><a href="dl_2.html#cb318-95" tabindex="-1"></a>        # 前向传播</span>
-<span id="cb318-96"><a href="dl_2.html#cb318-96" tabindex="-1"></a>        outputs = model(batch_x)</span>
-<span id="cb318-97"><a href="dl_2.html#cb318-97" tabindex="-1"></a>        </span>
-<span id="cb318-98"><a href="dl_2.html#cb318-98" tabindex="-1"></a>        # 计算损失</span>
-<span id="cb318-99"><a href="dl_2.html#cb318-99" tabindex="-1"></a>        loss = criterion(outputs, batch_y)</span>
-<span id="cb318-100"><a href="dl_2.html#cb318-100" tabindex="-1"></a>        </span>
-<span id="cb318-101"><a href="dl_2.html#cb318-101" tabindex="-1"></a>        # 反向传播和优化</span>
-<span id="cb318-102"><a href="dl_2.html#cb318-102" tabindex="-1"></a>        optimizer.zero_grad()</span>
-<span id="cb318-103"><a href="dl_2.html#cb318-103" tabindex="-1"></a>        loss.backward()</span>
-<span id="cb318-104"><a href="dl_2.html#cb318-104" tabindex="-1"></a>        optimizer.step()</span>
-<span id="cb318-105"><a href="dl_2.html#cb318-105" tabindex="-1"></a>        </span>
-<span id="cb318-106"><a href="dl_2.html#cb318-106" tabindex="-1"></a>        # 统计训练情况</span>
-<span id="cb318-107"><a href="dl_2.html#cb318-107" tabindex="-1"></a>        running_loss += loss.item()</span>
-<span id="cb318-108"><a href="dl_2.html#cb318-108" tabindex="-1"></a>        </span>
-<span id="cb318-109"><a href="dl_2.html#cb318-109" tabindex="-1"></a>        # 计算准确率</span>
-<span id="cb318-110"><a href="dl_2.html#cb318-110" tabindex="-1"></a>        predictions = (outputs &gt; 0.5).float()</span>
-<span id="cb318-111"><a href="dl_2.html#cb318-111" tabindex="-1"></a>        correct_train += (predictions == batch_y).sum().item()</span>
-<span id="cb318-112"><a href="dl_2.html#cb318-112" tabindex="-1"></a>        total_train += batch_y.size(0)</span>
-<span id="cb318-113"><a href="dl_2.html#cb318-113" tabindex="-1"></a>    </span>
-<span id="cb318-114"><a href="dl_2.html#cb318-114" tabindex="-1"></a>    # 计算本轮训练的平均损失和准确率</span>
-<span id="cb318-115"><a href="dl_2.html#cb318-115" tabindex="-1"></a>    epoch_loss = running_loss / len(train_loader)</span>
-<span id="cb318-116"><a href="dl_2.html#cb318-116" tabindex="-1"></a>    epoch_acc = correct_train / total_train if total_train &gt; 0 else 0</span>
-<span id="cb318-117"><a href="dl_2.html#cb318-117" tabindex="-1"></a>    train_losses.append(epoch_loss)</span>
-<span id="cb318-118"><a href="dl_2.html#cb318-118" tabindex="-1"></a>    train_accuracies.append(epoch_acc)</span>
-<span id="cb318-119"><a href="dl_2.html#cb318-119" tabindex="-1"></a>    </span>
-<span id="cb318-120"><a href="dl_2.html#cb318-120" tabindex="-1"></a>    # 验证评估</span>
-<span id="cb318-121"><a href="dl_2.html#cb318-121" tabindex="-1"></a>    model.eval()</span>
-<span id="cb318-122"><a href="dl_2.html#cb318-122" tabindex="-1"></a>    with torch.no_grad():</span>
-<span id="cb318-123"><a href="dl_2.html#cb318-123" tabindex="-1"></a>        # 移动测试数据到设备</span>
-<span id="cb318-124"><a href="dl_2.html#cb318-124" tabindex="-1"></a>        test_x, test_y = X_test.to(device), y_test.to(device)</span>
-<span id="cb318-125"><a href="dl_2.html#cb318-125" tabindex="-1"></a>        # 前向传播</span>
-<span id="cb318-126"><a href="dl_2.html#cb318-126" tabindex="-1"></a>        outputs = model(test_x)</span>
-<span id="cb318-127"><a href="dl_2.html#cb318-127" tabindex="-1"></a>        # 计算损失</span>
-<span id="cb318-128"><a href="dl_2.html#cb318-128" tabindex="-1"></a>        val_loss = criterion(outputs, test_y).item()</span>
-<span id="cb318-129"><a href="dl_2.html#cb318-129" tabindex="-1"></a>        # 计算预测结果</span>
-<span id="cb318-130"><a href="dl_2.html#cb318-130" tabindex="-1"></a>        predictions = (outputs &gt; 0.5).float()</span>
-<span id="cb318-131"><a href="dl_2.html#cb318-131" tabindex="-1"></a>        # 计算准确率</span>
-<span id="cb318-132"><a href="dl_2.html#cb318-132" tabindex="-1"></a>        correct_val = (predictions == test_y).sum().item()</span>
-<span id="cb318-133"><a href="dl_2.html#cb318-133" tabindex="-1"></a>        total_val = test_y.size(0)</span>
-<span id="cb318-134"><a href="dl_2.html#cb318-134" tabindex="-1"></a>        val_acc = correct_val / total_val</span>
-<span id="cb318-135"><a href="dl_2.html#cb318-135" tabindex="-1"></a>        # 存储验证结果</span>
-<span id="cb318-136"><a href="dl_2.html#cb318-136" tabindex="-1"></a>        val_losses.append(val_loss)</span>
-<span id="cb318-137"><a href="dl_2.html#cb318-137" tabindex="-1"></a>        val_accuracies.append(val_acc)</span>
-<span id="cb318-138"><a href="dl_2.html#cb318-138" tabindex="-1"></a>    </span>
-<span id="cb318-139"><a href="dl_2.html#cb318-139" tabindex="-1"></a>    # 每10个epoch打印一次进度</span>
-<span id="cb318-140"><a href="dl_2.html#cb318-140" tabindex="-1"></a>    if (epoch + 1) % 10 == 0:</span>
-<span id="cb318-141"><a href="dl_2.html#cb318-141" tabindex="-1"></a>        print(&quot;=&quot;*10,</span>
-<span id="cb318-142"><a href="dl_2.html#cb318-142" tabindex="-1"></a>              f&quot;Epoch_{epoch+1}&quot;,</span>
-<span id="cb318-143"><a href="dl_2.html#cb318-143" tabindex="-1"></a>              &quot;=&quot;*10,</span>
-<span id="cb318-144"><a href="dl_2.html#cb318-144" tabindex="-1"></a>              f&quot;\nTrain Loss: {epoch_loss:.4f}, Train Acc: {epoch_acc:.4f}\n&quot;,</span>
-<span id="cb318-145"><a href="dl_2.html#cb318-145" tabindex="-1"></a>              f&quot;Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}&quot;)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb324-1"><a href="dl_2.html#cb324-1" tabindex="-1"></a>import torch</span>
+<span id="cb324-2"><a href="dl_2.html#cb324-2" tabindex="-1"></a>import torch.nn as nn</span>
+<span id="cb324-3"><a href="dl_2.html#cb324-3" tabindex="-1"></a>import torch.optim as optim</span>
+<span id="cb324-4"><a href="dl_2.html#cb324-4" tabindex="-1"></a>from sklearn.datasets import make_classification</span>
+<span id="cb324-5"><a href="dl_2.html#cb324-5" tabindex="-1"></a>from sklearn.model_selection import train_test_split</span>
+<span id="cb324-6"><a href="dl_2.html#cb324-6" tabindex="-1"></a>from sklearn.preprocessing import StandardScaler</span>
+<span id="cb324-7"><a href="dl_2.html#cb324-7" tabindex="-1"></a>import numpy as np</span>
+<span id="cb324-8"><a href="dl_2.html#cb324-8" tabindex="-1"></a>from torch.utils.data import TensorDataset, DataLoader</span>
+<span id="cb324-9"><a href="dl_2.html#cb324-9" tabindex="-1"></a></span>
+<span id="cb324-10"><a href="dl_2.html#cb324-10" tabindex="-1"></a># 设置随机数种子</span>
+<span id="cb324-11"><a href="dl_2.html#cb324-11" tabindex="-1"></a>torch.manual_seed(123)</span>
+<span id="cb324-12"><a href="dl_2.html#cb324-12" tabindex="-1"></a>np.random.seed(321)</span>
+<span id="cb324-13"><a href="dl_2.html#cb324-13" tabindex="-1"></a></span>
+<span id="cb324-14"><a href="dl_2.html#cb324-14" tabindex="-1"></a>def gen_data(n_samples=2000, n_features=10, n_classes=2):</span>
+<span id="cb324-15"><a href="dl_2.html#cb324-15" tabindex="-1"></a></span>
+<span id="cb324-16"><a href="dl_2.html#cb324-16" tabindex="-1"></a>    # 生成复杂的分类型数据（有重叠）</span>
+<span id="cb324-17"><a href="dl_2.html#cb324-17" tabindex="-1"></a>    X, y = make_classification(</span>
+<span id="cb324-18"><a href="dl_2.html#cb324-18" tabindex="-1"></a>        n_samples=n_samples,    # 样本数</span>
+<span id="cb324-19"><a href="dl_2.html#cb324-19" tabindex="-1"></a>        n_features=n_features,  # 特征数</span>
+<span id="cb324-20"><a href="dl_2.html#cb324-20" tabindex="-1"></a>        n_informative=8,        # 有信息量的特征数量</span>
+<span id="cb324-21"><a href="dl_2.html#cb324-21" tabindex="-1"></a>        n_redundant=2,          # 冗余特征数量</span>
+<span id="cb324-22"><a href="dl_2.html#cb324-22" tabindex="-1"></a>        n_repeated=0,           # 重复特征数量</span>
+<span id="cb324-23"><a href="dl_2.html#cb324-23" tabindex="-1"></a>        n_classes=n_classes,    # 类别数</span>
+<span id="cb324-24"><a href="dl_2.html#cb324-24" tabindex="-1"></a>        flip_y=0.15,            # 15%的噪声</span>
+<span id="cb324-25"><a href="dl_2.html#cb324-25" tabindex="-1"></a>        class_sep=0.8           # 类间分离程度</span>
+<span id="cb324-26"><a href="dl_2.html#cb324-26" tabindex="-1"></a>    )</span>
+<span id="cb324-27"><a href="dl_2.html#cb324-27" tabindex="-1"></a>    </span>
+<span id="cb324-28"><a href="dl_2.html#cb324-28" tabindex="-1"></a>    # 划分训练集和测试集</span>
+<span id="cb324-29"><a href="dl_2.html#cb324-29" tabindex="-1"></a>    X_train, X_test, y_train, y_test = train_test_split(</span>
+<span id="cb324-30"><a href="dl_2.html#cb324-30" tabindex="-1"></a>        X, y, test_size=0.2, random_state=42</span>
+<span id="cb324-31"><a href="dl_2.html#cb324-31" tabindex="-1"></a>    )</span>
+<span id="cb324-32"><a href="dl_2.html#cb324-32" tabindex="-1"></a>    </span>
+<span id="cb324-33"><a href="dl_2.html#cb324-33" tabindex="-1"></a>    # 数据标准化</span>
+<span id="cb324-34"><a href="dl_2.html#cb324-34" tabindex="-1"></a>    scaler = StandardScaler()</span>
+<span id="cb324-35"><a href="dl_2.html#cb324-35" tabindex="-1"></a>    X_train = scaler.fit_transform(X_train)</span>
+<span id="cb324-36"><a href="dl_2.html#cb324-36" tabindex="-1"></a>    X_test = scaler.transform(X_test)</span>
+<span id="cb324-37"><a href="dl_2.html#cb324-37" tabindex="-1"></a></span>
+<span id="cb324-38"><a href="dl_2.html#cb324-38" tabindex="-1"></a>    # 转换为PyTorch张量</span>
+<span id="cb324-39"><a href="dl_2.html#cb324-39" tabindex="-1"></a>    X_train = torch.tensor(X_train, dtype=torch.float32)</span>
+<span id="cb324-40"><a href="dl_2.html#cb324-40" tabindex="-1"></a>    y_train = torch.tensor(y_train, dtype=torch.float32).view(-1, 1)  # 二分类需要二维标签</span>
+<span id="cb324-41"><a href="dl_2.html#cb324-41" tabindex="-1"></a>    X_test = torch.tensor(X_test, dtype=torch.float32)</span>
+<span id="cb324-42"><a href="dl_2.html#cb324-42" tabindex="-1"></a>    y_test = torch.tensor(y_test, dtype=torch.float32).view(-1, 1)</span>
+<span id="cb324-43"><a href="dl_2.html#cb324-43" tabindex="-1"></a>    </span>
+<span id="cb324-44"><a href="dl_2.html#cb324-44" tabindex="-1"></a>    return X_train, X_test, y_train, y_test</span>
+<span id="cb324-45"><a href="dl_2.html#cb324-45" tabindex="-1"></a></span>
+<span id="cb324-46"><a href="dl_2.html#cb324-46" tabindex="-1"></a># 生成数据</span>
+<span id="cb324-47"><a href="dl_2.html#cb324-47" tabindex="-1"></a>X_train, X_test, y_train, y_test = gen_data()</span>
+<span id="cb324-48"><a href="dl_2.html#cb324-48" tabindex="-1"></a></span>
+<span id="cb324-49"><a href="dl_2.html#cb324-49" tabindex="-1"></a># 创建数据加载器</span>
+<span id="cb324-50"><a href="dl_2.html#cb324-50" tabindex="-1"></a>train_dataset = TensorDataset(X_train, y_train)</span>
+<span id="cb324-51"><a href="dl_2.html#cb324-51" tabindex="-1"></a>test_dataset = TensorDataset(X_test, y_test)</span>
+<span id="cb324-52"><a href="dl_2.html#cb324-52" tabindex="-1"></a></span>
+<span id="cb324-53"><a href="dl_2.html#cb324-53" tabindex="-1"></a>train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)</span>
+<span id="cb324-54"><a href="dl_2.html#cb324-54" tabindex="-1"></a>test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)</span>
+<span id="cb324-55"><a href="dl_2.html#cb324-55" tabindex="-1"></a></span>
+<span id="cb324-56"><a href="dl_2.html#cb324-56" tabindex="-1"></a>model = nn.Sequential(</span>
+<span id="cb324-57"><a href="dl_2.html#cb324-57" tabindex="-1"></a>    nn.Linear(10,64),</span>
+<span id="cb324-58"><a href="dl_2.html#cb324-58" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb324-59"><a href="dl_2.html#cb324-59" tabindex="-1"></a>    nn.BatchNorm1d(64),  # 对该批次数据进行标准化操作，并进行缩放和平移，可在一定程度上缓解“内部协变量偏移”情况</span>
+<span id="cb324-60"><a href="dl_2.html#cb324-60" tabindex="-1"></a>    nn.Dropout(0.2),     # 以一定概率丢弃某些神经元，从而缓解过拟合现象</span>
+<span id="cb324-61"><a href="dl_2.html#cb324-61" tabindex="-1"></a>    </span>
+<span id="cb324-62"><a href="dl_2.html#cb324-62" tabindex="-1"></a>    nn.Linear(64,32),</span>
+<span id="cb324-63"><a href="dl_2.html#cb324-63" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb324-64"><a href="dl_2.html#cb324-64" tabindex="-1"></a>    nn.BatchNorm1d(32),</span>
+<span id="cb324-65"><a href="dl_2.html#cb324-65" tabindex="-1"></a>    nn.Dropout(0.2),</span>
+<span id="cb324-66"><a href="dl_2.html#cb324-66" tabindex="-1"></a>    </span>
+<span id="cb324-67"><a href="dl_2.html#cb324-67" tabindex="-1"></a>    nn.Linear(32,1),</span>
+<span id="cb324-68"><a href="dl_2.html#cb324-68" tabindex="-1"></a>    nn.Sigmoid()</span>
+<span id="cb324-69"><a href="dl_2.html#cb324-69" tabindex="-1"></a>)</span>
+<span id="cb324-70"><a href="dl_2.html#cb324-70" tabindex="-1"></a></span>
+<span id="cb324-71"><a href="dl_2.html#cb324-71" tabindex="-1"></a>criterion = nn.BCELoss()</span>
+<span id="cb324-72"><a href="dl_2.html#cb324-72" tabindex="-1"></a>optimizer = optim.SGD(model.parameters(), lr=0.05)</span>
+<span id="cb324-73"><a href="dl_2.html#cb324-73" tabindex="-1"></a></span>
+<span id="cb324-74"><a href="dl_2.html#cb324-74" tabindex="-1"></a># 将模型移到GPU上</span>
+<span id="cb324-75"><a href="dl_2.html#cb324-75" tabindex="-1"></a>device = torch.device(&#39;cuda&#39; if torch.cuda.is_available() else &#39;cpu&#39;)</span>
+<span id="cb324-76"><a href="dl_2.html#cb324-76" tabindex="-1"></a>model.to(device)</span>
+<span id="cb324-77"><a href="dl_2.html#cb324-77" tabindex="-1"></a></span>
+<span id="cb324-78"><a href="dl_2.html#cb324-78" tabindex="-1"></a># 存储训练指标</span>
+<span id="cb324-79"><a href="dl_2.html#cb324-79" tabindex="-1"></a>train_losses = []</span>
+<span id="cb324-80"><a href="dl_2.html#cb324-80" tabindex="-1"></a>train_accuracies = []</span>
+<span id="cb324-81"><a href="dl_2.html#cb324-81" tabindex="-1"></a>val_losses = []</span>
+<span id="cb324-82"><a href="dl_2.html#cb324-82" tabindex="-1"></a>val_accuracies = []</span>
+<span id="cb324-83"><a href="dl_2.html#cb324-83" tabindex="-1"></a></span>
+<span id="cb324-84"><a href="dl_2.html#cb324-84" tabindex="-1"></a>for epoch in range(100):</span>
+<span id="cb324-85"><a href="dl_2.html#cb324-85" tabindex="-1"></a>    # 训练模式</span>
+<span id="cb324-86"><a href="dl_2.html#cb324-86" tabindex="-1"></a>    model.train()</span>
+<span id="cb324-87"><a href="dl_2.html#cb324-87" tabindex="-1"></a>    running_loss = 0.0</span>
+<span id="cb324-88"><a href="dl_2.html#cb324-88" tabindex="-1"></a>    correct_train = 0</span>
+<span id="cb324-89"><a href="dl_2.html#cb324-89" tabindex="-1"></a>    total_train = 0</span>
+<span id="cb324-90"><a href="dl_2.html#cb324-90" tabindex="-1"></a>    </span>
+<span id="cb324-91"><a href="dl_2.html#cb324-91" tabindex="-1"></a>    for batch_x, batch_y in train_loader:</span>
+<span id="cb324-92"><a href="dl_2.html#cb324-92" tabindex="-1"></a>        # 移动数据到设备</span>
+<span id="cb324-93"><a href="dl_2.html#cb324-93" tabindex="-1"></a>        batch_x, batch_y = batch_x.to(device), batch_y.to(device)</span>
+<span id="cb324-94"><a href="dl_2.html#cb324-94" tabindex="-1"></a>        </span>
+<span id="cb324-95"><a href="dl_2.html#cb324-95" tabindex="-1"></a>        # 前向传播</span>
+<span id="cb324-96"><a href="dl_2.html#cb324-96" tabindex="-1"></a>        outputs = model(batch_x)</span>
+<span id="cb324-97"><a href="dl_2.html#cb324-97" tabindex="-1"></a>        </span>
+<span id="cb324-98"><a href="dl_2.html#cb324-98" tabindex="-1"></a>        # 计算损失</span>
+<span id="cb324-99"><a href="dl_2.html#cb324-99" tabindex="-1"></a>        loss = criterion(outputs, batch_y)</span>
+<span id="cb324-100"><a href="dl_2.html#cb324-100" tabindex="-1"></a>        </span>
+<span id="cb324-101"><a href="dl_2.html#cb324-101" tabindex="-1"></a>        # 反向传播和优化</span>
+<span id="cb324-102"><a href="dl_2.html#cb324-102" tabindex="-1"></a>        optimizer.zero_grad()</span>
+<span id="cb324-103"><a href="dl_2.html#cb324-103" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb324-104"><a href="dl_2.html#cb324-104" tabindex="-1"></a>        optimizer.step()</span>
+<span id="cb324-105"><a href="dl_2.html#cb324-105" tabindex="-1"></a>        </span>
+<span id="cb324-106"><a href="dl_2.html#cb324-106" tabindex="-1"></a>        # 统计训练情况</span>
+<span id="cb324-107"><a href="dl_2.html#cb324-107" tabindex="-1"></a>        running_loss += loss.item()</span>
+<span id="cb324-108"><a href="dl_2.html#cb324-108" tabindex="-1"></a>        </span>
+<span id="cb324-109"><a href="dl_2.html#cb324-109" tabindex="-1"></a>        # 计算准确率</span>
+<span id="cb324-110"><a href="dl_2.html#cb324-110" tabindex="-1"></a>        predictions = (outputs &gt; 0.5).float()</span>
+<span id="cb324-111"><a href="dl_2.html#cb324-111" tabindex="-1"></a>        correct_train += (predictions == batch_y).sum().item()</span>
+<span id="cb324-112"><a href="dl_2.html#cb324-112" tabindex="-1"></a>        total_train += batch_y.size(0)</span>
+<span id="cb324-113"><a href="dl_2.html#cb324-113" tabindex="-1"></a>    </span>
+<span id="cb324-114"><a href="dl_2.html#cb324-114" tabindex="-1"></a>    # 计算本轮训练的平均损失和准确率</span>
+<span id="cb324-115"><a href="dl_2.html#cb324-115" tabindex="-1"></a>    epoch_loss = running_loss / len(train_loader)</span>
+<span id="cb324-116"><a href="dl_2.html#cb324-116" tabindex="-1"></a>    epoch_acc = correct_train / total_train if total_train &gt; 0 else 0</span>
+<span id="cb324-117"><a href="dl_2.html#cb324-117" tabindex="-1"></a>    train_losses.append(epoch_loss)</span>
+<span id="cb324-118"><a href="dl_2.html#cb324-118" tabindex="-1"></a>    train_accuracies.append(epoch_acc)</span>
+<span id="cb324-119"><a href="dl_2.html#cb324-119" tabindex="-1"></a>    </span>
+<span id="cb324-120"><a href="dl_2.html#cb324-120" tabindex="-1"></a>    # 验证评估</span>
+<span id="cb324-121"><a href="dl_2.html#cb324-121" tabindex="-1"></a>    model.eval()</span>
+<span id="cb324-122"><a href="dl_2.html#cb324-122" tabindex="-1"></a>    with torch.no_grad():</span>
+<span id="cb324-123"><a href="dl_2.html#cb324-123" tabindex="-1"></a>        # 移动测试数据到设备</span>
+<span id="cb324-124"><a href="dl_2.html#cb324-124" tabindex="-1"></a>        test_x, test_y = X_test.to(device), y_test.to(device)</span>
+<span id="cb324-125"><a href="dl_2.html#cb324-125" tabindex="-1"></a>        # 前向传播</span>
+<span id="cb324-126"><a href="dl_2.html#cb324-126" tabindex="-1"></a>        outputs = model(test_x)</span>
+<span id="cb324-127"><a href="dl_2.html#cb324-127" tabindex="-1"></a>        # 计算损失</span>
+<span id="cb324-128"><a href="dl_2.html#cb324-128" tabindex="-1"></a>        val_loss = criterion(outputs, test_y).item()</span>
+<span id="cb324-129"><a href="dl_2.html#cb324-129" tabindex="-1"></a>        # 计算预测结果</span>
+<span id="cb324-130"><a href="dl_2.html#cb324-130" tabindex="-1"></a>        predictions = (outputs &gt; 0.5).float()</span>
+<span id="cb324-131"><a href="dl_2.html#cb324-131" tabindex="-1"></a>        # 计算准确率</span>
+<span id="cb324-132"><a href="dl_2.html#cb324-132" tabindex="-1"></a>        correct_val = (predictions == test_y).sum().item()</span>
+<span id="cb324-133"><a href="dl_2.html#cb324-133" tabindex="-1"></a>        total_val = test_y.size(0)</span>
+<span id="cb324-134"><a href="dl_2.html#cb324-134" tabindex="-1"></a>        val_acc = correct_val / total_val</span>
+<span id="cb324-135"><a href="dl_2.html#cb324-135" tabindex="-1"></a>        # 存储验证结果</span>
+<span id="cb324-136"><a href="dl_2.html#cb324-136" tabindex="-1"></a>        val_losses.append(val_loss)</span>
+<span id="cb324-137"><a href="dl_2.html#cb324-137" tabindex="-1"></a>        val_accuracies.append(val_acc)</span>
+<span id="cb324-138"><a href="dl_2.html#cb324-138" tabindex="-1"></a>    </span>
+<span id="cb324-139"><a href="dl_2.html#cb324-139" tabindex="-1"></a>    # 每10个epoch打印一次进度</span>
+<span id="cb324-140"><a href="dl_2.html#cb324-140" tabindex="-1"></a>    if (epoch + 1) % 10 == 0:</span>
+<span id="cb324-141"><a href="dl_2.html#cb324-141" tabindex="-1"></a>        print(&quot;=&quot;*10,</span>
+<span id="cb324-142"><a href="dl_2.html#cb324-142" tabindex="-1"></a>              f&quot;Epoch_{epoch+1}&quot;,</span>
+<span id="cb324-143"><a href="dl_2.html#cb324-143" tabindex="-1"></a>              &quot;=&quot;*10,</span>
+<span id="cb324-144"><a href="dl_2.html#cb324-144" tabindex="-1"></a>              f&quot;\nTrain Loss: {epoch_loss:.4f}, Train Acc: {epoch_acc:.4f}\n&quot;,</span>
+<span id="cb324-145"><a href="dl_2.html#cb324-145" tabindex="-1"></a>              f&quot;Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}&quot;)</span></code></pre></div>
 <p>说明：</p>
 <ol style="list-style-type: decimal">
 <li><p>在将数据存储为张量时就要统一特征和标签的数据类型为浮点数，否则后续特征为浮点数，标签为整数会报错。同时，标签的形状也应变为二维的。</p></li>
@@ -924,154 +925,154 @@ div.csl-indent {
 <div id="dl_2_3" class="section level3 hasAnchor" number="11.2.3">
 <h3><span class="header-section-number">11.2.3</span> 多分类问题<a href="dl_2.html#dl_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>对于多分类问题，输出层维度为类别数，无需添加softmax函数，因为在交叉熵损失函数<code>nn.CrossEntropyLoss()</code>中自带了softmax运算。</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb319-1"><a href="dl_2.html#cb319-1" tabindex="-1"></a>import torch</span>
-<span id="cb319-2"><a href="dl_2.html#cb319-2" tabindex="-1"></a>import torch.nn as nn</span>
-<span id="cb319-3"><a href="dl_2.html#cb319-3" tabindex="-1"></a>import torch.optim as optim</span>
-<span id="cb319-4"><a href="dl_2.html#cb319-4" tabindex="-1"></a>from sklearn.datasets import make_classification</span>
-<span id="cb319-5"><a href="dl_2.html#cb319-5" tabindex="-1"></a>from sklearn.model_selection import train_test_split</span>
-<span id="cb319-6"><a href="dl_2.html#cb319-6" tabindex="-1"></a>from sklearn.preprocessing import StandardScaler</span>
-<span id="cb319-7"><a href="dl_2.html#cb319-7" tabindex="-1"></a>import numpy as np</span>
-<span id="cb319-8"><a href="dl_2.html#cb319-8" tabindex="-1"></a>from torch.utils.data import TensorDataset, DataLoader</span>
-<span id="cb319-9"><a href="dl_2.html#cb319-9" tabindex="-1"></a></span>
-<span id="cb319-10"><a href="dl_2.html#cb319-10" tabindex="-1"></a># 设置随机数种子</span>
-<span id="cb319-11"><a href="dl_2.html#cb319-11" tabindex="-1"></a>torch.manual_seed(123)</span>
-<span id="cb319-12"><a href="dl_2.html#cb319-12" tabindex="-1"></a>np.random.seed(321)</span>
-<span id="cb319-13"><a href="dl_2.html#cb319-13" tabindex="-1"></a></span>
-<span id="cb319-14"><a href="dl_2.html#cb319-14" tabindex="-1"></a>def gen_data(n_samples=2000, n_features=10, n_classes=5):</span>
-<span id="cb319-15"><a href="dl_2.html#cb319-15" tabindex="-1"></a></span>
-<span id="cb319-16"><a href="dl_2.html#cb319-16" tabindex="-1"></a>    # 生成复杂的分类型数据（有重叠）</span>
-<span id="cb319-17"><a href="dl_2.html#cb319-17" tabindex="-1"></a>    X, y = make_classification(</span>
-<span id="cb319-18"><a href="dl_2.html#cb319-18" tabindex="-1"></a>        n_samples=n_samples,    # 样本数</span>
-<span id="cb319-19"><a href="dl_2.html#cb319-19" tabindex="-1"></a>        n_features=n_features,  # 特征数</span>
-<span id="cb319-20"><a href="dl_2.html#cb319-20" tabindex="-1"></a>        n_informative=8,        # 有信息量的特征数量</span>
-<span id="cb319-21"><a href="dl_2.html#cb319-21" tabindex="-1"></a>        n_redundant=2,          # 冗余特征数量</span>
-<span id="cb319-22"><a href="dl_2.html#cb319-22" tabindex="-1"></a>        n_repeated=0,           # 重复特征数量</span>
-<span id="cb319-23"><a href="dl_2.html#cb319-23" tabindex="-1"></a>        n_classes=n_classes,    # 类别数</span>
-<span id="cb319-24"><a href="dl_2.html#cb319-24" tabindex="-1"></a>        flip_y=0.15,            # 15%的噪声</span>
-<span id="cb319-25"><a href="dl_2.html#cb319-25" tabindex="-1"></a>        class_sep=0.8           # 类间分离程度</span>
-<span id="cb319-26"><a href="dl_2.html#cb319-26" tabindex="-1"></a>    )</span>
-<span id="cb319-27"><a href="dl_2.html#cb319-27" tabindex="-1"></a>    </span>
-<span id="cb319-28"><a href="dl_2.html#cb319-28" tabindex="-1"></a>    # 划分训练集和测试集</span>
-<span id="cb319-29"><a href="dl_2.html#cb319-29" tabindex="-1"></a>    X_train, X_test, y_train, y_test = train_test_split(</span>
-<span id="cb319-30"><a href="dl_2.html#cb319-30" tabindex="-1"></a>        X, y, test_size=0.2, random_state=42</span>
-<span id="cb319-31"><a href="dl_2.html#cb319-31" tabindex="-1"></a>    )</span>
-<span id="cb319-32"><a href="dl_2.html#cb319-32" tabindex="-1"></a>    </span>
-<span id="cb319-33"><a href="dl_2.html#cb319-33" tabindex="-1"></a>    # 数据标准化</span>
-<span id="cb319-34"><a href="dl_2.html#cb319-34" tabindex="-1"></a>    scaler = StandardScaler()</span>
-<span id="cb319-35"><a href="dl_2.html#cb319-35" tabindex="-1"></a>    X_train = scaler.fit_transform(X_train)</span>
-<span id="cb319-36"><a href="dl_2.html#cb319-36" tabindex="-1"></a>    X_test = scaler.transform(X_test)</span>
-<span id="cb319-37"><a href="dl_2.html#cb319-37" tabindex="-1"></a></span>
-<span id="cb319-38"><a href="dl_2.html#cb319-38" tabindex="-1"></a>    # 转换为PyTorch张量</span>
-<span id="cb319-39"><a href="dl_2.html#cb319-39" tabindex="-1"></a>    X_train = torch.tensor(X_train, dtype=torch.float32)</span>
-<span id="cb319-40"><a href="dl_2.html#cb319-40" tabindex="-1"></a>    y_train = torch.tensor(y_train, dtype=torch.long)     # 交叉熵损失函数要求标签为整数型</span>
-<span id="cb319-41"><a href="dl_2.html#cb319-41" tabindex="-1"></a>    X_test = torch.tensor(X_test, dtype=torch.float32)</span>
-<span id="cb319-42"><a href="dl_2.html#cb319-42" tabindex="-1"></a>    y_test = torch.tensor(y_test, dtype=torch.long)</span>
-<span id="cb319-43"><a href="dl_2.html#cb319-43" tabindex="-1"></a>    </span>
-<span id="cb319-44"><a href="dl_2.html#cb319-44" tabindex="-1"></a>    return X_train, X_test, y_train, y_test</span>
-<span id="cb319-45"><a href="dl_2.html#cb319-45" tabindex="-1"></a></span>
-<span id="cb319-46"><a href="dl_2.html#cb319-46" tabindex="-1"></a># 生成数据，多分类任务</span>
-<span id="cb319-47"><a href="dl_2.html#cb319-47" tabindex="-1"></a>X_train, X_test, y_train, y_test = gen_data()</span>
-<span id="cb319-48"><a href="dl_2.html#cb319-48" tabindex="-1"></a></span>
-<span id="cb319-49"><a href="dl_2.html#cb319-49" tabindex="-1"></a># 创建数据加载器</span>
-<span id="cb319-50"><a href="dl_2.html#cb319-50" tabindex="-1"></a>train_dataset = TensorDataset(X_train, y_train)</span>
-<span id="cb319-51"><a href="dl_2.html#cb319-51" tabindex="-1"></a>test_dataset = TensorDataset(X_test, y_test)</span>
-<span id="cb319-52"><a href="dl_2.html#cb319-52" tabindex="-1"></a></span>
-<span id="cb319-53"><a href="dl_2.html#cb319-53" tabindex="-1"></a>train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)</span>
-<span id="cb319-54"><a href="dl_2.html#cb319-54" tabindex="-1"></a>test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)</span>
-<span id="cb319-55"><a href="dl_2.html#cb319-55" tabindex="-1"></a></span>
-<span id="cb319-56"><a href="dl_2.html#cb319-56" tabindex="-1"></a>model = nn.Sequential(</span>
-<span id="cb319-57"><a href="dl_2.html#cb319-57" tabindex="-1"></a>    nn.Linear(10,128),</span>
-<span id="cb319-58"><a href="dl_2.html#cb319-58" tabindex="-1"></a>    nn.ReLU(),</span>
-<span id="cb319-59"><a href="dl_2.html#cb319-59" tabindex="-1"></a>    nn.BatchNorm1d(128),  # 对该批次数据进行标准化操作，并进行缩放和平移，可在一定程度上缓解“内部协变量偏移”情况</span>
-<span id="cb319-60"><a href="dl_2.html#cb319-60" tabindex="-1"></a>    nn.Dropout(0.2),     # 以一定概率丢弃某些神经元，从而缓解过拟合现象</span>
-<span id="cb319-61"><a href="dl_2.html#cb319-61" tabindex="-1"></a>    </span>
-<span id="cb319-62"><a href="dl_2.html#cb319-62" tabindex="-1"></a>    nn.Linear(128,64),</span>
-<span id="cb319-63"><a href="dl_2.html#cb319-63" tabindex="-1"></a>    nn.ReLU(),</span>
-<span id="cb319-64"><a href="dl_2.html#cb319-64" tabindex="-1"></a>    nn.BatchNorm1d(64),</span>
-<span id="cb319-65"><a href="dl_2.html#cb319-65" tabindex="-1"></a>    nn.Dropout(0.2),</span>
-<span id="cb319-66"><a href="dl_2.html#cb319-66" tabindex="-1"></a></span>
-<span id="cb319-67"><a href="dl_2.html#cb319-67" tabindex="-1"></a>    nn.Linear(64,32),</span>
-<span id="cb319-68"><a href="dl_2.html#cb319-68" tabindex="-1"></a>    nn.ReLU(),</span>
-<span id="cb319-69"><a href="dl_2.html#cb319-69" tabindex="-1"></a>    nn.BatchNorm1d(32),</span>
-<span id="cb319-70"><a href="dl_2.html#cb319-70" tabindex="-1"></a>    nn.Dropout(0.2),</span>
-<span id="cb319-71"><a href="dl_2.html#cb319-71" tabindex="-1"></a>    </span>
-<span id="cb319-72"><a href="dl_2.html#cb319-72" tabindex="-1"></a>    nn.Linear(32,5)      # 输出维度为类别数</span>
-<span id="cb319-73"><a href="dl_2.html#cb319-73" tabindex="-1"></a>)</span>
-<span id="cb319-74"><a href="dl_2.html#cb319-74" tabindex="-1"></a></span>
-<span id="cb319-75"><a href="dl_2.html#cb319-75" tabindex="-1"></a>criterion = nn.CrossEntropyLoss()</span>
-<span id="cb319-76"><a href="dl_2.html#cb319-76" tabindex="-1"></a>optimizer = optim.Adam(model.parameters(), lr=0.05)</span>
-<span id="cb319-77"><a href="dl_2.html#cb319-77" tabindex="-1"></a></span>
-<span id="cb319-78"><a href="dl_2.html#cb319-78" tabindex="-1"></a>device = torch.device(&#39;cuda&#39; if torch.cuda.is_available() else &#39;cpu&#39;)</span>
-<span id="cb319-79"><a href="dl_2.html#cb319-79" tabindex="-1"></a>model.to(device)</span>
-<span id="cb319-80"><a href="dl_2.html#cb319-80" tabindex="-1"></a></span>
-<span id="cb319-81"><a href="dl_2.html#cb319-81" tabindex="-1"></a># 存储训练指标</span>
-<span id="cb319-82"><a href="dl_2.html#cb319-82" tabindex="-1"></a>train_losses = []</span>
-<span id="cb319-83"><a href="dl_2.html#cb319-83" tabindex="-1"></a>train_accuracies = []</span>
-<span id="cb319-84"><a href="dl_2.html#cb319-84" tabindex="-1"></a>val_losses = []</span>
-<span id="cb319-85"><a href="dl_2.html#cb319-85" tabindex="-1"></a>val_accuracies = []</span>
-<span id="cb319-86"><a href="dl_2.html#cb319-86" tabindex="-1"></a></span>
-<span id="cb319-87"><a href="dl_2.html#cb319-87" tabindex="-1"></a>for epoch in range(100):</span>
-<span id="cb319-88"><a href="dl_2.html#cb319-88" tabindex="-1"></a>    # 训练模式</span>
-<span id="cb319-89"><a href="dl_2.html#cb319-89" tabindex="-1"></a>    model.train()</span>
-<span id="cb319-90"><a href="dl_2.html#cb319-90" tabindex="-1"></a>    running_loss = 0.0</span>
-<span id="cb319-91"><a href="dl_2.html#cb319-91" tabindex="-1"></a>    correct_train = 0</span>
-<span id="cb319-92"><a href="dl_2.html#cb319-92" tabindex="-1"></a>    total_train = 0</span>
-<span id="cb319-93"><a href="dl_2.html#cb319-93" tabindex="-1"></a>    </span>
-<span id="cb319-94"><a href="dl_2.html#cb319-94" tabindex="-1"></a>    for batch_x, batch_y in train_loader:</span>
-<span id="cb319-95"><a href="dl_2.html#cb319-95" tabindex="-1"></a>        # 移动数据到设备</span>
-<span id="cb319-96"><a href="dl_2.html#cb319-96" tabindex="-1"></a>        batch_x, batch_y = batch_x.to(device), batch_y.to(device)</span>
-<span id="cb319-97"><a href="dl_2.html#cb319-97" tabindex="-1"></a>        </span>
-<span id="cb319-98"><a href="dl_2.html#cb319-98" tabindex="-1"></a>        # 前向传播</span>
-<span id="cb319-99"><a href="dl_2.html#cb319-99" tabindex="-1"></a>        outputs = model(batch_x)</span>
-<span id="cb319-100"><a href="dl_2.html#cb319-100" tabindex="-1"></a>        </span>
-<span id="cb319-101"><a href="dl_2.html#cb319-101" tabindex="-1"></a>        # 计算损失</span>
-<span id="cb319-102"><a href="dl_2.html#cb319-102" tabindex="-1"></a>        loss = criterion(outputs, batch_y)</span>
-<span id="cb319-103"><a href="dl_2.html#cb319-103" tabindex="-1"></a>        </span>
-<span id="cb319-104"><a href="dl_2.html#cb319-104" tabindex="-1"></a>        # 反向传播和优化</span>
-<span id="cb319-105"><a href="dl_2.html#cb319-105" tabindex="-1"></a>        optimizer.zero_grad()</span>
-<span id="cb319-106"><a href="dl_2.html#cb319-106" tabindex="-1"></a>        loss.backward()</span>
-<span id="cb319-107"><a href="dl_2.html#cb319-107" tabindex="-1"></a>        optimizer.step()</span>
-<span id="cb319-108"><a href="dl_2.html#cb319-108" tabindex="-1"></a>        </span>
-<span id="cb319-109"><a href="dl_2.html#cb319-109" tabindex="-1"></a>        # 统计训练情况</span>
-<span id="cb319-110"><a href="dl_2.html#cb319-110" tabindex="-1"></a>        running_loss += loss.item()</span>
-<span id="cb319-111"><a href="dl_2.html#cb319-111" tabindex="-1"></a>        </span>
-<span id="cb319-112"><a href="dl_2.html#cb319-112" tabindex="-1"></a>        # 计算准确率</span>
-<span id="cb319-113"><a href="dl_2.html#cb319-113" tabindex="-1"></a>        predictions = torch.argmax(outputs, dim = 1)   # logits值最大的为预测类别</span>
-<span id="cb319-114"><a href="dl_2.html#cb319-114" tabindex="-1"></a>        correct_train += (predictions == batch_y).sum().item()</span>
-<span id="cb319-115"><a href="dl_2.html#cb319-115" tabindex="-1"></a>        total_train += batch_y.size(0)</span>
-<span id="cb319-116"><a href="dl_2.html#cb319-116" tabindex="-1"></a>    </span>
-<span id="cb319-117"><a href="dl_2.html#cb319-117" tabindex="-1"></a>    # 计算本轮训练的平均损失和准确率</span>
-<span id="cb319-118"><a href="dl_2.html#cb319-118" tabindex="-1"></a>    epoch_loss = running_loss / len(train_loader)</span>
-<span id="cb319-119"><a href="dl_2.html#cb319-119" tabindex="-1"></a>    epoch_acc = correct_train / total_train if total_train &gt; 0 else 0</span>
-<span id="cb319-120"><a href="dl_2.html#cb319-120" tabindex="-1"></a>    train_losses.append(epoch_loss)</span>
-<span id="cb319-121"><a href="dl_2.html#cb319-121" tabindex="-1"></a>    train_accuracies.append(epoch_acc)</span>
-<span id="cb319-122"><a href="dl_2.html#cb319-122" tabindex="-1"></a>    </span>
-<span id="cb319-123"><a href="dl_2.html#cb319-123" tabindex="-1"></a>    # 验证评估</span>
-<span id="cb319-124"><a href="dl_2.html#cb319-124" tabindex="-1"></a>    model.eval()</span>
-<span id="cb319-125"><a href="dl_2.html#cb319-125" tabindex="-1"></a>    with torch.no_grad():</span>
-<span id="cb319-126"><a href="dl_2.html#cb319-126" tabindex="-1"></a>        # 移动测试数据到设备</span>
-<span id="cb319-127"><a href="dl_2.html#cb319-127" tabindex="-1"></a>        test_x, test_y = X_test.to(device), y_test.to(device)</span>
-<span id="cb319-128"><a href="dl_2.html#cb319-128" tabindex="-1"></a>        # 前向传播</span>
-<span id="cb319-129"><a href="dl_2.html#cb319-129" tabindex="-1"></a>        outputs = model(test_x)</span>
-<span id="cb319-130"><a href="dl_2.html#cb319-130" tabindex="-1"></a>        # 计算损失</span>
-<span id="cb319-131"><a href="dl_2.html#cb319-131" tabindex="-1"></a>        val_loss = criterion(outputs, test_y).item()</span>
-<span id="cb319-132"><a href="dl_2.html#cb319-132" tabindex="-1"></a>        # 计算预测结果</span>
-<span id="cb319-133"><a href="dl_2.html#cb319-133" tabindex="-1"></a>        predictions = torch.argmax(outputs, dim = 1)</span>
-<span id="cb319-134"><a href="dl_2.html#cb319-134" tabindex="-1"></a>        # 计算准确率</span>
-<span id="cb319-135"><a href="dl_2.html#cb319-135" tabindex="-1"></a>        correct_val = (predictions == test_y).sum().item()</span>
-<span id="cb319-136"><a href="dl_2.html#cb319-136" tabindex="-1"></a>        total_val = test_y.size(0)</span>
-<span id="cb319-137"><a href="dl_2.html#cb319-137" tabindex="-1"></a>        val_acc = correct_val / total_val</span>
-<span id="cb319-138"><a href="dl_2.html#cb319-138" tabindex="-1"></a>        # 存储验证结果</span>
-<span id="cb319-139"><a href="dl_2.html#cb319-139" tabindex="-1"></a>        val_losses.append(val_loss)</span>
-<span id="cb319-140"><a href="dl_2.html#cb319-140" tabindex="-1"></a>        val_accuracies.append(val_acc)</span>
-<span id="cb319-141"><a href="dl_2.html#cb319-141" tabindex="-1"></a>    </span>
-<span id="cb319-142"><a href="dl_2.html#cb319-142" tabindex="-1"></a>    # 每10个epoch打印一次进度</span>
-<span id="cb319-143"><a href="dl_2.html#cb319-143" tabindex="-1"></a>    if (epoch + 1) % 10 == 0:</span>
-<span id="cb319-144"><a href="dl_2.html#cb319-144" tabindex="-1"></a>        print(&quot;=&quot;*10,</span>
-<span id="cb319-145"><a href="dl_2.html#cb319-145" tabindex="-1"></a>              f&quot;Epoch_{epoch+1}&quot;,</span>
-<span id="cb319-146"><a href="dl_2.html#cb319-146" tabindex="-1"></a>              &quot;=&quot;*10,</span>
-<span id="cb319-147"><a href="dl_2.html#cb319-147" tabindex="-1"></a>              f&quot;\nTrain Loss: {epoch_loss:.4f}, Train Acc: {epoch_acc:.4f}\n&quot;,</span>
-<span id="cb319-148"><a href="dl_2.html#cb319-148" tabindex="-1"></a>              f&quot;Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}&quot;)</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb325-1"><a href="dl_2.html#cb325-1" tabindex="-1"></a>import torch</span>
+<span id="cb325-2"><a href="dl_2.html#cb325-2" tabindex="-1"></a>import torch.nn as nn</span>
+<span id="cb325-3"><a href="dl_2.html#cb325-3" tabindex="-1"></a>import torch.optim as optim</span>
+<span id="cb325-4"><a href="dl_2.html#cb325-4" tabindex="-1"></a>from sklearn.datasets import make_classification</span>
+<span id="cb325-5"><a href="dl_2.html#cb325-5" tabindex="-1"></a>from sklearn.model_selection import train_test_split</span>
+<span id="cb325-6"><a href="dl_2.html#cb325-6" tabindex="-1"></a>from sklearn.preprocessing import StandardScaler</span>
+<span id="cb325-7"><a href="dl_2.html#cb325-7" tabindex="-1"></a>import numpy as np</span>
+<span id="cb325-8"><a href="dl_2.html#cb325-8" tabindex="-1"></a>from torch.utils.data import TensorDataset, DataLoader</span>
+<span id="cb325-9"><a href="dl_2.html#cb325-9" tabindex="-1"></a></span>
+<span id="cb325-10"><a href="dl_2.html#cb325-10" tabindex="-1"></a># 设置随机数种子</span>
+<span id="cb325-11"><a href="dl_2.html#cb325-11" tabindex="-1"></a>torch.manual_seed(123)</span>
+<span id="cb325-12"><a href="dl_2.html#cb325-12" tabindex="-1"></a>np.random.seed(321)</span>
+<span id="cb325-13"><a href="dl_2.html#cb325-13" tabindex="-1"></a></span>
+<span id="cb325-14"><a href="dl_2.html#cb325-14" tabindex="-1"></a>def gen_data(n_samples=2000, n_features=10, n_classes=5):</span>
+<span id="cb325-15"><a href="dl_2.html#cb325-15" tabindex="-1"></a></span>
+<span id="cb325-16"><a href="dl_2.html#cb325-16" tabindex="-1"></a>    # 生成复杂的分类型数据（有重叠）</span>
+<span id="cb325-17"><a href="dl_2.html#cb325-17" tabindex="-1"></a>    X, y = make_classification(</span>
+<span id="cb325-18"><a href="dl_2.html#cb325-18" tabindex="-1"></a>        n_samples=n_samples,    # 样本数</span>
+<span id="cb325-19"><a href="dl_2.html#cb325-19" tabindex="-1"></a>        n_features=n_features,  # 特征数</span>
+<span id="cb325-20"><a href="dl_2.html#cb325-20" tabindex="-1"></a>        n_informative=8,        # 有信息量的特征数量</span>
+<span id="cb325-21"><a href="dl_2.html#cb325-21" tabindex="-1"></a>        n_redundant=2,          # 冗余特征数量</span>
+<span id="cb325-22"><a href="dl_2.html#cb325-22" tabindex="-1"></a>        n_repeated=0,           # 重复特征数量</span>
+<span id="cb325-23"><a href="dl_2.html#cb325-23" tabindex="-1"></a>        n_classes=n_classes,    # 类别数</span>
+<span id="cb325-24"><a href="dl_2.html#cb325-24" tabindex="-1"></a>        flip_y=0.15,            # 15%的噪声</span>
+<span id="cb325-25"><a href="dl_2.html#cb325-25" tabindex="-1"></a>        class_sep=0.8           # 类间分离程度</span>
+<span id="cb325-26"><a href="dl_2.html#cb325-26" tabindex="-1"></a>    )</span>
+<span id="cb325-27"><a href="dl_2.html#cb325-27" tabindex="-1"></a>    </span>
+<span id="cb325-28"><a href="dl_2.html#cb325-28" tabindex="-1"></a>    # 划分训练集和测试集</span>
+<span id="cb325-29"><a href="dl_2.html#cb325-29" tabindex="-1"></a>    X_train, X_test, y_train, y_test = train_test_split(</span>
+<span id="cb325-30"><a href="dl_2.html#cb325-30" tabindex="-1"></a>        X, y, test_size=0.2, random_state=42</span>
+<span id="cb325-31"><a href="dl_2.html#cb325-31" tabindex="-1"></a>    )</span>
+<span id="cb325-32"><a href="dl_2.html#cb325-32" tabindex="-1"></a>    </span>
+<span id="cb325-33"><a href="dl_2.html#cb325-33" tabindex="-1"></a>    # 数据标准化</span>
+<span id="cb325-34"><a href="dl_2.html#cb325-34" tabindex="-1"></a>    scaler = StandardScaler()</span>
+<span id="cb325-35"><a href="dl_2.html#cb325-35" tabindex="-1"></a>    X_train = scaler.fit_transform(X_train)</span>
+<span id="cb325-36"><a href="dl_2.html#cb325-36" tabindex="-1"></a>    X_test = scaler.transform(X_test)</span>
+<span id="cb325-37"><a href="dl_2.html#cb325-37" tabindex="-1"></a></span>
+<span id="cb325-38"><a href="dl_2.html#cb325-38" tabindex="-1"></a>    # 转换为PyTorch张量</span>
+<span id="cb325-39"><a href="dl_2.html#cb325-39" tabindex="-1"></a>    X_train = torch.tensor(X_train, dtype=torch.float32)</span>
+<span id="cb325-40"><a href="dl_2.html#cb325-40" tabindex="-1"></a>    y_train = torch.tensor(y_train, dtype=torch.long)     # 交叉熵损失函数要求标签为整数型</span>
+<span id="cb325-41"><a href="dl_2.html#cb325-41" tabindex="-1"></a>    X_test = torch.tensor(X_test, dtype=torch.float32)</span>
+<span id="cb325-42"><a href="dl_2.html#cb325-42" tabindex="-1"></a>    y_test = torch.tensor(y_test, dtype=torch.long)</span>
+<span id="cb325-43"><a href="dl_2.html#cb325-43" tabindex="-1"></a>    </span>
+<span id="cb325-44"><a href="dl_2.html#cb325-44" tabindex="-1"></a>    return X_train, X_test, y_train, y_test</span>
+<span id="cb325-45"><a href="dl_2.html#cb325-45" tabindex="-1"></a></span>
+<span id="cb325-46"><a href="dl_2.html#cb325-46" tabindex="-1"></a># 生成数据，多分类任务</span>
+<span id="cb325-47"><a href="dl_2.html#cb325-47" tabindex="-1"></a>X_train, X_test, y_train, y_test = gen_data()</span>
+<span id="cb325-48"><a href="dl_2.html#cb325-48" tabindex="-1"></a></span>
+<span id="cb325-49"><a href="dl_2.html#cb325-49" tabindex="-1"></a># 创建数据加载器</span>
+<span id="cb325-50"><a href="dl_2.html#cb325-50" tabindex="-1"></a>train_dataset = TensorDataset(X_train, y_train)</span>
+<span id="cb325-51"><a href="dl_2.html#cb325-51" tabindex="-1"></a>test_dataset = TensorDataset(X_test, y_test)</span>
+<span id="cb325-52"><a href="dl_2.html#cb325-52" tabindex="-1"></a></span>
+<span id="cb325-53"><a href="dl_2.html#cb325-53" tabindex="-1"></a>train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)</span>
+<span id="cb325-54"><a href="dl_2.html#cb325-54" tabindex="-1"></a>test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)</span>
+<span id="cb325-55"><a href="dl_2.html#cb325-55" tabindex="-1"></a></span>
+<span id="cb325-56"><a href="dl_2.html#cb325-56" tabindex="-1"></a>model = nn.Sequential(</span>
+<span id="cb325-57"><a href="dl_2.html#cb325-57" tabindex="-1"></a>    nn.Linear(10,128),</span>
+<span id="cb325-58"><a href="dl_2.html#cb325-58" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb325-59"><a href="dl_2.html#cb325-59" tabindex="-1"></a>    nn.BatchNorm1d(128),  # 对该批次数据进行标准化操作，并进行缩放和平移，可在一定程度上缓解“内部协变量偏移”情况</span>
+<span id="cb325-60"><a href="dl_2.html#cb325-60" tabindex="-1"></a>    nn.Dropout(0.2),     # 以一定概率丢弃某些神经元，从而缓解过拟合现象</span>
+<span id="cb325-61"><a href="dl_2.html#cb325-61" tabindex="-1"></a>    </span>
+<span id="cb325-62"><a href="dl_2.html#cb325-62" tabindex="-1"></a>    nn.Linear(128,64),</span>
+<span id="cb325-63"><a href="dl_2.html#cb325-63" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb325-64"><a href="dl_2.html#cb325-64" tabindex="-1"></a>    nn.BatchNorm1d(64),</span>
+<span id="cb325-65"><a href="dl_2.html#cb325-65" tabindex="-1"></a>    nn.Dropout(0.2),</span>
+<span id="cb325-66"><a href="dl_2.html#cb325-66" tabindex="-1"></a></span>
+<span id="cb325-67"><a href="dl_2.html#cb325-67" tabindex="-1"></a>    nn.Linear(64,32),</span>
+<span id="cb325-68"><a href="dl_2.html#cb325-68" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb325-69"><a href="dl_2.html#cb325-69" tabindex="-1"></a>    nn.BatchNorm1d(32),</span>
+<span id="cb325-70"><a href="dl_2.html#cb325-70" tabindex="-1"></a>    nn.Dropout(0.2),</span>
+<span id="cb325-71"><a href="dl_2.html#cb325-71" tabindex="-1"></a>    </span>
+<span id="cb325-72"><a href="dl_2.html#cb325-72" tabindex="-1"></a>    nn.Linear(32,5)      # 输出维度为类别数</span>
+<span id="cb325-73"><a href="dl_2.html#cb325-73" tabindex="-1"></a>)</span>
+<span id="cb325-74"><a href="dl_2.html#cb325-74" tabindex="-1"></a></span>
+<span id="cb325-75"><a href="dl_2.html#cb325-75" tabindex="-1"></a>criterion = nn.CrossEntropyLoss()</span>
+<span id="cb325-76"><a href="dl_2.html#cb325-76" tabindex="-1"></a>optimizer = optim.Adam(model.parameters(), lr=0.05)</span>
+<span id="cb325-77"><a href="dl_2.html#cb325-77" tabindex="-1"></a></span>
+<span id="cb325-78"><a href="dl_2.html#cb325-78" tabindex="-1"></a>device = torch.device(&#39;cuda&#39; if torch.cuda.is_available() else &#39;cpu&#39;)</span>
+<span id="cb325-79"><a href="dl_2.html#cb325-79" tabindex="-1"></a>model.to(device)</span>
+<span id="cb325-80"><a href="dl_2.html#cb325-80" tabindex="-1"></a></span>
+<span id="cb325-81"><a href="dl_2.html#cb325-81" tabindex="-1"></a># 存储训练指标</span>
+<span id="cb325-82"><a href="dl_2.html#cb325-82" tabindex="-1"></a>train_losses = []</span>
+<span id="cb325-83"><a href="dl_2.html#cb325-83" tabindex="-1"></a>train_accuracies = []</span>
+<span id="cb325-84"><a href="dl_2.html#cb325-84" tabindex="-1"></a>val_losses = []</span>
+<span id="cb325-85"><a href="dl_2.html#cb325-85" tabindex="-1"></a>val_accuracies = []</span>
+<span id="cb325-86"><a href="dl_2.html#cb325-86" tabindex="-1"></a></span>
+<span id="cb325-87"><a href="dl_2.html#cb325-87" tabindex="-1"></a>for epoch in range(100):</span>
+<span id="cb325-88"><a href="dl_2.html#cb325-88" tabindex="-1"></a>    # 训练模式</span>
+<span id="cb325-89"><a href="dl_2.html#cb325-89" tabindex="-1"></a>    model.train()</span>
+<span id="cb325-90"><a href="dl_2.html#cb325-90" tabindex="-1"></a>    running_loss = 0.0</span>
+<span id="cb325-91"><a href="dl_2.html#cb325-91" tabindex="-1"></a>    correct_train = 0</span>
+<span id="cb325-92"><a href="dl_2.html#cb325-92" tabindex="-1"></a>    total_train = 0</span>
+<span id="cb325-93"><a href="dl_2.html#cb325-93" tabindex="-1"></a>    </span>
+<span id="cb325-94"><a href="dl_2.html#cb325-94" tabindex="-1"></a>    for batch_x, batch_y in train_loader:</span>
+<span id="cb325-95"><a href="dl_2.html#cb325-95" tabindex="-1"></a>        # 移动数据到设备</span>
+<span id="cb325-96"><a href="dl_2.html#cb325-96" tabindex="-1"></a>        batch_x, batch_y = batch_x.to(device), batch_y.to(device)</span>
+<span id="cb325-97"><a href="dl_2.html#cb325-97" tabindex="-1"></a>        </span>
+<span id="cb325-98"><a href="dl_2.html#cb325-98" tabindex="-1"></a>        # 前向传播</span>
+<span id="cb325-99"><a href="dl_2.html#cb325-99" tabindex="-1"></a>        outputs = model(batch_x)</span>
+<span id="cb325-100"><a href="dl_2.html#cb325-100" tabindex="-1"></a>        </span>
+<span id="cb325-101"><a href="dl_2.html#cb325-101" tabindex="-1"></a>        # 计算损失</span>
+<span id="cb325-102"><a href="dl_2.html#cb325-102" tabindex="-1"></a>        loss = criterion(outputs, batch_y)</span>
+<span id="cb325-103"><a href="dl_2.html#cb325-103" tabindex="-1"></a>        </span>
+<span id="cb325-104"><a href="dl_2.html#cb325-104" tabindex="-1"></a>        # 反向传播和优化</span>
+<span id="cb325-105"><a href="dl_2.html#cb325-105" tabindex="-1"></a>        optimizer.zero_grad()</span>
+<span id="cb325-106"><a href="dl_2.html#cb325-106" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb325-107"><a href="dl_2.html#cb325-107" tabindex="-1"></a>        optimizer.step()</span>
+<span id="cb325-108"><a href="dl_2.html#cb325-108" tabindex="-1"></a>        </span>
+<span id="cb325-109"><a href="dl_2.html#cb325-109" tabindex="-1"></a>        # 统计训练情况</span>
+<span id="cb325-110"><a href="dl_2.html#cb325-110" tabindex="-1"></a>        running_loss += loss.item()</span>
+<span id="cb325-111"><a href="dl_2.html#cb325-111" tabindex="-1"></a>        </span>
+<span id="cb325-112"><a href="dl_2.html#cb325-112" tabindex="-1"></a>        # 计算准确率</span>
+<span id="cb325-113"><a href="dl_2.html#cb325-113" tabindex="-1"></a>        predictions = torch.argmax(outputs, dim = 1)   # logits值最大的为预测类别</span>
+<span id="cb325-114"><a href="dl_2.html#cb325-114" tabindex="-1"></a>        correct_train += (predictions == batch_y).sum().item()</span>
+<span id="cb325-115"><a href="dl_2.html#cb325-115" tabindex="-1"></a>        total_train += batch_y.size(0)</span>
+<span id="cb325-116"><a href="dl_2.html#cb325-116" tabindex="-1"></a>    </span>
+<span id="cb325-117"><a href="dl_2.html#cb325-117" tabindex="-1"></a>    # 计算本轮训练的平均损失和准确率</span>
+<span id="cb325-118"><a href="dl_2.html#cb325-118" tabindex="-1"></a>    epoch_loss = running_loss / len(train_loader)</span>
+<span id="cb325-119"><a href="dl_2.html#cb325-119" tabindex="-1"></a>    epoch_acc = correct_train / total_train if total_train &gt; 0 else 0</span>
+<span id="cb325-120"><a href="dl_2.html#cb325-120" tabindex="-1"></a>    train_losses.append(epoch_loss)</span>
+<span id="cb325-121"><a href="dl_2.html#cb325-121" tabindex="-1"></a>    train_accuracies.append(epoch_acc)</span>
+<span id="cb325-122"><a href="dl_2.html#cb325-122" tabindex="-1"></a>    </span>
+<span id="cb325-123"><a href="dl_2.html#cb325-123" tabindex="-1"></a>    # 验证评估</span>
+<span id="cb325-124"><a href="dl_2.html#cb325-124" tabindex="-1"></a>    model.eval()</span>
+<span id="cb325-125"><a href="dl_2.html#cb325-125" tabindex="-1"></a>    with torch.no_grad():</span>
+<span id="cb325-126"><a href="dl_2.html#cb325-126" tabindex="-1"></a>        # 移动测试数据到设备</span>
+<span id="cb325-127"><a href="dl_2.html#cb325-127" tabindex="-1"></a>        test_x, test_y = X_test.to(device), y_test.to(device)</span>
+<span id="cb325-128"><a href="dl_2.html#cb325-128" tabindex="-1"></a>        # 前向传播</span>
+<span id="cb325-129"><a href="dl_2.html#cb325-129" tabindex="-1"></a>        outputs = model(test_x)</span>
+<span id="cb325-130"><a href="dl_2.html#cb325-130" tabindex="-1"></a>        # 计算损失</span>
+<span id="cb325-131"><a href="dl_2.html#cb325-131" tabindex="-1"></a>        val_loss = criterion(outputs, test_y).item()</span>
+<span id="cb325-132"><a href="dl_2.html#cb325-132" tabindex="-1"></a>        # 计算预测结果</span>
+<span id="cb325-133"><a href="dl_2.html#cb325-133" tabindex="-1"></a>        predictions = torch.argmax(outputs, dim = 1)</span>
+<span id="cb325-134"><a href="dl_2.html#cb325-134" tabindex="-1"></a>        # 计算准确率</span>
+<span id="cb325-135"><a href="dl_2.html#cb325-135" tabindex="-1"></a>        correct_val = (predictions == test_y).sum().item()</span>
+<span id="cb325-136"><a href="dl_2.html#cb325-136" tabindex="-1"></a>        total_val = test_y.size(0)</span>
+<span id="cb325-137"><a href="dl_2.html#cb325-137" tabindex="-1"></a>        val_acc = correct_val / total_val</span>
+<span id="cb325-138"><a href="dl_2.html#cb325-138" tabindex="-1"></a>        # 存储验证结果</span>
+<span id="cb325-139"><a href="dl_2.html#cb325-139" tabindex="-1"></a>        val_losses.append(val_loss)</span>
+<span id="cb325-140"><a href="dl_2.html#cb325-140" tabindex="-1"></a>        val_accuracies.append(val_acc)</span>
+<span id="cb325-141"><a href="dl_2.html#cb325-141" tabindex="-1"></a>    </span>
+<span id="cb325-142"><a href="dl_2.html#cb325-142" tabindex="-1"></a>    # 每10个epoch打印一次进度</span>
+<span id="cb325-143"><a href="dl_2.html#cb325-143" tabindex="-1"></a>    if (epoch + 1) % 10 == 0:</span>
+<span id="cb325-144"><a href="dl_2.html#cb325-144" tabindex="-1"></a>        print(&quot;=&quot;*10,</span>
+<span id="cb325-145"><a href="dl_2.html#cb325-145" tabindex="-1"></a>              f&quot;Epoch_{epoch+1}&quot;,</span>
+<span id="cb325-146"><a href="dl_2.html#cb325-146" tabindex="-1"></a>              &quot;=&quot;*10,</span>
+<span id="cb325-147"><a href="dl_2.html#cb325-147" tabindex="-1"></a>              f&quot;\nTrain Loss: {epoch_loss:.4f}, Train Acc: {epoch_acc:.4f}\n&quot;,</span>
+<span id="cb325-148"><a href="dl_2.html#cb325-148" tabindex="-1"></a>              f&quot;Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}&quot;)</span></code></pre></div>
 <p>说明：</p>
 <ol style="list-style-type: decimal">
 <li><p><code>nn.CrossEntropyLoss()</code>接收预测值logits（原值）与标签。其中logits为神经网络的原始输出，无需在输出时添加Softmax激活函数，<code>nn.CrossEntropyLoss()</code>的内部会自动进行Softmax计算，避免重复计算。同时，标签要求为整数型且维度为1，不需要独热编码。</p></li>

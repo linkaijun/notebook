@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="dl_2.html"/>
-<link rel="next" href="network.html"/>
+<link rel="next" href="dl_4.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -567,6 +567,22 @@ div.csl-indent {
 <li class="chapter" data-level="11.3.2" data-path="dl_3.html"><a href="dl_3.html#dl_3_2"><i class="fa fa-check"></i><b>11.3.2</b> 示例</a></li>
 <li class="chapter" data-level="11.3.3" data-path="dl_3.html"><a href="dl_3.html#dl_3_3"><i class="fa fa-check"></i><b>11.3.3</b> 拓展</a></li>
 </ul></li>
+<li class="chapter" data-level="11.4" data-path="dl_4.html"><a href="dl_4.html"><i class="fa fa-check"></i><b>11.4</b> GRU</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="dl_4.html"><a href="dl_4.html#dl_4_1"><i class="fa fa-check"></i><b>11.4.1</b> 原理</a></li>
+<li class="chapter" data-level="11.4.2" data-path="dl_4.html"><a href="dl_4.html#dl_4_2"><i class="fa fa-check"></i><b>11.4.2</b> 示例</a></li>
+<li class="chapter" data-level="11.4.3" data-path="dl_4.html"><a href="dl_4.html#dl_4_3"><i class="fa fa-check"></i><b>11.4.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="dl_5.html"><a href="dl_5.html"><i class="fa fa-check"></i><b>11.5</b> BNN</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="dl_5.html"><a href="dl_5.html#dl_5_1"><i class="fa fa-check"></i><b>11.5.1</b> 原理</a></li>
+<li class="chapter" data-level="11.5.2" data-path="dl_5.html"><a href="dl_5.html#dl_5_2"><i class="fa fa-check"></i><b>11.5.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="dl_6.html"><a href="dl_6.html"><i class="fa fa-check"></i><b>11.6</b> GNN</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="dl_6.html"><a href="dl_6.html#dl_6_1"><i class="fa fa-check"></i><b>11.6.1</b> 原理</a></li>
+<li class="chapter" data-level="11.6.2" data-path="dl_6.html"><a href="dl_6.html#dl_6_2"><i class="fa fa-check"></i><b>11.6.2</b> 示例</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>III 多源数据分析</b></span></li>
 <li class="chapter" data-level="12" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>12</b> 网络型数据</a>
@@ -716,7 +732,12 @@ div.csl-indent {
 <p>在学习LSTM之前，可以先了解一下RNN，再去看LSTM。</p>
 <p><a href="https://www.bilibili.com/video/BV1z5411f7Bm" target="_blank">【循环神经网络】5分钟搞懂RNN，3D动画深入浅出</a></p>
 <p><a href="https://www.bilibili.com/video/BV1Z34y1k7mc" target="_blank">【LSTM长短期记忆网络】3D模型一目了然，带你领略算法背后的逻辑</a></p>
-<p>此外，GRU算是LSTM的简化版本，感兴趣的可以自行了解。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dl-p1"></span>
+<img src="pic/dl/lstm.png" alt="LSTM" width="744" />
+<p class="caption">
+图 11.1: LSTM
+</p>
+</div>
 <p>LSTM的原理简单表示为下面几个公式。</p>
 <p>记输入为<span class="math inline">\(X\)</span>，隐状态为<span class="math inline">\(H\)</span>，记忆元为<span class="math inline">\(C\)</span>，输入门为<span class="math inline">\(I\)</span>，遗忘门为<span class="math inline">\(F\)</span>，输出门为<span class="math inline">\(O\)</span>，则有</p>
 <blockquote>
@@ -727,7 +748,8 @@ div.csl-indent {
 I_t &amp;= \sigma (X_tW_{xi}+H_{t-1}W_{hi}+b_i) \\
 F_t &amp;= \sigma (X_tW_{xf}+H_{t-1}W_{hf}+b_f) \\
 O_t &amp;= \sigma (X_tW_{xo}+H_{t-1}W_{ho}+b_o) \\
-C_t &amp;= F_t \odot C_{t-1} + I_t \odot \tanh(X_tW_{xc}+H_{t-1}W_{hc}+b_c) \\
+\tilde C_t &amp;= \tanh(X_tW_{xc}+H_{t-1}W_{hc}+b_c) \\
+C_t &amp;= F_t \odot C_{t-1} + I_t \odot \tilde C_t \\
 H_t &amp;= O_t \odot \tanh (C_t)
 \end{aligned}
 \]</span></p>
@@ -894,21 +916,17 @@ H_t &amp;= O_t \odot \tanh (C_t)
 <li><p>单向与双向</p>
 <p>常规的LSTM都是从历史数据出发，由老及新，根据历史去预测未来。而双向LSTM则包含了两个LSTM层，一个在时间上从前到后，另一个在时间上从后到前。这使得模型能够捕捉序列的“历史信息”与“未来信息”，在输出时融合这两个LSTM层的隐藏状态作为最终输出。</p>
 <p>对于时间序列的预测任务只能使用单向LSTM。</p></li>
+<li><p>可与注意力机制结合起来提升性能。</p></li>
 </ol>
-
 </div>
 </div>
-<!-- </div> -->
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="dl_2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="network.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dl_4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

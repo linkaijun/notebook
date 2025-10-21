@@ -647,7 +647,10 @@ for epoch in range(100):
 
 [【LSTM长短期记忆网络】3D模型一目了然，带你领略算法背后的逻辑](https://www.bilibili.com/video/BV1Z34y1k7mc)
 
-此外，GRU算是LSTM的简化版本，感兴趣的可以自行了解。
+<div class="figure" style="text-align: center">
+<img src="./pic/dl/lstm.png" alt="LSTM" width="744" />
+<p class="caption">(\#fig:dl-p1)LSTM</p>
+</div>
 
 LSTM的原理简单表示为下面几个公式。
 
@@ -660,7 +663,8 @@ $$
 I_t &= \sigma (X_tW_{xi}+H_{t-1}W_{hi}+b_i) \\
 F_t &= \sigma (X_tW_{xf}+H_{t-1}W_{hf}+b_f) \\
 O_t &= \sigma (X_tW_{xo}+H_{t-1}W_{ho}+b_o) \\
-C_t &= F_t \odot C_{t-1} + I_t \odot \tanh(X_tW_{xc}+H_{t-1}W_{hc}+b_c) \\
+\tilde C_t &= \tanh(X_tW_{xc}+H_{t-1}W_{hc}+b_c) \\
+C_t &= F_t \odot C_{t-1} + I_t \odot \tilde C_t \\
 H_t &= O_t \odot \tanh (C_t)
 \end{aligned}
 $$
@@ -832,10 +836,520 @@ for epoch in range(num_epochs):
 
    多层LSTM将第一层LSTM的输出序列（通常是每个时间步的隐藏状态）作为输入，相较于单层LSTM能够提取更为复杂的特征。对于简单任务还是使用单层LSTM，一般层数也不宜超过4层。
 
-
 2. 单向与双向
 
    常规的LSTM都是从历史数据出发，由老及新，根据历史去预测未来。而双向LSTM则包含了两个LSTM层，一个在时间上从前到后，另一个在时间上从后到前。这使得模型能够捕捉序列的“历史信息”与“未来信息”，在输出时融合这两个LSTM层的隐藏状态作为最终输出。
    
    对于时间序列的预测任务只能使用单向LSTM。
+
+3. 可与注意力机制结合起来提升性能。
+
+## GRU {#dl_4}
+
+### 原理 {#dl_4_1}
+
+GRU是LSTM的简化版本，仅有两个门控——重置门（遗忘）与更新门，同时也缺少记忆元，这使得GRU在训练时更加快捷。
+
+<div class="figure" style="text-align: center">
+<img src="./pic/dl/GRU.png" alt="GRU" width="686" />
+<p class="caption">(\#fig:dl-p2)GRU</p>
+</div>
+
+$$
+\begin{aligned}
+R_t &= \sigma(X_t W_{xr} + H_{t-1} W_{hr} + b_r) \\
+Z_t &= \sigma(X_t W_{xz} + H_{t-1} W_{hz} + b_z) \\
+\tilde{H}_t &= \tanh(X_t W_{xh} + (R_t \odot H_{t-1}) W_{hh} + b_h) \\
+H_t &= Z_t \odot H_{t-1} + (1 - Z_t) \odot \tilde{H}_t
+\end{aligned}
+$$
+
+重置门$R_t$用于控制过去的隐藏状态有多少内容被用于生成当前候选隐藏状态，更新门$Z_t$用于控制生成当前隐藏状态时过去隐藏状态和候选隐藏状态的权重。
+
+### 示例 {#dl_4_2}
+
+
+``` default
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# ------------------------------
+# 1. 生成模拟数据
+# ------------------------------
+# 我们造一个简单的任务：输入一个时间序列（正弦+噪声），预测最后一个时刻的值
+np.random.seed(42)
+torch.manual_seed(42)
+
+def generate_data(num_samples=200, seq_len=20):
+    X = []
+    y = []
+    for _ in range(num_samples):
+        freq = np.random.uniform(0.5, 1.5)
+        phase = np.random.uniform(0, np.pi)
+        noise = np.random.normal(0, 0.1, seq_len)
+        seq = np.sin(np.linspace(0, 2 * np.pi * freq, seq_len) + phase) + noise
+        X.append(seq)
+        y.append(seq[-1])  # 预测最后一个点
+    X = np.expand_dims(np.array(X), axis=2)  # (N, T, 1)
+    y = np.expand_dims(np.array(y), axis=1)  # (N, 1)
+    return torch.tensor(X, dtype=torch.float32), torch.tensor(y, dtype=torch.float32)
+
+X, y = generate_data(num_samples=300, seq_len=30)
+train_X, test_X = X[:240], X[240:]
+train_y, test_y = y[:240], y[240:]
+
+
+# ------------------------------
+# 2. 定义 GRU 模型
+# ------------------------------
+class GRUNet(nn.Module):
+    def __init__(self, input_size, hidden_size, num_layers, output_size,
+                 dropout=0.2, bidirectional=False):
+        super(GRUNet, self).__init__()
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.bidirectional = bidirectional
+
+        self.gru = nn.GRU(
+            input_size=input_size,
+            hidden_size=hidden_size,
+            num_layers=num_layers,
+            dropout=dropout if num_layers > 1 else 0.0,
+            bidirectional=bidirectional,
+            batch_first=True
+        )
+        # 如果是双向GRU，需要乘2
+        direction_factor = 2 if bidirectional else 1
+        self.fc = nn.Linear(hidden_size * direction_factor, output_size)
+
+    def forward(self, x):
+        out, h = self.gru(x)              # out: (batch, seq, hidden*direction)
+        out = self.fc(out[:, -1, :])      # 取最后一个时间步的输出
+        return out
+
+
+# ------------------------------
+# 3. 初始化模型与优化器
+# ------------------------------
+model = GRUNet(
+    input_size=1,       # 每个时间步输入1个特征
+    hidden_size=32,     # 隐层维度
+    num_layers=1,       # 堆叠1层GRU
+    output_size=1,      # 输出一个数（预测值）
+    dropout=0.2,
+    bidirectional=False  # 是否使用双向GRU
+)
+
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.005)
+
+
+# ------------------------------
+# 4. 训练模型
+# ------------------------------
+epochs = 100
+train_losses = []
+
+for epoch in range(epochs):
+    model.train()
+    optimizer.zero_grad()
+    output = model(train_X)
+    loss = criterion(output, train_y)
+    loss.backward()
+    optimizer.step()
+
+    train_losses.append(loss.item())
+    if (epoch + 1) % 20 == 0:
+        print(f"Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.6f}")
+
+# 绘制训练损失曲线
+plt.figure(figsize=(6,4))
+plt.plot(train_losses)
+plt.title("Training Loss Curve")
+plt.xlabel("Epoch")
+plt.ylabel("MSE Loss")
+plt.show()
+
+
+# ------------------------------
+# 5. 测试与可视化
+# ------------------------------
+model.eval()
+with torch.no_grad():
+    pred = model(test_X).squeeze().numpy()
+    truth = test_y.squeeze().numpy()
+
+plt.figure(figsize=(8,5))
+plt.plot(truth, label="True")
+plt.plot(pred, label="Predicted")
+plt.legend()
+plt.title("GRU Prediction on Test Set")
+plt.show()
+
+# 计算误差指标
+mse = np.mean((pred - truth)**2)
+mae = np.mean(np.abs(pred - truth))
+print(f"Test MSE: {mse:.6f}, MAE: {mae:.6f}")
+```
+
+### 拓展 {#dl_4_3}
+
+同[LSTM](#dl_3_3)。
+
+## BNN {#dl_5}
+
+### 原理 {#dl_5_1}
+
+在传统神经网络中，模型参数（权重$w$）被视为固定值，通过最小化损失函数获得最优点估计：
+
+$$
+\hat{w} = \arg\max_w p(D|w)
+$$
+
+其中$D=\{(x_1​,y_1​),(x_2​,y_2​),…,(x_N​,y_N​)\}$表示数据集。
+
+然而，在现实问题中，数据噪声与异质性会导致模型存在显著**不确定性**。**贝叶斯神经网络（Bayesian Neural Network,BNN）**的核心思想是将模型参数$w$看作**随机变量**，并通过贝叶斯推断来量化模型不确定性。
+
+BNN 的关键思想源于贝叶斯定理：
+
+$$
+p(w|D) = \frac{p(D|w)p(w)}{p(D)}
+$$
+
+其中：
+
+- $p(w)$：参数的**先验分布**；
+- $p(D|w)$：数据在给定参数下的**似然函数**；
+- $p(w|D)$：参数的**后验分布**；
+- $p(D)$：边际似然（证据）。
+
+因此，BNN不再求单点参数$\hat{w}$，而是学习整个参数分布$p(w|D)$。
+
+给定新输入$x^*$，预测输出$y^*$的分布为：
+
+$$
+p(y^*|x^*, D) = \int p(y^*|x^*, w) \, p(w|D) \, dw
+$$
+
+由于该积分难以解析计算，通常采用**近似推断方法**求解，如：
+
+- **变分推断**
+- **马尔科夫链蒙特卡洛**
+- **Monte Carlo Dropout**
+- **深度集合**
+
+在这里仅介绍变分推断和MC Dropout方法。
+
+-----
+
+变分推断法就是用一个可学习分布$q(w|\theta)$来近似后验分布$p(w|D)$，通过最小化两者的KL散度实现优化。经过一系列推导可知，最小化KL散度等价于最大化ELBO：
+
+> 详细推导可见[什么是变分推断](https://www.bilibili.com/video/BV1MnbEzXEnc/?spm_id_from=333.337.search-card.all.click&vd_source=1ff1a8ac5564814fec4d27cae552f90e)
+
+$$
+ELBO = \mathbb{E}_{q(w|\theta)}[\log p(D|w)] - KL(q(w|\theta)\;||\;p(w))
+$$
+
+若令先验分布$p(w)$为标准正态分布，近似后验分布为正态分布，则：
+
+$$
+KL(\mathcal{N}(\mu,\sigma^2)\;||\;\mathcal{N}(0,1))
+= \frac{1}{2}(\sigma^2 + \mu^2 - 1 - \log\sigma^2)
+$$
+
+据此可用重参数化技巧$w = \mu + \sigma \epsilon, \epsilon \sim N(0,1)$来对$2$进行MC抽样。
+
+-----
+
+MC Dropout是一种**近似贝叶斯推断**方法：
+
+- 在训练和预测阶段**都启用 Dropout**；
+- 每次前向传播都会随机丢弃部分神经元；
+- 多次采样预测结果，计算均值与方差。
+
+$$
+p(y|x, D) \approx \frac{1}{M} \sum_{i=1}^{M} f(x; \hat{w}_i)
+$$
+
+每个$\hat{w}_i$对应一次随机Dropout后的网络参数。
+
+### 示例 {#dl_5_2}
+
+变分推断法：
+
+
+``` default
+# ===============================================
+# 贝叶斯神经网络 (Bayesian Neural Network) 示例
+# 使用变分近似 + 多次采样预测不确定性
+# ===============================================
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+import matplotlib.pyplot as plt
+
+
+# ------------------------------------------------
+# 1. 生成模拟数据：y = sin(x) + 噪声
+# ------------------------------------------------
+torch.manual_seed(42)
+
+N = 100
+x = torch.linspace(-3, 3, N).unsqueeze(1)
+y_true = torch.sin(x)
+y = y_true + 0.2 * torch.randn_like(y_true)  # 添加噪声
+
+plt.figure(figsize=(7, 4))
+plt.scatter(x, y, label="Noisy observations", s=15)
+plt.plot(x, y_true, color='orange', label="True function")
+plt.legend()
+plt.title("Training Data (sin function + noise)")
+plt.show()
+
+
+# ------------------------------------------------
+# 2. 定义贝叶斯线性层
+# ------------------------------------------------
+class BayesianLinear(nn.Module):
+    def __init__(self, in_features, out_features):
+        super().__init__()
+        # 均值与log方差参数
+        self.w_mu = nn.Parameter(torch.Tensor(out_features, in_features).normal_(0, 0.1))
+        self.w_logvar = nn.Parameter(torch.Tensor(out_features, in_features).normal_(-3, 0.1))
+        self.b_mu = nn.Parameter(torch.Tensor(out_features).normal_(0, 0.1))
+        self.b_logvar = nn.Parameter(torch.Tensor(out_features).normal_(-3, 0.1))
+
+    def forward(self, x, sample=True):
+        if sample:
+            w = self.w_mu + torch.exp(0.5 * self.w_logvar) * torch.randn_like(self.w_mu)
+            b = self.b_mu + torch.exp(0.5 * self.b_logvar) * torch.randn_like(self.b_mu)
+        else:
+            w, b = self.w_mu, self.b_mu
+        return F.linear(x, w, b)
+    
+    def kl_loss(self):
+        # KL 散度项：衡量权重分布与先验 N(0,1) 的距离
+        return 0.5 * torch.sum(
+            torch.exp(self.w_logvar) + self.w_mu**2 - 1.0 - self.w_logvar
+        ) + 0.5 * torch.sum(
+            torch.exp(self.b_logvar) + self.b_mu**2 - 1.0 - self.b_logvar
+        )
+
+
+# ------------------------------------------------
+# 3. 定义贝叶斯神经网络模型
+# ------------------------------------------------
+class BayesianNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = BayesianLinear(1, 20)
+        self.fc2 = BayesianLinear(20, 20)
+        self.fc3 = BayesianLinear(20, 1)
+
+    def forward(self, x, sample=True):
+        x = torch.relu(self.fc1(x, sample))
+        x = torch.relu(self.fc2(x, sample))
+        return self.fc3(x, sample)
+
+    def kl_loss(self):
+        return self.fc1.kl_loss() + self.fc2.kl_loss() + self.fc3.kl_loss()
+
+
+# ------------------------------------------------
+# 4. 训练模型
+# ------------------------------------------------
+model = BayesianNN()
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+epochs = 2000
+
+for epoch in range(epochs):
+    optimizer.zero_grad()
+    y_pred = model(x, sample=True)
+    
+    # 似然项 (MSE)
+    likelihood = F.mse_loss(y_pred, y, reduction='sum')
+    
+    # KL 散度项
+    kl = model.kl_loss()
+    
+    # 总损失 = 似然项 + KL权重
+    loss = likelihood + 1e-3 * kl
+    loss.backward()
+    optimizer.step()
+
+    if (epoch + 1) % 200 == 0:
+        print(f"Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}")
+
+
+# ------------------------------------------------
+# 5. 多次采样预测，计算不确定性
+# ------------------------------------------------
+model.eval()
+x_test = torch.linspace(-3, 3, 200).unsqueeze(1)
+pred_samples = []
+
+with torch.no_grad():
+    for _ in range(100):  # 采样100次
+        pred = model(x_test, sample=True)
+        pred_samples.append(pred)
+
+pred_stack = torch.stack(pred_samples)   # (100, 200, 1)
+y_mean = pred_stack.mean(0).squeeze()
+y_std = pred_stack.std(0).squeeze()
+
+
+# ------------------------------------------------
+# 6. 可视化预测结果与置信区间
+# ------------------------------------------------
+plt.figure(figsize=(8,5))
+plt.plot(x_test, torch.sin(x_test), 'orange', label='True function')
+plt.scatter(x, y, color='gray', s=15, label='Training data')
+plt.plot(x_test, y_mean, 'b', label='Predicted mean')
+plt.fill_between(
+    x_test.squeeze().numpy(),
+    (y_mean - 2*y_std).numpy(),
+    (y_mean + 2*y_std).numpy(),
+    color='lightblue', alpha=0.4, label='±2 std (uncertainty)'
+)
+plt.legend()
+plt.title("Bayesian Neural Network Prediction with Uncertainty")
+plt.show()
+
+```
+
+-----------
+
+Droptout法：
+
+
+``` default
+# ===========================================================
+# Monte Carlo Dropout 版 贝叶斯神经网络 (Bayesian NN)
+# ===========================================================
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+import matplotlib.pyplot as plt
+
+# -------------------------------------------------
+# 1. 生成模拟数据：y = sin(x) + 噪声
+# -------------------------------------------------
+torch.manual_seed(42)
+
+N = 100
+x = torch.linspace(-3, 3, N).unsqueeze(1)
+y_true = torch.sin(x)
+y = y_true + 0.2 * torch.randn_like(y_true)
+
+plt.figure(figsize=(7,4))
+plt.scatter(x, y, label="Noisy observations", s=15)
+plt.plot(x, y_true, color='orange', label="True function")
+plt.legend()
+plt.title("Training Data (sin function + noise)")
+plt.show()
+
+
+# -------------------------------------------------
+# 2. 定义 Dropout 版神经网络
+# -------------------------------------------------
+class MCDropoutNN(nn.Module):
+    def __init__(self, input_dim=1, hidden_dim=64, output_dim=1, dropout_p=0.2):
+        super(MCDropoutNN, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc3 = nn.Linear(hidden_dim, output_dim)
+        self.dropout = nn.Dropout(p=dropout_p)
+        
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = torch.relu(self.fc2(x))
+        x = self.dropout(x)
+        x = self.fc3(x)
+        return x
+
+
+# -------------------------------------------------
+# 3. 训练模型
+# -------------------------------------------------
+model = MCDropoutNN(input_dim=1, hidden_dim=64, dropout_p=0.2)
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+criterion = nn.MSELoss()
+
+epochs = 2000
+for epoch in range(epochs):
+    model.train()
+    optimizer.zero_grad()
+    y_pred = model(x)
+    loss = criterion(y_pred, y)
+    loss.backward()
+    optimizer.step()
+
+    if (epoch + 1) % 200 == 0:
+        print(f"Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}")
+
+
+# -------------------------------------------------
+# 4. 测试阶段：启用 Dropout，多次采样预测
+# -------------------------------------------------
+def mc_dropout_predict(model, x_test, n_samples=100):
+    model.train()  # 关键！保持 Dropout 激活状态
+    preds = []
+    with torch.no_grad():
+        for _ in range(n_samples):
+            pred = model(x_test)
+            preds.append(pred)
+    preds = torch.stack(preds)  # (n_samples, N, 1)
+    return preds
+
+x_test = torch.linspace(-3, 3, 200).unsqueeze(1)
+preds = mc_dropout_predict(model, x_test, n_samples=100)
+y_mean = preds.mean(0).squeeze()
+y_std = preds.std(0).squeeze()
+
+
+# -------------------------------------------------
+# 5. 可视化结果
+# -------------------------------------------------
+plt.figure(figsize=(8,5))
+plt.plot(x_test, torch.sin(x_test), 'orange', label='True function')
+plt.scatter(x, y, color='gray', s=15, label='Training data')
+plt.plot(x_test, y_mean, 'b', label='Predicted mean')
+plt.fill_between(
+    x_test.squeeze().numpy(),
+    (y_mean - 2*y_std).numpy(),
+    (y_mean + 2*y_std).numpy(),
+    color='lightblue', alpha=0.4, label='±2 std (uncertainty)'
+)
+plt.legend()
+plt.title("MC Dropout Bayesian Neural Network (Uncertainty Estimation)")
+plt.show()
+```
+
+## GNN {#dl_6}
+
+### 原理 {#dl_6_1}
+
+
+
+### 示例 {#dl_6_2}
+
+
+
+
+
+
+
+
+
+
+
+
 

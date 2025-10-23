@@ -1335,21 +1335,305 @@ plt.show()
 
 ## GNN {#dl_6}
 
+[零基础多图详解图神经网络（GNN/GCN）【论文精读】](https://www.bilibili.com/video/BV1iT4y1d7zP/?spm_id_from=333.337.search-card.all.click&vd_source=1ff1a8ac5564814fec4d27cae552f90e)
+
 ### 原理 {#dl_6_1}
 
+1. 图的结构
+
+   图由边与节点构成，即$G=\{V,E\}$，有时还会附带全局信息$\text{Master Node(U)}$。无论是节点、边还是全局信息，都可通过向量来存储数据。而对于图的连接信息，则可通过**邻接列表**（二维列表，每个子列表代表谁与谁连接）来存储。
+   
+2. 信息聚合
+
+   边、节点亦或是全局信息都可通过信息聚合的方式从邻居（三者都可以）处获取信息。可通过求和、求平均、取最大值的形式完成信息聚合。
+   
+   > sum、mean、max的操作没有显著差异
+
+3. 输入与输出
+
+   图神经网络的输入与输出都是图，每个GNN层都是一次信息聚合，从而完成节点、边或全局信息的更新。堆叠层数越多就是让元素能够逐步整合更大范围的图结构信息。
+   
+### 图神经网络的类型 {#dl_6_2}
+
+1. GCN（图卷积神经网络）
+
+   GCN以节点为研究单位，根据连接关系从邻居节点处聚合特征。
+
+2. GAT（图注意力网络）
+
+   引入注意力机制，使得GCN能够根据注意力得分对邻居特征进行加权。
+
+3. ST-GNN（时空图神经网络）
+
+   利用图神经网络从空间角度建模，也就是说可以用图神经网络对具有网络结构的数据进行特征提取。之后可将提取后的特征代入到时序模型，例如LSTM、GRU等。通过同时捕捉节点间拓扑依赖和时间动态变化，实现对时空关联数据的精准预测。
+
+### 示例 {#dl_6_3}
+
+图神经网络建模可通过`torch_geometric`实现。基本建模过程就是定义图数据结构（确定每个节点的特征、构建边关系），之后再定义图神经网络模型即可。
+
+> 注意图神经网络的视角是空间视角，抓住数据中的结构关系即可
 
 
-### 示例 {#dl_6_2}
+``` default
+import torch
+import torch.nn.functional as F
+from torch_geometric.data import Data
+from torch_geometric.nn import GCNConv
+
+# ===============================
+# 1️⃣ 定义图结构
+# ===============================
+
+# 图的边 (source, target)，采用 COO 格式
+# 例如：0↔1, 1↔2, 2↔3, 3↔4, 4↔0
+edge_index = torch.tensor([
+    [0, 1, 2, 3, 4, 1, 2, 3, 4, 0],  # source
+    [1, 2, 3, 4, 0, 0, 1, 2, 3, 4]   # target
+], dtype=torch.long)
+
+# 每个节点的特征（这里每个节点3维）
+x = torch.randn((5, 3))
+
+# 如果是节点分类任务，可加上节点标签
+y = torch.tensor([0, 1, 0, 1, 0], dtype=torch.long)
+
+# 构建图数据对象
+data = Data(x=x, edge_index=edge_index, y=y)
+
+print("图信息：")
+print(data)
+print("节点特征形状:", data.x.shape)
+print("边数量:", data.edge_index.shape[1])
+
+# ===============================
+# 2️⃣ 定义 GCN 模型
+# ===============================
+class GCN(torch.nn.Module):
+    def __init__(self, in_channels, hidden_channels, out_channels):
+        super(GCN, self).__init__()
+        self.conv1 = GCNConv(in_channels, hidden_channels)
+        self.conv2 = GCNConv(hidden_channels, out_channels)
+
+    def forward(self, x, edge_index):
+        # 第一层：图卷积 + ReLU
+        x = self.conv1(x, edge_index)
+        x = F.relu(x)
+        # 第二层：图卷积 + Softmax 输出（用于分类）
+        x = self.conv2(x, edge_index)
+        return x
+
+# ===============================
+# 3️⃣ 实例化模型并前向传播
+# ===============================
+model = GCN(in_channels=3, hidden_channels=4, out_channels=2)
+out = model(data.x, data.edge_index)
+
+print("\n输出特征形状:", out.shape)
+print("输出节点嵌入：\n", out)
+
+# 若是分类任务：
+pred = out.argmax(dim=1)
+print("\n节点类别预测：", pred)
+
+```
+
+## Diffusion Model {#dl_7}
+
+扩散模型（Diffusion Model）是一类生成模型，其核心思想是通过逐步添加噪声再逐步去噪，从而学习到复杂数据的分布并生成新的样本。
+
+### 原理 {#dl_7_1}
+
+在前向过程中，设原始样本为$x_0$，通过$T$步逐步加噪，得到$x_1, x_2, \dots, x_T$。
+
+每一步定义为：
+
+$$
+q(x_t | x_{t-1}) = \mathcal{N}\left(x_t; \sqrt{1 - \beta_t}x_{t-1}, \, \beta_t I \right)
+$$
+
+其中：
+
+- $\beta_t \in (0, 1)$ 为每步噪声强度；
+- $I$ 为单位协方差矩阵。
+
+通过多步叠加，最终数据会趋近标准高斯分布：
+
+$$
+x_T \sim \mathcal{N}(0, I)
+$$
+
+利用高斯链式性质，可以直接写出任意时刻 $t$ 的显式表达式：
+
+$$
+q(x_t | x_0) = \mathcal{N}\left(x_t; \sqrt{\bar{\alpha_t}}x_0, \, (1 - \bar{\alpha_t})I \right)
+$$
+
+其中：
+
+$$
+\alpha_t = 1 - \beta_t, \quad \bar{\alpha_t} = \prod_{s=1}^t \alpha_s
+$$
+
+这意味着我们可以**一次性**将任意样本 $x_0$ 加噪为第 $t$ 步状态 $x_t$，无需逐步生成。
+
+之后在反向过程中，从纯噪声 $x_T \sim \mathcal{N}(0, I)$ 开始，学习反向马尔可夫链：
+
+$$
+p_\theta(x_{t-1} | x_t) = \mathcal{N}\left(x_{t-1}; \mu_\theta(x_t, t), \, \Sigma_\theta(x_t, t)\right)
+$$
+
+由于真实的 $q(x_{t-1}|x_t)$ 不可得，我们用神经网络 $\epsilon_\theta(x_t, t)$ 来近似噪声分布，
+并将均值项重写为：
+
+$$
+\mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha_t}}} \, \epsilon_\theta(x_t, t) \right)
+$$
+
+训练目标是最小化模型预测噪声与真实噪声之间的均方误差：
+
+$$
+L(\theta) = \mathbb{E}_{x_0, t, \epsilon}\left[ \| \epsilon - \epsilon_\theta(x_t, t) \|^2 \right]
+$$
+
+即让模型在任意加噪程度下，准确预测噪声成分。
+
+**实现逻辑：**
+
+1. 随机采样时间步 $t$；
+2. 采样噪声 $\epsilon \sim \mathcal{N}(0, I)$；
+3. 一次性计算加噪样本：
+   $$
+   x_t = \sqrt{\bar{\alpha_t}}x_0 + \sqrt{1 - \bar{\alpha_t}}\epsilon
+   $$
+4. 训练模型预测噪声：
+   $$
+   \epsilon_\theta(x_t, t) \approx \epsilon
+   $$
+5. 最小化预测误差。
+
+训练完成后，从标准高斯噪声开始逆向去噪：
+
+$$
+x_{t-1} = \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha_t}}} \epsilon_\theta(x_t, t) \right)
++ \sigma_t z, \quad z \sim \mathcal{N}(0, I)
+$$
+
+循环从 $t = T$ 到 $t = 1$，即可生成新的样本 $x_0$。
+
+### 示例 {#dl_7_2}
 
 
+``` default
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import matplotlib.pyplot as plt
 
+# ========================
+# 1️⃣ 定义超参数
+# ========================
+device = "cuda" if torch.cuda.is_available() else "cpu"
+T = 1000                       # 扩散步数
+beta_start, beta_end = 1e-4, 0.02
+betas = torch.linspace(beta_start, beta_end, T).to(device)
+alphas = 1.0 - betas
+alpha_bars = torch.cumprod(alphas, dim=0)
 
+# ========================
+# 2️⃣ 构造一个简单数据集（1维高斯分布）
+# ========================
+N = 1000
+x0 = torch.randn(N, 1).to(device) * 2 + 3  # 数据分布：N(3, 4)
+plt.hist(x0.cpu().numpy(), bins=50, density=True)
+plt.title("Training data distribution")
+plt.show()
 
+# ========================
+# 3️⃣ 前向加噪函数 q(x_t | x_0)
+# ========================
+def q_sample(x0, t, noise=None):
+    if noise is None:
+        noise = torch.randn_like(x0)
+    sqrt_ab = torch.sqrt(alpha_bars[t]).view(-1, 1)
+    sqrt_one_minus_ab = torch.sqrt(1 - alpha_bars[t]).view(-1, 1)
+    return sqrt_ab * x0 + sqrt_one_minus_ab * noise
 
+# ========================
+# 4️⃣ 定义去噪网络 ε_θ(x_t, t)
+# ========================
+class DenoiseNet(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(2, 128),
+            nn.ReLU(),
+            nn.Linear(128, 128),
+            nn.ReLU(),
+            nn.Linear(128, 1)
+        )
+    def forward(self, x_t, t):
+        # 将时间步归一化后拼接输入
+        t_embed = t.float().unsqueeze(1) / T
+        x_in = torch.cat([x_t, t_embed], dim=1)
+        return self.net(x_in)
 
+model = DenoiseNet().to(device)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
+# ========================
+# 5️⃣ 训练过程
+# ========================
+epochs = 1000
+for epoch in range(epochs):
+    t = torch.randint(0, T, (N,), device=device)  # 随机时间步
+    noise = torch.randn_like(x0)
+    x_t = q_sample(x0, t, noise)
 
+    noise_pred = model(x_t, t)
+    loss = F.mse_loss(noise_pred, noise)
 
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
 
+    if epoch % 100 == 0:
+        print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
 
+# ========================
+# 6️⃣ 采样（从纯噪声逆扩散生成）
+# ========================
+@torch.no_grad()
+def p_sample(model, x_t, t):
+    beta_t = betas[t]
+    alpha_t = alphas[t]
+    alpha_bar_t = alpha_bars[t]
+    noise_pred = model(x_t, torch.tensor([t]*x_t.shape[0], device=device))
+    mean = (1 / torch.sqrt(alpha_t)) * (
+        x_t - (1 - alpha_t) / torch.sqrt(1 - alpha_bar_t) * noise_pred
+    )
+    if t > 0:
+        z = torch.randn_like(x_t)
+    else:
+        z = 0
+    return mean + torch.sqrt(beta_t) * z
+
+@torch.no_grad()
+def sample(model, n_samples=1000):
+    x_t = torch.randn(n_samples, 1).to(device)
+    for t in reversed(range(T)):
+        x_t = p_sample(model, x_t, t)
+    return x_t
+
+samples = sample(model, n_samples=1000).cpu().numpy()
+
+# ========================
+# 7️⃣ 可视化结果
+# ========================
+plt.figure(figsize=(8,5))
+plt.hist(x0.cpu().numpy(), bins=50, density=True, alpha=0.5, label="Real data")
+plt.hist(samples, bins=50, density=True, alpha=0.5, label="Generated data")
+plt.legend()
+plt.title("DDPM training vs sampling result")
+plt.show()
+```
 

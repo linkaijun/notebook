@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>参考文献 | kj的学习笔记</title>
+  <title>11.7 Diffusion Model | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="参考文献 | kj的学习笔记" />
+  <meta property="og:title" content="11.7 Diffusion Model | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="参考文献 | kj的学习笔记" />
+  <meta name="twitter:title" content="11.7 Diffusion Model | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="jap.html"/>
-
+<link rel="prev" href="dl_6.html"/>
+<link rel="next" href="network.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -731,116 +731,186 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="参考文献" class="section level1 unnumbered hasAnchor">
-<h1>参考文献<a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h1>
-<div id="refs" class="references csl-bib-body" entry-spacing="0">
-<div class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">SIMON N. FRIEDMAN J H. HASTIE T. 等. Regularization paths for Cox’s proportional hazards model via coordinate descent[J]. Journal of Statistical Software, 2011, 39: 1-13.</div>
+<div id="dl_7" class="section level2 hasAnchor" number="11.7">
+<h2><span class="header-section-number">11.7</span> Diffusion Model<a href="dl_7.html#dl_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>扩散模型（Diffusion Model）是一类生成模型，其核心思想是通过逐步添加噪声再逐步去噪，从而学习到复杂数据的分布并生成新的样本。</p>
+<div id="dl_7_1" class="section level3 hasAnchor" number="11.7.1">
+<h3><span class="header-section-number">11.7.1</span> 原理<a href="dl_7.html#dl_7_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在前向过程中，设原始样本为<span class="math inline">\(x_0\)</span>，通过<span class="math inline">\(T\)</span>步逐步加噪，得到<span class="math inline">\(x_1, x_2, \dots, x_T\)</span>。</p>
+<p>每一步定义为：</p>
+<p><span class="math display">\[
+q(x_t | x_{t-1}) = \mathcal{N}\left(x_t; \sqrt{1 - \beta_t}x_{t-1}, \, \beta_t I \right)
+\]</span></p>
+<p>其中：</p>
+<ul>
+<li><span class="math inline">\(\beta_t \in (0, 1)\)</span> 为每步噪声强度；</li>
+<li><span class="math inline">\(I\)</span> 为单位协方差矩阵。</li>
+</ul>
+<p>通过多步叠加，最终数据会趋近标准高斯分布：</p>
+<p><span class="math display">\[
+x_T \sim \mathcal{N}(0, I)
+\]</span></p>
+<p>利用高斯链式性质，可以直接写出任意时刻 <span class="math inline">\(t\)</span> 的显式表达式：</p>
+<p><span class="math display">\[
+q(x_t | x_0) = \mathcal{N}\left(x_t; \sqrt{\bar{\alpha_t}}x_0, \, (1 - \bar{\alpha_t})I \right)
+\]</span></p>
+<p>其中：</p>
+<p><span class="math display">\[
+\alpha_t = 1 - \beta_t, \quad \bar{\alpha_t} = \prod_{s=1}^t \alpha_s
+\]</span></p>
+<p>这意味着我们可以<strong>一次性</strong>将任意样本 <span class="math inline">\(x_0\)</span> 加噪为第 <span class="math inline">\(t\)</span> 步状态 <span class="math inline">\(x_t\)</span>，无需逐步生成。</p>
+<p>之后在反向过程中，从纯噪声 <span class="math inline">\(x_T \sim \mathcal{N}(0, I)\)</span> 开始，学习反向马尔可夫链：</p>
+<p><span class="math display">\[
+p_\theta(x_{t-1} | x_t) = \mathcal{N}\left(x_{t-1}; \mu_\theta(x_t, t), \, \Sigma_\theta(x_t, t)\right)
+\]</span></p>
+<p>由于真实的 <span class="math inline">\(q(x_{t-1}|x_t)\)</span> 不可得，我们用神经网络 <span class="math inline">\(\epsilon_\theta(x_t, t)\)</span> 来近似噪声分布，
+并将均值项重写为：</p>
+<p><span class="math display">\[
+\mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha_t}}} \, \epsilon_\theta(x_t, t) \right)
+\]</span></p>
+<p>训练目标是最小化模型预测噪声与真实噪声之间的均方误差：</p>
+<p><span class="math display">\[
+L(\theta) = \mathbb{E}_{x_0, t, \epsilon}\left[ \| \epsilon - \epsilon_\theta(x_t, t) \|^2 \right]
+\]</span></p>
+<p>即让模型在任意加噪程度下，准确预测噪声成分。</p>
+<p><strong>实现逻辑：</strong></p>
+<ol style="list-style-type: decimal">
+<li>随机采样时间步 <span class="math inline">\(t\)</span>；</li>
+<li>采样噪声 <span class="math inline">\(\epsilon \sim \mathcal{N}(0, I)\)</span>；</li>
+<li>一次性计算加噪样本：
+<span class="math display">\[
+x_t = \sqrt{\bar{\alpha_t}}x_0 + \sqrt{1 - \bar{\alpha_t}}\epsilon
+\]</span></li>
+<li>训练模型预测噪声：
+<span class="math display">\[
+\epsilon_\theta(x_t, t) \approx \epsilon
+\]</span></li>
+<li>最小化预测误差。</li>
+</ol>
+<p>训练完成后，从标准高斯噪声开始逆向去噪：</p>
+<p><span class="math display">\[
+x_{t-1} = \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha_t}}} \epsilon_\theta(x_t, t) \right)
++ \sigma_t z, \quad z \sim \mathcal{N}(0, I)
+\]</span></p>
+<p>循环从 <span class="math inline">\(t = T\)</span> 到 <span class="math inline">\(t = 1\)</span>，即可生成新的样本 <span class="math inline">\(x_0\)</span>。</p>
 </div>
-<div class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">何勇. 石伟. 陈旭辉. 基于社会网络分析的文旅产业融合空间结构研究[J]. 东南大学学报（哲学社会科学版）, 2024, 26(3): 107-116.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">张正峰. 张栋. 基于社会网络分析的京津冀地区碳排放空间关联与碳平衡分区[J]. 中国环境科学, 2023, 43(4): 2057-2068.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">邱志萍. 刘举胜. 何建佳. 我国商贸流通网络的结构特征及驱动因素——基于引力模型的社会网络分析[J]. 中国流通经济, 2023, 37(2): 31-42.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">张露露. 刘安诺. 尤梅. 等. 社区老年人老化态度的潜在剖面分析及其与社会网络的关系[J]. 军事护理, 2024, 41(8): 39-42, 73.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">黄文胜. 肖利斌. 郑向敏. 民营酒店员工社会网络类型和结构特性研究——基于中心性、凝聚子群的视角[J]. 企业经济, 2020(5): 87-94.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[7] </div><div class="csl-right-inline">张鑫. 刘秉权. 王晓龙. 复杂网络中社区发现方法的研究[J]. 计算机工程与应用, 2015, 51(24): 1-7.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[8] </div><div class="csl-right-inline">端祥宇. 袁冠. 孟凡荣. 动态社区发现方法研究综述[J]. 计算机科学与探索, 2021, 15(4): 612-630.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[9] </div><div class="csl-right-inline">刘军. QAP:测量"关系"之间关系的一种方法[J]. 社会, 2007, 27(4): 164-174.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[10] </div><div class="csl-right-inline">姜小鱼. 陈秧分. 农业对外投资布局对母国参与全球价值链的影响——基于社会网络分析视角[J]. 华中农业大学学报（社会科学版）, 2023(3): 44-53.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[11] </div><div class="csl-right-inline">王珊珊. 孙程九. 经济制裁是否破坏了增加值贸易网络——基于全球制裁数据的社会网络分析[J]. 国际贸易问题, 2023(2): 74-91.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[12] </div><div class="csl-right-inline">张亚明. 付尧飞. 宋雯婕. 等. 社交媒体时代全球智库国际传播力研究:基于87家智库Twitter账户的社交网络分析[J]. 智库理论与实践, 2024, 9(2): 48-59.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[13] </div><div class="csl-right-inline">FRIEDMAN J. HASTIE T. TIBSHIRANI R. Regularization paths for generalized linear models via coordinate descent[J]. Journal of Statistical Software, 2010, 33(1): 1.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[14] </div><div class="csl-right-inline">FAN J. LI R. Variable selection via nonconcave penalized likelihood and its oracle properties[J]. Journal of the American Statistical Association, 2001, 96(456): 1348-1360.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[15] </div><div class="csl-right-inline">TIBSHIRANI R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 1996, 58(1): 267-288.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[16] </div><div class="csl-right-inline">DONOHO D L. JOHNSTONE I M. Ideal spatial adaptation by wavelet shrinkage[J/OL]. Biometrika, 1994, 81: 425-455. <a href="https://api.semanticscholar.org/CorpusID:239520">https://api.semanticscholar.org/CorpusID:239520</a>.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[17] </div><div class="csl-right-inline">ZOU. HUI. The Adaptive Lasso and Its Oracle Properties[J]. Publications of the American Statistical Association, 2006, 101(476): 1418-1429.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[18] </div><div class="csl-right-inline">王小燕. 谢邦昌. 马双鸽. 等. 高维数据下群组变量选择的惩罚方法综述[J]. 数理统计与管理, 2015, 34(6): 978-988.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[19] </div><div class="csl-right-inline">HOERL A E. KENNARD R W. Ridge regression: Biased estimation for nonorthogonal problems[J]. Technometrics, 1970, 12(1): 55-67.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[20] </div><div class="csl-right-inline">ZOU H. HASTIE T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 2005, 67(2): 301-320.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[21] </div><div class="csl-right-inline">ZHANG C H. Penalized linear unbiased selection[J]. Department of Statistics and Bioinformatics, Rutgers University, 2007, 3(2010): 894-942.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[22] </div><div class="csl-right-inline">EFRON B. HASTIE T. TIBSHIRANI J R. Least Angle Regression[J]. Annals of Statistics, 2004, 32(2): 407-451.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[23] </div><div class="csl-right-inline">HUANG J. BREHENY P. LEE S. 等. The Mnet method for variable selection[J]. Statistica Sinica, 2016: 903-923.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[24] </div><div class="csl-right-inline">ZENG L. XIE J. Group variable selection via SCAD-L2[J/OL]. Statistics, 2014, 48: 49-66. <a href="https://api.semanticscholar.org/CorpusID:14065404">https://api.semanticscholar.org/CorpusID:14065404</a>.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[25] </div><div class="csl-right-inline">ZENG L. XIE J. Group variable selection for data with dependent structures[J]. Journal of Statistical Computation and Simulation, 2012, 82(1): 95-106.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[26] </div><div class="csl-right-inline">YUAN M. LIN Y. Model selection and estimation in regression with grouped variables[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 2006, 68(1): 49-67.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[27] </div><div class="csl-right-inline">ZHAO P. ROCHA G. YU B. The composite absolute penalties family for grouped and hierarchical variable selection[J]. 2009.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[28] </div><div class="csl-right-inline">HUANG J. MA S. XIE H. 等. A group bridge approach for variable selection[J]. Biometrika, 2009, 96(2): 339-355.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[29] </div><div class="csl-right-inline">BREHENY P. HUANG J. Penalized methods for bi-level variable selection[J]. Statistics and Its Interface, 2009, 2(3): 369.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[30] </div><div class="csl-right-inline">SIMON N. FRIEDMAN J. HASTIE T. 等. A Sparse-Group Lasso[J]. Journal of Computational and Graphical Statistics: A Joint Publication of American Statistical Association, Institute of Mathematical Statistics, Interface Foundation of North America, 2013, 22(2): 231-245.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[31] </div><div class="csl-right-inline">马双鸽. 王小燕. 方匡南. 大数据的整合分析方法[J]. 统计研究, 2015, 32(11): 3-11.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[32] </div><div class="csl-right-inline">MA S. HUANG J. A Concave Pairwise Fusion Approach to Subgroup Analysis[J/OL]. Journal of the American Statistical Association, 2017, 112(517): 410-423. DOI:<a href="https://doi.org/10.1080/01621459.2016.1148039">10.1080/01621459.2016.1148039</a>.</div>
-</div>
-<div class="csl-entry">
-<div class="csl-left-margin">[33] </div><div class="csl-right-inline">CAI T. HU T. Subgroup detection in the heterogeneous partially linear additive Cox model[J/OL]. Journal of Nonparametric Statistics, 2024, 0(0): 1-26. DOI:<a href="https://doi.org/10.1080/10485252.2024.2303103">10.1080/10485252.2024.2303103</a>.</div>
-</div>
-</div>
+<div id="dl_7_2" class="section level3 hasAnchor" number="11.7.2">
+<h3><span class="header-section-number">11.7.2</span> 示例<a href="dl_7.html#dl_7_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div class="sourceCode" id="cb331"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb331-1"><a href="dl_7.html#cb331-1" tabindex="-1"></a>import torch</span>
+<span id="cb331-2"><a href="dl_7.html#cb331-2" tabindex="-1"></a>import torch.nn as nn</span>
+<span id="cb331-3"><a href="dl_7.html#cb331-3" tabindex="-1"></a>import torch.nn.functional as F</span>
+<span id="cb331-4"><a href="dl_7.html#cb331-4" tabindex="-1"></a>import matplotlib.pyplot as plt</span>
+<span id="cb331-5"><a href="dl_7.html#cb331-5" tabindex="-1"></a></span>
+<span id="cb331-6"><a href="dl_7.html#cb331-6" tabindex="-1"></a># ========================</span>
+<span id="cb331-7"><a href="dl_7.html#cb331-7" tabindex="-1"></a># 1️⃣ 定义超参数</span>
+<span id="cb331-8"><a href="dl_7.html#cb331-8" tabindex="-1"></a># ========================</span>
+<span id="cb331-9"><a href="dl_7.html#cb331-9" tabindex="-1"></a>device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;</span>
+<span id="cb331-10"><a href="dl_7.html#cb331-10" tabindex="-1"></a>T = 1000                       # 扩散步数</span>
+<span id="cb331-11"><a href="dl_7.html#cb331-11" tabindex="-1"></a>beta_start, beta_end = 1e-4, 0.02</span>
+<span id="cb331-12"><a href="dl_7.html#cb331-12" tabindex="-1"></a>betas = torch.linspace(beta_start, beta_end, T).to(device)</span>
+<span id="cb331-13"><a href="dl_7.html#cb331-13" tabindex="-1"></a>alphas = 1.0 - betas</span>
+<span id="cb331-14"><a href="dl_7.html#cb331-14" tabindex="-1"></a>alpha_bars = torch.cumprod(alphas, dim=0)</span>
+<span id="cb331-15"><a href="dl_7.html#cb331-15" tabindex="-1"></a></span>
+<span id="cb331-16"><a href="dl_7.html#cb331-16" tabindex="-1"></a># ========================</span>
+<span id="cb331-17"><a href="dl_7.html#cb331-17" tabindex="-1"></a># 2️⃣ 构造一个简单数据集（1维高斯分布）</span>
+<span id="cb331-18"><a href="dl_7.html#cb331-18" tabindex="-1"></a># ========================</span>
+<span id="cb331-19"><a href="dl_7.html#cb331-19" tabindex="-1"></a>N = 1000</span>
+<span id="cb331-20"><a href="dl_7.html#cb331-20" tabindex="-1"></a>x0 = torch.randn(N, 1).to(device) * 2 + 3  # 数据分布：N(3, 4)</span>
+<span id="cb331-21"><a href="dl_7.html#cb331-21" tabindex="-1"></a>plt.hist(x0.cpu().numpy(), bins=50, density=True)</span>
+<span id="cb331-22"><a href="dl_7.html#cb331-22" tabindex="-1"></a>plt.title(&quot;Training data distribution&quot;)</span>
+<span id="cb331-23"><a href="dl_7.html#cb331-23" tabindex="-1"></a>plt.show()</span>
+<span id="cb331-24"><a href="dl_7.html#cb331-24" tabindex="-1"></a></span>
+<span id="cb331-25"><a href="dl_7.html#cb331-25" tabindex="-1"></a># ========================</span>
+<span id="cb331-26"><a href="dl_7.html#cb331-26" tabindex="-1"></a># 3️⃣ 前向加噪函数 q(x_t | x_0)</span>
+<span id="cb331-27"><a href="dl_7.html#cb331-27" tabindex="-1"></a># ========================</span>
+<span id="cb331-28"><a href="dl_7.html#cb331-28" tabindex="-1"></a>def q_sample(x0, t, noise=None):</span>
+<span id="cb331-29"><a href="dl_7.html#cb331-29" tabindex="-1"></a>    if noise is None:</span>
+<span id="cb331-30"><a href="dl_7.html#cb331-30" tabindex="-1"></a>        noise = torch.randn_like(x0)</span>
+<span id="cb331-31"><a href="dl_7.html#cb331-31" tabindex="-1"></a>    sqrt_ab = torch.sqrt(alpha_bars[t]).view(-1, 1)</span>
+<span id="cb331-32"><a href="dl_7.html#cb331-32" tabindex="-1"></a>    sqrt_one_minus_ab = torch.sqrt(1 - alpha_bars[t]).view(-1, 1)</span>
+<span id="cb331-33"><a href="dl_7.html#cb331-33" tabindex="-1"></a>    return sqrt_ab * x0 + sqrt_one_minus_ab * noise</span>
+<span id="cb331-34"><a href="dl_7.html#cb331-34" tabindex="-1"></a></span>
+<span id="cb331-35"><a href="dl_7.html#cb331-35" tabindex="-1"></a># ========================</span>
+<span id="cb331-36"><a href="dl_7.html#cb331-36" tabindex="-1"></a># 4️⃣ 定义去噪网络 ε_θ(x_t, t)</span>
+<span id="cb331-37"><a href="dl_7.html#cb331-37" tabindex="-1"></a># ========================</span>
+<span id="cb331-38"><a href="dl_7.html#cb331-38" tabindex="-1"></a>class DenoiseNet(nn.Module):</span>
+<span id="cb331-39"><a href="dl_7.html#cb331-39" tabindex="-1"></a>    def __init__(self):</span>
+<span id="cb331-40"><a href="dl_7.html#cb331-40" tabindex="-1"></a>        super().__init__()</span>
+<span id="cb331-41"><a href="dl_7.html#cb331-41" tabindex="-1"></a>        self.net = nn.Sequential(</span>
+<span id="cb331-42"><a href="dl_7.html#cb331-42" tabindex="-1"></a>            nn.Linear(2, 128),</span>
+<span id="cb331-43"><a href="dl_7.html#cb331-43" tabindex="-1"></a>            nn.ReLU(),</span>
+<span id="cb331-44"><a href="dl_7.html#cb331-44" tabindex="-1"></a>            nn.Linear(128, 128),</span>
+<span id="cb331-45"><a href="dl_7.html#cb331-45" tabindex="-1"></a>            nn.ReLU(),</span>
+<span id="cb331-46"><a href="dl_7.html#cb331-46" tabindex="-1"></a>            nn.Linear(128, 1)</span>
+<span id="cb331-47"><a href="dl_7.html#cb331-47" tabindex="-1"></a>        )</span>
+<span id="cb331-48"><a href="dl_7.html#cb331-48" tabindex="-1"></a>    def forward(self, x_t, t):</span>
+<span id="cb331-49"><a href="dl_7.html#cb331-49" tabindex="-1"></a>        # 将时间步归一化后拼接输入</span>
+<span id="cb331-50"><a href="dl_7.html#cb331-50" tabindex="-1"></a>        t_embed = t.float().unsqueeze(1) / T</span>
+<span id="cb331-51"><a href="dl_7.html#cb331-51" tabindex="-1"></a>        x_in = torch.cat([x_t, t_embed], dim=1)</span>
+<span id="cb331-52"><a href="dl_7.html#cb331-52" tabindex="-1"></a>        return self.net(x_in)</span>
+<span id="cb331-53"><a href="dl_7.html#cb331-53" tabindex="-1"></a></span>
+<span id="cb331-54"><a href="dl_7.html#cb331-54" tabindex="-1"></a>model = DenoiseNet().to(device)</span>
+<span id="cb331-55"><a href="dl_7.html#cb331-55" tabindex="-1"></a>optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)</span>
+<span id="cb331-56"><a href="dl_7.html#cb331-56" tabindex="-1"></a></span>
+<span id="cb331-57"><a href="dl_7.html#cb331-57" tabindex="-1"></a># ========================</span>
+<span id="cb331-58"><a href="dl_7.html#cb331-58" tabindex="-1"></a># 5️⃣ 训练过程</span>
+<span id="cb331-59"><a href="dl_7.html#cb331-59" tabindex="-1"></a># ========================</span>
+<span id="cb331-60"><a href="dl_7.html#cb331-60" tabindex="-1"></a>epochs = 1000</span>
+<span id="cb331-61"><a href="dl_7.html#cb331-61" tabindex="-1"></a>for epoch in range(epochs):</span>
+<span id="cb331-62"><a href="dl_7.html#cb331-62" tabindex="-1"></a>    t = torch.randint(0, T, (N,), device=device)  # 随机时间步</span>
+<span id="cb331-63"><a href="dl_7.html#cb331-63" tabindex="-1"></a>    noise = torch.randn_like(x0)</span>
+<span id="cb331-64"><a href="dl_7.html#cb331-64" tabindex="-1"></a>    x_t = q_sample(x0, t, noise)</span>
+<span id="cb331-65"><a href="dl_7.html#cb331-65" tabindex="-1"></a></span>
+<span id="cb331-66"><a href="dl_7.html#cb331-66" tabindex="-1"></a>    noise_pred = model(x_t, t)</span>
+<span id="cb331-67"><a href="dl_7.html#cb331-67" tabindex="-1"></a>    loss = F.mse_loss(noise_pred, noise)</span>
+<span id="cb331-68"><a href="dl_7.html#cb331-68" tabindex="-1"></a></span>
+<span id="cb331-69"><a href="dl_7.html#cb331-69" tabindex="-1"></a>    optimizer.zero_grad()</span>
+<span id="cb331-70"><a href="dl_7.html#cb331-70" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb331-71"><a href="dl_7.html#cb331-71" tabindex="-1"></a>    optimizer.step()</span>
+<span id="cb331-72"><a href="dl_7.html#cb331-72" tabindex="-1"></a></span>
+<span id="cb331-73"><a href="dl_7.html#cb331-73" tabindex="-1"></a>    if epoch % 100 == 0:</span>
+<span id="cb331-74"><a href="dl_7.html#cb331-74" tabindex="-1"></a>        print(f&quot;Epoch {epoch}, Loss: {loss.item():.4f}&quot;)</span>
+<span id="cb331-75"><a href="dl_7.html#cb331-75" tabindex="-1"></a></span>
+<span id="cb331-76"><a href="dl_7.html#cb331-76" tabindex="-1"></a># ========================</span>
+<span id="cb331-77"><a href="dl_7.html#cb331-77" tabindex="-1"></a># 6️⃣ 采样（从纯噪声逆扩散生成）</span>
+<span id="cb331-78"><a href="dl_7.html#cb331-78" tabindex="-1"></a># ========================</span>
+<span id="cb331-79"><a href="dl_7.html#cb331-79" tabindex="-1"></a>@torch.no_grad()</span>
+<span id="cb331-80"><a href="dl_7.html#cb331-80" tabindex="-1"></a>def p_sample(model, x_t, t):</span>
+<span id="cb331-81"><a href="dl_7.html#cb331-81" tabindex="-1"></a>    beta_t = betas[t]</span>
+<span id="cb331-82"><a href="dl_7.html#cb331-82" tabindex="-1"></a>    alpha_t = alphas[t]</span>
+<span id="cb331-83"><a href="dl_7.html#cb331-83" tabindex="-1"></a>    alpha_bar_t = alpha_bars[t]</span>
+<span id="cb331-84"><a href="dl_7.html#cb331-84" tabindex="-1"></a>    noise_pred = model(x_t, torch.tensor([t]*x_t.shape[0], device=device))</span>
+<span id="cb331-85"><a href="dl_7.html#cb331-85" tabindex="-1"></a>    mean = (1 / torch.sqrt(alpha_t)) * (</span>
+<span id="cb331-86"><a href="dl_7.html#cb331-86" tabindex="-1"></a>        x_t - (1 - alpha_t) / torch.sqrt(1 - alpha_bar_t) * noise_pred</span>
+<span id="cb331-87"><a href="dl_7.html#cb331-87" tabindex="-1"></a>    )</span>
+<span id="cb331-88"><a href="dl_7.html#cb331-88" tabindex="-1"></a>    if t &gt; 0:</span>
+<span id="cb331-89"><a href="dl_7.html#cb331-89" tabindex="-1"></a>        z = torch.randn_like(x_t)</span>
+<span id="cb331-90"><a href="dl_7.html#cb331-90" tabindex="-1"></a>    else:</span>
+<span id="cb331-91"><a href="dl_7.html#cb331-91" tabindex="-1"></a>        z = 0</span>
+<span id="cb331-92"><a href="dl_7.html#cb331-92" tabindex="-1"></a>    return mean + torch.sqrt(beta_t) * z</span>
+<span id="cb331-93"><a href="dl_7.html#cb331-93" tabindex="-1"></a></span>
+<span id="cb331-94"><a href="dl_7.html#cb331-94" tabindex="-1"></a>@torch.no_grad()</span>
+<span id="cb331-95"><a href="dl_7.html#cb331-95" tabindex="-1"></a>def sample(model, n_samples=1000):</span>
+<span id="cb331-96"><a href="dl_7.html#cb331-96" tabindex="-1"></a>    x_t = torch.randn(n_samples, 1).to(device)</span>
+<span id="cb331-97"><a href="dl_7.html#cb331-97" tabindex="-1"></a>    for t in reversed(range(T)):</span>
+<span id="cb331-98"><a href="dl_7.html#cb331-98" tabindex="-1"></a>        x_t = p_sample(model, x_t, t)</span>
+<span id="cb331-99"><a href="dl_7.html#cb331-99" tabindex="-1"></a>    return x_t</span>
+<span id="cb331-100"><a href="dl_7.html#cb331-100" tabindex="-1"></a></span>
+<span id="cb331-101"><a href="dl_7.html#cb331-101" tabindex="-1"></a>samples = sample(model, n_samples=1000).cpu().numpy()</span>
+<span id="cb331-102"><a href="dl_7.html#cb331-102" tabindex="-1"></a></span>
+<span id="cb331-103"><a href="dl_7.html#cb331-103" tabindex="-1"></a># ========================</span>
+<span id="cb331-104"><a href="dl_7.html#cb331-104" tabindex="-1"></a># 7️⃣ 可视化结果</span>
+<span id="cb331-105"><a href="dl_7.html#cb331-105" tabindex="-1"></a># ========================</span>
+<span id="cb331-106"><a href="dl_7.html#cb331-106" tabindex="-1"></a>plt.figure(figsize=(8,5))</span>
+<span id="cb331-107"><a href="dl_7.html#cb331-107" tabindex="-1"></a>plt.hist(x0.cpu().numpy(), bins=50, density=True, alpha=0.5, label=&quot;Real data&quot;)</span>
+<span id="cb331-108"><a href="dl_7.html#cb331-108" tabindex="-1"></a>plt.hist(samples, bins=50, density=True, alpha=0.5, label=&quot;Generated data&quot;)</span>
+<span id="cb331-109"><a href="dl_7.html#cb331-109" tabindex="-1"></a>plt.legend()</span>
+<span id="cb331-110"><a href="dl_7.html#cb331-110" tabindex="-1"></a>plt.title(&quot;DDPM training vs sampling result&quot;)</span>
+<span id="cb331-111"><a href="dl_7.html#cb331-111" tabindex="-1"></a>plt.show()</span></code></pre></div>
 
 </div>
-
-
-
-
-
+</div>
+<!-- </div> -->
 
 
 
@@ -849,8 +919,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="jap.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="dl_6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="network.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

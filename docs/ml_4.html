@@ -504,12 +504,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 原理</a></li>
 <li class="chapter" data-level="8.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 实现</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> 贝叶斯方法</a>
-<ul>
-<li class="chapter" data-level="8.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>8.7.1</b> 贝叶斯判别法</a></li>
-<li class="chapter" data-level="8.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>8.7.2</b> 朴素贝叶斯分类器</a></li>
-</ul></li>
-<li class="chapter" data-level="8.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>8.8</b> SVM</a></li>
+<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> SVM</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> 生存分析</a>
 <ul>
@@ -554,6 +549,7 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 数据操作</a></li>
 <li class="chapter" data-level="11.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 自动微分</a></li>
 <li class="chapter" data-level="11.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="11.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 调参技巧</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>11.2</b> 线性神经网络</a>
 <ul>
@@ -811,6 +807,84 @@ L_{split} = \frac{1}{2}[\frac{(\sum_{i \in I_L}g_i)^2}{\sum_{i \in I_L} h_i + \l
 <div id="ml_4_2" class="section level3 hasAnchor" number="8.4.2">
 <h3><span class="header-section-number">8.4.2</span> 实现<a href="ml_4.html#ml_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
 <p>超参数详见<a href="https://xgboost.readthedocs.io/en/release_3.0.0/parameter.html" target="_blank">官方手册</a></p>
+<p>调参技巧：</p>
+<ol style="list-style-type: decimal">
+<li>控制模型复杂度（最优先）</li>
+</ol>
+<p>模型复杂度过高容易过拟合；过低则欠拟合。<br />
+重点调整以下三个参数：</p>
+<ul>
+<li><p><strong>max_depth</strong>：树的最大深度</p>
+<p>-默认值：6</p>
+<ul>
+<li><p>建议范围：3 ~ 10</p></li>
+<li><p>越大模型越复杂；过拟合时应减小</p></li>
+</ul></li>
+<li><p><strong>min_child_weight</strong>：每个叶子节点的最小样本权重和（即最小样本数约束）</p>
+<ul>
+<li><p>默认值：1</p></li>
+<li><p>建议范围：1 ~ 10</p></li>
+<li><p>越大模型越保守，可防止过拟合</p></li>
+</ul></li>
+<li><p><strong>gamma (min_split_loss)</strong>：节点分裂所需的最小损失减少量</p>
+<ul>
+<li><p>默认值：0</p></li>
+<li><p>建议范围：0 ~ 5</p></li>
+<li><p>增大 gamma 可减少分裂、抑制过拟合</p></li>
+</ul></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>学习率与迭代次数</li>
+</ol>
+<p>学习率决定每棵树对最终模型的贡献；迭代次数决定累积学习量，两者必须配合使用。</p>
+<ul>
+<li><p><strong>eta (learning_rate)</strong>：学习率</p>
+<ul>
+<li><p>默认值：0.3</p></li>
+<li><p>建议范围：0.01 ~ 0.2</p></li>
+<li><p>小 eta + 大 n_estimators = 稳定、效果好，但训练时间长</p></li>
+</ul></li>
+<li><p><strong>n_estimators</strong>：迭代次数（树的数量）</p>
+<ul>
+<li><p>建议范围：500 ~ 5000</p></li>
+<li><p>通常配合 early_stopping_rounds 使用</p></li>
+</ul></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>子采样与特征采样（防止过拟合）</li>
+</ol>
+<p>通过随机采样样本或特征来增加模型的泛化能力。</p>
+<ul>
+<li><p><strong>subsample</strong>：每棵树训练使用的样本比例</p>
+<ul>
+<li><p>默认值：1</p></li>
+<li><p>建议范围：0.6 ~ 0.9</p></li>
+<li><p>值太低可能欠拟合，太高容易过拟合</p></li>
+</ul></li>
+<li><p><strong>colsample_bytree</strong>：每棵树随机选择的特征比例</p>
+<ul>
+<li><p>默认值：1</p></li>
+<li><p>建议范围：0.6 ~ 0.9</p></li>
+</ul></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>正则化参数（进一步防过拟合）</li>
+</ol>
+<p>控制叶子权重的惩罚力度，提升模型稳定性。</p>
+<ul>
+<li><p><strong>lambda (reg_lambda)</strong>：L2 正则项（权重平方惩罚）</p>
+<ul>
+<li><p>默认值：1</p></li>
+<li><p>建议范围：1 ~ 10</p></li>
+<li><p>增大能提升模型泛化性</p></li>
+</ul></li>
+<li><p><strong>alpha (reg_alpha)</strong>：L1 正则项（稀疏化）</p>
+<ul>
+<li><p>默认值：0</p></li>
+<li><p>建议范围：0 ~ 10</p></li>
+<li><p>增大能进行特征筛选（部分特征权重归零）</p></li>
+</ul></li>
+</ul>
 <p>python的<code>xgboost</code>库，示例如下。</p>
 <div class="sourceCode" id="cb269"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb269-1"><a href="ml_4.html#cb269-1" tabindex="-1"></a>param_xgb = {</span>
 <span id="cb269-2"><a href="ml_4.html#cb269-2" tabindex="-1"></a>    &#39;max_depth&#39;: stats.randint(3, 10),</span>

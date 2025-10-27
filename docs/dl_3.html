@@ -504,12 +504,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 原理</a></li>
 <li class="chapter" data-level="8.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 实现</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> 贝叶斯方法</a>
-<ul>
-<li class="chapter" data-level="8.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>8.7.1</b> 贝叶斯判别法</a></li>
-<li class="chapter" data-level="8.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>8.7.2</b> 朴素贝叶斯分类器</a></li>
-</ul></li>
-<li class="chapter" data-level="8.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>8.8</b> SVM</a></li>
+<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> SVM</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> 生存分析</a>
 <ul>
@@ -554,6 +549,7 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 数据操作</a></li>
 <li class="chapter" data-level="11.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 自动微分</a></li>
 <li class="chapter" data-level="11.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="11.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 调参技巧</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>11.2</b> 线性神经网络</a>
 <ul>
@@ -764,154 +760,154 @@ H_t &amp;= O_t \odot \tanh (C_t)
 </div>
 <div id="dl_3_2" class="section level3 hasAnchor" number="11.3.2">
 <h3><span class="header-section-number">11.3.2</span> 示例<a href="dl_3.html#dl_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div class="sourceCode" id="cb326"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb326-1"><a href="dl_3.html#cb326-1" tabindex="-1"></a>import torch</span>
-<span id="cb326-2"><a href="dl_3.html#cb326-2" tabindex="-1"></a>import torch.nn as nn</span>
-<span id="cb326-3"><a href="dl_3.html#cb326-3" tabindex="-1"></a>import numpy as np</span>
-<span id="cb326-4"><a href="dl_3.html#cb326-4" tabindex="-1"></a>from torch.utils.data import Dataset, DataLoader</span>
-<span id="cb326-5"><a href="dl_3.html#cb326-5" tabindex="-1"></a></span>
-<span id="cb326-6"><a href="dl_3.html#cb326-6" tabindex="-1"></a># 设置随机种子以确保结果可复现</span>
-<span id="cb326-7"><a href="dl_3.html#cb326-7" tabindex="-1"></a>torch.manual_seed(42)</span>
-<span id="cb326-8"><a href="dl_3.html#cb326-8" tabindex="-1"></a>np.random.seed(42)</span>
-<span id="cb326-9"><a href="dl_3.html#cb326-9" tabindex="-1"></a></span>
-<span id="cb326-10"><a href="dl_3.html#cb326-10" tabindex="-1"></a># 1. 生成正弦波数据</span>
-<span id="cb326-11"><a href="dl_3.html#cb326-11" tabindex="-1"></a>total_length = 1000</span>
-<span id="cb326-12"><a href="dl_3.html#cb326-12" tabindex="-1"></a>time_steps = np.linspace(0, 20 * np.pi, total_length)</span>
-<span id="cb326-13"><a href="dl_3.html#cb326-13" tabindex="-1"></a>data_sequence = np.sin(time_steps) + np.random.normal(0, 0.1, total_length)</span>
-<span id="cb326-14"><a href="dl_3.html#cb326-14" tabindex="-1"></a></span>
-<span id="cb326-15"><a href="dl_3.html#cb326-15" tabindex="-1"></a># 2. 划分训练集和测试集</span>
-<span id="cb326-16"><a href="dl_3.html#cb326-16" tabindex="-1"></a>split_idx = int(total_length * 0.8)  # 80%训练集，20%测试集</span>
-<span id="cb326-17"><a href="dl_3.html#cb326-17" tabindex="-1"></a>train_data = data_sequence[:split_idx]</span>
-<span id="cb326-18"><a href="dl_3.html#cb326-18" tabindex="-1"></a>test_data = data_sequence[split_idx:]</span>
-<span id="cb326-19"><a href="dl_3.html#cb326-19" tabindex="-1"></a></span>
-<span id="cb326-20"><a href="dl_3.html#cb326-20" tabindex="-1"></a># 3. 创建序列数据集类</span>
-<span id="cb326-21"><a href="dl_3.html#cb326-21" tabindex="-1"></a>class SequenceDataset(Dataset):</span>
-<span id="cb326-22"><a href="dl_3.html#cb326-22" tabindex="-1"></a>    def __init__(self, data, seq_length=20):</span>
-<span id="cb326-23"><a href="dl_3.html#cb326-23" tabindex="-1"></a>        self.data = torch.FloatTensor(data)</span>
-<span id="cb326-24"><a href="dl_3.html#cb326-24" tabindex="-1"></a>        self.seq_length = seq_length</span>
-<span id="cb326-25"><a href="dl_3.html#cb326-25" tabindex="-1"></a>        </span>
-<span id="cb326-26"><a href="dl_3.html#cb326-26" tabindex="-1"></a>    def __len__(self):</span>
-<span id="cb326-27"><a href="dl_3.html#cb326-27" tabindex="-1"></a>        return len(self.data) - self.seq_length</span>
-<span id="cb326-28"><a href="dl_3.html#cb326-28" tabindex="-1"></a>    </span>
-<span id="cb326-29"><a href="dl_3.html#cb326-29" tabindex="-1"></a>    def __getitem__(self, idx):</span>
-<span id="cb326-30"><a href="dl_3.html#cb326-30" tabindex="-1"></a>        input_seq = self.data[idx:idx+self.seq_length]</span>
-<span id="cb326-31"><a href="dl_3.html#cb326-31" tabindex="-1"></a>        target = self.data[idx+self.seq_length]</span>
-<span id="cb326-32"><a href="dl_3.html#cb326-32" tabindex="-1"></a>        return input_seq.view(self.seq_length, 1), target.view(1)  # 添加特征维度</span>
-<span id="cb326-33"><a href="dl_3.html#cb326-33" tabindex="-1"></a></span>
-<span id="cb326-34"><a href="dl_3.html#cb326-34" tabindex="-1"></a># 创建数据集和数据加载器</span>
-<span id="cb326-35"><a href="dl_3.html#cb326-35" tabindex="-1"></a>seq_length = 20</span>
-<span id="cb326-36"><a href="dl_3.html#cb326-36" tabindex="-1"></a>batch_size = 32</span>
-<span id="cb326-37"><a href="dl_3.html#cb326-37" tabindex="-1"></a></span>
-<span id="cb326-38"><a href="dl_3.html#cb326-38" tabindex="-1"></a># 训练集</span>
-<span id="cb326-39"><a href="dl_3.html#cb326-39" tabindex="-1"></a>train_dataset = SequenceDataset(train_data, seq_length)</span>
-<span id="cb326-40"><a href="dl_3.html#cb326-40" tabindex="-1"></a>train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)</span>
-<span id="cb326-41"><a href="dl_3.html#cb326-41" tabindex="-1"></a></span>
-<span id="cb326-42"><a href="dl_3.html#cb326-42" tabindex="-1"></a># 测试集</span>
-<span id="cb326-43"><a href="dl_3.html#cb326-43" tabindex="-1"></a>test_dataset = SequenceDataset(test_data, seq_length)</span>
-<span id="cb326-44"><a href="dl_3.html#cb326-44" tabindex="-1"></a>test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, drop_last=True)</span>
-<span id="cb326-45"><a href="dl_3.html#cb326-45" tabindex="-1"></a></span>
-<span id="cb326-46"><a href="dl_3.html#cb326-46" tabindex="-1"></a># 4. 定义LSTM模型</span>
-<span id="cb326-47"><a href="dl_3.html#cb326-47" tabindex="-1"></a>class LSTMModel(nn.Module):</span>
-<span id="cb326-48"><a href="dl_3.html#cb326-48" tabindex="-1"></a>    def __init__(self, input_size=1, hidden_size=32, output_size=1, num_layers=1):</span>
-<span id="cb326-49"><a href="dl_3.html#cb326-49" tabindex="-1"></a>        super().__init__()</span>
-<span id="cb326-50"><a href="dl_3.html#cb326-50" tabindex="-1"></a>        self.num_layers = num_layers</span>
-<span id="cb326-51"><a href="dl_3.html#cb326-51" tabindex="-1"></a>        self.hidden_size = hidden_size</span>
-<span id="cb326-52"><a href="dl_3.html#cb326-52" tabindex="-1"></a>        </span>
-<span id="cb326-53"><a href="dl_3.html#cb326-53" tabindex="-1"></a>        # LSTM层</span>
-<span id="cb326-54"><a href="dl_3.html#cb326-54" tabindex="-1"></a>        self.lstm = nn.LSTM(</span>
-<span id="cb326-55"><a href="dl_3.html#cb326-55" tabindex="-1"></a>            input_size=input_size,       # 默认为1即时序的自回归结构</span>
-<span id="cb326-56"><a href="dl_3.html#cb326-56" tabindex="-1"></a>            hidden_size=hidden_size,</span>
-<span id="cb326-57"><a href="dl_3.html#cb326-57" tabindex="-1"></a>            num_layers=num_layers,</span>
-<span id="cb326-58"><a href="dl_3.html#cb326-58" tabindex="-1"></a>            batch_first=True</span>
-<span id="cb326-59"><a href="dl_3.html#cb326-59" tabindex="-1"></a>        )</span>
-<span id="cb326-60"><a href="dl_3.html#cb326-60" tabindex="-1"></a>        </span>
-<span id="cb326-61"><a href="dl_3.html#cb326-61" tabindex="-1"></a>        # 输出层</span>
-<span id="cb326-62"><a href="dl_3.html#cb326-62" tabindex="-1"></a>        self.linear = nn.Linear(hidden_size, output_size)</span>
-<span id="cb326-63"><a href="dl_3.html#cb326-63" tabindex="-1"></a>        </span>
-<span id="cb326-64"><a href="dl_3.html#cb326-64" tabindex="-1"></a>    def forward(self, x, hidden=None):</span>
-<span id="cb326-65"><a href="dl_3.html#cb326-65" tabindex="-1"></a>        # 初始化隐藏状态</span>
-<span id="cb326-66"><a href="dl_3.html#cb326-66" tabindex="-1"></a>        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(&#39;cuda&#39;)</span>
-<span id="cb326-67"><a href="dl_3.html#cb326-67" tabindex="-1"></a>        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(&#39;cuda&#39;)</span>
-<span id="cb326-68"><a href="dl_3.html#cb326-68" tabindex="-1"></a>        hidden = (h0, c0)</span>
-<span id="cb326-69"><a href="dl_3.html#cb326-69" tabindex="-1"></a>        </span>
-<span id="cb326-70"><a href="dl_3.html#cb326-70" tabindex="-1"></a>        # 前向传播LSTM</span>
-<span id="cb326-71"><a href="dl_3.html#cb326-71" tabindex="-1"></a>        # 需要将输入形状调整为 [batch, seq_len, features]</span>
-<span id="cb326-72"><a href="dl_3.html#cb326-72" tabindex="-1"></a>        x = x.reshape(x.size(0), -1, 1) if x.dim() == 2 else x</span>
-<span id="cb326-73"><a href="dl_3.html#cb326-73" tabindex="-1"></a>        # out表示LSTM最后一层所有时间步的输出</span>
-<span id="cb326-74"><a href="dl_3.html#cb326-74" tabindex="-1"></a>        # hidden表示LSTM所有层在最后一个时间步的最终状态</span>
-<span id="cb326-75"><a href="dl_3.html#cb326-75" tabindex="-1"></a>        out, hidden = self.lstm(x, hidden) </span>
-<span id="cb326-76"><a href="dl_3.html#cb326-76" tabindex="-1"></a>        </span>
-<span id="cb326-77"><a href="dl_3.html#cb326-77" tabindex="-1"></a>        # 只取最后一个时间步的输出(batch, seq, features)</span>
-<span id="cb326-78"><a href="dl_3.html#cb326-78" tabindex="-1"></a>        out = self.linear(out[:, -1, :])</span>
-<span id="cb326-79"><a href="dl_3.html#cb326-79" tabindex="-1"></a>        return out, hidden</span>
-<span id="cb326-80"><a href="dl_3.html#cb326-80" tabindex="-1"></a></span>
-<span id="cb326-81"><a href="dl_3.html#cb326-81" tabindex="-1"></a># 5. 实例化模型</span>
-<span id="cb326-82"><a href="dl_3.html#cb326-82" tabindex="-1"></a>input_size = 1</span>
-<span id="cb326-83"><a href="dl_3.html#cb326-83" tabindex="-1"></a>hidden_size = 64</span>
-<span id="cb326-84"><a href="dl_3.html#cb326-84" tabindex="-1"></a>output_size = 1</span>
-<span id="cb326-85"><a href="dl_3.html#cb326-85" tabindex="-1"></a>num_layers = 1</span>
-<span id="cb326-86"><a href="dl_3.html#cb326-86" tabindex="-1"></a></span>
-<span id="cb326-87"><a href="dl_3.html#cb326-87" tabindex="-1"></a>model = LSTMModel(input_size, hidden_size, output_size, num_layers)</span>
-<span id="cb326-88"><a href="dl_3.html#cb326-88" tabindex="-1"></a># 将模型移到GPU上</span>
-<span id="cb326-89"><a href="dl_3.html#cb326-89" tabindex="-1"></a>model.to(&#39;cuda&#39;)</span>
-<span id="cb326-90"><a href="dl_3.html#cb326-90" tabindex="-1"></a></span>
-<span id="cb326-91"><a href="dl_3.html#cb326-91" tabindex="-1"></a># 6. 定义损失函数和优化器</span>
-<span id="cb326-92"><a href="dl_3.html#cb326-92" tabindex="-1"></a>criterion = nn.MSELoss()</span>
-<span id="cb326-93"><a href="dl_3.html#cb326-93" tabindex="-1"></a>optimizer = torch.optim.Adam(model.parameters(), lr=0.001)</span>
-<span id="cb326-94"><a href="dl_3.html#cb326-94" tabindex="-1"></a></span>
-<span id="cb326-95"><a href="dl_3.html#cb326-95" tabindex="-1"></a># 7. 训练模型</span>
-<span id="cb326-96"><a href="dl_3.html#cb326-96" tabindex="-1"></a>num_epochs = 50</span>
-<span id="cb326-97"><a href="dl_3.html#cb326-97" tabindex="-1"></a>train_losses = []</span>
-<span id="cb326-98"><a href="dl_3.html#cb326-98" tabindex="-1"></a>test_losses = []</span>
-<span id="cb326-99"><a href="dl_3.html#cb326-99" tabindex="-1"></a></span>
-<span id="cb326-100"><a href="dl_3.html#cb326-100" tabindex="-1"></a>for epoch in range(num_epochs):</span>
-<span id="cb326-101"><a href="dl_3.html#cb326-101" tabindex="-1"></a>    # --- 训练阶段 ---</span>
-<span id="cb326-102"><a href="dl_3.html#cb326-102" tabindex="-1"></a>    model.train()</span>
-<span id="cb326-103"><a href="dl_3.html#cb326-103" tabindex="-1"></a>    epoch_train_loss = 0.0</span>
-<span id="cb326-104"><a href="dl_3.html#cb326-104" tabindex="-1"></a>    </span>
-<span id="cb326-105"><a href="dl_3.html#cb326-105" tabindex="-1"></a>    for inputs, targets in train_loader:</span>
-<span id="cb326-106"><a href="dl_3.html#cb326-106" tabindex="-1"></a>        # 输入形状: [batch_size, seq_length, 1]</span>
-<span id="cb326-107"><a href="dl_3.html#cb326-107" tabindex="-1"></a>        # 目标形状: [batch_size, 1]</span>
-<span id="cb326-108"><a href="dl_3.html#cb326-108" tabindex="-1"></a>        optimizer.zero_grad()</span>
-<span id="cb326-109"><a href="dl_3.html#cb326-109" tabindex="-1"></a></span>
-<span id="cb326-110"><a href="dl_3.html#cb326-110" tabindex="-1"></a>        inputs, targets = inputs.to(&#39;cuda&#39;), targets.to(&#39;cuda&#39;)</span>
-<span id="cb326-111"><a href="dl_3.html#cb326-111" tabindex="-1"></a>        </span>
-<span id="cb326-112"><a href="dl_3.html#cb326-112" tabindex="-1"></a>        # 前向传播</span>
-<span id="cb326-113"><a href="dl_3.html#cb326-113" tabindex="-1"></a>        outputs, _ = model(inputs)</span>
-<span id="cb326-114"><a href="dl_3.html#cb326-114" tabindex="-1"></a>        loss = criterion(outputs, targets)</span>
-<span id="cb326-115"><a href="dl_3.html#cb326-115" tabindex="-1"></a>        </span>
-<span id="cb326-116"><a href="dl_3.html#cb326-116" tabindex="-1"></a>        # 反向传播和优化</span>
-<span id="cb326-117"><a href="dl_3.html#cb326-117" tabindex="-1"></a>        loss.backward()</span>
-<span id="cb326-118"><a href="dl_3.html#cb326-118" tabindex="-1"></a>        optimizer.step()</span>
-<span id="cb326-119"><a href="dl_3.html#cb326-119" tabindex="-1"></a>        </span>
-<span id="cb326-120"><a href="dl_3.html#cb326-120" tabindex="-1"></a>        epoch_train_loss += loss.item()</span>
-<span id="cb326-121"><a href="dl_3.html#cb326-121" tabindex="-1"></a>    </span>
-<span id="cb326-122"><a href="dl_3.html#cb326-122" tabindex="-1"></a>    # 计算平均训练损失</span>
-<span id="cb326-123"><a href="dl_3.html#cb326-123" tabindex="-1"></a>    avg_train_loss = epoch_train_loss / len(train_loader)</span>
-<span id="cb326-124"><a href="dl_3.html#cb326-124" tabindex="-1"></a>    train_losses.append(avg_train_loss)</span>
-<span id="cb326-125"><a href="dl_3.html#cb326-125" tabindex="-1"></a>    </span>
-<span id="cb326-126"><a href="dl_3.html#cb326-126" tabindex="-1"></a>    # --- 测试阶段 ---</span>
-<span id="cb326-127"><a href="dl_3.html#cb326-127" tabindex="-1"></a>    model.eval()</span>
-<span id="cb326-128"><a href="dl_3.html#cb326-128" tabindex="-1"></a>    epoch_test_loss = 0.0</span>
-<span id="cb326-129"><a href="dl_3.html#cb326-129" tabindex="-1"></a>    </span>
-<span id="cb326-130"><a href="dl_3.html#cb326-130" tabindex="-1"></a>    with torch.no_grad():</span>
-<span id="cb326-131"><a href="dl_3.html#cb326-131" tabindex="-1"></a>        for inputs, targets in test_loader:</span>
-<span id="cb326-132"><a href="dl_3.html#cb326-132" tabindex="-1"></a>            inputs, targets = inputs.to(&#39;cuda&#39;), targets.to(&#39;cuda&#39;)</span>
-<span id="cb326-133"><a href="dl_3.html#cb326-133" tabindex="-1"></a>            outputs, _ = model(inputs)</span>
-<span id="cb326-134"><a href="dl_3.html#cb326-134" tabindex="-1"></a>            loss = criterion(outputs, targets)</span>
-<span id="cb326-135"><a href="dl_3.html#cb326-135" tabindex="-1"></a>            epoch_test_loss += loss.item()</span>
-<span id="cb326-136"><a href="dl_3.html#cb326-136" tabindex="-1"></a>    </span>
-<span id="cb326-137"><a href="dl_3.html#cb326-137" tabindex="-1"></a>    # 计算平均测试损失</span>
-<span id="cb326-138"><a href="dl_3.html#cb326-138" tabindex="-1"></a>    avg_test_loss = epoch_test_loss / len(test_loader)</span>
-<span id="cb326-139"><a href="dl_3.html#cb326-139" tabindex="-1"></a>    test_losses.append(avg_test_loss)</span>
-<span id="cb326-140"><a href="dl_3.html#cb326-140" tabindex="-1"></a>    </span>
-<span id="cb326-141"><a href="dl_3.html#cb326-141" tabindex="-1"></a>    # 每5个epoch打印一次进度</span>
-<span id="cb326-142"><a href="dl_3.html#cb326-142" tabindex="-1"></a>    if (epoch+1) % 5 == 0 or epoch == 0:</span>
-<span id="cb326-143"><a href="dl_3.html#cb326-143" tabindex="-1"></a>        print(f&quot;Epoch [{epoch+1}/{num_epochs}], Train Loss: {avg_train_loss:.6f}, Test Loss: {avg_test_loss:.6f}&quot;)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb327-1"><a href="dl_3.html#cb327-1" tabindex="-1"></a>import torch</span>
+<span id="cb327-2"><a href="dl_3.html#cb327-2" tabindex="-1"></a>import torch.nn as nn</span>
+<span id="cb327-3"><a href="dl_3.html#cb327-3" tabindex="-1"></a>import numpy as np</span>
+<span id="cb327-4"><a href="dl_3.html#cb327-4" tabindex="-1"></a>from torch.utils.data import Dataset, DataLoader</span>
+<span id="cb327-5"><a href="dl_3.html#cb327-5" tabindex="-1"></a></span>
+<span id="cb327-6"><a href="dl_3.html#cb327-6" tabindex="-1"></a># 设置随机种子以确保结果可复现</span>
+<span id="cb327-7"><a href="dl_3.html#cb327-7" tabindex="-1"></a>torch.manual_seed(42)</span>
+<span id="cb327-8"><a href="dl_3.html#cb327-8" tabindex="-1"></a>np.random.seed(42)</span>
+<span id="cb327-9"><a href="dl_3.html#cb327-9" tabindex="-1"></a></span>
+<span id="cb327-10"><a href="dl_3.html#cb327-10" tabindex="-1"></a># 1. 生成正弦波数据</span>
+<span id="cb327-11"><a href="dl_3.html#cb327-11" tabindex="-1"></a>total_length = 1000</span>
+<span id="cb327-12"><a href="dl_3.html#cb327-12" tabindex="-1"></a>time_steps = np.linspace(0, 20 * np.pi, total_length)</span>
+<span id="cb327-13"><a href="dl_3.html#cb327-13" tabindex="-1"></a>data_sequence = np.sin(time_steps) + np.random.normal(0, 0.1, total_length)</span>
+<span id="cb327-14"><a href="dl_3.html#cb327-14" tabindex="-1"></a></span>
+<span id="cb327-15"><a href="dl_3.html#cb327-15" tabindex="-1"></a># 2. 划分训练集和测试集</span>
+<span id="cb327-16"><a href="dl_3.html#cb327-16" tabindex="-1"></a>split_idx = int(total_length * 0.8)  # 80%训练集，20%测试集</span>
+<span id="cb327-17"><a href="dl_3.html#cb327-17" tabindex="-1"></a>train_data = data_sequence[:split_idx]</span>
+<span id="cb327-18"><a href="dl_3.html#cb327-18" tabindex="-1"></a>test_data = data_sequence[split_idx:]</span>
+<span id="cb327-19"><a href="dl_3.html#cb327-19" tabindex="-1"></a></span>
+<span id="cb327-20"><a href="dl_3.html#cb327-20" tabindex="-1"></a># 3. 创建序列数据集类</span>
+<span id="cb327-21"><a href="dl_3.html#cb327-21" tabindex="-1"></a>class SequenceDataset(Dataset):</span>
+<span id="cb327-22"><a href="dl_3.html#cb327-22" tabindex="-1"></a>    def __init__(self, data, seq_length=20):</span>
+<span id="cb327-23"><a href="dl_3.html#cb327-23" tabindex="-1"></a>        self.data = torch.FloatTensor(data)</span>
+<span id="cb327-24"><a href="dl_3.html#cb327-24" tabindex="-1"></a>        self.seq_length = seq_length</span>
+<span id="cb327-25"><a href="dl_3.html#cb327-25" tabindex="-1"></a>        </span>
+<span id="cb327-26"><a href="dl_3.html#cb327-26" tabindex="-1"></a>    def __len__(self):</span>
+<span id="cb327-27"><a href="dl_3.html#cb327-27" tabindex="-1"></a>        return len(self.data) - self.seq_length</span>
+<span id="cb327-28"><a href="dl_3.html#cb327-28" tabindex="-1"></a>    </span>
+<span id="cb327-29"><a href="dl_3.html#cb327-29" tabindex="-1"></a>    def __getitem__(self, idx):</span>
+<span id="cb327-30"><a href="dl_3.html#cb327-30" tabindex="-1"></a>        input_seq = self.data[idx:idx+self.seq_length]</span>
+<span id="cb327-31"><a href="dl_3.html#cb327-31" tabindex="-1"></a>        target = self.data[idx+self.seq_length]</span>
+<span id="cb327-32"><a href="dl_3.html#cb327-32" tabindex="-1"></a>        return input_seq.view(self.seq_length, 1), target.view(1)  # 添加特征维度</span>
+<span id="cb327-33"><a href="dl_3.html#cb327-33" tabindex="-1"></a></span>
+<span id="cb327-34"><a href="dl_3.html#cb327-34" tabindex="-1"></a># 创建数据集和数据加载器</span>
+<span id="cb327-35"><a href="dl_3.html#cb327-35" tabindex="-1"></a>seq_length = 20</span>
+<span id="cb327-36"><a href="dl_3.html#cb327-36" tabindex="-1"></a>batch_size = 32</span>
+<span id="cb327-37"><a href="dl_3.html#cb327-37" tabindex="-1"></a></span>
+<span id="cb327-38"><a href="dl_3.html#cb327-38" tabindex="-1"></a># 训练集</span>
+<span id="cb327-39"><a href="dl_3.html#cb327-39" tabindex="-1"></a>train_dataset = SequenceDataset(train_data, seq_length)</span>
+<span id="cb327-40"><a href="dl_3.html#cb327-40" tabindex="-1"></a>train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)</span>
+<span id="cb327-41"><a href="dl_3.html#cb327-41" tabindex="-1"></a></span>
+<span id="cb327-42"><a href="dl_3.html#cb327-42" tabindex="-1"></a># 测试集</span>
+<span id="cb327-43"><a href="dl_3.html#cb327-43" tabindex="-1"></a>test_dataset = SequenceDataset(test_data, seq_length)</span>
+<span id="cb327-44"><a href="dl_3.html#cb327-44" tabindex="-1"></a>test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, drop_last=True)</span>
+<span id="cb327-45"><a href="dl_3.html#cb327-45" tabindex="-1"></a></span>
+<span id="cb327-46"><a href="dl_3.html#cb327-46" tabindex="-1"></a># 4. 定义LSTM模型</span>
+<span id="cb327-47"><a href="dl_3.html#cb327-47" tabindex="-1"></a>class LSTMModel(nn.Module):</span>
+<span id="cb327-48"><a href="dl_3.html#cb327-48" tabindex="-1"></a>    def __init__(self, input_size=1, hidden_size=32, output_size=1, num_layers=1):</span>
+<span id="cb327-49"><a href="dl_3.html#cb327-49" tabindex="-1"></a>        super().__init__()</span>
+<span id="cb327-50"><a href="dl_3.html#cb327-50" tabindex="-1"></a>        self.num_layers = num_layers</span>
+<span id="cb327-51"><a href="dl_3.html#cb327-51" tabindex="-1"></a>        self.hidden_size = hidden_size</span>
+<span id="cb327-52"><a href="dl_3.html#cb327-52" tabindex="-1"></a>        </span>
+<span id="cb327-53"><a href="dl_3.html#cb327-53" tabindex="-1"></a>        # LSTM层</span>
+<span id="cb327-54"><a href="dl_3.html#cb327-54" tabindex="-1"></a>        self.lstm = nn.LSTM(</span>
+<span id="cb327-55"><a href="dl_3.html#cb327-55" tabindex="-1"></a>            input_size=input_size,       # 默认为1即时序的自回归结构</span>
+<span id="cb327-56"><a href="dl_3.html#cb327-56" tabindex="-1"></a>            hidden_size=hidden_size,</span>
+<span id="cb327-57"><a href="dl_3.html#cb327-57" tabindex="-1"></a>            num_layers=num_layers,</span>
+<span id="cb327-58"><a href="dl_3.html#cb327-58" tabindex="-1"></a>            batch_first=True</span>
+<span id="cb327-59"><a href="dl_3.html#cb327-59" tabindex="-1"></a>        )</span>
+<span id="cb327-60"><a href="dl_3.html#cb327-60" tabindex="-1"></a>        </span>
+<span id="cb327-61"><a href="dl_3.html#cb327-61" tabindex="-1"></a>        # 输出层</span>
+<span id="cb327-62"><a href="dl_3.html#cb327-62" tabindex="-1"></a>        self.linear = nn.Linear(hidden_size, output_size)</span>
+<span id="cb327-63"><a href="dl_3.html#cb327-63" tabindex="-1"></a>        </span>
+<span id="cb327-64"><a href="dl_3.html#cb327-64" tabindex="-1"></a>    def forward(self, x, hidden=None):</span>
+<span id="cb327-65"><a href="dl_3.html#cb327-65" tabindex="-1"></a>        # 初始化隐藏状态</span>
+<span id="cb327-66"><a href="dl_3.html#cb327-66" tabindex="-1"></a>        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(&#39;cuda&#39;)</span>
+<span id="cb327-67"><a href="dl_3.html#cb327-67" tabindex="-1"></a>        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(&#39;cuda&#39;)</span>
+<span id="cb327-68"><a href="dl_3.html#cb327-68" tabindex="-1"></a>        hidden = (h0, c0)</span>
+<span id="cb327-69"><a href="dl_3.html#cb327-69" tabindex="-1"></a>        </span>
+<span id="cb327-70"><a href="dl_3.html#cb327-70" tabindex="-1"></a>        # 前向传播LSTM</span>
+<span id="cb327-71"><a href="dl_3.html#cb327-71" tabindex="-1"></a>        # 需要将输入形状调整为 [batch, seq_len, features]</span>
+<span id="cb327-72"><a href="dl_3.html#cb327-72" tabindex="-1"></a>        x = x.reshape(x.size(0), -1, 1) if x.dim() == 2 else x</span>
+<span id="cb327-73"><a href="dl_3.html#cb327-73" tabindex="-1"></a>        # out表示LSTM最后一层所有时间步的输出</span>
+<span id="cb327-74"><a href="dl_3.html#cb327-74" tabindex="-1"></a>        # hidden表示LSTM所有层在最后一个时间步的最终状态</span>
+<span id="cb327-75"><a href="dl_3.html#cb327-75" tabindex="-1"></a>        out, hidden = self.lstm(x, hidden) </span>
+<span id="cb327-76"><a href="dl_3.html#cb327-76" tabindex="-1"></a>        </span>
+<span id="cb327-77"><a href="dl_3.html#cb327-77" tabindex="-1"></a>        # 只取最后一个时间步的输出(batch, seq, features)</span>
+<span id="cb327-78"><a href="dl_3.html#cb327-78" tabindex="-1"></a>        out = self.linear(out[:, -1, :])</span>
+<span id="cb327-79"><a href="dl_3.html#cb327-79" tabindex="-1"></a>        return out, hidden</span>
+<span id="cb327-80"><a href="dl_3.html#cb327-80" tabindex="-1"></a></span>
+<span id="cb327-81"><a href="dl_3.html#cb327-81" tabindex="-1"></a># 5. 实例化模型</span>
+<span id="cb327-82"><a href="dl_3.html#cb327-82" tabindex="-1"></a>input_size = 1</span>
+<span id="cb327-83"><a href="dl_3.html#cb327-83" tabindex="-1"></a>hidden_size = 64</span>
+<span id="cb327-84"><a href="dl_3.html#cb327-84" tabindex="-1"></a>output_size = 1</span>
+<span id="cb327-85"><a href="dl_3.html#cb327-85" tabindex="-1"></a>num_layers = 1</span>
+<span id="cb327-86"><a href="dl_3.html#cb327-86" tabindex="-1"></a></span>
+<span id="cb327-87"><a href="dl_3.html#cb327-87" tabindex="-1"></a>model = LSTMModel(input_size, hidden_size, output_size, num_layers)</span>
+<span id="cb327-88"><a href="dl_3.html#cb327-88" tabindex="-1"></a># 将模型移到GPU上</span>
+<span id="cb327-89"><a href="dl_3.html#cb327-89" tabindex="-1"></a>model.to(&#39;cuda&#39;)</span>
+<span id="cb327-90"><a href="dl_3.html#cb327-90" tabindex="-1"></a></span>
+<span id="cb327-91"><a href="dl_3.html#cb327-91" tabindex="-1"></a># 6. 定义损失函数和优化器</span>
+<span id="cb327-92"><a href="dl_3.html#cb327-92" tabindex="-1"></a>criterion = nn.MSELoss()</span>
+<span id="cb327-93"><a href="dl_3.html#cb327-93" tabindex="-1"></a>optimizer = torch.optim.Adam(model.parameters(), lr=0.001)</span>
+<span id="cb327-94"><a href="dl_3.html#cb327-94" tabindex="-1"></a></span>
+<span id="cb327-95"><a href="dl_3.html#cb327-95" tabindex="-1"></a># 7. 训练模型</span>
+<span id="cb327-96"><a href="dl_3.html#cb327-96" tabindex="-1"></a>num_epochs = 50</span>
+<span id="cb327-97"><a href="dl_3.html#cb327-97" tabindex="-1"></a>train_losses = []</span>
+<span id="cb327-98"><a href="dl_3.html#cb327-98" tabindex="-1"></a>test_losses = []</span>
+<span id="cb327-99"><a href="dl_3.html#cb327-99" tabindex="-1"></a></span>
+<span id="cb327-100"><a href="dl_3.html#cb327-100" tabindex="-1"></a>for epoch in range(num_epochs):</span>
+<span id="cb327-101"><a href="dl_3.html#cb327-101" tabindex="-1"></a>    # --- 训练阶段 ---</span>
+<span id="cb327-102"><a href="dl_3.html#cb327-102" tabindex="-1"></a>    model.train()</span>
+<span id="cb327-103"><a href="dl_3.html#cb327-103" tabindex="-1"></a>    epoch_train_loss = 0.0</span>
+<span id="cb327-104"><a href="dl_3.html#cb327-104" tabindex="-1"></a>    </span>
+<span id="cb327-105"><a href="dl_3.html#cb327-105" tabindex="-1"></a>    for inputs, targets in train_loader:</span>
+<span id="cb327-106"><a href="dl_3.html#cb327-106" tabindex="-1"></a>        # 输入形状: [batch_size, seq_length, 1]</span>
+<span id="cb327-107"><a href="dl_3.html#cb327-107" tabindex="-1"></a>        # 目标形状: [batch_size, 1]</span>
+<span id="cb327-108"><a href="dl_3.html#cb327-108" tabindex="-1"></a>        optimizer.zero_grad()</span>
+<span id="cb327-109"><a href="dl_3.html#cb327-109" tabindex="-1"></a></span>
+<span id="cb327-110"><a href="dl_3.html#cb327-110" tabindex="-1"></a>        inputs, targets = inputs.to(&#39;cuda&#39;), targets.to(&#39;cuda&#39;)</span>
+<span id="cb327-111"><a href="dl_3.html#cb327-111" tabindex="-1"></a>        </span>
+<span id="cb327-112"><a href="dl_3.html#cb327-112" tabindex="-1"></a>        # 前向传播</span>
+<span id="cb327-113"><a href="dl_3.html#cb327-113" tabindex="-1"></a>        outputs, _ = model(inputs)</span>
+<span id="cb327-114"><a href="dl_3.html#cb327-114" tabindex="-1"></a>        loss = criterion(outputs, targets)</span>
+<span id="cb327-115"><a href="dl_3.html#cb327-115" tabindex="-1"></a>        </span>
+<span id="cb327-116"><a href="dl_3.html#cb327-116" tabindex="-1"></a>        # 反向传播和优化</span>
+<span id="cb327-117"><a href="dl_3.html#cb327-117" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb327-118"><a href="dl_3.html#cb327-118" tabindex="-1"></a>        optimizer.step()</span>
+<span id="cb327-119"><a href="dl_3.html#cb327-119" tabindex="-1"></a>        </span>
+<span id="cb327-120"><a href="dl_3.html#cb327-120" tabindex="-1"></a>        epoch_train_loss += loss.item()</span>
+<span id="cb327-121"><a href="dl_3.html#cb327-121" tabindex="-1"></a>    </span>
+<span id="cb327-122"><a href="dl_3.html#cb327-122" tabindex="-1"></a>    # 计算平均训练损失</span>
+<span id="cb327-123"><a href="dl_3.html#cb327-123" tabindex="-1"></a>    avg_train_loss = epoch_train_loss / len(train_loader)</span>
+<span id="cb327-124"><a href="dl_3.html#cb327-124" tabindex="-1"></a>    train_losses.append(avg_train_loss)</span>
+<span id="cb327-125"><a href="dl_3.html#cb327-125" tabindex="-1"></a>    </span>
+<span id="cb327-126"><a href="dl_3.html#cb327-126" tabindex="-1"></a>    # --- 测试阶段 ---</span>
+<span id="cb327-127"><a href="dl_3.html#cb327-127" tabindex="-1"></a>    model.eval()</span>
+<span id="cb327-128"><a href="dl_3.html#cb327-128" tabindex="-1"></a>    epoch_test_loss = 0.0</span>
+<span id="cb327-129"><a href="dl_3.html#cb327-129" tabindex="-1"></a>    </span>
+<span id="cb327-130"><a href="dl_3.html#cb327-130" tabindex="-1"></a>    with torch.no_grad():</span>
+<span id="cb327-131"><a href="dl_3.html#cb327-131" tabindex="-1"></a>        for inputs, targets in test_loader:</span>
+<span id="cb327-132"><a href="dl_3.html#cb327-132" tabindex="-1"></a>            inputs, targets = inputs.to(&#39;cuda&#39;), targets.to(&#39;cuda&#39;)</span>
+<span id="cb327-133"><a href="dl_3.html#cb327-133" tabindex="-1"></a>            outputs, _ = model(inputs)</span>
+<span id="cb327-134"><a href="dl_3.html#cb327-134" tabindex="-1"></a>            loss = criterion(outputs, targets)</span>
+<span id="cb327-135"><a href="dl_3.html#cb327-135" tabindex="-1"></a>            epoch_test_loss += loss.item()</span>
+<span id="cb327-136"><a href="dl_3.html#cb327-136" tabindex="-1"></a>    </span>
+<span id="cb327-137"><a href="dl_3.html#cb327-137" tabindex="-1"></a>    # 计算平均测试损失</span>
+<span id="cb327-138"><a href="dl_3.html#cb327-138" tabindex="-1"></a>    avg_test_loss = epoch_test_loss / len(test_loader)</span>
+<span id="cb327-139"><a href="dl_3.html#cb327-139" tabindex="-1"></a>    test_losses.append(avg_test_loss)</span>
+<span id="cb327-140"><a href="dl_3.html#cb327-140" tabindex="-1"></a>    </span>
+<span id="cb327-141"><a href="dl_3.html#cb327-141" tabindex="-1"></a>    # 每5个epoch打印一次进度</span>
+<span id="cb327-142"><a href="dl_3.html#cb327-142" tabindex="-1"></a>    if (epoch+1) % 5 == 0 or epoch == 0:</span>
+<span id="cb327-143"><a href="dl_3.html#cb327-143" tabindex="-1"></a>        print(f&quot;Epoch [{epoch+1}/{num_epochs}], Train Loss: {avg_train_loss:.6f}, Test Loss: {avg_test_loss:.6f}&quot;)</span></code></pre></div>
 <p>说明：</p>
 <ol style="list-style-type: decimal">
 <li><p>对于时序数据，给定t个数据后，t+1时刻的值即为响应变量。除了目标变量的自回归结构，还可以添加其他预测变量，记得要修改<code>input_size</code>。</p></li>
 <li><p>关于h和c的初始状态，绝大部分场景下都需要进行重置，即不同序列之间的初始状态是独立的。同时，初始状态也不是需要学习的参数，除特殊任务外，一般都无需设置梯度。</p></li>
-<li><p>如果要进行预测，则需要根据特定步长的窗口序列来预测下一时刻的目标值。</p></li>
+<li><p>如果要进行预测，则需要根据特定步长的窗口序列来预测下一时刻的目标值。<strong>单步预测</strong>直接让全连接层的输出维度为1；<strong>多步预测</strong>可以让全连接层的输出维度为目标维度，这等价于把未来步间的依赖压缩在最后的隐状态里，亦或者采取<strong>滚动预测</strong>的方式进行多步输出；除此之外，可考虑<strong>Seq2Seq</strong>的方法进行多步预测。</p></li>
 </ol>
 </div>
 <div id="dl_3_3" class="section level3 hasAnchor" number="11.3.3">

@@ -1075,6 +1075,92 @@ $$
 
 超参数详见[官方手册](https://xgboost.readthedocs.io/en/release_3.0.0/parameter.html)
 
+调参技巧：
+
+1. 控制模型复杂度（最优先）
+
+模型复杂度过高容易过拟合；过低则欠拟合。  
+重点调整以下三个参数：
+
+- **max_depth**：树的最大深度  
+
+  -默认值：6  
+  
+  - 建议范围：3 ~ 10  
+  
+  - 越大模型越复杂；过拟合时应减小  
+
+- **min_child_weight**：每个叶子节点的最小样本权重和（即最小样本数约束）  
+  - 默认值：1  
+  
+  - 建议范围：1 ~ 10  
+  
+  - 越大模型越保守，可防止过拟合  
+
+- **gamma (min_split_loss)**：节点分裂所需的最小损失减少量  
+
+  - 默认值：0  
+  
+  - 建议范围：0 ~ 5  
+  
+  - 增大 gamma 可减少分裂、抑制过拟合
+
+2. 学习率与迭代次数
+
+学习率决定每棵树对最终模型的贡献；迭代次数决定累积学习量，两者必须配合使用。
+
+- **eta (learning_rate)**：学习率  
+
+  - 默认值：0.3  
+  
+  - 建议范围：0.01 ~ 0.2  
+  
+  - 小 eta + 大 n_estimators = 稳定、效果好，但训练时间长
+
+- **n_estimators**：迭代次数（树的数量）  
+
+  - 建议范围：500 ~ 5000  
+  
+  - 通常配合 early_stopping_rounds 使用  
+
+3. 子采样与特征采样（防止过拟合）
+
+通过随机采样样本或特征来增加模型的泛化能力。
+
+- **subsample**：每棵树训练使用的样本比例  
+
+  - 默认值：1  
+  
+  - 建议范围：0.6 ~ 0.9  
+  
+  - 值太低可能欠拟合，太高容易过拟合  
+
+- **colsample_bytree**：每棵树随机选择的特征比例  
+
+  - 默认值：1  
+  
+  - 建议范围：0.6 ~ 0.9  
+
+4. 正则化参数（进一步防过拟合）
+
+控制叶子权重的惩罚力度，提升模型稳定性。
+
+- **lambda (reg_lambda)**：L2 正则项（权重平方惩罚） 
+
+  - 默认值：1  
+  
+  - 建议范围：1 ~ 10  
+  
+  - 增大能提升模型泛化性  
+
+- **alpha (reg_alpha)**：L1 正则项（稀疏化）  
+
+  - 默认值：0  
+  
+  - 建议范围：0 ~ 10  
+  
+  - 增大能进行特征筛选（部分特征权重归零）  
+
 python的`xgboost`库，示例如下。
 
 
@@ -1143,6 +1229,216 @@ LightGBM对连续特征离散化为直方图，降低计算复杂度。
 
 ### 实现 {#ml_5_2}
 
+调参技巧：
+
+1. 控制树模型复杂度
+
+- **num_leaves**：叶子节点数量（最重要的参数）
+
+  - 默认值：31
+  
+  - 建议范围：31 ~ 255
+  
+  - 越大模型越复杂，过拟合风险上升  
+  
+  - 通常应满足：`num_leaves <= 2^(max_depth)`  
+
+- **max_depth**：最大树深度
+
+  - 默认值：-1（不限制）
+  
+  - 建议范围：3 ~ 10  
+  
+  - 限制树深度可显著降低过拟合
+
+- **min_data_in_leaf**：叶子节点最小样本数
+
+  - 默认值：20
+  
+  - 建议范围：20 ~ 100
+  
+  - 增大能平滑模型、提升泛化能力
+
+- **min_sum_hessian_in_leaf**：叶子节点最小Hessian和
+
+  - 默认值：1e-3
+  
+  - 建议范围：1e-3 ~ 1e-1
+  
+  - 数据量大时可适度增大，防止过拟合
+
+2. 学习率与迭代次数（核心控制）
+
+- **learning_rate**
+
+  - 默认值：0.1
+  
+  - 建议范围：0.01 ~ 0.1
+  
+  - 越小训练越慢但泛化更好  
+
+- **n_estimators**
+
+  - 默认值：100
+  
+  - 建议范围：500 ~ 5000
+  
+  - 通常与 learning_rate 组合调节  
+  
+  - 建议开启早停：`early_stopping_rounds = 50~200`
+
+3. 防止过拟合的随机采样
+
+- **feature_fraction**（列采样率）
+
+  - 默认值：1.0
+  
+  - 建议范围：0.6 ~ 0.9
+  
+  - 每棵树随机使用部分特征  
+
+- **bagging_fraction**（样本采样率）
+
+  - 默认值：1.0
+  
+  - 建议范围：0.6 ~ 0.9
+  
+  - 每次建树使用部分样本  
+
+- **bagging_freq**
+
+  - 默认值：0（禁用）
+  
+  - 建议值：5  
+  
+  - 表示每 5 次迭代重新随机采样一次  
+
+4. 正则化参数（控制权重大小）
+
+- **lambda_l1**：L1 正则化（稀疏化）
+
+  - 默认值：0
+  
+  - 建议范围：0 ~ 10  
+
+- **lambda_l2**：L2 正则化（平滑化）
+
+  - 默认值：0
+  
+  - 建议范围：0 ~ 10  
+
+- **min_gain_to_split**：节点分裂所需的最小增益
+
+  - 默认值：0
+  
+  - 建议范围：0 ~ 0.2
+  
+  - 限制无效分裂，提高泛化能力 
+
+
+``` default
+import numpy as np
+import pandas as pd
+import lightgbm as lgb
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+import logging
+
+# 关闭 LightGBM 日志输出
+logging.getLogger("lightgbm").setLevel(logging.ERROR)
+
+# ==============================================
+# 1️⃣ 生成模拟数据
+# ==============================================
+np.random.seed(42)
+n_samples = 2000
+n_features = 10
+
+# 生成特征矩阵
+X = np.random.randn(n_samples, n_features)
+
+# 构造非线性目标变量
+y = (
+    5 * np.sin(X[:, 0])
+    + 3 * X[:, 1] ** 2
+    + 2 * X[:, 2]
+    + np.random.normal(0, 0.5, n_samples)  # 添加噪声
+)
+
+# 转换为DataFrame，带列名
+feature_names = [f"f{i}" for i in range(n_features)]
+X = pd.DataFrame(X, columns=feature_names)
+y = pd.Series(y, name="target")
+
+# ==============================================
+# 2️⃣ 划分训练 / 验证 / 测试集
+# ==============================================
+X_train_val, X_test, y_train_val, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_valid, y_train, y_valid = train_test_split(X_train_val, y_train_val, test_size=0.25, random_state=42)
+# → 训练:60%，验证:20%，测试:20%
+
+print(f"训练集: {X_train.shape}, 验证集: {X_valid.shape}, 测试集: {X_test.shape}")
+
+# ==============================================
+# 3️⃣ 构建 LightGBM 模型（sklearn 风格）
+# ==============================================
+model = lgb.LGBMRegressor(
+    objective="regression",
+    metric="rmse",
+    learning_rate=0.05,
+    n_estimators=2000,
+    num_leaves=63,
+    max_depth=6,
+    min_child_samples=30,
+    feature_fraction=0.8,
+    bagging_fraction=0.8,
+    bagging_freq=5,
+    lambda_l2=1.0,
+    verbose=-1  # 静默模式
+)
+
+# ==============================================
+# 4️⃣ 模型训练（含 early stopping）
+# ==============================================
+model.fit(
+    X_train, y_train,
+    eval_set=[(X_valid, y_valid)],
+    eval_metric="rmse",
+    callbacks=[
+        lgb.early_stopping(stopping_rounds=100, verbose=False),
+        lgb.log_evaluation(period=0)
+    ]
+)
+
+# ==============================================
+# 5️⃣ 模型评估
+# ==============================================
+y_pred = model.predict(X_test)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+print(f"✅ 测试集 RMSE: {rmse:.4f}")
+
+# ==============================================
+# 6️⃣ 可视化预测结果
+# ==============================================
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, alpha=0.6)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], "r--")
+plt.xlabel("True Values")
+plt.ylabel("Predicted Values")
+plt.title("LightGBM (sklearn-style, DataFrame) - Prediction vs True")
+plt.grid(True)
+plt.show()
+
+# ==============================================
+# 7️⃣ 特征重要性（可选）
+# ==============================================
+plt.figure(figsize=(8, 5))
+lgb.plot_importance(model, max_num_features=10)
+plt.title("Feature Importance (LightGBM)")
+plt.tight_layout()
+plt.show()
+```
 
 
 ## 因果森林 {#ml_6}
@@ -1213,15 +1509,7 @@ R语言`grf`包。
 
 - $predictions：输出每个观测的预测处理效应值
 
-## 贝叶斯方法 {#ml_7}
-
-### 贝叶斯判别法 {#ml_7_1}
-
-详见[应用多元统计](#ms_5_2)
-
-### 朴素贝叶斯分类器 {#ml_7_2}
-
-## SVM {#ml_8}
+## SVM {#ml_7}
 
 关于支持向量机SVM的介绍参见[视频](https://www.bilibili.com/video/BV16T4y1y7qj/)。
 

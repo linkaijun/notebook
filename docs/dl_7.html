@@ -504,12 +504,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 原理</a></li>
 <li class="chapter" data-level="8.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 实现</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> 贝叶斯方法</a>
-<ul>
-<li class="chapter" data-level="8.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>8.7.1</b> 贝叶斯判别法</a></li>
-<li class="chapter" data-level="8.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>8.7.2</b> 朴素贝叶斯分类器</a></li>
-</ul></li>
-<li class="chapter" data-level="8.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>8.8</b> SVM</a></li>
+<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> SVM</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> 生存分析</a>
 <ul>
@@ -554,6 +549,7 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 数据操作</a></li>
 <li class="chapter" data-level="11.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 自动微分</a></li>
 <li class="chapter" data-level="11.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="11.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 调参技巧</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>11.2</b> 线性神经网络</a>
 <ul>
@@ -796,117 +792,117 @@ x_{t-1} = \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{1 - \alpha_t}{\sqrt{1 - \
 </div>
 <div id="dl_7_2" class="section level3 hasAnchor" number="11.7.2">
 <h3><span class="header-section-number">11.7.2</span> 示例<a href="dl_7.html#dl_7_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<div class="sourceCode" id="cb331"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb331-1"><a href="dl_7.html#cb331-1" tabindex="-1"></a>import torch</span>
-<span id="cb331-2"><a href="dl_7.html#cb331-2" tabindex="-1"></a>import torch.nn as nn</span>
-<span id="cb331-3"><a href="dl_7.html#cb331-3" tabindex="-1"></a>import torch.nn.functional as F</span>
-<span id="cb331-4"><a href="dl_7.html#cb331-4" tabindex="-1"></a>import matplotlib.pyplot as plt</span>
-<span id="cb331-5"><a href="dl_7.html#cb331-5" tabindex="-1"></a></span>
-<span id="cb331-6"><a href="dl_7.html#cb331-6" tabindex="-1"></a># ========================</span>
-<span id="cb331-7"><a href="dl_7.html#cb331-7" tabindex="-1"></a># 1️⃣ 定义超参数</span>
-<span id="cb331-8"><a href="dl_7.html#cb331-8" tabindex="-1"></a># ========================</span>
-<span id="cb331-9"><a href="dl_7.html#cb331-9" tabindex="-1"></a>device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;</span>
-<span id="cb331-10"><a href="dl_7.html#cb331-10" tabindex="-1"></a>T = 1000                       # 扩散步数</span>
-<span id="cb331-11"><a href="dl_7.html#cb331-11" tabindex="-1"></a>beta_start, beta_end = 1e-4, 0.02</span>
-<span id="cb331-12"><a href="dl_7.html#cb331-12" tabindex="-1"></a>betas = torch.linspace(beta_start, beta_end, T).to(device)</span>
-<span id="cb331-13"><a href="dl_7.html#cb331-13" tabindex="-1"></a>alphas = 1.0 - betas</span>
-<span id="cb331-14"><a href="dl_7.html#cb331-14" tabindex="-1"></a>alpha_bars = torch.cumprod(alphas, dim=0)</span>
-<span id="cb331-15"><a href="dl_7.html#cb331-15" tabindex="-1"></a></span>
-<span id="cb331-16"><a href="dl_7.html#cb331-16" tabindex="-1"></a># ========================</span>
-<span id="cb331-17"><a href="dl_7.html#cb331-17" tabindex="-1"></a># 2️⃣ 构造一个简单数据集（1维高斯分布）</span>
-<span id="cb331-18"><a href="dl_7.html#cb331-18" tabindex="-1"></a># ========================</span>
-<span id="cb331-19"><a href="dl_7.html#cb331-19" tabindex="-1"></a>N = 1000</span>
-<span id="cb331-20"><a href="dl_7.html#cb331-20" tabindex="-1"></a>x0 = torch.randn(N, 1).to(device) * 2 + 3  # 数据分布：N(3, 4)</span>
-<span id="cb331-21"><a href="dl_7.html#cb331-21" tabindex="-1"></a>plt.hist(x0.cpu().numpy(), bins=50, density=True)</span>
-<span id="cb331-22"><a href="dl_7.html#cb331-22" tabindex="-1"></a>plt.title(&quot;Training data distribution&quot;)</span>
-<span id="cb331-23"><a href="dl_7.html#cb331-23" tabindex="-1"></a>plt.show()</span>
-<span id="cb331-24"><a href="dl_7.html#cb331-24" tabindex="-1"></a></span>
-<span id="cb331-25"><a href="dl_7.html#cb331-25" tabindex="-1"></a># ========================</span>
-<span id="cb331-26"><a href="dl_7.html#cb331-26" tabindex="-1"></a># 3️⃣ 前向加噪函数 q(x_t | x_0)</span>
-<span id="cb331-27"><a href="dl_7.html#cb331-27" tabindex="-1"></a># ========================</span>
-<span id="cb331-28"><a href="dl_7.html#cb331-28" tabindex="-1"></a>def q_sample(x0, t, noise=None):</span>
-<span id="cb331-29"><a href="dl_7.html#cb331-29" tabindex="-1"></a>    if noise is None:</span>
-<span id="cb331-30"><a href="dl_7.html#cb331-30" tabindex="-1"></a>        noise = torch.randn_like(x0)</span>
-<span id="cb331-31"><a href="dl_7.html#cb331-31" tabindex="-1"></a>    sqrt_ab = torch.sqrt(alpha_bars[t]).view(-1, 1)</span>
-<span id="cb331-32"><a href="dl_7.html#cb331-32" tabindex="-1"></a>    sqrt_one_minus_ab = torch.sqrt(1 - alpha_bars[t]).view(-1, 1)</span>
-<span id="cb331-33"><a href="dl_7.html#cb331-33" tabindex="-1"></a>    return sqrt_ab * x0 + sqrt_one_minus_ab * noise</span>
-<span id="cb331-34"><a href="dl_7.html#cb331-34" tabindex="-1"></a></span>
-<span id="cb331-35"><a href="dl_7.html#cb331-35" tabindex="-1"></a># ========================</span>
-<span id="cb331-36"><a href="dl_7.html#cb331-36" tabindex="-1"></a># 4️⃣ 定义去噪网络 ε_θ(x_t, t)</span>
-<span id="cb331-37"><a href="dl_7.html#cb331-37" tabindex="-1"></a># ========================</span>
-<span id="cb331-38"><a href="dl_7.html#cb331-38" tabindex="-1"></a>class DenoiseNet(nn.Module):</span>
-<span id="cb331-39"><a href="dl_7.html#cb331-39" tabindex="-1"></a>    def __init__(self):</span>
-<span id="cb331-40"><a href="dl_7.html#cb331-40" tabindex="-1"></a>        super().__init__()</span>
-<span id="cb331-41"><a href="dl_7.html#cb331-41" tabindex="-1"></a>        self.net = nn.Sequential(</span>
-<span id="cb331-42"><a href="dl_7.html#cb331-42" tabindex="-1"></a>            nn.Linear(2, 128),</span>
-<span id="cb331-43"><a href="dl_7.html#cb331-43" tabindex="-1"></a>            nn.ReLU(),</span>
-<span id="cb331-44"><a href="dl_7.html#cb331-44" tabindex="-1"></a>            nn.Linear(128, 128),</span>
-<span id="cb331-45"><a href="dl_7.html#cb331-45" tabindex="-1"></a>            nn.ReLU(),</span>
-<span id="cb331-46"><a href="dl_7.html#cb331-46" tabindex="-1"></a>            nn.Linear(128, 1)</span>
-<span id="cb331-47"><a href="dl_7.html#cb331-47" tabindex="-1"></a>        )</span>
-<span id="cb331-48"><a href="dl_7.html#cb331-48" tabindex="-1"></a>    def forward(self, x_t, t):</span>
-<span id="cb331-49"><a href="dl_7.html#cb331-49" tabindex="-1"></a>        # 将时间步归一化后拼接输入</span>
-<span id="cb331-50"><a href="dl_7.html#cb331-50" tabindex="-1"></a>        t_embed = t.float().unsqueeze(1) / T</span>
-<span id="cb331-51"><a href="dl_7.html#cb331-51" tabindex="-1"></a>        x_in = torch.cat([x_t, t_embed], dim=1)</span>
-<span id="cb331-52"><a href="dl_7.html#cb331-52" tabindex="-1"></a>        return self.net(x_in)</span>
-<span id="cb331-53"><a href="dl_7.html#cb331-53" tabindex="-1"></a></span>
-<span id="cb331-54"><a href="dl_7.html#cb331-54" tabindex="-1"></a>model = DenoiseNet().to(device)</span>
-<span id="cb331-55"><a href="dl_7.html#cb331-55" tabindex="-1"></a>optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)</span>
-<span id="cb331-56"><a href="dl_7.html#cb331-56" tabindex="-1"></a></span>
-<span id="cb331-57"><a href="dl_7.html#cb331-57" tabindex="-1"></a># ========================</span>
-<span id="cb331-58"><a href="dl_7.html#cb331-58" tabindex="-1"></a># 5️⃣ 训练过程</span>
-<span id="cb331-59"><a href="dl_7.html#cb331-59" tabindex="-1"></a># ========================</span>
-<span id="cb331-60"><a href="dl_7.html#cb331-60" tabindex="-1"></a>epochs = 1000</span>
-<span id="cb331-61"><a href="dl_7.html#cb331-61" tabindex="-1"></a>for epoch in range(epochs):</span>
-<span id="cb331-62"><a href="dl_7.html#cb331-62" tabindex="-1"></a>    t = torch.randint(0, T, (N,), device=device)  # 随机时间步</span>
-<span id="cb331-63"><a href="dl_7.html#cb331-63" tabindex="-1"></a>    noise = torch.randn_like(x0)</span>
-<span id="cb331-64"><a href="dl_7.html#cb331-64" tabindex="-1"></a>    x_t = q_sample(x0, t, noise)</span>
-<span id="cb331-65"><a href="dl_7.html#cb331-65" tabindex="-1"></a></span>
-<span id="cb331-66"><a href="dl_7.html#cb331-66" tabindex="-1"></a>    noise_pred = model(x_t, t)</span>
-<span id="cb331-67"><a href="dl_7.html#cb331-67" tabindex="-1"></a>    loss = F.mse_loss(noise_pred, noise)</span>
-<span id="cb331-68"><a href="dl_7.html#cb331-68" tabindex="-1"></a></span>
-<span id="cb331-69"><a href="dl_7.html#cb331-69" tabindex="-1"></a>    optimizer.zero_grad()</span>
-<span id="cb331-70"><a href="dl_7.html#cb331-70" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb331-71"><a href="dl_7.html#cb331-71" tabindex="-1"></a>    optimizer.step()</span>
-<span id="cb331-72"><a href="dl_7.html#cb331-72" tabindex="-1"></a></span>
-<span id="cb331-73"><a href="dl_7.html#cb331-73" tabindex="-1"></a>    if epoch % 100 == 0:</span>
-<span id="cb331-74"><a href="dl_7.html#cb331-74" tabindex="-1"></a>        print(f&quot;Epoch {epoch}, Loss: {loss.item():.4f}&quot;)</span>
-<span id="cb331-75"><a href="dl_7.html#cb331-75" tabindex="-1"></a></span>
-<span id="cb331-76"><a href="dl_7.html#cb331-76" tabindex="-1"></a># ========================</span>
-<span id="cb331-77"><a href="dl_7.html#cb331-77" tabindex="-1"></a># 6️⃣ 采样（从纯噪声逆扩散生成）</span>
-<span id="cb331-78"><a href="dl_7.html#cb331-78" tabindex="-1"></a># ========================</span>
-<span id="cb331-79"><a href="dl_7.html#cb331-79" tabindex="-1"></a>@torch.no_grad()</span>
-<span id="cb331-80"><a href="dl_7.html#cb331-80" tabindex="-1"></a>def p_sample(model, x_t, t):</span>
-<span id="cb331-81"><a href="dl_7.html#cb331-81" tabindex="-1"></a>    beta_t = betas[t]</span>
-<span id="cb331-82"><a href="dl_7.html#cb331-82" tabindex="-1"></a>    alpha_t = alphas[t]</span>
-<span id="cb331-83"><a href="dl_7.html#cb331-83" tabindex="-1"></a>    alpha_bar_t = alpha_bars[t]</span>
-<span id="cb331-84"><a href="dl_7.html#cb331-84" tabindex="-1"></a>    noise_pred = model(x_t, torch.tensor([t]*x_t.shape[0], device=device))</span>
-<span id="cb331-85"><a href="dl_7.html#cb331-85" tabindex="-1"></a>    mean = (1 / torch.sqrt(alpha_t)) * (</span>
-<span id="cb331-86"><a href="dl_7.html#cb331-86" tabindex="-1"></a>        x_t - (1 - alpha_t) / torch.sqrt(1 - alpha_bar_t) * noise_pred</span>
-<span id="cb331-87"><a href="dl_7.html#cb331-87" tabindex="-1"></a>    )</span>
-<span id="cb331-88"><a href="dl_7.html#cb331-88" tabindex="-1"></a>    if t &gt; 0:</span>
-<span id="cb331-89"><a href="dl_7.html#cb331-89" tabindex="-1"></a>        z = torch.randn_like(x_t)</span>
-<span id="cb331-90"><a href="dl_7.html#cb331-90" tabindex="-1"></a>    else:</span>
-<span id="cb331-91"><a href="dl_7.html#cb331-91" tabindex="-1"></a>        z = 0</span>
-<span id="cb331-92"><a href="dl_7.html#cb331-92" tabindex="-1"></a>    return mean + torch.sqrt(beta_t) * z</span>
-<span id="cb331-93"><a href="dl_7.html#cb331-93" tabindex="-1"></a></span>
-<span id="cb331-94"><a href="dl_7.html#cb331-94" tabindex="-1"></a>@torch.no_grad()</span>
-<span id="cb331-95"><a href="dl_7.html#cb331-95" tabindex="-1"></a>def sample(model, n_samples=1000):</span>
-<span id="cb331-96"><a href="dl_7.html#cb331-96" tabindex="-1"></a>    x_t = torch.randn(n_samples, 1).to(device)</span>
-<span id="cb331-97"><a href="dl_7.html#cb331-97" tabindex="-1"></a>    for t in reversed(range(T)):</span>
-<span id="cb331-98"><a href="dl_7.html#cb331-98" tabindex="-1"></a>        x_t = p_sample(model, x_t, t)</span>
-<span id="cb331-99"><a href="dl_7.html#cb331-99" tabindex="-1"></a>    return x_t</span>
-<span id="cb331-100"><a href="dl_7.html#cb331-100" tabindex="-1"></a></span>
-<span id="cb331-101"><a href="dl_7.html#cb331-101" tabindex="-1"></a>samples = sample(model, n_samples=1000).cpu().numpy()</span>
-<span id="cb331-102"><a href="dl_7.html#cb331-102" tabindex="-1"></a></span>
-<span id="cb331-103"><a href="dl_7.html#cb331-103" tabindex="-1"></a># ========================</span>
-<span id="cb331-104"><a href="dl_7.html#cb331-104" tabindex="-1"></a># 7️⃣ 可视化结果</span>
-<span id="cb331-105"><a href="dl_7.html#cb331-105" tabindex="-1"></a># ========================</span>
-<span id="cb331-106"><a href="dl_7.html#cb331-106" tabindex="-1"></a>plt.figure(figsize=(8,5))</span>
-<span id="cb331-107"><a href="dl_7.html#cb331-107" tabindex="-1"></a>plt.hist(x0.cpu().numpy(), bins=50, density=True, alpha=0.5, label=&quot;Real data&quot;)</span>
-<span id="cb331-108"><a href="dl_7.html#cb331-108" tabindex="-1"></a>plt.hist(samples, bins=50, density=True, alpha=0.5, label=&quot;Generated data&quot;)</span>
-<span id="cb331-109"><a href="dl_7.html#cb331-109" tabindex="-1"></a>plt.legend()</span>
-<span id="cb331-110"><a href="dl_7.html#cb331-110" tabindex="-1"></a>plt.title(&quot;DDPM training vs sampling result&quot;)</span>
-<span id="cb331-111"><a href="dl_7.html#cb331-111" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb332-1"><a href="dl_7.html#cb332-1" tabindex="-1"></a>import torch</span>
+<span id="cb332-2"><a href="dl_7.html#cb332-2" tabindex="-1"></a>import torch.nn as nn</span>
+<span id="cb332-3"><a href="dl_7.html#cb332-3" tabindex="-1"></a>import torch.nn.functional as F</span>
+<span id="cb332-4"><a href="dl_7.html#cb332-4" tabindex="-1"></a>import matplotlib.pyplot as plt</span>
+<span id="cb332-5"><a href="dl_7.html#cb332-5" tabindex="-1"></a></span>
+<span id="cb332-6"><a href="dl_7.html#cb332-6" tabindex="-1"></a># ========================</span>
+<span id="cb332-7"><a href="dl_7.html#cb332-7" tabindex="-1"></a># 1️⃣ 定义超参数</span>
+<span id="cb332-8"><a href="dl_7.html#cb332-8" tabindex="-1"></a># ========================</span>
+<span id="cb332-9"><a href="dl_7.html#cb332-9" tabindex="-1"></a>device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;</span>
+<span id="cb332-10"><a href="dl_7.html#cb332-10" tabindex="-1"></a>T = 1000                       # 扩散步数</span>
+<span id="cb332-11"><a href="dl_7.html#cb332-11" tabindex="-1"></a>beta_start, beta_end = 1e-4, 0.02</span>
+<span id="cb332-12"><a href="dl_7.html#cb332-12" tabindex="-1"></a>betas = torch.linspace(beta_start, beta_end, T).to(device)</span>
+<span id="cb332-13"><a href="dl_7.html#cb332-13" tabindex="-1"></a>alphas = 1.0 - betas</span>
+<span id="cb332-14"><a href="dl_7.html#cb332-14" tabindex="-1"></a>alpha_bars = torch.cumprod(alphas, dim=0)</span>
+<span id="cb332-15"><a href="dl_7.html#cb332-15" tabindex="-1"></a></span>
+<span id="cb332-16"><a href="dl_7.html#cb332-16" tabindex="-1"></a># ========================</span>
+<span id="cb332-17"><a href="dl_7.html#cb332-17" tabindex="-1"></a># 2️⃣ 构造一个简单数据集（1维高斯分布）</span>
+<span id="cb332-18"><a href="dl_7.html#cb332-18" tabindex="-1"></a># ========================</span>
+<span id="cb332-19"><a href="dl_7.html#cb332-19" tabindex="-1"></a>N = 1000</span>
+<span id="cb332-20"><a href="dl_7.html#cb332-20" tabindex="-1"></a>x0 = torch.randn(N, 1).to(device) * 2 + 3  # 数据分布：N(3, 4)</span>
+<span id="cb332-21"><a href="dl_7.html#cb332-21" tabindex="-1"></a>plt.hist(x0.cpu().numpy(), bins=50, density=True)</span>
+<span id="cb332-22"><a href="dl_7.html#cb332-22" tabindex="-1"></a>plt.title(&quot;Training data distribution&quot;)</span>
+<span id="cb332-23"><a href="dl_7.html#cb332-23" tabindex="-1"></a>plt.show()</span>
+<span id="cb332-24"><a href="dl_7.html#cb332-24" tabindex="-1"></a></span>
+<span id="cb332-25"><a href="dl_7.html#cb332-25" tabindex="-1"></a># ========================</span>
+<span id="cb332-26"><a href="dl_7.html#cb332-26" tabindex="-1"></a># 3️⃣ 前向加噪函数 q(x_t | x_0)</span>
+<span id="cb332-27"><a href="dl_7.html#cb332-27" tabindex="-1"></a># ========================</span>
+<span id="cb332-28"><a href="dl_7.html#cb332-28" tabindex="-1"></a>def q_sample(x0, t, noise=None):</span>
+<span id="cb332-29"><a href="dl_7.html#cb332-29" tabindex="-1"></a>    if noise is None:</span>
+<span id="cb332-30"><a href="dl_7.html#cb332-30" tabindex="-1"></a>        noise = torch.randn_like(x0)</span>
+<span id="cb332-31"><a href="dl_7.html#cb332-31" tabindex="-1"></a>    sqrt_ab = torch.sqrt(alpha_bars[t]).view(-1, 1)</span>
+<span id="cb332-32"><a href="dl_7.html#cb332-32" tabindex="-1"></a>    sqrt_one_minus_ab = torch.sqrt(1 - alpha_bars[t]).view(-1, 1)</span>
+<span id="cb332-33"><a href="dl_7.html#cb332-33" tabindex="-1"></a>    return sqrt_ab * x0 + sqrt_one_minus_ab * noise</span>
+<span id="cb332-34"><a href="dl_7.html#cb332-34" tabindex="-1"></a></span>
+<span id="cb332-35"><a href="dl_7.html#cb332-35" tabindex="-1"></a># ========================</span>
+<span id="cb332-36"><a href="dl_7.html#cb332-36" tabindex="-1"></a># 4️⃣ 定义去噪网络 ε_θ(x_t, t)</span>
+<span id="cb332-37"><a href="dl_7.html#cb332-37" tabindex="-1"></a># ========================</span>
+<span id="cb332-38"><a href="dl_7.html#cb332-38" tabindex="-1"></a>class DenoiseNet(nn.Module):</span>
+<span id="cb332-39"><a href="dl_7.html#cb332-39" tabindex="-1"></a>    def __init__(self):</span>
+<span id="cb332-40"><a href="dl_7.html#cb332-40" tabindex="-1"></a>        super().__init__()</span>
+<span id="cb332-41"><a href="dl_7.html#cb332-41" tabindex="-1"></a>        self.net = nn.Sequential(</span>
+<span id="cb332-42"><a href="dl_7.html#cb332-42" tabindex="-1"></a>            nn.Linear(2, 128),</span>
+<span id="cb332-43"><a href="dl_7.html#cb332-43" tabindex="-1"></a>            nn.ReLU(),</span>
+<span id="cb332-44"><a href="dl_7.html#cb332-44" tabindex="-1"></a>            nn.Linear(128, 128),</span>
+<span id="cb332-45"><a href="dl_7.html#cb332-45" tabindex="-1"></a>            nn.ReLU(),</span>
+<span id="cb332-46"><a href="dl_7.html#cb332-46" tabindex="-1"></a>            nn.Linear(128, 1)</span>
+<span id="cb332-47"><a href="dl_7.html#cb332-47" tabindex="-1"></a>        )</span>
+<span id="cb332-48"><a href="dl_7.html#cb332-48" tabindex="-1"></a>    def forward(self, x_t, t):</span>
+<span id="cb332-49"><a href="dl_7.html#cb332-49" tabindex="-1"></a>        # 将时间步归一化后拼接输入</span>
+<span id="cb332-50"><a href="dl_7.html#cb332-50" tabindex="-1"></a>        t_embed = t.float().unsqueeze(1) / T</span>
+<span id="cb332-51"><a href="dl_7.html#cb332-51" tabindex="-1"></a>        x_in = torch.cat([x_t, t_embed], dim=1)</span>
+<span id="cb332-52"><a href="dl_7.html#cb332-52" tabindex="-1"></a>        return self.net(x_in)</span>
+<span id="cb332-53"><a href="dl_7.html#cb332-53" tabindex="-1"></a></span>
+<span id="cb332-54"><a href="dl_7.html#cb332-54" tabindex="-1"></a>model = DenoiseNet().to(device)</span>
+<span id="cb332-55"><a href="dl_7.html#cb332-55" tabindex="-1"></a>optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)</span>
+<span id="cb332-56"><a href="dl_7.html#cb332-56" tabindex="-1"></a></span>
+<span id="cb332-57"><a href="dl_7.html#cb332-57" tabindex="-1"></a># ========================</span>
+<span id="cb332-58"><a href="dl_7.html#cb332-58" tabindex="-1"></a># 5️⃣ 训练过程</span>
+<span id="cb332-59"><a href="dl_7.html#cb332-59" tabindex="-1"></a># ========================</span>
+<span id="cb332-60"><a href="dl_7.html#cb332-60" tabindex="-1"></a>epochs = 1000</span>
+<span id="cb332-61"><a href="dl_7.html#cb332-61" tabindex="-1"></a>for epoch in range(epochs):</span>
+<span id="cb332-62"><a href="dl_7.html#cb332-62" tabindex="-1"></a>    t = torch.randint(0, T, (N,), device=device)  # 随机时间步</span>
+<span id="cb332-63"><a href="dl_7.html#cb332-63" tabindex="-1"></a>    noise = torch.randn_like(x0)</span>
+<span id="cb332-64"><a href="dl_7.html#cb332-64" tabindex="-1"></a>    x_t = q_sample(x0, t, noise)</span>
+<span id="cb332-65"><a href="dl_7.html#cb332-65" tabindex="-1"></a></span>
+<span id="cb332-66"><a href="dl_7.html#cb332-66" tabindex="-1"></a>    noise_pred = model(x_t, t)</span>
+<span id="cb332-67"><a href="dl_7.html#cb332-67" tabindex="-1"></a>    loss = F.mse_loss(noise_pred, noise)</span>
+<span id="cb332-68"><a href="dl_7.html#cb332-68" tabindex="-1"></a></span>
+<span id="cb332-69"><a href="dl_7.html#cb332-69" tabindex="-1"></a>    optimizer.zero_grad()</span>
+<span id="cb332-70"><a href="dl_7.html#cb332-70" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb332-71"><a href="dl_7.html#cb332-71" tabindex="-1"></a>    optimizer.step()</span>
+<span id="cb332-72"><a href="dl_7.html#cb332-72" tabindex="-1"></a></span>
+<span id="cb332-73"><a href="dl_7.html#cb332-73" tabindex="-1"></a>    if epoch % 100 == 0:</span>
+<span id="cb332-74"><a href="dl_7.html#cb332-74" tabindex="-1"></a>        print(f&quot;Epoch {epoch}, Loss: {loss.item():.4f}&quot;)</span>
+<span id="cb332-75"><a href="dl_7.html#cb332-75" tabindex="-1"></a></span>
+<span id="cb332-76"><a href="dl_7.html#cb332-76" tabindex="-1"></a># ========================</span>
+<span id="cb332-77"><a href="dl_7.html#cb332-77" tabindex="-1"></a># 6️⃣ 采样（从纯噪声逆扩散生成）</span>
+<span id="cb332-78"><a href="dl_7.html#cb332-78" tabindex="-1"></a># ========================</span>
+<span id="cb332-79"><a href="dl_7.html#cb332-79" tabindex="-1"></a>@torch.no_grad()</span>
+<span id="cb332-80"><a href="dl_7.html#cb332-80" tabindex="-1"></a>def p_sample(model, x_t, t):</span>
+<span id="cb332-81"><a href="dl_7.html#cb332-81" tabindex="-1"></a>    beta_t = betas[t]</span>
+<span id="cb332-82"><a href="dl_7.html#cb332-82" tabindex="-1"></a>    alpha_t = alphas[t]</span>
+<span id="cb332-83"><a href="dl_7.html#cb332-83" tabindex="-1"></a>    alpha_bar_t = alpha_bars[t]</span>
+<span id="cb332-84"><a href="dl_7.html#cb332-84" tabindex="-1"></a>    noise_pred = model(x_t, torch.tensor([t]*x_t.shape[0], device=device))</span>
+<span id="cb332-85"><a href="dl_7.html#cb332-85" tabindex="-1"></a>    mean = (1 / torch.sqrt(alpha_t)) * (</span>
+<span id="cb332-86"><a href="dl_7.html#cb332-86" tabindex="-1"></a>        x_t - (1 - alpha_t) / torch.sqrt(1 - alpha_bar_t) * noise_pred</span>
+<span id="cb332-87"><a href="dl_7.html#cb332-87" tabindex="-1"></a>    )</span>
+<span id="cb332-88"><a href="dl_7.html#cb332-88" tabindex="-1"></a>    if t &gt; 0:</span>
+<span id="cb332-89"><a href="dl_7.html#cb332-89" tabindex="-1"></a>        z = torch.randn_like(x_t)</span>
+<span id="cb332-90"><a href="dl_7.html#cb332-90" tabindex="-1"></a>    else:</span>
+<span id="cb332-91"><a href="dl_7.html#cb332-91" tabindex="-1"></a>        z = 0</span>
+<span id="cb332-92"><a href="dl_7.html#cb332-92" tabindex="-1"></a>    return mean + torch.sqrt(beta_t) * z</span>
+<span id="cb332-93"><a href="dl_7.html#cb332-93" tabindex="-1"></a></span>
+<span id="cb332-94"><a href="dl_7.html#cb332-94" tabindex="-1"></a>@torch.no_grad()</span>
+<span id="cb332-95"><a href="dl_7.html#cb332-95" tabindex="-1"></a>def sample(model, n_samples=1000):</span>
+<span id="cb332-96"><a href="dl_7.html#cb332-96" tabindex="-1"></a>    x_t = torch.randn(n_samples, 1).to(device)</span>
+<span id="cb332-97"><a href="dl_7.html#cb332-97" tabindex="-1"></a>    for t in reversed(range(T)):</span>
+<span id="cb332-98"><a href="dl_7.html#cb332-98" tabindex="-1"></a>        x_t = p_sample(model, x_t, t)</span>
+<span id="cb332-99"><a href="dl_7.html#cb332-99" tabindex="-1"></a>    return x_t</span>
+<span id="cb332-100"><a href="dl_7.html#cb332-100" tabindex="-1"></a></span>
+<span id="cb332-101"><a href="dl_7.html#cb332-101" tabindex="-1"></a>samples = sample(model, n_samples=1000).cpu().numpy()</span>
+<span id="cb332-102"><a href="dl_7.html#cb332-102" tabindex="-1"></a></span>
+<span id="cb332-103"><a href="dl_7.html#cb332-103" tabindex="-1"></a># ========================</span>
+<span id="cb332-104"><a href="dl_7.html#cb332-104" tabindex="-1"></a># 7️⃣ 可视化结果</span>
+<span id="cb332-105"><a href="dl_7.html#cb332-105" tabindex="-1"></a># ========================</span>
+<span id="cb332-106"><a href="dl_7.html#cb332-106" tabindex="-1"></a>plt.figure(figsize=(8,5))</span>
+<span id="cb332-107"><a href="dl_7.html#cb332-107" tabindex="-1"></a>plt.hist(x0.cpu().numpy(), bins=50, density=True, alpha=0.5, label=&quot;Real data&quot;)</span>
+<span id="cb332-108"><a href="dl_7.html#cb332-108" tabindex="-1"></a>plt.hist(samples, bins=50, density=True, alpha=0.5, label=&quot;Generated data&quot;)</span>
+<span id="cb332-109"><a href="dl_7.html#cb332-109" tabindex="-1"></a>plt.legend()</span>
+<span id="cb332-110"><a href="dl_7.html#cb332-110" tabindex="-1"></a>plt.title(&quot;DDPM training vs sampling result&quot;)</span>
+<span id="cb332-111"><a href="dl_7.html#cb332-111" tabindex="-1"></a>plt.show()</span></code></pre></div>
 
 </div>
 </div>

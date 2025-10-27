@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8.7 贝叶斯方法 | kj的学习笔记</title>
+  <title>8.7 SVM | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8.7 贝叶斯方法 | kj的学习笔记" />
+  <meta property="og:title" content="8.7 SVM | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8.7 贝叶斯方法 | kj的学习笔记" />
+  <meta name="twitter:title" content="8.7 SVM | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="ml_6.html"/>
-<link rel="next" href="ml_8.html"/>
+<link rel="next" href="survival.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -504,12 +504,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 原理</a></li>
 <li class="chapter" data-level="8.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 实现</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> 贝叶斯方法</a>
-<ul>
-<li class="chapter" data-level="8.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>8.7.1</b> 贝叶斯判别法</a></li>
-<li class="chapter" data-level="8.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>8.7.2</b> 朴素贝叶斯分类器</a></li>
-</ul></li>
-<li class="chapter" data-level="8.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>8.8</b> SVM</a></li>
+<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> SVM</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> 生存分析</a>
 <ul>
@@ -554,6 +549,7 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 数据操作</a></li>
 <li class="chapter" data-level="11.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 自动微分</a></li>
 <li class="chapter" data-level="11.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="11.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 调参技巧</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>11.2</b> 线性神经网络</a>
 <ul>
@@ -732,22 +728,45 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="ml_7" class="section level2 hasAnchor" number="8.7">
-<h2><span class="header-section-number">8.7</span> 贝叶斯方法<a href="ml_7.html#ml_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="ml_7_1" class="section level3 hasAnchor" number="8.7.1">
-<h3><span class="header-section-number">8.7.1</span> 贝叶斯判别法<a href="ml_7.html#ml_7_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p>详见<a href="ms_5.html#ms_5_2" target="_blank">应用多元统计</a></p>
+<h2><span class="header-section-number">8.7</span> SVM<a href="ml_7.html#ml_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>关于支持向量机SVM的介绍参见<a href="https://www.bilibili.com/video/BV16T4y1y7qj/" target="_blank">视频</a>。</p>
+<p><code>e1071</code>包的<code>tune()</code>函数能够对超参数进行网格搜索，并保留最优模型。</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="ml_7.html#cb271-1" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb271-2"><a href="ml_7.html#cb271-2" tabindex="-1"></a></span>
+<span id="cb271-3"><a href="ml_7.html#cb271-3" tabindex="-1"></a><span class="co"># 设置参数范围，进行网格搜索</span></span>
+<span id="cb271-4"><a href="ml_7.html#cb271-4" tabindex="-1"></a>tune_grid <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb271-5"><a href="ml_7.html#cb271-5" tabindex="-1"></a>  <span class="at">cost =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb271-6"><a href="ml_7.html#cb271-6" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>),</span>
+<span id="cb271-7"><a href="ml_7.html#cb271-7" tabindex="-1"></a>  <span class="at">kernel =</span> <span class="fu">c</span>(<span class="st">&#39;radial&#39;</span>, <span class="st">&#39;linear&#39;</span>)</span>
+<span id="cb271-8"><a href="ml_7.html#cb271-8" tabindex="-1"></a>)</span>
+<span id="cb271-9"><a href="ml_7.html#cb271-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb271-10"><a href="ml_7.html#cb271-10" tabindex="-1"></a><span class="co"># tune()函数能够自行调优</span></span>
+<span id="cb271-11"><a href="ml_7.html#cb271-11" tabindex="-1"></a>model_tune_svm <span class="ot">&lt;-</span> <span class="fu">tune</span>(</span>
+<span id="cb271-12"><a href="ml_7.html#cb271-12" tabindex="-1"></a>  <span class="at">METHOD =</span> svm,</span>
+<span id="cb271-13"><a href="ml_7.html#cb271-13" tabindex="-1"></a>  <span class="at">train.x =</span> label <span class="sc">~</span> score <span class="sc">+</span> departure,</span>
+<span id="cb271-14"><a href="ml_7.html#cb271-14" tabindex="-1"></a>  <span class="at">data =</span> train_set,</span>
+<span id="cb271-15"><a href="ml_7.html#cb271-15" tabindex="-1"></a>  <span class="at">ranges =</span> tune_grid,</span>
+<span id="cb271-16"><a href="ml_7.html#cb271-16" tabindex="-1"></a>  <span class="at">tunecontrol =</span> <span class="fu">tune.control</span>(</span>
+<span id="cb271-17"><a href="ml_7.html#cb271-17" tabindex="-1"></a>    <span class="at">sampling =</span> <span class="st">&quot;cross&quot;</span>,             <span class="co"># 交叉验证</span></span>
+<span id="cb271-18"><a href="ml_7.html#cb271-18" tabindex="-1"></a>    <span class="at">cross =</span> <span class="dv">5</span>,                      <span class="co"># 5折交叉验证</span></span>
+<span id="cb271-19"><a href="ml_7.html#cb271-19" tabindex="-1"></a>    <span class="at">best.model =</span> <span class="cn">TRUE</span>               <span class="co"># 保留最佳模型</span></span>
+<span id="cb271-20"><a href="ml_7.html#cb271-20" tabindex="-1"></a>  )</span>
+<span id="cb271-21"><a href="ml_7.html#cb271-21" tabindex="-1"></a>  )</span>
+<span id="cb271-22"><a href="ml_7.html#cb271-22" tabindex="-1"></a></span>
+<span id="cb271-23"><a href="ml_7.html#cb271-23" tabindex="-1"></a><span class="fu">summary</span>(model_tune_svm)</span>
+<span id="cb271-24"><a href="ml_7.html#cb271-24" tabindex="-1"></a>model_tune_svm<span class="sc">$</span>best.parameters            <span class="co"># 最优参数组合</span></span>
+<span id="cb271-25"><a href="ml_7.html#cb271-25" tabindex="-1"></a>model_svm <span class="ot">&lt;-</span> model_tune_svm<span class="sc">$</span>best.model    <span class="co"># 提取最优模型</span></span>
+<span id="cb271-26"><a href="ml_7.html#cb271-26" tabindex="-1"></a>fit_svm <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm, train_set)  <span class="co"># 测试集预测</span></span></code></pre></div>
+
 </div>
-<div id="ml_7_2" class="section level3 hasAnchor" number="8.7.2">
-<h3><span class="header-section-number">8.7.2</span> 朴素贝叶斯分类器<a href="ml_7.html#ml_7_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-</div>
-</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
 <a href="ml_6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ml_8.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="survival.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

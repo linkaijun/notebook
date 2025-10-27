@@ -504,12 +504,7 @@ div.csl-indent {
 <li class="chapter" data-level="8.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 原理</a></li>
 <li class="chapter" data-level="8.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 实现</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> 贝叶斯方法</a>
-<ul>
-<li class="chapter" data-level="8.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>8.7.1</b> 贝叶斯判别法</a></li>
-<li class="chapter" data-level="8.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>8.7.2</b> 朴素贝叶斯分类器</a></li>
-</ul></li>
-<li class="chapter" data-level="8.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>8.8</b> SVM</a></li>
+<li class="chapter" data-level="8.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>8.7</b> SVM</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> 生存分析</a>
 <ul>
@@ -554,6 +549,7 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 数据操作</a></li>
 <li class="chapter" data-level="11.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 自动微分</a></li>
 <li class="chapter" data-level="11.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="11.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 调参技巧</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>11.2</b> 线性神经网络</a>
 <ul>
@@ -765,65 +761,65 @@ div.csl-indent {
 <blockquote>
 <p>注意图神经网络的视角是空间视角，抓住数据中的结构关系即可</p>
 </blockquote>
-<div class="sourceCode" id="cb330"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb330-1"><a href="dl_6.html#cb330-1" tabindex="-1"></a>import torch</span>
-<span id="cb330-2"><a href="dl_6.html#cb330-2" tabindex="-1"></a>import torch.nn.functional as F</span>
-<span id="cb330-3"><a href="dl_6.html#cb330-3" tabindex="-1"></a>from torch_geometric.data import Data</span>
-<span id="cb330-4"><a href="dl_6.html#cb330-4" tabindex="-1"></a>from torch_geometric.nn import GCNConv</span>
-<span id="cb330-5"><a href="dl_6.html#cb330-5" tabindex="-1"></a></span>
-<span id="cb330-6"><a href="dl_6.html#cb330-6" tabindex="-1"></a># ===============================</span>
-<span id="cb330-7"><a href="dl_6.html#cb330-7" tabindex="-1"></a># 1️⃣ 定义图结构</span>
-<span id="cb330-8"><a href="dl_6.html#cb330-8" tabindex="-1"></a># ===============================</span>
-<span id="cb330-9"><a href="dl_6.html#cb330-9" tabindex="-1"></a></span>
-<span id="cb330-10"><a href="dl_6.html#cb330-10" tabindex="-1"></a># 图的边 (source, target)，采用 COO 格式</span>
-<span id="cb330-11"><a href="dl_6.html#cb330-11" tabindex="-1"></a># 例如：0↔1, 1↔2, 2↔3, 3↔4, 4↔0</span>
-<span id="cb330-12"><a href="dl_6.html#cb330-12" tabindex="-1"></a>edge_index = torch.tensor([</span>
-<span id="cb330-13"><a href="dl_6.html#cb330-13" tabindex="-1"></a>    [0, 1, 2, 3, 4, 1, 2, 3, 4, 0],  # source</span>
-<span id="cb330-14"><a href="dl_6.html#cb330-14" tabindex="-1"></a>    [1, 2, 3, 4, 0, 0, 1, 2, 3, 4]   # target</span>
-<span id="cb330-15"><a href="dl_6.html#cb330-15" tabindex="-1"></a>], dtype=torch.long)</span>
-<span id="cb330-16"><a href="dl_6.html#cb330-16" tabindex="-1"></a></span>
-<span id="cb330-17"><a href="dl_6.html#cb330-17" tabindex="-1"></a># 每个节点的特征（这里每个节点3维）</span>
-<span id="cb330-18"><a href="dl_6.html#cb330-18" tabindex="-1"></a>x = torch.randn((5, 3))</span>
-<span id="cb330-19"><a href="dl_6.html#cb330-19" tabindex="-1"></a></span>
-<span id="cb330-20"><a href="dl_6.html#cb330-20" tabindex="-1"></a># 如果是节点分类任务，可加上节点标签</span>
-<span id="cb330-21"><a href="dl_6.html#cb330-21" tabindex="-1"></a>y = torch.tensor([0, 1, 0, 1, 0], dtype=torch.long)</span>
-<span id="cb330-22"><a href="dl_6.html#cb330-22" tabindex="-1"></a></span>
-<span id="cb330-23"><a href="dl_6.html#cb330-23" tabindex="-1"></a># 构建图数据对象</span>
-<span id="cb330-24"><a href="dl_6.html#cb330-24" tabindex="-1"></a>data = Data(x=x, edge_index=edge_index, y=y)</span>
-<span id="cb330-25"><a href="dl_6.html#cb330-25" tabindex="-1"></a></span>
-<span id="cb330-26"><a href="dl_6.html#cb330-26" tabindex="-1"></a>print(&quot;图信息：&quot;)</span>
-<span id="cb330-27"><a href="dl_6.html#cb330-27" tabindex="-1"></a>print(data)</span>
-<span id="cb330-28"><a href="dl_6.html#cb330-28" tabindex="-1"></a>print(&quot;节点特征形状:&quot;, data.x.shape)</span>
-<span id="cb330-29"><a href="dl_6.html#cb330-29" tabindex="-1"></a>print(&quot;边数量:&quot;, data.edge_index.shape[1])</span>
-<span id="cb330-30"><a href="dl_6.html#cb330-30" tabindex="-1"></a></span>
-<span id="cb330-31"><a href="dl_6.html#cb330-31" tabindex="-1"></a># ===============================</span>
-<span id="cb330-32"><a href="dl_6.html#cb330-32" tabindex="-1"></a># 2️⃣ 定义 GCN 模型</span>
-<span id="cb330-33"><a href="dl_6.html#cb330-33" tabindex="-1"></a># ===============================</span>
-<span id="cb330-34"><a href="dl_6.html#cb330-34" tabindex="-1"></a>class GCN(torch.nn.Module):</span>
-<span id="cb330-35"><a href="dl_6.html#cb330-35" tabindex="-1"></a>    def __init__(self, in_channels, hidden_channels, out_channels):</span>
-<span id="cb330-36"><a href="dl_6.html#cb330-36" tabindex="-1"></a>        super(GCN, self).__init__()</span>
-<span id="cb330-37"><a href="dl_6.html#cb330-37" tabindex="-1"></a>        self.conv1 = GCNConv(in_channels, hidden_channels)</span>
-<span id="cb330-38"><a href="dl_6.html#cb330-38" tabindex="-1"></a>        self.conv2 = GCNConv(hidden_channels, out_channels)</span>
-<span id="cb330-39"><a href="dl_6.html#cb330-39" tabindex="-1"></a></span>
-<span id="cb330-40"><a href="dl_6.html#cb330-40" tabindex="-1"></a>    def forward(self, x, edge_index):</span>
-<span id="cb330-41"><a href="dl_6.html#cb330-41" tabindex="-1"></a>        # 第一层：图卷积 + ReLU</span>
-<span id="cb330-42"><a href="dl_6.html#cb330-42" tabindex="-1"></a>        x = self.conv1(x, edge_index)</span>
-<span id="cb330-43"><a href="dl_6.html#cb330-43" tabindex="-1"></a>        x = F.relu(x)</span>
-<span id="cb330-44"><a href="dl_6.html#cb330-44" tabindex="-1"></a>        # 第二层：图卷积 + Softmax 输出（用于分类）</span>
-<span id="cb330-45"><a href="dl_6.html#cb330-45" tabindex="-1"></a>        x = self.conv2(x, edge_index)</span>
-<span id="cb330-46"><a href="dl_6.html#cb330-46" tabindex="-1"></a>        return x</span>
-<span id="cb330-47"><a href="dl_6.html#cb330-47" tabindex="-1"></a></span>
-<span id="cb330-48"><a href="dl_6.html#cb330-48" tabindex="-1"></a># ===============================</span>
-<span id="cb330-49"><a href="dl_6.html#cb330-49" tabindex="-1"></a># 3️⃣ 实例化模型并前向传播</span>
-<span id="cb330-50"><a href="dl_6.html#cb330-50" tabindex="-1"></a># ===============================</span>
-<span id="cb330-51"><a href="dl_6.html#cb330-51" tabindex="-1"></a>model = GCN(in_channels=3, hidden_channels=4, out_channels=2)</span>
-<span id="cb330-52"><a href="dl_6.html#cb330-52" tabindex="-1"></a>out = model(data.x, data.edge_index)</span>
-<span id="cb330-53"><a href="dl_6.html#cb330-53" tabindex="-1"></a></span>
-<span id="cb330-54"><a href="dl_6.html#cb330-54" tabindex="-1"></a>print(&quot;\n输出特征形状:&quot;, out.shape)</span>
-<span id="cb330-55"><a href="dl_6.html#cb330-55" tabindex="-1"></a>print(&quot;输出节点嵌入：\n&quot;, out)</span>
-<span id="cb330-56"><a href="dl_6.html#cb330-56" tabindex="-1"></a></span>
-<span id="cb330-57"><a href="dl_6.html#cb330-57" tabindex="-1"></a># 若是分类任务：</span>
-<span id="cb330-58"><a href="dl_6.html#cb330-58" tabindex="-1"></a>pred = out.argmax(dim=1)</span>
-<span id="cb330-59"><a href="dl_6.html#cb330-59" tabindex="-1"></a>print(&quot;\n节点类别预测：&quot;, pred)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb331-1"><a href="dl_6.html#cb331-1" tabindex="-1"></a>import torch</span>
+<span id="cb331-2"><a href="dl_6.html#cb331-2" tabindex="-1"></a>import torch.nn.functional as F</span>
+<span id="cb331-3"><a href="dl_6.html#cb331-3" tabindex="-1"></a>from torch_geometric.data import Data</span>
+<span id="cb331-4"><a href="dl_6.html#cb331-4" tabindex="-1"></a>from torch_geometric.nn import GCNConv</span>
+<span id="cb331-5"><a href="dl_6.html#cb331-5" tabindex="-1"></a></span>
+<span id="cb331-6"><a href="dl_6.html#cb331-6" tabindex="-1"></a># ===============================</span>
+<span id="cb331-7"><a href="dl_6.html#cb331-7" tabindex="-1"></a># 1️⃣ 定义图结构</span>
+<span id="cb331-8"><a href="dl_6.html#cb331-8" tabindex="-1"></a># ===============================</span>
+<span id="cb331-9"><a href="dl_6.html#cb331-9" tabindex="-1"></a></span>
+<span id="cb331-10"><a href="dl_6.html#cb331-10" tabindex="-1"></a># 图的边 (source, target)，采用 COO 格式</span>
+<span id="cb331-11"><a href="dl_6.html#cb331-11" tabindex="-1"></a># 例如：0↔1, 1↔2, 2↔3, 3↔4, 4↔0</span>
+<span id="cb331-12"><a href="dl_6.html#cb331-12" tabindex="-1"></a>edge_index = torch.tensor([</span>
+<span id="cb331-13"><a href="dl_6.html#cb331-13" tabindex="-1"></a>    [0, 1, 2, 3, 4, 1, 2, 3, 4, 0],  # source</span>
+<span id="cb331-14"><a href="dl_6.html#cb331-14" tabindex="-1"></a>    [1, 2, 3, 4, 0, 0, 1, 2, 3, 4]   # target</span>
+<span id="cb331-15"><a href="dl_6.html#cb331-15" tabindex="-1"></a>], dtype=torch.long)</span>
+<span id="cb331-16"><a href="dl_6.html#cb331-16" tabindex="-1"></a></span>
+<span id="cb331-17"><a href="dl_6.html#cb331-17" tabindex="-1"></a># 每个节点的特征（这里每个节点3维）</span>
+<span id="cb331-18"><a href="dl_6.html#cb331-18" tabindex="-1"></a>x = torch.randn((5, 3))</span>
+<span id="cb331-19"><a href="dl_6.html#cb331-19" tabindex="-1"></a></span>
+<span id="cb331-20"><a href="dl_6.html#cb331-20" tabindex="-1"></a># 如果是节点分类任务，可加上节点标签</span>
+<span id="cb331-21"><a href="dl_6.html#cb331-21" tabindex="-1"></a>y = torch.tensor([0, 1, 0, 1, 0], dtype=torch.long)</span>
+<span id="cb331-22"><a href="dl_6.html#cb331-22" tabindex="-1"></a></span>
+<span id="cb331-23"><a href="dl_6.html#cb331-23" tabindex="-1"></a># 构建图数据对象</span>
+<span id="cb331-24"><a href="dl_6.html#cb331-24" tabindex="-1"></a>data = Data(x=x, edge_index=edge_index, y=y)</span>
+<span id="cb331-25"><a href="dl_6.html#cb331-25" tabindex="-1"></a></span>
+<span id="cb331-26"><a href="dl_6.html#cb331-26" tabindex="-1"></a>print(&quot;图信息：&quot;)</span>
+<span id="cb331-27"><a href="dl_6.html#cb331-27" tabindex="-1"></a>print(data)</span>
+<span id="cb331-28"><a href="dl_6.html#cb331-28" tabindex="-1"></a>print(&quot;节点特征形状:&quot;, data.x.shape)</span>
+<span id="cb331-29"><a href="dl_6.html#cb331-29" tabindex="-1"></a>print(&quot;边数量:&quot;, data.edge_index.shape[1])</span>
+<span id="cb331-30"><a href="dl_6.html#cb331-30" tabindex="-1"></a></span>
+<span id="cb331-31"><a href="dl_6.html#cb331-31" tabindex="-1"></a># ===============================</span>
+<span id="cb331-32"><a href="dl_6.html#cb331-32" tabindex="-1"></a># 2️⃣ 定义 GCN 模型</span>
+<span id="cb331-33"><a href="dl_6.html#cb331-33" tabindex="-1"></a># ===============================</span>
+<span id="cb331-34"><a href="dl_6.html#cb331-34" tabindex="-1"></a>class GCN(torch.nn.Module):</span>
+<span id="cb331-35"><a href="dl_6.html#cb331-35" tabindex="-1"></a>    def __init__(self, in_channels, hidden_channels, out_channels):</span>
+<span id="cb331-36"><a href="dl_6.html#cb331-36" tabindex="-1"></a>        super(GCN, self).__init__()</span>
+<span id="cb331-37"><a href="dl_6.html#cb331-37" tabindex="-1"></a>        self.conv1 = GCNConv(in_channels, hidden_channels)</span>
+<span id="cb331-38"><a href="dl_6.html#cb331-38" tabindex="-1"></a>        self.conv2 = GCNConv(hidden_channels, out_channels)</span>
+<span id="cb331-39"><a href="dl_6.html#cb331-39" tabindex="-1"></a></span>
+<span id="cb331-40"><a href="dl_6.html#cb331-40" tabindex="-1"></a>    def forward(self, x, edge_index):</span>
+<span id="cb331-41"><a href="dl_6.html#cb331-41" tabindex="-1"></a>        # 第一层：图卷积 + ReLU</span>
+<span id="cb331-42"><a href="dl_6.html#cb331-42" tabindex="-1"></a>        x = self.conv1(x, edge_index)</span>
+<span id="cb331-43"><a href="dl_6.html#cb331-43" tabindex="-1"></a>        x = F.relu(x)</span>
+<span id="cb331-44"><a href="dl_6.html#cb331-44" tabindex="-1"></a>        # 第二层：图卷积 + Softmax 输出（用于分类）</span>
+<span id="cb331-45"><a href="dl_6.html#cb331-45" tabindex="-1"></a>        x = self.conv2(x, edge_index)</span>
+<span id="cb331-46"><a href="dl_6.html#cb331-46" tabindex="-1"></a>        return x</span>
+<span id="cb331-47"><a href="dl_6.html#cb331-47" tabindex="-1"></a></span>
+<span id="cb331-48"><a href="dl_6.html#cb331-48" tabindex="-1"></a># ===============================</span>
+<span id="cb331-49"><a href="dl_6.html#cb331-49" tabindex="-1"></a># 3️⃣ 实例化模型并前向传播</span>
+<span id="cb331-50"><a href="dl_6.html#cb331-50" tabindex="-1"></a># ===============================</span>
+<span id="cb331-51"><a href="dl_6.html#cb331-51" tabindex="-1"></a>model = GCN(in_channels=3, hidden_channels=4, out_channels=2)</span>
+<span id="cb331-52"><a href="dl_6.html#cb331-52" tabindex="-1"></a>out = model(data.x, data.edge_index)</span>
+<span id="cb331-53"><a href="dl_6.html#cb331-53" tabindex="-1"></a></span>
+<span id="cb331-54"><a href="dl_6.html#cb331-54" tabindex="-1"></a>print(&quot;\n输出特征形状:&quot;, out.shape)</span>
+<span id="cb331-55"><a href="dl_6.html#cb331-55" tabindex="-1"></a>print(&quot;输出节点嵌入：\n&quot;, out)</span>
+<span id="cb331-56"><a href="dl_6.html#cb331-56" tabindex="-1"></a></span>
+<span id="cb331-57"><a href="dl_6.html#cb331-57" tabindex="-1"></a># 若是分类任务：</span>
+<span id="cb331-58"><a href="dl_6.html#cb331-58" tabindex="-1"></a>pred = out.argmax(dim=1)</span>
+<span id="cb331-59"><a href="dl_6.html#cb331-59" tabindex="-1"></a>print(&quot;\n节点类别预测：&quot;, pred)</span></code></pre></div>
 </div>
 </div>
             </section>

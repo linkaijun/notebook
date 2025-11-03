@@ -727,6 +727,84 @@ for epoch in range(100):
 
 3. 如果要输出预测类别，可以`torch.argmax(outputs, dim=1)`。
 
+## RNN {#dl_9}
+
+<div class="figure" style="text-align: center">
+<img src="./pic/dl/rnn.png" alt="RNN" width="1007" />
+<p class="caption">(\#fig:dl-p5)RNN</p>
+</div>
+
+简单来说，RNN将隐状态在时间上依次传递，当前时间步的隐状态由当前时间步的输入与上一时间步的隐状态得到，当前时间步的输出由当前时间步的隐状态得到。
+
+$$
+\begin{gather}
+s_t = f(W_s s_{t-1} + W_x x_t) \\
+o_t = g(W_os_t)
+\end{gather}
+$$
+
+但是在训练过程中，由于这种**循环**结构，容易导致梯度爆炸或消失问题。
+
+对于一个简单的循环神经网络 (RNN)，隐藏状态的更新为：
+
+$$
+s_t = f(W_s s_{t-1} + W_x x_t)
+$$
+
+训练RNN时，需要对损失函数$L_T$关于参数$W_s$求导。  
+梯度在时间维度上通过链式法则传播：
+
+$$
+\frac{\partial L_T}{\partial W_s}
+= \sum_{t=1}^{T} \frac{\partial L_T}{\partial s_t} \frac{\partial s_t}{\partial W_s}
+$$
+
+关键项为梯度在时间维上的传播：
+
+$$
+\frac{\partial L_T}{\partial s_t}
+= \frac{\partial L_T}{\partial s_T}
+\prod_{k=t+1}^{T} \frac{\partial s_k}{\partial s_{k-1}}
+$$
+
+而每一步的梯度传递因子为：
+
+$$
+\frac{\partial s_k}{\partial s_{k-1}}
+= W_s^T \cdot \text{diag}(f'(W_s s_{k-2} + W_x x_{k-1}))
+$$
+
+也就是说，RNN的梯度是由多个线性变换与激活函数导数的**连乘积**组成。
+
+对于常见的激活函数，例如tanh，其导数位于[0,1]之间，因此在多次连乘下极容易梯度消失。而当权重矩阵$W_s$过大时，又容易产生梯度爆炸问题。
+
+解决方法：
+
+1. 梯度裁剪
+
+   将梯度范数超过阈值时进行缩放，可抑制梯度爆炸。
+   
+2. 门控结构（LSTM/GRU）
+
+   LSTM和GRU都是通过门控加法机制实现信息传递。以LSTM为例：
+   
+$$
+C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t
+$$
+
+$$
+\frac{\partial C_t}{\partial C_{t-1}} = f_t
+$$
+
+$$
+\frac{\partial L}{\partial C_{t-1}}
+= \frac{\partial L}{\partial C_t} \odot f_t
+$$
+
+   梯度只与门控值$f_t$相乘，而不涉及矩阵连乘。若$f_t \approx 1$，梯度几乎可恒等传播；若$f_t < 1$，梯度以可控方式衰减。
+   
+   矩阵乘法会改变梯度的方向与长度，导致非线性扰动；而逐元素标量乘法不会改变方向，只调整幅度。门控$f_t \in [0,1]$还可以**自适应地学习**需要保留的梯度比例，从而在数值上保持稳定传播。
+
 ## LSTM {#dl_3}
 
 ### 原理 {#dl_3_1}
@@ -1090,9 +1168,133 @@ print(f"Test MSE: {mse:.6f}, MAE: {mae:.6f}")
 
 同[LSTM](#dl_3_3)。
 
-## BNN {#dl_5}
+## Seq2Seq {#dl_5}
 
 ### 原理 {#dl_5_1}
+
+<div class="figure" style="text-align: center">
+<img src="./pic/dl/seq2seq.png" alt="seq2seq" width="693" />
+<p class="caption">(\#fig:dl-p3)seq2seq</p>
+</div>
+
+> 当然对于翻译任务，应当有个词嵌入环节
+
+Seq2Seq由编码器和解码器组成，二者均是RNN（包括LSTM和GRU）结构，用于解决由原始序列输出目标序列的任务，两个序列可以不等长。
+
+在编码器部分，由于输入序列已知，因此可以使用**双向RNN结构**用于提取信息，然后在最后一个时间步输出隐状态，并将此隐状态作为上下文向量***context vector***，记为$c$。
+
+> 上下文向量相当于是对原始序列信息的一个浓缩
+
+在解码器部分，若记解码器的隐状态为$s$，则
+
+$$
+s_t = f(s_{t-1}, y_{t-1}, c)
+$$
+
+即解码器t时刻的隐状态由上一步的隐状态、上一步的预测值、编码器的上下文向量共同输入得到。
+
+> 在训练时，采取$Teacher Forcing$策略，即每次输入的$y$值为真实值，这有助于模型训练。但在预测时则接收上一步的预测值作为输入
+
+但是，Seq2Seq有很明显的缺陷，即在解码器中使用的上下文向量是固定的，而由于编码器的RNN结构，导致这个上下文向量难以记住更早的重要信息。于是，提出**Seq2Seq+注意力机制**的方法。
+
+下面介绍Luong的论文[*Effective Approaches to Attention-based Neural Machine Translation*](https://arxiv.org/pdf/1508.04025)。
+
+> 这篇论文可以说是对Bahdanau的[NEURAL MACHINE TRANSLATION BY JOINTLY LEARNING TO ALIGN AND TRANSLATE](https://arxiv.org/pdf/1409.0473)这篇论文的改进，有细微差异，例如这篇论文用$s_{t-1}$来更新$c_t$，而Luong用$s_t$
+
+<div class="figure" style="text-align: center">
+<img src="./pic/dl/seq2seq_attention.png" alt="Seq2Seq与注意力机制（Input-Feeding）" width="286" />
+<p class="caption">(\#fig:dl-p4)Seq2Seq与注意力机制（Input-Feeding）</p>
+</div>
+
+计算流程为：
+
+1. 编码阶段
+
+输入序列 $(x_1, x_2, \ldots, x_S)$ 经双向LSTM编码得到：
+
+$$
+h_1, h_2, \ldots, h_S = \text{EncoderRNN}(x_1, \ldots, x_S)
+$$
+
+每个$h_s$是源序列中第$s$个词的隐状态输出。
+
+2. 解码器状态更新
+
+在时间步$t$，解码器根据上一步输出的目标词$y_{t-1}$与前一隐藏状态 $s_{t-1}$，更新当前解码器状态：
+
+$$
+s_t = \text{DecoderRNN}(y_{t-1}, s_{t-1})
+$$
+
+此时 $s_t$ 表示“当前要生成第 $t$ 个词”的语义状态。
+
+论文还提出了**Input-Feeding**机制，即在生成$s_t$时也用到了$\tilde{s}_{t-1}$的信息，$\tilde{s}_{t-1}$后续会介绍。
+
+$$
+s_t = \text{DecoderRNN}(y_{t-1}, \tilde{s}_{t-1}, s_{t-1})
+$$
+
+3. 注意力机制
+
+通过相似度函数计算$s_t$与每个$h_s$的匹配程度，论文中介绍了三种计算方法：
+
+$$
+\text{score}(s_t, h_s) =
+\begin{cases}
+s_t^\top h_s, & \text{(Dot)} \\
+s_t^\top W_a h_s, & \text{(General)} \\
+v_a^\top \tanh(W_a [s_t; h_s]), & \text{(Concat)}
+\end{cases}
+$$
+
+> Bahdanau的论文中使用$e_{t,i}= v_a^{T} \text{tanh}(W_ss_{t-1}+W_hh_i)$加性注意力函数来计算相似度得分
+
+之后通过softmax归一化得到每个源词的注意力权重：
+
+$$
+a_t(s) = \frac{\exp(\text{score}(s_t, h_s))}
+{\sum_{s'=1}^{S} \exp(\text{score}(s_t, h_{s'}))}
+$$
+
+其中$a_t(s)$ 表示当前解码器在生成第$t$个词时，关注源序列$s$个位置的程度。
+
+4. 计算上下文向量
+
+对编码器输出进行加权求和，得到上下文向量：
+
+$$
+c_t = \sum_{s=1}^{S} a_t(s)\, h_s
+$$
+
+$c_t$是源端信息的加权摘要，代表模型在第$t$步“看到”的输入信息。
+
+5. 信息融合
+
+Luong 定义了**attentional hidden state**：
+
+$$
+\tilde{s}_t = \tanh(W_c [c_t; s_t])
+$$
+
+该向量综合了当前目标语义与注意到的源端信息。
+
+6. 输出词预测
+
+通过线性层与 softmax 计算目标词概率分布：
+
+$$
+p(y_t \mid y_{<t}, x) = \text{softmax}(W_o \tilde{s}_t)
+$$
+
+取概率最大的词作为预测输出：
+
+$$
+\hat{y}_t = \arg\max_y p(y_t)
+$$
+
+## BNN {#dl_6}
+
+### 原理 {#dl_6_1}
 
 在传统神经网络中，模型参数（权重$w$）被视为固定值，通过最小化损失函数获得最优点估计：
 
@@ -1151,7 +1353,7 @@ KL(\mathcal{N}(\mu,\sigma^2)\;||\;\mathcal{N}(0,1))
 = \frac{1}{2}(\sigma^2 + \mu^2 - 1 - \log\sigma^2)
 $$
 
-据此可用重参数化技巧$w = \mu + \sigma \epsilon, \epsilon \sim N(0,1)$来对$2$进行MC抽样。
+据此可用重参数化技巧$w = \mu + \sigma \epsilon, \epsilon \sim N(0,1)$来对$w$进行MC抽样。
 
 -----
 
@@ -1167,7 +1369,7 @@ $$
 
 每个$\hat{w}_i$对应一次随机Dropout后的网络参数。
 
-### 示例 {#dl_5_2}
+### 示例 {#dl_6_2}
 
 变分推断法：
 
@@ -1423,11 +1625,11 @@ plt.title("MC Dropout Bayesian Neural Network (Uncertainty Estimation)")
 plt.show()
 ```
 
-## GNN {#dl_6}
+## GNN {#dl_7}
 
 [零基础多图详解图神经网络（GNN/GCN）【论文精读】](https://www.bilibili.com/video/BV1iT4y1d7zP/?spm_id_from=333.337.search-card.all.click&vd_source=1ff1a8ac5564814fec4d27cae552f90e)
 
-### 原理 {#dl_6_1}
+### 原理 {#dl_7_1}
 
 1. 图的结构
 
@@ -1443,7 +1645,7 @@ plt.show()
 
    图神经网络的输入与输出都是图，每个GNN层都是一次信息聚合，从而完成节点、边或全局信息的更新。堆叠层数越多就是让元素能够逐步整合更大范围的图结构信息。
    
-### 图神经网络的类型 {#dl_6_2}
+### 图神经网络的类型 {#dl_7_2}
 
 1. GCN（图卷积神经网络）
 
@@ -1457,7 +1659,7 @@ plt.show()
 
    利用图神经网络从空间角度建模，也就是说可以用图神经网络对具有网络结构的数据进行特征提取。之后可将提取后的特征代入到时序模型，例如LSTM、GRU等。通过同时捕捉节点间拓扑依赖和时间动态变化，实现对时空关联数据的精准预测。
 
-### 示例 {#dl_6_3}
+### 示例 {#dl_7_3}
 
 图神经网络建模可通过`torch_geometric`实现。基本建模过程就是定义图数据结构（确定每个节点的特征、构建边关系），之后再定义图神经网络模型即可。
 
@@ -1527,11 +1729,11 @@ print("\n节点类别预测：", pred)
 
 ```
 
-## Diffusion Model {#dl_7}
+## Diffusion Model {#dl_8}
 
 扩散模型（Diffusion Model）是一类生成模型，其核心思想是通过逐步添加噪声再逐步去噪，从而学习到复杂数据的分布并生成新的样本。
 
-### 原理 {#dl_7_1}
+### 原理 {#dl_8_1}
 
 在前向过程中，设原始样本为$x_0$，通过$T$步逐步加噪，得到$x_1, x_2, \dots, x_T$。
 
@@ -1541,10 +1743,50 @@ $$
 q(x_t | x_{t-1}) = \mathcal{N}\left(x_t; \sqrt{1 - \beta_t}x_{t-1}, \, \beta_t I \right)
 $$
 
+即：
+
+$$
+x_t = \sqrt{1-\beta_t}\,x_{t-1} + \sqrt{\beta_t}\,\epsilon_t, \quad \epsilon_t \sim \mathcal{N}(0, I)
+$$
+
 其中：
 
 - $\beta_t \in (0, 1)$ 为每步噪声强度；
 - $I$ 为单位协方差矩阵。
+
+设上一时刻$x_{t-1}$ 的方差为1，则：
+
+$$
+\text{Var}(x_t)
+= (1-\beta_t)\text{Var}(x_{t-1}) + \beta_t\text{Var}(\epsilon_t)
+= (1-\beta_t) + \beta_t = 1
+$$
+
+因此，若使用系数$\sqrt{1-\beta_t}$，可以保证每一步加噪后整体方差不变，  
+从而避免分布在时间上传递时**发散或塌缩**。
+
+> $\sqrt{1-\beta_t}$表示保留上一时刻信号的能量比例，$\sqrt{\beta_t}$表示注入噪声的能量比例
+
+记$\alpha_t = 1-\beta_t, \quad \bar{\alpha}_t= \prod_{s=1}^t\alpha_s$，通过递归展开
+
+$$
+\begin{aligned}
+x_t &= \sqrt{\alpha_t}x_{t-1}+\sqrt{1-\alpha_t}\epsilon_{t-1} \\
+&= \sqrt{\alpha_t\alpha_{t-1}}x_{t-2}+\sqrt{\alpha_t(1-\alpha_{t-1})}\epsilon_{t-2}+\sqrt{1-\alpha_t}\epsilon_{t-1} \\
+&= \cdots \\
+&= \sqrt{\bar{\alpha}_t}\,x_0 + \sqrt{1-\bar{\alpha}_t}\,\epsilon
+\end{aligned}
+$$
+
+其中$\epsilon \sim \mathcal{N}(0,I)$。噪声独立同分布于正态分布，根据正态分布的可加性，可以将所有高斯噪声合并为一个噪声，期望显然为0，注意到方差为
+
+$$
+\begin{aligned}
+Var(\sqrt{\alpha_t(1-\alpha_{t-1})}\epsilon_{t-2}+\sqrt{1-\alpha_t}\epsilon_{t-1}) &= \alpha_t(1-\alpha_{t-1})+(1-\alpha_{t}) \\
+&=1-\alpha_t \alpha_{t-1}
+\end{aligned}
+$$
+
 
 通过多步叠加，最终数据会趋近标准高斯分布：
 
@@ -1556,12 +1798,6 @@ $$
 
 $$
 q(x_t | x_0) = \mathcal{N}\left(x_t; \sqrt{\bar{\alpha_t}}x_0, \, (1 - \bar{\alpha_t})I \right)
-$$
-
-其中：
-
-$$
-\alpha_t = 1 - \beta_t, \quad \bar{\alpha_t} = \prod_{s=1}^t \alpha_s
 $$
 
 这意味着我们可以**一次性**将任意样本 $x_0$ 加噪为第 $t$ 步状态 $x_t$，无需逐步生成。
@@ -1610,7 +1846,11 @@ $$
 
 循环从 $t = T$ 到 $t = 1$，即可生成新的样本 $x_0$。
 
-### 示例 {#dl_7_2}
+### 示例 {#dl_8_2}
+
+1. 对嵌入时间步$t$，让模型知道此时处于第几个时间步（噪声强度如何）
+
+> 若是单纯的整数，神经网络不会将其视作连续变量，无法通过梯度下降学习到时间变化趋势
 
 
 ``` default

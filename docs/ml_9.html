@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>18.3 后场技术 | kj的学习笔记</title>
+  <title>8.9 聚类分析 | kj的学习笔记</title>
   <meta name="description" content="个人学习笔记" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="18.3 后场技术 | kj的学习笔记" />
+  <meta property="og:title" content="8.9 聚类分析 | kj的学习笔记" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/‪D:.png" />
   <meta property="og:description" content="个人学习笔记" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="18.3 后场技术 | kj的学习笔记" />
+  <meta name="twitter:title" content="8.9 聚类分析 | kj的学习笔记" />
   
   <meta name="twitter:description" content="个人学习笔记" />
   <meta name="twitter:image" content="/‪D:.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ball_2.html"/>
-<link rel="next" href="ball_4.html"/>
+<link rel="prev" href="ml_8.html"/>
+<link rel="next" href="survival.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -745,44 +745,328 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ball_3" class="section level2 hasAnchor" number="18.3">
-<h2><span class="header-section-number">18.3</span> 后场技术<a href="ball_3.html#ball_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
-<div id="ball_3_1" class="section level3 hasAnchor" number="18.3.1">
-<h3><span class="header-section-number">18.3.1</span> 杀球<a href="ball_3.html#ball_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p><a href="https://www.bilibili.com/video/BV1WM4y1h7GY/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">刘辉教练告诉你杀球压不下去怎么办</a></p>
-<p><a href="https://www.bilibili.com/video/BV1wtUCYsE3d/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">杀球如何更快更猛！快来学习吧</a></p>
-<p><a href="https://www.bilibili.com/video/BV1fH4y1L7aT/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">暴力杀球，鞭打/闪动发力是如何正确的做？教你如何打出有速度，隐蔽与突然的球！【李宇轩教练】</a></p>
-<p><a href="https://www.bilibili.com/video/BV1D7PYe5EbA/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">改掉这5点，杀球碾压90%的人</a></p>
-<p><a href="https://www.bilibili.com/video/BV1oUfsYpE1G/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">如何加快你的杀球速度，2步搞定！</a></p>
-<p><a href="https://www.bilibili.com/video/BV1dYDbY6Evx/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">杀球如何更有力？</a></p>
+<div id="ml_9" class="section level2 hasAnchor" number="8.9">
+<h2><span class="header-section-number">8.9</span> 聚类分析<a href="ml_9.html#ml_9" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div id="ml_9_1" class="section level3 hasAnchor" number="8.9.1">
+<h3><span class="header-section-number">8.9.1</span> 聚类结果评价<a href="ml_9.html#ml_9_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>轮廓系数</p>
+<p>轮廓系数综合考虑了样本在自身簇内的<strong>紧密程度</strong>和与其他簇的<strong>分离程度</strong>。</p></li>
+</ol>
+<p><span class="math display">\[
+a(i) = \frac{1}{|C_i| - 1} \sum_{j \in C_i, j \neq i} d(i, j)
+\]</span></p>
+<p><span class="math display">\[
+b(i) = \min_{k \neq i} \frac{1}{|C_k|} \sum_{j \in C_k} d(i, j)
+\]</span></p>
+<p>其中：
+- <span class="math inline">\(a(i)\)</span>：样本 <span class="math inline">\(i\)</span> 到<strong>同簇中其他样本</strong>的平均距离；
+- <span class="math inline">\(b(i)\)</span>：样本 <span class="math inline">\(i\)</span> 到<strong>最近其他簇</strong>的平均距离。</p>
+<p>轮廓系数定义为：</p>
+<p><span class="math display">\[
+s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
+\]</span></p>
+<p>整体平均轮廓系数：</p>
+<p><span class="math display">\[
+S = \frac{1}{N} \sum_{i=1}^{N} s(i)
+\]</span></p>
+<p><strong>取值范围：</strong> <span class="math inline">\([-1, 1]\)</span>，越接近 1 表示聚类效果越好。</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>CH指数</p>
+<p>CH指数衡量<strong>类间方差</strong>与<strong>类内方差</strong>的比值，类似于方差分析（ANOVA）中的 F 统计量。</p></li>
+</ol>
+<p>设共有<span class="math inline">\(N\)</span>个样本、<span class="math inline">\(K\)</span>个簇，第<span class="math inline">\(k\)</span>个簇的样本数为<span class="math inline">\(n_k\)</span>，簇中心为<span class="math inline">\(c_k\)</span>，全局中心为<span class="math inline">\(c\)</span>。</p>
+<p>定义：</p>
+<p><span class="math display">\[
+B_k = n_k \| c_k - c \|^2
+\]</span></p>
+<p><span class="math display">\[
+W_k = \sum_{x_i \in C_k} \| x_i - c_k \|^2
+\]</span></p>
+<p>则CH指数为：</p>
+<p><span class="math display">\[
+CH = \frac{\text{Tr}(B)}{\text{Tr}(W)} \times \frac{N - K}{K - 1}
+\]</span></p>
+<p>其中：</p>
+<p><span class="math display">\[
+\text{Tr}(B) = \sum_{k=1}^{K} B_k, \quad \text{Tr}(W) = \sum_{k=1}^{K} W_k
+\]</span></p>
+<p><strong>取值方向：</strong> 越大越好，表示类间分离更明显、类内更加紧密。</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Dunn指数</p>
+<p>Dunn指数衡量聚类结果的“最差情况”，即<strong>最小簇间距离</strong>与<strong>最大簇内直径</strong>的比值。</p></li>
+</ol>
+<p>定义：</p>
+<p><span class="math display">\[
+\delta(C_i, C_j) = \min_{x \in C_i, y \in C_j} d(x, y)
+\]</span></p>
+<p><span class="math display">\[
+\Delta(C_k) = \max_{x, y \in C_k} d(x, y)
+\]</span></p>
+<p>Dunn 指数为：</p>
+<p><span class="math display">\[
+D = \frac{\min_{i \neq j} \delta(C_i, C_j)}{\max_{k} \Delta(C_k)}
+\]</span></p>
+<p><strong>取值方向：</strong> 越大越好，表示簇间更远、簇内更紧密。<br />
+但对噪声较敏感。</p>
 </div>
-<div id="ball_3_2" class="section level3 hasAnchor" number="18.3.2">
-<h3><span class="header-section-number">18.3.2</span> 吊球<a href="ball_3.html#ball_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p><a href="https://www.bilibili.com/video/BV112UWYzEWX/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">五种国家队吊球手法</a></p>
-<p><a href="https://www.bilibili.com/video/BV1tN41177YK/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">劈吊精髓</a></p>
-<p><a href="https://www.bilibili.com/video/BV1LzAae7EgY/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">羽毛球滑板吊球教学！小白从0到1滑拍斜线细节纠错！打太直和压球问题解决方案</a></p>
-<p><a href="https://www.bilibili.com/video/BV1PEHfeHE85/?spm_id_from=333.1387.favlist.content.click" target="_blank">头顶滑板4个重要细节</a></p>
-<p><a href="https://www.bilibili.com/video/BV1twFTeREHh/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">正手滑板直线</a></p>
-<p><a href="https://www.bilibili.com/video/BV1Au4m1A7a8/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">劈吊和吊球 肯定更想学隐蔽性高，球速快，容易一击得分的那一个啊～</a></p>
+<div id="ml_9_2" class="section level3 hasAnchor" number="8.9.2">
+<h3><span class="header-section-number">8.9.2</span> Kmeans<a href="ml_9.html#ml_9_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>Kmeans是一种基于距离的划分式聚类算法。其目标是将样本划分为<span class="math inline">\(K\)</span>个簇，使得同一簇内的样本尽可能相似，不同簇之间的样本尽可能不同。</p>
+<p>算法流程：</p>
+<ol style="list-style-type: decimal">
+<li><p>随机选择<span class="math inline">\(K\)</span>个样本作为初始中心</p></li>
+<li><p>对每个样本<span class="math inline">\(x_i\)</span>，计算其到各中心的距离：</p></li>
+</ol>
+<p><span class="math display">\[
+\text{assign } x_i \text{ to } C_k \text{ if } \|x_i - \mu_k\|^2 \le \|x_i - \mu_j\|^2, \forall j
+\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>对每个簇<span class="math inline">\(C_k\)</span>更新中心</li>
+</ol>
+<p><span class="math display">\[
+\mu_k = \frac{1}{|C_k|}\sum_{x_i \in C_k}x_i
+\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>重复迭代步骤2、3，直至簇分配不再变化或达到最大迭代次数</li>
+</ol>
+<blockquote>
+<p>对初始中心敏感，容易陷入局部最优</p>
+<p>需要指定K</p>
+<p>只能处理凸形簇</p>
+</blockquote>
+<p>如何确定参数K？</p>
+<ol style="list-style-type: decimal">
+<li><p>手肘法。计算不同K值下的簇内误差平方和</p>
+<p>随着K增大，SSE会逐渐减小，但减小速度在某点后变缓。该“拐点”即为最佳K值。</p></li>
+</ol>
+<p><span class="math display">\[
+\text{SSE}(K)=\sum_{k=1}^{K}\sum_{x_i \in C_k}\|x_i-\mu_k\|^2
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>轮廓系数法</p>
+<p><span class="math inline">\(a_i\)</span>表示样本与同簇内其他点的平均距离，<span class="math inline">\(b_i\)</span>表示样本与最近邻簇中所有点的平均距离。轮廓系数<span class="math inline">\(S\)</span>越大表示聚类效果越好。</p></li>
+</ol>
+<p><span class="math display">\[
+\begin{gather}
+s_i = \frac{b_i - a_i}{\max(a_i, b_i)} \\
+S = \frac{1}{n}\sum_{i=1}^{n}s_i, \quad S \in [-1,1]
+\end{gather}
+\]</span></p>
 </div>
-<div id="ball_3_3" class="section level3 hasAnchor" number="18.3.3">
-<h3><span class="header-section-number">18.3.3</span> 反手<a href="ball_3.html#ball_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
-<p><a href="https://www.bilibili.com/video/BV1XYtwz1EtX/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">反手高远</a></p>
-<p><a href="https://www.bilibili.com/video/BV12Veez3EFR/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">反手高远球速通</a></p>
-<p><a href="https://www.bilibili.com/video/BV1Znb9zzEqq/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">反手高远球4个重要细节</a></p>
-<p><a href="https://www.bilibili.com/video/BV1JdUWYYECG/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">反手只会过渡可不行，反手抽球学起来</a></p>
-<p><a href="https://www.bilibili.com/video/BV1WBbszvEXB/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">反手过渡对角线</a></p>
-<p><a href="https://www.bilibili.com/video/BV1PVsuepEbr/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">反手被动球处理不好，来看过渡斜线教学</a></p>
-<p><a href="https://www.bilibili.com/video/BV11YypYREhr/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=1ff1a8ac5564814fec4d27cae552f90e" target="_blank">反手吊球没有球速，或者又高又远。 你要知道发力靠手腕，下压靠手腕，手臂外旋以手腕为轴是关键。4个错误动作看看你有没有中招</a></p>
+<div id="ml_9_3" class="section level3 hasAnchor" number="8.9.3">
+<h3><span class="header-section-number">8.9.3</span> Kmeans++<a href="ml_9.html#ml_9_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>Kmeans的核心问题在于——对初始簇中心的选择非常敏感：</p>
+<ul>
+<li><p>若初始中心选得不好，算法可能陷入<strong>局部最优</strong>；</p></li>
+<li><p>聚类结果依赖随机性，稳定性差；</p></li>
+<li><p>可能导致“簇塌缩”（多个中心聚到同一区域）。</p></li>
+</ul>
+<p>因此Kmeans++让初始中心尽可能远离彼此，从而覆盖数据空间的主要区域。</p>
+<p>算法流程：</p>
+<ol style="list-style-type: decimal">
+<li>给定数据集<span class="math inline">\(X = \{x_1, x_2, \ldots, x_n\}\)</span>，以及目标簇数<span class="math inline">\(K\)</span>，随机选择第一个中心：</li>
+</ol>
+<p><span class="math display">\[
+\mu_1 = x_i, \quad x_i \text{ 从 } X \text{ 中随机选取}
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>计算每个点到已有最近中心的距离平方，当前已有中心集合为<span class="math inline">\(\{\mu_1, \ldots, \mu_m\}\)</span>。</li>
+</ol>
+<p><span class="math display">\[
+D(x_i)^2 = \min_{1 \le j \le m} \|x_i - \mu_j\|^2
+\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>按距离加权概率选择下一个中心，距离当前中心越远的点被选为新中心的概率越大。</li>
+</ol>
+<p><span class="math display">\[
+P(x_i) = \frac{D(x_i)^2}{\sum_j D(x_j)^2}
+\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>重复步骤2、3，直到选出K个中心。</p></li>
+<li><p>之后就开始正常的kmeans迭代。</p></li>
+</ol>
+</div>
+<div id="ml_9_4" class="section level3 hasAnchor" number="8.9.4">
+<h3><span class="header-section-number">8.9.4</span> DBSCAN<a href="ml_9.html#ml_9_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>DBSCAN是一种基于密度的聚类算法，能够在<strong>任意形状</strong>的数据分布中识别出高密度区域，并自动识别噪声点。</p>
+<p>DBSCAN有两个参数：邻域半径<span class="math inline">\(\varepsilon\)</span>（定义多远的距离算作邻居）与最小样本数minPts（邻域内至少多少个点才算稠密）。</p>
+<p><span class="math inline">\(\varepsilon\)</span>-邻域定义为</p>
+<p><span class="math display">\[
+N_\varepsilon(x_i) = \{x_j \mid \text{dist}(x_i, x_j) \le \varepsilon\}
+\]</span></p>
+<table style="width:100%;">
+<colgroup>
+<col width="42%" />
+<col width="28%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>点类型</th>
+<th>条件</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>核心点（Core Point）</strong></td>
+<td><span class="math inline">\(|N_\varepsilon(x_i)| \ge \text{minPts}\)</span></td>
+<td>位于高密度区域</td>
+</tr>
+<tr class="even">
+<td><strong>边界点（Border Point）</strong></td>
+<td><span class="math inline">\(|N_\varepsilon(x_i)| &lt; \text{minPts}\)</span>，但与核心点相邻</td>
+<td>位于簇的边缘</td>
+</tr>
+<tr class="odd">
+<td><strong>噪声点（Noise Point）</strong></td>
+<td>不属于任何核心点的邻域</td>
+<td>离群样本</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><strong>直接密度可达</strong>：</p>
+<p>若<span class="math inline">\(x_j \in N_\varepsilon(x_i)\)</span>，且<span class="math inline">\(x_i\)</span>是核心点，则<span class="math inline">\(x_j\)</span>对<span class="math inline">\(x_i\)</span><strong>直接密度可达</strong>。</p></li>
+</ul>
+<blockquote>
+<p>圆心的影响力</p>
+</blockquote>
+<ul>
+<li><p><strong>密度可达</strong>：</p>
+<p>若存在一系列核心点<span class="math inline">\(x_1, x_2, ..., x_n\)</span>，其中<span class="math inline">\(x_{i+1}\)</span>对<span class="math inline">\(x_i\)</span>直接密度可达，则<span class="math inline">\(x_n\)</span>对<span class="math inline">\(x_1\)</span>密度可达。</p></li>
+</ul>
+<blockquote>
+<p>圆心相连</p>
+</blockquote>
+<ul>
+<li><p><strong>密度相连</strong>：</p>
+<p>若存在核心点<span class="math inline">\(x_k\)</span>，使得<span class="math inline">\(x_i, x_j\)</span>都密度可达于<span class="math inline">\(x_k\)</span>，则 <span class="math inline">\(x_i\)</span>与<span class="math inline">\(x_j\)</span>密度相连。</p></li>
+</ul>
+<blockquote>
+<p>圆的并集内都是密度相连的</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ml-p1"></span>
+<img src="pic/ml/dbscan.jpg" alt="密度" width="360" />
+<p class="caption">
+图 8.7: 密度
+</p>
+</div>
+<p>算法流程：</p>
+<ol style="list-style-type: decimal">
+<li><p>根据<span class="math inline">\(\varepsilon\)</span>和minPts找到样本中所有的核心点。</p></li>
+<li><p>随机取一个核心点，在其邻域中找到所有密度可达点，在从这些密度可达点出发不断拓展，直至拓展后的邻域中再无密度可达点。将这些密度可达点及其邻域内的点归为一个簇。</p></li>
+<li><p>从剩下的尚未归类的核心点中重新抽取一个核心点，重复步骤2.</p></li>
+<li><p>当所有核心点已归类时，尚未归类的样本点记为噪声点。</p></li>
+</ol>
+<p>DBSCAN如何调参：</p>
+<ol style="list-style-type: decimal">
+<li><p>绘制K-距离图：</p>
+<ul>
+<li><p>对每个点计算到第minPts个最近邻的距离；</p></li>
+<li><p>将这些距离排序并绘制曲线；</p></li>
+<li><p>曲线的“拐点”即为较优的<span class="math inline">\(\varepsilon\)</span>值。</p></li>
+</ul></li>
+</ol>
+<p>2️. 经验规则：</p>
+<ul>
+<li><p>minPts ≈ 2 × 数据维度；</p></li>
+<li><p>二维数据常取 4~6，高维数据取 10~20。</p></li>
+</ul>
+</div>
+<div id="ml_9_5" class="section level3 hasAnchor" number="8.9.5">
+<h3><span class="header-section-number">8.9.5</span> HDBSCAN<a href="ml_9.html#ml_9_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>HDBSCAN是一种基于密度的层次聚类算法，是DBSCAN的改进版本。它通过构建多尺度密度层次结构<strong>自动识别不同密度</strong>的簇并剔除噪声点，从而克服了DBSCAN需要固定<span class="math inline">\(\varepsilon\)</span>参数、难以处理不同密度区域的缺陷。</p>
+<p>传统<strong>DBSCAN</strong>存在两大局限：</p>
+<ul>
+<li><p><strong>需要手动设定 ε（邻域半径）</strong>：不同密度簇无法用同一<span class="math inline">\(\varepsilon\)</span>表示。</p></li>
+<li><p><strong>无法发现不同密度的簇</strong>：固定半径会导致稠密区域被过分细分，稀疏区域被忽略。</p></li>
+</ul>
+<p><strong>HDBSCAN</strong> 的核心改进思路是：</p>
+<ul>
+<li><p>不固定<span class="math inline">\(\varepsilon\)</span>，而是从所有可能的<span class="math inline">\(\varepsilon\)</span>值构建层次结构，</p></li>
+<li><p>然后通过分析“簇的稳定性”自动剪枝，选出最稳定的聚类结果。</p></li>
+</ul>
+<p>算法流程：</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>计算核心距离（Core Distance）</strong></p>
+<p>对每个点<span class="math inline">\(x_i\)</span>，计算其到第<code>min_samples</code>个最近邻的距离：</p></li>
+</ol>
+<p><span class="math display">\[
+\text{core}_k(x_i) = \text{distance to the } k\text{-th nearest neighbor of } x_i
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>计算互相可达距离（Mutual Reachability Distance）</strong></li>
+</ol>
+<p>对任意两点<span class="math inline">\(a, b\)</span>定义：</p>
+<p><span class="math display">\[
+d_{\text{reach}}(a,b) = \max\{\text{core}_k(a), \text{core}_k(b), d(a,b)\}
+\]</span>
+这样可以防止高密度点“误连接”低密度簇。</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p><strong>构建最小生成树MST</strong></p>
+<p>以互相可达距离为边权构造最小生成树（Minimum Spanning Tree）。</p></li>
+<li><p><strong>构建层次聚类树（Condensed Cluster Tree）</strong></p>
+<p>逐步增加距离阈值，相当于逐层“切割” MST，每当一条边被移除，一个簇可能分裂成多个子簇，形成一棵密度树。</p></li>
+<li><p><strong>计算簇稳定性</strong></p></li>
+</ol>
+<p>对每个簇，计算其在不同密度尺度下的持续时间（即“生存时间”）：</p>
+<p><span class="math display">\[
+\text{stability}(C) = \sum_{x_i \in C} (\lambda_{\text{death}} - \lambda_{\text{birth}})
+\]</span></p>
+<p>其中<span class="math inline">\(\lambda = 1/\varepsilon\)</span>，表示密度水平。</p>
+<ol start="6" style="list-style-type: decimal">
+<li><p><strong>提取最稳定簇</strong></p>
+<p>根据簇的稳定性评分，剪枝层次树并输出最稳定的聚类结构。</p></li>
+</ol>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>含义</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>min_cluster_size</code></strong></td>
+<td>最小簇大小</td>
+<td>控制簇的最小规模</td>
+</tr>
+<tr class="even">
+<td><strong><code>min_samples</code></strong></td>
+<td>最小样本数</td>
+<td>控制密度估计的平滑度（可近似为 DBSCAN 的 minPts）</td>
+</tr>
+<tr class="odd">
+<td><strong><code>metric</code></strong></td>
+<td>距离度量</td>
+<td>默认为欧氏距离，可改为曼哈顿、余弦等</td>
+</tr>
+<tr class="even">
+<td><strong><code>cluster_selection_method</code></strong></td>
+<td>簇选择方式</td>
+<td><code>"eom"</code>（Excess of Mass）或 <code>"leaf"</code>（选择层次树的叶节点）</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="ball_2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ball_4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ml_8.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="survival.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

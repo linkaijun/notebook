@@ -1215,34 +1215,52 @@ python的`xgboost`库，示例如下。
 
 
 ``` default
-param_xgb = {
-    'max_depth': stats.randint(3, 10),
-    'min_child_weight': stats.randint(1, 6),
-    'gamma': stats.uniform(0, 0.5),
-    'subsample': stats.uniform(0.6, 0.4),
-    'colsample_bytree': stats.uniform(0.6, 0.4),
-    'reg_lambda': stats.uniform(0, 1.0),
-    'reg_alpha': stats.uniform(0, 1.0),
-    'learning_rate' : stats.uniform(0.01, 0.29),
-    'n_estimators': [50,100,150,200,250,300]
-}
+import optuna
+def obj_fun(trial):
+    params = {
+        'n_estimators':trial.suggest_int('n_estimators', 100, 300),
+        'max_depth':trial.suggest_int('max_depth', 3, 10),
+        'learning_rate':trial.suggest_float('learning_rate', 0.01, 0.05, log = True),
+        'subsample': trial.suggest_float('subsample', 0.5, 1.0),
+        'colsample_bytree': trial.suggest_float('colsample_bytree', 0.5, 1.0),
+        'eval_metric': 'auc',
+        'random_state': 42
+    }
+    # from xgboost.callback import EarlyStopping
+    # early_stop_callback = EarlyStopping(rounds=50, metric_name='auc', save_best=True)
+    # model = XGBClassifier(**params, callbacks=[early_stop_callback])
+    model = XGBClassifier(**params, early_stopping_rounds=50)
+    
+    model.fit(
+        X_train, y_train,
+        eval_set = [(X_val, y_val)],
+        verbose = False
+    )
+    
+    y_pred_prob = model.predict_proba(X_val)[:,1]
+    auc = roc_auc_score(y_val, y_pred_prob)
+    return auc
 
-model_xgb = xgb.XGBRegressor(objective='reg:squarederror', random_state=527)
-random_search_xgb = RandomizedSearchCV(
-    model_xgb, 
-    param_xgb, 
-    n_iter=100,
-    cv=5, 
-    scoring='neg_mean_squared_error',
-    n_jobs=-1,
-    random_state=135
+study = optuna.create_study(
+    direction="maximize",  # 我们希望最大化 AUC
+    study_name="xgb_optuna_tuning"
 )
-random_search_xgb.fit(X, Y)
-best_score_xgb = -random_search_xgb.best_score_
-print(f"最优模型的交叉验证均方误差（MSE）: {best_score_xgb:.2f}")
-best_param_xgb = random_search_xgb.best_params_
-print(best_param_xgb)
-best_model_xgb = random_search_xgb.best_estimator_
+study.optimize(obj_fun, n_trials=50, n_jobs=-1)
+
+print("最优参数：", study.best_params)
+print("最优 AUC：", study.best_value)
+
+best_params = study.best_params
+best_model = XGBClassifier(
+    **best_params,
+    eval_metric='auc',
+    early_stopping_rounds=50,
+    random_state=42
+)
+best_model.fit(X_trainval, y_trainval, verbose=True)
+y_pred_prob = best_model.predict_proba(X_test)[:, 1]
+auc = roc_auc_score(y_test, y_pred_prob)
+print("Test AUC:", auc)
 ```
 
 ## LightGBM {#ml_6}

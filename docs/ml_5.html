@@ -904,34 +904,52 @@ L_{split} = \frac{1}{2}[\frac{(\sum_{i \in I_L}g_i)^2}{\sum_{i \in I_L} h_i + \l
 </ul></li>
 </ul>
 <p>python的<code>xgboost</code>库，示例如下。</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb271-1"><a href="ml_5.html#cb271-1" tabindex="-1"></a>param_xgb = {</span>
-<span id="cb271-2"><a href="ml_5.html#cb271-2" tabindex="-1"></a>    &#39;max_depth&#39;: stats.randint(3, 10),</span>
-<span id="cb271-3"><a href="ml_5.html#cb271-3" tabindex="-1"></a>    &#39;min_child_weight&#39;: stats.randint(1, 6),</span>
-<span id="cb271-4"><a href="ml_5.html#cb271-4" tabindex="-1"></a>    &#39;gamma&#39;: stats.uniform(0, 0.5),</span>
-<span id="cb271-5"><a href="ml_5.html#cb271-5" tabindex="-1"></a>    &#39;subsample&#39;: stats.uniform(0.6, 0.4),</span>
-<span id="cb271-6"><a href="ml_5.html#cb271-6" tabindex="-1"></a>    &#39;colsample_bytree&#39;: stats.uniform(0.6, 0.4),</span>
-<span id="cb271-7"><a href="ml_5.html#cb271-7" tabindex="-1"></a>    &#39;reg_lambda&#39;: stats.uniform(0, 1.0),</span>
-<span id="cb271-8"><a href="ml_5.html#cb271-8" tabindex="-1"></a>    &#39;reg_alpha&#39;: stats.uniform(0, 1.0),</span>
-<span id="cb271-9"><a href="ml_5.html#cb271-9" tabindex="-1"></a>    &#39;learning_rate&#39; : stats.uniform(0.01, 0.29),</span>
-<span id="cb271-10"><a href="ml_5.html#cb271-10" tabindex="-1"></a>    &#39;n_estimators&#39;: [50,100,150,200,250,300]</span>
-<span id="cb271-11"><a href="ml_5.html#cb271-11" tabindex="-1"></a>}</span>
-<span id="cb271-12"><a href="ml_5.html#cb271-12" tabindex="-1"></a></span>
-<span id="cb271-13"><a href="ml_5.html#cb271-13" tabindex="-1"></a>model_xgb = xgb.XGBRegressor(objective=&#39;reg:squarederror&#39;, random_state=527)</span>
-<span id="cb271-14"><a href="ml_5.html#cb271-14" tabindex="-1"></a>random_search_xgb = RandomizedSearchCV(</span>
-<span id="cb271-15"><a href="ml_5.html#cb271-15" tabindex="-1"></a>    model_xgb, </span>
-<span id="cb271-16"><a href="ml_5.html#cb271-16" tabindex="-1"></a>    param_xgb, </span>
-<span id="cb271-17"><a href="ml_5.html#cb271-17" tabindex="-1"></a>    n_iter=100,</span>
-<span id="cb271-18"><a href="ml_5.html#cb271-18" tabindex="-1"></a>    cv=5, </span>
-<span id="cb271-19"><a href="ml_5.html#cb271-19" tabindex="-1"></a>    scoring=&#39;neg_mean_squared_error&#39;,</span>
-<span id="cb271-20"><a href="ml_5.html#cb271-20" tabindex="-1"></a>    n_jobs=-1,</span>
-<span id="cb271-21"><a href="ml_5.html#cb271-21" tabindex="-1"></a>    random_state=135</span>
-<span id="cb271-22"><a href="ml_5.html#cb271-22" tabindex="-1"></a>)</span>
-<span id="cb271-23"><a href="ml_5.html#cb271-23" tabindex="-1"></a>random_search_xgb.fit(X, Y)</span>
-<span id="cb271-24"><a href="ml_5.html#cb271-24" tabindex="-1"></a>best_score_xgb = -random_search_xgb.best_score_</span>
-<span id="cb271-25"><a href="ml_5.html#cb271-25" tabindex="-1"></a>print(f&quot;最优模型的交叉验证均方误差（MSE）: {best_score_xgb:.2f}&quot;)</span>
-<span id="cb271-26"><a href="ml_5.html#cb271-26" tabindex="-1"></a>best_param_xgb = random_search_xgb.best_params_</span>
-<span id="cb271-27"><a href="ml_5.html#cb271-27" tabindex="-1"></a>print(best_param_xgb)</span>
-<span id="cb271-28"><a href="ml_5.html#cb271-28" tabindex="-1"></a>best_model_xgb = random_search_xgb.best_estimator_</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb271-1"><a href="ml_5.html#cb271-1" tabindex="-1"></a>import optuna</span>
+<span id="cb271-2"><a href="ml_5.html#cb271-2" tabindex="-1"></a>def obj_fun(trial):</span>
+<span id="cb271-3"><a href="ml_5.html#cb271-3" tabindex="-1"></a>    params = {</span>
+<span id="cb271-4"><a href="ml_5.html#cb271-4" tabindex="-1"></a>        &#39;n_estimators&#39;:trial.suggest_int(&#39;n_estimators&#39;, 100, 300),</span>
+<span id="cb271-5"><a href="ml_5.html#cb271-5" tabindex="-1"></a>        &#39;max_depth&#39;:trial.suggest_int(&#39;max_depth&#39;, 3, 10),</span>
+<span id="cb271-6"><a href="ml_5.html#cb271-6" tabindex="-1"></a>        &#39;learning_rate&#39;:trial.suggest_float(&#39;learning_rate&#39;, 0.01, 0.05, log = True),</span>
+<span id="cb271-7"><a href="ml_5.html#cb271-7" tabindex="-1"></a>        &#39;subsample&#39;: trial.suggest_float(&#39;subsample&#39;, 0.5, 1.0),</span>
+<span id="cb271-8"><a href="ml_5.html#cb271-8" tabindex="-1"></a>        &#39;colsample_bytree&#39;: trial.suggest_float(&#39;colsample_bytree&#39;, 0.5, 1.0),</span>
+<span id="cb271-9"><a href="ml_5.html#cb271-9" tabindex="-1"></a>        &#39;eval_metric&#39;: &#39;auc&#39;,</span>
+<span id="cb271-10"><a href="ml_5.html#cb271-10" tabindex="-1"></a>        &#39;random_state&#39;: 42</span>
+<span id="cb271-11"><a href="ml_5.html#cb271-11" tabindex="-1"></a>    }</span>
+<span id="cb271-12"><a href="ml_5.html#cb271-12" tabindex="-1"></a>    # from xgboost.callback import EarlyStopping</span>
+<span id="cb271-13"><a href="ml_5.html#cb271-13" tabindex="-1"></a>    # early_stop_callback = EarlyStopping(rounds=50, metric_name=&#39;auc&#39;, save_best=True)</span>
+<span id="cb271-14"><a href="ml_5.html#cb271-14" tabindex="-1"></a>    # model = XGBClassifier(**params, callbacks=[early_stop_callback])</span>
+<span id="cb271-15"><a href="ml_5.html#cb271-15" tabindex="-1"></a>    model = XGBClassifier(**params, early_stopping_rounds=50)</span>
+<span id="cb271-16"><a href="ml_5.html#cb271-16" tabindex="-1"></a>    </span>
+<span id="cb271-17"><a href="ml_5.html#cb271-17" tabindex="-1"></a>    model.fit(</span>
+<span id="cb271-18"><a href="ml_5.html#cb271-18" tabindex="-1"></a>        X_train, y_train,</span>
+<span id="cb271-19"><a href="ml_5.html#cb271-19" tabindex="-1"></a>        eval_set = [(X_val, y_val)],</span>
+<span id="cb271-20"><a href="ml_5.html#cb271-20" tabindex="-1"></a>        verbose = False</span>
+<span id="cb271-21"><a href="ml_5.html#cb271-21" tabindex="-1"></a>    )</span>
+<span id="cb271-22"><a href="ml_5.html#cb271-22" tabindex="-1"></a>    </span>
+<span id="cb271-23"><a href="ml_5.html#cb271-23" tabindex="-1"></a>    y_pred_prob = model.predict_proba(X_val)[:,1]</span>
+<span id="cb271-24"><a href="ml_5.html#cb271-24" tabindex="-1"></a>    auc = roc_auc_score(y_val, y_pred_prob)</span>
+<span id="cb271-25"><a href="ml_5.html#cb271-25" tabindex="-1"></a>    return auc</span>
+<span id="cb271-26"><a href="ml_5.html#cb271-26" tabindex="-1"></a></span>
+<span id="cb271-27"><a href="ml_5.html#cb271-27" tabindex="-1"></a>study = optuna.create_study(</span>
+<span id="cb271-28"><a href="ml_5.html#cb271-28" tabindex="-1"></a>    direction=&quot;maximize&quot;,  # 我们希望最大化 AUC</span>
+<span id="cb271-29"><a href="ml_5.html#cb271-29" tabindex="-1"></a>    study_name=&quot;xgb_optuna_tuning&quot;</span>
+<span id="cb271-30"><a href="ml_5.html#cb271-30" tabindex="-1"></a>)</span>
+<span id="cb271-31"><a href="ml_5.html#cb271-31" tabindex="-1"></a>study.optimize(obj_fun, n_trials=50, n_jobs=-1)</span>
+<span id="cb271-32"><a href="ml_5.html#cb271-32" tabindex="-1"></a></span>
+<span id="cb271-33"><a href="ml_5.html#cb271-33" tabindex="-1"></a>print(&quot;最优参数：&quot;, study.best_params)</span>
+<span id="cb271-34"><a href="ml_5.html#cb271-34" tabindex="-1"></a>print(&quot;最优 AUC：&quot;, study.best_value)</span>
+<span id="cb271-35"><a href="ml_5.html#cb271-35" tabindex="-1"></a></span>
+<span id="cb271-36"><a href="ml_5.html#cb271-36" tabindex="-1"></a>best_params = study.best_params</span>
+<span id="cb271-37"><a href="ml_5.html#cb271-37" tabindex="-1"></a>best_model = XGBClassifier(</span>
+<span id="cb271-38"><a href="ml_5.html#cb271-38" tabindex="-1"></a>    **best_params,</span>
+<span id="cb271-39"><a href="ml_5.html#cb271-39" tabindex="-1"></a>    eval_metric=&#39;auc&#39;,</span>
+<span id="cb271-40"><a href="ml_5.html#cb271-40" tabindex="-1"></a>    early_stopping_rounds=50,</span>
+<span id="cb271-41"><a href="ml_5.html#cb271-41" tabindex="-1"></a>    random_state=42</span>
+<span id="cb271-42"><a href="ml_5.html#cb271-42" tabindex="-1"></a>)</span>
+<span id="cb271-43"><a href="ml_5.html#cb271-43" tabindex="-1"></a>best_model.fit(X_trainval, y_trainval, verbose=True)</span>
+<span id="cb271-44"><a href="ml_5.html#cb271-44" tabindex="-1"></a>y_pred_prob = best_model.predict_proba(X_test)[:, 1]</span>
+<span id="cb271-45"><a href="ml_5.html#cb271-45" tabindex="-1"></a>auc = roc_auc_score(y_test, y_pred_prob)</span>
+<span id="cb271-46"><a href="ml_5.html#cb271-46" tabindex="-1"></a>print(&quot;Test AUC:&quot;, auc)</span></code></pre></div>
 </div>
 </div>
             </section>

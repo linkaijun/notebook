@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.6 交互式图像与插入图像 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.6 交互式图像与插入图像 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.6 交互式图像与插入图像 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="shiny_5.html"/>
+<link rel="next" href="shiny_7.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="content.html"><a href="content.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>个人简介</a></li>
+<li class="part"><span><b>I 专项</b></span></li>
+<li class="chapter" data-level="1" data-path="rmd.html"><a href="rmd.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rmd_1.html"><a href="rmd_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="rmd_2.html"><a href="rmd_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="1.3" data-path="rmd_3.html"><a href="rmd_3.html"><i class="fa fa-check"></i><b>1.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 标题</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 换行</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_4"><i class="fa fa-check"></i><b>1.3.4</b> 链接</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_5"><i class="fa fa-check"></i><b>1.3.5</b> 引用</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_6"><i class="fa fa-check"></i><b>1.3.6</b> 列表</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_7"><i class="fa fa-check"></i><b>1.3.7</b> 代码</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_8"><i class="fa fa-check"></i><b>1.3.8</b> 表格</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_9"><i class="fa fa-check"></i><b>1.3.9</b> 图片</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_10"><i class="fa fa-check"></i><b>1.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rmd_4.html"><a href="rmd_4.html"><i class="fa fa-check"></i><b>1.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_2"><i class="fa fa-check"></i><b>1.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_4"><i class="fa fa-check"></i><b>1.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_5"><i class="fa fa-check"></i><b>1.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="1.4.6" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_6"><i class="fa fa-check"></i><b>1.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="1.4.7" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_7"><i class="fa fa-check"></i><b>1.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="1.4.8" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_8"><i class="fa fa-check"></i><b>1.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="1.4.9" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_9"><i class="fa fa-check"></i><b>1.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="1.4.10" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_10"><i class="fa fa-check"></i><b>1.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="1.4.11" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_11"><i class="fa fa-check"></i><b>1.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="1.4.12" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_12"><i class="fa fa-check"></i><b>1.4.12</b> 注释</a></li>
+<li class="chapter" data-level="1.4.13" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_13"><i class="fa fa-check"></i><b>1.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="1.4.14" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_14"><i class="fa fa-check"></i><b>1.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rmd_5.html"><a href="rmd_5.html"><i class="fa fa-check"></i><b>1.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_1"><i class="fa fa-check"></i><b>1.5.1</b> 标签</a></li>
+<li class="chapter" data-level="1.5.2" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_2"><i class="fa fa-check"></i><b>1.5.2</b> 目录</a></li>
+<li class="chapter" data-level="1.5.3" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_3"><i class="fa fa-check"></i><b>1.5.3</b> 外观</a></li>
+<li class="chapter" data-level="1.5.4" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_4"><i class="fa fa-check"></i><b>1.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="1.5.5" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_5"><i class="fa fa-check"></i><b>1.5.5</b> 表格</a></li>
+<li class="chapter" data-level="1.5.6" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_6"><i class="fa fa-check"></i><b>1.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="1.5.7" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_7"><i class="fa fa-check"></i><b>1.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="1.5.8" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_8"><i class="fa fa-check"></i><b>1.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="1.5.9" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_9"><i class="fa fa-check"></i><b>1.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="1.5.10" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_10"><i class="fa fa-check"></i><b>1.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rmd_6.html"><a href="rmd_6.html"><i class="fa fa-check"></i><b>1.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_1"><i class="fa fa-check"></i><b>1.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="1.6.2" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_2"><i class="fa fa-check"></i><b>1.6.2</b> 目录</a></li>
+<li class="chapter" data-level="1.6.3" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_3"><i class="fa fa-check"></i><b>1.6.3</b> 图与表</a></li>
+<li class="chapter" data-level="1.6.4" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_4"><i class="fa fa-check"></i><b>1.6.4</b> 语法高亮</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manim.html"><a href="manim.html"><i class="fa fa-check"></i><b>2</b> Manim</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manim_1.html"><a href="manim_1.html"><i class="fa fa-check"></i><b>2.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="2.2" data-path="manim_2.html"><a href="manim_2.html"><i class="fa fa-check"></i><b>2.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="2.3" data-path="manim_3.html"><a href="manim_3.html"><i class="fa fa-check"></i><b>2.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="manim_3.html"><a href="manim_3.html#manim_3_1"><i class="fa fa-check"></i><b>2.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="2.3.2" data-path="manim_3.html"><a href="manim_3.html#manim_3_2"><i class="fa fa-check"></i><b>2.3.2</b> 片段</a></li>
+<li class="chapter" data-level="2.3.3" data-path="manim_3.html"><a href="manim_3.html#manim_3_3"><i class="fa fa-check"></i><b>2.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="manim_4.html"><a href="manim_4.html"><i class="fa fa-check"></i><b>2.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="manim_4.html"><a href="manim_4.html#manim_4_1"><i class="fa fa-check"></i><b>2.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="manim_4.html"><a href="manim_4.html#manim_4_2"><i class="fa fa-check"></i><b>2.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="2.4.3" data-path="manim_4.html"><a href="manim_4.html#manim_4_3"><i class="fa fa-check"></i><b>2.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="manim_5.html"><a href="manim_5.html"><i class="fa fa-check"></i><b>2.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manim_5.html"><a href="manim_5.html#manim_5_1"><i class="fa fa-check"></i><b>2.5.1</b> Text</a></li>
+<li class="chapter" data-level="2.5.2" data-path="manim_5.html"><a href="manim_5.html#manim_5_2"><i class="fa fa-check"></i><b>2.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="2.5.3" data-path="manim_5.html"><a href="manim_5.html#manim_5_3"><i class="fa fa-check"></i><b>2.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="2.5.4" data-path="manim_5.html"><a href="manim_5.html#manim_5_4"><i class="fa fa-check"></i><b>2.5.4</b> Tex</a></li>
+<li class="chapter" data-level="2.5.5" data-path="manim_5.html"><a href="manim_5.html#manim_5_5"><i class="fa fa-check"></i><b>2.5.5</b> MathTex</a></li>
+<li class="chapter" data-level="2.5.6" data-path="manim_5.html"><a href="manim_5.html#manim_5_6"><i class="fa fa-check"></i><b>2.5.6</b> Title</a></li>
+<li class="chapter" data-level="2.5.7" data-path="manim_5.html"><a href="manim_5.html#manim_5_7"><i class="fa fa-check"></i><b>2.5.7</b> BulletedList</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manim_6.html"><a href="manim_6.html"><i class="fa fa-check"></i><b>2.6</b> 内置颜色</a></li>
+<li class="chapter" data-level="2.7" data-path="manim_7.html"><a href="manim_7.html"><i class="fa fa-check"></i><b>2.7</b> 物体的位置与移动</a></li>
+<li class="chapter" data-level="2.8" data-path="manim_8.html"><a href="manim_8.html"><i class="fa fa-check"></i><b>2.8</b> 动画</a></li>
+<li class="chapter" data-level="2.9" data-path="manim_9.html"><a href="manim_9.html"><i class="fa fa-check"></i><b>2.9</b> 镜头视角</a></li>
+<li class="chapter" data-level="2.10" data-path="manim_10.html"><a href="manim_10.html"><i class="fa fa-check"></i><b>2.10</b> 存储对象</a></li>
+<li class="chapter" data-level="2.11" data-path="manim_11.html"><a href="manim_11.html"><i class="fa fa-check"></i><b>2.11</b> 成品</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
+<li class="chapter" data-level="3.2.2" data-path="sql_2.html"><a href="sql_2.html#sql_2_2"><i class="fa fa-check"></i><b>3.2.2</b> 选择数据库与表</a></li>
+<li class="chapter" data-level="3.2.3" data-path="sql_2.html"><a href="sql_2.html#sql_2_3"><i class="fa fa-check"></i><b>3.2.3</b> 检索数据</a></li>
+<li class="chapter" data-level="3.2.4" data-path="sql_2.html"><a href="sql_2.html#sql_2_4"><i class="fa fa-check"></i><b>3.2.4</b> 排序检索数据</a></li>
+<li class="chapter" data-level="3.2.5" data-path="sql_2.html"><a href="sql_2.html#sql_2_5"><i class="fa fa-check"></i><b>3.2.5</b> 过滤数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="sql_2.html"><a href="sql_2.html#sql_2_6"><i class="fa fa-check"></i><b>3.2.6</b> 计算字段</a></li>
+<li class="chapter" data-level="3.2.7" data-path="sql_2.html"><a href="sql_2.html#sql_2_7"><i class="fa fa-check"></i><b>3.2.7</b> 函数</a></li>
+<li class="chapter" data-level="3.2.8" data-path="sql_2.html"><a href="sql_2.html#sql_2_8"><i class="fa fa-check"></i><b>3.2.8</b> 汇总数据</a></li>
+<li class="chapter" data-level="3.2.9" data-path="sql_2.html"><a href="sql_2.html#sql_2_9"><i class="fa fa-check"></i><b>3.2.9</b> 数据分组</a></li>
+<li class="chapter" data-level="3.2.10" data-path="sql_2.html"><a href="sql_2.html#sql_2_10"><i class="fa fa-check"></i><b>3.2.10</b> 子查询</a></li>
+<li class="chapter" data-level="3.2.11" data-path="sql_2.html"><a href="sql_2.html#sql_2_11"><i class="fa fa-check"></i><b>3.2.11</b> 表联结</a></li>
+<li class="chapter" data-level="3.2.12" data-path="sql_2.html"><a href="sql_2.html#sql_2_12"><i class="fa fa-check"></i><b>3.2.12</b> 组合查询</a></li>
+<li class="chapter" data-level="3.2.13" data-path="sql_2.html"><a href="sql_2.html#sql_2_13"><i class="fa fa-check"></i><b>3.2.13</b> 全文本搜索</a></li>
+<li class="chapter" data-level="3.2.14" data-path="sql_2.html"><a href="sql_2.html#sql_2_14"><i class="fa fa-check"></i><b>3.2.14</b> 插入数据</a></li>
+<li class="chapter" data-level="3.2.15" data-path="sql_2.html"><a href="sql_2.html#sql_2_15"><i class="fa fa-check"></i><b>3.2.15</b> 更新数据</a></li>
+<li class="chapter" data-level="3.2.16" data-path="sql_2.html"><a href="sql_2.html#sql_2_16"><i class="fa fa-check"></i><b>3.2.16</b> 表的操作</a></li>
+<li class="chapter" data-level="3.2.17" data-path="sql_2.html"><a href="sql_2.html#sql_2_17"><i class="fa fa-check"></i><b>3.2.17</b> 使用视图</a></li>
+<li class="chapter" data-level="3.2.18" data-path="sql_2.html"><a href="sql_2.html#sql_2_18"><i class="fa fa-check"></i><b>3.2.18</b> 使用存储过程</a></li>
+<li class="chapter" data-level="3.2.19" data-path="sql_2.html"><a href="sql_2.html#sql_2_19"><i class="fa fa-check"></i><b>3.2.19</b> 触发器</a></li>
+<li class="chapter" data-level="3.2.20" data-path="sql_2.html"><a href="sql_2.html#sql_2_20"><i class="fa fa-check"></i><b>3.2.20</b> 事务处理</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spider_1.html"><a href="spider_1.html"><i class="fa fa-check"></i><b>4.1</b> 提要</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>5</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="shiny_1.html"><a href="shiny_1.html"><i class="fa fa-check"></i><b>5.1</b> 初始Shiny</a></li>
+<li class="chapter" data-level="5.2" data-path="shiny_2.html"><a href="shiny_2.html"><i class="fa fa-check"></i><b>5.2</b> UI设计</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 输入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 输出</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="shiny_3.html"><a href="shiny_3.html"><i class="fa fa-check"></i><b>5.3</b> 反应式编程</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 服务端</a></li>
+<li class="chapter" data-level="5.3.2" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 反应表达式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_3"><i class="fa fa-check"></i><b>5.3.3</b> 控制更新</a></li>
+<li class="chapter" data-level="5.3.4" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_4"><i class="fa fa-check"></i><b>5.3.4</b> 信息反馈</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="shiny_4.html"><a href="shiny_4.html"><i class="fa fa-check"></i><b>5.4</b> 页面布局</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_1"><i class="fa fa-check"></i><b>5.4.1</b> 页面函数</a></li>
+<li class="chapter" data-level="5.4.2" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2"><i class="fa fa-check"></i><b>5.4.2</b> 布局函数</a></li>
+<li class="chapter" data-level="5.4.3" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2_3"><i class="fa fa-check"></i><b>5.4.3</b> bslib风格布局</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="shiny_5.html"><a href="shiny_5.html"><i class="fa fa-check"></i><b>5.5</b> 主题</a></li>
+<li class="chapter" data-level="5.6" data-path="shiny_6.html"><a href="shiny_6.html"><i class="fa fa-check"></i><b>5.6</b> 交互式图像与插入图像</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_1"><i class="fa fa-check"></i><b>5.6.1</b> 交互式图像</a></li>
+<li class="chapter" data-level="5.6.2" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_2"><i class="fa fa-check"></i><b>5.6.2</b> 插入图像</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="shiny_7.html"><a href="shiny_7.html"><i class="fa fa-check"></i><b>5.7</b> 用户反馈</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_1"><i class="fa fa-check"></i><b>5.7.1</b> 验证</a></li>
+<li class="chapter" data-level="5.7.2" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_2"><i class="fa fa-check"></i><b>5.7.2</b> 通知</a></li>
+<li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
+<li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
+<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
+<li class="chapter" data-level="5.10.2" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 外观</a></li>
+<li class="chapter" data-level="5.10.3" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_3"><i class="fa fa-check"></i><b>5.10.3</b> 案例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="langchain.html"><a href="langchain.html"><i class="fa fa-check"></i><b>6</b> Langchain</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="langchain_x.html"><a href="langchain_x.html"><i class="fa fa-check"></i><b>6.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="langchain_x.html"><a href="langchain_x.html#langchain_x_1"><i class="fa fa-check"></i><b>6.1.1</b> NL2SQL</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 模型与方法</b></span></li>
+<li class="chapter" data-level="7" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>7</b> 应用回归分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg_1.html"><a href="reg_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="reg_1.html"><a href="reg_1.html#reg_1_1"><i class="fa fa-check"></i><b>7.1.1</b> 变量间的相关关系</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reg_1.html"><a href="reg_1.html#reg_1_2"><i class="fa fa-check"></i><b>7.1.2</b> 回归模型的一般形式</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="reg_2.html"><a href="reg_2.html"><i class="fa fa-check"></i><b>7.2</b> 假定</a></li>
+<li class="chapter" data-level="7.3" data-path="reg_3.html"><a href="reg_3.html"><i class="fa fa-check"></i><b>7.3</b> 线性回归模型</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="reg_3.html"><a href="reg_3.html#reg_3_1"><i class="fa fa-check"></i><b>7.3.1</b> 一元线性回归模型</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg_3.html"><a href="reg_3.html#reg_3_2"><i class="fa fa-check"></i><b>7.3.2</b> 多元线性回归模型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="reg_4.html"><a href="reg_4.html"><i class="fa fa-check"></i><b>7.4</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>7.4.1</b> 最小二乘估计</a></li>
+<li class="chapter" data-level="7.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>7.4.2</b> 极大似然估计</a></li>
+<li class="chapter" data-level="7.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>7.4.3</b> 矩估计</a></li>
+<li class="chapter" data-level="7.4.4" data-path="reg_4.html"><a href="reg_4.html#reg_4_4"><i class="fa fa-check"></i><b>7.4.4</b> 几何视角</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="reg_5.html"><a href="reg_5.html"><i class="fa fa-check"></i><b>7.5</b> 最小二乘估计的性质</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="reg_5.html"><a href="reg_5.html#reg_5_1"><i class="fa fa-check"></i><b>7.5.1</b> 线性</a></li>
+<li class="chapter" data-level="7.5.2" data-path="reg_5.html"><a href="reg_5.html#reg_5_2"><i class="fa fa-check"></i><b>7.5.2</b> 无偏性</a></li>
+<li class="chapter" data-level="7.5.3" data-path="reg_5.html"><a href="reg_5.html#reg_5_3"><i class="fa fa-check"></i><b>7.5.3</b> 有效性</a></li>
+<li class="chapter" data-level="7.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>7.5.4</b> 方差</a></li>
+<li class="chapter" data-level="7.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>7.5.5</b> 正态性</a></li>
+<li class="chapter" data-level="7.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>7.5.6</b> 残差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>7.6</b> 显著性检验</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>7.6.1</b> 区间估计</a></li>
+<li class="chapter" data-level="7.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>7.6.2</b> t检验</a></li>
+<li class="chapter" data-level="7.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>7.6.3</b> F检验</a></li>
+<li class="chapter" data-level="7.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>7.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="7.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>7.6.5</b> 样本决定系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>7.7</b> 预测</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>7.7.1</b> 预测因变量新值的均值</a></li>
+<li class="chapter" data-level="7.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>7.7.2</b> 预测因变量的新值</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>7.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="7.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>7.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>7.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="7.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>7.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="7.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>7.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="7.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>7.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="7.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>7.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.11" data-path="reg_11.html"><a href="reg_11.html"><i class="fa fa-check"></i><b>7.11</b> 重要的定义和等式</a></li>
+<li class="chapter" data-level="7.12" data-path="reg_12.html"><a href="reg_12.html"><i class="fa fa-check"></i><b>7.12</b> 回归诊断</a>
+<ul>
+<li class="chapter" data-level="7.12.1" data-path="reg_12.html"><a href="reg_12.html#reg_12_1"><i class="fa fa-check"></i><b>7.12.1</b> 残差分析</a></li>
+<li class="chapter" data-level="7.12.2" data-path="reg_12.html"><a href="reg_12.html#reg_12_2"><i class="fa fa-check"></i><b>7.12.2</b> 异常点和强影响点</a></li>
+<li class="chapter" data-level="7.12.3" data-path="reg_12.html"><a href="reg_12.html#reg_12_3"><i class="fa fa-check"></i><b>7.12.3</b> 异方差</a></li>
+<li class="chapter" data-level="7.12.4" data-path="reg_12.html"><a href="reg_12.html#reg_12_4"><i class="fa fa-check"></i><b>7.12.4</b> 自相关</a></li>
+<li class="chapter" data-level="7.12.5" data-path="reg_12.html"><a href="reg_12.html#reg_12_5"><i class="fa fa-check"></i><b>7.12.5</b> 多重共线性</a></li>
+</ul></li>
+<li class="chapter" data-level="7.13" data-path="reg_13.html"><a href="reg_13.html"><i class="fa fa-check"></i><b>7.13</b> 变量选择与正则化</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="reg_13.html"><a href="reg_13.html#reg_13_1"><i class="fa fa-check"></i><b>7.13.1</b> 冗余与遗漏</a></li>
+<li class="chapter" data-level="7.13.2" data-path="reg_13.html"><a href="reg_13.html#reg_13_2"><i class="fa fa-check"></i><b>7.13.2</b> 变量选择的传统方法</a></li>
+<li class="chapter" data-level="7.13.3" data-path="reg_13.html"><a href="reg_13.html#reg_13_3"><i class="fa fa-check"></i><b>7.13.3</b> 变量选择的正则化方法</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>8</b> 应用多元统计</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ms_1.html"><a href="ms_1.html"><i class="fa fa-check"></i><b>8.1</b> 矩阵运算</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="ms_1.html"><a href="ms_1.html#ms_1_1"><i class="fa fa-check"></i><b>8.1.1</b> Kronecker积</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ms_1.html"><a href="ms_1.html#ms_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 拉直</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ms_1.html"><a href="ms_1.html#ms_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 减号逆与加号逆</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ms_1.html"><a href="ms_1.html#ms_1_4"><i class="fa fa-check"></i><b>8.1.4</b> 分块矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ms_2.html"><a href="ms_2.html"><i class="fa fa-check"></i><b>8.2</b> 多元正态分布</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ms_2.html"><a href="ms_2.html#ms_2_1"><i class="fa fa-check"></i><b>8.2.1</b> 多元分布的基本运算性质</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ms_2.html"><a href="ms_2.html#ms_2_2"><i class="fa fa-check"></i><b>8.2.2</b> 多元正态分布的定义</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ms_2.html"><a href="ms_2.html#ms_2_3"><i class="fa fa-check"></i><b>8.2.3</b> 正态分布的条件分布和独立性</a></li>
+<li class="chapter" data-level="8.2.4" data-path="ms_2.html"><a href="ms_2.html#ms_2_4"><i class="fa fa-check"></i><b>8.2.4</b> 偏相关系数与全相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ms_3.html"><a href="ms_3.html"><i class="fa fa-check"></i><b>8.3</b> 主成分分析</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ms_3.html"><a href="ms_3.html#ms_3_1"><i class="fa fa-check"></i><b>8.3.1</b> 总体主成分</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ms_3.html"><a href="ms_3.html#ms_3_2"><i class="fa fa-check"></i><b>8.3.2</b> 样本主成分</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ms_3.html"><a href="ms_3.html#ms_3_3"><i class="fa fa-check"></i><b>8.3.3</b> 关于主成分</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ms_4.html"><a href="ms_4.html"><i class="fa fa-check"></i><b>8.4</b> 因子分析</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ms_4.html"><a href="ms_4.html#ms_4_1"><i class="fa fa-check"></i><b>8.4.1</b> 正交因子模型</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ms_4.html"><a href="ms_4.html#ms_4_3"><i class="fa fa-check"></i><b>8.4.2</b> 参数估计</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ms_4.html"><a href="ms_4.html#ms_4_4"><i class="fa fa-check"></i><b>8.4.3</b> 因子旋转</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ms_4.html"><a href="ms_4.html#ms_4_5"><i class="fa fa-check"></i><b>8.4.4</b> 因子得分</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ms_4.html"><a href="ms_4.html#ms_4_6"><i class="fa fa-check"></i><b>8.4.5</b> 因子分析和主成分分析的区别与联系</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ms_5.html"><a href="ms_5.html"><i class="fa fa-check"></i><b>8.5</b> 判别分析</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ms_5.html"><a href="ms_5.html#ms_5_1"><i class="fa fa-check"></i><b>8.5.1</b> 距离判别</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ms_5.html"><a href="ms_5.html#ms_5_2"><i class="fa fa-check"></i><b>8.5.2</b> 贝叶斯判别</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ms_6.html"><a href="ms_6.html"><i class="fa fa-check"></i><b>8.6</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ms_6.html"><a href="ms_6.html#ms_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 距离与相似性的度量</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ms_6.html"><a href="ms_6.html#ms_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 聚类效果的评价指标</a></li>
+<li class="chapter" data-level="8.6.3" data-path="ms_6.html"><a href="ms_6.html#ms_6_3"><i class="fa fa-check"></i><b>8.6.3</b> 系统聚类</a></li>
+<li class="chapter" data-level="8.6.4" data-path="ms_6.html"><a href="ms_6.html#ms_6_4"><i class="fa fa-check"></i><b>8.6.4</b> Kmeans</a></li>
+<li class="chapter" data-level="8.6.5" data-path="ms_6.html"><a href="ms_6.html#ms_6_5"><i class="fa fa-check"></i><b>8.6.5</b> 其他聚类方法</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="ms_7.html"><a href="ms_7.html"><i class="fa fa-check"></i><b>8.7</b> 典型相关分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ml.html"><a href="ml.html"><i class="fa fa-check"></i><b>9</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ml_1.html"><a href="ml_1.html"><i class="fa fa-check"></i><b>9.1</b> 基础知识</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>9.1.1</b> 偏差-方差权衡</a></li>
+<li class="chapter" data-level="9.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>9.1.2</b> 评价指标</a></li>
+<li class="chapter" data-level="9.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>9.1.3</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>9.2</b> pandas与sklearn</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ml_2.html"><a href="ml_2.html#ml_2_1"><i class="fa fa-check"></i><b>9.2.1</b> 导入数据集</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ml_2.html"><a href="ml_2.html#ml_2_2"><i class="fa fa-check"></i><b>9.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ml_2.html"><a href="ml_2.html#ml_2_3"><i class="fa fa-check"></i><b>9.2.3</b> 分割数据集</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ml_3.html"><a href="ml_3.html"><i class="fa fa-check"></i><b>9.3</b> 决策树</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ml_3.html"><a href="ml_3.html#ml_3_1"><i class="fa fa-check"></i><b>9.3.1</b> 分类树</a></li>
+<li class="chapter" data-level="9.3.2" data-path="ml_3.html"><a href="ml_3.html#ml_3_2"><i class="fa fa-check"></i><b>9.3.2</b> 回归树</a></li>
+<li class="chapter" data-level="9.3.3" data-path="ml_3.html"><a href="ml_3.html#ml_3_3"><i class="fa fa-check"></i><b>9.3.3</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ml_4.html"><a href="ml_4.html"><i class="fa fa-check"></i><b>9.4</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ml_4.html"><a href="ml_4.html#ml_4_1"><i class="fa fa-check"></i><b>9.4.1</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ml_5.html"><a href="ml_5.html"><i class="fa fa-check"></i><b>9.5</b> XGBoost</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="ml_5.html"><a href="ml_5.html#ml_5_1"><i class="fa fa-check"></i><b>9.5.1</b> 原理</a></li>
+<li class="chapter" data-level="9.5.2" data-path="ml_5.html"><a href="ml_5.html#ml_5_2"><i class="fa fa-check"></i><b>9.5.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="ml_6.html"><a href="ml_6.html"><i class="fa fa-check"></i><b>9.6</b> LightGBM</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>9.6.1</b> 原理</a></li>
+<li class="chapter" data-level="9.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>9.6.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>9.7</b> 因果森林</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>9.7.1</b> 原理</a></li>
+<li class="chapter" data-level="9.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>9.7.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>9.8</b> SVM</a></li>
+<li class="chapter" data-level="9.9" data-path="ml_9.html"><a href="ml_9.html"><i class="fa fa-check"></i><b>9.9</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="ml_9.html"><a href="ml_9.html#ml_9_1"><i class="fa fa-check"></i><b>9.9.1</b> 聚类结果评价</a></li>
+<li class="chapter" data-level="9.9.2" data-path="ml_9.html"><a href="ml_9.html#ml_9_2"><i class="fa fa-check"></i><b>9.9.2</b> Kmeans</a></li>
+<li class="chapter" data-level="9.9.3" data-path="ml_9.html"><a href="ml_9.html#ml_9_3"><i class="fa fa-check"></i><b>9.9.3</b> Kmeans++</a></li>
+<li class="chapter" data-level="9.9.4" data-path="ml_9.html"><a href="ml_9.html#ml_9_4"><i class="fa fa-check"></i><b>9.9.4</b> DBSCAN</a></li>
+<li class="chapter" data-level="9.9.5" data-path="ml_9.html"><a href="ml_9.html#ml_9_5"><i class="fa fa-check"></i><b>9.9.5</b> HDBSCAN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dl.html"><a href="dl.html"><i class="fa fa-check"></i><b>10</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dl_1.html"><a href="dl_1.html"><i class="fa fa-check"></i><b>10.1</b> 预备知识</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>10.1.1</b> 数据操作</a></li>
+<li class="chapter" data-level="10.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>10.1.2</b> 自动微分</a></li>
+<li class="chapter" data-level="10.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>10.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="10.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>10.1.4</b> 调参技巧</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>10.2</b> 线性神经网络</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dl_2.html"><a href="dl_2.html#dl_2_1"><i class="fa fa-check"></i><b>10.2.1</b> 线性回归</a></li>
+<li class="chapter" data-level="10.2.2" data-path="dl_2.html"><a href="dl_2.html#dl_2_2"><i class="fa fa-check"></i><b>10.2.2</b> 二分类问题</a></li>
+<li class="chapter" data-level="10.2.3" data-path="dl_2.html"><a href="dl_2.html#dl_2_3"><i class="fa fa-check"></i><b>10.2.3</b> 多分类问题</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dl_9.html"><a href="dl_9.html"><i class="fa fa-check"></i><b>10.3</b> RNN</a></li>
+<li class="chapter" data-level="10.4" data-path="dl_3.html"><a href="dl_3.html"><i class="fa fa-check"></i><b>10.4</b> LSTM</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="dl_3.html"><a href="dl_3.html#dl_3_1"><i class="fa fa-check"></i><b>10.4.1</b> 原理</a></li>
+<li class="chapter" data-level="10.4.2" data-path="dl_3.html"><a href="dl_3.html#dl_3_2"><i class="fa fa-check"></i><b>10.4.2</b> 示例</a></li>
+<li class="chapter" data-level="10.4.3" data-path="dl_3.html"><a href="dl_3.html#dl_3_3"><i class="fa fa-check"></i><b>10.4.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="dl_4.html"><a href="dl_4.html"><i class="fa fa-check"></i><b>10.5</b> GRU</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="dl_4.html"><a href="dl_4.html#dl_4_1"><i class="fa fa-check"></i><b>10.5.1</b> 原理</a></li>
+<li class="chapter" data-level="10.5.2" data-path="dl_4.html"><a href="dl_4.html#dl_4_2"><i class="fa fa-check"></i><b>10.5.2</b> 示例</a></li>
+<li class="chapter" data-level="10.5.3" data-path="dl_4.html"><a href="dl_4.html#dl_4_3"><i class="fa fa-check"></i><b>10.5.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="dl_5.html"><a href="dl_5.html"><i class="fa fa-check"></i><b>10.6</b> Seq2Seq</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="dl_5.html"><a href="dl_5.html#dl_5_1"><i class="fa fa-check"></i><b>10.6.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="dl_6.html"><a href="dl_6.html"><i class="fa fa-check"></i><b>10.7</b> BNN</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="dl_6.html"><a href="dl_6.html#dl_6_1"><i class="fa fa-check"></i><b>10.7.1</b> 原理</a></li>
+<li class="chapter" data-level="10.7.2" data-path="dl_6.html"><a href="dl_6.html#dl_6_2"><i class="fa fa-check"></i><b>10.7.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="dl_7.html"><a href="dl_7.html"><i class="fa fa-check"></i><b>10.8</b> GNN</a>
+<ul>
+<li class="chapter" data-level="10.8.1" data-path="dl_7.html"><a href="dl_7.html#dl_7_1"><i class="fa fa-check"></i><b>10.8.1</b> 原理</a></li>
+<li class="chapter" data-level="10.8.2" data-path="dl_7.html"><a href="dl_7.html#dl_7_2"><i class="fa fa-check"></i><b>10.8.2</b> 图神经网络的类型</a></li>
+<li class="chapter" data-level="10.8.3" data-path="dl_7.html"><a href="dl_7.html#dl_7_3"><i class="fa fa-check"></i><b>10.8.3</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.9" data-path="dl_8.html"><a href="dl_8.html"><i class="fa fa-check"></i><b>10.9</b> Diffusion Model</a>
+<ul>
+<li class="chapter" data-level="10.9.1" data-path="dl_8.html"><a href="dl_8.html#dl_8_1"><i class="fa fa-check"></i><b>10.9.1</b> 原理</a></li>
+<li class="chapter" data-level="10.9.2" data-path="dl_8.html"><a href="dl_8.html#dl_8_2"><i class="fa fa-check"></i><b>10.9.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.10" data-path="dl_10.html"><a href="dl_10.html"><i class="fa fa-check"></i><b>10.10</b> Transformer</a>
+<ul>
+<li class="chapter" data-level="10.10.1" data-path="dl_10.html"><a href="dl_10.html#dl_10_1"><i class="fa fa-check"></i><b>10.10.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.11" data-path="dl_11.html"><a href="dl_11.html"><i class="fa fa-check"></i><b>10.11</b> BERT</a>
+<ul>
+<li class="chapter" data-level="10.11.1" data-path="dl_11.html"><a href="dl_11.html#dl_11_1"><i class="fa fa-check"></i><b>10.11.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.12" data-path="dl_12.html"><a href="dl_12.html"><i class="fa fa-check"></i><b>10.12</b> GPT</a>
+<ul>
+<li class="chapter" data-level="10.12.1" data-path="dl_12.html"><a href="dl_12.html#dl_12_1"><i class="fa fa-check"></i><b>10.12.1</b> GPT-1</a></li>
+<li class="chapter" data-level="10.12.2" data-path="dl_12.html"><a href="dl_12.html#dl_12_2"><i class="fa fa-check"></i><b>10.12.2</b> GPT-2</a></li>
+<li class="chapter" data-level="10.12.3" data-path="dl_12.html"><a href="dl_12.html#dl_12_3"><i class="fa fa-check"></i><b>10.12.3</b> GPT-3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>11</b> 生存分析</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>11.1</b> 基本概念</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 删失数据</a></li>
+<li class="chapter" data-level="11.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 截断数据</a></li>
+<li class="chapter" data-level="11.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 函数</a></li>
+<li class="chapter" data-level="11.1.4" data-path="survival_1.html"><a href="survival_1.html#survival_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 似然函数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>11.2</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>11.2.1</b> KM估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>11.2.2</b> NA估计</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>11.3</b> 置信区间与置信带</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>11.3.1</b> 置信区间</a></li>
+<li class="chapter" data-level="11.3.2" data-path="survival_3.html"><a href="survival_3.html#survival_3_2"><i class="fa fa-check"></i><b>11.3.2</b> 置信带</a></li>
+<li class="chapter" data-level="11.3.3" data-path="survival_3.html"><a href="survival_3.html#survival_3_3"><i class="fa fa-check"></i><b>11.3.3</b> 平均生存时间的置信区间</a></li>
+<li class="chapter" data-level="11.3.4" data-path="survival_3.html"><a href="survival_3.html#survival_3_4"><i class="fa fa-check"></i><b>11.3.4</b> 分位数的置信区间</a></li>
+<li class="chapter" data-level="11.3.5" data-path="survival_3.html"><a href="survival_3.html#survival_3_5"><i class="fa fa-check"></i><b>11.3.5</b> 左截断数据的置信区间</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>11.4</b> 假设检验</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="survival_4.html"><a href="survival_4.html#survival_4_1"><i class="fa fa-check"></i><b>11.4.1</b> 单样本检验</a></li>
+<li class="chapter" data-level="11.4.2" data-path="survival_4.html"><a href="survival_4.html#survival_4_2"><i class="fa fa-check"></i><b>11.4.2</b> 多样本检验</a></li>
+<li class="chapter" data-level="11.4.3" data-path="survival_4.html"><a href="survival_4.html#survival_4_3"><i class="fa fa-check"></i><b>11.4.3</b> 趋势性检验</a></li>
+<li class="chapter" data-level="11.4.4" data-path="survival_4.html"><a href="survival_4.html#survival_4_4"><i class="fa fa-check"></i><b>11.4.4</b> 分层检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>11.5</b> Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_1"><i class="fa fa-check"></i><b>11.5.1</b> 偏对数似然函数</a></li>
+<li class="chapter" data-level="11.5.2" data-path="survival_5.html"><a href="survival_5.html#survival_5_x"><i class="fa fa-check"></i><b>11.5.2</b> Regularization Paths for Cox’s Proportional Hazards Model via Coordinate Descent</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>12</b> 数据分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="da_1.html"><a href="da_1.html"><i class="fa fa-check"></i><b>12.1</b> ABtest</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="da_1.html"><a href="da_1.html#da_1_1"><i class="fa fa-check"></i><b>12.1.1</b> 确定目标与指标选取</a></li>
+<li class="chapter" data-level="12.1.2" data-path="da_1.html"><a href="da_1.html#da_1_2"><i class="fa fa-check"></i><b>12.1.2</b> 实验设计</a></li>
+<li class="chapter" data-level="12.1.3" data-path="da_1.html"><a href="da_1.html#da_1_3"><i class="fa fa-check"></i><b>12.1.3</b> 实验上线</a></li>
+<li class="chapter" data-level="12.1.4" data-path="da_1.html"><a href="da_1.html#da_1_4"><i class="fa fa-check"></i><b>12.1.4</b> 实验结束</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="da_2.html"><a href="da_2.html"><i class="fa fa-check"></i><b>12.2</b> 异动归因</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="da_2.html"><a href="da_2.html#da_2_1"><i class="fa fa-check"></i><b>12.2.1</b> 验真</a></li>
+<li class="chapter" data-level="12.2.2" data-path="da_2.html"><a href="da_2.html#da_2_2"><i class="fa fa-check"></i><b>12.2.2</b> 维度拆解</a></li>
+<li class="chapter" data-level="12.2.3" data-path="da_2.html"><a href="da_2.html#da_2_3"><i class="fa fa-check"></i><b>12.2.3</b> 贡献度分析</a></li>
+<li class="chapter" data-level="12.2.4" data-path="da_2.html"><a href="da_2.html#da_2_4"><i class="fa fa-check"></i><b>12.2.4</b> 从数据原因到业务原因</a></li>
+<li class="chapter" data-level="12.2.5" data-path="da_2.html"><a href="da_2.html#da_2_5"><i class="fa fa-check"></i><b>12.2.5</b> 案例分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="da_3.html"><a href="da_3.html"><i class="fa fa-check"></i><b>12.3</b> 用户分析</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="da_3.html"><a href="da_3.html#da_3_1"><i class="fa fa-check"></i><b>12.3.1</b> 用户画像</a></li>
+<li class="chapter" data-level="12.3.2" data-path="da_3.html"><a href="da_3.html#da_3_2"><i class="fa fa-check"></i><b>12.3.2</b> 用户行为路径分析</a></li>
+<li class="chapter" data-level="12.3.3" data-path="da_3.html"><a href="da_3.html#da_3_3"><i class="fa fa-check"></i><b>12.3.3</b> 用户分层模型</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III 多源数据分析</b></span></li>
+<li class="chapter" data-level="13" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>13</b> 网络型数据</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>13.1</b> 构造联系</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>13.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="13.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>13.1.2</b> 社会网络量表</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>13.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="13.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>13.3</b> 拓展分析</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>13.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="13.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>13.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="13.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>13.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="13.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>13.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="13.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>13.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="13.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>13.3.6</b> 综合评价</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>13.4</b> 其他启示</a></li>
+</ul></li>
+<li class="part"><span><b>IV 可视化</b></span></li>
+<li class="chapter" data-level="14" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>14</b> Manim动画</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>14.1</b> 最小二乘与投影矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="people.html"><a href="people.html"><i class="fa fa-check"></i><b>15</b> 七普数据可视化</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="people_1.html"><a href="people_1.html"><i class="fa fa-check"></i><b>15.1</b> 数据来源及说明</a></li>
+<li class="chapter" data-level="15.2" data-path="people_2.html"><a href="people_2.html"><i class="fa fa-check"></i><b>15.2</b> 全国人口状况</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="people_2.html"><a href="people_2.html#people_2_1"><i class="fa fa-check"></i><b>15.2.1</b> 人口自然增长率</a></li>
+<li class="chapter" data-level="15.2.2" data-path="people_2.html"><a href="people_2.html#people_2_2"><i class="fa fa-check"></i><b>15.2.2</b> 年龄结构</a></li>
+<li class="chapter" data-level="15.2.3" data-path="people_2.html"><a href="people_2.html#people_2_3"><i class="fa fa-check"></i><b>15.2.3</b> 人口流动</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V 组会论文</b></span></li>
+<li class="chapter" data-level="16" data-path="penalty.html"><a href="penalty.html"><i class="fa fa-check"></i><b>16</b> 变量选择与惩罚函数</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="penalty_1.html"><a href="penalty_1.html"><i class="fa fa-check"></i><b>16.1</b> 准备</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_1"><i class="fa fa-check"></i><b>16.1.1</b> 范数</a></li>
+<li class="chapter" data-level="16.1.2" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_2"><i class="fa fa-check"></i><b>16.1.2</b> 目标函数</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>16.2</b> 单变量选择</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>16.2.1</b> Lasso</a></li>
+<li class="chapter" data-level="16.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>16.2.2</b> Hard &amp; Soft Threshold</a></li>
+<li class="chapter" data-level="16.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>16.2.3</b> SCAD</a></li>
+<li class="chapter" data-level="16.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>16.2.4</b> Adaptive Lasso</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="penalty_3.html"><a href="penalty_3.html"><i class="fa fa-check"></i><b>16.3</b> 群组变量选择</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_1"><i class="fa fa-check"></i><b>16.3.1</b> 思维导图</a></li>
+<li class="chapter" data-level="16.3.2" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_2"><i class="fa fa-check"></i><b>16.3.2</b> 处理高度相关数据的组变量选择方法</a></li>
+<li class="chapter" data-level="16.3.3" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_3"><i class="fa fa-check"></i><b>16.3.3</b> 仅能选择组变量的方法</a></li>
+<li class="chapter" data-level="16.3.4" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_4"><i class="fa fa-check"></i><b>16.3.4</b> 双层变量选择方法</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="penalty_4.html"><a href="penalty_4.html"><i class="fa fa-check"></i><b>16.4</b> 算法</a></li>
+<li class="chapter" data-level="16.5" data-path="penalty_5.html"><a href="penalty_5.html"><i class="fa fa-check"></i><b>16.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="integrative.html"><a href="integrative.html"><i class="fa fa-check"></i><b>17</b> 整合分析</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>17.1</b> 引言</a></li>
+<li class="chapter" data-level="17.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>17.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="17.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>17.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="17.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>17.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="17.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>17.5</b> 具有网络结构关系的整合分析</a></li>
+</ul></li>
+<li class="part"><span><b>VI 算法复现</b></span></li>
+<li class="chapter" data-level="18" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>18</b> 算法复现</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="code_1.html"><a href="code_1.html"><i class="fa fa-check"></i><b>18.1</b> 惩罚Cox比例风险模型</a></li>
+<li class="chapter" data-level="18.2" data-path="code_2.html"><a href="code_2.html"><i class="fa fa-check"></i><b>18.2</b> 异质截距项的线性模型</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="code_2.html"><a href="code_2.html#code_2_1"><i class="fa fa-check"></i><b>18.2.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.2.2" data-path="code_2.html"><a href="code_2.html#code_2_2"><i class="fa fa-check"></i><b>18.2.2</b> 数据模拟</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="code_3.html"><a href="code_3.html"><i class="fa fa-check"></i><b>18.3</b> （异质）线性+非线性的Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="code_3.html"><a href="code_3.html#code_3_1"><i class="fa fa-check"></i><b>18.3.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.3.2" data-path="code_3.html"><a href="code_3.html#code_3_2"><i class="fa fa-check"></i><b>18.3.2</b> 数据模拟</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII 生活</b></span></li>
+<li class="chapter" data-level="19" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>19</b> 羽毛球修炼手册</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>19.1</b> 发球</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>19.1.1</b> 正手发球</a></li>
+<li class="chapter" data-level="19.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>19.1.2</b> 反手发球</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ball_2.html"><a href="ball_2.html"><i class="fa fa-check"></i><b>19.2</b> 网前技术</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ball_2.html"><a href="ball_2.html#ball_2_1"><i class="fa fa-check"></i><b>19.2.1</b> 勾对角</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ball_2.html"><a href="ball_2.html#ball_2_2"><i class="fa fa-check"></i><b>19.2.2</b> 扑球</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ball_2.html"><a href="ball_2.html#ball_2_3"><i class="fa fa-check"></i><b>19.2.3</b> 封网</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ball_2.html"><a href="ball_2.html#ball_2_4"><i class="fa fa-check"></i><b>19.2.4</b> 平抽</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ball_2.html"><a href="ball_2.html#ball_2_5"><i class="fa fa-check"></i><b>19.2.5</b> 抹球</a></li>
+<li class="chapter" data-level="19.2.6" data-path="ball_2.html"><a href="ball_2.html#ball_2_6"><i class="fa fa-check"></i><b>19.2.6</b> 搓球</a></li>
+<li class="chapter" data-level="19.2.7" data-path="ball_2.html"><a href="ball_2.html#ball_2_7"><i class="fa fa-check"></i><b>19.2.7</b> 挡网</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ball_3.html"><a href="ball_3.html"><i class="fa fa-check"></i><b>19.3</b> 后场技术</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ball_3.html"><a href="ball_3.html#ball_3_1"><i class="fa fa-check"></i><b>19.3.1</b> 杀球</a></li>
+<li class="chapter" data-level="19.3.2" data-path="ball_3.html"><a href="ball_3.html#ball_3_2"><i class="fa fa-check"></i><b>19.3.2</b> 吊球</a></li>
+<li class="chapter" data-level="19.3.3" data-path="ball_3.html"><a href="ball_3.html#ball_3_3"><i class="fa fa-check"></i><b>19.3.3</b> 反手</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ball_4.html"><a href="ball_4.html"><i class="fa fa-check"></i><b>19.4</b> 假动作</a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="ball_4.html"><a href="ball_4.html#ball_4_1"><i class="fa fa-check"></i><b>19.4.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.4.2" data-path="ball_4.html"><a href="ball_4.html#ball_4_2"><i class="fa fa-check"></i><b>19.4.2</b> 网前</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="ball_5.html"><a href="ball_5.html"><i class="fa fa-check"></i><b>19.5</b> 双打</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="ball_5.html"><a href="ball_5.html#ball_5_1"><i class="fa fa-check"></i><b>19.5.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.5.2" data-path="ball_5.html"><a href="ball_5.html#ball_5_2"><i class="fa fa-check"></i><b>19.5.2</b> 站位</a></li>
+<li class="chapter" data-level="19.5.3" data-path="ball_5.html"><a href="ball_5.html#ball_5_3"><i class="fa fa-check"></i><b>19.5.3</b> 分球</a></li>
+<li class="chapter" data-level="19.5.4" data-path="ball_5.html"><a href="ball_5.html#ball_5_4"><i class="fa fa-check"></i><b>19.5.4</b> 球路</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="ball_6.html"><a href="ball_6.html"><i class="fa fa-check"></i><b>19.6</b> 球路</a></li>
+<li class="chapter" data-level="19.7" data-path="ball_7.html"><a href="ball_7.html"><i class="fa fa-check"></i><b>19.7</b> 步伐</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="jap.html"><a href="jap.html"><i class="fa fa-check"></i><b>20</b> 日语</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><i class="fa fa-check"></i>参考文献</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="shiny_6" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> 交互式图像与插入图像<a href="shiny_6.html#shiny_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p><a href="https://mastering-shiny.org/action-graphics.html" target="_blank">手册</a>中介绍了交互式图像的相关知识。但个人觉得还是在shiny中直接使用<code>plotly</code>及相关可交互图像包更为便捷。</p>
+<div id="shiny_6_1" class="section level3 hasAnchor" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> 交互式图像<a href="shiny_6.html#shiny_6_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div id="shiny_6_1_1" class="section level4 hasAnchor" number="5.6.1.1">
+<h4><span class="header-section-number">5.6.1.1</span> plotly<a href="shiny_6.html#shiny_6_1_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p><code>plotly</code>包中自带<code>renderPlotly()</code>与<code>plotlyOutput()</code>函数，负责在shiny中渲染并输出plotly图像。</p>
+<p>这里就简单介绍plotly的用法，具体细节还是等有需要的时候自行查找<a href="https://plotly.com/r/reference/index/" target="_blank">官方手册</a>。</p>
+<p>plotly绘图的两种实现方式：</p>
+<ol style="list-style-type: decimal">
+<li><p>直接绘图</p>
+<ul>
+<li>利用<code>plot_ly()</code>函数初始化对象，在传递参数时得使用<code>=~</code></li>
+<li>根据不同的图形类型查询对应的官网手册，利用<strong>命名列表</strong>来传递参数</li>
+<li>支持管道符</li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="shiny_6.html#cb200-1" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb200-2"><a href="shiny_6.html#cb200-2" tabindex="-1"></a></span>
+<span id="cb200-3"><a href="shiny_6.html#cb200-3" tabindex="-1"></a><span class="co"># volcano是R内置的矩阵</span></span>
+<span id="cb200-4"><a href="shiny_6.html#cb200-4" tabindex="-1"></a>fig <span class="ot">&lt;-</span> <span class="fu">plot_ly</span>(<span class="at">z =</span> <span class="sc">~</span>volcano) <span class="sc">%&gt;%</span> <span class="fu">add_surface</span>(</span>
+<span id="cb200-5"><a href="shiny_6.html#cb200-5" tabindex="-1"></a>  <span class="at">contours =</span> <span class="fu">list</span>(</span>
+<span id="cb200-6"><a href="shiny_6.html#cb200-6" tabindex="-1"></a>    <span class="at">z =</span> <span class="fu">list</span>(</span>
+<span id="cb200-7"><a href="shiny_6.html#cb200-7" tabindex="-1"></a>      <span class="at">show=</span><span class="cn">TRUE</span>,</span>
+<span id="cb200-8"><a href="shiny_6.html#cb200-8" tabindex="-1"></a>      <span class="at">usecolormap=</span><span class="cn">TRUE</span>,</span>
+<span id="cb200-9"><a href="shiny_6.html#cb200-9" tabindex="-1"></a>      <span class="at">highlightcolor=</span><span class="st">&quot;#ff0000&quot;</span>,</span>
+<span id="cb200-10"><a href="shiny_6.html#cb200-10" tabindex="-1"></a>      <span class="at">project=</span><span class="fu">list</span>(<span class="at">z=</span><span class="cn">TRUE</span>)</span>
+<span id="cb200-11"><a href="shiny_6.html#cb200-11" tabindex="-1"></a>    )</span>
+<span id="cb200-12"><a href="shiny_6.html#cb200-12" tabindex="-1"></a>  )</span>
+<span id="cb200-13"><a href="shiny_6.html#cb200-13" tabindex="-1"></a>)</span>
+<span id="cb200-14"><a href="shiny_6.html#cb200-14" tabindex="-1"></a>fig <span class="ot">&lt;-</span> fig <span class="sc">%&gt;%</span> <span class="fu">layout</span>(</span>
+<span id="cb200-15"><a href="shiny_6.html#cb200-15" tabindex="-1"></a>  <span class="at">scene =</span> <span class="fu">list</span>(</span>
+<span id="cb200-16"><a href="shiny_6.html#cb200-16" tabindex="-1"></a>    <span class="at">camera=</span><span class="fu">list</span>(</span>
+<span id="cb200-17"><a href="shiny_6.html#cb200-17" tabindex="-1"></a>      <span class="at">eye =</span> <span class="fu">list</span>(<span class="at">x=</span><span class="fl">1.87</span>, <span class="at">y=</span><span class="fl">0.88</span>, <span class="at">z=</span><span class="sc">-</span><span class="fl">0.64</span>)</span>
+<span id="cb200-18"><a href="shiny_6.html#cb200-18" tabindex="-1"></a>    )</span>
+<span id="cb200-19"><a href="shiny_6.html#cb200-19" tabindex="-1"></a>  )</span>
+<span id="cb200-20"><a href="shiny_6.html#cb200-20" tabindex="-1"></a>)</span>
+<span id="cb200-21"><a href="shiny_6.html#cb200-21" tabindex="-1"></a></span>
+<span id="cb200-22"><a href="shiny_6.html#cb200-22" tabindex="-1"></a>fig</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-ee03abcd30d6692460d2" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-ee03abcd30d6692460d2">{"x":{"visdat":{"9958172e1315":["function () ","plotlyVisDat"]},"cur_data":"9958172e1315","attrs":{"9958172e1315":{"z":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"surface","contours":{"z":{"show":true,"usecolormap":true,"highlightcolor":"#ff0000","project":{"z":true}}},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"camera":{"eye":{"x":1.8700000000000001,"y":0.88,"z":-0.64000000000000001}},"zaxis":{"title":"volcano"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"volcano","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666666","rgba(70,19,97,1)"],["0.0833333333333334","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666666","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"z":[[100,100,101,101,101,101,101,100,100,100,101,101,102,102,102,102,103,104,103,102,101,101,102,103,104,104,105,107,107,107,108,108,110,110,110,110,110,110,110,110,108,108,108,107,107,108,108,108,108,108,107,107,107,107,106,106,105,105,104,104,103],[101,101,102,102,102,102,102,101,101,101,102,102,103,103,103,103,104,105,104,103,102,102,103,105,106,106,107,109,110,110,110,110,111,112,113,114,116,115,114,112,110,110,110,109,108,109,109,109,109,108,108,108,108,107,107,106,106,105,105,104,104],[102,102,103,103,103,103,103,102,102,102,103,103,104,104,104,104,105,106,105,104,104,105,106,107,108,110,111,113,114,115,114,115,116,118,119,119,121,121,120,118,116,114,112,111,110,110,110,110,109,109,109,109,108,108,107,107,106,106,105,105,104],[103,103,104,104,104,104,104,103,103,103,103,104,104,104,105,105,106,107,106,106,106,107,108,110,111,114,117,118,117,119,120,121,122,124,125,126,127,127,126,124,122,120,117,116,113,111,110,110,110,109,109,109,109,108,108,107,107,106,106,105,105],[104,104,105,105,105,105,105,104,104,103,104,104,105,105,105,106,107,108,108,108,109,110,112,114,115,118,121,122,121,123,128,131,129,130,131,131,132,132,131,130,128,126,122,119,115,114,112,110,110,110,110,110,109,109,108,107,107,107,106,106,105],[105,105,105,106,106,106,106,105,105,104,104,105,105,106,106,107,109,110,110,112,113,115,116,118,119,121,124,126,126,129,134,137,137,136,136,135,136,136,136,135,133,129,126,122,118,116,115,113,111,110,110,110,110,109,108,108,108,107,107,106,106],[105,106,106,107,107,107,107,106,106,105,105,106,106,107,108,109,111,113,114,116,118,120,121,122,123,125,127,129,130,135,140,142,142,142,141,140,140,140,140,139,137,134,129,125,121,118,116,114,112,110,110,110,111,110,109,109,108,108,107,107,106],[106,107,107,108,108,108,108,107,107,106,106,107,108,108,110,113,115,117,118,120,122,124,125,127,128,129,131,134,135,141,146,147,146,146,145,144,144,144,143,142,141,139,135,130,126,122,118,116,114,112,112,113,112,110,110,109,109,108,108,107,106],[107,108,108,109,109,109,109,108,108,107,108,108,110,111,113,116,118,120,123,125,127,129,130,132,134,135,137,139,142,146,152,152,151,151,150,149,148,148,146,145,143,142,139,135,131,127,122,119,117,115,115,115,114,112,110,110,109,109,108,107,107],[108,109,109,110,110,110,110,109,109,108,110,110,113,116,118,120,122,125,127,129,133,136,138,140,141,142,148,150,151,156,158,159,158,157,158,158,154,151,149,148,146,144,141,137,134,130,125,122,120,118,117,117,115,113,111,110,110,109,108,107,107],[109,110,110,111,111,111,111,110,110,110,112,114,118,121,123,125,127,129,133,137,141,143,145,146,148,150,154,156,159,161,162,163,164,163,164,164,160,157,154,151,149,146,144,140,137,133,129,126,124,121,119,118,116,114,112,111,110,109,108,107,106],[110,110,111,113,112,111,113,112,112,114,116,119,121,124,127,129,133,138,143,146,149,149,151,153,154,157,159,160,163,165,166,167,168,168,168,168,166,162,159,157,154,152,149,144,140,136,133,131,128,125,122,119,117,115,113,111,110,109,108,107,106],[110,111,113,115,114,113,114,114,115,117,119,121,124,126,129,133,140,145,150,154,155,155,157,159,161,162,164,165,167,168,169,170,172,174,172,172,171,169,166,163,161,158,153,148,143,140,137,134,131,128,125,120,118,116,114,112,110,109,108,107,105],[111,113,115,117,116,115,116,117,117,119,121,124,126,128,132,137,143,151,156,161,161,162,163,165,166,167,168,170,171,173,175,177,179,178,177,176,176,174,171,169,165,161,156,152,148,144,140,138,135,131,127,123,119,117,115,113,111,110,108,106,105],[114,115,117,117,117,118,119,119,120,121,124,126,128,131,137,143,150,156,160,163,165,168,170,171,172,173,174,175,177,179,180,182,183,183,183,183,180,178,177,172,168,164,160,156,152,148,144,141,138,134,130,126,121,117,114,112,110,110,108,106,104],[116,118,118,118,120,121,121,122,122,123,125,128,130,134,141,147,152,156,160,165,168,170,174,176,179,180,181,181,182,182,183,184,186,187,187,184,184,181,180,176,172,168,165,161,157,153,149,145,142,138,133,129,125,120,115,111,110,110,108,106,104],[118,120,120,121,122,123,124,124,125,126,127,129,132,135,142,149,153,157,161,166,170,174,178,180,182,183,184,184,185,186,186,187,189,189,189,189,189,186,182,179,175,171,168,165,162,157,152,149,145,141,137,131,125,120,116,111,110,110,108,106,104],[120,121,122,123,124,125,126,127,127,128,130,132,134,137,142,151,155,158,162,169,172,176,181,183,184,186,187,188,189,189,189,189,190,190,191,190,190,188,186,183,180,175,171,168,165,161,157,152,149,145,141,134,127,121,116,112,110,110,108,106,104],[120,122,125,126,126,127,128,129,130,130,132,134,136,139,145,152,157,160,167,172,175,178,181,185,186,188,190,191,192,193,193,192,192,191,192,191,191,190,190,187,184,181,177,172,169,165,161,156,152,147,143,139,131,123,119,115,111,110,108,106,105],[121,124,126,128,129,129,130,131,132,133,135,137,139,143,150,154,159,164,170,173,176,179,184,186,189,190,191,192,193,194,195,194,193,192,191,191,191,191,190,190,188,184,181,177,173,169,165,160,155,149,145,142,136,129,123,118,114,110,108,108,107],[122,125,127,130,130,131,133,134,135,136,137,140,143,147,154,158,162,166,171,174,177,181,186,189,190,190,191,192,191,191,190,189,188,189,190,190,191,190,190,190,189,186,184,181,177,173,169,164,158,152,148,144,140,134,125,118,115,111,110,108,107],[122,125,128,130,132,133,135,136,137,139,140,143,147,152,157,161,164,168,172,175,179,182,186,190,190,190,190,189,187,184,184,183,182,182,183,183,183,184,185,186,187,186,185,184,181,177,173,169,163,157,149,145,141,136,130,119,116,112,110,108,106],[123,126,129,131,133,135,137,138,139,141,143,147,150,156,161,164,167,170,173,177,181,184,187,188,190,189,187,185,183,179,176,174,174,174,174,174,176,177,179,180,182,183,182,181,181,180,176,171,166,160,152,147,142,138,133,126,121,115,110,106,105],[124,127,130,132,135,137,138,140,142,144,147,149,154,157,161,165,168,171,175,178,181,184,186,187,187,184,184,181,179,175,171,169,168,168,168,169,170,172,174,177,178,179,180,181,181,180,179,174,167,161,155,148,144,139,134,128,121,115,110,106,105],[123,128,131,133,136,138,140,142,144,146,149,151,154,157,160,164,168,172,175,178,181,183,184,184,185,183,180,177,174,170,167,165,164,164,164,165,166,168,171,175,176,178,180,181,180,180,179,177,170,163,157,150,144,139,134,128,121,115,110,108,107],[123,127,131,134,136,138,140,142,144,147,149,151,154,157,160,164,168,171,174,178,180,181,181,182,183,181,178,173,169,166,163,161,161,160,160,161,163,165,168,173,176,178,179,180,181,180,180,175,173,166,159,152,145,139,134,127,121,115,110,109,108],[120,124,128,131,134,137,139,142,144,146,149,151,153,156,160,163,167,171,174,178,180,180,180,180,180,180,175,171,167,162,160,158,157,157,157,158,159,162,166,170,175,177,178,180,181,181,180,178,175,169,160,154,148,140,134,128,121,115,110,110,109],[118,121,125,129,132,134,137,140,142,145,147,149,151,155,159,163,166,169,173,177,179,180,180,180,180,179,174,169,166,161,158,156,154,153,153,154,156,159,163,169,173,175,178,180,181,180,180,179,175,170,160,154,149,142,135,128,122,116,111,110,110],[117,120,121,125,129,132,135,138,140,143,145,147,149,153,157,160,163,166,171,174,177,179,180,180,180,179,172,168,164,160,157,154,151,149,150,150,154,158,164,169,174,178,180,180,180,180,178,177,175,170,161,153,148,142,135,129,123,116,113,112,110],[115,118,120,122,126,130,133,136,138,141,143,145,148,151,154,157,160,163,168,171,174,177,179,179,179,176,171,167,164,160,156,153,149,148,149,151,155,158,163,170,173,177,179,180,180,180,178,175,173,171,162,154,147,141,136,130,124,117,115,112,110],[114,116,118,120,122,127,131,133,136,138,141,143,146,148,151,154,157,160,164,168,171,174,178,178,179,177,173,169,165,161,157,154,151,149,150,152,155,159,166,171,175,177,179,180,180,179,176,174,171,168,159,151,146,141,135,129,124,119,116,113,110],[115,114,116,118,120,122,127,129,132,136,139,141,143,146,148,151,153,156,160,164,167,172,174,176,177,176,173,170,166,162,159,157,154,153,154,155,158,161,169,172,174,176,178,178,178,178,175,172,169,162,156,149,144,140,134,128,123,118,115,112,110],[113,113,114,116,118,120,122,125,129,133,136,138,141,143,146,149,150,153,156,160,165,170,173,176,176,176,173,172,169,165,163,160,158,157,158,159,161,166,170,170,173,175,176,178,176,173,171,168,164,158,153,146,140,137,132,127,121,117,113,111,110],[111,112,113,114,116,118,120,122,126,130,133,136,139,142,145,147,148,151,155,158,163,168,173,176,177,177,176,174,171,169,166,164,161,161,162,164,165,167,170,170,171,173,173,173,170,168,165,163,160,155,149,143,138,134,130,125,119,116,112,110,109],[110,112,113,113,114,116,118,120,123,127,131,134,137,141,143,145,148,150,154,157,161,166,171,176,178,178,178,176,174,172,170,167,167,167,166,168,170,169,168,167,168,168,168,168,167,165,163,160,156,152,146,140,136,131,128,122,118,114,110,110,109],[109,110,111,112,114,116,118,119,120,124,128,131,136,140,142,145,147,150,153,157,160,165,170,174,178,179,179,178,178,176,174,171,170,170,170,168,167,166,164,163,161,162,163,163,163,161,160,157,153,148,142,136,130,127,124,120,117,113,110,110,109],[108,109,111,112,114,116,117,118,120,121,125,128,132,138,142,144,147,149,153,156,160,164,170,174,178,180,180,179,179,178,176,172,170,170,170,168,166,164,162,160,157,156,157,158,158,156,153,151,149,144,139,130,127,124,121,118,115,112,110,110,109],[108,109,111,113,114,116,117,118,119,120,122,126,130,135,139,143,147,149,152,156,160,164,169,173,177,180,180,180,180,179,178,174,170,170,168,167,165,163,161,157,154,153,152,152,152,149,148,147,144,140,134,128,125,122,119,117,114,110,110,109,109],[107,108,111,112,114,115,116,117,119,120,121,124,128,133,137,141,145,149,152,156,160,164,168,172,176,179,180,180,180,179,178,174,170,168,166,165,163,161,158,154,150,149,148,146,145,143,143,143,140,136,130,126,123,120,118,115,112,110,110,109,109],[107,108,110,112,113,113,115,116,118,120,122,125,128,132,136,140,145,148,150,155,160,164,167,170,174,177,179,179,178,176,176,173,169,166,164,163,161,159,155,152,148,145,143,141,140,139,139,138,136,132,128,124,121,118,116,114,111,110,110,109,108],[107,108,109,111,113,114,116,117,119,120,122,125,128,132,137,141,144,146,149,152,157,162,166,168,171,173,175,175,173,172,172,171,168,165,162,160,158,156,153,149,145,142,139,138,137,136,135,133,131,129,126,122,119,117,114,112,110,110,109,108,107],[108,109,110,112,114,115,116,117,119,120,122,126,129,133,137,141,143,146,148,151,155,160,164,167,168,169,170,170,169,168,167,168,166,163,160,158,155,153,150,147,143,140,137,136,134,133,132,130,129,127,125,121,118,115,112,110,110,110,108,107,107],[109,110,111,113,115,116,117,118,120,121,123,126,129,133,138,141,143,146,148,150,155,159,163,165,166,167,168,168,166,165,164,161,160,159,158,155,152,149,147,144,141,138,135,134,132,130,129,128,126,124,122,120,117,113,111,110,110,110,108,107,107],[110,111,112,113,116,117,118,119,120,122,125,127,130,133,138,141,143,146,148,150,154,159,162,163,164,166,166,166,165,163,161,159,157,156,155,153,150,146,143,140,138,136,133,132,130,129,128,125,124,122,120,119,117,114,111,110,110,109,108,107,107],[111,112,113,114,116,117,118,119,120,123,125,128,130,134,139,141,144,146,148,151,154,158,161,164,166,167,168,166,165,163,161,158,156,154,152,150,146,142,139,137,135,133,131,130,129,128,127,125,123,121,120,118,116,113,111,110,110,109,108,107,106],[111,112,113,115,117,118,118,120,121,124,126,128,131,135,139,142,144,146,148,151,155,160,164,165,168,169,169,168,166,163,160,158,156,153,151,148,145,142,139,137,135,132,130,129,127,126,125,124,123,120,120,117,116,114,112,110,110,108,107,106,106],[112,113,114,116,117,118,119,120,122,124,127,129,132,135,139,142,144,146,149,152,157,162,167,169,170,170,170,168,165,163,161,159,157,155,151,148,145,141,139,136,134,132,130,128,127,126,124,123,122,120,119,117,116,114,112,111,109,107,106,106,105],[113,114,115,116,117,119,119,120,122,125,127,129,132,135,139,142,144,147,149,154,159,164,169,170,170,170,170,170,168,165,163,161,158,155,151,148,145,142,139,137,135,132,131,128,126,125,124,122,121,120,119,117,115,113,111,110,109,106,105,105,104],[113,114,115,117,118,119,120,121,123,125,127,130,132,135,139,142,145,148,150,156,161,166,170,170,170,170,170,170,169,166,163,161,159,155,151,148,146,143,140,138,135,134,132,130,127,125,123,121,120,120,119,116,114,112,110,110,108,106,105,104,104],[114,115,116,117,118,119,120,121,123,126,128,130,133,136,139,142,145,148,152,157,161,166,168,170,170,170,170,168,166,164,163,160,159,155,151,148,146,143,141,138,136,134,132,130,128,125,123,121,120,120,118,116,113,111,110,110,109,106,105,104,104],[115,116,117,118,119,120,121,121,123,126,128,131,134,136,139,142,145,149,152,157,161,163,164,166,168,167,166,164,163,161,160,158,156,152,149,147,144,143,141,139,136,134,132,130,128,125,122,120,120,119,117,115,113,110,110,109,107,106,105,104,104],[115,116,117,118,119,120,121,122,123,125,128,131,134,137,139,142,145,149,152,156,159,159,160,162,162,161,161,160,159,158,157,155,153,150,148,146,145,143,142,140,137,134,131,129,126,124,122,120,119,117,115,113,111,110,109,109,107,106,105,104,104],[114,115,116,116,118,119,120,121,122,126,129,132,135,137,140,143,146,149,152,155,156,157,158,159,159,159,158,158,157,155,153,151,150,149,147,146,145,144,142,141,138,135,132,128,125,122,120,118,117,115,113,112,110,109,108,108,106,105,105,104,104],[113,114,115,116,117,118,119,120,123,126,129,132,135,138,140,143,146,148,151,153,154,156,157,157,157,157,156,155,154,152,150,149,148,147,146,145,144,142,141,140,139,136,132,129,125,121,118,116,115,113,111,110,109,108,108,107,106,105,104,104,104],[112,113,114,115,116,117,119,120,122,126,130,133,136,138,141,143,146,148,150,152,154,155,155,155,155,155,154,152,152,150,148,147,146,145,145,143,142,141,140,140,140,137,133,129,125,120,117,115,111,110,110,109,108,107,107,106,105,105,104,104,103],[111,112,114,115,116,117,118,120,122,125,131,134,137,139,142,144,146,148,150,152,153,153,153,153,153,153,153,151,149,147,146,144,144,143,143,142,141,140,140,140,140,138,134,130,123,120,118,111,110,110,110,108,107,106,108,105,105,104,104,103,103],[111,112,113,115,115,116,117,119,121,126,131,135,138,140,142,144,146,148,150,151,151,151,151,151,151,151,151,150,148,146,144,142,141,141,142,141,140,140,140,140,140,140,136,132,126,120,115,110,110,110,109,107,106,105,107,105,104,104,104,103,103],[112,113,113,114,115,116,117,119,122,127,132,135,139,141,143,145,147,149,150,150,150,150,150,150,150,150,150,149,147,144,142,141,140,140,140,140,140,140,140,140,140,140,137,133,128,120,117,110,110,110,108,106,105,105,106,105,104,104,103,103,103],[112,113,114,114,116,117,118,120,122,128,132,136,139,141,144,146,147,149,150,150,150,150,150,150,150,150,150,149,146,143,141,140,140,139,139,139,140,140,140,140,140,140,137,133,129,121,118,110,110,109,107,106,105,105,105,104,104,103,103,103,102],[112,114,114,115,116,117,119,120,122,128,133,136,140,142,144,146,148,150,150,150,150,150,150,150,150,150,150,148,145,142,140,138,138,138,137,138,140,140,140,140,140,140,137,134,130,122,118,110,110,108,106,105,103,104,104,104,104,103,103,102,102],[113,114,115,116,116,117,118,120,123,129,133,137,140,142,144,146,149,150,150,150,150,150,150,150,150,150,150,147,143,141,139,137,136,136,135,136,138,140,140,140,140,139,136,134,130,123,119,113,109,108,106,104,103,104,104,104,103,103,102,102,101],[114,115,115,116,117,118,118,120,123,129,133,137,140,143,145,147,150,150,150,150,150,150,150,150,150,150,148,145,142,139,138,136,135,134,134,134,136,138,137,138,139,137,134,132,125,122,117,114,109,107,105,103,102,104,104,103,103,102,102,101,101],[114,115,116,117,117,119,118,120,123,128,132,136,139,142,145,148,150,150,150,150,150,150,150,150,150,150,147,144,141,139,136,135,134,133,132,132,134,134,134,134,135,133,131,128,124,120,116,113,110,107,104,102,102,103,103,103,102,102,102,101,100],[115,116,116,117,118,119,119,120,124,128,132,136,139,142,145,148,150,150,150,150,150,150,150,150,150,149,146,143,140,138,135,134,133,131,131,131,131,131,131,131,130,127,124,122,119,117,115,112,109,106,104,101,102,103,103,102,102,102,101,100,100],[115,116,117,118,118,119,120,123,125,128,131,135,138,141,145,148,150,150,150,150,150,150,150,150,150,147,145,142,139,137,134,132,131,130,129,128,128,128,128,128,126,123,121,119,116,114,112,110,108,105,103,101,103,103,103,102,102,101,100,100,100],[116,117,118,118,119,120,122,123,125,128,131,134,137,141,145,148,149,150,150,150,150,150,150,150,148,145,143,141,138,135,133,130,129,128,127,126,125,125,125,124,123,120,118,116,114,111,109,107,106,104,102,100,101,101,102,102,101,100,100,100,100],[116,117,118,119,120,121,123,124,126,128,130,133,137,140,144,145,147,148,149,150,149,149,147,146,144,141,139,136,133,131,129,128,127,126,125,124,123,123,122,121,120,118,116,114,112,108,107,105,103,102,100,100,100,100,101,101,100,100,100,100,100],[117,118,119,119,120,121,123,124,126,128,129,131,135,139,142,143,145,146,147,147,147,146,144,142,140,138,135,133,130,128,127,126,125,124,123,122,121,120,119,118,117,115,114,112,110,106,105,102,101,100,100,100,100,100,100,100,100,99,99,99,99],[117,118,119,120,120,121,123,124,125,126,128,129,132,137,140,142,143,143,144,144,144,143,141,139,137,135,133,130,128,127,126,125,123,122,121,120,119,117,116,115,114,112,111,108,107,105,100,100,100,100,100,100,100,99,99,99,99,99,99,99,98],[116,117,118,120,120,121,122,123,124,125,126,128,130,134,139,140,141,141,141,141,141,140,138,136,134,133,131,129,127,125,124,123,122,120,119,118,117,116,114,112,111,108,109,106,106,100,100,100,100,100,99,99,99,99,99,99,99,98,98,98,97],[114,115,116,117,119,119,120,121,122,123,125,127,129,133,136,134,134,136,138,138,137,137,135,133,132,130,129,127,125,124,122,121,120,119,117,116,115,114,112,110,109,108,107,105,105,100,100,100,100,99,99,99,98,98,98,98,98,97,97,97,97],[112,113,114,115,116,116,117,119,120,122,124,126,127,129,129,128,127,129,132,133,133,133,133,131,129,127,126,125,124,122,121,119,118,117,116,114,113,112,110,109,108,106,106,105,100,100,100,98,98,98,98,98,98,97,97,97,97,97,97,97,96],[109,111,112,112,113,113,113,114,116,119,121,123,124,125,124,123,123,123,125,127,129,129,128,128,127,125,124,123,122,121,119,118,117,116,114,113,112,110,109,108,107,106,105,100,100,100,97,97,97,97,97,97,97,96,96,96,96,96,96,96,96],[106,107,108,108,109,110,110,112,113,114,117,119,120,121,119,117,117,117,118,120,123,124,125,125,125,123,121,120,120,119,118,117,116,115,114,113,111,109,109,107,106,105,100,100,100,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96],[104,105,105,106,106,107,108,108,109,109,111,115,116,114,113,112,111,110,111,113,116,119,122,122,122,121,120,119,118,118,117,116,115,114,113,112,111,108,108,106,105,100,100,100,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96],[102,103,103,104,104,105,106,106,107,108,109,111,112,110,109,108,108,108,108,109,110,112,116,117,117,118,118,118,117,116,116,115,114,113,112,111,110,107,107,105,100,100,100,97,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96],[101,102,103,103,104,105,105,106,106,107,108,109,109,107,106,106,105,105,105,106,107,108,109,110,111,113,114,115,115,115,114,113,112,111,110,108,108,106,105,100,100,100,97,97,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96],[100,101,102,102,103,103,104,104,105,106,106,107,106,106,106,105,105,104,103,103,104,105,107,108,110,111,111,112,112,113,113,112,111,110,108,107,106,105,100,100,100,98,97,97,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96],[100,101,101,102,102,103,103,104,104,105,105,105,105,106,105,105,104,103,102,101,102,103,104,106,107,110,111,111,111,112,112,112,110,107,107,106,105,102,100,100,99,98,97,97,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,95],[99,100,101,102,102,103,103,103,104,104,104,104,103,104,104,104,104,102,101,101,102,103,104,105,107,110,111,111,111,111,111,111,108,106,105,105,102,101,100,99,99,98,97,97,96,96,96,96,96,96,96,96,96,96,96,96,96,96,96,95,95],[99,100,100,101,101,102,102,102,103,103,103,103,102,103,103,104,103,102,101,101,101,102,103,104,106,109,110,111,111,111,110,110,107,105,103,104,100,100,99,99,98,98,97,97,96,96,96,96,96,96,96,96,96,96,95,95,95,95,95,95,95],[99,100,100,100,101,101,101,102,102,103,102,102,101,102,102,103,103,101,101,100,101,101,102,103,105,109,110,110,111,110,110,109,106,105,100,102,100,99,99,99,98,98,97,97,96,96,96,96,96,96,95,95,95,95,95,95,95,95,95,95,94],[99,99,99,99,100,100,101,101,102,102,101,101,101,101,101,102,102,101,100,100,101,101,101,103,104,107,109,109,110,110,109,108,105,102,100,100,99,99,99,98,98,98,97,96,96,96,96,96,95,95,95,95,95,95,95,94,94,94,94,94,94],[98,99,99,99,99,100,100,101,101,102,101,100,100,100,101,101,101,100,100,100,100,101,101,101,103,106,107,109,109,109,109,107,104,101,100,99,99,99,98,98,98,97,96,96,96,96,95,95,95,95,95,95,95,94,94,94,94,94,94,94,94],[98,98,98,99,99,99,100,100,101,101,100,100,99,99,100,100,100,100,100,100,100,101,101,101,102,105,106,109,108,109,107,105,102,100,100,99,99,98,98,98,97,96,96,96,96,95,95,95,95,95,95,94,94,94,94,94,94,94,94,94,94],[97,98,98,98,99,99,99,100,100,100,100,100,99,99,99,100,100,100,100,100,100,100,101,101,101,103,104,105,106,105,104,101,100,100,99,99,98,98,97,97,97,96,96,96,95,95,95,95,95,94,94,94,94,94,94,94,94,94,94,94,94],[97,97,97,98,98,99,99,99,100,100,100,99,99,99,99,99,100,100,100,100,100,100,101,101,100,100,100,100,100,100,100,100,100,100,99,99,98,97,97,97,96,96,96,95,95,95,95,94,94,94,94,94,94,94,94,94,94,94,94,94,94]],"type":"surface","contours":{"z":{"show":true,"usecolormap":true,"highlightcolor":"#ff0000","project":{"z":true}}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<ol start="2" style="list-style-type: decimal">
+<li><p>基于ggplot</p>
+<ul>
+<li>直接用<code>ggplot()</code>绘图，再利用<code>ggplotly()</code>函数转化为plotly对象，之后可根据需要继续使用管道符来添加细节</li>
+<li>注意，部分<code>ggplot</code>元素无法转化为plotly对象</li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="shiny_6.html#cb201-1" tabindex="-1"></a>fig <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>iris)<span class="sc">+</span></span>
+<span id="cb201-2"><a href="shiny_6.html#cb201-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">y=</span>Sepal.Width, <span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb201-3"><a href="shiny_6.html#cb201-3" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb201-4"><a href="shiny_6.html#cb201-4" tabindex="-1"></a><span class="fu">ggplotly</span>(fig)</span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-0e22c016782a8243ed8c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0e22c016782a8243ed8c">{"x":{"data":[{"x":[5.0999999999999996,4.9000000000000004,4.7000000000000002,4.5999999999999996,5,5.4000000000000004,4.5999999999999996,5,4.4000000000000004,4.9000000000000004,5.4000000000000004,4.7999999999999998,4.7999999999999998,4.2999999999999998,5.7999999999999998,5.7000000000000002,5.4000000000000004,5.0999999999999996,5.7000000000000002,5.0999999999999996,5.4000000000000004,5.0999999999999996,4.5999999999999996,5.0999999999999996,4.7999999999999998,5,5,5.2000000000000002,5.2000000000000002,4.7000000000000002,4.7999999999999998,5.4000000000000004,5.2000000000000002,5.5,4.9000000000000004,5,5.5,4.9000000000000004,4.4000000000000004,5.0999999999999996,5,4.5,4.4000000000000004,5,5.0999999999999996,4.7999999999999998,5.0999999999999996,4.5999999999999996,5.2999999999999998,5],"y":[3.5,3,3.2000000000000002,3.1000000000000001,3.6000000000000001,3.8999999999999999,3.3999999999999999,3.3999999999999999,2.8999999999999999,3.1000000000000001,3.7000000000000002,3.3999999999999999,3,3,4,4.4000000000000004,3.8999999999999999,3.5,3.7999999999999998,3.7999999999999998,3.3999999999999999,3.7000000000000002,3.6000000000000001,3.2999999999999998,3.3999999999999999,3,3.3999999999999999,3.5,3.3999999999999999,3.2000000000000002,3.1000000000000001,3.3999999999999999,4.0999999999999996,4.2000000000000002,3.1000000000000001,3.2000000000000002,3.5,3.6000000000000001,3,3.3999999999999999,3.5,2.2999999999999998,3.2000000000000002,3.5,3.7999999999999998,3,3.7999999999999998,3.2000000000000002,3.7000000000000002,3.2999999999999998],"text":["Sepal.Length: 5.1<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 4.7<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.6<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.9<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 4.4<br />Sepal.Width: 2.9<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.7<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 4.3<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.8<br />Sepal.Width: 4.0<br />Species: setosa","Sepal.Length: 5.7<br />Sepal.Width: 4.4<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.9<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 5.7<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.7<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.6<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.3<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.2<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 5.2<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 4.7<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.4<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.2<br />Sepal.Width: 4.1<br />Species: setosa","Sepal.Length: 5.5<br />Sepal.Width: 4.2<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.1<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 5.5<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 4.9<br />Sepal.Width: 3.6<br />Species: setosa","Sepal.Length: 4.4<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.4<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 4.5<br />Sepal.Width: 2.3<br />Species: setosa","Sepal.Length: 4.4<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.5<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 4.8<br />Sepal.Width: 3.0<br />Species: setosa","Sepal.Length: 5.1<br />Sepal.Width: 3.8<br />Species: setosa","Sepal.Length: 4.6<br />Sepal.Width: 3.2<br />Species: setosa","Sepal.Length: 5.3<br />Sepal.Width: 3.7<br />Species: setosa","Sepal.Length: 5.0<br />Sepal.Width: 3.3<br />Species: setosa"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"setosa","legendgroup":"setosa","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[7,6.4000000000000004,6.9000000000000004,5.5,6.5,5.7000000000000002,6.2999999999999998,4.9000000000000004,6.5999999999999996,5.2000000000000002,5,5.9000000000000004,6,6.0999999999999996,5.5999999999999996,6.7000000000000002,5.5999999999999996,5.7999999999999998,6.2000000000000002,5.5999999999999996,5.9000000000000004,6.0999999999999996,6.2999999999999998,6.0999999999999996,6.4000000000000004,6.5999999999999996,6.7999999999999998,6.7000000000000002,6,5.7000000000000002,5.5,5.5,5.7999999999999998,6,5.4000000000000004,6,6.7000000000000002,6.2999999999999998,5.5999999999999996,5.5,5.5,6.0999999999999996,5.7999999999999998,5,5.5999999999999996,5.7000000000000002,5.7000000000000002,6.2000000000000002,5.0999999999999996,5.7000000000000002],"y":[3.2000000000000002,3.2000000000000002,3.1000000000000001,2.2999999999999998,2.7999999999999998,2.7999999999999998,3.2999999999999998,2.3999999999999999,2.8999999999999999,2.7000000000000002,2,3,2.2000000000000002,2.8999999999999999,2.8999999999999999,3.1000000000000001,3,2.7000000000000002,2.2000000000000002,2.5,3.2000000000000002,2.7999999999999998,2.5,2.7999999999999998,2.8999999999999999,3,2.7999999999999998,3,2.8999999999999999,2.6000000000000001,2.3999999999999999,2.3999999999999999,2.7000000000000002,2.7000000000000002,3,3.3999999999999999,3.1000000000000001,2.2999999999999998,3,2.5,2.6000000000000001,3,2.6000000000000001,2.2999999999999998,2.7000000000000002,3,2.8999999999999999,2.8999999999999999,2.5,2.7999999999999998],"text":["Sepal.Length: 7.0<br />Sepal.Width: 3.2<br />Species: versicolor","Sepal.Length: 6.4<br />Sepal.Width: 3.2<br />Species: versicolor","Sepal.Length: 6.9<br />Sepal.Width: 3.1<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.3<br />Species: versicolor","Sepal.Length: 6.5<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.3<br />Sepal.Width: 3.3<br />Species: versicolor","Sepal.Length: 4.9<br />Sepal.Width: 2.4<br />Species: versicolor","Sepal.Length: 6.6<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.2<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 5.0<br />Sepal.Width: 2.0<br />Species: versicolor","Sepal.Length: 5.9<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 2.2<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 6.7<br />Sepal.Width: 3.1<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 6.2<br />Sepal.Width: 2.2<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 5.9<br />Sepal.Width: 3.2<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.3<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.4<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 6.6<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.8<br />Sepal.Width: 2.8<br />Species: versicolor","Sepal.Length: 6.7<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.6<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.4<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.4<br />Species: versicolor","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 5.4<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 6.0<br />Sepal.Width: 3.4<br />Species: versicolor","Sepal.Length: 6.7<br />Sepal.Width: 3.1<br />Species: versicolor","Sepal.Length: 6.3<br />Sepal.Width: 2.3<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 5.5<br />Sepal.Width: 2.6<br />Species: versicolor","Sepal.Length: 6.1<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.8<br />Sepal.Width: 2.6<br />Species: versicolor","Sepal.Length: 5.0<br />Sepal.Width: 2.3<br />Species: versicolor","Sepal.Length: 5.6<br />Sepal.Width: 2.7<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 3.0<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 6.2<br />Sepal.Width: 2.9<br />Species: versicolor","Sepal.Length: 5.1<br />Sepal.Width: 2.5<br />Species: versicolor","Sepal.Length: 5.7<br />Sepal.Width: 2.8<br />Species: versicolor"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,186,56,1)"}},"hoveron":"points","name":"versicolor","legendgroup":"versicolor","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[6.2999999999999998,5.7999999999999998,7.0999999999999996,6.2999999999999998,6.5,7.5999999999999996,4.9000000000000004,7.2999999999999998,6.7000000000000002,7.2000000000000002,6.5,6.4000000000000004,6.7999999999999998,5.7000000000000002,5.7999999999999998,6.4000000000000004,6.5,7.7000000000000002,7.7000000000000002,6,6.9000000000000004,5.5999999999999996,7.7000000000000002,6.2999999999999998,6.7000000000000002,7.2000000000000002,6.2000000000000002,6.0999999999999996,6.4000000000000004,7.2000000000000002,7.4000000000000004,7.9000000000000004,6.4000000000000004,6.2999999999999998,6.0999999999999996,7.7000000000000002,6.2999999999999998,6.4000000000000004,6,6.9000000000000004,6.7000000000000002,6.9000000000000004,5.7999999999999998,6.7999999999999998,6.7000000000000002,6.7000000000000002,6.2999999999999998,6.5,6.2000000000000002,5.9000000000000004],"y":[3.2999999999999998,2.7000000000000002,3,2.8999999999999999,3,3,2.5,2.8999999999999999,2.5,3.6000000000000001,3.2000000000000002,2.7000000000000002,3,2.5,2.7999999999999998,3.2000000000000002,3,3.7999999999999998,2.6000000000000001,2.2000000000000002,3.2000000000000002,2.7999999999999998,2.7999999999999998,2.7000000000000002,3.2999999999999998,3.2000000000000002,2.7999999999999998,3,2.7999999999999998,3,2.7999999999999998,3.7999999999999998,2.7999999999999998,2.7999999999999998,2.6000000000000001,3,3.3999999999999999,3.1000000000000001,3,3.1000000000000001,3.1000000000000001,3.1000000000000001,2.7000000000000002,3.2000000000000002,3.2999999999999998,3,2.5,3,3.3999999999999999,3],"text":["Sepal.Length: 6.3<br />Sepal.Width: 3.3<br />Species: virginica","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 7.1<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.9<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 7.6<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 4.9<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 7.3<br />Sepal.Width: 2.9<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 7.2<br />Sepal.Width: 3.6<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 6.8<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 5.7<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 5.8<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 3.8<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 2.6<br />Species: virginica","Sepal.Length: 6.0<br />Sepal.Width: 2.2<br />Species: virginica","Sepal.Length: 6.9<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 5.6<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.3<br />Species: virginica","Sepal.Length: 7.2<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.2<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.1<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 7.2<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 7.4<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 7.9<br />Sepal.Width: 3.8<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.8<br />Species: virginica","Sepal.Length: 6.1<br />Sepal.Width: 2.6<br />Species: virginica","Sepal.Length: 7.7<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 3.4<br />Species: virginica","Sepal.Length: 6.4<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 6.0<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.9<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 6.9<br />Sepal.Width: 3.1<br />Species: virginica","Sepal.Length: 5.8<br />Sepal.Width: 2.7<br />Species: virginica","Sepal.Length: 6.8<br />Sepal.Width: 3.2<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.3<br />Species: virginica","Sepal.Length: 6.7<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.3<br />Sepal.Width: 2.5<br />Species: virginica","Sepal.Length: 6.5<br />Sepal.Width: 3.0<br />Species: virginica","Sepal.Length: 6.2<br />Sepal.Width: 3.4<br />Species: virginica","Sepal.Length: 5.9<br />Sepal.Width: 3.0<br />Species: virginica"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(97,156,255,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(97,156,255,1)"}},"hoveron":"points","name":"virginica","legendgroup":"virginica","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283104,"r":7.3059360730593621,"b":40.182648401826491,"l":43.105022831050235},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[4.1200000000000001,8.0800000000000001],"tickmode":"array","ticktext":["5","6","7","8"],"tickvals":[5,6,7,8],"categoryorder":"array","categoryarray":["5","6","7","8"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Sepal.Length","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1.8799999999999999,4.5200000000000005],"tickmode":"array","ticktext":["2.0","2.5","3.0","3.5","4.0","4.5"],"tickvals":[2,2.5,3,3.5,4,4.5],"categoryorder":"array","categoryarray":["2.0","2.5","3.0","3.5","4.0","4.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Sepal.Width","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Species","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"99585abb64c":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"99585abb64c","visdat":{"99585abb64c":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="shiny_6_2" class="section level3 hasAnchor" number="5.6.2">
+<h3><span class="header-section-number">5.6.2</span> 插入图像<a href="shiny_6.html#shiny_6_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>使用<code>renderImage()</code>来渲染图片。该渲染函数需要一个提供了图像信息的列表。</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="shiny_6.html#cb202-1" tabindex="-1"></a>output<span class="sc">$</span>photo <span class="ot">&lt;-</span> <span class="fu">renderImage</span>({</span>
+<span id="cb202-2"><a href="shiny_6.html#cb202-2" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb202-3"><a href="shiny_6.html#cb202-3" tabindex="-1"></a>      <span class="at">src =</span> <span class="fu">file.path</span>(<span class="st">&quot;puppy-photos&quot;</span>, <span class="fu">paste0</span>(input<span class="sc">$</span>id, <span class="st">&quot;.jpg&quot;</span>)),</span>
+<span id="cb202-4"><a href="shiny_6.html#cb202-4" tabindex="-1"></a>      <span class="at">contentType =</span> <span class="st">&quot;image/jpeg&quot;</span>,</span>
+<span id="cb202-5"><a href="shiny_6.html#cb202-5" tabindex="-1"></a>      <span class="at">width =</span> <span class="dv">500</span>,</span>
+<span id="cb202-6"><a href="shiny_6.html#cb202-6" tabindex="-1"></a>      <span class="at">height =</span> <span class="dv">650</span></span>
+<span id="cb202-7"><a href="shiny_6.html#cb202-7" tabindex="-1"></a>    )</span>
+<span id="cb202-8"><a href="shiny_6.html#cb202-8" tabindex="-1"></a>  }, <span class="at">deleteFile =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>参数<code>src</code>指向存储了图像的本地路径；<code>contentType</code>表示图像格式，若已经提供了图像后缀名则会自动识别；由于<code>renderImage()</code>一开始的设计初衷是为了处理临时性文件，因此在渲染后会自动删除图像，因此需声明<code>deleteFile=FALSE</code>来保留图像。</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="shiny_5.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="shiny_7.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "toc_depth": 3
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

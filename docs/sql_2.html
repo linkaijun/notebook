@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.2 MySQL必知必会 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.2 MySQL必知必会 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.2 MySQL必知必会 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sql_1.html"/>
+<link rel="next" href="spider.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="content.html"><a href="content.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>个人简介</a></li>
+<li class="part"><span><b>I 专项</b></span></li>
+<li class="chapter" data-level="1" data-path="rmd.html"><a href="rmd.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rmd_1.html"><a href="rmd_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="rmd_2.html"><a href="rmd_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="1.3" data-path="rmd_3.html"><a href="rmd_3.html"><i class="fa fa-check"></i><b>1.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 标题</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 换行</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_4"><i class="fa fa-check"></i><b>1.3.4</b> 链接</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_5"><i class="fa fa-check"></i><b>1.3.5</b> 引用</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_6"><i class="fa fa-check"></i><b>1.3.6</b> 列表</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_7"><i class="fa fa-check"></i><b>1.3.7</b> 代码</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_8"><i class="fa fa-check"></i><b>1.3.8</b> 表格</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_9"><i class="fa fa-check"></i><b>1.3.9</b> 图片</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_10"><i class="fa fa-check"></i><b>1.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rmd_4.html"><a href="rmd_4.html"><i class="fa fa-check"></i><b>1.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_2"><i class="fa fa-check"></i><b>1.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_4"><i class="fa fa-check"></i><b>1.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_5"><i class="fa fa-check"></i><b>1.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="1.4.6" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_6"><i class="fa fa-check"></i><b>1.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="1.4.7" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_7"><i class="fa fa-check"></i><b>1.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="1.4.8" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_8"><i class="fa fa-check"></i><b>1.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="1.4.9" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_9"><i class="fa fa-check"></i><b>1.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="1.4.10" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_10"><i class="fa fa-check"></i><b>1.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="1.4.11" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_11"><i class="fa fa-check"></i><b>1.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="1.4.12" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_12"><i class="fa fa-check"></i><b>1.4.12</b> 注释</a></li>
+<li class="chapter" data-level="1.4.13" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_13"><i class="fa fa-check"></i><b>1.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="1.4.14" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_14"><i class="fa fa-check"></i><b>1.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rmd_5.html"><a href="rmd_5.html"><i class="fa fa-check"></i><b>1.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_1"><i class="fa fa-check"></i><b>1.5.1</b> 标签</a></li>
+<li class="chapter" data-level="1.5.2" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_2"><i class="fa fa-check"></i><b>1.5.2</b> 目录</a></li>
+<li class="chapter" data-level="1.5.3" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_3"><i class="fa fa-check"></i><b>1.5.3</b> 外观</a></li>
+<li class="chapter" data-level="1.5.4" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_4"><i class="fa fa-check"></i><b>1.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="1.5.5" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_5"><i class="fa fa-check"></i><b>1.5.5</b> 表格</a></li>
+<li class="chapter" data-level="1.5.6" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_6"><i class="fa fa-check"></i><b>1.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="1.5.7" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_7"><i class="fa fa-check"></i><b>1.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="1.5.8" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_8"><i class="fa fa-check"></i><b>1.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="1.5.9" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_9"><i class="fa fa-check"></i><b>1.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="1.5.10" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_10"><i class="fa fa-check"></i><b>1.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rmd_6.html"><a href="rmd_6.html"><i class="fa fa-check"></i><b>1.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_1"><i class="fa fa-check"></i><b>1.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="1.6.2" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_2"><i class="fa fa-check"></i><b>1.6.2</b> 目录</a></li>
+<li class="chapter" data-level="1.6.3" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_3"><i class="fa fa-check"></i><b>1.6.3</b> 图与表</a></li>
+<li class="chapter" data-level="1.6.4" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_4"><i class="fa fa-check"></i><b>1.6.4</b> 语法高亮</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manim.html"><a href="manim.html"><i class="fa fa-check"></i><b>2</b> Manim</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manim_1.html"><a href="manim_1.html"><i class="fa fa-check"></i><b>2.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="2.2" data-path="manim_2.html"><a href="manim_2.html"><i class="fa fa-check"></i><b>2.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="2.3" data-path="manim_3.html"><a href="manim_3.html"><i class="fa fa-check"></i><b>2.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="manim_3.html"><a href="manim_3.html#manim_3_1"><i class="fa fa-check"></i><b>2.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="2.3.2" data-path="manim_3.html"><a href="manim_3.html#manim_3_2"><i class="fa fa-check"></i><b>2.3.2</b> 片段</a></li>
+<li class="chapter" data-level="2.3.3" data-path="manim_3.html"><a href="manim_3.html#manim_3_3"><i class="fa fa-check"></i><b>2.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="manim_4.html"><a href="manim_4.html"><i class="fa fa-check"></i><b>2.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="manim_4.html"><a href="manim_4.html#manim_4_1"><i class="fa fa-check"></i><b>2.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="manim_4.html"><a href="manim_4.html#manim_4_2"><i class="fa fa-check"></i><b>2.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="2.4.3" data-path="manim_4.html"><a href="manim_4.html#manim_4_3"><i class="fa fa-check"></i><b>2.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="manim_5.html"><a href="manim_5.html"><i class="fa fa-check"></i><b>2.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manim_5.html"><a href="manim_5.html#manim_5_1"><i class="fa fa-check"></i><b>2.5.1</b> Text</a></li>
+<li class="chapter" data-level="2.5.2" data-path="manim_5.html"><a href="manim_5.html#manim_5_2"><i class="fa fa-check"></i><b>2.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="2.5.3" data-path="manim_5.html"><a href="manim_5.html#manim_5_3"><i class="fa fa-check"></i><b>2.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="2.5.4" data-path="manim_5.html"><a href="manim_5.html#manim_5_4"><i class="fa fa-check"></i><b>2.5.4</b> Tex</a></li>
+<li class="chapter" data-level="2.5.5" data-path="manim_5.html"><a href="manim_5.html#manim_5_5"><i class="fa fa-check"></i><b>2.5.5</b> MathTex</a></li>
+<li class="chapter" data-level="2.5.6" data-path="manim_5.html"><a href="manim_5.html#manim_5_6"><i class="fa fa-check"></i><b>2.5.6</b> Title</a></li>
+<li class="chapter" data-level="2.5.7" data-path="manim_5.html"><a href="manim_5.html#manim_5_7"><i class="fa fa-check"></i><b>2.5.7</b> BulletedList</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manim_6.html"><a href="manim_6.html"><i class="fa fa-check"></i><b>2.6</b> 内置颜色</a></li>
+<li class="chapter" data-level="2.7" data-path="manim_7.html"><a href="manim_7.html"><i class="fa fa-check"></i><b>2.7</b> 物体的位置与移动</a></li>
+<li class="chapter" data-level="2.8" data-path="manim_8.html"><a href="manim_8.html"><i class="fa fa-check"></i><b>2.8</b> 动画</a></li>
+<li class="chapter" data-level="2.9" data-path="manim_9.html"><a href="manim_9.html"><i class="fa fa-check"></i><b>2.9</b> 镜头视角</a></li>
+<li class="chapter" data-level="2.10" data-path="manim_10.html"><a href="manim_10.html"><i class="fa fa-check"></i><b>2.10</b> 存储对象</a></li>
+<li class="chapter" data-level="2.11" data-path="manim_11.html"><a href="manim_11.html"><i class="fa fa-check"></i><b>2.11</b> 成品</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
+<li class="chapter" data-level="3.2.2" data-path="sql_2.html"><a href="sql_2.html#sql_2_2"><i class="fa fa-check"></i><b>3.2.2</b> 选择数据库与表</a></li>
+<li class="chapter" data-level="3.2.3" data-path="sql_2.html"><a href="sql_2.html#sql_2_3"><i class="fa fa-check"></i><b>3.2.3</b> 检索数据</a></li>
+<li class="chapter" data-level="3.2.4" data-path="sql_2.html"><a href="sql_2.html#sql_2_4"><i class="fa fa-check"></i><b>3.2.4</b> 排序检索数据</a></li>
+<li class="chapter" data-level="3.2.5" data-path="sql_2.html"><a href="sql_2.html#sql_2_5"><i class="fa fa-check"></i><b>3.2.5</b> 过滤数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="sql_2.html"><a href="sql_2.html#sql_2_6"><i class="fa fa-check"></i><b>3.2.6</b> 计算字段</a></li>
+<li class="chapter" data-level="3.2.7" data-path="sql_2.html"><a href="sql_2.html#sql_2_7"><i class="fa fa-check"></i><b>3.2.7</b> 函数</a></li>
+<li class="chapter" data-level="3.2.8" data-path="sql_2.html"><a href="sql_2.html#sql_2_8"><i class="fa fa-check"></i><b>3.2.8</b> 汇总数据</a></li>
+<li class="chapter" data-level="3.2.9" data-path="sql_2.html"><a href="sql_2.html#sql_2_9"><i class="fa fa-check"></i><b>3.2.9</b> 数据分组</a></li>
+<li class="chapter" data-level="3.2.10" data-path="sql_2.html"><a href="sql_2.html#sql_2_10"><i class="fa fa-check"></i><b>3.2.10</b> 子查询</a></li>
+<li class="chapter" data-level="3.2.11" data-path="sql_2.html"><a href="sql_2.html#sql_2_11"><i class="fa fa-check"></i><b>3.2.11</b> 表联结</a></li>
+<li class="chapter" data-level="3.2.12" data-path="sql_2.html"><a href="sql_2.html#sql_2_12"><i class="fa fa-check"></i><b>3.2.12</b> 组合查询</a></li>
+<li class="chapter" data-level="3.2.13" data-path="sql_2.html"><a href="sql_2.html#sql_2_13"><i class="fa fa-check"></i><b>3.2.13</b> 全文本搜索</a></li>
+<li class="chapter" data-level="3.2.14" data-path="sql_2.html"><a href="sql_2.html#sql_2_14"><i class="fa fa-check"></i><b>3.2.14</b> 插入数据</a></li>
+<li class="chapter" data-level="3.2.15" data-path="sql_2.html"><a href="sql_2.html#sql_2_15"><i class="fa fa-check"></i><b>3.2.15</b> 更新数据</a></li>
+<li class="chapter" data-level="3.2.16" data-path="sql_2.html"><a href="sql_2.html#sql_2_16"><i class="fa fa-check"></i><b>3.2.16</b> 表的操作</a></li>
+<li class="chapter" data-level="3.2.17" data-path="sql_2.html"><a href="sql_2.html#sql_2_17"><i class="fa fa-check"></i><b>3.2.17</b> 使用视图</a></li>
+<li class="chapter" data-level="3.2.18" data-path="sql_2.html"><a href="sql_2.html#sql_2_18"><i class="fa fa-check"></i><b>3.2.18</b> 使用存储过程</a></li>
+<li class="chapter" data-level="3.2.19" data-path="sql_2.html"><a href="sql_2.html#sql_2_19"><i class="fa fa-check"></i><b>3.2.19</b> 触发器</a></li>
+<li class="chapter" data-level="3.2.20" data-path="sql_2.html"><a href="sql_2.html#sql_2_20"><i class="fa fa-check"></i><b>3.2.20</b> 事务处理</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spider_1.html"><a href="spider_1.html"><i class="fa fa-check"></i><b>4.1</b> 提要</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>5</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="shiny_1.html"><a href="shiny_1.html"><i class="fa fa-check"></i><b>5.1</b> 初始Shiny</a></li>
+<li class="chapter" data-level="5.2" data-path="shiny_2.html"><a href="shiny_2.html"><i class="fa fa-check"></i><b>5.2</b> UI设计</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 输入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 输出</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="shiny_3.html"><a href="shiny_3.html"><i class="fa fa-check"></i><b>5.3</b> 反应式编程</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 服务端</a></li>
+<li class="chapter" data-level="5.3.2" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 反应表达式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_3"><i class="fa fa-check"></i><b>5.3.3</b> 控制更新</a></li>
+<li class="chapter" data-level="5.3.4" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_4"><i class="fa fa-check"></i><b>5.3.4</b> 信息反馈</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="shiny_4.html"><a href="shiny_4.html"><i class="fa fa-check"></i><b>5.4</b> 页面布局</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_1"><i class="fa fa-check"></i><b>5.4.1</b> 页面函数</a></li>
+<li class="chapter" data-level="5.4.2" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2"><i class="fa fa-check"></i><b>5.4.2</b> 布局函数</a></li>
+<li class="chapter" data-level="5.4.3" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2_3"><i class="fa fa-check"></i><b>5.4.3</b> bslib风格布局</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="shiny_5.html"><a href="shiny_5.html"><i class="fa fa-check"></i><b>5.5</b> 主题</a></li>
+<li class="chapter" data-level="5.6" data-path="shiny_6.html"><a href="shiny_6.html"><i class="fa fa-check"></i><b>5.6</b> 交互式图像与插入图像</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_1"><i class="fa fa-check"></i><b>5.6.1</b> 交互式图像</a></li>
+<li class="chapter" data-level="5.6.2" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_2"><i class="fa fa-check"></i><b>5.6.2</b> 插入图像</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="shiny_7.html"><a href="shiny_7.html"><i class="fa fa-check"></i><b>5.7</b> 用户反馈</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_1"><i class="fa fa-check"></i><b>5.7.1</b> 验证</a></li>
+<li class="chapter" data-level="5.7.2" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_2"><i class="fa fa-check"></i><b>5.7.2</b> 通知</a></li>
+<li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
+<li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
+<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
+<li class="chapter" data-level="5.10.2" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 外观</a></li>
+<li class="chapter" data-level="5.10.3" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_3"><i class="fa fa-check"></i><b>5.10.3</b> 案例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="langchain.html"><a href="langchain.html"><i class="fa fa-check"></i><b>6</b> Langchain</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="langchain_x.html"><a href="langchain_x.html"><i class="fa fa-check"></i><b>6.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="langchain_x.html"><a href="langchain_x.html#langchain_x_1"><i class="fa fa-check"></i><b>6.1.1</b> NL2SQL</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 模型与方法</b></span></li>
+<li class="chapter" data-level="7" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>7</b> 应用回归分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg_1.html"><a href="reg_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="reg_1.html"><a href="reg_1.html#reg_1_1"><i class="fa fa-check"></i><b>7.1.1</b> 变量间的相关关系</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reg_1.html"><a href="reg_1.html#reg_1_2"><i class="fa fa-check"></i><b>7.1.2</b> 回归模型的一般形式</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="reg_2.html"><a href="reg_2.html"><i class="fa fa-check"></i><b>7.2</b> 假定</a></li>
+<li class="chapter" data-level="7.3" data-path="reg_3.html"><a href="reg_3.html"><i class="fa fa-check"></i><b>7.3</b> 线性回归模型</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="reg_3.html"><a href="reg_3.html#reg_3_1"><i class="fa fa-check"></i><b>7.3.1</b> 一元线性回归模型</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg_3.html"><a href="reg_3.html#reg_3_2"><i class="fa fa-check"></i><b>7.3.2</b> 多元线性回归模型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="reg_4.html"><a href="reg_4.html"><i class="fa fa-check"></i><b>7.4</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>7.4.1</b> 最小二乘估计</a></li>
+<li class="chapter" data-level="7.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>7.4.2</b> 极大似然估计</a></li>
+<li class="chapter" data-level="7.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>7.4.3</b> 矩估计</a></li>
+<li class="chapter" data-level="7.4.4" data-path="reg_4.html"><a href="reg_4.html#reg_4_4"><i class="fa fa-check"></i><b>7.4.4</b> 几何视角</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="reg_5.html"><a href="reg_5.html"><i class="fa fa-check"></i><b>7.5</b> 最小二乘估计的性质</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="reg_5.html"><a href="reg_5.html#reg_5_1"><i class="fa fa-check"></i><b>7.5.1</b> 线性</a></li>
+<li class="chapter" data-level="7.5.2" data-path="reg_5.html"><a href="reg_5.html#reg_5_2"><i class="fa fa-check"></i><b>7.5.2</b> 无偏性</a></li>
+<li class="chapter" data-level="7.5.3" data-path="reg_5.html"><a href="reg_5.html#reg_5_3"><i class="fa fa-check"></i><b>7.5.3</b> 有效性</a></li>
+<li class="chapter" data-level="7.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>7.5.4</b> 方差</a></li>
+<li class="chapter" data-level="7.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>7.5.5</b> 正态性</a></li>
+<li class="chapter" data-level="7.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>7.5.6</b> 残差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>7.6</b> 显著性检验</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>7.6.1</b> 区间估计</a></li>
+<li class="chapter" data-level="7.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>7.6.2</b> t检验</a></li>
+<li class="chapter" data-level="7.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>7.6.3</b> F检验</a></li>
+<li class="chapter" data-level="7.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>7.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="7.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>7.6.5</b> 样本决定系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>7.7</b> 预测</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>7.7.1</b> 预测因变量新值的均值</a></li>
+<li class="chapter" data-level="7.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>7.7.2</b> 预测因变量的新值</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>7.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="7.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>7.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>7.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="7.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>7.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="7.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>7.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="7.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>7.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="7.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>7.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.11" data-path="reg_11.html"><a href="reg_11.html"><i class="fa fa-check"></i><b>7.11</b> 重要的定义和等式</a></li>
+<li class="chapter" data-level="7.12" data-path="reg_12.html"><a href="reg_12.html"><i class="fa fa-check"></i><b>7.12</b> 回归诊断</a>
+<ul>
+<li class="chapter" data-level="7.12.1" data-path="reg_12.html"><a href="reg_12.html#reg_12_1"><i class="fa fa-check"></i><b>7.12.1</b> 残差分析</a></li>
+<li class="chapter" data-level="7.12.2" data-path="reg_12.html"><a href="reg_12.html#reg_12_2"><i class="fa fa-check"></i><b>7.12.2</b> 异常点和强影响点</a></li>
+<li class="chapter" data-level="7.12.3" data-path="reg_12.html"><a href="reg_12.html#reg_12_3"><i class="fa fa-check"></i><b>7.12.3</b> 异方差</a></li>
+<li class="chapter" data-level="7.12.4" data-path="reg_12.html"><a href="reg_12.html#reg_12_4"><i class="fa fa-check"></i><b>7.12.4</b> 自相关</a></li>
+<li class="chapter" data-level="7.12.5" data-path="reg_12.html"><a href="reg_12.html#reg_12_5"><i class="fa fa-check"></i><b>7.12.5</b> 多重共线性</a></li>
+</ul></li>
+<li class="chapter" data-level="7.13" data-path="reg_13.html"><a href="reg_13.html"><i class="fa fa-check"></i><b>7.13</b> 变量选择与正则化</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="reg_13.html"><a href="reg_13.html#reg_13_1"><i class="fa fa-check"></i><b>7.13.1</b> 冗余与遗漏</a></li>
+<li class="chapter" data-level="7.13.2" data-path="reg_13.html"><a href="reg_13.html#reg_13_2"><i class="fa fa-check"></i><b>7.13.2</b> 变量选择的传统方法</a></li>
+<li class="chapter" data-level="7.13.3" data-path="reg_13.html"><a href="reg_13.html#reg_13_3"><i class="fa fa-check"></i><b>7.13.3</b> 变量选择的正则化方法</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>8</b> 应用多元统计</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ms_1.html"><a href="ms_1.html"><i class="fa fa-check"></i><b>8.1</b> 矩阵运算</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="ms_1.html"><a href="ms_1.html#ms_1_1"><i class="fa fa-check"></i><b>8.1.1</b> Kronecker积</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ms_1.html"><a href="ms_1.html#ms_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 拉直</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ms_1.html"><a href="ms_1.html#ms_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 减号逆与加号逆</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ms_1.html"><a href="ms_1.html#ms_1_4"><i class="fa fa-check"></i><b>8.1.4</b> 分块矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ms_2.html"><a href="ms_2.html"><i class="fa fa-check"></i><b>8.2</b> 多元正态分布</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ms_2.html"><a href="ms_2.html#ms_2_1"><i class="fa fa-check"></i><b>8.2.1</b> 多元分布的基本运算性质</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ms_2.html"><a href="ms_2.html#ms_2_2"><i class="fa fa-check"></i><b>8.2.2</b> 多元正态分布的定义</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ms_2.html"><a href="ms_2.html#ms_2_3"><i class="fa fa-check"></i><b>8.2.3</b> 正态分布的条件分布和独立性</a></li>
+<li class="chapter" data-level="8.2.4" data-path="ms_2.html"><a href="ms_2.html#ms_2_4"><i class="fa fa-check"></i><b>8.2.4</b> 偏相关系数与全相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ms_3.html"><a href="ms_3.html"><i class="fa fa-check"></i><b>8.3</b> 主成分分析</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ms_3.html"><a href="ms_3.html#ms_3_1"><i class="fa fa-check"></i><b>8.3.1</b> 总体主成分</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ms_3.html"><a href="ms_3.html#ms_3_2"><i class="fa fa-check"></i><b>8.3.2</b> 样本主成分</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ms_3.html"><a href="ms_3.html#ms_3_3"><i class="fa fa-check"></i><b>8.3.3</b> 关于主成分</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ms_4.html"><a href="ms_4.html"><i class="fa fa-check"></i><b>8.4</b> 因子分析</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ms_4.html"><a href="ms_4.html#ms_4_1"><i class="fa fa-check"></i><b>8.4.1</b> 正交因子模型</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ms_4.html"><a href="ms_4.html#ms_4_3"><i class="fa fa-check"></i><b>8.4.2</b> 参数估计</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ms_4.html"><a href="ms_4.html#ms_4_4"><i class="fa fa-check"></i><b>8.4.3</b> 因子旋转</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ms_4.html"><a href="ms_4.html#ms_4_5"><i class="fa fa-check"></i><b>8.4.4</b> 因子得分</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ms_4.html"><a href="ms_4.html#ms_4_6"><i class="fa fa-check"></i><b>8.4.5</b> 因子分析和主成分分析的区别与联系</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ms_5.html"><a href="ms_5.html"><i class="fa fa-check"></i><b>8.5</b> 判别分析</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ms_5.html"><a href="ms_5.html#ms_5_1"><i class="fa fa-check"></i><b>8.5.1</b> 距离判别</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ms_5.html"><a href="ms_5.html#ms_5_2"><i class="fa fa-check"></i><b>8.5.2</b> 贝叶斯判别</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ms_6.html"><a href="ms_6.html"><i class="fa fa-check"></i><b>8.6</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ms_6.html"><a href="ms_6.html#ms_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 距离与相似性的度量</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ms_6.html"><a href="ms_6.html#ms_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 聚类效果的评价指标</a></li>
+<li class="chapter" data-level="8.6.3" data-path="ms_6.html"><a href="ms_6.html#ms_6_3"><i class="fa fa-check"></i><b>8.6.3</b> 系统聚类</a></li>
+<li class="chapter" data-level="8.6.4" data-path="ms_6.html"><a href="ms_6.html#ms_6_4"><i class="fa fa-check"></i><b>8.6.4</b> Kmeans</a></li>
+<li class="chapter" data-level="8.6.5" data-path="ms_6.html"><a href="ms_6.html#ms_6_5"><i class="fa fa-check"></i><b>8.6.5</b> 其他聚类方法</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="ms_7.html"><a href="ms_7.html"><i class="fa fa-check"></i><b>8.7</b> 典型相关分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ml.html"><a href="ml.html"><i class="fa fa-check"></i><b>9</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ml_1.html"><a href="ml_1.html"><i class="fa fa-check"></i><b>9.1</b> 基础知识</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>9.1.1</b> 偏差-方差权衡</a></li>
+<li class="chapter" data-level="9.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>9.1.2</b> 评价指标</a></li>
+<li class="chapter" data-level="9.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>9.1.3</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>9.2</b> pandas与sklearn</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ml_2.html"><a href="ml_2.html#ml_2_1"><i class="fa fa-check"></i><b>9.2.1</b> 导入数据集</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ml_2.html"><a href="ml_2.html#ml_2_2"><i class="fa fa-check"></i><b>9.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ml_2.html"><a href="ml_2.html#ml_2_3"><i class="fa fa-check"></i><b>9.2.3</b> 分割数据集</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ml_3.html"><a href="ml_3.html"><i class="fa fa-check"></i><b>9.3</b> 决策树</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ml_3.html"><a href="ml_3.html#ml_3_1"><i class="fa fa-check"></i><b>9.3.1</b> 分类树</a></li>
+<li class="chapter" data-level="9.3.2" data-path="ml_3.html"><a href="ml_3.html#ml_3_2"><i class="fa fa-check"></i><b>9.3.2</b> 回归树</a></li>
+<li class="chapter" data-level="9.3.3" data-path="ml_3.html"><a href="ml_3.html#ml_3_3"><i class="fa fa-check"></i><b>9.3.3</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ml_4.html"><a href="ml_4.html"><i class="fa fa-check"></i><b>9.4</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ml_4.html"><a href="ml_4.html#ml_4_1"><i class="fa fa-check"></i><b>9.4.1</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ml_5.html"><a href="ml_5.html"><i class="fa fa-check"></i><b>9.5</b> XGBoost</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="ml_5.html"><a href="ml_5.html#ml_5_1"><i class="fa fa-check"></i><b>9.5.1</b> 原理</a></li>
+<li class="chapter" data-level="9.5.2" data-path="ml_5.html"><a href="ml_5.html#ml_5_2"><i class="fa fa-check"></i><b>9.5.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="ml_6.html"><a href="ml_6.html"><i class="fa fa-check"></i><b>9.6</b> LightGBM</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>9.6.1</b> 原理</a></li>
+<li class="chapter" data-level="9.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>9.6.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>9.7</b> 因果森林</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>9.7.1</b> 原理</a></li>
+<li class="chapter" data-level="9.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>9.7.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>9.8</b> SVM</a></li>
+<li class="chapter" data-level="9.9" data-path="ml_9.html"><a href="ml_9.html"><i class="fa fa-check"></i><b>9.9</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="ml_9.html"><a href="ml_9.html#ml_9_1"><i class="fa fa-check"></i><b>9.9.1</b> 聚类结果评价</a></li>
+<li class="chapter" data-level="9.9.2" data-path="ml_9.html"><a href="ml_9.html#ml_9_2"><i class="fa fa-check"></i><b>9.9.2</b> Kmeans</a></li>
+<li class="chapter" data-level="9.9.3" data-path="ml_9.html"><a href="ml_9.html#ml_9_3"><i class="fa fa-check"></i><b>9.9.3</b> Kmeans++</a></li>
+<li class="chapter" data-level="9.9.4" data-path="ml_9.html"><a href="ml_9.html#ml_9_4"><i class="fa fa-check"></i><b>9.9.4</b> DBSCAN</a></li>
+<li class="chapter" data-level="9.9.5" data-path="ml_9.html"><a href="ml_9.html#ml_9_5"><i class="fa fa-check"></i><b>9.9.5</b> HDBSCAN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dl.html"><a href="dl.html"><i class="fa fa-check"></i><b>10</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dl_1.html"><a href="dl_1.html"><i class="fa fa-check"></i><b>10.1</b> 预备知识</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>10.1.1</b> 数据操作</a></li>
+<li class="chapter" data-level="10.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>10.1.2</b> 自动微分</a></li>
+<li class="chapter" data-level="10.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>10.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="10.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>10.1.4</b> 调参技巧</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>10.2</b> 线性神经网络</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dl_2.html"><a href="dl_2.html#dl_2_1"><i class="fa fa-check"></i><b>10.2.1</b> 线性回归</a></li>
+<li class="chapter" data-level="10.2.2" data-path="dl_2.html"><a href="dl_2.html#dl_2_2"><i class="fa fa-check"></i><b>10.2.2</b> 二分类问题</a></li>
+<li class="chapter" data-level="10.2.3" data-path="dl_2.html"><a href="dl_2.html#dl_2_3"><i class="fa fa-check"></i><b>10.2.3</b> 多分类问题</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dl_9.html"><a href="dl_9.html"><i class="fa fa-check"></i><b>10.3</b> RNN</a></li>
+<li class="chapter" data-level="10.4" data-path="dl_3.html"><a href="dl_3.html"><i class="fa fa-check"></i><b>10.4</b> LSTM</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="dl_3.html"><a href="dl_3.html#dl_3_1"><i class="fa fa-check"></i><b>10.4.1</b> 原理</a></li>
+<li class="chapter" data-level="10.4.2" data-path="dl_3.html"><a href="dl_3.html#dl_3_2"><i class="fa fa-check"></i><b>10.4.2</b> 示例</a></li>
+<li class="chapter" data-level="10.4.3" data-path="dl_3.html"><a href="dl_3.html#dl_3_3"><i class="fa fa-check"></i><b>10.4.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="dl_4.html"><a href="dl_4.html"><i class="fa fa-check"></i><b>10.5</b> GRU</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="dl_4.html"><a href="dl_4.html#dl_4_1"><i class="fa fa-check"></i><b>10.5.1</b> 原理</a></li>
+<li class="chapter" data-level="10.5.2" data-path="dl_4.html"><a href="dl_4.html#dl_4_2"><i class="fa fa-check"></i><b>10.5.2</b> 示例</a></li>
+<li class="chapter" data-level="10.5.3" data-path="dl_4.html"><a href="dl_4.html#dl_4_3"><i class="fa fa-check"></i><b>10.5.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="dl_5.html"><a href="dl_5.html"><i class="fa fa-check"></i><b>10.6</b> Seq2Seq</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="dl_5.html"><a href="dl_5.html#dl_5_1"><i class="fa fa-check"></i><b>10.6.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="dl_6.html"><a href="dl_6.html"><i class="fa fa-check"></i><b>10.7</b> BNN</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="dl_6.html"><a href="dl_6.html#dl_6_1"><i class="fa fa-check"></i><b>10.7.1</b> 原理</a></li>
+<li class="chapter" data-level="10.7.2" data-path="dl_6.html"><a href="dl_6.html#dl_6_2"><i class="fa fa-check"></i><b>10.7.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="dl_7.html"><a href="dl_7.html"><i class="fa fa-check"></i><b>10.8</b> GNN</a>
+<ul>
+<li class="chapter" data-level="10.8.1" data-path="dl_7.html"><a href="dl_7.html#dl_7_1"><i class="fa fa-check"></i><b>10.8.1</b> 原理</a></li>
+<li class="chapter" data-level="10.8.2" data-path="dl_7.html"><a href="dl_7.html#dl_7_2"><i class="fa fa-check"></i><b>10.8.2</b> 图神经网络的类型</a></li>
+<li class="chapter" data-level="10.8.3" data-path="dl_7.html"><a href="dl_7.html#dl_7_3"><i class="fa fa-check"></i><b>10.8.3</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.9" data-path="dl_8.html"><a href="dl_8.html"><i class="fa fa-check"></i><b>10.9</b> Diffusion Model</a>
+<ul>
+<li class="chapter" data-level="10.9.1" data-path="dl_8.html"><a href="dl_8.html#dl_8_1"><i class="fa fa-check"></i><b>10.9.1</b> 原理</a></li>
+<li class="chapter" data-level="10.9.2" data-path="dl_8.html"><a href="dl_8.html#dl_8_2"><i class="fa fa-check"></i><b>10.9.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.10" data-path="dl_10.html"><a href="dl_10.html"><i class="fa fa-check"></i><b>10.10</b> Transformer</a>
+<ul>
+<li class="chapter" data-level="10.10.1" data-path="dl_10.html"><a href="dl_10.html#dl_10_1"><i class="fa fa-check"></i><b>10.10.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.11" data-path="dl_11.html"><a href="dl_11.html"><i class="fa fa-check"></i><b>10.11</b> BERT</a>
+<ul>
+<li class="chapter" data-level="10.11.1" data-path="dl_11.html"><a href="dl_11.html#dl_11_1"><i class="fa fa-check"></i><b>10.11.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.12" data-path="dl_12.html"><a href="dl_12.html"><i class="fa fa-check"></i><b>10.12</b> GPT</a>
+<ul>
+<li class="chapter" data-level="10.12.1" data-path="dl_12.html"><a href="dl_12.html#dl_12_1"><i class="fa fa-check"></i><b>10.12.1</b> GPT-1</a></li>
+<li class="chapter" data-level="10.12.2" data-path="dl_12.html"><a href="dl_12.html#dl_12_2"><i class="fa fa-check"></i><b>10.12.2</b> GPT-2</a></li>
+<li class="chapter" data-level="10.12.3" data-path="dl_12.html"><a href="dl_12.html#dl_12_3"><i class="fa fa-check"></i><b>10.12.3</b> GPT-3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>11</b> 生存分析</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>11.1</b> 基本概念</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 删失数据</a></li>
+<li class="chapter" data-level="11.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 截断数据</a></li>
+<li class="chapter" data-level="11.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 函数</a></li>
+<li class="chapter" data-level="11.1.4" data-path="survival_1.html"><a href="survival_1.html#survival_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 似然函数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>11.2</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>11.2.1</b> KM估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>11.2.2</b> NA估计</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>11.3</b> 置信区间与置信带</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>11.3.1</b> 置信区间</a></li>
+<li class="chapter" data-level="11.3.2" data-path="survival_3.html"><a href="survival_3.html#survival_3_2"><i class="fa fa-check"></i><b>11.3.2</b> 置信带</a></li>
+<li class="chapter" data-level="11.3.3" data-path="survival_3.html"><a href="survival_3.html#survival_3_3"><i class="fa fa-check"></i><b>11.3.3</b> 平均生存时间的置信区间</a></li>
+<li class="chapter" data-level="11.3.4" data-path="survival_3.html"><a href="survival_3.html#survival_3_4"><i class="fa fa-check"></i><b>11.3.4</b> 分位数的置信区间</a></li>
+<li class="chapter" data-level="11.3.5" data-path="survival_3.html"><a href="survival_3.html#survival_3_5"><i class="fa fa-check"></i><b>11.3.5</b> 左截断数据的置信区间</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>11.4</b> 假设检验</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="survival_4.html"><a href="survival_4.html#survival_4_1"><i class="fa fa-check"></i><b>11.4.1</b> 单样本检验</a></li>
+<li class="chapter" data-level="11.4.2" data-path="survival_4.html"><a href="survival_4.html#survival_4_2"><i class="fa fa-check"></i><b>11.4.2</b> 多样本检验</a></li>
+<li class="chapter" data-level="11.4.3" data-path="survival_4.html"><a href="survival_4.html#survival_4_3"><i class="fa fa-check"></i><b>11.4.3</b> 趋势性检验</a></li>
+<li class="chapter" data-level="11.4.4" data-path="survival_4.html"><a href="survival_4.html#survival_4_4"><i class="fa fa-check"></i><b>11.4.4</b> 分层检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>11.5</b> Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_1"><i class="fa fa-check"></i><b>11.5.1</b> 偏对数似然函数</a></li>
+<li class="chapter" data-level="11.5.2" data-path="survival_5.html"><a href="survival_5.html#survival_5_x"><i class="fa fa-check"></i><b>11.5.2</b> Regularization Paths for Cox’s Proportional Hazards Model via Coordinate Descent</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>12</b> 数据分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="da_1.html"><a href="da_1.html"><i class="fa fa-check"></i><b>12.1</b> ABtest</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="da_1.html"><a href="da_1.html#da_1_1"><i class="fa fa-check"></i><b>12.1.1</b> 确定目标与指标选取</a></li>
+<li class="chapter" data-level="12.1.2" data-path="da_1.html"><a href="da_1.html#da_1_2"><i class="fa fa-check"></i><b>12.1.2</b> 实验设计</a></li>
+<li class="chapter" data-level="12.1.3" data-path="da_1.html"><a href="da_1.html#da_1_3"><i class="fa fa-check"></i><b>12.1.3</b> 实验上线</a></li>
+<li class="chapter" data-level="12.1.4" data-path="da_1.html"><a href="da_1.html#da_1_4"><i class="fa fa-check"></i><b>12.1.4</b> 实验结束</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="da_2.html"><a href="da_2.html"><i class="fa fa-check"></i><b>12.2</b> 异动归因</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="da_2.html"><a href="da_2.html#da_2_1"><i class="fa fa-check"></i><b>12.2.1</b> 验真</a></li>
+<li class="chapter" data-level="12.2.2" data-path="da_2.html"><a href="da_2.html#da_2_2"><i class="fa fa-check"></i><b>12.2.2</b> 维度拆解</a></li>
+<li class="chapter" data-level="12.2.3" data-path="da_2.html"><a href="da_2.html#da_2_3"><i class="fa fa-check"></i><b>12.2.3</b> 贡献度分析</a></li>
+<li class="chapter" data-level="12.2.4" data-path="da_2.html"><a href="da_2.html#da_2_4"><i class="fa fa-check"></i><b>12.2.4</b> 从数据原因到业务原因</a></li>
+<li class="chapter" data-level="12.2.5" data-path="da_2.html"><a href="da_2.html#da_2_5"><i class="fa fa-check"></i><b>12.2.5</b> 案例分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="da_3.html"><a href="da_3.html"><i class="fa fa-check"></i><b>12.3</b> 用户分析</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="da_3.html"><a href="da_3.html#da_3_1"><i class="fa fa-check"></i><b>12.3.1</b> 用户画像</a></li>
+<li class="chapter" data-level="12.3.2" data-path="da_3.html"><a href="da_3.html#da_3_2"><i class="fa fa-check"></i><b>12.3.2</b> 用户行为路径分析</a></li>
+<li class="chapter" data-level="12.3.3" data-path="da_3.html"><a href="da_3.html#da_3_3"><i class="fa fa-check"></i><b>12.3.3</b> 用户分层模型</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III 多源数据分析</b></span></li>
+<li class="chapter" data-level="13" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>13</b> 网络型数据</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>13.1</b> 构造联系</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>13.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="13.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>13.1.2</b> 社会网络量表</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>13.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="13.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>13.3</b> 拓展分析</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>13.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="13.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>13.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="13.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>13.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="13.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>13.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="13.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>13.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="13.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>13.3.6</b> 综合评价</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>13.4</b> 其他启示</a></li>
+</ul></li>
+<li class="part"><span><b>IV 可视化</b></span></li>
+<li class="chapter" data-level="14" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>14</b> Manim动画</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>14.1</b> 最小二乘与投影矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="people.html"><a href="people.html"><i class="fa fa-check"></i><b>15</b> 七普数据可视化</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="people_1.html"><a href="people_1.html"><i class="fa fa-check"></i><b>15.1</b> 数据来源及说明</a></li>
+<li class="chapter" data-level="15.2" data-path="people_2.html"><a href="people_2.html"><i class="fa fa-check"></i><b>15.2</b> 全国人口状况</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="people_2.html"><a href="people_2.html#people_2_1"><i class="fa fa-check"></i><b>15.2.1</b> 人口自然增长率</a></li>
+<li class="chapter" data-level="15.2.2" data-path="people_2.html"><a href="people_2.html#people_2_2"><i class="fa fa-check"></i><b>15.2.2</b> 年龄结构</a></li>
+<li class="chapter" data-level="15.2.3" data-path="people_2.html"><a href="people_2.html#people_2_3"><i class="fa fa-check"></i><b>15.2.3</b> 人口流动</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V 组会论文</b></span></li>
+<li class="chapter" data-level="16" data-path="penalty.html"><a href="penalty.html"><i class="fa fa-check"></i><b>16</b> 变量选择与惩罚函数</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="penalty_1.html"><a href="penalty_1.html"><i class="fa fa-check"></i><b>16.1</b> 准备</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_1"><i class="fa fa-check"></i><b>16.1.1</b> 范数</a></li>
+<li class="chapter" data-level="16.1.2" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_2"><i class="fa fa-check"></i><b>16.1.2</b> 目标函数</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>16.2</b> 单变量选择</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>16.2.1</b> Lasso</a></li>
+<li class="chapter" data-level="16.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>16.2.2</b> Hard &amp; Soft Threshold</a></li>
+<li class="chapter" data-level="16.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>16.2.3</b> SCAD</a></li>
+<li class="chapter" data-level="16.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>16.2.4</b> Adaptive Lasso</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="penalty_3.html"><a href="penalty_3.html"><i class="fa fa-check"></i><b>16.3</b> 群组变量选择</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_1"><i class="fa fa-check"></i><b>16.3.1</b> 思维导图</a></li>
+<li class="chapter" data-level="16.3.2" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_2"><i class="fa fa-check"></i><b>16.3.2</b> 处理高度相关数据的组变量选择方法</a></li>
+<li class="chapter" data-level="16.3.3" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_3"><i class="fa fa-check"></i><b>16.3.3</b> 仅能选择组变量的方法</a></li>
+<li class="chapter" data-level="16.3.4" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_4"><i class="fa fa-check"></i><b>16.3.4</b> 双层变量选择方法</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="penalty_4.html"><a href="penalty_4.html"><i class="fa fa-check"></i><b>16.4</b> 算法</a></li>
+<li class="chapter" data-level="16.5" data-path="penalty_5.html"><a href="penalty_5.html"><i class="fa fa-check"></i><b>16.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="integrative.html"><a href="integrative.html"><i class="fa fa-check"></i><b>17</b> 整合分析</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>17.1</b> 引言</a></li>
+<li class="chapter" data-level="17.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>17.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="17.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>17.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="17.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>17.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="17.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>17.5</b> 具有网络结构关系的整合分析</a></li>
+</ul></li>
+<li class="part"><span><b>VI 算法复现</b></span></li>
+<li class="chapter" data-level="18" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>18</b> 算法复现</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="code_1.html"><a href="code_1.html"><i class="fa fa-check"></i><b>18.1</b> 惩罚Cox比例风险模型</a></li>
+<li class="chapter" data-level="18.2" data-path="code_2.html"><a href="code_2.html"><i class="fa fa-check"></i><b>18.2</b> 异质截距项的线性模型</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="code_2.html"><a href="code_2.html#code_2_1"><i class="fa fa-check"></i><b>18.2.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.2.2" data-path="code_2.html"><a href="code_2.html#code_2_2"><i class="fa fa-check"></i><b>18.2.2</b> 数据模拟</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="code_3.html"><a href="code_3.html"><i class="fa fa-check"></i><b>18.3</b> （异质）线性+非线性的Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="code_3.html"><a href="code_3.html#code_3_1"><i class="fa fa-check"></i><b>18.3.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.3.2" data-path="code_3.html"><a href="code_3.html#code_3_2"><i class="fa fa-check"></i><b>18.3.2</b> 数据模拟</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII 生活</b></span></li>
+<li class="chapter" data-level="19" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>19</b> 羽毛球修炼手册</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>19.1</b> 发球</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>19.1.1</b> 正手发球</a></li>
+<li class="chapter" data-level="19.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>19.1.2</b> 反手发球</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ball_2.html"><a href="ball_2.html"><i class="fa fa-check"></i><b>19.2</b> 网前技术</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ball_2.html"><a href="ball_2.html#ball_2_1"><i class="fa fa-check"></i><b>19.2.1</b> 勾对角</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ball_2.html"><a href="ball_2.html#ball_2_2"><i class="fa fa-check"></i><b>19.2.2</b> 扑球</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ball_2.html"><a href="ball_2.html#ball_2_3"><i class="fa fa-check"></i><b>19.2.3</b> 封网</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ball_2.html"><a href="ball_2.html#ball_2_4"><i class="fa fa-check"></i><b>19.2.4</b> 平抽</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ball_2.html"><a href="ball_2.html#ball_2_5"><i class="fa fa-check"></i><b>19.2.5</b> 抹球</a></li>
+<li class="chapter" data-level="19.2.6" data-path="ball_2.html"><a href="ball_2.html#ball_2_6"><i class="fa fa-check"></i><b>19.2.6</b> 搓球</a></li>
+<li class="chapter" data-level="19.2.7" data-path="ball_2.html"><a href="ball_2.html#ball_2_7"><i class="fa fa-check"></i><b>19.2.7</b> 挡网</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ball_3.html"><a href="ball_3.html"><i class="fa fa-check"></i><b>19.3</b> 后场技术</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ball_3.html"><a href="ball_3.html#ball_3_1"><i class="fa fa-check"></i><b>19.3.1</b> 杀球</a></li>
+<li class="chapter" data-level="19.3.2" data-path="ball_3.html"><a href="ball_3.html#ball_3_2"><i class="fa fa-check"></i><b>19.3.2</b> 吊球</a></li>
+<li class="chapter" data-level="19.3.3" data-path="ball_3.html"><a href="ball_3.html#ball_3_3"><i class="fa fa-check"></i><b>19.3.3</b> 反手</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ball_4.html"><a href="ball_4.html"><i class="fa fa-check"></i><b>19.4</b> 假动作</a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="ball_4.html"><a href="ball_4.html#ball_4_1"><i class="fa fa-check"></i><b>19.4.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.4.2" data-path="ball_4.html"><a href="ball_4.html#ball_4_2"><i class="fa fa-check"></i><b>19.4.2</b> 网前</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="ball_5.html"><a href="ball_5.html"><i class="fa fa-check"></i><b>19.5</b> 双打</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="ball_5.html"><a href="ball_5.html#ball_5_1"><i class="fa fa-check"></i><b>19.5.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.5.2" data-path="ball_5.html"><a href="ball_5.html#ball_5_2"><i class="fa fa-check"></i><b>19.5.2</b> 站位</a></li>
+<li class="chapter" data-level="19.5.3" data-path="ball_5.html"><a href="ball_5.html#ball_5_3"><i class="fa fa-check"></i><b>19.5.3</b> 分球</a></li>
+<li class="chapter" data-level="19.5.4" data-path="ball_5.html"><a href="ball_5.html#ball_5_4"><i class="fa fa-check"></i><b>19.5.4</b> 球路</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="ball_6.html"><a href="ball_6.html"><i class="fa fa-check"></i><b>19.6</b> 球路</a></li>
+<li class="chapter" data-level="19.7" data-path="ball_7.html"><a href="ball_7.html"><i class="fa fa-check"></i><b>19.7</b> 步伐</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="jap.html"><a href="jap.html"><i class="fa fa-check"></i><b>20</b> 日语</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><i class="fa fa-check"></i>参考文献</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sql_2" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> MySQL必知必会<a href="sql_2.html#sql_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<div id="sql_2_1" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> 提要<a href="sql_2.html#sql_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ul>
+<li><p>sql语句可单行或多行，以分号结尾</p></li>
+<li><p>可使用空格缩进来增强可读性</p></li>
+<li><p><strong>MySQL</strong>数据库的SQL语句<strong>不区分大小写</strong>，但关键字还是建议用大写</p></li>
+<li><p>单行注释用<code>#</code>或<code>--</code>，多行注释用<code>/* text */</code></p></li>
+<li><p>子句顺序</p>
+<p>WHERE → GROUP BY → HAVING → SELECT（包括别名定义）→ ORDER BY → LIMIT</p></li>
+</ul>
+</div>
+<div id="sql_2_2" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> 选择数据库与表<a href="sql_2.html#sql_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li>选择数据库</li>
+</ol>
+<pre><code>USE 数据库名;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>查询所有可用的数据库</li>
+</ol>
+<pre><code>SHOW DATABASES;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>查询当前选择的数据库内可用表的列表</li>
+</ol>
+<pre><code>SHOW TABLES;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>查询某表的所有列</li>
+</ol>
+<pre><code>SHOW COLUMNS 
+FROM 表名;</code></pre>
+<blockquote>
+<p>等价于<code>DESCRIBE 表名;</code></p>
+</blockquote>
+</div>
+<div id="sql_2_3" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> 检索数据<a href="sql_2.html#sql_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li>检索单个列</li>
+</ol>
+<pre><code>SELECT 列名 
+FROM 表名;</code></pre>
+<blockquote>
+<p>返回的数据顺序不一定与原始顺序一致</p>
+</blockquote>
+<blockquote>
+<p>select语句包含的内容为空，则输出<code>NULL</code>；若空内容出现在from语句，则select语句输出空值</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>检索多个列</li>
+</ol>
+<pre><code>SELECT 列名_1, 列名_2, 列名_3 
+FROM 表名;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>检索所有列</li>
+</ol>
+<pre><code>SELECT * 
+FROM 表名;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>行去重</li>
+</ol>
+<pre><code>SELECT DISTINCT 列名 
+FROM 表名;</code></pre>
+<blockquote>
+<p>无论检索多少列，<code>DISTINCT</code>作用于所有的列，而不单单是前置它的列。</p>
+</blockquote>
+<ol start="5" style="list-style-type: decimal">
+<li>限制结果</li>
+</ol>
+<p><code>LIMIT</code>子句用于控制输出的行数，且记第一行为<strong>行0</strong>。</p>
+<pre><code>SELECT 列名 
+FROM 表名 
+LIMIT 5;</code></pre>
+<p>表示输出不多于5行的记录。</p>
+<pre><code>SELECT 列名 
+FROM 表名 
+LIMIT 5, 4;</code></pre>
+<p>表示从行5（事实上是第6行）开始数4行。</p>
+<p>等价于</p>
+<pre><code>SELECT 列名 
+FROM 表名 
+LIMIT 4 OFFSET 5;</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>使用完全限定的表名</li>
+</ol>
+<p>可使用<code>X.Y</code>的形式来声明<code>Y</code>是来自于<code>X</code>的<code>Y</code>，其中<code>X</code>可为表名或数据库名</p>
+<pre><code>SELECT 表名.列名 
+FROM 数据库名.表名;</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>多分类表达式</li>
+</ol>
+<pre><code>SELECT
+CASE
+    WHEN condition THEN result
+    ELSE
+END AS col</code></pre>
+</div>
+<div id="sql_2_4" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> 排序检索数据<a href="sql_2.html#sql_2_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><code>ORDER BY</code>子句控制排序。</p>
+<pre><code>SELECT 列名 
+FROM 表名
+ORDER BY 列名;</code></pre>
+<p>若按多列排序，则为<code>ORDER BY 列名1, 列名2;</code>，先根据列名1排序，再根据列名2排序。</p>
+<p>默认升序，若想降序则在列名后跟<code>DESC</code>关键字，并且<code>DESC</code>只作用于其所跟的列。</p>
+<pre><code>SELECT 列名 
+FROM 表名
+ORDER BY 列1 DESC, 列2;</code></pre>
+<p>有时需要对数据进行排名，下面介绍常见的三个窗口函数<code>ROW_NUMBER()``RANK()``DENSE_RANK()</code>。其中<code>PARTITION</code>表示分组标识，<code>ORDER BY</code>表示顺序标识。</p>
+<p><code>ROW_NUMBER()</code>直接给行编号，有多少行编多少号，如1、2、3、4。</p>
+<p><code>RANK()</code>对于相同值则相同排名，同时跳过排名，如1、1、3、4。</p>
+<p><code>DENSE_RANK()</code>对于相同值则相同排名，但不跳过排名，如1、1、2、3。</p>
+<pre><code>ROW_NUMBER() OVER ([PARTITION by col] ORDER BY col [ASC|DESC]) AS col
+RANK() OVER ([PARTITION by col] ORDER BY col [ASC|DESC]) AS col
+DENSE_RANK() OVER ([PARTITION by col] ORDER BY col [ASC|DESC]) AS col</code></pre>
+<blockquote>
+<p>返回的结果已经按ORDER BY进行排序</p>
+</blockquote>
+</div>
+<div id="sql_2_5" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> 过滤数据<a href="sql_2.html#sql_2_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><code>WHERE</code>子句筛选符合条件的记录。</p>
+<ol style="list-style-type: decimal">
+<li>常规操作符</li>
+</ol>
+<pre><code>SELECT 列名 
+FROM 表名 
+WHERE 列名 = 5;</code></pre>
+<p>除了相等是<code>=</code>，其余大小比较符号都符合常用习惯。还有范围操作符<code>BETWEEN X AND Y</code>，表示介于<code>X</code>和<code>Y</code>之间的数值，包括两端。</p>
+<p>特别的，返回值为空值<code>NULL</code>的记录：<code>WHERE 列名 IS NULL;</code>。</p>
+<ol start="2" style="list-style-type: decimal">
+<li><code>AND</code>或<code>OR</code></li>
+</ol>
+<p>同样，可使用<code>AND</code>或<code>OR</code>来组合多个条件。</p>
+<pre><code>SELECT 列名 
+FROM 表名 
+WHERE 列1 = 5 AND 列2 = 4;</code></pre>
+<blockquote>
+<p>默认优先处理<code>AND</code>关键字，必要时可用括号<code>()</code>将条件进行分组</p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li><code>IN</code></li>
+</ol>
+<p><code>IN</code>如同R里的<code>%in%</code>，筛选值是否在后续条件中，条件用圆括号包围。</p>
+<pre><code>SELECT 列名 
+FROM 表名 
+WHERE 列1 IN (2001, 2003);</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><code>NOT</code></li>
+</ol>
+<p><code>NOT</code>为取反操作，可对<code>IN</code>、<code>BETWEEN</code>、<code>EXISTS</code>等关键字取反。如<code>WHERE 列1 NOT IN (2001, 2003);</code></p>
+<ol start="5" style="list-style-type: decimal">
+<li><code>LIKE</code></li>
+</ol>
+<blockquote>
+<p><code>LIKE</code>并不是操作符，而是<strong>谓词</strong>，在技术上有所区别，但结果是相同的</p>
+</blockquote>
+<p>顾名思义，<code>LIKE</code>查找与条件值像不像的记录。常与<code>%</code>和<code>_</code>搭配，前者表示匹配任意个字符，后者表示匹配单个字符。</p>
+<pre><code>SELECT 列名 
+FROM 表名 
+WHERE 列1 LIKE &#39;jet%&#39;;</code></pre>
+<blockquote>
+<p>MySQL在配置方式中可设置是否区分大小写
+<code>LIKE</code>无法匹配<code>NULL</code>
+一般不要把通配符放在pattern的开端，检索速度慢</p>
+</blockquote>
+<ol start="6" style="list-style-type: decimal">
+<li>正则表达式</li>
+</ol>
+<p><code>REGEXP</code>关键字后跟正则表达式。</p>
+<blockquote>
+<p><code>LIKE</code>是针对整个列值，而<code>REGEXP</code>则适合列值内，若<code>LIKE</code>不使用通配符的话，则二者存在差异</p>
+<p><code>REGXEP</code>可用<code>REGEXP BINARY</code>来实现区分大小写的功能，默认不区分大小写</p>
+</blockquote>
+<ul>
+<li><p><code>|</code>表示“或”</p></li>
+<li><p><code>[单个字符集]</code>与<code>[^单个字符集]</code>表示匹配其中一个字符或否定</p></li>
+<li><p><code>[1-9]</code>或<code>[a-z]</code>表示某个范围的单个字符集</p></li>
+<li><p>转义符<code>\\</code></p></li>
+<li><p>事先预定的字符集，如<code>[:alnum:]</code>表示任意字母和数值</p></li>
+<li><p><code>.</code>、<code>*</code>、<code>+</code>、<code>?</code>、<code>{n}</code>、<code>{n,}</code>、<code>{n,m}</code></p></li>
+<li><p><code>^</code>、<code>$</code>、<code>[[:&lt;:]]</code>、<code>[[:&gt;:]]</code></p></li>
+</ul>
+<blockquote>
+<p>可使用<code>SELECT '字符串' REGEXP 正则表达式</code>来简单检验正则表达式是否正确</p>
+</blockquote>
+</div>
+<div id="sql_2_6" class="section level3 hasAnchor" number="3.2.6">
+<h3><span class="header-section-number">3.2.6</span> 计算字段<a href="sql_2.html#sql_2_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li>拼接字段</li>
+</ol>
+<p><code>Concat()</code>可用于列与列的拼接，类似<code>unite()</code>，并可用关键字<code>AS</code>设置别名，从而进行索引。</p>
+<blockquote>
+<p>可用<code>Trim()</code>、<code>RTrim()</code>、<code>LTrim()</code>去掉空格</p>
+</blockquote>
+<pre><code>SELECT Concat(RTrim(列1), &#39;_&#39;, LTrim(列2)) AS 列3
+FROM 表名;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>计算字段</li>
+</ol>
+<p>可在选择列时直接对列之间进行计算，如<code>mutate()</code>可直接在列之间进行计算一样，对新的列用<code>AS</code>命名即可。</p>
+<pre><code>SELECT 列1 * 列2 AS 列3
+FROM 表名;</code></pre>
+</div>
+<div id="sql_2_7" class="section level3 hasAnchor" number="3.2.7">
+<h3><span class="header-section-number">3.2.7</span> 函数<a href="sql_2.html#sql_2_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>不同SQL之间的SQL语句差异较小，而函数差异则较大。在使用函数时直接作用在列名上即可。</p>
+<ol style="list-style-type: decimal">
+<li><p>文本处理函数</p>
+<ul>
+<li><p>字符串长度</p>
+<p><code>LENGTH()</code>与<code>CHAR_LENGTH()</code>略有差异，前者返回字节长度，后者才是真的字符串长度。</p></li>
+</ul></li>
+<li><p>日期处理函数</p>
+<ul>
+<li><p>DATEDIFF(date1,date2)</p>
+<p>返回date1-date2的天数</p></li>
+</ul></li>
+<li><p>数值处理函数</p></li>
+<li><p>窗口函数</p></li>
+</ol>
+<p>窗口函数先进行分组及排序操作后再在窗口内执行对应的函数。</p>
+<p>可以适当了解<strong>窗口函数框架规范</strong>。</p>
+<blockquote>
+<p>窗口函数并不合并行，保留原始数据的完整性，例如在窗口中使用<code>COUNT</code>函数，则窗口内的每行赋值同一个数值</p>
+</blockquote>
+<ul>
+<li><p>ROW_NUMBER()</p>
+<p>行编号</p></li>
+<li><p>RANK()</p>
+<p>排名跳号</p></li>
+<li><p>DENSE_RANK()</p>
+<p>排名不跳号</p></li>
+<li><p>LAG(expression, offset, default_value)</p>
+<p>offest表示返回<strong>前多少行</strong>，默认为1；default_value表示若超出范围时的默认值，默认为NULL</p></li>
+<li><p>LEAD(expression, offset, default_value)</p>
+<p>offest表示返回<strong>后多少行</strong>，默认为1；default_value表示若超出范围时的默认值，默认为NULL</p></li>
+<li><p>FIRST_VALUE(expression)</p>
+<p>输出按指定顺序排列后的第一个值</p></li>
+</ul>
+<blockquote>
+<p>注意，若想查询分组后的第一个值，必要时需在主键前添加DISTINCT</p>
+</blockquote>
+<ul>
+<li>LAST_VALUE(expression)</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li><p>其他函数</p>
+<ul>
+<li><p>IFNULL(expression, alt_value)</p>
+<p>NULL值替换，若为NULL值则替换为<code>alt_value</code></p></li>
+<li><p>IF(condition, value_if_true, value_if_false)</p></li>
+</ul></li>
+</ol>
+<blockquote>
+<p>IF函数可以SUM函数结合起来用于计数</p>
+</blockquote>
+</div>
+<div id="sql_2_8" class="section level3 hasAnchor" number="3.2.8">
+<h3><span class="header-section-number">3.2.8</span> 汇总数据<a href="sql_2.html#sql_2_8" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>下面提到的汇总函数也可作为窗口函数使用。</p>
+<ol style="list-style-type: decimal">
+<li><p><code>AVG()</code></p>
+<p>求某列均值，以列名为输入值，仅能输入一个列，并且忽略NULL。</p></li>
+</ol>
+<blockquote>
+<p>能够处理布尔表达式，如<code>AVG(c.action = 'confirmed')</code></p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li><p><code>COUNT()</code></p>
+<p>对行数进行计数，若为<code>COUNT(*)</code>则无论是否有NULL都算进去，若为<code>COUNT(列)</code>则忽视NULL值。</p></li>
+<li><p><code>MAX()</code></p></li>
+<li><p><code>MIN()</code></p></li>
+<li><p><code>SUM()</code></p>
+<p>可根据算术符对多个列进行求和，如<code>SUM(列1 * 列2)</code>，忽略NULL。</p></li>
+</ol>
+<blockquote>
+<p>有时可与<code>DISTINCE</code>关键字结合起来，如<code>AVG(DISTINCT 列1)</code></p>
+</blockquote>
+</div>
+<div id="sql_2_9" class="section level3 hasAnchor" number="3.2.9">
+<h3><span class="header-section-number">3.2.9</span> 数据分组<a href="sql_2.html#sql_2_9" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><code>GROUP BY</code>子句进行分组，可同时对多列进行分组，并在最后规定的分组上汇总。</p>
+<p>在使用<code>GROUP BY</code>时，<code>SELECT</code>中的每个列（除了聚集计算语句外）都得在<code>GROUP BY</code>中给出（若是表达式则不能使用别名，而是指定相同的表达式）。</p>
+<blockquote>
+<p>否则会按列的默认顺序返回对应的函数，从而导致“记录”的值不匹配</p>
+</blockquote>
+<pre><code>SELECT 列1, COUNT(*) AS 列
+FROM 表名
+GROUP BY 列1;</code></pre>
+<blockquote>
+<p><code>GROUP BY 列 WITH ROLLUP</code>将会根据分组顺序逐级向上汇总，在返回的数据中增加汇总行</p>
+</blockquote>
+<p>若要对分组进行筛选，可使用<code>HAVING</code>子句。与<code>WHERE</code>子句的区别在于，<code>WHERE</code>是对行进行过滤，而<code>HAVING</code>可以过滤分组。</p>
+<pre><code>SELECT 列1, COUNT(*) AS 列
+FROM 表名
+WHERE 列2 &gt;= 10
+GROUP BY 列1
+HAVING COUNT(*) &gt;= 2;</code></pre>
+<p><code>ORDER BY</code>也能对分组后的数据进行排序。</p>
+</div>
+<div id="sql_2_10" class="section level3 hasAnchor" number="3.2.10">
+<h3><span class="header-section-number">3.2.10</span> 子查询<a href="sql_2.html#sql_2_10" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>所谓<strong>子查询</strong>，也就是<code>SELECT</code>语句的嵌套（用圆括号包围），将内层<code>SELECT</code>结构的结果作为条件输出给外层<code>SELECT</code>结构进行查询。</p>
+<ol style="list-style-type: decimal">
+<li>过滤</li>
+</ol>
+<p>子查询作为条件传给外层的<code>WHERE</code>子句。</p>
+<pre><code>SELECT 列1
+FROM 表1
+WHERE 列2 IN (SELECT 列3
+              FROM 表2
+              WHERE 列4 = &#39;xxx&#39;);</code></pre>
+<blockquote>
+<p>除了<code>IN</code>，还可以与其他操作符结合在一起</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>计算字段</li>
+</ol>
+<p>除了作为过滤条件外，还可用于计算字段传给外层的<code>SELECT</code>子句。</p>
+<pre><code>SELECT 列1,
+       (SELECT COUNT(*)
+        FROM 表2
+        WHERE 表2.列2 = 表1.列3) AS 列4
+FROM 表1
+ORDER BY 列1;</code></pre>
+<blockquote>
+<p>注意对于同名列需要区分表来源，这种情形也称之为<strong>相关子查询</strong></p>
+</blockquote>
+</div>
+<div id="sql_2_11" class="section level3 hasAnchor" number="3.2.11">
+<h3><span class="header-section-number">3.2.11</span> 表联结<a href="sql_2.html#sql_2_11" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p><strong>主键</strong>，即某表中每条记录的唯一标识符，如ID。<strong>外键</strong>，即某表包含另一个表的主键的那一列，该列定义了两个表之间的关系。</p>
+<p>为了简洁，可在<code>FROM</code>子句中用<code>AS</code>关键字为表取别名。</p>
+<p>也可多次使用联结，并且每次联结的类型可以不同。</p>
+<blockquote>
+<p>联结时除了匹配主键或外键，还可以用其他条件来联结，如<code>ON a.player_id = t.player_id AND DATEDIFF(a.event_date, t.first_date) = 1</code></p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li><code>WHERE</code>联结</li>
+</ol>
+<p>在<code>WHERE</code>子句中添加两个表之间的配对关系（主键与外键），从而实现表联结。且该联结方式为<strong>内部联结</strong>。</p>
+<pre><code>SELECT 列1, 列2
+FROM 表1, 表2
+WHERE 表1.主键 = 表2.外键
+ORDER BY 列1, 列2;</code></pre>
+<blockquote>
+<p>若想得到两个表之间的笛卡尔积（也就是<strong>全联结</strong>），则去掉<code>WHERE</code>子句即可</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>内部联结</li>
+</ol>
+<p>内部联结<code>INNER JOIN</code>取表的交集。</p>
+<pre><code>SELECT 列1, 列2, 列3
+FROM 
+表1 
+INNER JOIN 表2 ON 表1.主键 = 表2.外键
+INNER JOIN 表3 ON 表1.外键 = 表3.主键;</code></pre>
+<blockquote>
+<p>建议用<code>INNER JOIN</code>替代<code>WHERE</code>联结</p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>自联结</li>
+</ol>
+<p>在自联结中，需要使用表别名。自联结的多张表中其中一张表作为主表，用于展示查询结果，其余表作为副表，用于提供查询条件。</p>
+<pre><code>SELECT t1.列1, t1.列2
+FROM 表1 AS t1, 表1 AS t2
+WHERE t1.列3 = t2.列3
+AND t2.列4 = &#39;xxx&#39;;</code></pre>
+<blockquote>
+<p>这里通过列3来将t1和t2进行匹配，并通过t2.列4进行筛选，从而筛选出t1中符合条件的列</p>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>自然联结</li>
+</ol>
+<p>自然联结排除列的多次出现，使每个列只返回一次。因此，只需要选中主表的所有列（<code>SELECT 主表.*</code>），其余副表中的列明确指名即可。</p>
+<ol start="5" style="list-style-type: decimal">
+<li>外部联结</li>
+</ol>
+<p>外部联结包括左联结<code>LEFT OUTER JOIN</code>和右联结<code>RIGHT OUTER JOIN</code>，二者本质上是互通的。</p>
+<blockquote>
+<p>左联结就是以<code>LEFT OUTER JOIN</code>左边的表为准，右联结则以<code>RIGHT OUTER JOIN</code>右边的表为准</p>
+</blockquote>
+<pre><code>SELECT 表1.列1, 表2.列2
+FROM 表1 LEFT OUTER JOIN 表2
+ON 表1.列1 = 表2.列1</code></pre>
+</div>
+<div id="sql_2_12" class="section level3 hasAnchor" number="3.2.12">
+<h3><span class="header-section-number">3.2.12</span> 组合查询<a href="sql_2.html#sql_2_12" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>组合查询，就是将多条<code>SELECT</code>语句的结果整合到一起，作为单个查询结果返回。用关键字<code>UNION</code>连接多个<code>SELECT</code>语句。</p>
+<blockquote>
+<p>组合查询时每个查询必须包含相同的列、表达式或聚集函数</p>
+</blockquote>
+<p>组合查询即可用于对一张表的多次查询，也可用于在单次查询中从不同表返回类似结构的数据。</p>
+<blockquote>
+<p>前一种情形可用多个<code>WHERE</code>子句实现相同效果</p>
+</blockquote>
+<pre><code>SELECT 列1, 列2
+FROM 表1
+WHERE 列2 &lt;= 5
+UNION
+SELECT 列1, 列2
+FROM 表1
+WHERE 列3 IN (xxx,yyy);</code></pre>
+<p>在多次查询中，对与重复的行<code>UNION</code>会默认省去，使用<code>UNION ALL</code>关键字可返回所有匹配的行。</p>
+<p>在对组合查询结果排序时只能在最后一条<code>SELECT</code>语句后面添加<code>ORDER BY</code>子句</p>
+</div>
+<div id="sql_2_13" class="section level3 hasAnchor" number="3.2.13">
+<h3><span class="header-section-number">3.2.13</span> 全文本搜索<a href="sql_2.html#sql_2_13" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<blockquote>
+<p>并非所有引擎都支持全文本搜索，MyISAM引擎支持全文本搜索，而InnoDB引擎则不支持</p>
+</blockquote>
+<p>要实现全文本搜索，需要在创建表的时候将某些列指定为<code>FULLTEXT</code>，这样就能在后续使用<code>Match()</code>与<code>Against()</code>函数来进行搜索。<code>Match()</code>指定被搜索的列，该列必须在指定的<code>FULLTEXT</code>列中，若指定多列，则必须列出它们并且顺序与<code>FULLTEXT</code>中的一致。<code>Against()</code>指定要搜索的表达式，若要区分大小写则使用<code>BINARY</code>关键字。</p>
+<blockquote>
+<p>不要在导入数据时使用<code>FULLTEXT</code>，而是等导入所有数据后再修改表，定义<code>FULLTEXT</code></p>
+</blockquote>
+<pre><code>SELECT 列1
+FROM 表名
+WHERE Match(列1) Against(&#39;xxx&#39;);</code></pre>
+<blockquote>
+<p>被搜索的表达式越早出现，则其在搜索结果中越靠前</p>
+</blockquote>
+<ul>
+<li><p>查询扩展</p>
+<p>使用全文本搜索时只能找到包含目标表达式的行，而使用查询扩展则会在全文本搜索的基础上找出与目标较为相似（即使没有目标表达式，但出现其他共同的词汇）的其他行。</p></li>
+</ul>
+<pre><code>SELECT 列1
+FROM 表名
+WHERE Match(列1) Against(&#39;xxx&#39; WITH QUERY EXPANSION);</code></pre>
+<ul>
+<li><p>布尔文本搜索</p>
+<p>能更为精细地控制搜索模式，请详见原文。</p></li>
+</ul>
+</div>
+<div id="sql_2_14" class="section level3 hasAnchor" number="3.2.14">
+<h3><span class="header-section-number">3.2.14</span> 插入数据<a href="sql_2.html#sql_2_14" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li>插入记录</li>
+</ol>
+<p>使用<code>INSERT</code>子句插入记录。内容可填充为<code>NULL</code>，</p>
+<pre><code>INSERT INTO 表名 (
+列名
+)
+VALUES(
+NULL,
+&#39;xxx&#39;,
+...
+);</code></pre>
+<p>在填充时如果不给出列名（也就是表名后的圆括号），则按列的默认顺序依次填充。</p>
+<blockquote>
+<p>对于被定义为主键的列，可以不用为其填充，MySQL会自动填充</p>
+</blockquote>
+<p>若要插入多行记录，则确保值的顺序与列的顺序一致，多行记录的值用圆括号括起来并用逗号隔开。</p>
+<pre><code>INSERT INTO 表名 (
+列名
+)
+VALUES(
+NULL,
+&#39;xxx&#39;,
+...
+),
+(
+NULL,
+&#39;xxx&#39;,
+...
+);</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>插入检索出的数据</li>
+</ol>
+<p>可以先用<code>SELECT</code>检索出数据，再把检索出的数据插入到另一个表中。</p>
+<pre><code>INSERT INTO 表1 (
+...
+)
+SELECT ...
+FROM 表2;</code></pre>
+<p>注意<code>SELECT</code>子句中的列名不一定要与表1中的列名一样，在执行<code>INSERT SELECT</code>结构时仅关心<code>SELECT</code>子句中的位置关系，根据对应位置进行填充。</p>
+<blockquote>
+<p>如果其中包含了主键列，你可以省略该列，MySQL会自动增量</p>
+<p><code>SELECT</code>子句也可包含<code>WHERE</code>子句</p>
+</blockquote>
+</div>
+<div id="sql_2_15" class="section level3 hasAnchor" number="3.2.15">
+<h3><span class="header-section-number">3.2.15</span> 更新数据<a href="sql_2.html#sql_2_15" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li>更新</li>
+</ol>
+<p><code>UPDATE</code>语句用于更新数据。更新规则为“列 = 值”的形式，不同列之间用逗号隔开，利用<code>WHERE</code>筛选出要更新的行。</p>
+<pre><code>UPDATE 表名
+SET 列1 = &#39;xxx&#39;,
+    列2 = &#39;yyy&#39;
+WHERE 列3 = &#39;zzz&#39;;</code></pre>
+<blockquote>
+<p>在更新过程中可能会报错，默认会恢复到原值，如果想无视错误而更新一部分的话，可使用<code>UPDATE IGNORE</code>语句</p>
+<p>如果想删除某个列的值，可设置它为<code>NULL</code></p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>删除</li>
+</ol>
+<p><code>DELETE</code>语句删除行。</p>
+<pre><code>DELETE FROM 表名
+WHERE 列 = &#39;...&#39;;</code></pre>
+<p>根据<code>WHERE</code>子句删除特定行，若没有<code>WHERE</code>则删除所有行，但不意味着删除该表。</p>
+</div>
+<div id="sql_2_16" class="section level3 hasAnchor" number="3.2.16">
+<h3><span class="header-section-number">3.2.16</span> 表的操作<a href="sql_2.html#sql_2_16" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<ol style="list-style-type: decimal">
+<li>创建表</li>
+</ol>
+<p>利用<code>CREATE TABLE</code>创建表。</p>
+<pre><code>CREATE TABLE 表名 IF NOT EXISTS
+(
+主键1 int NOT NULL AUTO_INCREMENT,
+主键2 int NOT NULL,
+列1 char(50) NOT NULL DEFAULT &#39;xxx&#39;,
+列2 char (5) NULL,
+PRIMARY KEY (主键1, 主键2)
+) ENGINE = InnoDB;</code></pre>
+<p>创建表时，需给出列名及其对应的数据类型。可根据<code>PRIMARY KEY</code>来指定主键，主键可设置自动增量<code>AUTO_INCREMENT</code>。</p>
+<blockquote>
+<p>每个表只有一列允许<code>AUTO_INCREMENT</code></p>
+<p>可根据<code>SELECT last_insert_id()</code>来返回最后一个<code>AUTO_INCREMENT</code>值</p>
+<p>可用<code>DEFAULT</code>来设置默认值</p>
+<p>InnoDB引擎支持事务处理，但不支持全文本搜索；MEMORY速度快，适合临时表；MyISAM支持全文本搜索，但不支持事务处理</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>更新表</li>
+</ol>
+<blockquote>
+<p>当表中存储数据以后，不建议再更新，因此在创建表时就得深思熟虑</p>
+</blockquote>
+<p>使用<code>ALTER TABLE</code>语句进行更改表操作。对单个表进行多次更改时，可用逗号隔开每次更改。</p>
+<pre><code>ALTER TABLE 表名
+ADD 列名 CHAR(20);
+
+ALTER TABLE 表名
+DROP COLUMN 列名;
+
+ALTER TABLE 表1
+ADD CONSTRAINT 外键约束名
+FOREIGN KEY (外键字段名)
+REFERENCES 表2 (表2主键);</code></pre>
+<blockquote>
+<p>外键字段名是表中已经存在的列名，外键约束名则是该外键在整个数据库中的唯一标识符</p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>删除表</li>
+</ol>
+<pre><code>DROP TABLE 表名;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>重命名表</li>
+</ol>
+<pre><code>RENAME TABLE 表1 TO 新表1,
+             表2 TO 新表2;</code></pre>
+</div>
+<div id="sql_2_17" class="section level3 hasAnchor" number="3.2.17">
+<h3><span class="header-section-number">3.2.17</span> 使用视图<a href="sql_2.html#sql_2_17" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>视图(view)就是一张虚拟表，既可又一张表构成，又可结合多个表的数据。</p>
+<ol style="list-style-type: decimal">
+<li>创建视图</li>
+</ol>
+<pre><code>CREATE VIEW 视图名 AS
+SELECT 列1, 列2, 列3
+FROM 表1, 表2, 表3
+WHERE 表1.主键 = 表2.表1外键
+AND 表3.主键 = 表2.表3外键</code></pre>
+<blockquote>
+<p><code>AS</code>前面的就是视图名</p>
+</blockquote>
+<p>在创建好视图后，即可对视图进行一般的查询操作。</p>
+<blockquote>
+<p>一般视图用于检索数据而非更新，故不介绍视图的更新操作</p>
+</blockquote>
+</div>
+<div id="sql_2_18" class="section level3 hasAnchor" number="3.2.18">
+<h3><span class="header-section-number">3.2.18</span> 使用存储过程<a href="sql_2.html#sql_2_18" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<blockquote>
+<p><strong>存储过程</strong>类似自定义函数，你不一定有创建存储过程的权限，但可能会使用到它</p>
+<p><strong>游标</strong>是包含在存储过程中的一个概念，故不介绍</p>
+</blockquote>
+<p>使用<code>CALL</code>关键字来调用存储过程。</p>
+<pre><code>CALL 存储过程名
+(@参数1, @参数2, @参数3);</code></pre>
+</div>
+<div id="sql_2_19" class="section level3 hasAnchor" number="3.2.19">
+<h3><span class="header-section-number">3.2.19</span> 触发器<a href="sql_2.html#sql_2_19" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<blockquote>
+<p>创建触发器也是需要安全访问权限，故了解即可</p>
+</blockquote>
+<p>所谓触发器，就是在特定语句（仅限<code>DELETE</code>、<code>INSERT</code>、<code>UPDATE</code>）发生之前或之后自动执行的行为。</p>
+<ol style="list-style-type: decimal">
+<li>创建触发器</li>
+</ol>
+<pre><code>CREATE TRIGGER 触发器名 AFTER INSERT ON 表名
+FOR EACH ROW 操作;</code></pre>
+<p><code>CREATE TRIGGER</code>关键字来创建触发器，<code>AFTER INSERT</code>定义触发器在<code>INSERT</code>语句发生后触发，第二行就是针对每个被插入行的具体操作了，具体操作可到时视情况而定。</p>
+<ol start="2" style="list-style-type: decimal">
+<li>删除触发器</li>
+</ol>
+<pre><code>DROP TRIGGER 触发器名;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>使用触发器</li>
+</ol>
+<ul>
+<li><p>INSERT触发器</p>
+<p>在INSERT触发器内部可引用一个名为<code>NEW</code>的虚拟表，用于访问被插入的行。</p></li>
+</ul>
+<pre><code>CREATE TRIGGER 触发器名 AFTER INSERT ON 表名
+FOR EACH ROW SELECT NEW.列1;</code></pre>
+<p>该代码表明在每次插入新的行后，返回这些行的列1。</p>
+<ul>
+<li><p>DELETE触发器</p>
+<p>在DELETE触发器内部可引用一个名为<code>OLD</code>的虚拟表，用于访问要被删除的行。</p></li>
+</ul>
+<pre><code>CREATE TRIGGER 触发器名 BEFORE DELETE ON 表名
+FOR EACH ROW
+BEGIN
+   ...
+END;</code></pre>
+<p>该代码定义了在<code>DELETE</code>语句前要执行的行为，具体行为被包含在<code>BEGIN END</code>块中，这使得能够该触发器能够容纳多条SQL语句。</p>
+<ul>
+<li><p>UPDATE触发器</p>
+<p>在UPDATE触发器内部可引用<code>OLD</code>和<code>NEW</code>的虚拟表，用于访问被插入与被删除的行。</p></li>
+</ul>
+<pre><code>CREATE TRIGGER 触发器名 BEFORE UPDATE ON 表名
+FOR EACH ROW 操作;</code></pre>
+</div>
+<div id="sql_2_20" class="section level3 hasAnchor" number="3.2.20">
+<h3><span class="header-section-number">3.2.20</span> 事务处理<a href="sql_2.html#sql_2_20" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>事务处理一种机制，确保某些操作应当成批执行，或者不执行，从而确保结果的完整性与过程的一致性。</p>
+<blockquote>
+<p><strong>事务</strong>指的是一组SQL语句</p>
+<p>事务处理用来管理<code>INSERT</code>、<code>UPDATE</code>、<code>DELETE</code>语句</p>
+</blockquote>
+<p>事务处理以<code>START TRANSACTION</code>关键字开头。</p>
+<ul>
+<li>回退</li>
+</ul>
+<p><code>ROLLBACK</code>关键词撤销前面的所有操作，表的状态会回到<code>START TRANSACTION</code>前的状态。</p>
+<pre><code>START TRANSACTION;
+操作;
+ROLLBACK;</code></pre>
+<ul>
+<li>提交</li>
+</ul>
+<p><code>COMMIT</code>是在前述所有操作成功的前提下才会执行，得到最终结果。</p>
+<pre><code>START TRANSACTION;
+操作;
+COMMIT;</code></pre>
+<ul>
+<li>保留点</li>
+</ul>
+<p>保留点相当于存档点，有时候不一定要回退到最开始的状态，可以中途定义一些保留点，然后回退到保留点即可。</p>
+<pre><code>START TRANSACTION;
+操作;
+SAVEPOINT 保留点1;
+操作;
+ROLLBACK TO 保留点1;</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sql_1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spider.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "toc_depth": 3
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

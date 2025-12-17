@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>16.3 群组变量选择 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="16.3 群组变量选择 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="16.3 群组变量选择 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="penalty_2.html"/>
+<link rel="next" href="penalty_4.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="content.html"><a href="content.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>个人简介</a></li>
+<li class="part"><span><b>I 专项</b></span></li>
+<li class="chapter" data-level="1" data-path="rmd.html"><a href="rmd.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rmd_1.html"><a href="rmd_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="rmd_2.html"><a href="rmd_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="1.3" data-path="rmd_3.html"><a href="rmd_3.html"><i class="fa fa-check"></i><b>1.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 标题</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 换行</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_4"><i class="fa fa-check"></i><b>1.3.4</b> 链接</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_5"><i class="fa fa-check"></i><b>1.3.5</b> 引用</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_6"><i class="fa fa-check"></i><b>1.3.6</b> 列表</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_7"><i class="fa fa-check"></i><b>1.3.7</b> 代码</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_8"><i class="fa fa-check"></i><b>1.3.8</b> 表格</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_9"><i class="fa fa-check"></i><b>1.3.9</b> 图片</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_10"><i class="fa fa-check"></i><b>1.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rmd_4.html"><a href="rmd_4.html"><i class="fa fa-check"></i><b>1.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_2"><i class="fa fa-check"></i><b>1.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_4"><i class="fa fa-check"></i><b>1.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_5"><i class="fa fa-check"></i><b>1.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="1.4.6" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_6"><i class="fa fa-check"></i><b>1.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="1.4.7" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_7"><i class="fa fa-check"></i><b>1.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="1.4.8" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_8"><i class="fa fa-check"></i><b>1.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="1.4.9" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_9"><i class="fa fa-check"></i><b>1.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="1.4.10" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_10"><i class="fa fa-check"></i><b>1.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="1.4.11" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_11"><i class="fa fa-check"></i><b>1.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="1.4.12" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_12"><i class="fa fa-check"></i><b>1.4.12</b> 注释</a></li>
+<li class="chapter" data-level="1.4.13" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_13"><i class="fa fa-check"></i><b>1.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="1.4.14" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_14"><i class="fa fa-check"></i><b>1.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rmd_5.html"><a href="rmd_5.html"><i class="fa fa-check"></i><b>1.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_1"><i class="fa fa-check"></i><b>1.5.1</b> 标签</a></li>
+<li class="chapter" data-level="1.5.2" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_2"><i class="fa fa-check"></i><b>1.5.2</b> 目录</a></li>
+<li class="chapter" data-level="1.5.3" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_3"><i class="fa fa-check"></i><b>1.5.3</b> 外观</a></li>
+<li class="chapter" data-level="1.5.4" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_4"><i class="fa fa-check"></i><b>1.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="1.5.5" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_5"><i class="fa fa-check"></i><b>1.5.5</b> 表格</a></li>
+<li class="chapter" data-level="1.5.6" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_6"><i class="fa fa-check"></i><b>1.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="1.5.7" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_7"><i class="fa fa-check"></i><b>1.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="1.5.8" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_8"><i class="fa fa-check"></i><b>1.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="1.5.9" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_9"><i class="fa fa-check"></i><b>1.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="1.5.10" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_10"><i class="fa fa-check"></i><b>1.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rmd_6.html"><a href="rmd_6.html"><i class="fa fa-check"></i><b>1.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_1"><i class="fa fa-check"></i><b>1.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="1.6.2" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_2"><i class="fa fa-check"></i><b>1.6.2</b> 目录</a></li>
+<li class="chapter" data-level="1.6.3" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_3"><i class="fa fa-check"></i><b>1.6.3</b> 图与表</a></li>
+<li class="chapter" data-level="1.6.4" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_4"><i class="fa fa-check"></i><b>1.6.4</b> 语法高亮</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manim.html"><a href="manim.html"><i class="fa fa-check"></i><b>2</b> Manim</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manim_1.html"><a href="manim_1.html"><i class="fa fa-check"></i><b>2.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="2.2" data-path="manim_2.html"><a href="manim_2.html"><i class="fa fa-check"></i><b>2.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="2.3" data-path="manim_3.html"><a href="manim_3.html"><i class="fa fa-check"></i><b>2.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="manim_3.html"><a href="manim_3.html#manim_3_1"><i class="fa fa-check"></i><b>2.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="2.3.2" data-path="manim_3.html"><a href="manim_3.html#manim_3_2"><i class="fa fa-check"></i><b>2.3.2</b> 片段</a></li>
+<li class="chapter" data-level="2.3.3" data-path="manim_3.html"><a href="manim_3.html#manim_3_3"><i class="fa fa-check"></i><b>2.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="manim_4.html"><a href="manim_4.html"><i class="fa fa-check"></i><b>2.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="manim_4.html"><a href="manim_4.html#manim_4_1"><i class="fa fa-check"></i><b>2.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="manim_4.html"><a href="manim_4.html#manim_4_2"><i class="fa fa-check"></i><b>2.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="2.4.3" data-path="manim_4.html"><a href="manim_4.html#manim_4_3"><i class="fa fa-check"></i><b>2.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="manim_5.html"><a href="manim_5.html"><i class="fa fa-check"></i><b>2.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manim_5.html"><a href="manim_5.html#manim_5_1"><i class="fa fa-check"></i><b>2.5.1</b> Text</a></li>
+<li class="chapter" data-level="2.5.2" data-path="manim_5.html"><a href="manim_5.html#manim_5_2"><i class="fa fa-check"></i><b>2.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="2.5.3" data-path="manim_5.html"><a href="manim_5.html#manim_5_3"><i class="fa fa-check"></i><b>2.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="2.5.4" data-path="manim_5.html"><a href="manim_5.html#manim_5_4"><i class="fa fa-check"></i><b>2.5.4</b> Tex</a></li>
+<li class="chapter" data-level="2.5.5" data-path="manim_5.html"><a href="manim_5.html#manim_5_5"><i class="fa fa-check"></i><b>2.5.5</b> MathTex</a></li>
+<li class="chapter" data-level="2.5.6" data-path="manim_5.html"><a href="manim_5.html#manim_5_6"><i class="fa fa-check"></i><b>2.5.6</b> Title</a></li>
+<li class="chapter" data-level="2.5.7" data-path="manim_5.html"><a href="manim_5.html#manim_5_7"><i class="fa fa-check"></i><b>2.5.7</b> BulletedList</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manim_6.html"><a href="manim_6.html"><i class="fa fa-check"></i><b>2.6</b> 内置颜色</a></li>
+<li class="chapter" data-level="2.7" data-path="manim_7.html"><a href="manim_7.html"><i class="fa fa-check"></i><b>2.7</b> 物体的位置与移动</a></li>
+<li class="chapter" data-level="2.8" data-path="manim_8.html"><a href="manim_8.html"><i class="fa fa-check"></i><b>2.8</b> 动画</a></li>
+<li class="chapter" data-level="2.9" data-path="manim_9.html"><a href="manim_9.html"><i class="fa fa-check"></i><b>2.9</b> 镜头视角</a></li>
+<li class="chapter" data-level="2.10" data-path="manim_10.html"><a href="manim_10.html"><i class="fa fa-check"></i><b>2.10</b> 存储对象</a></li>
+<li class="chapter" data-level="2.11" data-path="manim_11.html"><a href="manim_11.html"><i class="fa fa-check"></i><b>2.11</b> 成品</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
+<li class="chapter" data-level="3.2.2" data-path="sql_2.html"><a href="sql_2.html#sql_2_2"><i class="fa fa-check"></i><b>3.2.2</b> 选择数据库与表</a></li>
+<li class="chapter" data-level="3.2.3" data-path="sql_2.html"><a href="sql_2.html#sql_2_3"><i class="fa fa-check"></i><b>3.2.3</b> 检索数据</a></li>
+<li class="chapter" data-level="3.2.4" data-path="sql_2.html"><a href="sql_2.html#sql_2_4"><i class="fa fa-check"></i><b>3.2.4</b> 排序检索数据</a></li>
+<li class="chapter" data-level="3.2.5" data-path="sql_2.html"><a href="sql_2.html#sql_2_5"><i class="fa fa-check"></i><b>3.2.5</b> 过滤数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="sql_2.html"><a href="sql_2.html#sql_2_6"><i class="fa fa-check"></i><b>3.2.6</b> 计算字段</a></li>
+<li class="chapter" data-level="3.2.7" data-path="sql_2.html"><a href="sql_2.html#sql_2_7"><i class="fa fa-check"></i><b>3.2.7</b> 函数</a></li>
+<li class="chapter" data-level="3.2.8" data-path="sql_2.html"><a href="sql_2.html#sql_2_8"><i class="fa fa-check"></i><b>3.2.8</b> 汇总数据</a></li>
+<li class="chapter" data-level="3.2.9" data-path="sql_2.html"><a href="sql_2.html#sql_2_9"><i class="fa fa-check"></i><b>3.2.9</b> 数据分组</a></li>
+<li class="chapter" data-level="3.2.10" data-path="sql_2.html"><a href="sql_2.html#sql_2_10"><i class="fa fa-check"></i><b>3.2.10</b> 子查询</a></li>
+<li class="chapter" data-level="3.2.11" data-path="sql_2.html"><a href="sql_2.html#sql_2_11"><i class="fa fa-check"></i><b>3.2.11</b> 表联结</a></li>
+<li class="chapter" data-level="3.2.12" data-path="sql_2.html"><a href="sql_2.html#sql_2_12"><i class="fa fa-check"></i><b>3.2.12</b> 组合查询</a></li>
+<li class="chapter" data-level="3.2.13" data-path="sql_2.html"><a href="sql_2.html#sql_2_13"><i class="fa fa-check"></i><b>3.2.13</b> 全文本搜索</a></li>
+<li class="chapter" data-level="3.2.14" data-path="sql_2.html"><a href="sql_2.html#sql_2_14"><i class="fa fa-check"></i><b>3.2.14</b> 插入数据</a></li>
+<li class="chapter" data-level="3.2.15" data-path="sql_2.html"><a href="sql_2.html#sql_2_15"><i class="fa fa-check"></i><b>3.2.15</b> 更新数据</a></li>
+<li class="chapter" data-level="3.2.16" data-path="sql_2.html"><a href="sql_2.html#sql_2_16"><i class="fa fa-check"></i><b>3.2.16</b> 表的操作</a></li>
+<li class="chapter" data-level="3.2.17" data-path="sql_2.html"><a href="sql_2.html#sql_2_17"><i class="fa fa-check"></i><b>3.2.17</b> 使用视图</a></li>
+<li class="chapter" data-level="3.2.18" data-path="sql_2.html"><a href="sql_2.html#sql_2_18"><i class="fa fa-check"></i><b>3.2.18</b> 使用存储过程</a></li>
+<li class="chapter" data-level="3.2.19" data-path="sql_2.html"><a href="sql_2.html#sql_2_19"><i class="fa fa-check"></i><b>3.2.19</b> 触发器</a></li>
+<li class="chapter" data-level="3.2.20" data-path="sql_2.html"><a href="sql_2.html#sql_2_20"><i class="fa fa-check"></i><b>3.2.20</b> 事务处理</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spider_1.html"><a href="spider_1.html"><i class="fa fa-check"></i><b>4.1</b> 提要</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>5</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="shiny_1.html"><a href="shiny_1.html"><i class="fa fa-check"></i><b>5.1</b> 初始Shiny</a></li>
+<li class="chapter" data-level="5.2" data-path="shiny_2.html"><a href="shiny_2.html"><i class="fa fa-check"></i><b>5.2</b> UI设计</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 输入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 输出</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="shiny_3.html"><a href="shiny_3.html"><i class="fa fa-check"></i><b>5.3</b> 反应式编程</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 服务端</a></li>
+<li class="chapter" data-level="5.3.2" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 反应表达式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_3"><i class="fa fa-check"></i><b>5.3.3</b> 控制更新</a></li>
+<li class="chapter" data-level="5.3.4" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_4"><i class="fa fa-check"></i><b>5.3.4</b> 信息反馈</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="shiny_4.html"><a href="shiny_4.html"><i class="fa fa-check"></i><b>5.4</b> 页面布局</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_1"><i class="fa fa-check"></i><b>5.4.1</b> 页面函数</a></li>
+<li class="chapter" data-level="5.4.2" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2"><i class="fa fa-check"></i><b>5.4.2</b> 布局函数</a></li>
+<li class="chapter" data-level="5.4.3" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2_3"><i class="fa fa-check"></i><b>5.4.3</b> bslib风格布局</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="shiny_5.html"><a href="shiny_5.html"><i class="fa fa-check"></i><b>5.5</b> 主题</a></li>
+<li class="chapter" data-level="5.6" data-path="shiny_6.html"><a href="shiny_6.html"><i class="fa fa-check"></i><b>5.6</b> 交互式图像与插入图像</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_1"><i class="fa fa-check"></i><b>5.6.1</b> 交互式图像</a></li>
+<li class="chapter" data-level="5.6.2" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_2"><i class="fa fa-check"></i><b>5.6.2</b> 插入图像</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="shiny_7.html"><a href="shiny_7.html"><i class="fa fa-check"></i><b>5.7</b> 用户反馈</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_1"><i class="fa fa-check"></i><b>5.7.1</b> 验证</a></li>
+<li class="chapter" data-level="5.7.2" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_2"><i class="fa fa-check"></i><b>5.7.2</b> 通知</a></li>
+<li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
+<li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
+<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
+<li class="chapter" data-level="5.10.2" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 外观</a></li>
+<li class="chapter" data-level="5.10.3" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_3"><i class="fa fa-check"></i><b>5.10.3</b> 案例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="langchain.html"><a href="langchain.html"><i class="fa fa-check"></i><b>6</b> Langchain</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="langchain_x.html"><a href="langchain_x.html"><i class="fa fa-check"></i><b>6.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="langchain_x.html"><a href="langchain_x.html#langchain_x_1"><i class="fa fa-check"></i><b>6.1.1</b> NL2SQL</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 模型与方法</b></span></li>
+<li class="chapter" data-level="7" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>7</b> 应用回归分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg_1.html"><a href="reg_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="reg_1.html"><a href="reg_1.html#reg_1_1"><i class="fa fa-check"></i><b>7.1.1</b> 变量间的相关关系</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reg_1.html"><a href="reg_1.html#reg_1_2"><i class="fa fa-check"></i><b>7.1.2</b> 回归模型的一般形式</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="reg_2.html"><a href="reg_2.html"><i class="fa fa-check"></i><b>7.2</b> 假定</a></li>
+<li class="chapter" data-level="7.3" data-path="reg_3.html"><a href="reg_3.html"><i class="fa fa-check"></i><b>7.3</b> 线性回归模型</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="reg_3.html"><a href="reg_3.html#reg_3_1"><i class="fa fa-check"></i><b>7.3.1</b> 一元线性回归模型</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg_3.html"><a href="reg_3.html#reg_3_2"><i class="fa fa-check"></i><b>7.3.2</b> 多元线性回归模型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="reg_4.html"><a href="reg_4.html"><i class="fa fa-check"></i><b>7.4</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>7.4.1</b> 最小二乘估计</a></li>
+<li class="chapter" data-level="7.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>7.4.2</b> 极大似然估计</a></li>
+<li class="chapter" data-level="7.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>7.4.3</b> 矩估计</a></li>
+<li class="chapter" data-level="7.4.4" data-path="reg_4.html"><a href="reg_4.html#reg_4_4"><i class="fa fa-check"></i><b>7.4.4</b> 几何视角</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="reg_5.html"><a href="reg_5.html"><i class="fa fa-check"></i><b>7.5</b> 最小二乘估计的性质</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="reg_5.html"><a href="reg_5.html#reg_5_1"><i class="fa fa-check"></i><b>7.5.1</b> 线性</a></li>
+<li class="chapter" data-level="7.5.2" data-path="reg_5.html"><a href="reg_5.html#reg_5_2"><i class="fa fa-check"></i><b>7.5.2</b> 无偏性</a></li>
+<li class="chapter" data-level="7.5.3" data-path="reg_5.html"><a href="reg_5.html#reg_5_3"><i class="fa fa-check"></i><b>7.5.3</b> 有效性</a></li>
+<li class="chapter" data-level="7.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>7.5.4</b> 方差</a></li>
+<li class="chapter" data-level="7.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>7.5.5</b> 正态性</a></li>
+<li class="chapter" data-level="7.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>7.5.6</b> 残差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>7.6</b> 显著性检验</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>7.6.1</b> 区间估计</a></li>
+<li class="chapter" data-level="7.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>7.6.2</b> t检验</a></li>
+<li class="chapter" data-level="7.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>7.6.3</b> F检验</a></li>
+<li class="chapter" data-level="7.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>7.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="7.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>7.6.5</b> 样本决定系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>7.7</b> 预测</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>7.7.1</b> 预测因变量新值的均值</a></li>
+<li class="chapter" data-level="7.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>7.7.2</b> 预测因变量的新值</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>7.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="7.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>7.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>7.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="7.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>7.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="7.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>7.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="7.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>7.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="7.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>7.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.11" data-path="reg_11.html"><a href="reg_11.html"><i class="fa fa-check"></i><b>7.11</b> 重要的定义和等式</a></li>
+<li class="chapter" data-level="7.12" data-path="reg_12.html"><a href="reg_12.html"><i class="fa fa-check"></i><b>7.12</b> 回归诊断</a>
+<ul>
+<li class="chapter" data-level="7.12.1" data-path="reg_12.html"><a href="reg_12.html#reg_12_1"><i class="fa fa-check"></i><b>7.12.1</b> 残差分析</a></li>
+<li class="chapter" data-level="7.12.2" data-path="reg_12.html"><a href="reg_12.html#reg_12_2"><i class="fa fa-check"></i><b>7.12.2</b> 异常点和强影响点</a></li>
+<li class="chapter" data-level="7.12.3" data-path="reg_12.html"><a href="reg_12.html#reg_12_3"><i class="fa fa-check"></i><b>7.12.3</b> 异方差</a></li>
+<li class="chapter" data-level="7.12.4" data-path="reg_12.html"><a href="reg_12.html#reg_12_4"><i class="fa fa-check"></i><b>7.12.4</b> 自相关</a></li>
+<li class="chapter" data-level="7.12.5" data-path="reg_12.html"><a href="reg_12.html#reg_12_5"><i class="fa fa-check"></i><b>7.12.5</b> 多重共线性</a></li>
+</ul></li>
+<li class="chapter" data-level="7.13" data-path="reg_13.html"><a href="reg_13.html"><i class="fa fa-check"></i><b>7.13</b> 变量选择与正则化</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="reg_13.html"><a href="reg_13.html#reg_13_1"><i class="fa fa-check"></i><b>7.13.1</b> 冗余与遗漏</a></li>
+<li class="chapter" data-level="7.13.2" data-path="reg_13.html"><a href="reg_13.html#reg_13_2"><i class="fa fa-check"></i><b>7.13.2</b> 变量选择的传统方法</a></li>
+<li class="chapter" data-level="7.13.3" data-path="reg_13.html"><a href="reg_13.html#reg_13_3"><i class="fa fa-check"></i><b>7.13.3</b> 变量选择的正则化方法</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>8</b> 应用多元统计</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ms_1.html"><a href="ms_1.html"><i class="fa fa-check"></i><b>8.1</b> 矩阵运算</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="ms_1.html"><a href="ms_1.html#ms_1_1"><i class="fa fa-check"></i><b>8.1.1</b> Kronecker积</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ms_1.html"><a href="ms_1.html#ms_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 拉直</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ms_1.html"><a href="ms_1.html#ms_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 减号逆与加号逆</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ms_1.html"><a href="ms_1.html#ms_1_4"><i class="fa fa-check"></i><b>8.1.4</b> 分块矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ms_2.html"><a href="ms_2.html"><i class="fa fa-check"></i><b>8.2</b> 多元正态分布</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ms_2.html"><a href="ms_2.html#ms_2_1"><i class="fa fa-check"></i><b>8.2.1</b> 多元分布的基本运算性质</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ms_2.html"><a href="ms_2.html#ms_2_2"><i class="fa fa-check"></i><b>8.2.2</b> 多元正态分布的定义</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ms_2.html"><a href="ms_2.html#ms_2_3"><i class="fa fa-check"></i><b>8.2.3</b> 正态分布的条件分布和独立性</a></li>
+<li class="chapter" data-level="8.2.4" data-path="ms_2.html"><a href="ms_2.html#ms_2_4"><i class="fa fa-check"></i><b>8.2.4</b> 偏相关系数与全相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ms_3.html"><a href="ms_3.html"><i class="fa fa-check"></i><b>8.3</b> 主成分分析</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ms_3.html"><a href="ms_3.html#ms_3_1"><i class="fa fa-check"></i><b>8.3.1</b> 总体主成分</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ms_3.html"><a href="ms_3.html#ms_3_2"><i class="fa fa-check"></i><b>8.3.2</b> 样本主成分</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ms_3.html"><a href="ms_3.html#ms_3_3"><i class="fa fa-check"></i><b>8.3.3</b> 关于主成分</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ms_4.html"><a href="ms_4.html"><i class="fa fa-check"></i><b>8.4</b> 因子分析</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ms_4.html"><a href="ms_4.html#ms_4_1"><i class="fa fa-check"></i><b>8.4.1</b> 正交因子模型</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ms_4.html"><a href="ms_4.html#ms_4_3"><i class="fa fa-check"></i><b>8.4.2</b> 参数估计</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ms_4.html"><a href="ms_4.html#ms_4_4"><i class="fa fa-check"></i><b>8.4.3</b> 因子旋转</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ms_4.html"><a href="ms_4.html#ms_4_5"><i class="fa fa-check"></i><b>8.4.4</b> 因子得分</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ms_4.html"><a href="ms_4.html#ms_4_6"><i class="fa fa-check"></i><b>8.4.5</b> 因子分析和主成分分析的区别与联系</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ms_5.html"><a href="ms_5.html"><i class="fa fa-check"></i><b>8.5</b> 判别分析</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ms_5.html"><a href="ms_5.html#ms_5_1"><i class="fa fa-check"></i><b>8.5.1</b> 距离判别</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ms_5.html"><a href="ms_5.html#ms_5_2"><i class="fa fa-check"></i><b>8.5.2</b> 贝叶斯判别</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ms_6.html"><a href="ms_6.html"><i class="fa fa-check"></i><b>8.6</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ms_6.html"><a href="ms_6.html#ms_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 距离与相似性的度量</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ms_6.html"><a href="ms_6.html#ms_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 聚类效果的评价指标</a></li>
+<li class="chapter" data-level="8.6.3" data-path="ms_6.html"><a href="ms_6.html#ms_6_3"><i class="fa fa-check"></i><b>8.6.3</b> 系统聚类</a></li>
+<li class="chapter" data-level="8.6.4" data-path="ms_6.html"><a href="ms_6.html#ms_6_4"><i class="fa fa-check"></i><b>8.6.4</b> Kmeans</a></li>
+<li class="chapter" data-level="8.6.5" data-path="ms_6.html"><a href="ms_6.html#ms_6_5"><i class="fa fa-check"></i><b>8.6.5</b> 其他聚类方法</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="ms_7.html"><a href="ms_7.html"><i class="fa fa-check"></i><b>8.7</b> 典型相关分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ml.html"><a href="ml.html"><i class="fa fa-check"></i><b>9</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ml_1.html"><a href="ml_1.html"><i class="fa fa-check"></i><b>9.1</b> 基础知识</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>9.1.1</b> 偏差-方差权衡</a></li>
+<li class="chapter" data-level="9.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>9.1.2</b> 评价指标</a></li>
+<li class="chapter" data-level="9.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>9.1.3</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>9.2</b> pandas与sklearn</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ml_2.html"><a href="ml_2.html#ml_2_1"><i class="fa fa-check"></i><b>9.2.1</b> 导入数据集</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ml_2.html"><a href="ml_2.html#ml_2_2"><i class="fa fa-check"></i><b>9.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ml_2.html"><a href="ml_2.html#ml_2_3"><i class="fa fa-check"></i><b>9.2.3</b> 分割数据集</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ml_3.html"><a href="ml_3.html"><i class="fa fa-check"></i><b>9.3</b> 决策树</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ml_3.html"><a href="ml_3.html#ml_3_1"><i class="fa fa-check"></i><b>9.3.1</b> 分类树</a></li>
+<li class="chapter" data-level="9.3.2" data-path="ml_3.html"><a href="ml_3.html#ml_3_2"><i class="fa fa-check"></i><b>9.3.2</b> 回归树</a></li>
+<li class="chapter" data-level="9.3.3" data-path="ml_3.html"><a href="ml_3.html#ml_3_3"><i class="fa fa-check"></i><b>9.3.3</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ml_4.html"><a href="ml_4.html"><i class="fa fa-check"></i><b>9.4</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ml_4.html"><a href="ml_4.html#ml_4_1"><i class="fa fa-check"></i><b>9.4.1</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ml_5.html"><a href="ml_5.html"><i class="fa fa-check"></i><b>9.5</b> XGBoost</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="ml_5.html"><a href="ml_5.html#ml_5_1"><i class="fa fa-check"></i><b>9.5.1</b> 原理</a></li>
+<li class="chapter" data-level="9.5.2" data-path="ml_5.html"><a href="ml_5.html#ml_5_2"><i class="fa fa-check"></i><b>9.5.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="ml_6.html"><a href="ml_6.html"><i class="fa fa-check"></i><b>9.6</b> LightGBM</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>9.6.1</b> 原理</a></li>
+<li class="chapter" data-level="9.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>9.6.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>9.7</b> 因果森林</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>9.7.1</b> 原理</a></li>
+<li class="chapter" data-level="9.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>9.7.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>9.8</b> SVM</a></li>
+<li class="chapter" data-level="9.9" data-path="ml_9.html"><a href="ml_9.html"><i class="fa fa-check"></i><b>9.9</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="ml_9.html"><a href="ml_9.html#ml_9_1"><i class="fa fa-check"></i><b>9.9.1</b> 聚类结果评价</a></li>
+<li class="chapter" data-level="9.9.2" data-path="ml_9.html"><a href="ml_9.html#ml_9_2"><i class="fa fa-check"></i><b>9.9.2</b> Kmeans</a></li>
+<li class="chapter" data-level="9.9.3" data-path="ml_9.html"><a href="ml_9.html#ml_9_3"><i class="fa fa-check"></i><b>9.9.3</b> Kmeans++</a></li>
+<li class="chapter" data-level="9.9.4" data-path="ml_9.html"><a href="ml_9.html#ml_9_4"><i class="fa fa-check"></i><b>9.9.4</b> DBSCAN</a></li>
+<li class="chapter" data-level="9.9.5" data-path="ml_9.html"><a href="ml_9.html#ml_9_5"><i class="fa fa-check"></i><b>9.9.5</b> HDBSCAN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dl.html"><a href="dl.html"><i class="fa fa-check"></i><b>10</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dl_1.html"><a href="dl_1.html"><i class="fa fa-check"></i><b>10.1</b> 预备知识</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>10.1.1</b> 数据操作</a></li>
+<li class="chapter" data-level="10.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>10.1.2</b> 自动微分</a></li>
+<li class="chapter" data-level="10.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>10.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="10.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>10.1.4</b> 调参技巧</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>10.2</b> 线性神经网络</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dl_2.html"><a href="dl_2.html#dl_2_1"><i class="fa fa-check"></i><b>10.2.1</b> 线性回归</a></li>
+<li class="chapter" data-level="10.2.2" data-path="dl_2.html"><a href="dl_2.html#dl_2_2"><i class="fa fa-check"></i><b>10.2.2</b> 二分类问题</a></li>
+<li class="chapter" data-level="10.2.3" data-path="dl_2.html"><a href="dl_2.html#dl_2_3"><i class="fa fa-check"></i><b>10.2.3</b> 多分类问题</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dl_9.html"><a href="dl_9.html"><i class="fa fa-check"></i><b>10.3</b> RNN</a></li>
+<li class="chapter" data-level="10.4" data-path="dl_3.html"><a href="dl_3.html"><i class="fa fa-check"></i><b>10.4</b> LSTM</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="dl_3.html"><a href="dl_3.html#dl_3_1"><i class="fa fa-check"></i><b>10.4.1</b> 原理</a></li>
+<li class="chapter" data-level="10.4.2" data-path="dl_3.html"><a href="dl_3.html#dl_3_2"><i class="fa fa-check"></i><b>10.4.2</b> 示例</a></li>
+<li class="chapter" data-level="10.4.3" data-path="dl_3.html"><a href="dl_3.html#dl_3_3"><i class="fa fa-check"></i><b>10.4.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="dl_4.html"><a href="dl_4.html"><i class="fa fa-check"></i><b>10.5</b> GRU</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="dl_4.html"><a href="dl_4.html#dl_4_1"><i class="fa fa-check"></i><b>10.5.1</b> 原理</a></li>
+<li class="chapter" data-level="10.5.2" data-path="dl_4.html"><a href="dl_4.html#dl_4_2"><i class="fa fa-check"></i><b>10.5.2</b> 示例</a></li>
+<li class="chapter" data-level="10.5.3" data-path="dl_4.html"><a href="dl_4.html#dl_4_3"><i class="fa fa-check"></i><b>10.5.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="dl_5.html"><a href="dl_5.html"><i class="fa fa-check"></i><b>10.6</b> Seq2Seq</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="dl_5.html"><a href="dl_5.html#dl_5_1"><i class="fa fa-check"></i><b>10.6.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="dl_6.html"><a href="dl_6.html"><i class="fa fa-check"></i><b>10.7</b> BNN</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="dl_6.html"><a href="dl_6.html#dl_6_1"><i class="fa fa-check"></i><b>10.7.1</b> 原理</a></li>
+<li class="chapter" data-level="10.7.2" data-path="dl_6.html"><a href="dl_6.html#dl_6_2"><i class="fa fa-check"></i><b>10.7.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="dl_7.html"><a href="dl_7.html"><i class="fa fa-check"></i><b>10.8</b> GNN</a>
+<ul>
+<li class="chapter" data-level="10.8.1" data-path="dl_7.html"><a href="dl_7.html#dl_7_1"><i class="fa fa-check"></i><b>10.8.1</b> 原理</a></li>
+<li class="chapter" data-level="10.8.2" data-path="dl_7.html"><a href="dl_7.html#dl_7_2"><i class="fa fa-check"></i><b>10.8.2</b> 图神经网络的类型</a></li>
+<li class="chapter" data-level="10.8.3" data-path="dl_7.html"><a href="dl_7.html#dl_7_3"><i class="fa fa-check"></i><b>10.8.3</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.9" data-path="dl_8.html"><a href="dl_8.html"><i class="fa fa-check"></i><b>10.9</b> Diffusion Model</a>
+<ul>
+<li class="chapter" data-level="10.9.1" data-path="dl_8.html"><a href="dl_8.html#dl_8_1"><i class="fa fa-check"></i><b>10.9.1</b> 原理</a></li>
+<li class="chapter" data-level="10.9.2" data-path="dl_8.html"><a href="dl_8.html#dl_8_2"><i class="fa fa-check"></i><b>10.9.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.10" data-path="dl_10.html"><a href="dl_10.html"><i class="fa fa-check"></i><b>10.10</b> Transformer</a>
+<ul>
+<li class="chapter" data-level="10.10.1" data-path="dl_10.html"><a href="dl_10.html#dl_10_1"><i class="fa fa-check"></i><b>10.10.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.11" data-path="dl_11.html"><a href="dl_11.html"><i class="fa fa-check"></i><b>10.11</b> BERT</a>
+<ul>
+<li class="chapter" data-level="10.11.1" data-path="dl_11.html"><a href="dl_11.html#dl_11_1"><i class="fa fa-check"></i><b>10.11.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.12" data-path="dl_12.html"><a href="dl_12.html"><i class="fa fa-check"></i><b>10.12</b> GPT</a>
+<ul>
+<li class="chapter" data-level="10.12.1" data-path="dl_12.html"><a href="dl_12.html#dl_12_1"><i class="fa fa-check"></i><b>10.12.1</b> GPT-1</a></li>
+<li class="chapter" data-level="10.12.2" data-path="dl_12.html"><a href="dl_12.html#dl_12_2"><i class="fa fa-check"></i><b>10.12.2</b> GPT-2</a></li>
+<li class="chapter" data-level="10.12.3" data-path="dl_12.html"><a href="dl_12.html#dl_12_3"><i class="fa fa-check"></i><b>10.12.3</b> GPT-3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>11</b> 生存分析</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>11.1</b> 基本概念</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 删失数据</a></li>
+<li class="chapter" data-level="11.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 截断数据</a></li>
+<li class="chapter" data-level="11.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 函数</a></li>
+<li class="chapter" data-level="11.1.4" data-path="survival_1.html"><a href="survival_1.html#survival_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 似然函数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>11.2</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>11.2.1</b> KM估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>11.2.2</b> NA估计</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>11.3</b> 置信区间与置信带</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>11.3.1</b> 置信区间</a></li>
+<li class="chapter" data-level="11.3.2" data-path="survival_3.html"><a href="survival_3.html#survival_3_2"><i class="fa fa-check"></i><b>11.3.2</b> 置信带</a></li>
+<li class="chapter" data-level="11.3.3" data-path="survival_3.html"><a href="survival_3.html#survival_3_3"><i class="fa fa-check"></i><b>11.3.3</b> 平均生存时间的置信区间</a></li>
+<li class="chapter" data-level="11.3.4" data-path="survival_3.html"><a href="survival_3.html#survival_3_4"><i class="fa fa-check"></i><b>11.3.4</b> 分位数的置信区间</a></li>
+<li class="chapter" data-level="11.3.5" data-path="survival_3.html"><a href="survival_3.html#survival_3_5"><i class="fa fa-check"></i><b>11.3.5</b> 左截断数据的置信区间</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>11.4</b> 假设检验</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="survival_4.html"><a href="survival_4.html#survival_4_1"><i class="fa fa-check"></i><b>11.4.1</b> 单样本检验</a></li>
+<li class="chapter" data-level="11.4.2" data-path="survival_4.html"><a href="survival_4.html#survival_4_2"><i class="fa fa-check"></i><b>11.4.2</b> 多样本检验</a></li>
+<li class="chapter" data-level="11.4.3" data-path="survival_4.html"><a href="survival_4.html#survival_4_3"><i class="fa fa-check"></i><b>11.4.3</b> 趋势性检验</a></li>
+<li class="chapter" data-level="11.4.4" data-path="survival_4.html"><a href="survival_4.html#survival_4_4"><i class="fa fa-check"></i><b>11.4.4</b> 分层检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>11.5</b> Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_1"><i class="fa fa-check"></i><b>11.5.1</b> 偏对数似然函数</a></li>
+<li class="chapter" data-level="11.5.2" data-path="survival_5.html"><a href="survival_5.html#survival_5_x"><i class="fa fa-check"></i><b>11.5.2</b> Regularization Paths for Cox’s Proportional Hazards Model via Coordinate Descent</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>12</b> 数据分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="da_1.html"><a href="da_1.html"><i class="fa fa-check"></i><b>12.1</b> ABtest</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="da_1.html"><a href="da_1.html#da_1_1"><i class="fa fa-check"></i><b>12.1.1</b> 确定目标与指标选取</a></li>
+<li class="chapter" data-level="12.1.2" data-path="da_1.html"><a href="da_1.html#da_1_2"><i class="fa fa-check"></i><b>12.1.2</b> 实验设计</a></li>
+<li class="chapter" data-level="12.1.3" data-path="da_1.html"><a href="da_1.html#da_1_3"><i class="fa fa-check"></i><b>12.1.3</b> 实验上线</a></li>
+<li class="chapter" data-level="12.1.4" data-path="da_1.html"><a href="da_1.html#da_1_4"><i class="fa fa-check"></i><b>12.1.4</b> 实验结束</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="da_2.html"><a href="da_2.html"><i class="fa fa-check"></i><b>12.2</b> 异动归因</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="da_2.html"><a href="da_2.html#da_2_1"><i class="fa fa-check"></i><b>12.2.1</b> 验真</a></li>
+<li class="chapter" data-level="12.2.2" data-path="da_2.html"><a href="da_2.html#da_2_2"><i class="fa fa-check"></i><b>12.2.2</b> 维度拆解</a></li>
+<li class="chapter" data-level="12.2.3" data-path="da_2.html"><a href="da_2.html#da_2_3"><i class="fa fa-check"></i><b>12.2.3</b> 贡献度分析</a></li>
+<li class="chapter" data-level="12.2.4" data-path="da_2.html"><a href="da_2.html#da_2_4"><i class="fa fa-check"></i><b>12.2.4</b> 从数据原因到业务原因</a></li>
+<li class="chapter" data-level="12.2.5" data-path="da_2.html"><a href="da_2.html#da_2_5"><i class="fa fa-check"></i><b>12.2.5</b> 案例分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="da_3.html"><a href="da_3.html"><i class="fa fa-check"></i><b>12.3</b> 用户分析</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="da_3.html"><a href="da_3.html#da_3_1"><i class="fa fa-check"></i><b>12.3.1</b> 用户画像</a></li>
+<li class="chapter" data-level="12.3.2" data-path="da_3.html"><a href="da_3.html#da_3_2"><i class="fa fa-check"></i><b>12.3.2</b> 用户行为路径分析</a></li>
+<li class="chapter" data-level="12.3.3" data-path="da_3.html"><a href="da_3.html#da_3_3"><i class="fa fa-check"></i><b>12.3.3</b> 用户分层模型</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III 多源数据分析</b></span></li>
+<li class="chapter" data-level="13" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>13</b> 网络型数据</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>13.1</b> 构造联系</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>13.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="13.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>13.1.2</b> 社会网络量表</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>13.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="13.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>13.3</b> 拓展分析</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>13.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="13.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>13.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="13.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>13.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="13.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>13.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="13.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>13.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="13.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>13.3.6</b> 综合评价</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>13.4</b> 其他启示</a></li>
+</ul></li>
+<li class="part"><span><b>IV 可视化</b></span></li>
+<li class="chapter" data-level="14" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>14</b> Manim动画</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>14.1</b> 最小二乘与投影矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="people.html"><a href="people.html"><i class="fa fa-check"></i><b>15</b> 七普数据可视化</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="people_1.html"><a href="people_1.html"><i class="fa fa-check"></i><b>15.1</b> 数据来源及说明</a></li>
+<li class="chapter" data-level="15.2" data-path="people_2.html"><a href="people_2.html"><i class="fa fa-check"></i><b>15.2</b> 全国人口状况</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="people_2.html"><a href="people_2.html#people_2_1"><i class="fa fa-check"></i><b>15.2.1</b> 人口自然增长率</a></li>
+<li class="chapter" data-level="15.2.2" data-path="people_2.html"><a href="people_2.html#people_2_2"><i class="fa fa-check"></i><b>15.2.2</b> 年龄结构</a></li>
+<li class="chapter" data-level="15.2.3" data-path="people_2.html"><a href="people_2.html#people_2_3"><i class="fa fa-check"></i><b>15.2.3</b> 人口流动</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V 组会论文</b></span></li>
+<li class="chapter" data-level="16" data-path="penalty.html"><a href="penalty.html"><i class="fa fa-check"></i><b>16</b> 变量选择与惩罚函数</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="penalty_1.html"><a href="penalty_1.html"><i class="fa fa-check"></i><b>16.1</b> 准备</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_1"><i class="fa fa-check"></i><b>16.1.1</b> 范数</a></li>
+<li class="chapter" data-level="16.1.2" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_2"><i class="fa fa-check"></i><b>16.1.2</b> 目标函数</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>16.2</b> 单变量选择</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>16.2.1</b> Lasso</a></li>
+<li class="chapter" data-level="16.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>16.2.2</b> Hard &amp; Soft Threshold</a></li>
+<li class="chapter" data-level="16.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>16.2.3</b> SCAD</a></li>
+<li class="chapter" data-level="16.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>16.2.4</b> Adaptive Lasso</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="penalty_3.html"><a href="penalty_3.html"><i class="fa fa-check"></i><b>16.3</b> 群组变量选择</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_1"><i class="fa fa-check"></i><b>16.3.1</b> 思维导图</a></li>
+<li class="chapter" data-level="16.3.2" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_2"><i class="fa fa-check"></i><b>16.3.2</b> 处理高度相关数据的组变量选择方法</a></li>
+<li class="chapter" data-level="16.3.3" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_3"><i class="fa fa-check"></i><b>16.3.3</b> 仅能选择组变量的方法</a></li>
+<li class="chapter" data-level="16.3.4" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_4"><i class="fa fa-check"></i><b>16.3.4</b> 双层变量选择方法</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="penalty_4.html"><a href="penalty_4.html"><i class="fa fa-check"></i><b>16.4</b> 算法</a></li>
+<li class="chapter" data-level="16.5" data-path="penalty_5.html"><a href="penalty_5.html"><i class="fa fa-check"></i><b>16.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="integrative.html"><a href="integrative.html"><i class="fa fa-check"></i><b>17</b> 整合分析</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>17.1</b> 引言</a></li>
+<li class="chapter" data-level="17.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>17.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="17.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>17.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="17.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>17.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="17.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>17.5</b> 具有网络结构关系的整合分析</a></li>
+</ul></li>
+<li class="part"><span><b>VI 算法复现</b></span></li>
+<li class="chapter" data-level="18" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>18</b> 算法复现</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="code_1.html"><a href="code_1.html"><i class="fa fa-check"></i><b>18.1</b> 惩罚Cox比例风险模型</a></li>
+<li class="chapter" data-level="18.2" data-path="code_2.html"><a href="code_2.html"><i class="fa fa-check"></i><b>18.2</b> 异质截距项的线性模型</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="code_2.html"><a href="code_2.html#code_2_1"><i class="fa fa-check"></i><b>18.2.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.2.2" data-path="code_2.html"><a href="code_2.html#code_2_2"><i class="fa fa-check"></i><b>18.2.2</b> 数据模拟</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="code_3.html"><a href="code_3.html"><i class="fa fa-check"></i><b>18.3</b> （异质）线性+非线性的Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="code_3.html"><a href="code_3.html#code_3_1"><i class="fa fa-check"></i><b>18.3.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.3.2" data-path="code_3.html"><a href="code_3.html#code_3_2"><i class="fa fa-check"></i><b>18.3.2</b> 数据模拟</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII 生活</b></span></li>
+<li class="chapter" data-level="19" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>19</b> 羽毛球修炼手册</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>19.1</b> 发球</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>19.1.1</b> 正手发球</a></li>
+<li class="chapter" data-level="19.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>19.1.2</b> 反手发球</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ball_2.html"><a href="ball_2.html"><i class="fa fa-check"></i><b>19.2</b> 网前技术</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ball_2.html"><a href="ball_2.html#ball_2_1"><i class="fa fa-check"></i><b>19.2.1</b> 勾对角</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ball_2.html"><a href="ball_2.html#ball_2_2"><i class="fa fa-check"></i><b>19.2.2</b> 扑球</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ball_2.html"><a href="ball_2.html#ball_2_3"><i class="fa fa-check"></i><b>19.2.3</b> 封网</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ball_2.html"><a href="ball_2.html#ball_2_4"><i class="fa fa-check"></i><b>19.2.4</b> 平抽</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ball_2.html"><a href="ball_2.html#ball_2_5"><i class="fa fa-check"></i><b>19.2.5</b> 抹球</a></li>
+<li class="chapter" data-level="19.2.6" data-path="ball_2.html"><a href="ball_2.html#ball_2_6"><i class="fa fa-check"></i><b>19.2.6</b> 搓球</a></li>
+<li class="chapter" data-level="19.2.7" data-path="ball_2.html"><a href="ball_2.html#ball_2_7"><i class="fa fa-check"></i><b>19.2.7</b> 挡网</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ball_3.html"><a href="ball_3.html"><i class="fa fa-check"></i><b>19.3</b> 后场技术</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ball_3.html"><a href="ball_3.html#ball_3_1"><i class="fa fa-check"></i><b>19.3.1</b> 杀球</a></li>
+<li class="chapter" data-level="19.3.2" data-path="ball_3.html"><a href="ball_3.html#ball_3_2"><i class="fa fa-check"></i><b>19.3.2</b> 吊球</a></li>
+<li class="chapter" data-level="19.3.3" data-path="ball_3.html"><a href="ball_3.html#ball_3_3"><i class="fa fa-check"></i><b>19.3.3</b> 反手</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ball_4.html"><a href="ball_4.html"><i class="fa fa-check"></i><b>19.4</b> 假动作</a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="ball_4.html"><a href="ball_4.html#ball_4_1"><i class="fa fa-check"></i><b>19.4.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.4.2" data-path="ball_4.html"><a href="ball_4.html#ball_4_2"><i class="fa fa-check"></i><b>19.4.2</b> 网前</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="ball_5.html"><a href="ball_5.html"><i class="fa fa-check"></i><b>19.5</b> 双打</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="ball_5.html"><a href="ball_5.html#ball_5_1"><i class="fa fa-check"></i><b>19.5.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.5.2" data-path="ball_5.html"><a href="ball_5.html#ball_5_2"><i class="fa fa-check"></i><b>19.5.2</b> 站位</a></li>
+<li class="chapter" data-level="19.5.3" data-path="ball_5.html"><a href="ball_5.html#ball_5_3"><i class="fa fa-check"></i><b>19.5.3</b> 分球</a></li>
+<li class="chapter" data-level="19.5.4" data-path="ball_5.html"><a href="ball_5.html#ball_5_4"><i class="fa fa-check"></i><b>19.5.4</b> 球路</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="ball_6.html"><a href="ball_6.html"><i class="fa fa-check"></i><b>19.6</b> 球路</a></li>
+<li class="chapter" data-level="19.7" data-path="ball_7.html"><a href="ball_7.html"><i class="fa fa-check"></i><b>19.7</b> 步伐</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="jap.html"><a href="jap.html"><i class="fa fa-check"></i><b>20</b> 日语</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><i class="fa fa-check"></i>参考文献</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="penalty_3" class="section level2 hasAnchor" number="16.3">
+<h2><span class="header-section-number">16.3</span> 群组变量选择<a href="penalty_3.html#penalty_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>本节是对<strong>《高维数据下群组变量选择的惩罚方法综述》</strong><span class="citation"><sup>[<a href="#ref-penalty_1">18</a>]</sup></span>的讨论。</p>
+<p>解释变量的分组结构可以分为两类：<strong>自然分组</strong>和<strong>人为分组</strong>。</p>
+<p>自然分组由<strong>先验信息</strong>划分，例如描述分类变量的虚拟变量组（季节、学历等）。</p>
+<p>人为分组则是在某种目的下将<strong>高度相关</strong>的变量归为一组，例如在公司财务评价中会把销售毛利率、净资产收益率、总资产报酬率等指标归为“盈利能力”。常见的分组依据为<strong>相关系数</strong>。</p>
+<p>无论是自然分组还是人为分组，都是解释变量的集合，即<strong>群组变量</strong>，由此引申出<strong>群组变量选择方法</strong>。</p>
+<p>在群组变量情形下，将自变量分为<span class="math inline">\(J\)</span>个组别，即<span class="math inline">\(X=(X_1,\cdots,X_J)\)</span>依旧是<span class="math inline">\(n \times p\)</span>维设计矩阵，对应的系数向量为<span class="math inline">\(\beta=(\beta^{(1)&#39;},\dots,\beta^{(J)&#39;})&#39;\)</span>，其中<span class="math inline">\(X_j=(x_{j1},\cdots,x_{jp_j})\)</span>，<span class="math inline">\(\beta^{(j)}=(\beta_1^{(j)},\cdots,\beta_{p_j}^{(j)})\)</span>。目标函数形式同式<a href="penalty_1.html#eq:penalty-eq4">(16.4)</a>。</p>
+<div id="penalty_3_1" class="section level3 hasAnchor" number="16.3.1">
+<h3><span class="header-section-number">16.3.1</span> 思维导图<a href="penalty_3.html#penalty_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-1db3906056ea01f1b3f8" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1db3906056ea01f1b3f8">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  node [shape = box]\n  edge [arrowsize=0.5, headport=w, arrowhead=none]\n  \n  rec_root [label = \"群组变量\"]\n  rec1_1 [label = \"分组\"]\n  rec1_2 [label = \"群组变量选择方法\"]\n  \n  rec1_1_1 [label = \"自然分组\"]\n  rec1_1_2 [label = \"人为分组\"]\n  rec1_1_1_sub [label = \"先验信息\"]\n  rec1_1_2_sub [label = \"高度相关（相关系数）\"]\n  \n  rec1_2_1 [label = \"高度相关\"]\n  rec1_2_1_1 [label = \"弹性网\"]\n  rec1_2_1_1_sub [label = \"L1+L2\", color=\"red\"]\n  rec1_2_1_2 [label = \"Mnet\"]\n  rec1_2_1_2_sub [label = \"MCP+L2\", color=\"red\"]\n  rec1_2_1_3 [label = \"SCAD_L2\"]\n  rec1_2_1_3_sub [label = \"SCAD+L2\", color=\"red\"]\n  \n  rec1_2_2 [label = \"仅能选择组\"]\n  rec1_2_2_1 [label = \"Group Lasso\"]\n  rec1_2_2_1_sub [label = \"椭圆范数+L1\", color=\"red\"]\n  rec1_2_2_2 [label = \"CAP\"]\n  rec1_2_2_2_sub [label = \"范数嵌套\", color=\"red\"]\n  \n  rec1_2_3 [label = \"双层变量选择\"]\n  rec1_2_3_1 [label = \"复合函数惩罚法\"]\n  rec1_2_3_1_1 [label = \"Group Bridge\"]\n  rec1_2_3_1_1_sub [label = \"组内Lasso，组间Bridge\", color=\"red\"]\n  rec1_2_3_1_2 [label = \"Group MCP\"]\n  rec1_2_3_1_2_sub [label = \"组内MCP，组间MCP\", color=\"red\"]\n  rec1_2_3_2 [label = \"稀疏组惩罚法\"]\n  rec1_2_3_2_1 [label = \"Sparse Group Lasso\"]\n  rec1_2_3_2_1_sub [label = \"Lasso + Group Lasso\", color=\"red\"]\n  \n  rec_root -> {rec1_1 rec1_2}\n  rec1_1 -> {rec1_1_1 rec1_1_2}\n  rec1_1_1 -> rec1_1_1_sub\n  rec1_1_2 -> rec1_1_2_sub\n  \n  rec1_2 -> {rec1_2_1 rec1_2_2 rec1_2_3}\n  rec1_2_1 -> {rec1_2_1_1 rec1_2_1_2 rec1_2_1_3}\n  rec1_2_1_1 -> rec1_2_1_1_sub\n  rec1_2_1_2 -> rec1_2_1_2_sub\n  rec1_2_1_3 -> rec1_2_1_3_sub\n  rec1_2_2 -> {rec1_2_2_1 rec1_2_2_2}\n  rec1_2_2_1 -> rec1_2_2_1_sub\n  rec1_2_2_2 -> rec1_2_2_2_sub\n  rec1_2_3 -> {rec1_2_3_1 rec1_2_3_2}\n  rec1_2_3_1 -> {rec1_2_3_1_1 rec1_2_3_1_2}\n  rec1_2_3_1_1 -> rec1_2_3_1_1_sub\n  rec1_2_3_1_2 -> rec1_2_3_1_2_sub\n  rec1_2_3_2 -> rec1_2_3_2_1\n  rec1_2_3_2_1 -> rec1_2_3_2_1_sub\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="penalty_3_2" class="section level3 hasAnchor" number="16.3.2">
+<h3><span class="header-section-number">16.3.2</span> 处理高度相关数据的组变量选择方法<a href="penalty_3.html#penalty_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>在处理高度相关数据时，惩罚函数是具有单个变量选择功能的函数和处理高度相关数据的函数的线性组合，其一般形式为</p>
+<p><span class="math display" id="eq:penalty-eq6">\[
+P_{\lambda_1,\lambda_2}(| \beta |)=\sum_{j=1}^pf_{\lambda_1}(| \beta_j |)+\lambda_2|| \beta ||_2^2 \tag{16.14}
+\]</span></p>
+<p>不难发现，式<a href="penalty_3.html#eq:penalty-eq6">(16.14)</a>的惩罚函数具有共同的组成部分，即<span class="math inline">\(L_2\)</span>正则项<span class="math inline">\(|| \beta ||_2^2\)</span>。文献<span class="citation"><sup>[<a href="#ref-penalty_3">19</a>]</sup></span>指出，如果<span class="math inline">\(X&#39;X\)</span>不是近似单位阵的话，那么最小二乘估计将会变得异常敏感。而为<span class="math inline">\(X&#39;X\)</span>加上<span class="math inline">\(kI\)</span>则能有效控制系数估计值的膨胀及不稳定性。</p>
+<blockquote>
+<p>为什么共线性会导致系数膨胀？</p>
+<p>根据文献<span class="citation"><sup>[<a href="#ref-penalty_3">19</a>]</sup></span>，记<span class="math inline">\(L_1^2=(\hat{\beta}-\beta)&#39;(\hat{\beta}-\beta)\)</span>，可得<span class="math inline">\(E(L_1^2)=\sigma^2\sum\limits_{i=1}^p (1/\lambda_i)\)</span>，<span class="math inline">\(Var(L_1^2)=2\sigma^4\sum\limits_{i=1}^p (1/\lambda_i)^2\)</span>。当共线性严重时，会导致<span class="math inline">\(X&#39;X\)</span>的最小特征值十分接近0，从而导致较大的<span class="math inline">\(E(L_1^2)\)</span>和<span class="math inline">\(Var(L_1^2)\)</span>，即系数估计值膨胀及不稳定。</p>
+</blockquote>
+<p>岭回归的解为</p>
+<p><span class="math display" id="eq:penalty-eq31">\[
+\hat{\beta}_{ridge}=(X&#39;X+\lambda I)^{-1}X&#39;Y \tag{16.15}
+\]</span></p>
+<p>岭回归通过引入可控的偏差从而有效地减少了系数估计的方差。</p>
+<blockquote>
+<p>也就是增大了<span class="math inline">\(X&#39;X\)</span>特征值</p>
+</blockquote>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>通过引入L2正则化项，可以解决特征数量多于样本数量时的过拟合问题。</li>
+<li>能够处理特征间高度相关的情况。</li>
+</ol></li>
+<li><p>缺点</p>
+<ol style="list-style-type: decimal">
+<li>虽然可以缩小系数，但不会将系数压缩到零，因此不会进行特征选择。</li>
+<li>需要选择合适的正则化参数。</li>
+</ol></li>
+</ul>
+<div id="penalty_3_2_1" class="section level4 hasAnchor" number="16.3.2.1">
+<h4><span class="header-section-number">16.3.2.1</span> Enet<a href="penalty_3.html#penalty_3_2_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>glmnet</code>包的<code>glmnet()</code>函数</p>
+</blockquote>
+<p><span class="math inline">\(Enet\)</span>首先见刊于<em>Hui Zou &amp; Trevor Hastie</em><span class="citation"><sup>[<a href="#ref-penalty_4">20</a>]</sup></span>的文章。</p>
+<blockquote>
+<p>Hui Zou也是<span class="math inline">\(Adaptive \; Lasso\)</span>的创造者。</p>
+</blockquote>
+<p><span class="math inline">\(Enet\)</span>的惩罚函数为</p>
+<p><span class="math display" id="eq:penalty-eq7">\[
+P_{\lambda}(| \beta |)=\lambda_1\sum_{j=1}^p| \beta_j |+\lambda_2\sum_{j=1}^p \beta_j^2 \tag{16.16}
+\]</span></p>
+<p>首先观察<span class="math inline">\(\frac{1}{2}| \beta |+\frac{1}{2}\beta^2\)</span>的图像，图片摘自原文。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p6"></span>
+<img src="pic/penalty/p6.png" alt="Enet惩罚函数" width="90%" />
+<p class="caption">
+图 16.11: Enet惩罚函数
+</p>
+</div>
+<blockquote>
+<p><span class="math inline">\(\alpha=\frac{\lambda_2}{\lambda_1+\lambda_2}\)</span></p>
+</blockquote>
+<p>正如注解中说的，<span class="math inline">\(Enet\)</span>惩罚函数在顶点处是奇异的，在边处是凸的，并且这种凸性与<span class="math inline">\(\alpha\)</span>挂钩。</p>
+<p>原文同样也给出了<span class="math inline">\(OLS\)</span>、<span class="math inline">\(Lasso\)</span>、<span class="math inline">\(Ridge\)</span>、<span class="math inline">\(naive \;elastic \; net\)</span>的解，如下图所示。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p7"></span>
+<img src="pic/penalty/p7.png" alt="弹性网的解" width="90%" />
+<p class="caption">
+图 16.12: 弹性网的解
+</p>
+</div>
+<p><span class="math inline">\(Enet\)</span>的解在一开始与<span class="math inline">\(Lasso\)</span>的解保持一致，均为0，但在达到阈值之后就同<span class="math inline">\(Ridge\)</span>一样逐渐增大惩罚力度。</p>
+<blockquote>
+<p>the naive elastic net can be viewed as a two-stage procedure: a ridge-type direct shrinkage followed by a lasso-type thresholding.</p>
+</blockquote>
+<blockquote>
+<p>这里提到的<code>naive elastic net</code>的解是对原数据进行数据变换后的解，在数据变换后可以作为<span class="math inline">\(Lasso\)</span>回归处理。后文又提到了<code>elastic net</code>的解，该解是在前者的基础上乘上<span class="math inline">\((1+\lambda_2)\)</span>，使得该解在保留前者优良性质的基础上还能取消对系数的压缩。</p>
+</blockquote>
+<p><span class="math inline">\(Enet\)</span>解的具体表达式如下所示</p>
+<blockquote>
+<p>为了后面引用方便，这个解的表达式摘自<span class="math inline">\(Mnet\)</span>的文献<span class="citation"><sup>[<a href="#ref-penalty_6">21</a>]</sup></span></p>
+</blockquote>
+<p><span class="math display" id="eq:penalty-eq8">\[
+\begin{aligned}
+\hat{\theta}_{nEnet} &amp;= sgn(z)\frac{(| z |-\lambda_1)}{1+\lambda_2} \\
+\tilde{\theta}_{Enet} &amp;= (1+\lambda_2)\hat{\theta}_{nEnet}
+\end{aligned} \tag{16.17}
+\]</span></p>
+<p>原文也提到了对<strong>分组效应</strong>的看法：“定性地说，如果一组高度相关的变量的回归系数趋于相等（如果是负相关的，则达到符号的变化），那么回归方法就会表现出<strong>分组效应</strong>。特别是，在某些变量完全相同的极端情况下，回归方法应该给相同的变量分配相同的系数”。</p>
+<p>并且，原文通过<span class="math inline">\(Lemma \; 2\)</span>表明严格凸惩罚函数（例如<span class="math inline">\(L_2\)</span>正则项）在极端情况（变量间高度相关）下能够识别出<strong>分组效应</strong>，并且同组变量的回归系数估计值将会趋同，反观<span class="math inline">\(L_1\)</span>正则项甚至没有唯一解。<span class="math inline">\(Theorem \; 1\)</span>则给出了两个高度相关的变量的差异上界，这种差异在相关系数为1下几乎为0。由于<span class="math inline">\(Enet\)</span>中包含了<span class="math inline">\(L_2\)</span>正则项，因此能够处理高度相关的变量，即具有群组变量选择的功能。</p>
+<blockquote>
+<p>原文提到<span class="math inline">\(Lasso\)</span>的三个缺点，前两个详见<span class="math inline">\(Least Angle Regression\)</span>原文<span class="citation"><sup>[<a href="#ref-penalty_15">22</a>]</sup></span>，第三个详见<span class="math inline">\(Lasso\)</span>原文<span class="citation"><sup>[<a href="#ref-penalty_14">15</a>]</sup></span>。</p>
+</blockquote>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>综合了岭回归和<span class="math inline">\(Lasso\)</span>的优点，既能很好地处理高度相关的数据，又能选择变量。</li>
+<li>当<span class="math inline">\(p&gt;&gt;n\)</span>时，在不可表条件以及其他一些复杂条件下，弹性网具有<span class="math inline">\(Oracle\)</span>性质。</li>
+</ol></li>
+<li><p>缺点</p>
+<ol style="list-style-type: decimal">
+<li>往往选择过多的变量组。</li>
+<li>一般情形下不具有<span class="math inline">\(Oracle\)</span>性质。</li>
+</ol></li>
+</ul>
+</div>
+<div id="penalty_3_2_2" class="section level4 hasAnchor" number="16.3.2.2">
+<h4><span class="header-section-number">16.3.2.2</span> Mnet<a href="penalty_3.html#penalty_3_2_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>ncvreg</code>包的<code>ncvreg()</code>函数</p>
+</blockquote>
+<p>Jian Huang等人<span class="citation"><sup>[<a href="#ref-penalty_5">23</a>]</sup></span>提出的<span class="math inline">\(Mnet\)</span>法结合了<span class="math inline">\(MCP\)</span>函数<span class="citation"><sup>[<a href="#ref-penalty_6">21</a>]</sup></span>和<span class="math inline">\(L_2\)</span>正则项。</p>
+<p><span class="math inline">\(Mnet\)</span>的惩罚函数为</p>
+<p><span class="math display" id="eq:penalty-eq9">\[
+P_{\lambda , a}(| \beta |)=\sum_{j=1}^p f_{\lambda_1,a}^{MCP}(| \beta_j |)+\frac{1}{2}\lambda_2\sum_{j=1}^p \beta_j^2 \tag{16.18}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display" id="eq:penalty-eq10">\[
+f_{\lambda,a}^{MCP}(\theta)=
+\begin{cases}
+\lambda\theta-\frac{\theta^2}{2a}, &amp; \theta \leq a \lambda \\
+\frac{a\lambda^2}{2}, &amp; \theta \gt a \lambda
+\end{cases} \tag{16.19}
+\]</span></p>
+<p><span class="math display" id="eq:penalty-eq11">\[
+f_{\lambda,a}^{&#39;MCP}(\theta)=
+\begin{cases}
+\lambda-\frac{\theta}{a}, &amp; \theta \leq a \lambda \\
+0, &amp; \theta \gt a \lambda
+\end{cases} \tag{16.20}
+\]</span></p>
+<blockquote>
+<p>原文中提到<span class="math inline">\(MCP\)</span>惩罚函数会使得结果是无偏的，稀疏的和连续的。</p>
+</blockquote>
+<p>式<a href="penalty_3.html#eq:penalty-eq9">(16.18)</a>和式<a href="penalty_3.html#eq:penalty-eq7">(16.16)</a>相比，将<span class="math inline">\(L_1\)</span>正则项换为MCP函数。</p>
+<p><span class="math inline">\(f_{\lambda_1,a}^{MCP}(| \beta |)+\frac{\lambda_2}{2}\beta^2\)</span>的函数图像如图<a href="penalty_3.html#fig:penalty-p8">16.13</a>所示。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p8"></span>
+<img src="5-penalty_files/figure-html/penalty-p8-1.png" alt="Mnet的惩罚函数" width="90%" />
+<p class="caption">
+图 16.13: Mnet的惩罚函数
+</p>
+</div>
+<p>原文还给出了<span class="math inline">\(Mnet\)</span>的解与<span class="math inline">\(Enet\)</span>的解之间的联系，结合式<a href="penalty_3.html#eq:penalty-eq8">(16.17)</a>，有</p>
+<p><span class="math display" id="eq:penalty-eq12">\[
+\begin{aligned}
+\hat{\theta}_{Mnet}&amp;=
+\begin{cases}
+sgn(z)\frac{a(| z |-\lambda_1)_{+}}{a(1+\lambda_2)-1}, &amp; | z | \leq a \lambda_1(1+\lambda_2) \\
+\frac{z}{1+\lambda_2}, &amp; | z | \gt a \lambda_1(1+\lambda_2)
+\end{cases} \\
+\tilde{\theta}_{sMnet}&amp;=
+\begin{cases}
+\frac{a(1+\lambda_2)}{a(1+\lambda_2)-1}\hat{\theta}_{Enet}, &amp; | z | \leq a \lambda_1(1+\lambda_2)  \\
+z, &amp; | z | \gt a \lambda_1(1+\lambda_2)
+\end{cases}
+\end{aligned} \tag{16.21}
+\]</span></p>
+<p><span class="math inline">\(Mnet\)</span>的解通过尺度变化（和<span class="math inline">\(Enet\)</span>一样都是乘上<span class="math inline">\(1+\lambda_2\)</span>），不仅能取消对估计值的压缩，还能得到无偏估计。</p>
+<p>而在<strong>分组效应</strong>方面，和<span class="math inline">\(Enet\)</span>一样，<span class="math inline">\(Mnet\)</span>原文也给出了两个高度相关的变量之间差异的上界，这意味高度相关的自变量能够被<span class="math inline">\(Mnet\)</span>识别出来。</p>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>在处理高度相关问题时比弹性网更具优势。</li>
+<li>在<span class="math inline">\(p&gt;n\)</span>或<span class="math inline">\(p&lt;n\)</span>时，在某些合理条件下，<span class="math inline">\(Mnet\)</span>能正确选择具有非零系数的解释变量且用岭回归来估计相应的参数，因此具有<span class="math inline">\(Oracle\)</span>性质。</li>
+</ol></li>
+</ul>
+</div>
+<div id="penalty_3_2_3" class="section level4 hasAnchor" number="16.3.2.3">
+<h4><span class="header-section-number">16.3.2.3</span> SCAD_l<sub>2</sub><a href="penalty_3.html#penalty_3_2_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>ncvreg</code>包的<code>ncvreg()</code>函数</p>
+</blockquote>
+<p>Zeng和Xie<span class="citation"><sup>[<a href="#ref-penalty_7">24</a>]</sup></span>提出的<span class="math inline">\(SCAD\_l_2\)</span>法综合了<span class="math inline">\(SCAD\)</span>函数和<span class="math inline">\(L_2\)</span>正则项。</p>
+<blockquote>
+<p><strong>《高维数据下群组变量选择的惩罚方法综述》</strong>引用的<em>Group variable selection for data with dependent structures</em><span class="citation"><sup>[<a href="#ref-penalty_8">25</a>]</sup></span>并没有<span class="math inline">\(SCAD\_L_2\)</span>，而是介绍<span class="math inline">\(gLars\)</span>和<span class="math inline">\(gRidge\)</span>算法。</p>
+</blockquote>
+<p><span class="math inline">\(SCAD\_l_2\)</span>的惩罚函数为</p>
+<p><span class="math display" id="eq:penalty-eq13">\[
+P_{\lambda, a}(| \beta |)=\sum_{j=1}^p f_{\lambda_1,a}^{SCAD}(\beta_j)+\lambda_2\sum_{j=1}^p \beta_j^2 \tag{16.22}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display" id="eq:penalty-eq14">\[
+f_{\lambda,a}^{SCAD}(\theta)=
+\begin{cases}
+\lambda | \theta |, &amp; 0 \leq | \theta | \lt \lambda \\
+-\frac{\theta^2-2a\lambda| \theta |+\lambda^2}{2(a-1)}, &amp;\lambda \leq | \theta | \lt a\lambda \\
+\frac{(a+1)\lambda^2}{2}, &amp;a\lambda \leq | \theta |
+\end{cases} \tag{16.23}
+\]</span></p>
+<p>原文中给出了<span class="math inline">\(SCAD\_L_2\)</span>的解和惩罚函数，分别如图<a href="penalty_3.html#fig:penalty-p9">16.14</a>、图<a href="penalty_3.html#fig:penalty-p10">16.15</a>所示。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p9"></span>
+<img src="pic/penalty/p9.png" alt="SCAD_L2的解" width="90%" />
+<p class="caption">
+图 16.14: SCAD_L2的解
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p10"></span>
+<img src="pic/penalty/p10.png" alt="SCAD_L2的惩罚函数" width="90%" />
+<p class="caption">
+图 16.15: SCAD_L2的惩罚函数
+</p>
+</div>
+<p>解的具体表达式如下所示</p>
+<p><span class="math display" id="eq:penalty-eq15">\[
+\hat{\theta}_{naive}=
+\begin{cases}
+\frac{sgn(z)(| z | -\lambda_1)_{+}}{1+2\lambda_2}, &amp;| z | \leq 2\lambda_1(1+\lambda_2) \\
+\frac{(a-1)z-a\lambda_1sgn(z)}{-1+(a-1)(1+2\lambda_2)}, &amp;2\lambda_1(1+\lambda_2) \lt | z | \leq a\lambda_1(1+2\lambda_2) \\
+\frac{z}{1+2\lambda_2}, &amp; a\lambda_1(1+2\lambda_2) \lt | z |
+\end{cases} \tag{16.24}
+\]</span></p>
+<p>当<span class="math inline">\(| z |\)</span>较大时，<span class="math inline">\(\hat{\theta}_{SCAD\_L_2} = (1+2\lambda_2)\hat{\theta}_{naive}\)</span>也是无偏的，与式<a href="penalty_3.html#eq:penalty-eq12">(16.21)</a>不谋而合。</p>
+<p>而在分组效应方面，相同作者的另一篇文献<span class="citation"><sup>[<a href="#ref-penalty_8">25</a>]</sup></span>定义了“群组变量”的概念：(1)和因变量或者残差高度相关；(2)组内变量之间高度相关。和<span class="math inline">\(Enet\)</span>的文献一样，原文证明了<span class="math inline">\(SCAD\_L_2\)</span>的惩罚函数是严格凸的，并且同样也给出了差异上界，故该方法也具有识别群组变量的功能。</p>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>在模拟分析中，与<span class="math inline">\(Lasso\)</span>、<span class="math inline">\(SCAD\)</span>和<span class="math inline">\(Enet\)</span>相比，该方法不仅能降低预测误差、保留模型的稀疏性质，而且能揭露变量更多的分组信息。</li>
+<li>估计值具有无偏性、连续性、稀疏性和群组效应。</li>
+</ol></li>
+</ul>
+</div>
+<div id="penalty_3_2_4" class="section level4 hasAnchor" number="16.3.2.4">
+<h4><span class="header-section-number">16.3.2.4</span> 小结<a href="penalty_3.html#penalty_3_2_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p>这三种方法都是依靠<span class="math inline">\(L_2\)</span>正则项来实现群组变量的识别，加之另一惩罚函数来实现单个变量选择。</p>
+<p><strong>三者都是通过证明惩罚函数是严格凸的或者变量之间的差异上界随着相关程度增加而趋于0来表明自己的方法能够识别群组变量。</strong></p>
+<p>除了<span class="math inline">\(Enet\)</span>，<span class="math inline">\(Mnet\)</span>和<span class="math inline">\(SCAD\_L_2\)</span>在系数估计值较大时都具有无偏性。</p>
+<blockquote>
+<p>这个性质是在设计矩阵为列正交阵的条件下证明的。正如文献<span class="citation"><sup>[<a href="#ref-penalty_5">23</a>]</sup></span>中提到的，对于一般情形，为了无偏性而做的尺度变换会增加估计的均方误差，又因为尺度变换不影响方法在筛选变量过程中呈现出来的性质，故一般不考虑尺度变换。</p>
+</blockquote>
+</div>
+</div>
+<div id="penalty_3_3" class="section level3 hasAnchor" number="16.3.3">
+<h3><span class="header-section-number">16.3.3</span> 仅能选择组变量的方法<a href="penalty_3.html#penalty_3_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>前一类方法将具有高度相关的数据视为同一个群组，但变量的组结构并不明确。下面介绍的方法则是在已知组结构的情形下对整租变量同时选择或者删除。这类方法的惩罚函数形如</p>
+<p><span class="math display" id="eq:penalty-eq16">\[
+P_{\lambda}(| \beta |)=\lambda\sum_{j=1}^JP_{outer}(\sum_{k=1}^{p_j}P_{inner}(| \beta_k^{(j)}|)) \tag{16.25}
+\]</span></p>
+<p>这类方法的组间惩罚函数具有单个变量选择功能，通过将组内对系数的惩罚和视作一个整体从而实现对组别的选择。而组内惩罚函数不具有单个变量选择功能，故该类方法只能选择重要组而不能选择组内的重要变量。</p>
+<div id="penalty_3_3_1" class="section level4 hasAnchor" number="16.3.3.1">
+<h4><span class="header-section-number">16.3.3.1</span> Group Lasso<a href="penalty_3.html#penalty_3_3_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>gglasso</code>包的<code>gglasso()</code>函数 or <code>grpreg</code>包的<code>grpreg</code>函数</p>
+</blockquote>
+<p>Yuan和Lin<span class="citation"><sup>[<a href="#ref-penalty_9">26</a>]</sup></span>在其文章中除了给出了<span class="math inline">\(Group \; Lasso\)</span>，还讨论了<span class="math inline">\(Group \; Lar\)</span>、<span class="math inline">\(Group \; non-negative \; garrotte\)</span>，这里仅讨论<span class="math inline">\(Group \; Lasso\)</span>。</p>
+<p><span class="math inline">\(Group \; Lasso\)</span>的惩罚函数为</p>
+<p><span class="math display" id="eq:penalty-eq17">\[
+P_{\lambda,K}(| \beta |)=\lambda \sum_{j=1}^J || \beta^{(j)} ||_{K_j} \tag{16.26}
+\]</span></p>
+<p>其中<span class="math inline">\(||\beta^{(j)}||_{K_j}=(\beta^{(j)&#39;}K_j\beta^{(j)})^{\frac{1}{2}}\)</span>为由<span class="math inline">\(K_j\)</span>决定的椭圆范数，<span class="math inline">\(K_j\)</span>为<span class="math inline">\(p_j\)</span>阶正定对称矩阵。椭圆范数有</p>
+<p><span class="math display" id="eq:penalty-eq18">\[
+\begin{aligned}
+||\beta^{(j)}||_{K_j}&amp;=(\beta^{(j)&#39;}K_j\beta^{(j)})^{\frac{1}{2}} \\
+&amp;= (\beta^{(j)&#39;}Q\Lambda Q&#39;\beta^{(j)})^{\frac{1}{2}} \\
+&amp;= [(\Lambda^{\frac{1}{2}}Q&#39;\beta^{(j)})&#39;(\Lambda^{\frac{1}{2}}Q&#39;\beta^{(j)})]^{\frac{1}{2}}
+\end{aligned} \tag{16.27}
+\]</span></p>
+<p>可见椭圆范数就是线性变换后的<span class="math inline">\(L_2\)</span>范数。</p>
+<p>原文给出了<span class="math inline">\(K_j\)</span>的建议值，即<span class="math inline">\(K_j=p_jI_j\)</span>，故式<a href="penalty_3.html#eq:penalty-eq17">(16.26)</a>转化为</p>
+<p><span class="math display" id="eq:penalty-eq19">\[
+P_{\lambda,K}(| \beta |)=\lambda \sum_{j=1}^J \sqrt{p_j}|| \beta^{(j)} ||_2 \tag{16.28}
+\]</span></p>
+<p>式<a href="penalty_3.html#eq:penalty-eq19">(16.28)</a>的组内惩罚即为带权重的组内系数的<span class="math inline">\(L_2\)</span>范数。不妨记组内惩罚为<span class="math inline">\(a_j=\sqrt{p_j}|| \beta^{(j)} ||_2\)</span>，当然有<span class="math inline">\(a_j \geq 0\)</span>。回忆<span class="math inline">\(L_1\)</span>范数的定义，<span class="math inline">\(||x||_1=\sum\limits_{i=1}^p |x_i|\)</span>，式<a href="penalty_3.html#eq:penalty-eq19">(16.28)</a>中的对应部分为<span class="math inline">\(\sum\limits_{j=1}^J a_j\)</span>，也就是说，若将组内惩罚值视作新的分量，那么组间惩罚的形式就是<span class="math inline">\(L_1\)</span>范数。</p>
+<p>原文对<span class="math inline">\(L_1\)</span>、<span class="math inline">\(Group \; Lasso\)</span>、<span class="math inline">\(L_2\)</span>的惩罚函数进行了可视化，如图<a href="penalty_3.html#fig:penalty-p11">16.16</a>所示。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p11"></span>
+<img src="pic/penalty/p11.png" alt="Group Lasso的惩罚函数" width="90%" />
+<p class="caption">
+图 16.16: Group Lasso的惩罚函数
+</p>
+</div>
+<p>可以发现式<a href="penalty_3.html#eq:penalty-eq19">(16.28)</a>介于<span class="math inline">\(L_1\)</span>正则项与<span class="math inline">\(L_2\)</span>正则项之间。其中子图<span class="math inline">\((e)\)</span>反映了<span class="math inline">\(||\beta_1||+|\beta2|=1\)</span>。</p>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>对于确定的<span class="math inline">\(p\)</span>，在不可表条件的变形条件下，<span class="math inline">\(Group \; Lasso\)</span>在随机设计模型中具有组选择一致性。</li>
+</ol></li>
+<li><p>缺点</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(Group \; Lasso\)</span>不具备<span class="math inline">\(Oracle\)</span>性质。</li>
+<li>参数估计值偏差过大，也往往会选择过多的组。</li>
+</ol></li>
+</ul>
+</div>
+<div id="penalty_3_3_2" class="section level4 hasAnchor" number="16.3.3.2">
+<h4><span class="header-section-number">16.3.3.2</span> CAP<a href="penalty_3.html#penalty_3_3_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<p><span class="math inline">\(CAP\)</span>也是在已知群组结构的情形下进行群组变量选择的方法。Zhao等人<span class="citation"><sup>[<a href="#ref-penalty_10">27</a>]</sup></span>提到了可以利用聚类技术先去进行分组，然后再进行群组变量选择。此外，原文还提到了<strong>重叠与非重叠群组</strong>的概念，而<span class="math inline">\(CAP\)</span>对这两种情形均适用。</p>
+<blockquote>
+<p>Specifically, we introduce
+the Composite Absolute Penalties (CAP) family, which allows given grouping and hierarchical relationships between the predictors to be expressed.</p>
+<p><strong>Grouped selection</strong> occurs for nonoverlapping groups. <strong>Hierarchical variable selection</strong> is
+reached by defining groups with particular overlapping patterns.</p>
+</blockquote>
+<p><span class="math inline">\(CAP\)</span>惩罚函数的一般形式为</p>
+<p><span class="math display" id="eq:penalty-eq20">\[
+P_{\lambda, \gamma}(|\beta|)=\lambda||(||\beta^{(1)}||_{\gamma_1},\cdots,||\beta^{(J)}||_{\gamma_J})&#39;||_{\gamma_0}^{\gamma_0} \tag{16.29}
+\]</span></p>
+<p>不难发现，组间惩罚函数为<span class="math inline">\(||\cdot||_{\gamma_0}^{\gamma_0}\)</span>，组内惩罚函数为<span class="math inline">\(||\cdot||_{\gamma_j}\)</span>。相较于式<a href="penalty_3.html#eq:penalty-eq19">(16.28)</a>，式<a href="penalty_3.html#eq:penalty-eq20">(16.29)</a>在组内惩罚函数的形式方面给予了更多的灵活度。这使得<span class="math inline">\(CAP\)</span>不仅能处理非重叠群组，还能处理重叠群组。</p>
+<p><strong>非重叠群组</strong>就是指各个组分配到的变量没有重复，该情形较为容易理解，这里就不再赘述。</p>
+<p>对于<strong>重叠群组</strong>，这里仅考虑有<span class="math inline">\(X_1\)</span>、<span class="math inline">\(X_2\)</span>的简单情形。若我们想让<span class="math inline">\(X_1\)</span>在<span class="math inline">\(X_2\)</span>之前选入模型，我们可以构造这样的群组关系，令<span class="math inline">\(G_1=\{X_1, X_2\}\)</span>、<span class="math inline">\(G_2=\{X_2\}\)</span>、<span class="math inline">\(\gamma_0=1\)</span>、<span class="math inline">\(\gamma_1,\gamma_2&gt;1\)</span>，对此有</p>
+<p><span class="math display" id="eq:penalty-eq34">\[
+P_{\lambda,\gamma}(|\beta|)=\lambda(||(\beta_1,\beta_2)||_{\gamma_1}+||\beta_2||_{\gamma_2}) \tag{16.30}
+\]</span></p>
+<p>其中<span class="math inline">\(||\beta_2||_{\gamma_2}=|\beta_2|\)</span>。绘制<span class="math inline">\(||(\beta_1,\beta_2)||_{\gamma_1}+|\beta_2|\)</span>的等值线图，如下所示：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p18"></span>
+<img src="pic/penalty/p18.png" alt="重叠群组的惩罚函数" width="90%" />
+<p class="caption">
+图 16.17: 重叠群组的惩罚函数
+</p>
+</div>
+<p>当<span class="math inline">\(\gamma_1 &gt; 1\)</span>时，<span class="math inline">\(\beta_1\)</span>轴上尖尖的特征愈发明显，而<span class="math inline">\(\beta_2\)</span>轴上愈发平坦。因此，<span class="math inline">\(\beta_1\)</span>轴更容易与损失函数相交，此时<span class="math inline">\(\beta_2=0\)</span>。可见，若想让一个变量先于另一个变量被选入到模型中，应当将这两个变量放在同一个组别中，并且另一个变量单独处于一个组。</p>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>允许组组之间存在重叠变量。</li>
+</ol></li>
+</ul>
+</div>
+</div>
+<div id="penalty_3_4" class="section level3 hasAnchor" number="16.3.4">
+<h3><span class="header-section-number">16.3.4</span> 双层变量选择方法<a href="penalty_3.html#penalty_3_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<p>双层变量选择方法既能选择重要组别，又能在组内选择重要变量。</p>
+<p>在这一节中，双层变量选择法又分为两类方法，第一类称为“复合函数惩罚法”，该类方法通过复合函数的形式来选择重要对象。因此组内惩罚函数与组间惩罚函数都应该是具有单个变量选择功能的惩罚函数。惩罚函数的形式同式<a href="penalty_3.html#eq:penalty-eq16">(16.25)</a>。第二类称为“稀疏组惩罚法”，该类方法凭借具有单个变量选择功能的惩罚函数和具有仅能选择组变量功能的惩罚函数的线性组合来选择对象，又称为“可加惩罚”，其一般形式为</p>
+<p><span class="math display" id="eq:penalty-eq21">\[
+P_{\lambda_1,\lambda_2}(|\beta|)=\lambda_1P_{indiv}(|\beta|)+\lambda_2P_{grp}(|\beta|) \tag{16.31}
+\]</span></p>
+<div id="penalty_3_4_1" class="section level4 hasAnchor" number="16.3.4.1">
+<h4><span class="header-section-number">16.3.4.1</span> Group Bridge<a href="penalty_3.html#penalty_3_4_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>grpreg</code>包的<code>grpreg</code>函数</p>
+</blockquote>
+<p>Huang等人<span class="citation"><sup>[<a href="#ref-penalty_11">28</a>]</sup></span>提出的<span class="math inline">\(Group \; Bridge\)</span>属于“复合函数惩罚法”，其惩罚函数形式为</p>
+<p><span class="math display" id="eq:penalty-eq22">\[
+P_\lambda(|\beta|)=\sum\limits_{j=1}^J\lambda c_j||\beta^{(j)}||_1^\gamma \tag{16.32}
+\]</span></p>
+<p>其中<span class="math inline">\(0&lt;\gamma&lt;1\)</span>，<span class="math inline">\(c_j\)</span>是一个调整参数，可取<span class="math inline">\(c_j \propto |A_j|^{1-\gamma}\)</span>，<span class="math inline">\(|A_j|\)</span>表示第<span class="math inline">\(j\)</span>组的变量数。注意组内系数的正则项为<span class="math inline">\(||\beta^{(j)}||_1^\gamma\)</span>，即先求得<span class="math inline">\(\beta^{(j)}\)</span>的<span class="math inline">\(L_1\)</span>范数，再求其<span class="math inline">\(\gamma\)</span>次幂，组间求和的形式就是<span class="math inline">\(L_\gamma\)</span>范数。结合图<a href="penalty_1.html#fig:penalty-p1">16.1</a>可知，当<span class="math inline">\(0&lt;\gamma&lt;1\)</span>时，<span class="math inline">\(L_\gamma\)</span>范数在结点处是奇异的，故也能产生稀疏解。因此<span class="math inline">\(Group \; Bridge\)</span>在组内和组间都能进行变量选择。</p>
+<p>该方法的惩罚函数图像如图<a href="penalty_3.html#fig:penalty-p12">16.18</a>所示。</p>
+<p>文献<span class="citation"><sup>[<a href="#ref-penalty_11">28</a>]</sup></span>中提到<span class="math inline">\(Group \; Bridge\)</span>也允许重叠群组的存在。</p>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>当<span class="math inline">\(p \rightarrow \infty, \, n \rightarrow \infty\)</span>但<span class="math inline">\(p&lt;n\)</span>时，在某些正则条件下，<span class="math inline">\(Group \; Bridge(0&lt;\gamma&lt;1)\)</span>具有群组<span class="math inline">\(Oracle\)</span>性质。</li>
+</ol></li>
+<li><p>缺点</p>
+<ol style="list-style-type: decimal">
+<li>不具备组内相合性。</li>
+</ol></li>
+</ul>
+</div>
+<div id="penalty_3_4_2" class="section level4 hasAnchor" number="16.3.4.2">
+<h4><span class="header-section-number">16.3.4.2</span> Group MCP<a href="penalty_3.html#penalty_3_4_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>grpreg</code>包的<code>grpreg</code>函数</p>
+</blockquote>
+<p><span class="math inline">\(Group \; Bridge\)</span>的惩罚函数结合了<span class="math inline">\(L_1\)</span>正则项与<span class="math inline">\(L_\gamma\)</span>正则项(<span class="math inline">\(0&lt;\gamma&lt;1\)</span>)，因此在某些点是奇异的，即不可微。故Breheny和Huang<span class="citation"><sup>[<a href="#ref-penalty_12">29</a>]</sup></span>提出的<span class="math inline">\(Group \; MCP\)</span>采用<span class="math inline">\(MCP\)</span>函数来作为组间及组内惩罚函数。在<span class="math inline">\(MCP\)</span>的原始文献<span class="citation"><sup>[<a href="#ref-penalty_6">21</a>]</sup></span>中已经证明了该惩罚函数具有无偏性、连续性和稀疏性。</p>
+<p><span class="math inline">\(Group \; MCP\)</span>的惩罚函数为</p>
+<p><span class="math display" id="eq:penalty-eq23">\[
+P_{\lambda, a, b}(|\beta|)=\sum\limits_{j=1}^Jf_{\lambda,b}^{MCP}(\sum\limits_{k=1}^{p_j}f_{\lambda, a}^{MCP}(|\beta_k^{(j)}|)) \tag{16.33}
+\]</span></p>
+<p>由式<a href="penalty_3.html#eq:penalty-eq10">(16.19)</a>可知，当<span class="math inline">\(\beta&gt;a\lambda\)</span>时，<span class="math inline">\(f_{\lambda,a}^{MCP}(\beta)\)</span>取得最大值<span class="math inline">\(\frac{a\lambda^2}{2}\)</span>。当组内的各个系数均大于<span class="math inline">\(a\lambda\)</span>时，组内惩罚达到最大值，即<span class="math inline">\(p_j\frac{a\lambda^2}{2}\)</span>。之后将组内惩罚值传入到组间惩罚函数，此时需比较<span class="math inline">\(b\lambda\)</span>与<span class="math inline">\(p_j\frac{a\lambda^2}{2}\)</span>的大小，显然当<span class="math inline">\(p_j\frac{a\lambda}{2}&gt;b\)</span>时，组间惩罚也取到了最大值。</p>
+<p>此外，与<span class="math inline">\(Group \; Lasso\)</span>和<span class="math inline">\(Group \; Bridge\)</span>相比，原文指出了<span class="math inline">\(Group MCP\)</span>无论是在个体变量选择上还是组别选择上都是<strong>capped</strong>，如图<a href="penalty_3.html#fig:penalty-p12">16.18</a>所示。</p>
+<blockquote>
+<p>不知道怎么翻译</p>
+<p>the group MCP penalty is <strong>capped</strong> at both the individual
+covariate and group levels, while the group lasso and group bridge penalties are not.</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:penalty-p12"></span>
+<img src="pic/penalty/p12.png" alt="Group MCP的惩罚函数" width="90%" />
+<p class="caption">
+图 16.18: Group MCP的惩罚函数
+</p>
+</div>
+<p>该图表明<span class="math inline">\(Group \; MCP\)</span>方法能够有效避免过度惩罚较大的系数，同时保持解的稀疏性。</p>
+<p>之后，原文写了一段耐人寻味的文字。</p>
+<blockquote>
+<p>Group bridge allows the presence of a single large predictor to continually lower the entry threshold of the other variables in its group. This property, whereby a single strong predictor drags others into the model, prevents group bridge from achieving consistency for the selection of individual variables. Group MCP, on the other hand, limits the amount of signal that a single predictor can contribute towards the reduction of the penalty applied to the other members of the group.</p>
+</blockquote>
+<p><span class="math inline">\(Group \; Bridge\)</span>的惩罚函数对系数的惩罚是一直存在的，并且系数越大，惩罚越大。在群组变量的背景下，当一个系数真的很大时，该系数就会极大地增加该组的组内惩罚函数值，尽管其他系数对组内惩罚函数值的贡献十分有限。这样从外人（组间惩罚函数）的视角来看就会觉得这一组变量挺重要的，实则滥竽充数，颇有“一人得道，鸡犬升天”的意味。</p>
+<p>而<span class="math inline">\(Group \; MCP\)</span>的惩罚函数对系数的惩罚是有限的，这就确保了当组内较大的系数摆脱了非零的嫌疑后，他就可以撒手不管，组内惩罚函数值的大小还得靠其他系数来一起做贡献，“大家好才是真的好”。</p>
+<blockquote>
+<p>与文献<span class="citation"><sup>[<a href="#ref-penalty_1">18</a>]</sup></span>的论断相反，有待商榷。</p>
+</blockquote>
+<ul>
+<li><p>优点</p>
+<ol style="list-style-type: decimal">
+<li>具有组内和组间的相合性。</li>
+</ol></li>
+</ul>
+</div>
+<div id="penalty_3_4_3" class="section level4 hasAnchor" number="16.3.4.3">
+<h4><span class="header-section-number">16.3.4.3</span> Sparse Group Lasso<a href="penalty_3.html#penalty_3_4_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h4>
+<blockquote>
+<p><code>sparsegl</code>包的<code>sparsegl()</code>函数</p>
+</blockquote>
+<p>Simon等人<span class="citation"><sup>[<a href="#ref-penalty_13">30</a>]</sup></span>提出的<span class="math inline">\(Sparse Group Lasso\)</span>的惩罚函数如下所示</p>
+<p><span class="math display" id="eq:penalty-eq24">\[
+P_\lambda(|\beta|)=\lambda_1||\beta||_1+\lambda_2\sum\limits_{j=1}^J ||\beta^{(j)}||_2 \tag{16.34}
+\]</span></p>
+<p>不难发现，式<a href="penalty_3.html#eq:penalty-eq24">(16.34)</a>就是<span class="math inline">\(L_1\)</span>正则项加上<span class="math inline">\(Group \; Lasso\)</span>中除去<span class="math inline">\(\sqrt{p_j}\)</span>的惩罚项，式<a href="penalty_3.html#eq:penalty-eq19">(16.28)</a>。该方法依靠<span class="math inline">\(L_1\)</span>正则项进行单个变量选择，依靠<span class="math inline">\(Group \; Lasso\)</span>的部分进行群组变量选择，从而实现既能选择单个重要变量，又能选择重要组别。当然，也正如文章中说的，第一项和第二项被具有相应功能的惩罚项替代也是可以的。</p>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-penalty_14" class="csl-entry">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">TIBSHIRANI R. Regression shrinkage and selection via the lasso[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 1996, 58(1): 267-288.</div>
+</div>
+<div id="ref-penalty_1" class="csl-entry">
+<div class="csl-left-margin">[18] </div><div class="csl-right-inline">王小燕. 谢邦昌. 马双鸽. 等. 高维数据下群组变量选择的惩罚方法综述[J]. 数理统计与管理, 2015, 34(6): 978-988.</div>
+</div>
+<div id="ref-penalty_3" class="csl-entry">
+<div class="csl-left-margin">[19] </div><div class="csl-right-inline">HOERL A E. KENNARD R W. Ridge regression: Biased estimation for nonorthogonal problems[J]. Technometrics, 1970, 12(1): 55-67.</div>
+</div>
+<div id="ref-penalty_4" class="csl-entry">
+<div class="csl-left-margin">[20] </div><div class="csl-right-inline">ZOU H. HASTIE T. Regularization and variable selection via the elastic net[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 2005, 67(2): 301-320.</div>
+</div>
+<div id="ref-penalty_6" class="csl-entry">
+<div class="csl-left-margin">[21] </div><div class="csl-right-inline">ZHANG C H. Penalized linear unbiased selection[J]. Department of Statistics and Bioinformatics, Rutgers University, 2007, 3(2010): 894-942.</div>
+</div>
+<div id="ref-penalty_15" class="csl-entry">
+<div class="csl-left-margin">[22] </div><div class="csl-right-inline">EFRON B. HASTIE T. TIBSHIRANI J R. Least Angle Regression[J]. Annals of Statistics, 2004, 32(2): 407-451.</div>
+</div>
+<div id="ref-penalty_5" class="csl-entry">
+<div class="csl-left-margin">[23] </div><div class="csl-right-inline">HUANG J. BREHENY P. LEE S. 等. The Mnet method for variable selection[J]. Statistica Sinica, 2016: 903-923.</div>
+</div>
+<div id="ref-penalty_7" class="csl-entry">
+<div class="csl-left-margin">[24] </div><div class="csl-right-inline">ZENG L. XIE J. Group variable selection via SCAD-L2[J/OL]. Statistics, 2014, 48: 49-66. <a href="https://api.semanticscholar.org/CorpusID:14065404">https://api.semanticscholar.org/CorpusID:14065404</a>.</div>
+</div>
+<div id="ref-penalty_8" class="csl-entry">
+<div class="csl-left-margin">[25] </div><div class="csl-right-inline">ZENG L. XIE J. Group variable selection for data with dependent structures[J]. Journal of Statistical Computation and Simulation, 2012, 82(1): 95-106.</div>
+</div>
+<div id="ref-penalty_9" class="csl-entry">
+<div class="csl-left-margin">[26] </div><div class="csl-right-inline">YUAN M. LIN Y. Model selection and estimation in regression with grouped variables[J]. Journal of the Royal Statistical Society Series B: Statistical Methodology, 2006, 68(1): 49-67.</div>
+</div>
+<div id="ref-penalty_10" class="csl-entry">
+<div class="csl-left-margin">[27] </div><div class="csl-right-inline">ZHAO P. ROCHA G. YU B. The composite absolute penalties family for grouped and hierarchical variable selection[J]. 2009.</div>
+</div>
+<div id="ref-penalty_11" class="csl-entry">
+<div class="csl-left-margin">[28] </div><div class="csl-right-inline">HUANG J. MA S. XIE H. 等. A group bridge approach for variable selection[J]. Biometrika, 2009, 96(2): 339-355.</div>
+</div>
+<div id="ref-penalty_12" class="csl-entry">
+<div class="csl-left-margin">[29] </div><div class="csl-right-inline">BREHENY P. HUANG J. Penalized methods for bi-level variable selection[J]. Statistics and Its Interface, 2009, 2(3): 369.</div>
+</div>
+<div id="ref-penalty_13" class="csl-entry">
+<div class="csl-left-margin">[30] </div><div class="csl-right-inline">SIMON N. FRIEDMAN J. HASTIE T. 等. A Sparse-Group Lasso[J]. Journal of Computational and Graphical Statistics: A Joint Publication of American Statistical Association, Institute of Mathematical Statistics, Interface Foundation of North America, 2013, 22(2): 231-245.</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="penalty_2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="penalty_4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "toc_depth": 3
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

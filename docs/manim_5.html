@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.5 文本 | kj的学习笔记</title>
+  <meta name="description" content="个人学习笔记" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.5 文本 | kj的学习笔记" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/‪D:.png" />
+  <meta property="og:description" content="个人学习笔记" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.5 文本 | kj的学习笔记" />
+  
+  <meta name="twitter:description" content="个人学习笔记" />
+  <meta name="twitter:image" content="/‪D:.png" />
+
+<meta name="author" content="刘柯榉" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="manim_4.html"/>
+<link rel="next" href="manim_6.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<pre>  kj的学习笔记  </pre>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="content.html"><a href="content.html"><i class="fa fa-check"></i>内容组成</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>个人简介</a></li>
+<li class="part"><span><b>I 专项</b></span></li>
+<li class="chapter" data-level="1" data-path="rmd.html"><a href="rmd.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rmd_1.html"><a href="rmd_1.html"><i class="fa fa-check"></i><b>1.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="1.2" data-path="rmd_2.html"><a href="rmd_2.html"><i class="fa fa-check"></i><b>1.2</b> 初识RMD</a></li>
+<li class="chapter" data-level="1.3" data-path="rmd_3.html"><a href="rmd_3.html"><i class="fa fa-check"></i><b>1.3</b> 语法介绍</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_1"><i class="fa fa-check"></i><b>1.3.1</b> 标题</a></li>
+<li class="chapter" data-level="1.3.2" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_2"><i class="fa fa-check"></i><b>1.3.2</b> 字体样式</a></li>
+<li class="chapter" data-level="1.3.3" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_3"><i class="fa fa-check"></i><b>1.3.3</b> 换行</a></li>
+<li class="chapter" data-level="1.3.4" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_4"><i class="fa fa-check"></i><b>1.3.4</b> 链接</a></li>
+<li class="chapter" data-level="1.3.5" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_5"><i class="fa fa-check"></i><b>1.3.5</b> 引用</a></li>
+<li class="chapter" data-level="1.3.6" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_6"><i class="fa fa-check"></i><b>1.3.6</b> 列表</a></li>
+<li class="chapter" data-level="1.3.7" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_7"><i class="fa fa-check"></i><b>1.3.7</b> 代码</a></li>
+<li class="chapter" data-level="1.3.8" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_8"><i class="fa fa-check"></i><b>1.3.8</b> 表格</a></li>
+<li class="chapter" data-level="1.3.9" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_9"><i class="fa fa-check"></i><b>1.3.9</b> 图片</a></li>
+<li class="chapter" data-level="1.3.10" data-path="rmd_3.html"><a href="rmd_3.html#rmd_3_10"><i class="fa fa-check"></i><b>1.3.10</b> 数学公式</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="rmd_4.html"><a href="rmd_4.html"><i class="fa fa-check"></i><b>1.4</b> 文档元素</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_1"><i class="fa fa-check"></i><b>1.4.1</b> 分割线</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_2"><i class="fa fa-check"></i><b>1.4.2</b> 转义符</a></li>
+<li class="chapter" data-level="1.4.3" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_3"><i class="fa fa-check"></i><b>1.4.3</b> 分页符</a></li>
+<li class="chapter" data-level="1.4.4" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_4"><i class="fa fa-check"></i><b>1.4.4</b> 设置动态标题</a></li>
+<li class="chapter" data-level="1.4.5" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_5"><i class="fa fa-check"></i><b>1.4.5</b> 自动更新时间</a></li>
+<li class="chapter" data-level="1.4.6" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_6"><i class="fa fa-check"></i><b>1.4.6</b> 获取元数据信息</a></li>
+<li class="chapter" data-level="1.4.7" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_7"><i class="fa fa-check"></i><b>1.4.7</b> 参考文献</a></li>
+<li class="chapter" data-level="1.4.8" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_8"><i class="fa fa-check"></i><b>1.4.8</b> 交叉引用</a></li>
+<li class="chapter" data-level="1.4.9" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_9"><i class="fa fa-check"></i><b>1.4.9</b> 多位作者</a></li>
+<li class="chapter" data-level="1.4.10" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_10"><i class="fa fa-check"></i><b>1.4.10</b> 将模型输出为公式</a></li>
+<li class="chapter" data-level="1.4.11" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_11"><i class="fa fa-check"></i><b>1.4.11</b> 流程图</a></li>
+<li class="chapter" data-level="1.4.12" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_12"><i class="fa fa-check"></i><b>1.4.12</b> 注释</a></li>
+<li class="chapter" data-level="1.4.13" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_13"><i class="fa fa-check"></i><b>1.4.13</b> 缩进</a></li>
+<li class="chapter" data-level="1.4.14" data-path="rmd_4.html"><a href="rmd_4.html#rmd_4_14"><i class="fa fa-check"></i><b>1.4.14</b> 字体颜色</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rmd_5.html"><a href="rmd_5.html"><i class="fa fa-check"></i><b>1.5</b> HTML文档</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_1"><i class="fa fa-check"></i><b>1.5.1</b> 标签</a></li>
+<li class="chapter" data-level="1.5.2" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_2"><i class="fa fa-check"></i><b>1.5.2</b> 目录</a></li>
+<li class="chapter" data-level="1.5.3" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_3"><i class="fa fa-check"></i><b>1.5.3</b> 外观</a></li>
+<li class="chapter" data-level="1.5.4" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_4"><i class="fa fa-check"></i><b>1.5.4</b> 选项卡</a></li>
+<li class="chapter" data-level="1.5.5" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_5"><i class="fa fa-check"></i><b>1.5.5</b> 表格</a></li>
+<li class="chapter" data-level="1.5.6" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_6"><i class="fa fa-check"></i><b>1.5.6</b> 代码块及其输出</a></li>
+<li class="chapter" data-level="1.5.7" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_7"><i class="fa fa-check"></i><b>1.5.7</b> 添加HTML文件</a></li>
+<li class="chapter" data-level="1.5.8" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_8"><i class="fa fa-check"></i><b>1.5.8</b> Pandoc参数</a></li>
+<li class="chapter" data-level="1.5.9" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_9"><i class="fa fa-check"></i><b>1.5.9</b> 共享选项</a></li>
+<li class="chapter" data-level="1.5.10" data-path="rmd_5.html"><a href="rmd_5.html#rmd_5_10"><i class="fa fa-check"></i><b>1.5.10</b> 下载文件</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="rmd_6.html"><a href="rmd_6.html"><i class="fa fa-check"></i><b>1.6</b> PDF文档</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_1"><i class="fa fa-check"></i><b>1.6.1</b> 中文文档</a></li>
+<li class="chapter" data-level="1.6.2" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_2"><i class="fa fa-check"></i><b>1.6.2</b> 目录</a></li>
+<li class="chapter" data-level="1.6.3" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_3"><i class="fa fa-check"></i><b>1.6.3</b> 图与表</a></li>
+<li class="chapter" data-level="1.6.4" data-path="rmd_6.html"><a href="rmd_6.html#rmd_6_4"><i class="fa fa-check"></i><b>1.6.4</b> 语法高亮</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="manim.html"><a href="manim.html"><i class="fa fa-check"></i><b>2</b> Manim</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="manim_1.html"><a href="manim_1.html"><i class="fa fa-check"></i><b>2.1</b> 安装与创建</a></li>
+<li class="chapter" data-level="2.2" data-path="manim_2.html"><a href="manim_2.html"><i class="fa fa-check"></i><b>2.2</b> 初识Manim</a></li>
+<li class="chapter" data-level="2.3" data-path="manim_3.html"><a href="manim_3.html"><i class="fa fa-check"></i><b>2.3</b> 输出设置</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="manim_3.html"><a href="manim_3.html#manim_3_1"><i class="fa fa-check"></i><b>2.3.1</b> 输出文件夹</a></li>
+<li class="chapter" data-level="2.3.2" data-path="manim_3.html"><a href="manim_3.html#manim_3_2"><i class="fa fa-check"></i><b>2.3.2</b> 片段</a></li>
+<li class="chapter" data-level="2.3.3" data-path="manim_3.html"><a href="manim_3.html#manim_3_3"><i class="fa fa-check"></i><b>2.3.3</b> 命令行标志</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="manim_4.html"><a href="manim_4.html"><i class="fa fa-check"></i><b>2.4</b> 配置</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="manim_4.html"><a href="manim_4.html#manim_4_1"><i class="fa fa-check"></i><b>2.4.1</b> 命令行参数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="manim_4.html"><a href="manim_4.html#manim_4_2"><i class="fa fa-check"></i><b>2.4.2</b> ManimConfig类</a></li>
+<li class="chapter" data-level="2.4.3" data-path="manim_4.html"><a href="manim_4.html#manim_4_3"><i class="fa fa-check"></i><b>2.4.3</b> 配置文件</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="manim_5.html"><a href="manim_5.html"><i class="fa fa-check"></i><b>2.5</b> 文本</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="manim_5.html"><a href="manim_5.html#manim_5_1"><i class="fa fa-check"></i><b>2.5.1</b> Text</a></li>
+<li class="chapter" data-level="2.5.2" data-path="manim_5.html"><a href="manim_5.html#manim_5_2"><i class="fa fa-check"></i><b>2.5.2</b> MarkupText</a></li>
+<li class="chapter" data-level="2.5.3" data-path="manim_5.html"><a href="manim_5.html#manim_5_3"><i class="fa fa-check"></i><b>2.5.3</b> Paragraph</a></li>
+<li class="chapter" data-level="2.5.4" data-path="manim_5.html"><a href="manim_5.html#manim_5_4"><i class="fa fa-check"></i><b>2.5.4</b> Tex</a></li>
+<li class="chapter" data-level="2.5.5" data-path="manim_5.html"><a href="manim_5.html#manim_5_5"><i class="fa fa-check"></i><b>2.5.5</b> MathTex</a></li>
+<li class="chapter" data-level="2.5.6" data-path="manim_5.html"><a href="manim_5.html#manim_5_6"><i class="fa fa-check"></i><b>2.5.6</b> Title</a></li>
+<li class="chapter" data-level="2.5.7" data-path="manim_5.html"><a href="manim_5.html#manim_5_7"><i class="fa fa-check"></i><b>2.5.7</b> BulletedList</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="manim_6.html"><a href="manim_6.html"><i class="fa fa-check"></i><b>2.6</b> 内置颜色</a></li>
+<li class="chapter" data-level="2.7" data-path="manim_7.html"><a href="manim_7.html"><i class="fa fa-check"></i><b>2.7</b> 物体的位置与移动</a></li>
+<li class="chapter" data-level="2.8" data-path="manim_8.html"><a href="manim_8.html"><i class="fa fa-check"></i><b>2.8</b> 动画</a></li>
+<li class="chapter" data-level="2.9" data-path="manim_9.html"><a href="manim_9.html"><i class="fa fa-check"></i><b>2.9</b> 镜头视角</a></li>
+<li class="chapter" data-level="2.10" data-path="manim_10.html"><a href="manim_10.html"><i class="fa fa-check"></i><b>2.10</b> 存储对象</a></li>
+<li class="chapter" data-level="2.11" data-path="manim_11.html"><a href="manim_11.html"><i class="fa fa-check"></i><b>2.11</b> 成品</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sql.html"><a href="sql.html"><i class="fa fa-check"></i><b>3</b> SQL</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="sql_1.html"><a href="sql_1.html"><i class="fa fa-check"></i><b>3.1</b> 连接MySQL</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="sql_1.html"><a href="sql_1.html#sql_1_1"><i class="fa fa-check"></i><b>3.1.1</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="sql_2.html"><a href="sql_2.html"><i class="fa fa-check"></i><b>3.2</b> MySQL必知必会</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="sql_2.html"><a href="sql_2.html#sql_2_1"><i class="fa fa-check"></i><b>3.2.1</b> 提要</a></li>
+<li class="chapter" data-level="3.2.2" data-path="sql_2.html"><a href="sql_2.html#sql_2_2"><i class="fa fa-check"></i><b>3.2.2</b> 选择数据库与表</a></li>
+<li class="chapter" data-level="3.2.3" data-path="sql_2.html"><a href="sql_2.html#sql_2_3"><i class="fa fa-check"></i><b>3.2.3</b> 检索数据</a></li>
+<li class="chapter" data-level="3.2.4" data-path="sql_2.html"><a href="sql_2.html#sql_2_4"><i class="fa fa-check"></i><b>3.2.4</b> 排序检索数据</a></li>
+<li class="chapter" data-level="3.2.5" data-path="sql_2.html"><a href="sql_2.html#sql_2_5"><i class="fa fa-check"></i><b>3.2.5</b> 过滤数据</a></li>
+<li class="chapter" data-level="3.2.6" data-path="sql_2.html"><a href="sql_2.html#sql_2_6"><i class="fa fa-check"></i><b>3.2.6</b> 计算字段</a></li>
+<li class="chapter" data-level="3.2.7" data-path="sql_2.html"><a href="sql_2.html#sql_2_7"><i class="fa fa-check"></i><b>3.2.7</b> 函数</a></li>
+<li class="chapter" data-level="3.2.8" data-path="sql_2.html"><a href="sql_2.html#sql_2_8"><i class="fa fa-check"></i><b>3.2.8</b> 汇总数据</a></li>
+<li class="chapter" data-level="3.2.9" data-path="sql_2.html"><a href="sql_2.html#sql_2_9"><i class="fa fa-check"></i><b>3.2.9</b> 数据分组</a></li>
+<li class="chapter" data-level="3.2.10" data-path="sql_2.html"><a href="sql_2.html#sql_2_10"><i class="fa fa-check"></i><b>3.2.10</b> 子查询</a></li>
+<li class="chapter" data-level="3.2.11" data-path="sql_2.html"><a href="sql_2.html#sql_2_11"><i class="fa fa-check"></i><b>3.2.11</b> 表联结</a></li>
+<li class="chapter" data-level="3.2.12" data-path="sql_2.html"><a href="sql_2.html#sql_2_12"><i class="fa fa-check"></i><b>3.2.12</b> 组合查询</a></li>
+<li class="chapter" data-level="3.2.13" data-path="sql_2.html"><a href="sql_2.html#sql_2_13"><i class="fa fa-check"></i><b>3.2.13</b> 全文本搜索</a></li>
+<li class="chapter" data-level="3.2.14" data-path="sql_2.html"><a href="sql_2.html#sql_2_14"><i class="fa fa-check"></i><b>3.2.14</b> 插入数据</a></li>
+<li class="chapter" data-level="3.2.15" data-path="sql_2.html"><a href="sql_2.html#sql_2_15"><i class="fa fa-check"></i><b>3.2.15</b> 更新数据</a></li>
+<li class="chapter" data-level="3.2.16" data-path="sql_2.html"><a href="sql_2.html#sql_2_16"><i class="fa fa-check"></i><b>3.2.16</b> 表的操作</a></li>
+<li class="chapter" data-level="3.2.17" data-path="sql_2.html"><a href="sql_2.html#sql_2_17"><i class="fa fa-check"></i><b>3.2.17</b> 使用视图</a></li>
+<li class="chapter" data-level="3.2.18" data-path="sql_2.html"><a href="sql_2.html#sql_2_18"><i class="fa fa-check"></i><b>3.2.18</b> 使用存储过程</a></li>
+<li class="chapter" data-level="3.2.19" data-path="sql_2.html"><a href="sql_2.html#sql_2_19"><i class="fa fa-check"></i><b>3.2.19</b> 触发器</a></li>
+<li class="chapter" data-level="3.2.20" data-path="sql_2.html"><a href="sql_2.html#sql_2_20"><i class="fa fa-check"></i><b>3.2.20</b> 事务处理</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="spider.html"><a href="spider.html"><i class="fa fa-check"></i><b>4</b> 爬虫</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="spider_1.html"><a href="spider_1.html"><i class="fa fa-check"></i><b>4.1</b> 提要</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>5</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="shiny_1.html"><a href="shiny_1.html"><i class="fa fa-check"></i><b>5.1</b> 初始Shiny</a></li>
+<li class="chapter" data-level="5.2" data-path="shiny_2.html"><a href="shiny_2.html"><i class="fa fa-check"></i><b>5.2</b> UI设计</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_1"><i class="fa fa-check"></i><b>5.2.1</b> 输入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="shiny_2.html"><a href="shiny_2.html#shiny_2_2"><i class="fa fa-check"></i><b>5.2.2</b> 输出</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="shiny_3.html"><a href="shiny_3.html"><i class="fa fa-check"></i><b>5.3</b> 反应式编程</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_1"><i class="fa fa-check"></i><b>5.3.1</b> 服务端</a></li>
+<li class="chapter" data-level="5.3.2" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_2"><i class="fa fa-check"></i><b>5.3.2</b> 反应表达式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_3"><i class="fa fa-check"></i><b>5.3.3</b> 控制更新</a></li>
+<li class="chapter" data-level="5.3.4" data-path="shiny_3.html"><a href="shiny_3.html#shiny_3_4"><i class="fa fa-check"></i><b>5.3.4</b> 信息反馈</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="shiny_4.html"><a href="shiny_4.html"><i class="fa fa-check"></i><b>5.4</b> 页面布局</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_1"><i class="fa fa-check"></i><b>5.4.1</b> 页面函数</a></li>
+<li class="chapter" data-level="5.4.2" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2"><i class="fa fa-check"></i><b>5.4.2</b> 布局函数</a></li>
+<li class="chapter" data-level="5.4.3" data-path="shiny_4.html"><a href="shiny_4.html#shiny_4_2_3"><i class="fa fa-check"></i><b>5.4.3</b> bslib风格布局</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="shiny_5.html"><a href="shiny_5.html"><i class="fa fa-check"></i><b>5.5</b> 主题</a></li>
+<li class="chapter" data-level="5.6" data-path="shiny_6.html"><a href="shiny_6.html"><i class="fa fa-check"></i><b>5.6</b> 交互式图像与插入图像</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_1"><i class="fa fa-check"></i><b>5.6.1</b> 交互式图像</a></li>
+<li class="chapter" data-level="5.6.2" data-path="shiny_6.html"><a href="shiny_6.html#shiny_6_2"><i class="fa fa-check"></i><b>5.6.2</b> 插入图像</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="shiny_7.html"><a href="shiny_7.html"><i class="fa fa-check"></i><b>5.7</b> 用户反馈</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_1"><i class="fa fa-check"></i><b>5.7.1</b> 验证</a></li>
+<li class="chapter" data-level="5.7.2" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_2"><i class="fa fa-check"></i><b>5.7.2</b> 通知</a></li>
+<li class="chapter" data-level="5.7.3" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_3"><i class="fa fa-check"></i><b>5.7.3</b> 进度条</a></li>
+<li class="chapter" data-level="5.7.4" data-path="shiny_7.html"><a href="shiny_7.html#shiny_7_4"><i class="fa fa-check"></i><b>5.7.4</b> 确认</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="shiny_8.html"><a href="shiny_8.html"><i class="fa fa-check"></i><b>5.8</b> shiny中的整洁式编程</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_1"><i class="fa fa-check"></i><b>5.8.1</b> Data-masking</a></li>
+<li class="chapter" data-level="5.8.2" data-path="shiny_8.html"><a href="shiny_8.html#shiny_8_2"><i class="fa fa-check"></i><b>5.8.2</b> Tidy-selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="shiny_9.html"><a href="shiny_9.html"><i class="fa fa-check"></i><b>5.9</b> 交互式Rmarkdown</a></li>
+<li class="chapter" data-level="5.10" data-path="shiny_10.html"><a href="shiny_10.html"><i class="fa fa-check"></i><b>5.10</b> 数据仪表盘</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_1"><i class="fa fa-check"></i><b>5.10.1</b> 整体框架</a></li>
+<li class="chapter" data-level="5.10.2" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_2"><i class="fa fa-check"></i><b>5.10.2</b> 外观</a></li>
+<li class="chapter" data-level="5.10.3" data-path="shiny_10.html"><a href="shiny_10.html#shiny_10_3"><i class="fa fa-check"></i><b>5.10.3</b> 案例</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="shiny_11.html"><a href="shiny_11.html"><i class="fa fa-check"></i><b>5.11</b> 分享shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="langchain.html"><a href="langchain.html"><i class="fa fa-check"></i><b>6</b> Langchain</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="langchain_x.html"><a href="langchain_x.html"><i class="fa fa-check"></i><b>6.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="langchain_x.html"><a href="langchain_x.html#langchain_x_1"><i class="fa fa-check"></i><b>6.1.1</b> NL2SQL</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 模型与方法</b></span></li>
+<li class="chapter" data-level="7" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>7</b> 应用回归分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="reg_1.html"><a href="reg_1.html"><i class="fa fa-check"></i><b>7.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="reg_1.html"><a href="reg_1.html#reg_1_1"><i class="fa fa-check"></i><b>7.1.1</b> 变量间的相关关系</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reg_1.html"><a href="reg_1.html#reg_1_2"><i class="fa fa-check"></i><b>7.1.2</b> 回归模型的一般形式</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="reg_2.html"><a href="reg_2.html"><i class="fa fa-check"></i><b>7.2</b> 假定</a></li>
+<li class="chapter" data-level="7.3" data-path="reg_3.html"><a href="reg_3.html"><i class="fa fa-check"></i><b>7.3</b> 线性回归模型</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="reg_3.html"><a href="reg_3.html#reg_3_1"><i class="fa fa-check"></i><b>7.3.1</b> 一元线性回归模型</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reg_3.html"><a href="reg_3.html#reg_3_2"><i class="fa fa-check"></i><b>7.3.2</b> 多元线性回归模型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="reg_4.html"><a href="reg_4.html"><i class="fa fa-check"></i><b>7.4</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="reg_4.html"><a href="reg_4.html#reg_4_1"><i class="fa fa-check"></i><b>7.4.1</b> 最小二乘估计</a></li>
+<li class="chapter" data-level="7.4.2" data-path="reg_4.html"><a href="reg_4.html#reg_4_2"><i class="fa fa-check"></i><b>7.4.2</b> 极大似然估计</a></li>
+<li class="chapter" data-level="7.4.3" data-path="reg_4.html"><a href="reg_4.html#reg_4_3"><i class="fa fa-check"></i><b>7.4.3</b> 矩估计</a></li>
+<li class="chapter" data-level="7.4.4" data-path="reg_4.html"><a href="reg_4.html#reg_4_4"><i class="fa fa-check"></i><b>7.4.4</b> 几何视角</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="reg_5.html"><a href="reg_5.html"><i class="fa fa-check"></i><b>7.5</b> 最小二乘估计的性质</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="reg_5.html"><a href="reg_5.html#reg_5_1"><i class="fa fa-check"></i><b>7.5.1</b> 线性</a></li>
+<li class="chapter" data-level="7.5.2" data-path="reg_5.html"><a href="reg_5.html#reg_5_2"><i class="fa fa-check"></i><b>7.5.2</b> 无偏性</a></li>
+<li class="chapter" data-level="7.5.3" data-path="reg_5.html"><a href="reg_5.html#reg_5_3"><i class="fa fa-check"></i><b>7.5.3</b> 有效性</a></li>
+<li class="chapter" data-level="7.5.4" data-path="reg_5.html"><a href="reg_5.html#reg_5_4"><i class="fa fa-check"></i><b>7.5.4</b> 方差</a></li>
+<li class="chapter" data-level="7.5.5" data-path="reg_5.html"><a href="reg_5.html#reg_5_5"><i class="fa fa-check"></i><b>7.5.5</b> 正态性</a></li>
+<li class="chapter" data-level="7.5.6" data-path="reg_5.html"><a href="reg_5.html#reg_5_6"><i class="fa fa-check"></i><b>7.5.6</b> 残差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="reg_6.html"><a href="reg_6.html"><i class="fa fa-check"></i><b>7.6</b> 显著性检验</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="reg_6.html"><a href="reg_6.html#reg_6_1"><i class="fa fa-check"></i><b>7.6.1</b> 区间估计</a></li>
+<li class="chapter" data-level="7.6.2" data-path="reg_6.html"><a href="reg_6.html#reg_6_2"><i class="fa fa-check"></i><b>7.6.2</b> t检验</a></li>
+<li class="chapter" data-level="7.6.3" data-path="reg_6.html"><a href="reg_6.html#reg_6_3"><i class="fa fa-check"></i><b>7.6.3</b> F检验</a></li>
+<li class="chapter" data-level="7.6.4" data-path="reg_6.html"><a href="reg_6.html#reg_6_4"><i class="fa fa-check"></i><b>7.6.4</b> 偏F检验</a></li>
+<li class="chapter" data-level="7.6.5" data-path="reg_6.html"><a href="reg_6.html#reg_6_5"><i class="fa fa-check"></i><b>7.6.5</b> 样本决定系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="reg_7.html"><a href="reg_7.html"><i class="fa fa-check"></i><b>7.7</b> 预测</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="reg_7.html"><a href="reg_7.html#reg_7_1"><i class="fa fa-check"></i><b>7.7.1</b> 预测因变量新值的均值</a></li>
+<li class="chapter" data-level="7.7.2" data-path="reg_7.html"><a href="reg_7.html#reg_7_2"><i class="fa fa-check"></i><b>7.7.2</b> 预测因变量的新值</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="reg_8.html"><a href="reg_8.html"><i class="fa fa-check"></i><b>7.8</b> 回归系数的解释</a></li>
+<li class="chapter" data-level="7.9" data-path="reg_9.html"><a href="reg_9.html"><i class="fa fa-check"></i><b>7.9</b> 中心化与标准化</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="reg_9.html"><a href="reg_9.html#reg_9_1"><i class="fa fa-check"></i><b>7.9.1</b> 中心化</a></li>
+<li class="chapter" data-level="7.9.2" data-path="reg_9.html"><a href="reg_9.html#reg_9_2"><i class="fa fa-check"></i><b>7.9.2</b> 标准化</a></li>
+</ul></li>
+<li class="chapter" data-level="7.10" data-path="reg_10.html"><a href="reg_10.html"><i class="fa fa-check"></i><b>7.10</b> 相关系数与偏相关系数</a>
+<ul>
+<li class="chapter" data-level="7.10.1" data-path="reg_10.html"><a href="reg_10.html#reg_10_1"><i class="fa fa-check"></i><b>7.10.1</b> 样本相关系数</a></li>
+<li class="chapter" data-level="7.10.2" data-path="reg_10.html"><a href="reg_10.html#reg_10_2"><i class="fa fa-check"></i><b>7.10.2</b> 样本偏相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="7.11" data-path="reg_11.html"><a href="reg_11.html"><i class="fa fa-check"></i><b>7.11</b> 重要的定义和等式</a></li>
+<li class="chapter" data-level="7.12" data-path="reg_12.html"><a href="reg_12.html"><i class="fa fa-check"></i><b>7.12</b> 回归诊断</a>
+<ul>
+<li class="chapter" data-level="7.12.1" data-path="reg_12.html"><a href="reg_12.html#reg_12_1"><i class="fa fa-check"></i><b>7.12.1</b> 残差分析</a></li>
+<li class="chapter" data-level="7.12.2" data-path="reg_12.html"><a href="reg_12.html#reg_12_2"><i class="fa fa-check"></i><b>7.12.2</b> 异常点和强影响点</a></li>
+<li class="chapter" data-level="7.12.3" data-path="reg_12.html"><a href="reg_12.html#reg_12_3"><i class="fa fa-check"></i><b>7.12.3</b> 异方差</a></li>
+<li class="chapter" data-level="7.12.4" data-path="reg_12.html"><a href="reg_12.html#reg_12_4"><i class="fa fa-check"></i><b>7.12.4</b> 自相关</a></li>
+<li class="chapter" data-level="7.12.5" data-path="reg_12.html"><a href="reg_12.html#reg_12_5"><i class="fa fa-check"></i><b>7.12.5</b> 多重共线性</a></li>
+</ul></li>
+<li class="chapter" data-level="7.13" data-path="reg_13.html"><a href="reg_13.html"><i class="fa fa-check"></i><b>7.13</b> 变量选择与正则化</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="reg_13.html"><a href="reg_13.html#reg_13_1"><i class="fa fa-check"></i><b>7.13.1</b> 冗余与遗漏</a></li>
+<li class="chapter" data-level="7.13.2" data-path="reg_13.html"><a href="reg_13.html#reg_13_2"><i class="fa fa-check"></i><b>7.13.2</b> 变量选择的传统方法</a></li>
+<li class="chapter" data-level="7.13.3" data-path="reg_13.html"><a href="reg_13.html#reg_13_3"><i class="fa fa-check"></i><b>7.13.3</b> 变量选择的正则化方法</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ms.html"><a href="ms.html"><i class="fa fa-check"></i><b>8</b> 应用多元统计</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ms_1.html"><a href="ms_1.html"><i class="fa fa-check"></i><b>8.1</b> 矩阵运算</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="ms_1.html"><a href="ms_1.html#ms_1_1"><i class="fa fa-check"></i><b>8.1.1</b> Kronecker积</a></li>
+<li class="chapter" data-level="8.1.2" data-path="ms_1.html"><a href="ms_1.html#ms_1_2"><i class="fa fa-check"></i><b>8.1.2</b> 拉直</a></li>
+<li class="chapter" data-level="8.1.3" data-path="ms_1.html"><a href="ms_1.html#ms_1_3"><i class="fa fa-check"></i><b>8.1.3</b> 减号逆与加号逆</a></li>
+<li class="chapter" data-level="8.1.4" data-path="ms_1.html"><a href="ms_1.html#ms_1_4"><i class="fa fa-check"></i><b>8.1.4</b> 分块矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="ms_2.html"><a href="ms_2.html"><i class="fa fa-check"></i><b>8.2</b> 多元正态分布</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ms_2.html"><a href="ms_2.html#ms_2_1"><i class="fa fa-check"></i><b>8.2.1</b> 多元分布的基本运算性质</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ms_2.html"><a href="ms_2.html#ms_2_2"><i class="fa fa-check"></i><b>8.2.2</b> 多元正态分布的定义</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ms_2.html"><a href="ms_2.html#ms_2_3"><i class="fa fa-check"></i><b>8.2.3</b> 正态分布的条件分布和独立性</a></li>
+<li class="chapter" data-level="8.2.4" data-path="ms_2.html"><a href="ms_2.html#ms_2_4"><i class="fa fa-check"></i><b>8.2.4</b> 偏相关系数与全相关系数</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ms_3.html"><a href="ms_3.html"><i class="fa fa-check"></i><b>8.3</b> 主成分分析</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="ms_3.html"><a href="ms_3.html#ms_3_1"><i class="fa fa-check"></i><b>8.3.1</b> 总体主成分</a></li>
+<li class="chapter" data-level="8.3.2" data-path="ms_3.html"><a href="ms_3.html#ms_3_2"><i class="fa fa-check"></i><b>8.3.2</b> 样本主成分</a></li>
+<li class="chapter" data-level="8.3.3" data-path="ms_3.html"><a href="ms_3.html#ms_3_3"><i class="fa fa-check"></i><b>8.3.3</b> 关于主成分</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="ms_4.html"><a href="ms_4.html"><i class="fa fa-check"></i><b>8.4</b> 因子分析</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ms_4.html"><a href="ms_4.html#ms_4_1"><i class="fa fa-check"></i><b>8.4.1</b> 正交因子模型</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ms_4.html"><a href="ms_4.html#ms_4_3"><i class="fa fa-check"></i><b>8.4.2</b> 参数估计</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ms_4.html"><a href="ms_4.html#ms_4_4"><i class="fa fa-check"></i><b>8.4.3</b> 因子旋转</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ms_4.html"><a href="ms_4.html#ms_4_5"><i class="fa fa-check"></i><b>8.4.4</b> 因子得分</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ms_4.html"><a href="ms_4.html#ms_4_6"><i class="fa fa-check"></i><b>8.4.5</b> 因子分析和主成分分析的区别与联系</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ms_5.html"><a href="ms_5.html"><i class="fa fa-check"></i><b>8.5</b> 判别分析</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ms_5.html"><a href="ms_5.html#ms_5_1"><i class="fa fa-check"></i><b>8.5.1</b> 距离判别</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ms_5.html"><a href="ms_5.html#ms_5_2"><i class="fa fa-check"></i><b>8.5.2</b> 贝叶斯判别</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ms_6.html"><a href="ms_6.html"><i class="fa fa-check"></i><b>8.6</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="ms_6.html"><a href="ms_6.html#ms_6_1"><i class="fa fa-check"></i><b>8.6.1</b> 距离与相似性的度量</a></li>
+<li class="chapter" data-level="8.6.2" data-path="ms_6.html"><a href="ms_6.html#ms_6_2"><i class="fa fa-check"></i><b>8.6.2</b> 聚类效果的评价指标</a></li>
+<li class="chapter" data-level="8.6.3" data-path="ms_6.html"><a href="ms_6.html#ms_6_3"><i class="fa fa-check"></i><b>8.6.3</b> 系统聚类</a></li>
+<li class="chapter" data-level="8.6.4" data-path="ms_6.html"><a href="ms_6.html#ms_6_4"><i class="fa fa-check"></i><b>8.6.4</b> Kmeans</a></li>
+<li class="chapter" data-level="8.6.5" data-path="ms_6.html"><a href="ms_6.html#ms_6_5"><i class="fa fa-check"></i><b>8.6.5</b> 其他聚类方法</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="ms_7.html"><a href="ms_7.html"><i class="fa fa-check"></i><b>8.7</b> 典型相关分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ml.html"><a href="ml.html"><i class="fa fa-check"></i><b>9</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ml_1.html"><a href="ml_1.html"><i class="fa fa-check"></i><b>9.1</b> 基础知识</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ml_1.html"><a href="ml_1.html#ml_1_1"><i class="fa fa-check"></i><b>9.1.1</b> 偏差-方差权衡</a></li>
+<li class="chapter" data-level="9.1.2" data-path="ml_1.html"><a href="ml_1.html#ml_1_2"><i class="fa fa-check"></i><b>9.1.2</b> 评价指标</a></li>
+<li class="chapter" data-level="9.1.3" data-path="ml_1.html"><a href="ml_1.html#ml_1_3"><i class="fa fa-check"></i><b>9.1.3</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ml_2.html"><a href="ml_2.html"><i class="fa fa-check"></i><b>9.2</b> pandas与sklearn</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ml_2.html"><a href="ml_2.html#ml_2_1"><i class="fa fa-check"></i><b>9.2.1</b> 导入数据集</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ml_2.html"><a href="ml_2.html#ml_2_2"><i class="fa fa-check"></i><b>9.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ml_2.html"><a href="ml_2.html#ml_2_3"><i class="fa fa-check"></i><b>9.2.3</b> 分割数据集</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ml_3.html"><a href="ml_3.html"><i class="fa fa-check"></i><b>9.3</b> 决策树</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ml_3.html"><a href="ml_3.html#ml_3_1"><i class="fa fa-check"></i><b>9.3.1</b> 分类树</a></li>
+<li class="chapter" data-level="9.3.2" data-path="ml_3.html"><a href="ml_3.html#ml_3_2"><i class="fa fa-check"></i><b>9.3.2</b> 回归树</a></li>
+<li class="chapter" data-level="9.3.3" data-path="ml_3.html"><a href="ml_3.html#ml_3_3"><i class="fa fa-check"></i><b>9.3.3</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ml_4.html"><a href="ml_4.html"><i class="fa fa-check"></i><b>9.4</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ml_4.html"><a href="ml_4.html#ml_4_1"><i class="fa fa-check"></i><b>9.4.1</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ml_5.html"><a href="ml_5.html"><i class="fa fa-check"></i><b>9.5</b> XGBoost</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="ml_5.html"><a href="ml_5.html#ml_5_1"><i class="fa fa-check"></i><b>9.5.1</b> 原理</a></li>
+<li class="chapter" data-level="9.5.2" data-path="ml_5.html"><a href="ml_5.html#ml_5_2"><i class="fa fa-check"></i><b>9.5.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="ml_6.html"><a href="ml_6.html"><i class="fa fa-check"></i><b>9.6</b> LightGBM</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="ml_6.html"><a href="ml_6.html#ml_6_1"><i class="fa fa-check"></i><b>9.6.1</b> 原理</a></li>
+<li class="chapter" data-level="9.6.2" data-path="ml_6.html"><a href="ml_6.html#ml_6_2"><i class="fa fa-check"></i><b>9.6.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="ml_7.html"><a href="ml_7.html"><i class="fa fa-check"></i><b>9.7</b> 因果森林</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="ml_7.html"><a href="ml_7.html#ml_7_1"><i class="fa fa-check"></i><b>9.7.1</b> 原理</a></li>
+<li class="chapter" data-level="9.7.2" data-path="ml_7.html"><a href="ml_7.html#ml_7_2"><i class="fa fa-check"></i><b>9.7.2</b> 实现</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="ml_8.html"><a href="ml_8.html"><i class="fa fa-check"></i><b>9.8</b> SVM</a></li>
+<li class="chapter" data-level="9.9" data-path="ml_9.html"><a href="ml_9.html"><i class="fa fa-check"></i><b>9.9</b> 聚类分析</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="ml_9.html"><a href="ml_9.html#ml_9_1"><i class="fa fa-check"></i><b>9.9.1</b> 聚类结果评价</a></li>
+<li class="chapter" data-level="9.9.2" data-path="ml_9.html"><a href="ml_9.html#ml_9_2"><i class="fa fa-check"></i><b>9.9.2</b> Kmeans</a></li>
+<li class="chapter" data-level="9.9.3" data-path="ml_9.html"><a href="ml_9.html#ml_9_3"><i class="fa fa-check"></i><b>9.9.3</b> Kmeans++</a></li>
+<li class="chapter" data-level="9.9.4" data-path="ml_9.html"><a href="ml_9.html#ml_9_4"><i class="fa fa-check"></i><b>9.9.4</b> DBSCAN</a></li>
+<li class="chapter" data-level="9.9.5" data-path="ml_9.html"><a href="ml_9.html#ml_9_5"><i class="fa fa-check"></i><b>9.9.5</b> HDBSCAN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dl.html"><a href="dl.html"><i class="fa fa-check"></i><b>10</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dl_1.html"><a href="dl_1.html"><i class="fa fa-check"></i><b>10.1</b> 预备知识</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dl_1.html"><a href="dl_1.html#dl_1_1"><i class="fa fa-check"></i><b>10.1.1</b> 数据操作</a></li>
+<li class="chapter" data-level="10.1.2" data-path="dl_1.html"><a href="dl_1.html#dl_1_2"><i class="fa fa-check"></i><b>10.1.2</b> 自动微分</a></li>
+<li class="chapter" data-level="10.1.3" data-path="dl_1.html"><a href="dl_1.html#dl_1_3"><i class="fa fa-check"></i><b>10.1.3</b> 加载数据集</a></li>
+<li class="chapter" data-level="10.1.4" data-path="dl_1.html"><a href="dl_1.html#dl_1_4"><i class="fa fa-check"></i><b>10.1.4</b> 调参技巧</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dl_2.html"><a href="dl_2.html"><i class="fa fa-check"></i><b>10.2</b> 线性神经网络</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dl_2.html"><a href="dl_2.html#dl_2_1"><i class="fa fa-check"></i><b>10.2.1</b> 线性回归</a></li>
+<li class="chapter" data-level="10.2.2" data-path="dl_2.html"><a href="dl_2.html#dl_2_2"><i class="fa fa-check"></i><b>10.2.2</b> 二分类问题</a></li>
+<li class="chapter" data-level="10.2.3" data-path="dl_2.html"><a href="dl_2.html#dl_2_3"><i class="fa fa-check"></i><b>10.2.3</b> 多分类问题</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dl_9.html"><a href="dl_9.html"><i class="fa fa-check"></i><b>10.3</b> RNN</a></li>
+<li class="chapter" data-level="10.4" data-path="dl_3.html"><a href="dl_3.html"><i class="fa fa-check"></i><b>10.4</b> LSTM</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="dl_3.html"><a href="dl_3.html#dl_3_1"><i class="fa fa-check"></i><b>10.4.1</b> 原理</a></li>
+<li class="chapter" data-level="10.4.2" data-path="dl_3.html"><a href="dl_3.html#dl_3_2"><i class="fa fa-check"></i><b>10.4.2</b> 示例</a></li>
+<li class="chapter" data-level="10.4.3" data-path="dl_3.html"><a href="dl_3.html#dl_3_3"><i class="fa fa-check"></i><b>10.4.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="dl_4.html"><a href="dl_4.html"><i class="fa fa-check"></i><b>10.5</b> GRU</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="dl_4.html"><a href="dl_4.html#dl_4_1"><i class="fa fa-check"></i><b>10.5.1</b> 原理</a></li>
+<li class="chapter" data-level="10.5.2" data-path="dl_4.html"><a href="dl_4.html#dl_4_2"><i class="fa fa-check"></i><b>10.5.2</b> 示例</a></li>
+<li class="chapter" data-level="10.5.3" data-path="dl_4.html"><a href="dl_4.html#dl_4_3"><i class="fa fa-check"></i><b>10.5.3</b> 拓展</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="dl_5.html"><a href="dl_5.html"><i class="fa fa-check"></i><b>10.6</b> Seq2Seq</a>
+<ul>
+<li class="chapter" data-level="10.6.1" data-path="dl_5.html"><a href="dl_5.html#dl_5_1"><i class="fa fa-check"></i><b>10.6.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="dl_6.html"><a href="dl_6.html"><i class="fa fa-check"></i><b>10.7</b> BNN</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="dl_6.html"><a href="dl_6.html#dl_6_1"><i class="fa fa-check"></i><b>10.7.1</b> 原理</a></li>
+<li class="chapter" data-level="10.7.2" data-path="dl_6.html"><a href="dl_6.html#dl_6_2"><i class="fa fa-check"></i><b>10.7.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="dl_7.html"><a href="dl_7.html"><i class="fa fa-check"></i><b>10.8</b> GNN</a>
+<ul>
+<li class="chapter" data-level="10.8.1" data-path="dl_7.html"><a href="dl_7.html#dl_7_1"><i class="fa fa-check"></i><b>10.8.1</b> 原理</a></li>
+<li class="chapter" data-level="10.8.2" data-path="dl_7.html"><a href="dl_7.html#dl_7_2"><i class="fa fa-check"></i><b>10.8.2</b> 图神经网络的类型</a></li>
+<li class="chapter" data-level="10.8.3" data-path="dl_7.html"><a href="dl_7.html#dl_7_3"><i class="fa fa-check"></i><b>10.8.3</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.9" data-path="dl_8.html"><a href="dl_8.html"><i class="fa fa-check"></i><b>10.9</b> Diffusion Model</a>
+<ul>
+<li class="chapter" data-level="10.9.1" data-path="dl_8.html"><a href="dl_8.html#dl_8_1"><i class="fa fa-check"></i><b>10.9.1</b> 原理</a></li>
+<li class="chapter" data-level="10.9.2" data-path="dl_8.html"><a href="dl_8.html#dl_8_2"><i class="fa fa-check"></i><b>10.9.2</b> 示例</a></li>
+</ul></li>
+<li class="chapter" data-level="10.10" data-path="dl_10.html"><a href="dl_10.html"><i class="fa fa-check"></i><b>10.10</b> Transformer</a>
+<ul>
+<li class="chapter" data-level="10.10.1" data-path="dl_10.html"><a href="dl_10.html#dl_10_1"><i class="fa fa-check"></i><b>10.10.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.11" data-path="dl_11.html"><a href="dl_11.html"><i class="fa fa-check"></i><b>10.11</b> BERT</a>
+<ul>
+<li class="chapter" data-level="10.11.1" data-path="dl_11.html"><a href="dl_11.html#dl_11_1"><i class="fa fa-check"></i><b>10.11.1</b> 原理</a></li>
+</ul></li>
+<li class="chapter" data-level="10.12" data-path="dl_12.html"><a href="dl_12.html"><i class="fa fa-check"></i><b>10.12</b> GPT</a>
+<ul>
+<li class="chapter" data-level="10.12.1" data-path="dl_12.html"><a href="dl_12.html#dl_12_1"><i class="fa fa-check"></i><b>10.12.1</b> GPT-1</a></li>
+<li class="chapter" data-level="10.12.2" data-path="dl_12.html"><a href="dl_12.html#dl_12_2"><i class="fa fa-check"></i><b>10.12.2</b> GPT-2</a></li>
+<li class="chapter" data-level="10.12.3" data-path="dl_12.html"><a href="dl_12.html#dl_12_3"><i class="fa fa-check"></i><b>10.12.3</b> GPT-3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>11</b> 生存分析</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="survival_1.html"><a href="survival_1.html"><i class="fa fa-check"></i><b>11.1</b> 基本概念</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="survival_1.html"><a href="survival_1.html#survival_1_1"><i class="fa fa-check"></i><b>11.1.1</b> 删失数据</a></li>
+<li class="chapter" data-level="11.1.2" data-path="survival_1.html"><a href="survival_1.html#survival_1_2"><i class="fa fa-check"></i><b>11.1.2</b> 截断数据</a></li>
+<li class="chapter" data-level="11.1.3" data-path="survival_1.html"><a href="survival_1.html#survival_1_3"><i class="fa fa-check"></i><b>11.1.3</b> 函数</a></li>
+<li class="chapter" data-level="11.1.4" data-path="survival_1.html"><a href="survival_1.html#survival_1_4"><i class="fa fa-check"></i><b>11.1.4</b> 似然函数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="survival_2.html"><a href="survival_2.html"><i class="fa fa-check"></i><b>11.2</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="survival_2.html"><a href="survival_2.html#survival_2_1"><i class="fa fa-check"></i><b>11.2.1</b> KM估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="survival_2.html"><a href="survival_2.html#survival_2_2"><i class="fa fa-check"></i><b>11.2.2</b> NA估计</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="survival_3.html"><a href="survival_3.html"><i class="fa fa-check"></i><b>11.3</b> 置信区间与置信带</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="survival_3.html"><a href="survival_3.html#survival_3_1"><i class="fa fa-check"></i><b>11.3.1</b> 置信区间</a></li>
+<li class="chapter" data-level="11.3.2" data-path="survival_3.html"><a href="survival_3.html#survival_3_2"><i class="fa fa-check"></i><b>11.3.2</b> 置信带</a></li>
+<li class="chapter" data-level="11.3.3" data-path="survival_3.html"><a href="survival_3.html#survival_3_3"><i class="fa fa-check"></i><b>11.3.3</b> 平均生存时间的置信区间</a></li>
+<li class="chapter" data-level="11.3.4" data-path="survival_3.html"><a href="survival_3.html#survival_3_4"><i class="fa fa-check"></i><b>11.3.4</b> 分位数的置信区间</a></li>
+<li class="chapter" data-level="11.3.5" data-path="survival_3.html"><a href="survival_3.html#survival_3_5"><i class="fa fa-check"></i><b>11.3.5</b> 左截断数据的置信区间</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="survival_4.html"><a href="survival_4.html"><i class="fa fa-check"></i><b>11.4</b> 假设检验</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="survival_4.html"><a href="survival_4.html#survival_4_1"><i class="fa fa-check"></i><b>11.4.1</b> 单样本检验</a></li>
+<li class="chapter" data-level="11.4.2" data-path="survival_4.html"><a href="survival_4.html#survival_4_2"><i class="fa fa-check"></i><b>11.4.2</b> 多样本检验</a></li>
+<li class="chapter" data-level="11.4.3" data-path="survival_4.html"><a href="survival_4.html#survival_4_3"><i class="fa fa-check"></i><b>11.4.3</b> 趋势性检验</a></li>
+<li class="chapter" data-level="11.4.4" data-path="survival_4.html"><a href="survival_4.html#survival_4_4"><i class="fa fa-check"></i><b>11.4.4</b> 分层检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="survival_5.html"><a href="survival_5.html"><i class="fa fa-check"></i><b>11.5</b> Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="survival_5.html"><a href="survival_5.html#survival_5_1"><i class="fa fa-check"></i><b>11.5.1</b> 偏对数似然函数</a></li>
+<li class="chapter" data-level="11.5.2" data-path="survival_5.html"><a href="survival_5.html#survival_5_x"><i class="fa fa-check"></i><b>11.5.2</b> Regularization Paths for Cox’s Proportional Hazards Model via Coordinate Descent</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="da.html"><a href="da.html"><i class="fa fa-check"></i><b>12</b> 数据分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="da_1.html"><a href="da_1.html"><i class="fa fa-check"></i><b>12.1</b> ABtest</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="da_1.html"><a href="da_1.html#da_1_1"><i class="fa fa-check"></i><b>12.1.1</b> 确定目标与指标选取</a></li>
+<li class="chapter" data-level="12.1.2" data-path="da_1.html"><a href="da_1.html#da_1_2"><i class="fa fa-check"></i><b>12.1.2</b> 实验设计</a></li>
+<li class="chapter" data-level="12.1.3" data-path="da_1.html"><a href="da_1.html#da_1_3"><i class="fa fa-check"></i><b>12.1.3</b> 实验上线</a></li>
+<li class="chapter" data-level="12.1.4" data-path="da_1.html"><a href="da_1.html#da_1_4"><i class="fa fa-check"></i><b>12.1.4</b> 实验结束</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="da_2.html"><a href="da_2.html"><i class="fa fa-check"></i><b>12.2</b> 异动归因</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="da_2.html"><a href="da_2.html#da_2_1"><i class="fa fa-check"></i><b>12.2.1</b> 验真</a></li>
+<li class="chapter" data-level="12.2.2" data-path="da_2.html"><a href="da_2.html#da_2_2"><i class="fa fa-check"></i><b>12.2.2</b> 维度拆解</a></li>
+<li class="chapter" data-level="12.2.3" data-path="da_2.html"><a href="da_2.html#da_2_3"><i class="fa fa-check"></i><b>12.2.3</b> 贡献度分析</a></li>
+<li class="chapter" data-level="12.2.4" data-path="da_2.html"><a href="da_2.html#da_2_4"><i class="fa fa-check"></i><b>12.2.4</b> 从数据原因到业务原因</a></li>
+<li class="chapter" data-level="12.2.5" data-path="da_2.html"><a href="da_2.html#da_2_5"><i class="fa fa-check"></i><b>12.2.5</b> 案例分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="da_3.html"><a href="da_3.html"><i class="fa fa-check"></i><b>12.3</b> 用户分析</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="da_3.html"><a href="da_3.html#da_3_1"><i class="fa fa-check"></i><b>12.3.1</b> 用户画像</a></li>
+<li class="chapter" data-level="12.3.2" data-path="da_3.html"><a href="da_3.html#da_3_2"><i class="fa fa-check"></i><b>12.3.2</b> 用户行为路径分析</a></li>
+<li class="chapter" data-level="12.3.3" data-path="da_3.html"><a href="da_3.html#da_3_3"><i class="fa fa-check"></i><b>12.3.3</b> 用户分层模型</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III 多源数据分析</b></span></li>
+<li class="chapter" data-level="13" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>13</b> 网络型数据</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="network_1.html"><a href="network_1.html"><i class="fa fa-check"></i><b>13.1</b> 构造联系</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="network_1.html"><a href="network_1.html#network_1_1"><i class="fa fa-check"></i><b>13.1.1</b> 引力模型</a></li>
+<li class="chapter" data-level="13.1.2" data-path="network_1.html"><a href="network_1.html#network_1_2"><i class="fa fa-check"></i><b>13.1.2</b> 社会网络量表</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="network_2.html"><a href="network_2.html"><i class="fa fa-check"></i><b>13.2</b> 网络结构特征</a></li>
+<li class="chapter" data-level="13.3" data-path="network_3.html"><a href="network_3.html"><i class="fa fa-check"></i><b>13.3</b> 拓展分析</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="network_3.html"><a href="network_3.html#network_3_1"><i class="fa fa-check"></i><b>13.3.1</b> 凝聚子群</a></li>
+<li class="chapter" data-level="13.3.2" data-path="network_3.html"><a href="network_3.html#network_3_2"><i class="fa fa-check"></i><b>13.3.2</b> 社区发现</a></li>
+<li class="chapter" data-level="13.3.3" data-path="network_3.html"><a href="network_3.html#network_3_3"><i class="fa fa-check"></i><b>13.3.3</b> 核心-边缘分析</a></li>
+<li class="chapter" data-level="13.3.4" data-path="network_3.html"><a href="network_3.html#network_3_4"><i class="fa fa-check"></i><b>13.3.4</b> QAP分析</a></li>
+<li class="chapter" data-level="13.3.5" data-path="network_3.html"><a href="network_3.html#network_3_5"><i class="fa fa-check"></i><b>13.3.5</b> 计量模型</a></li>
+<li class="chapter" data-level="13.3.6" data-path="network_3.html"><a href="network_3.html#network_3_6"><i class="fa fa-check"></i><b>13.3.6</b> 综合评价</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="network_4.html"><a href="network_4.html"><i class="fa fa-check"></i><b>13.4</b> 其他启示</a></li>
+</ul></li>
+<li class="part"><span><b>IV 可视化</b></span></li>
+<li class="chapter" data-level="14" data-path="animation.html"><a href="animation.html"><i class="fa fa-check"></i><b>14</b> Manim动画</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="animation_1.html"><a href="animation_1.html"><i class="fa fa-check"></i><b>14.1</b> 最小二乘与投影矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="people.html"><a href="people.html"><i class="fa fa-check"></i><b>15</b> 七普数据可视化</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="people_1.html"><a href="people_1.html"><i class="fa fa-check"></i><b>15.1</b> 数据来源及说明</a></li>
+<li class="chapter" data-level="15.2" data-path="people_2.html"><a href="people_2.html"><i class="fa fa-check"></i><b>15.2</b> 全国人口状况</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="people_2.html"><a href="people_2.html#people_2_1"><i class="fa fa-check"></i><b>15.2.1</b> 人口自然增长率</a></li>
+<li class="chapter" data-level="15.2.2" data-path="people_2.html"><a href="people_2.html#people_2_2"><i class="fa fa-check"></i><b>15.2.2</b> 年龄结构</a></li>
+<li class="chapter" data-level="15.2.3" data-path="people_2.html"><a href="people_2.html#people_2_3"><i class="fa fa-check"></i><b>15.2.3</b> 人口流动</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V 组会论文</b></span></li>
+<li class="chapter" data-level="16" data-path="penalty.html"><a href="penalty.html"><i class="fa fa-check"></i><b>16</b> 变量选择与惩罚函数</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="penalty_1.html"><a href="penalty_1.html"><i class="fa fa-check"></i><b>16.1</b> 准备</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_1"><i class="fa fa-check"></i><b>16.1.1</b> 范数</a></li>
+<li class="chapter" data-level="16.1.2" data-path="penalty_1.html"><a href="penalty_1.html#penalty_1_2"><i class="fa fa-check"></i><b>16.1.2</b> 目标函数</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="penalty_2.html"><a href="penalty_2.html"><i class="fa fa-check"></i><b>16.2</b> 单变量选择</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_1"><i class="fa fa-check"></i><b>16.2.1</b> Lasso</a></li>
+<li class="chapter" data-level="16.2.2" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_2"><i class="fa fa-check"></i><b>16.2.2</b> Hard &amp; Soft Threshold</a></li>
+<li class="chapter" data-level="16.2.3" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_3"><i class="fa fa-check"></i><b>16.2.3</b> SCAD</a></li>
+<li class="chapter" data-level="16.2.4" data-path="penalty_2.html"><a href="penalty_2.html#penalty_2_4"><i class="fa fa-check"></i><b>16.2.4</b> Adaptive Lasso</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="penalty_3.html"><a href="penalty_3.html"><i class="fa fa-check"></i><b>16.3</b> 群组变量选择</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_1"><i class="fa fa-check"></i><b>16.3.1</b> 思维导图</a></li>
+<li class="chapter" data-level="16.3.2" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_2"><i class="fa fa-check"></i><b>16.3.2</b> 处理高度相关数据的组变量选择方法</a></li>
+<li class="chapter" data-level="16.3.3" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_3"><i class="fa fa-check"></i><b>16.3.3</b> 仅能选择组变量的方法</a></li>
+<li class="chapter" data-level="16.3.4" data-path="penalty_3.html"><a href="penalty_3.html#penalty_3_4"><i class="fa fa-check"></i><b>16.3.4</b> 双层变量选择方法</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="penalty_4.html"><a href="penalty_4.html"><i class="fa fa-check"></i><b>16.4</b> 算法</a></li>
+<li class="chapter" data-level="16.5" data-path="penalty_5.html"><a href="penalty_5.html"><i class="fa fa-check"></i><b>16.5</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="integrative.html"><a href="integrative.html"><i class="fa fa-check"></i><b>17</b> 整合分析</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="integrative_1.html"><a href="integrative_1.html"><i class="fa fa-check"></i><b>17.1</b> 引言</a></li>
+<li class="chapter" data-level="17.2" data-path="integrative_2.html"><a href="integrative_2.html"><i class="fa fa-check"></i><b>17.2</b> 模型基本形式</a></li>
+<li class="chapter" data-level="17.3" data-path="integrative_3.html"><a href="integrative_3.html"><i class="fa fa-check"></i><b>17.3</b> 同构数据的整合分析</a></li>
+<li class="chapter" data-level="17.4" data-path="integrative_4.html"><a href="integrative_4.html"><i class="fa fa-check"></i><b>17.4</b> 异构数据的整合分析</a></li>
+<li class="chapter" data-level="17.5" data-path="integrative_5.html"><a href="integrative_5.html"><i class="fa fa-check"></i><b>17.5</b> 具有网络结构关系的整合分析</a></li>
+</ul></li>
+<li class="part"><span><b>VI 算法复现</b></span></li>
+<li class="chapter" data-level="18" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>18</b> 算法复现</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="code_1.html"><a href="code_1.html"><i class="fa fa-check"></i><b>18.1</b> 惩罚Cox比例风险模型</a></li>
+<li class="chapter" data-level="18.2" data-path="code_2.html"><a href="code_2.html"><i class="fa fa-check"></i><b>18.2</b> 异质截距项的线性模型</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="code_2.html"><a href="code_2.html#code_2_1"><i class="fa fa-check"></i><b>18.2.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.2.2" data-path="code_2.html"><a href="code_2.html#code_2_2"><i class="fa fa-check"></i><b>18.2.2</b> 数据模拟</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="code_3.html"><a href="code_3.html"><i class="fa fa-check"></i><b>18.3</b> （异质）线性+非线性的Cox比例风险模型</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="code_3.html"><a href="code_3.html#code_3_1"><i class="fa fa-check"></i><b>18.3.1</b> 自定义算法</a></li>
+<li class="chapter" data-level="18.3.2" data-path="code_3.html"><a href="code_3.html#code_3_2"><i class="fa fa-check"></i><b>18.3.2</b> 数据模拟</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII 生活</b></span></li>
+<li class="chapter" data-level="19" data-path="ball.html"><a href="ball.html"><i class="fa fa-check"></i><b>19</b> 羽毛球修炼手册</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ball_1.html"><a href="ball_1.html"><i class="fa fa-check"></i><b>19.1</b> 发球</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ball_1.html"><a href="ball_1.html#ball_1_1"><i class="fa fa-check"></i><b>19.1.1</b> 正手发球</a></li>
+<li class="chapter" data-level="19.1.2" data-path="ball_1.html"><a href="ball_1.html#ball_1_2"><i class="fa fa-check"></i><b>19.1.2</b> 反手发球</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ball_2.html"><a href="ball_2.html"><i class="fa fa-check"></i><b>19.2</b> 网前技术</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ball_2.html"><a href="ball_2.html#ball_2_1"><i class="fa fa-check"></i><b>19.2.1</b> 勾对角</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ball_2.html"><a href="ball_2.html#ball_2_2"><i class="fa fa-check"></i><b>19.2.2</b> 扑球</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ball_2.html"><a href="ball_2.html#ball_2_3"><i class="fa fa-check"></i><b>19.2.3</b> 封网</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ball_2.html"><a href="ball_2.html#ball_2_4"><i class="fa fa-check"></i><b>19.2.4</b> 平抽</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ball_2.html"><a href="ball_2.html#ball_2_5"><i class="fa fa-check"></i><b>19.2.5</b> 抹球</a></li>
+<li class="chapter" data-level="19.2.6" data-path="ball_2.html"><a href="ball_2.html#ball_2_6"><i class="fa fa-check"></i><b>19.2.6</b> 搓球</a></li>
+<li class="chapter" data-level="19.2.7" data-path="ball_2.html"><a href="ball_2.html#ball_2_7"><i class="fa fa-check"></i><b>19.2.7</b> 挡网</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ball_3.html"><a href="ball_3.html"><i class="fa fa-check"></i><b>19.3</b> 后场技术</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ball_3.html"><a href="ball_3.html#ball_3_1"><i class="fa fa-check"></i><b>19.3.1</b> 杀球</a></li>
+<li class="chapter" data-level="19.3.2" data-path="ball_3.html"><a href="ball_3.html#ball_3_2"><i class="fa fa-check"></i><b>19.3.2</b> 吊球</a></li>
+<li class="chapter" data-level="19.3.3" data-path="ball_3.html"><a href="ball_3.html#ball_3_3"><i class="fa fa-check"></i><b>19.3.3</b> 反手</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ball_4.html"><a href="ball_4.html"><i class="fa fa-check"></i><b>19.4</b> 假动作</a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="ball_4.html"><a href="ball_4.html#ball_4_1"><i class="fa fa-check"></i><b>19.4.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.4.2" data-path="ball_4.html"><a href="ball_4.html#ball_4_2"><i class="fa fa-check"></i><b>19.4.2</b> 网前</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="ball_5.html"><a href="ball_5.html"><i class="fa fa-check"></i><b>19.5</b> 双打</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="ball_5.html"><a href="ball_5.html#ball_5_1"><i class="fa fa-check"></i><b>19.5.1</b> 发接发</a></li>
+<li class="chapter" data-level="19.5.2" data-path="ball_5.html"><a href="ball_5.html#ball_5_2"><i class="fa fa-check"></i><b>19.5.2</b> 站位</a></li>
+<li class="chapter" data-level="19.5.3" data-path="ball_5.html"><a href="ball_5.html#ball_5_3"><i class="fa fa-check"></i><b>19.5.3</b> 分球</a></li>
+<li class="chapter" data-level="19.5.4" data-path="ball_5.html"><a href="ball_5.html#ball_5_4"><i class="fa fa-check"></i><b>19.5.4</b> 球路</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="ball_6.html"><a href="ball_6.html"><i class="fa fa-check"></i><b>19.6</b> 球路</a></li>
+<li class="chapter" data-level="19.7" data-path="ball_7.html"><a href="ball_7.html"><i class="fa fa-check"></i><b>19.7</b> 步伐</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="jap.html"><a href="jap.html"><i class="fa fa-check"></i><b>20</b> 日语</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><i class="fa fa-check"></i>参考文献</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">kj的学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="manim_5" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> 文本<a href="manim_5.html#manim_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h2>
+<p>Manim中的文本主要可以分为两类，分别是非LaTeX文本和LaTeX文本。前者使用Pango，归为<code>text_mobject</code>类；后者用LaTeX，归为<code>Tex_mobject</code>类。非LaTeX文本有三种：<code>Text</code>、<code>MarkupText</code>、<code>Paragraph</code>。LaTeX有五种：<code>Tex</code>、<code>MathTex</code>、<code>Title</code>、<code>BulletedList</code>、<code>SingleStringMathTex</code>（不谈）。除此之外，还有<code>code_mobject</code>类的代码文本及<code>numbers</code>类的数字型文本。</p>
+<div id="manim_5_1" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Text<a href="manim_5.html#manim_5_1" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<pre><code>class Text(text, fill_opacity=1.0, stroke_width=0, *, color=ManimColor(&#39;#FFFFFF&#39;), font_size=48, line_spacing=-1, font=&#39;&#39;, slant=&#39;NORMAL&#39;, weight=&#39;NORMAL&#39;, t2c=None, t2f=None, t2g=None, t2s=None, t2w=None, gradient=None, tab_width=4, warn_missing_font=True, height=None, width=None, should_center=True, disable_ligatures=False, use_svg_cache=False, **kwargs)</code></pre>
+<table>
+<caption>
+<span id="tab:t1">表 2.1: </span>Text类的方法与属性
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+方法
+</th>
+<th style="text-align:center;">
+属性
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+font_list
+</td>
+<td style="text-align:center;">
+animate
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+init_colors
+</td>
+<td style="text-align:center;">
+animation_overrides
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+depth
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+fill_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+font_size
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+hash_seed
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+height
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+n_points_per_curve
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+sheen_factor
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+stroke_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+width
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>继承自<code>SVGMobject</code></p>
+</blockquote>
+<p>生成文本的最简单方法是使用<code>Text</code>类。除了输出英文字母，它还能输出非英文字母的语言，例如中文、日文、韩文。示例如下所示。</p>
+<blockquote>
+<p>官方文档中介绍的就是中、日、韩语言都能显示，但我实操的时候发现韩语显示不出。这也无伤大雅，我估计我只用得到到英语和中文。</p>
+</blockquote>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="manim_5.html#cb102-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb102-2"><a href="manim_5.html#cb102-2" tabindex="-1"></a></span>
+<span id="cb102-3"><a href="manim_5.html#cb102-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb102-4"><a href="manim_5.html#cb102-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb102-5"><a href="manim_5.html#cb102-5" tabindex="-1"></a>        text_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb102-6"><a href="manim_5.html#cb102-6" tabindex="-1"></a>        text_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;你好，世界&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb102-7"><a href="manim_5.html#cb102-7" tabindex="-1"></a>        text_3 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;こんにちは，せかい&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb102-8"><a href="manim_5.html#cb102-8" tabindex="-1"></a>        text_4 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;안녕, 세계&quot;</span>, <span class="at">font_size=</span><span class="dv">100</span>)</span>
+<span id="cb102-9"><a href="manim_5.html#cb102-9" tabindex="-1"></a></span>
+<span id="cb102-10"><a href="manim_5.html#cb102-10" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_1.shift</span>(UP<span class="sc">*</span><span class="dv">2</span>))</span>
+<span id="cb102-11"><a href="manim_5.html#cb102-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_2.next_to</span>(text_1, DOWN))</span>
+<span id="cb102-12"><a href="manim_5.html#cb102-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_3.next_to</span>(text_2, DOWN))</span>
+<span id="cb102-13"><a href="manim_5.html#cb102-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">text_4.next_to</span>(text_3, DOWN))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p2"></span>
+<img src="pic/manim/p2.png" alt="各语言文本示例" width="427" />
+<p class="caption">
+图 2.2: 各语言文本示例
+</p>
+</div>
+<ul>
+<li><p>字体</p>
+<p>首先你得知道你能使用哪些字体，使用下面的代码查看你能使用的字体。</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="manim_5.html#cb103-1" tabindex="-1"></a>import manimpango</span>
+<span id="cb103-2"><a href="manim_5.html#cb103-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">manimpango.list_fonts</span>())</span></code></pre></div>
+<p>然后，为<code>font</code>参数赋值即可选择对应字体，如<code>Text('Hello', font='Times New Roman')</code></p></li>
+<li><p>斜体和粗细</p>
+<ul>
+<li><p>slant</p>
+<p>参数<code>slant</code>控制斜体，可选值为<code>NORMAL</code>、<code>ITALIC</code>、<code>OBLIQUE</code>。后两个都表示斜体，但<code>ITALIC</code>表示’Roman Style’，<code>OBLIQUE</code>表示’Italic Style’，存在细微区别。如<code>Text("Hello world", slant=ITALIC)</code>。</p></li>
+<li><p>weight</p>
+<p>参数<code>weight</code>控制字体粗细，粗细程度从小到大为<code>THIN</code>、<code>ULTRALIGHT</code>、<code>LIGHT</code>、<code>BOOK</code>、<code>NORMAL</code>、<code>MEDIUM</code>、<code>SEMIBOLD</code>、<code>BOLD</code>、<code>ULTRABOLD</code>、<code>HEAVY</code>、<code>ULTRAHEAVY</code>。如<code>Text("Hello world", weight=BOLD)</code>。</p></li>
+</ul>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="manim_5.html#cb104-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb104-2"><a href="manim_5.html#cb104-2" tabindex="-1"></a></span>
+<span id="cb104-3"><a href="manim_5.html#cb104-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb104-4"><a href="manim_5.html#cb104-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb104-5"><a href="manim_5.html#cb104-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">slant=</span>ITALIC)</span>
+<span id="cb104-6"><a href="manim_5.html#cb104-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&quot;Hello world&quot;</span>, <span class="at">weight=</span>BOLD)</span>
+<span id="cb104-7"><a href="manim_5.html#cb104-7" tabindex="-1"></a></span>
+<span id="cb104-8"><a href="manim_5.html#cb104-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(UP))</span>
+<span id="cb104-9"><a href="manim_5.html#cb104-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span></code></pre></div></li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p3"></span>
+<img src="pic/manim/p3.png" alt="斜体与粗细示例" width="427" />
+<p class="caption">
+图 2.3: 斜体与粗细示例
+</p>
+</div>
+<ul>
+<li><p>颜色</p>
+<ul>
+<li><p>纯色</p>
+<p>纯色可通过<code>color</code>参数为文本设置颜色，例如<code>Text('Hello World', color=BLUE)</code>。</p></li>
+<li><p>渐变色</p>
+<p>渐变色可通过<code>gradient</code>参数进行设置。<code>gradient</code>参数接受一个元组，里面每个元素都是颜色常量，并且其顺序决定了渐变顺序。例如<code>Text('Hello World', gradient=(BLUE, YELLOW, RED))</code>。</p></li>
+<li><p>自定义文本颜色</p>
+<p>有时你可能相对文本中的部分文字设置特定的颜色或者渐变色，此时你可以使用<code>t2c</code>和<code>t2g</code>进行个性化设置。</p>
+<p><code>t2c</code>参数用来设置部分文本的纯色。你可以为其传入一个字典，用切片的方式定位目标文本或者直接传入目标文本来进行上色。例如<code>Text('Hello World', t2c={'[1:4]':BLUE, 'rld':RED})</code>。</p>
+<p><code>t2g</code>参数用来设置部分文本的渐变色。同理，也是接收一个字典，只不过这里的值要变为元组。例如<code>Text('明天你还在这里吗', t2g={'[1:4]': (BLUE, YELLOW), '这里': (YELLOW, RED)})</code>。</p>
+<blockquote>
+<p><code>t2g</code>可能存在bug，会导致不能对目标文本进行渐变色设置，可能整个文本都会被设置渐变色。如下面的t_4。</p>
+</blockquote>
+<blockquote>
+<p>能被切片的方式选择字符说明<code>Text()</code>字符串对象是可迭代的、可被索引的。</p>
+</blockquote></li>
+</ul>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="manim_5.html#cb105-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb105-2"><a href="manim_5.html#cb105-2" tabindex="-1"></a></span>
+<span id="cb105-3"><a href="manim_5.html#cb105-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb105-4"><a href="manim_5.html#cb105-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb105-5"><a href="manim_5.html#cb105-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">color=</span>BLUE)</span>
+<span id="cb105-6"><a href="manim_5.html#cb105-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">gradient=</span>(BLUE, YELLOW, RED))</span>
+<span id="cb105-7"><a href="manim_5.html#cb105-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">t2c=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span>BLUE, <span class="st">&#39;rld&#39;</span><span class="sc">:</span>RED})</span>
+<span id="cb105-8"><a href="manim_5.html#cb105-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">t2g=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span>(BLUE, YELLOW), <span class="st">&#39;rld&#39;</span><span class="sc">:</span>(YELLOW ,RED)})</span>
+<span id="cb105-9"><a href="manim_5.html#cb105-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;明天你还在这里吗&#39;</span>, <span class="at">t2g=</span>{<span class="st">&#39;[1:4]&#39;</span><span class="sc">:</span> (BLUE, YELLOW), <span class="st">&#39;这里&#39;</span><span class="sc">:</span> (YELLOW, RED)})</span>
+<span id="cb105-10"><a href="manim_5.html#cb105-10" tabindex="-1"></a></span>
+<span id="cb105-11"><a href="manim_5.html#cb105-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(<span class="dv">2</span><span class="sc">*</span>UP))</span>
+<span id="cb105-12"><a href="manim_5.html#cb105-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span>
+<span id="cb105-13"><a href="manim_5.html#cb105-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_3.next_to</span>(t_2, DOWN))</span>
+<span id="cb105-14"><a href="manim_5.html#cb105-14" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_4.next_to</span>(t_3, DOWN))</span>
+<span id="cb105-15"><a href="manim_5.html#cb105-15" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_5.next_to</span>(t_4, DOWN))</span></code></pre></div></li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p4"></span>
+<img src="pic/manim/p4.png" alt="文本颜色" width="427" />
+<p class="caption">
+图 2.4: 文本颜色
+</p>
+</div>
+<ul>
+<li><p>大小</p>
+<ul>
+<li><p>font_size</p>
+<p><code>font_size</code>是<code>Text()</code>的参数值(默认为<code>font_size=48</code>)，可直接在<code>Text()</code>中设定，如<code>Text('Hello World', font_size=50)</code>。</p></li>
+<li><p>scale</p>
+<p><code>scale</code>是<code>Text()</code>的属性，用于调整字体大小的倍数，如<code>Text('Hello World').scale(0.5)</code>表示默认大小的0.5倍。</p></li>
+</ul>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="manim_5.html#cb106-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb106-2"><a href="manim_5.html#cb106-2" tabindex="-1"></a></span>
+<span id="cb106-3"><a href="manim_5.html#cb106-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb106-4"><a href="manim_5.html#cb106-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb106-5"><a href="manim_5.html#cb106-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>, <span class="at">font_size=</span><span class="dv">50</span>)</span>
+<span id="cb106-6"><a href="manim_5.html#cb106-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello World&#39;</span>)<span class="fu">.scale</span>(<span class="fl">0.5</span>)</span>
+<span id="cb106-7"><a href="manim_5.html#cb106-7" tabindex="-1"></a></span>
+<span id="cb106-8"><a href="manim_5.html#cb106-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_1.shift</span>(UP))</span>
+<span id="cb106-9"><a href="manim_5.html#cb106-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t_2.next_to</span>(t_1, DOWN))</span></code></pre></div></li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p5"></span>
+<img src="pic/manim/p5.png" alt="文本颜色" width="427" />
+<p class="caption">
+图 2.5: 文本颜色
+</p>
+</div>
+<blockquote>
+<p>貌似这里也有bug，t_2被设置了渐变色。</p>
+</blockquote>
+<ul>
+<li><p>行间距与换行</p>
+<p>在字符串中可以添加<code>\n</code>实现换行效果，并通过<code>Text()</code>中的<code>line_spacing</code>来调整行间距，如下所示。</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="manim_5.html#cb107-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb107-2"><a href="manim_5.html#cb107-2" tabindex="-1"></a></span>
+<span id="cb107-3"><a href="manim_5.html#cb107-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb107-4"><a href="manim_5.html#cb107-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb107-5"><a href="manim_5.html#cb107-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello</span><span class="sc">\n</span><span class="st">World&#39;</span>, <span class="at">line_spacing=</span><span class="dv">3</span>)</span>
+<span id="cb107-6"><a href="manim_5.html#cb107-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">Text</span>(<span class="st">&#39;Hello</span><span class="sc">\n</span><span class="st">World&#39;</span>)</span>
+<span id="cb107-7"><a href="manim_5.html#cb107-7" tabindex="-1"></a></span>
+<span id="cb107-8"><a href="manim_5.html#cb107-8" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2)</span>
+<span id="cb107-9"><a href="manim_5.html#cb107-9" tabindex="-1"></a></span>
+<span id="cb107-10"><a href="manim_5.html#cb107-10" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(LEFT))</span></code></pre></div></li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p6"></span>
+<img src="pic/manim/p6.png" alt="行间距与换行" width="427" />
+<p class="caption">
+图 2.6: 行间距与换行
+</p>
+</div>
+</div>
+<div id="manim_5_2" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> MarkupText<a href="manim_5.html#manim_5_2" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<div class="sourceCode" id="cb108"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb108-1"><a href="manim_5.html#cb108-1" tabindex="-1"></a>class MarkupText(text, fill_opacity=1, stroke_width=0, color=None, font_size=48, line_spacing=-1, font=&#39;&#39;, slant=&#39;NORMAL&#39;, weight=&#39;NORMAL&#39;, justify=False, gradient=None, tab_width=4, height=None, width=None, should_center=True, disable_ligatures=False, warn_missing_font=True, **kwargs)</span></code></pre></div>
+<table>
+<caption>
+(#tab:manim_t2)MarkupText类的方法与属性
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+方法
+</th>
+<th style="text-align:center;">
+属性
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+font_list
+</td>
+<td style="text-align:center;">
+animate
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animation_overrides
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+depth
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+fill_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+font_size
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+hash_seed
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+height
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+n_points_per_curve
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+sheen_factor
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+stroke_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+width
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>继承自<code>SVGMobject</code></p>
+</blockquote>
+<p>MarkupText即使用了PangoMarkup的标记文本，和html语言类似，他允许使用“标签”来直接修改对应“标签”内的文本样式。</p>
+<blockquote>
+<p>PangoMarkup is a small markup language like html and it helps you avoid using “range of characters” while coloring or styling a piece a Text.</p>
+</blockquote>
+<p>下面罗列了一些常见的标签：</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb109-1"><a href="manim_5.html#cb109-1" tabindex="-1"></a>&lt;b&gt;bold&lt;/b&gt;, &lt;i&gt;italic&lt;/i&gt; and &lt;b&gt;&lt;i&gt;bold+italic&lt;/i&gt;&lt;/b&gt;</span>
+<span id="cb109-2"><a href="manim_5.html#cb109-2" tabindex="-1"></a></span>
+<span id="cb109-3"><a href="manim_5.html#cb109-3" tabindex="-1"></a>&lt;ul&gt;underline&lt;/ul&gt; and &lt;s&gt;strike through&lt;/s&gt;</span>
+<span id="cb109-4"><a href="manim_5.html#cb109-4" tabindex="-1"></a></span>
+<span id="cb109-5"><a href="manim_5.html#cb109-5" tabindex="-1"></a>&lt;tt&gt;typewriter font&lt;/tt&gt;</span>
+<span id="cb109-6"><a href="manim_5.html#cb109-6" tabindex="-1"></a></span>
+<span id="cb109-7"><a href="manim_5.html#cb109-7" tabindex="-1"></a>&lt;big&gt;bigger font&lt;/big&gt; and &lt;small&gt;smaller font&lt;/small&gt;</span>
+<span id="cb109-8"><a href="manim_5.html#cb109-8" tabindex="-1"></a></span>
+<span id="cb109-9"><a href="manim_5.html#cb109-9" tabindex="-1"></a>&lt;sup&gt;superscript&lt;/sup&gt; and &lt;sub&gt;subscript&lt;/sub&gt;</span>
+<span id="cb109-10"><a href="manim_5.html#cb109-10" tabindex="-1"></a></span>
+<span id="cb109-11"><a href="manim_5.html#cb109-11" tabindex="-1"></a>&lt;span underline=&quot;double&quot; underline_color=&quot;green&quot;&gt;double underline&lt;/span&gt;</span>
+<span id="cb109-12"><a href="manim_5.html#cb109-12" tabindex="-1"></a></span>
+<span id="cb109-13"><a href="manim_5.html#cb109-13" tabindex="-1"></a>&lt;span underline=&quot;error&quot;&gt;error underline&lt;/span&gt;</span>
+<span id="cb109-14"><a href="manim_5.html#cb109-14" tabindex="-1"></a></span>
+<span id="cb109-15"><a href="manim_5.html#cb109-15" tabindex="-1"></a>&lt;span overline=&quot;single&quot; overline_color=&quot;green&quot;&gt;overline&lt;/span&gt;</span>
+<span id="cb109-16"><a href="manim_5.html#cb109-16" tabindex="-1"></a></span>
+<span id="cb109-17"><a href="manim_5.html#cb109-17" tabindex="-1"></a>&lt;span strikethrough=&quot;true&quot; strikethrough_color=&quot;red&quot;&gt;strikethrough&lt;/span&gt;</span>
+<span id="cb109-18"><a href="manim_5.html#cb109-18" tabindex="-1"></a></span>
+<span id="cb109-19"><a href="manim_5.html#cb109-19" tabindex="-1"></a>&lt;span font_family=&quot;sans&quot;&gt;temporary change of font&lt;/span&gt;</span>
+<span id="cb109-20"><a href="manim_5.html#cb109-20" tabindex="-1"></a></span>
+<span id="cb109-21"><a href="manim_5.html#cb109-21" tabindex="-1"></a>&lt;span foreground=&quot;red&quot;&gt;temporary change of color&lt;/span&gt;</span>
+<span id="cb109-22"><a href="manim_5.html#cb109-22" tabindex="-1"></a></span>
+<span id="cb109-23"><a href="manim_5.html#cb109-23" tabindex="-1"></a>&lt;span fgcolor=&quot;red&quot;&gt;temporary change of color&lt;/span&gt;</span>
+<span id="cb109-24"><a href="manim_5.html#cb109-24" tabindex="-1"></a></span>
+<span id="cb109-25"><a href="manim_5.html#cb109-25" tabindex="-1"></a>&lt;gradient from=&quot;YELLOW&quot; to=&quot;RED&quot;&gt;temporary gradient&lt;/gradient&gt;</span></code></pre></div>
+<blockquote>
+<p><code>&lt;tt&gt;</code>标签内的字体就像打字机打出来的一样</p>
+<p><code>&lt;sup&gt;</code>和<code>&lt;sub&gt;</code>分别表示上标和下标</p>
+<p>foreground和fgcolor都是作用于文本颜色（貌似效果一样？）</p>
+</blockquote>
+<p>在<code>&lt;span&gt;</code>标签里可以使用十六进制颜色(如<code>#ff0000</code>)或者CSS命名颜色(如<code>Coral</code>)。如果你想在其中继续使用Manim的颜色常量，那么你就得在字符串前添加<code>f</code>，以格式化的形式嵌入颜色常量(如<code>MarkupText(f'&lt;span fgcolor="{RED}"&gt;Hello&lt;/span&gt;')</code>)。</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="manim_5.html#cb110-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb110-2"><a href="manim_5.html#cb110-2" tabindex="-1"></a></span>
+<span id="cb110-3"><a href="manim_5.html#cb110-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb110-4"><a href="manim_5.html#cb110-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb110-5"><a href="manim_5.html#cb110-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;Do you need &lt;tt&gt;help&lt;/tt&gt;?&#39;</span>)</span>
+<span id="cb110-6"><a href="manim_5.html#cb110-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;H&lt;sub&gt;2&lt;/sub&gt;O and OH&lt;sup&gt;+&lt;/sup&gt;&#39;</span>)</span>
+<span id="cb110-7"><a href="manim_5.html#cb110-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span foreground=&quot;red&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb110-8"><a href="manim_5.html#cb110-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;red&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb110-9"><a href="manim_5.html#cb110-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;#ff0000&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb110-10"><a href="manim_5.html#cb110-10" tabindex="-1"></a>        t_6 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span fgcolor=&quot;Coral&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb110-11"><a href="manim_5.html#cb110-11" tabindex="-1"></a>        t_7 <span class="ot">=</span> <span class="fu">MarkupText</span>(f<span class="st">&#39;&lt;span fgcolor=&quot;{RED}&quot;&gt;Hello&lt;/span&gt;&#39;</span>)</span>
+<span id="cb110-12"><a href="manim_5.html#cb110-12" tabindex="-1"></a></span>
+<span id="cb110-13"><a href="manim_5.html#cb110-13" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2, t_3, t_4, t_5, t_6, t_7)</span>
+<span id="cb110-14"><a href="manim_5.html#cb110-14" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p7"></span>
+<img src="pic/manim/p7.png" alt="span示例" width="427" />
+<p class="caption">
+图 2.7: span示例
+</p>
+</div>
+<p><code>&lt;gradient&gt;</code>支持十六进制颜色或者Manim自带的颜色常量。但<code>&lt;gradient&gt;</code>在实际应用中稍显复杂。对于带连字<code>ligatures</code>（姑且翻译为“连字”吧，有些语言会把两个或者多个字符视为一个字符，也就是连字）的语言，<code>&lt;gradient&gt;</code>有时并不能正确识别渐变色的起始字符与终止字符，起始字符和终止字符可能会提前或推迟。对此，你可以使用<code>&lt;gradient&gt;</code>的<code>offset</code>属性来调整起始字符和结束字符的位置。例如<code>offset='1'</code>表示起始字符提前一个位置；<code>offset='1,2'</code>表示起始字符提前一个位置，终止字符提前两个位置；又如<code>offset=',-1'</code>表示终止字符推迟一个位置。对于不依赖连字<code>ligatures</code>的语言，你可以直接在<code>MarkupText()</code>中设置<code>disable_ligatures=True</code>。</p>
+<blockquote>
+<p>貌似中文可以不用考虑“连字”问题，英语的话可能会遇到</p>
+<p>当你在一个字符串中使用了<code>&lt;gradient&gt;</code>，并同时使用了<code>overline</code>或<code>underline</code>或<code>strikethrough</code>，你可能需要使用<code>offset</code>进行适当调整。</p>
+</blockquote>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="manim_5.html#cb111-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb111-2"><a href="manim_5.html#cb111-2" tabindex="-1"></a></span>
+<span id="cb111-3"><a href="manim_5.html#cb111-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb111-4"><a href="manim_5.html#cb111-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb111-5"><a href="manim_5.html#cb111-5" tabindex="-1"></a>        t_1 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;我想打&lt;gradient from=&quot;BLUE&quot; to=&quot;GREEN&quot;&gt;羽毛球&lt;/gradient&gt;&#39;</span>)</span>
+<span id="cb111-6"><a href="manim_5.html#cb111-6" tabindex="-1"></a>        t_2 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;hello &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot;&gt;world&lt;/gradient&gt; bye&#39;</span>)</span>
+<span id="cb111-7"><a href="manim_5.html#cb111-7" tabindex="-1"></a>        t_3 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;hello &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;1,2&quot;&gt;world&lt;/gradient&gt; bye&#39;</span>)</span>
+<span id="cb111-8"><a href="manim_5.html#cb111-8" tabindex="-1"></a>        t_4 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;double&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
+<span id="cb111-9"><a href="manim_5.html#cb111-9" tabindex="-1"></a>        t_5 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;double&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;-2&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
+<span id="cb111-10"><a href="manim_5.html#cb111-10" tabindex="-1"></a>        t_6 <span class="ot">=</span> <span class="fu">MarkupText</span>(<span class="st">&#39;&lt;span underline=&quot;single&quot; underline_color=&quot;green&quot;&gt;Do&lt;/span&gt; &lt;gradient from=&quot;RED&quot; to=&quot;YELLOW&quot; offset=&quot;-1&quot;&gt;you need&lt;/gradient&gt; help?&#39;</span>)</span>
+<span id="cb111-11"><a href="manim_5.html#cb111-11" tabindex="-1"></a></span>
+<span id="cb111-12"><a href="manim_5.html#cb111-12" tabindex="-1"></a>        group <span class="ot">=</span> <span class="fu">VGroup</span>(t_1, t_2, t_3, t_4, t_5, t_6)</span>
+<span id="cb111-13"><a href="manim_5.html#cb111-13" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p8"></span>
+<img src="pic/manim/p8.png" alt="gradient示例" width="427" />
+<p class="caption">
+图 2.8: gradient示例
+</p>
+</div>
+<p>如果你需要在文本中使用<code>&lt;</code>、<code>&gt;</code>和<code>&amp;</code>，得进行转义，用<code>&amp;lt;</code>、<code>&amp;gt</code>、<code>&amp;amp;</code>依次替代。</p>
+<p><code>MarkupText()</code>中的参数<code>justify=True</code>能够实现文本左右对齐，如下面所示。</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="manim_5.html#cb112-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb112-2"><a href="manim_5.html#cb112-2" tabindex="-1"></a></span>
+<span id="cb112-3"><a href="manim_5.html#cb112-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb112-4"><a href="manim_5.html#cb112-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb112-5"><a href="manim_5.html#cb112-5" tabindex="-1"></a>        ipsum_text <span class="ot">=</span> (</span>
+<span id="cb112-6"><a href="manim_5.html#cb112-6" tabindex="-1"></a>            <span class="st">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&quot;</span></span>
+<span id="cb112-7"><a href="manim_5.html#cb112-7" tabindex="-1"></a>            <span class="st">&quot;Praesent feugiat metus sit amet iaculis pulvinar. Nulla posuere &quot;</span></span>
+<span id="cb112-8"><a href="manim_5.html#cb112-8" tabindex="-1"></a>            <span class="st">&quot;quam a ex aliquam, eleifend consectetur tellus viverra. Aliquam &quot;</span></span>
+<span id="cb112-9"><a href="manim_5.html#cb112-9" tabindex="-1"></a>            <span class="st">&quot;fermentum interdum justo, nec rutrum elit pretium ac. Nam quis &quot;</span></span>
+<span id="cb112-10"><a href="manim_5.html#cb112-10" tabindex="-1"></a>            <span class="st">&quot;leo pulvinar, dignissim est at, venenatis nisi.&quot;</span></span>
+<span id="cb112-11"><a href="manim_5.html#cb112-11" tabindex="-1"></a>        )</span>
+<span id="cb112-12"><a href="manim_5.html#cb112-12" tabindex="-1"></a>        justified_text <span class="ot">=</span> <span class="fu">MarkupText</span>(ipsum_text, <span class="at">justify=</span>True)<span class="fu">.scale</span>(<span class="fl">0.4</span>)</span>
+<span id="cb112-13"><a href="manim_5.html#cb112-13" tabindex="-1"></a>        not_justified_text <span class="ot">=</span> <span class="fu">MarkupText</span>(ipsum_text, <span class="at">justify=</span>False)<span class="fu">.scale</span>(<span class="fl">0.4</span>)</span>
+<span id="cb112-14"><a href="manim_5.html#cb112-14" tabindex="-1"></a>        just_title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&quot;Justified&quot;</span>)</span>
+<span id="cb112-15"><a href="manim_5.html#cb112-15" tabindex="-1"></a>        njust_title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&quot;Not Justified&quot;</span>)</span>
+<span id="cb112-16"><a href="manim_5.html#cb112-16" tabindex="-1"></a>        <span class="fu">self.add</span>(njust_title, not_justified_text)</span>
+<span id="cb112-17"><a href="manim_5.html#cb112-17" tabindex="-1"></a>        <span class="fu">self.play</span>(</span>
+<span id="cb112-18"><a href="manim_5.html#cb112-18" tabindex="-1"></a>            <span class="fu">FadeOut</span>(not_justified_text),</span>
+<span id="cb112-19"><a href="manim_5.html#cb112-19" tabindex="-1"></a>            <span class="fu">FadeIn</span>(justified_text),</span>
+<span id="cb112-20"><a href="manim_5.html#cb112-20" tabindex="-1"></a>            <span class="fu">FadeOut</span>(njust_title),</span>
+<span id="cb112-21"><a href="manim_5.html#cb112-21" tabindex="-1"></a>            <span class="fu">FadeIn</span>(just_title),</span>
+<span id="cb112-22"><a href="manim_5.html#cb112-22" tabindex="-1"></a>            <span class="at">run_time=</span><span class="dv">5</span></span>
+<span id="cb112-23"><a href="manim_5.html#cb112-23" tabindex="-1"></a>        )</span>
+<span id="cb112-24"><a href="manim_5.html#cb112-24" tabindex="-1"></a>        <span class="fu">self.wait</span>(<span class="dv">1</span>)</span></code></pre></div>
+<blockquote>
+<p>python会自动将圆括号中的几个连续无间隔字符串拼接在一起。</p>
+</blockquote>
+</div>
+<div id="manim_5_3" class="section level3 hasAnchor" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Paragraph<a href="manim_5.html#manim_5_3" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<pre><code>class Paragraph(*text, line_spacing=-1, alignment=None, **kwargs)</code></pre>
+<table>
+<caption>
+(#tab:manim_t3)Paragraph类的方法与属性
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+方法
+</th>
+<th style="text-align:center;">
+属性
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animate
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animation_overrides
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+depth
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+fill_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+height
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+n_points_per_curve
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+sheen_factor
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+stroke_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+width
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>继承自<code>VGroup</code></p>
+</blockquote>
+<p><code>Paragraph</code>适合用于大段文本，它将每一行视作<code>VGroup</code>的一个元素。<code>Paragraph</code>主要接收<code>text</code>、<code>line_spacing</code>、<code>alignment</code>这三个参数。</p>
+<ul>
+<li><p>text</p>
+<p>每一行的内容将作为独立的字符串输入进去，例如<code>Paragraph('再见了妈妈', '我今晚就要远航', '别为我担心')</code>就表示第一行为“再见了妈妈”，第二行为“我今晚就要远航”，第三行就是“别为我担心”。</p></li>
+<li><p>line_spacing</p>
+<p>控制行间距，默认为-1，表示自动调整行间距。</p></li>
+<li><p>alignment</p>
+<p>对齐方式，默认为<code>None</code>，可选值为<code>'center'</code>、<code>'left'</code>、<code>'right'</code>。</p></li>
+</ul>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="manim_5.html#cb114-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb114-2"><a href="manim_5.html#cb114-2" tabindex="-1"></a></span>
+<span id="cb114-3"><a href="manim_5.html#cb114-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb114-4"><a href="manim_5.html#cb114-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb114-5"><a href="manim_5.html#cb114-5" tabindex="-1"></a>        paragraph <span class="ot">=</span> <span class="fu">Paragraph</span>(<span class="st">&#39;再见了妈妈&#39;</span>, <span class="st">&#39;我今晚就要远航&#39;</span>, <span class="st">&#39;别为我担心&#39;</span>,</span>
+<span id="cb114-6"><a href="manim_5.html#cb114-6" tabindex="-1"></a>                              <span class="at">alignment =</span> <span class="st">&#39;center&#39;</span>, <span class="at">line_spacing =</span> <span class="dv">2</span>)</span>
+<span id="cb114-7"><a href="manim_5.html#cb114-7" tabindex="-1"></a>        paragraph.color <span class="ot">=</span> <span class="st">&#39;#FFB6C1&#39;</span></span>
+<span id="cb114-8"><a href="manim_5.html#cb114-8" tabindex="-1"></a></span>
+<span id="cb114-9"><a href="manim_5.html#cb114-9" tabindex="-1"></a>        <span class="fu">self.add</span>(paragraph)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p9"></span>
+<img src="pic/manim/p9.png" alt="Paragraph示例" width="427" />
+<p class="caption">
+图 2.9: Paragraph示例
+</p>
+</div>
+</div>
+<div id="manim_5_4" class="section level3 hasAnchor" number="2.5.4">
+<h3><span class="header-section-number">2.5.4</span> Tex<a href="manim_5.html#manim_5_4" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<pre><code>class Tex(*tex_strings, arg_separator=&#39;&#39;, tex_environment=&#39;center&#39;, **kwargs)</code></pre>
+<table>
+<caption>
+(#tab:manim_t4)Tex类的方法与属性
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+方法
+</th>
+<th style="text-align:center;">
+属性
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animate
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animation_overrides
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+depth
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+fill_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+font_size
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+hash_seed
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+height
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+n_points_per_curve
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+sheen_factor
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+stroke_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+width
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>继承自<code>MathTex</code></p>
+<p>在<code>Tex()</code>中也可像<code>Text()</code>一样直接设置<code>color</code>、<code>font_size</code>等参数。因为往上有相同的父类</p>
+</blockquote>
+<p>使用<code>Tex()</code>即可插入LaTeX。由于LaTeX经常使用特殊字符（例如’\’），这在python中也具有特殊意义，所以推荐使用<code>Tex(r'字符串')</code>来输入字符串。</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="manim_5.html#cb116-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb116-2"><a href="manim_5.html#cb116-2" tabindex="-1"></a></span>
+<span id="cb116-3"><a href="manim_5.html#cb116-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb116-4"><a href="manim_5.html#cb116-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb116-5"><a href="manim_5.html#cb116-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">Tex</span>(<span class="st">&#39;Hello&#39;</span>, <span class="st">&#39;World&#39;</span>, <span class="st">&#39;Bye&#39;</span>, <span class="at">arg_separator=</span><span class="st">&#39;-&#39;</span>)</span>
+<span id="cb116-6"><a href="manim_5.html#cb116-6" tabindex="-1"></a></span>
+<span id="cb116-7"><a href="manim_5.html#cb116-7" tabindex="-1"></a>        <span class="fu">self.add</span>(t1)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p10"></span>
+<img src="pic/manim/p10.png" alt="Tex示例" width="427" />
+<p class="caption">
+图 2.10: Tex示例
+</p>
+</div>
+</div>
+<div id="manim_5_5" class="section level3 hasAnchor" number="2.5.5">
+<h3><span class="header-section-number">2.5.5</span> MathTex<a href="manim_5.html#manim_5_5" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<pre><code>class MathTex(*tex_strings, arg_separator=&#39; &#39;, substrings_to_isolate=None, tex_to_color_map=None, tex_environment=&#39;align*&#39;, **kwargs)</code></pre>
+<table>
+<caption>
+(#tab:manim_t5)MathTex类的方法与属性
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+方法
+</th>
+<th style="text-align:center;">
+属性
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+get_part_by_tex
+</td>
+<td style="text-align:center;">
+animate
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+get_parts_by_tex
+</td>
+<td style="text-align:center;">
+animation_overrides
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+index_of_part
+</td>
+<td style="text-align:center;">
+color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+index_of_part_by_tex
+</td>
+<td style="text-align:center;">
+depth
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+set_color_by_tex
+</td>
+<td style="text-align:center;">
+fill_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+set_color_by_tex_to_color_map
+</td>
+<td style="text-align:center;">
+font_size
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+set_opacity_by_tex
+</td>
+<td style="text-align:center;">
+hash_seed
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+sort_alphabetically
+</td>
+<td style="text-align:center;">
+height
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+n_points_per_curve
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+sheen_factor
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+stroke_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+width
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>继承自<code>SingleStringMathTex</code></p>
+<p>关于如何编辑数学公式大家可以参考这篇<a href="https://www.cnblogs.com/syqwq/p/15190115.html" target="_blank">博客</a>。</p>
+</blockquote>
+<p><code>MathTex()</code>中的字符串默认处在数学环境中，对应有<code>Tex(r'$字符串$')</code>，相当于是数学公式的<code>Tex()</code>简写。</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="manim_5.html#cb118-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb118-2"><a href="manim_5.html#cb118-2" tabindex="-1"></a></span>
+<span id="cb118-3"><a href="manim_5.html#cb118-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb118-4"><a href="manim_5.html#cb118-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb118-5"><a href="manim_5.html#cb118-5" tabindex="-1"></a>        t1 <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&#39;f(k)={n \choose k}p^{k}(1-p)^{n-k}&#39;</span>)</span>
+<span id="cb118-6"><a href="manim_5.html#cb118-6" tabindex="-1"></a>        t2 <span class="ot">=</span> <span class="fu">Tex</span>(r<span class="st">&#39;$f(k)={n \choose k}p^{k}(1-p)^{n-k}$&#39;</span>)</span>
+<span id="cb118-7"><a href="manim_5.html#cb118-7" tabindex="-1"></a></span>
+<span id="cb118-8"><a href="manim_5.html#cb118-8" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t1.shift</span>(UP))</span>
+<span id="cb118-9"><a href="manim_5.html#cb118-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">t2.shift</span>(DOWN))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p11"></span>
+<img src="pic/manim/p11.png" alt="MathTex示例" width="427" />
+<p class="caption">
+图 2.11: MathTex示例
+</p>
+</div>
+<ul>
+<li><p>字符串上色</p>
+<p><code>MathTex</code>能够接收多个字符串，最后会用<code>arg_separator</code>参数（默认为空格）将其隔开。对此，可以通过索引或者字符匹配（匹配的结果是对应的完整字符串）来选中特定的字符串进行设置，如下所示：</p>
+<blockquote>
+<p><code>Tex()</code>也同样适用，毕竟其父类就是<code>MathTex()</code>。</p>
+</blockquote>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="manim_5.html#cb119-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb119-2"><a href="manim_5.html#cb119-2" tabindex="-1"></a></span>
+<span id="cb119-3"><a href="manim_5.html#cb119-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb119-4"><a href="manim_5.html#cb119-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb119-5"><a href="manim_5.html#cb119-5" tabindex="-1"></a>        tex_1 <span class="ot">=</span> <span class="fu">Tex</span>(<span class="st">&#39;Hello&#39;</span>, r<span class="st">&#39;$</span><span class="sc">\b</span><span class="st">igstar$&#39;</span>, r<span class="st">&#39;\LaTeX&#39;</span>, <span class="at">font_size=</span><span class="dv">58</span>)</span>
+<span id="cb119-6"><a href="manim_5.html#cb119-6" tabindex="-1"></a>        tex_1[<span class="dv">1</span>]<span class="fu">.set_color</span>(RED)</span>
+<span id="cb119-7"><a href="manim_5.html#cb119-7" tabindex="-1"></a></span>
+<span id="cb119-8"><a href="manim_5.html#cb119-8" tabindex="-1"></a>        tex_2 <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&#39;\sum_{i=0}^n i^2&#39;</span>, <span class="st">&#39;=&#39;</span>, r<span class="st">&#39;</span><span class="sc">\f</span><span class="st">rac{(n^2+n)(2n+1)}{6}&#39;</span>, <span class="at">font_size=</span><span class="dv">58</span>)</span>
+<span id="cb119-9"><a href="manim_5.html#cb119-9" tabindex="-1"></a>        <span class="fu">tex_2.set_color_by_tex</span>(<span class="st">&#39;i=&#39;</span>, RED)</span>
+<span id="cb119-10"><a href="manim_5.html#cb119-10" tabindex="-1"></a></span>
+<span id="cb119-11"><a href="manim_5.html#cb119-11" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">tex_1.shift</span>(UP))</span>
+<span id="cb119-12"><a href="manim_5.html#cb119-12" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">tex_2.shift</span>(DOWN))</span></code></pre></div></li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p12"></span>
+<img src="pic/manim/p12.png" alt="子字符串上色示例" width="427" />
+<p class="caption">
+图 2.12: 子字符串上色示例
+</p>
+</div>
+<ul>
+<li><p>目标字符上色</p>
+<p>如果想要匹配某个字符而不是字符所在的整个字符串，则可以用到<code>substrings_to_isolate</code>参数，它能够在<code>set_color_by_tex</code>时将目标字符串单独分离出来。或者用两对花括号<code>{{.}}</code>将目标字符框起来也能起到同样作用。二者如下所示：</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="manim_5.html#cb120-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb120-2"><a href="manim_5.html#cb120-2" tabindex="-1"></a></span>
+<span id="cb120-3"><a href="manim_5.html#cb120-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb120-4"><a href="manim_5.html#cb120-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb120-5"><a href="manim_5.html#cb120-5" tabindex="-1"></a>        e_1 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
+<span id="cb120-6"><a href="manim_5.html#cb120-6" tabindex="-1"></a>            r<span class="st">&#39;e^x = x^0 + x^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} x^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} x^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} x^n + \cdots&#39;</span></span>
+<span id="cb120-7"><a href="manim_5.html#cb120-7" tabindex="-1"></a>     )</span>
+<span id="cb120-8"><a href="manim_5.html#cb120-8" tabindex="-1"></a>        <span class="fu">e_1.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
+<span id="cb120-9"><a href="manim_5.html#cb120-9" tabindex="-1"></a></span>
+<span id="cb120-10"><a href="manim_5.html#cb120-10" tabindex="-1"></a>        e_2 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
+<span id="cb120-11"><a href="manim_5.html#cb120-11" tabindex="-1"></a>            r<span class="st">&#39;e^x = x^0 + x^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} x^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} x^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} x^n + \cdots&#39;</span>,</span>
+<span id="cb120-12"><a href="manim_5.html#cb120-12" tabindex="-1"></a>            <span class="at">substrings_to_isolate=</span><span class="st">&#39;x&#39;</span></span>
+<span id="cb120-13"><a href="manim_5.html#cb120-13" tabindex="-1"></a>        )</span>
+<span id="cb120-14"><a href="manim_5.html#cb120-14" tabindex="-1"></a>        <span class="fu">e_2.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
+<span id="cb120-15"><a href="manim_5.html#cb120-15" tabindex="-1"></a></span>
+<span id="cb120-16"><a href="manim_5.html#cb120-16" tabindex="-1"></a>        e_3 <span class="ot">=</span> <span class="fu">MathTex</span>(</span>
+<span id="cb120-17"><a href="manim_5.html#cb120-17" tabindex="-1"></a>            r<span class="st">&#39;e^{{x}} = {{x}}^0 + {{x}}^1 + </span><span class="sc">\f</span><span class="st">rac{1}{2} {{x}}^2 + </span><span class="sc">\f</span><span class="st">rac{1}{6} {{x}}^3 + \cdots + </span><span class="sc">\f</span><span class="st">rac{1}{n!} {{x}}^n + \cdots&#39;</span></span>
+<span id="cb120-18"><a href="manim_5.html#cb120-18" tabindex="-1"></a>        )</span>
+<span id="cb120-19"><a href="manim_5.html#cb120-19" tabindex="-1"></a>        <span class="fu">e_3.set_color_by_tex</span>(<span class="st">&#39;x&#39;</span>, BLUE)</span>
+<span id="cb120-20"><a href="manim_5.html#cb120-20" tabindex="-1"></a></span>
+<span id="cb120-21"><a href="manim_5.html#cb120-21" tabindex="-1"></a>        group<span class="ot">=</span><span class="fu">VGroup</span>(e_1, e_2, e_3)</span>
+<span id="cb120-22"><a href="manim_5.html#cb120-22" tabindex="-1"></a></span>
+<span id="cb120-23"><a href="manim_5.html#cb120-23" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">group.arrange</span>(DOWN))</span></code></pre></div></li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p13"></span>
+<img src="pic/manim/p13.png" alt="目标字符上色示例" width="427" />
+<p class="caption">
+图 2.13: 目标字符上色示例
+</p>
+</div>
+<p>除了多个字符串的索引，还可以对一个字符串（即Mobject对象）中的不同组成部分进行索引。<code>index_labels()</code>能够显示Mobject对象的组成部分的索引，如下所示：</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="manim_5.html#cb121-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb121-2"><a href="manim_5.html#cb121-2" tabindex="-1"></a></span>
+<span id="cb121-3"><a href="manim_5.html#cb121-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb121-4"><a href="manim_5.html#cb121-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb121-5"><a href="manim_5.html#cb121-5" tabindex="-1"></a>        text <span class="ot">=</span> <span class="fu">MathTex</span>(r<span class="st">&quot;</span><span class="sc">\b</span><span class="st">inom{2n}{n+2}&quot;</span>, <span class="at">font_size=</span><span class="dv">96</span>)</span>
+<span id="cb121-6"><a href="manim_5.html#cb121-6" tabindex="-1"></a></span>
+<span id="cb121-7"><a href="manim_5.html#cb121-7" tabindex="-1"></a>        <span class="co"># MathTex中仅有一个字符串，所以只索引了第一项</span></span>
+<span id="cb121-8"><a href="manim_5.html#cb121-8" tabindex="-1"></a>        <span class="co"># 若有多个字符串则可以通过对应的索引选中目标字符串</span></span>
+<span id="cb121-9"><a href="manim_5.html#cb121-9" tabindex="-1"></a>        <span class="fu">self.add</span>(<span class="fu">index_labels</span>(text[<span class="dv">0</span>]))</span>
+<span id="cb121-10"><a href="manim_5.html#cb121-10" tabindex="-1"></a></span>
+<span id="cb121-11"><a href="manim_5.html#cb121-11" tabindex="-1"></a>        text[<span class="dv">0</span>][<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]<span class="fu">.set_color</span>(YELLOW)</span>
+<span id="cb121-12"><a href="manim_5.html#cb121-12" tabindex="-1"></a>        text[<span class="dv">0</span>][<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>]<span class="fu">.set_color</span>(RED)</span>
+<span id="cb121-13"><a href="manim_5.html#cb121-13" tabindex="-1"></a>        <span class="fu">self.add</span>(text)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p14"></span>
+<img src="pic/manim/p14.png" alt="目标字符上色示例" width="427" />
+<p class="caption">
+图 2.14: 目标字符上色示例
+</p>
+</div>
+<ul>
+<li>字体</li>
+</ul>
+<p><code>MathTex()</code>可通过<code>tex_template</code>参数来修改字体。在<code>TexFontTemplates</code>类中有诸多字体可供选择，通过提取其属性值来进行赋值，例如<code>tex_template = TexFontTemplates.french_cursive</code>。可选字体如<a href="https://docs.manim.community/en/stable/reference/manim.utils.tex_templates.TexFontTemplates.html#manim.utils.tex_templates.TexFontTemplates" target="_blank">官网所示</a>。</p>
+</div>
+<div id="manim_5_6" class="section level3 hasAnchor" number="2.5.6">
+<h3><span class="header-section-number">2.5.6</span> Title<a href="manim_5.html#manim_5_6" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<pre><code>class Title(*text_parts, include_underline=True, match_underline_width_to_text=False, underline_buff=0.25, **kwargs)</code></pre>
+<table>
+<caption>
+(#tab:manim_t6)Title类的方法与属性
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+方法
+</th>
+<th style="text-align:center;">
+属性
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animate
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animation_overrides
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+depth
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+fill_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+font_size
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+hash_seed
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+height
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+n_points_per_curve
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+sheen_factor
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+stroke_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+width
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>继承自<code>Tex</code></p>
+</blockquote>
+<p><code>Title</code>的作用就是在画面正上方显示标题。如果你想在标题中输入中文，那么一定要设置<code>tex_template</code>参数，并为其赋值为<code>tex_template = TexTemplateLibrary.ctex</code>。</p>
+<blockquote>
+<p><code>Tex</code>若想显示中文也得这样设置，但一般用<code>Text</code>来显示中文会更多。</p>
+</blockquote>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="manim_5.html#cb123-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb123-2"><a href="manim_5.html#cb123-2" tabindex="-1"></a></span>
+<span id="cb123-3"><a href="manim_5.html#cb123-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb123-4"><a href="manim_5.html#cb123-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb123-5"><a href="manim_5.html#cb123-5" tabindex="-1"></a>        banner <span class="ot">=</span> <span class="fu">ManimBanner</span>()</span>
+<span id="cb123-6"><a href="manim_5.html#cb123-6" tabindex="-1"></a>        title <span class="ot">=</span> <span class="fu">Title</span>(<span class="st">&#39;Hello你好&#39;</span>, <span class="at">tex_template=</span>TexTemplateLibrary.ctex, <span class="at">match_underline_width_to_text=</span>True)</span>
+<span id="cb123-7"><a href="manim_5.html#cb123-7" tabindex="-1"></a>        <span class="fu">self.add</span>(banner, title)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p15"></span>
+<img src="pic/manim/p15.png" alt="Title示例" width="427" />
+<p class="caption">
+图 2.15: Title示例
+</p>
+</div>
+</div>
+<div id="manim_5_7" class="section level3 hasAnchor" number="2.5.7">
+<h3><span class="header-section-number">2.5.7</span> BulletedList<a href="manim_5.html#manim_5_7" class="anchor-section" aria-label="Anchor link to header" target="_blank"></a></h3>
+<pre><code>class BulletedList(*items, buff=0.5, dot_scale_factor=2, tex_environment=None, **kwargs)</code></pre>
+<table>
+<caption>
+(#tab:manim_t7)Title类的方法与属性
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+方法
+</th>
+<th style="text-align:center;">
+属性
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+fade_all_but
+</td>
+<td style="text-align:center;">
+animate
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+animation_overrides
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+depth
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+fill_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+font_size
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+hash_seed
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+height
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+n_points_per_curve
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+sheen_factor
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+stroke_color
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+width
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>继承自<code>Tex</code></p>
+</blockquote>
+<p><code>BulletedList</code>实际上就是markdown中的无序列表。</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="manim_5.html#cb125-1" tabindex="-1"></a>from manim import <span class="sc">*</span></span>
+<span id="cb125-2"><a href="manim_5.html#cb125-2" tabindex="-1"></a></span>
+<span id="cb125-3"><a href="manim_5.html#cb125-3" tabindex="-1"></a>class <span class="fu">Example</span>(Scene)<span class="sc">:</span></span>
+<span id="cb125-4"><a href="manim_5.html#cb125-4" tabindex="-1"></a>    def <span class="fu">construct</span>(self)<span class="sc">:</span></span>
+<span id="cb125-5"><a href="manim_5.html#cb125-5" tabindex="-1"></a>        blist <span class="ot">=</span> <span class="fu">BulletedList</span>(<span class="st">&#39;项目 1&#39;</span>, <span class="st">&#39;项目 2&#39;</span>, <span class="st">&#39;项目 3&#39;</span>, <span class="at">height=</span><span class="dv">2</span>, <span class="at">width=</span><span class="dv">2</span>, <span class="at">tex_template=</span>TexTemplateLibrary.ctex)</span>
+<span id="cb125-6"><a href="manim_5.html#cb125-6" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;1&#39;</span>, RED)</span>
+<span id="cb125-7"><a href="manim_5.html#cb125-7" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;2&#39;</span>, GREEN)</span>
+<span id="cb125-8"><a href="manim_5.html#cb125-8" tabindex="-1"></a>        <span class="fu">blist.set_color_by_tex</span>(<span class="st">&#39;3&#39;</span>, BLUE)</span>
+<span id="cb125-9"><a href="manim_5.html#cb125-9" tabindex="-1"></a>        <span class="fu">self.add</span>(blist)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:manim-p16"></span>
+<img src="pic/manim/p16.png" alt="BulletedList示例" width="427" />
+<p class="caption">
+图 2.16: BulletedList示例
+</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="manim_4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="manim_6.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "toc_depth": 3
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
